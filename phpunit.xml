@@ -2,12 +2,11 @@
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/4.1/phpunit.xsd"
          colors="true"
-         bootstrap="./Test/bootstrap.php"
+         bootstrap="tests/bootstrap.php"
 >
     <testsuites>
-        <testsuite name="unit-tests">
-            <directory suffix="Test.php">./Test/Unit</directory>
-            <directory suffix="Test.php">./Test/Integration</directory>
+        <testsuite>
+            <directory prefix="test-" suffix=".php">./tests/</directory>
         </testsuite>
     </testsuites>
 </phpunit>
