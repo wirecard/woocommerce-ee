@@ -21,7 +21,17 @@
     "test": "phpunit --colors=always",
     "test-coverage": "phpunit --colors=always --coverage-clover clover.xml"
   },
-  "config": {
-    "vendor-dir":"wc-wirecard-ee/vendor"
+  "autoload": {
+    "psr-4": {
+      "Wirecard\\ElasticEngine\\": ""
+    },
+    "files": [
+      "registration.php"
+    ]
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "WirecardTest\\ElasticEngine\\": "Test"
+    }
   }
 }
