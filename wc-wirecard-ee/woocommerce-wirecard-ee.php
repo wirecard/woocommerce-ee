@@ -37,7 +37,7 @@
  * Please do not use the plugin if you do not agree to these terms of use!
  */
 if ( ! defined( 'ABSPATH' ) ) {
-	//Exit if accessed directly
+	// Exit if accessed directly
 	exit;
 }
 
@@ -108,7 +108,7 @@ if ( class_exists( 'Wirecard_Payment_Gateway' ) ) {
 		 * @since 0.0.1
 		 */
 		private function init_hooks() {
-			register_activation_hook( __FILE__, 'install_wirecard_payment_gateway');
+			register_activation_hook( __FILE__, 'install_wirecard_payment_gateway' );
 			add_action( 'plugins_loaded', 'init_wirecard_payment_gateway' );
 		}
 
