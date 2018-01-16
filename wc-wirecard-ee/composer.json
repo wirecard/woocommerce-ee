@@ -1,0 +1,32 @@
+{
+  "name": "wirecard/woocommerce-ee",
+  "description": "WooCommerce plugin for Wirecard Payment Processing Gateway",
+  "license": "GPL-3.0",
+  "minimum-stability": "beta",
+  "prefer-stable": true,
+  "require": {
+    "php": ">=5.6",
+    "wirecard/payment-sdk-php": ">=1.0.11"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "5.3.5",
+    "friendsofphp/php-cs-fixer": "^2.2",
+    "johnpbloch/wordpress-core": ">=4.9.1"
+  },
+  "type": "wordpress-plugin",
+  "scripts": {
+    "upload-coverage": "coveralls -v",
+    "cs-check": "php-cs-fixer fix -v --dry-run --using-cache=no .",
+    "cs-fix": "php-cs-fixer fix .",
+    "test": "phpunit --colors=always",
+    "test-coverage": "phpunit --colors=always --coverage-clover clover.xml"
+  },
+  "autoload": {
+    "psr-4": {
+      "Wirecard\\ElasticEngine\\": ""
+    },
+    "files": [
+      "registration.php"
+    ]
+  }
+}
