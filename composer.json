@@ -16,5 +16,8 @@
   "type": "wordpress-plugin",
   "scripts": {
     "test": "phpunit --colors=always"
+  },
+  "config": {
+    "vendor-dir":"wc-wirecard-ee/vendor"
   }
 }
