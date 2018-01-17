@@ -16,8 +16,8 @@
   "type": "wordpress-plugin",
   "scripts": {
     "upload-coverage": "coveralls -v",
-    "cs-check": "phpcs -v --standard=./phpcs.xml --extensions=php .",
-    "cs-fix": "phpcbf -w --standard=./phpcs.xml .",
+    "cs-check": "phpcs --standard=./phpcs.xml .",
+    "cs-fix": "phpcbf --standard=./phpcs.xml .",
     "test": "phpunit --colors=always",
     "test-coverage": "phpunit --colors=always --coverage-clover clover.xml"
   },
