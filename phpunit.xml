@@ -2,7 +2,7 @@
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/4.1/phpunit.xsd"
          colors="true"
-         bootstrap="./wc-wirecard-ee/Test/bootstrap.php"
+         bootstrap="./wc-wirecard-ee/vendor/autoload.php"
 >
     <testsuites>
         <testsuite>
@@ -13,7 +13,7 @@
         <whitelist processUncoveredFilesFromWhitelist="true">
             <directory suffix=".php">./wc-wirecard-ee/*</directory>
             <exclude>
-                <directory suffix=".php">./wc-wirecard-ee/vendor</directory>
+                <directory>./wc-wirecard-ee/vendor</directory>
             </exclude>
         </whitelist>
     </filter>
