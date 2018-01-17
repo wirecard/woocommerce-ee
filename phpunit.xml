@@ -11,8 +11,10 @@
     </testsuites>
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">./wc-wirecard-ee/includes/*</directory>
-            <directory suffix=".php">./wc-wirecard-ee/woocommerce-wirecard-ee</directory>
+            <directory suffix=".php">wc-wirecard-ee</directory>
+            <exclude>
+                <directory suffix=".php">wc-wirecard-ee/vendor</directory>
+            </exclude>
         </whitelist>
     </filter>
 </phpunit>
