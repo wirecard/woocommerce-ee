@@ -23,18 +23,19 @@ env:
   global:
   - COMPOSER_ARGS="--no-interaction"
 
+before_install:
+  - git clone -b master --depth 1 https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards.git $SNIFFS_DIR
+  - composer phpcs --config-set installed_paths $SNIFFS_DIR
+
 install:
   - travis_retry composer require --dev $COMPOSER_ARGS satooshi/php-coveralls:^1.0
   - travis_retry composer install $COMPOSER_ARGS
   - composer show
 
-before_script:
-  - composer create-project wp-coding-standards/wpcs --no-dev
-
 script:
   - composer test-coverage
   - sonar-scanner
-  - composer cs-check
+  - composer phpcs -p . --standard=WordPress
 
 after_script:
   - composer upload-coverage
