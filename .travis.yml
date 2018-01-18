@@ -28,6 +28,9 @@ install:
   - travis_retry composer install $COMPOSER_ARGS
   - composer show
 
+before_script:
+  - composer create-project wp-coding-standards/wpcs --no-dev
+
 script:
   - composer test-coverage
   - sonar-scanner
