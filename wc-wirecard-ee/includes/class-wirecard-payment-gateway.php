@@ -1,13 +1,5 @@
 <?php
 /**
- * Plugin Name: Wirecard Payment Processing Gateway
- * Plugin URI: https://github.com/wirecard/woocommerce-ee
- * Description: Wirecard Payment Processing Gateway Plugin for WooCommerce
- * Version: 0.0.1
- * Author: Wirecard
- * Author URI: https://www.wirecard.at/
- * License: GPL3
- *
  * Shop System Plugins - Terms of Use
  *
  * The plugins offered are provided free of charge by Wirecard AG and are explicitly not part
@@ -37,39 +29,21 @@
  * Please do not use the plugin if you do not agree to these terms of use!
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	// Exit if accessed directly
-	exit;
-}
-
-define( 'WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR', plugin_dir_path( __FILE__ ) );
-define( 'WOOCOMMERCE_GATEWAY_WIRECARD_URL', plugin_dir_url( __FILE__ ) );
-
-register_activation_hook( __FILE__, 'install_wirecard_payment_gateway' );
-
-add_action( 'plugins_loaded', 'init_wirecard_payment_gateway' );
-
-function init_wirecard_payment_gateway() {
-	if ( ! class_exists( 'WC_PAYMENT_GATEWAY' ) ) {
-		return;
-	}
-
-	require_once ( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'includes/class-wirecard-payment-gateway.php');
-	require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'vendor/autoload.php' );
-
-	add_filter( 'woocommerce_payment_gateways', 'add_wirecard_payment_gateway' );
-}
-
-function add_wirecard_payment_gateway() {
-	$methods[] = 'WC_Gateway_Wirecard_Payment_Gateway';
-	return $methods;
-}
-
 /**
- * Default method for installation process
- *
- * @since 0.0.1
+ * Class WC_Gateway_Wirecard_Payment_Gateway
  */
-function install_wirecard_payment_gateway() {
-	global $wpdb;
+class WC_Gateway_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
+
+	public function __construct() {
+		$this->id           = "woocommerce_wirecard_payment_gateway";
+		$this->method_title = "Wirecard Payment Gateway";
+		$this->method_description = "Payment Gateway";
+		$this->has_fields   = true;
+		$this->init_form_fields();
+		$this->init_settings();
+
+		// if any of the payment types are enabled, set this to "yes", otherwise "no"
+		$this->enabled = "yes";
+		$this->title   = 'Wirecard Payment Gateway';
+	}
 }
