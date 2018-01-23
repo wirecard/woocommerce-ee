@@ -23,11 +23,11 @@
   },
   "type": "wordpress-plugin",
   "scripts": {
-    "upload-coverage": "coveralls -v",
+    "upload-coverage": "wc-wirecard-ee/vendor/bin/coveralls -v",
     "cs-check": "phpcs --standard=phpcs.xml .",
     "cs-fix": "phpcbf --standard=phpcs.xml .",
     "test": "phpunit --colors=always",
-    "test-coverage": "phpunit --colors=always --coverage-clover clover.xml"
+    "test-coverage": "phpunit --colors=always --coverage-clover build/logs/clover.xml"
   },
   "config": {
     "vendor-dir":"wc-wirecard-ee/vendor"
