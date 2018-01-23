@@ -54,7 +54,7 @@ function init_wirecard_payment_gateway() {
 		return;
 	}
 
-	require_once ( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'includes/class-wirecard-payment-gateway.php');
+	require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'includes/class-wc-wirecard-payment-gateway.php' );
 	require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'vendor/autoload.php' );
 
 	add_filter( 'woocommerce_payment_gateways', 'add_wirecard_payment_gateway' );
@@ -62,6 +62,7 @@ function init_wirecard_payment_gateway() {
 
 function add_wirecard_payment_gateway() {
 	$methods[] = 'WC_Gateway_Wirecard_Payment_Gateway';
+
 	return $methods;
 }
 
