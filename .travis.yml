@@ -2,6 +2,9 @@ sudo: false
 dist: trusty
 language: php
 
+services:
+  - mysql
+
 cache:
   directories:
     - $HOME/.sonar/cache
@@ -24,6 +27,7 @@ env:
   - COMPOSER_ARGS="--no-interaction"
 
 before_install:
+  - mysql -e "CREATE DATABASE database_name_here; GRANT USAGE ON *.* TO username_here@localhost IDENTIFIED BY 'password_here';"
   - export PHPCS_DIR=/tmp/phpcs
   - export SNIFFS_DIR=/tmp/sniffs
   - git clone -b master --depth 1 https://github.com/squizlabs/PHP_CodeSniffer.git $PHPCS_DIR
