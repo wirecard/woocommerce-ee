@@ -37,6 +37,7 @@ before_install:
 install:
   - travis_retry composer require --dev $COMPOSER_ARGS satooshi/php-coveralls:^1.0
   - travis_retry composer install $COMPOSER_ARGS
+  - mv wc-wirecard-ee/vendor/wordpress/wp-config-sample.php wc-wirecard-ee/vendor/wordpress/wp-config.php
   - composer show
 
 script:
