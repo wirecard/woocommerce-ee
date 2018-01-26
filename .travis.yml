@@ -2,9 +2,6 @@ sudo: false
 dist: trusty
 language: php
 
-services:
-  - mysql
-
 cache:
   directories:
     - $HOME/.sonar/cache
@@ -27,7 +24,6 @@ env:
   - COMPOSER_ARGS="--no-interaction"
 
 before_install:
-  - mysql -e "CREATE DATABASE IF NOT EXISTS database_name_here; GRANT USAGE ON *.* TO username_here@localhost IDENTIFIED BY 'password_here'; SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = 'database_name_here';"
   - export PHPCS_DIR=/tmp/phpcs
   - export SNIFFS_DIR=/tmp/sniffs
   - git clone -b master --depth 1 https://github.com/squizlabs/PHP_CodeSniffer.git $PHPCS_DIR
@@ -37,7 +33,6 @@ before_install:
 install:
   - travis_retry composer require --dev $COMPOSER_ARGS satooshi/php-coveralls:^1.0
   - travis_retry composer install $COMPOSER_ARGS
-  - mv wc-wirecard-ee/vendor/wordpress/wp-config-sample.php wc-wirecard-ee/vendor/wordpress/wp-config.php
   - composer show
 
 script:

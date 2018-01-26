@@ -5,15 +5,16 @@
          bootstrap="./wc-wirecard-ee/Test/bootstrap.php"
 >
     <testsuites>
-        <testsuite>
+        <testsuite name="unit-tests">
             <directory prefix="test-" suffix=".php">wc-wirecard-ee/Test</directory>
         </testsuite>
     </testsuites>
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">./wc-wirecard-ee</directory>
+            <directory suffix=".php">./wc-wirecard-ee/*</directory>
             <exclude>
                 <directory>wc-wirecard-ee/vendor</directory>
+                <directory>wc-wirecard-ee/Test</directory>
             </exclude>
         </whitelist>
     </filter>

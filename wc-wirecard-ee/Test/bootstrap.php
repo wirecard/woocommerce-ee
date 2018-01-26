@@ -1,3 +1,6 @@
 <?php
 require_once __DIR__ . '/../vendor/autoload.php';
-require_once __DIR__ . '/../vendor/woocommerce/woocommerce.php';
+
+//stub objects
+require __DIR__ . '/stubs/wc-payment-gateway.php';
+
