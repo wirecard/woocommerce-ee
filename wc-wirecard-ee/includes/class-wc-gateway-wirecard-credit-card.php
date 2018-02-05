@@ -30,20 +30,25 @@
  */
 
 /**
- * Class WC_Gateway_Wirecard_Payment_Gateway
+ * Class WC_Gateway_Wirecard_Credit_Card
  */
-class WC_Gateway_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
+class WC_Gateway_Wirecard_Credit_Card extends WC_Payment_Gateway {
 
 	public function __construct() {
-		$this->id                 = 'woocommerce_wirecard_payment_gateway';
-		$this->method_title       = 'Wirecard Payment Gateway';
-		$this->method_description = 'Payment Gateway';
-		$this->has_fields         = true;
+		$this->id                 = 'woocommerce_wirecard_credit_card';
+		$this->method_title       = 'Wirecard Payment Processing Gateway Credit Card';
+		$this->method_description = 'Credit Card transactions via Wirecard Payment Processing Gateway';
+		$this->has_fields         = false;
 		$this->init_form_fields();
 		$this->init_settings();
 
 		// if any of the payment types are enabled, set this to "yes", otherwise "no"
 		$this->enabled = 'yes';
-		$this->title   = 'Wirecard Payment Gateway';
+		$this->title   = 'Wirecard Payment Processing Gateway Credit Card';
 	}
+
+    public function init_form_fields()
+    {
+        global $wpdb;
+    }
 }
