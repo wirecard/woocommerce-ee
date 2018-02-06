@@ -50,19 +50,33 @@ register_activation_hook( __FILE__, 'install_wirecard_payment_gateway' );
 add_action( 'plugins_loaded', 'init_wirecard_payment_gateway' );
 add_action( 'admin_menu', 'wirecard_gateway_options_page' );
 
+/**
+ * Initialize payment gateway
+ *
+ * @since 1.0.0
+ */
 function init_wirecard_payment_gateway() {
 	if ( ! class_exists( 'WC_PAYMENT_GATEWAY' ) ) {
 		return;
 	}
 
-	require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'includes/class-wc-gateway-wirecard-credit-card.php' );
+    require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'includes/abstract-wc-wirecard-payment-gateway.php' );
+	require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'includes/class-wc-gateway-wirecard-paypal.php' );
 	require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'vendor/autoload.php' );
 
-	add_filter( 'woocommerce_payment_gateways', 'add_wirecard_payment_gateway' );
+	add_filter( 'woocommerce_payment_gateways', 'add_wirecard_payment_gateway', 0 );
 }
 
-function add_wirecard_payment_gateway() {
-	$methods[] = 'WC_Gateway_Wirecard_Credit_Card';
+/**
+ * Add payment methods for wirecard payment gateway
+ *
+ * @param $methods
+ * @return array
+ *
+ * @since 1.0.0
+ */
+function add_wirecard_payment_gateway( $methods ) {
+	$methods[] = 'WC_Gateway_Wirecard_Paypal';
 
 	return $methods;
 }
@@ -82,9 +96,9 @@ function install_wirecard_payment_gateway() {
  * @since 1.0.0
  */
 function wirecard_gateway_options_page() {
-    require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'admin/class-wirecard-payment-gateway.php' );
+    require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'admin/class-wirecard-settings.php' );
 
-    $admin = new Wirecard_Payment_Gateway();
+    $admin = new Wirecard_Settings();
     add_menu_page(
         'Wirecard Payment Gateway',
         'Wirecard Payment Gateway',

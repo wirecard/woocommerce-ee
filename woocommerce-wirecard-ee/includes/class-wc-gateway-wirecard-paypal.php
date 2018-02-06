@@ -29,18 +29,27 @@
  * Please do not use the plugin if you do not agree to these terms of use!
  */
 
-class Wirecard_Payment_Gateway {
+/**
+ * Class WC_Gateway_Wirecard_Paypal
+ *
+ * @extends WC_Gateway_Wirecard
+ *
+ * @since 1.0.0
+ */
+class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 
-    public function __construct() {
-    }
+	public function __construct() {
+		$this->id                 = 'woocommerce_wirecard_paypal';
+		$this->method_title       = __( 'Wirecard Payment Processing Gateway PayPal', 'wooocommerce-gateway-wirecard' );
+		$this->method_description = __( 'PayPal transactions via Wirecard Payment Processing Gateway', 'woocommerce-gateway-wirecard' );
 
-    public function wirecard_payment_gateway_settings() {
-        ?>
-        <div class="wirecard-payment-settings-wrapper">
-            <h3>Wirecard Payment Processing Gateway</h3>
-            <p>Wirecard Payment Processing Gateway Plugin for WooCommerce</p>
-            <p>Global settings, Transactiondetails, Back-end Operations and Support Requests will be implemented here</p>
-        </div>
-        <?php
-    }
+		// Load the form fields.
+		$this->init_form_fields();
+
+		// Load the settings.
+		$this->init_settings();
+
+        $this->title                = __( 'Wirecard Payment Processing Gateway PayPal', 'wooocommerce-gateway-wirecard' );
+        $this->enabled              = 'yes';
+	}
 }
