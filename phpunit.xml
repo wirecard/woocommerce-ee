@@ -14,7 +14,6 @@
             <directory suffix=".php">./woocommerce-wirecard-ee/*</directory>
             <exclude>
                 <directory>woocommerce-wirecard-ee/vendor</directory>
-                <directory>woocommerce-wirecard-ee/Test</directory>
             </exclude>
         </whitelist>
     </filter>

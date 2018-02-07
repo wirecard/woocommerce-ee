@@ -31,16 +31,16 @@
 
 class Wirecard_Settings {
 
-    public function __construct() {
-    }
+	public function __construct() {
+	}
 
-    public function wirecard_payment_gateway_settings() {
-        ?>
-        <div class="wirecard-payment-settings-wrapper">
-            <h3>Wirecard Payment Processing Gateway</h3>
-            <p>Wirecard Payment Processing Gateway Plugin for WooCommerce</p>
-            <p>Global settings, Transactiondetails, Back-end Operations and Support Requests will be implemented here</p>
-        </div>
-        <?php
-    }
+	public function wirecard_payment_gateway_settings() {
+		?>
+		<div class="wirecard-payment-settings-wrapper">
+			<h3>Wirecard Payment Processing Gateway</h3>
+			<p>Wirecard Payment Processing Gateway Plugin for WooCommerce</p>
+			<p>Global settings, Transactiondetails, Back-end Operations and Support Requests will be implemented here</p>
+		</div>
+		<?php
+	}
 }

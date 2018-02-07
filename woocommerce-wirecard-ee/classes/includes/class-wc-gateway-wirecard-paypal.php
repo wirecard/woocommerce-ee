@@ -29,12 +29,14 @@
  * Please do not use the plugin if you do not agree to these terms of use!
  */
 
+require_once __DIR__ . '/class-wc-wirecard-payment-gateway.php';
+
 /**
  * Class WC_Gateway_Wirecard_Paypal
  *
- * @extends WC_Gateway_Wirecard
+ * @extends WC_Wirecard_Payment_Gateway
  *
- * @since 1.0.0
+ * @since   1.0.0
  */
 class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 
@@ -49,7 +51,7 @@ class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 		// Load the settings.
 		$this->init_settings();
 
-        $this->title                = __( 'Wirecard Payment Processing Gateway PayPal', 'wooocommerce-gateway-wirecard' );
-        $this->enabled              = 'yes';
+		$this->title   = __( 'Wirecard Payment Processing Gateway PayPal', 'wooocommerce-gateway-wirecard' );
+		$this->enabled = 'yes';
 	}
 }
