@@ -30,7 +30,7 @@
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-    exit;
+	exit;
 }
 
 /**
@@ -38,7 +38,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 
-    public function is_available() {
-        return parent::is_available();
-    }
+	public function is_available() {
+		return parent::is_available();
+	}
 }
