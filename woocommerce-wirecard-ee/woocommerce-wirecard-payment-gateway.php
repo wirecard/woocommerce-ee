@@ -62,6 +62,7 @@ function init_wirecard_payment_gateway() {
 
 	require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/includes/class-wc-wirecard-payment-gateway.php' );
 	require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-paypal.php' );
+	require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-creditcard.php' );
 	require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'vendor/autoload.php' );
 
 	add_filter( 'woocommerce_payment_gateways', 'add_wirecard_payment_gateway', 0 );
@@ -78,6 +79,7 @@ function init_wirecard_payment_gateway() {
  */
 function add_wirecard_payment_gateway( $methods ) {
 	$methods[] = 'WC_Gateway_Wirecard_Paypal';
+	$methods[] = 'WC_Gateway_Wirecard_Creditcard';
 
 	return $methods;
 }
