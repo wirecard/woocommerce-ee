@@ -31,6 +31,13 @@
 
 require_once __DIR__ . '/class-wc-wirecard-payment-gateway.php';
 
+use Wirecard\PaymentSdk\Config\Config;
+use Wirecard\PaymentSdk\Config\PaymentMethodConfig;
+use Wirecard\PaymentSdk\Entity\Amount;
+use Wirecard\PaymentSdk\Entity\Redirect;
+use Wirecard\PaymentSdk\Transaction\PayPalTransaction;
+use Wirecard\PaymentSdk\TransactionService;
+
 /**
  * Class WC_Gateway_Wirecard_Paypal
  *
@@ -149,20 +156,20 @@ class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 
 		$order = wc_get_order( $order_id );
 
-		$redirectUrls     = new \Wirecard\PaymentSdk\Entity\Redirect( $this->create_return_url( $order, 'SUCCESS' ), $this->create_return_url( $order, 'CANCEL' ) );
+		$redirect_urls     = new Redirect( $this->create_return_url( $order, 'SUCCESS' ), $this->create_return_url( $order, 'CANCEL' ) );
 		$page_url         = $order->get_checkout_payment_url( true );
 		$page_url         = add_query_arg( 'key', $order->get_order_key(), $page_url );
-		$notificationrUrl = add_query_arg( 'order-pay', $order_id, $page_url );
+		$notification_url = add_query_arg( 'order-pay', $order_id, $page_url );
 
 
-		$transaction = new \Wirecard\PaymentSdk\Transaction\PayPalTransaction();
-		$transaction->setNotificationUrl( $notificationrUrl );
-		$transaction->setRedirect( $redirectUrls );
-		$amount = new \Wirecard\PaymentSdk\Entity\Amount( $order->get_total(), 'EUR' );
+		$transaction = new PayPalTransaction();
+		$transaction->setNotificationUrl( $notification_url );
+		$transaction->setRedirect( $redirect_urls );
+		$amount = new Amount( $order->get_total(), 'EUR' );
 		$transaction->setAmount( $amount );
 		$config = $this->create_payment_config();
 
-		$transaction_service = new \Wirecard\PaymentSdk\TransactionService( $config );
+		$transaction_service = new TransactionService( $config );
 		try {
 			$response = $transaction_service->process( $transaction, 'reserve' );
 			$this->_logger->error( print_r( $response, true ) );
@@ -181,7 +188,7 @@ class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 	/**
 	 * Create payment method configuration
 	 *
-	 * @return \Wirecard\PaymentSdk\Config\Config
+	 * @return Config
 	 *
 	 * @since 1.0.0
 	 */
@@ -190,8 +197,8 @@ class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 		$http_user     = $this->get_option( 'http_user' );
 		$http_password = $this->get_option( 'http_pass' );
 
-		$config         = new \Wirecard\PaymentSdk\Config\Config( $base_url, $http_user, $http_password, 'EUR' );
-		$payment_config = new \Wirecard\PaymentSdk\Config\PaymentMethodConfig( \Wirecard\PaymentSdk\Transaction\PayPalTransaction::NAME, $this->get_option( 'merchant_account_id' ), $this->get_option( 'secret' ) );
+		$config         = new Config( $base_url, $http_user, $http_password, 'EUR' );
+		$payment_config = new PaymentMethodConfig( PayPalTransaction::NAME, $this->get_option( 'merchant_account_id' ), $this->get_option( 'secret' ) );
 		$config->add( $payment_config );
 
 		return $config;
