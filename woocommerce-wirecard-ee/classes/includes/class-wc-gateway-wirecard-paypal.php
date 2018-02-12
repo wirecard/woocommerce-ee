@@ -51,7 +51,92 @@ class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 		// Load the settings.
 		$this->init_settings();
 
-		$this->title   = __( 'Wirecard Payment Processing Gateway PayPal', 'wooocommerce-gateway-wirecard' );
-		$this->enabled = 'yes';
+		$this->title   = $this->get_option( 'title' );
+		$this->enabled = $this->get_option( 'enabled' );
+
+		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
+	}
+
+	/**
+	 * Load form fields for configuration
+	 *
+	 * @since 1.0.0
+	 */
+	public function init_form_fields() {
+		$this->form_fields = array(
+			'enabled'             => array(
+				'title'   => __( 'Enable/Disable', 'woocommerce-gateway-wirecard' ),
+				'type'    => 'checkbox',
+				'label'   => __( 'Enable Wirecard Payment Processing Gateway PayPal', 'woocommerce-gateway-wirecard' ),
+				'default' => 'yes'
+			),
+			'title'               => array(
+				'title'       => __( 'Title', 'woocommerce-gateway-wirecard' ),
+				'type'        => 'text',
+				'description' => __( 'This controls the title which the user sees during checkout.', 'woocommerce-gateway-wirecard' ),
+				'default'     => __( 'Wirecard Payment Processing Gateway PayPal', 'woocommerce-gateway-wirecard' ),
+				'desc_tip'    => true,
+			),
+			'description'         => array(
+				'title'   => __( 'Customer Message', 'woocommerce-gateway-wirecard' ),
+				'type'    => 'textarea',
+				'default' => ''
+			),
+			'base_url'            => array(
+				'title'       => __( 'Base Url', 'woocommerce-gateway-wirecard' ),
+				'type'        => 'text',
+				'description' => __( 'The elastic engine base url. (e.g. https://api.wirecard.com)' ),
+				'default'     => 'https://api-test.wirecard.com',
+				'desc_tip'    => true
+			),
+			'http_user'           => array(
+				'title'   => __( 'Http User', 'woocommerce-gateway-wirecard' ),
+				'type'    => 'text',
+				'default' => '70000-APITEST-AP'
+			),
+			'http_pass'           => array(
+				'title'   => __( 'Http Password', 'woocommerce-gateway-wirecard' ),
+				'type'    => 'text',
+				'default' => 'qD2wzQ_hrc!8'
+			),
+			'merchant_account_id' => array(
+				'title'   => __( 'Merchant Account ID', 'woocommerce-gateway-wirecard' ),
+				'type'    => 'text',
+				'default' => '2a0e9351-24ed-4110-9a1b-fd0fee6bec26'
+			),
+			'secret'              => array(
+				'title'   => __( 'Secret Key', 'woocommerce-gateway-wirecard' ),
+				'type'    => 'text',
+				'default' => 'dbc5a498-9a66-43b9-bf1d-a618dd399684'
+			),
+			'payment_action'      => array(
+				'title'   => __( 'Payment Action', 'woocommerce-gateway-wirecard' ),
+				'type'    => 'select',
+				'default' => 'Authorization',
+				'label'   => __( 'Payment Action', 'woocommerce-gateway-wirecard' ),
+				'options' => array(
+					'authorization' => 'Authorization',
+					'capture'       => 'Capture'
+				)
+			),
+			'shopping_basket'     => array(
+				'title'   => __( 'Enable/Disable', 'woocommerce-gateway-wirecard' ),
+				'type'    => 'checkbox',
+				'label'   => __( 'Shopping Basket', 'woocommerce-gateway-wirecard' ),
+				'default' => 'no'
+			),
+			'descriptor'          => array(
+				'title'   => __( 'Enable/Disable', 'woocommerce-gateway-wirecard' ),
+				'type'    => 'checkbox',
+				'label'   => __( 'Descriptor', 'woocommerce-gateway-wirecard' ),
+				'default' => 'no'
+			),
+			'send_additional'     => array(
+				'title'   => __( 'Enable/Disable', 'woocommerce-gateway-wirecard' ),
+				'type'    => 'checkbox',
+				'label'   => __( 'Send additional information', 'woocommerce-gateway-wirecard' ),
+				'default' => 'yes'
+			)
+		);
 	}
 }
