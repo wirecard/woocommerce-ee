@@ -24,18 +24,18 @@
   "type": "wordpress-plugin",
   "scripts": {
     "upload-coverage": "coveralls -v",
-    "cs-check": "phpcs --standard=phpcs.xml .",
-    "cs-fix": "phpcbf --standard=phpcs.xml .",
+    "cs-check": "phpcs --standard=./phpcs.xml .",
+    "cs-fix": "phpcbf --standard=./phpcs.xml .",
     "test": "phpunit --colors=always",
     "test-coverage": "phpunit --colors=always --coverage-clover clover.xml"
   },
   "config": {
-    "vendor-dir":"wc-wirecard-ee/vendor"
+    "vendor-dir":"woocommerce-wirecard-ee/vendor"
   },
   "extra": {
-    "wordpress-install-dir": "wc-wirecard-ee/vendor/wordpress",
+    "wordpress-install-dir": "woocommerce-wirecard-ee/vendor/wordpress",
     "installer-paths": {
-      "wc-wirecard-ee/vendor/woocommerce": ["type:wordpress-plugin"]
+      "woocommerce-wirecard-ee/vendor/woocommerce": ["type:wordpress-plugin"]
     }
   }
 }
