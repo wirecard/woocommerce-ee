@@ -40,10 +40,14 @@ require_once __DIR__ . '/class-wc-wirecard-payment-gateway.php';
  */
 class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 
+	protected $_logger;
+
 	public function __construct() {
 		$this->id                 = 'woocommerce_wirecard_paypal';
+		$this->icon               = WOOCOMMERCE_GATEWAY_WIRECARD_URL . 'assets/images/paypal.png';
 		$this->method_title       = __( 'Wirecard Payment Processing Gateway PayPal', 'wooocommerce-gateway-wirecard' );
 		$this->method_description = __( 'PayPal transactions via Wirecard Payment Processing Gateway', 'woocommerce-gateway-wirecard' );
+		$this->_logger            = new WC_Logger();
 
 		// Load the form fields.
 		$this->init_form_fields();
@@ -138,5 +142,71 @@ class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 				'default' => 'yes'
 			)
 		);
+	}
+
+	public function process_payment( $order_id ) {
+		global $woocommerce;
+
+		$order = wc_get_order( $order_id );
+
+		$redirectUrls     = new \Wirecard\PaymentSdk\Entity\Redirect( $this->create_return_url( $order, 'SUCCESS' ), $this->create_return_url( $order, 'CANCEL' ) );
+		$page_url         = $order->get_checkout_payment_url( true );
+		$page_url         = add_query_arg( 'key', $order->get_order_key(), $page_url );
+		$notificationrUrl = add_query_arg( 'order-pay', $order_id, $page_url );
+
+
+		$transaction = new \Wirecard\PaymentSdk\Transaction\PayPalTransaction();
+		$transaction->setNotificationUrl( $notificationrUrl );
+		$transaction->setRedirect( $redirectUrls );
+		$amount = new \Wirecard\PaymentSdk\Entity\Amount( $order->get_total(), 'EUR' );
+		$transaction->setAmount( $amount );
+		$config = $this->create_payment_config();
+
+		$transaction_service = new \Wirecard\PaymentSdk\TransactionService( $config );
+		try {
+			$response = $transaction_service->process( $transaction, 'reserve' );
+			$this->_logger->error( print_r( $response, true ) );
+		}
+		catch ( \Exception $exception ) {
+			$this->_logger->error( print_r( $exception, true ) );
+		}
+
+		return array(
+			'result'   => 'success',
+			'redirect' => $this->get_return_url( $order )
+		);
+
+	}
+
+	/**
+	 * Create payment method configuration
+	 *
+	 * @return \Wirecard\PaymentSdk\Config\Config
+	 *
+	 * @since 1.0.0
+	 */
+	public function create_payment_config() {
+		$base_url      = $this->get_option( 'base_url' );
+		$http_user     = $this->get_option( 'http_user' );
+		$http_password = $this->get_option( 'http_pass' );
+
+		$config         = new \Wirecard\PaymentSdk\Config\Config( $base_url, $http_user, $http_password, 'EUR' );
+		$payment_config = new \Wirecard\PaymentSdk\Config\PaymentMethodConfig( \Wirecard\PaymentSdk\Transaction\PayPalTransaction::NAME, $this->get_option( 'merchant_account_id' ), $this->get_option( 'secret' ) );
+		$config->add( $payment_config );
+
+		return $config;
+	}
+
+	public function create_return_url( $order, $payment_state ) {
+		$return_url = add_query_arg(
+			array(
+				'wc-api'       => 'WC_Wirecard_Payment_Gateway_Return',
+				'order-id'     => $order->get_id(),
+				'paymentState' => $payment_state
+			),
+			site_url( '/', is_ssl() ? 'https' : 'http' )
+		);
+
+		return $return_url;
 	}
 }
