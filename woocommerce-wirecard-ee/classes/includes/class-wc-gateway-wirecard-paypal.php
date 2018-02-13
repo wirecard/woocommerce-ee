@@ -173,6 +173,11 @@ class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 		$transaction->setRedirect( $redirect_urls );
 		$transaction->setAmount( $amount );
 
+		if ( $this->get_option( 'shopping_basket' ) == 'yes' ) {
+			$basket = $this->create_shopping_basket( $order, $transaction );
+			$transaction->setBasket( $basket );
+		}
+
 		return $this->execute_transaction( $transaction, $config, $operation, $order, $order_id );
 	}
 
