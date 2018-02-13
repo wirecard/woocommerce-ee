@@ -35,6 +35,9 @@ use Wirecard\PaymentSdk\Config\Config;
 use Wirecard\PaymentSdk\Config\PaymentMethodConfig;
 use Wirecard\PaymentSdk\Entity\Amount;
 use Wirecard\PaymentSdk\Entity\Redirect;
+use Wirecard\PaymentSdk\Response\Response;
+use Wirecard\PaymentSdk\Response\FailureResponse;
+use Wirecard\PaymentSdk\Response\InteractionResponse;
 use Wirecard\PaymentSdk\Transaction\PayPalTransaction;
 use Wirecard\PaymentSdk\TransactionService;
 
@@ -66,6 +69,8 @@ class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 		$this->enabled = $this->get_option( 'enabled' );
 
 		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
+
+		parent::add_payment_gateway_actions();
 	}
 
 	/**
@@ -87,11 +92,6 @@ class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 				'description' => __( 'This controls the title which the user sees during checkout.', 'woocommerce-gateway-wirecard' ),
 				'default'     => __( 'Wirecard Payment Processing Gateway PayPal', 'woocommerce-gateway-wirecard' ),
 				'desc_tip'    => true,
-			),
-			'description'         => array(
-				'title'   => __( 'Customer Message', 'woocommerce-gateway-wirecard' ),
-				'type'    => 'textarea',
-				'default' => ''
 			),
 			'base_url'            => array(
 				'title'       => __( 'Base Url', 'woocommerce-gateway-wirecard' ),
@@ -126,8 +126,8 @@ class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 				'default' => 'Authorization',
 				'label'   => __( 'Payment Action', 'woocommerce-gateway-wirecard' ),
 				'options' => array(
-					'authorization' => 'Authorization',
-					'capture'       => 'Capture'
+					'reserve' => 'Authorization',
+					'pay'       => 'Capture'
 				)
 			),
 			'shopping_basket'     => array(
@@ -151,26 +151,40 @@ class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 		);
 	}
 
+	/**
+	 * Process payment gateway transactions
+	 *
+	 * @param int $order_id
+	 *
+	 * @return array
+	 *
+	 * @since 1.0.0
+	 */
 	public function process_payment( $order_id ) {
-		global $woocommerce;
-
 		$order = wc_get_order( $order_id );
 
-		$redirect_urls     = new Redirect( $this->create_return_url( $order, 'SUCCESS' ), $this->create_return_url( $order, 'CANCEL' ) );
-		$page_url         = $order->get_checkout_payment_url( true );
-		$page_url         = add_query_arg( 'key', $order->get_order_key(), $page_url );
-		$notification_url = add_query_arg( 'order-pay', $order_id, $page_url );
+		$redirect_urls = new Redirect(
+			$this->create_redirect_url( $order, 'success' ),
+			$this->create_redirect_url( $order, 'cancel' )
+		);
 
+		$notification_url = add_query_arg(
+			'wc-api', 'WC_Wirecard_Payment_Gateway',
+			site_url( '/', is_ssl() ? 'https' : 'http' )
+		);
+
+		$amount = new Amount( $order->get_total(), 'EUR' );
 
 		$transaction = new PayPalTransaction();
 		$transaction->setNotificationUrl( $notification_url );
 		$transaction->setRedirect( $redirect_urls );
-		$amount = new Amount( $order->get_total(), 'EUR' );
 		$transaction->setAmount( $amount );
+
 		$config = $this->create_payment_config();
 
 		$transaction_service = new TransactionService( $config );
 		try {
+			/** @var $response Response */
 			$response = $transaction_service->process( $transaction, 'reserve' );
 			$this->_logger->error( print_r( $response, true ) );
 		}
@@ -178,9 +192,27 @@ class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 			$this->_logger->error( print_r( $exception, true ) );
 		}
 
+		$page_url = $order->get_checkout_payment_url( true );
+		$page_url = add_query_arg( 'key', $order->get_order_key(), $page_url );
+		$page_url = add_query_arg( 'order-pay', $order_id, $page_url );
+
+		if ( $response instanceof InteractionResponse ) {
+			$page_url = $response->getRedirectUrl();
+		}
+
+		// FailureResponse, redirect should be implemented
+		if ( $response instanceof FailureResponse ) {
+			$errors = "";
+			foreach ( $response->getStatusCollection()->getIterator() as $item ) {
+				/** @var Status $item */
+				$errors .= $item->getDescription() . "<br>\n";
+			}
+			throw new InvalidArgumentException( $errors );
+		}
+
 		return array(
 			'result'   => 'success',
-			'redirect' => $this->get_return_url( $order )
+			'redirect' => $page_url
 		);
 
 	}
@@ -202,18 +234,5 @@ class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 		$config->add( $payment_config );
 
 		return $config;
-	}
-
-	public function create_return_url( $order, $payment_state ) {
-		$return_url = add_query_arg(
-			array(
-				'wc-api'       => 'WC_Wirecard_Payment_Gateway_Return',
-				'order-id'     => $order->get_id(),
-				'paymentState' => $payment_state
-			),
-			site_url( '/', is_ssl() ? 'https' : 'http' )
-		);
-
-		return $return_url;
 	}
 }

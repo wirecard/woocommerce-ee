@@ -38,7 +38,67 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 
-	public function is_available() {
-		return parent::is_available();
+	/**
+	 * Add global wirecard payment gateway actions
+	 *
+	 * @since 1.0.0
+	 */
+	public function add_payment_gateway_actions() {
+		add_action(
+			'woocommerce_api_wc_wirecard_payment_gateway',
+			array(
+				$this,
+				'notify'
+			)
+		);
+		add_action(
+			'woocommerce_api_wc_wirecard_payment_gateway_redirect',
+			array(
+				$this,
+				'return_request'
+			)
+		);
+	}
+
+	/**
+	 * Handle redirects
+	 *
+	 * @since 1.0.0
+	 */
+	public function return_request() {
+		$order_id = $_REQUEST['order-id'];
+		$order    = new WC_Order( $order_id );
+
+		$redirect_url = $this->get_return_url( $order );
+		header( 'Location: ' . $redirect_url );
+		die();
+	}
+
+	/**
+	 * Handle notifications
+	 *
+	 * @since 1.0.0
+	 */
+	public function notify() {
+		echo "notify";
+	}
+
+	/**
+	 * @param $order
+	 * @param $payment_state
+	 *
+	 * @return string
+	 */
+	public function create_redirect_url( $order, $payment_state ) {
+		$return_url = add_query_arg(
+			array(
+				'wc-api'       => 'WC_Wirecard_Payment_Gateway_Redirect',
+				'order-id'     => $order->get_id(),
+				'paymentState' => $payment_state
+			),
+			site_url( '/', is_ssl() ? 'https' : 'http' )
+		);
+
+		return $return_url;
 	}
 }
