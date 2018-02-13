@@ -17,9 +17,9 @@ class WC_Wirecard_Payment_Gateway_Test extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function test_add_wirecard_payment_gateway() {
-		$actual = add_wirecard_payment_gateway();
+		$actual     = add_wirecard_payment_gateway();
 		$expected[] = 'WC_Gateway_Wirecard_Paypal';
 
-		$this->assertEquals($expected, $actual);
+		$this->assertEquals( $expected, $actual );
 	}
 }

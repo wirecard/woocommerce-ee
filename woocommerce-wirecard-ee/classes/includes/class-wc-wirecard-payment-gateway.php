@@ -56,14 +56,14 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 			'woocommerce_api_wc_wirecard_payment_gateway',
 			array(
 				$this,
-				'notify'
+				'notify',
 			)
 		);
 		add_action(
 			'woocommerce_api_wc_wirecard_payment_gateway_redirect',
 			array(
 				$this,
-				'return_request'
+				'return_request',
 			)
 		);
 	}
@@ -88,7 +88,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 * @since 1.0.0
 	 */
 	public function notify() {
-		echo "notify";
+		echo 'notify';
 	}
 
 	/**
@@ -104,7 +104,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 			array(
 				'wc-api'       => 'WC_Wirecard_Payment_Gateway_Redirect',
 				'order-id'     => $order->get_id(),
-				'paymentState' => $payment_state
+				'paymentState' => $payment_state,
 			),
 			site_url( '/', is_ssl() ? 'https' : 'http' )
 		);
@@ -146,8 +146,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 			/** @var $response Response */
 			$response = $transaction_service->process( $transaction, $operation );
 			$logger->error( print_r( $response, true ) );
-		}
-		catch ( \Exception $exception ) {
+		} catch ( \Exception $exception ) {
 			$logger->error( print_r( $exception, true ) );
 		}
 
@@ -161,7 +160,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 
 		// FailureResponse, redirect should be implemented
 		if ( $response instanceof FailureResponse ) {
-			$errors = "";
+			$errors = '';
 			foreach ( $response->getStatusCollection()->getIterator() as $item ) {
 				/** @var Status $item */
 				$errors .= $item->getDescription() . "<br>\n";
@@ -171,7 +170,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 
 		return array(
 			'result'   => 'success',
-			'redirect' => $page_url
+			'redirect' => $page_url,
 		);
 	}
 
@@ -204,12 +203,11 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 			$item_unit_gross_amount = wc_format_decimal( $item_unit_net_amount + $item_unit_tax_amount, wc_get_price_decimals() );
 			$item_tax_rate          = $item_unit_tax_amount / $item_unit_gross_amount;
 
-			$amount = new Amount( $item_unit_gross_amount, get_woocommerce_currency() );
-			$item   = new Item( $name, $amount, $item_quantity );
-
 			$article_nr  = $product->get_sku();
 			$description = $product->get_short_description();
+			$amount      = new Amount( $item_unit_gross_amount, get_woocommerce_currency() );
 
+			$item = new Item( $name, $amount, $item_quantity );
 			$item->setDescription( $description );
 			$item->setArticleNumber( $article_nr );
 			if ( $product->is_taxable() ) {
