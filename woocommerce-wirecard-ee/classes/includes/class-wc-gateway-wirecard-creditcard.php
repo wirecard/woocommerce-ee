@@ -59,6 +59,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 		$this->enabled = $this->get_option( 'enabled' );
 
 		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
+		add_action( 'woocommerce_after_checkout_form', array( $this, 'add_checkout_script' ) );
 	}
 
 	/**
@@ -67,7 +68,6 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	 * @since 1.0.0
 	 */
 	public function init_form_fields() {
-
 		$this->form_fields = array(
 			'enabled'                     => array(
 				'title'   => __( 'Enable/Disable', 'woocommerce-gateway-wirecard' ),
@@ -173,8 +173,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	 * @since 1.0.0
 	 */
 	public function create_payment_config() {
-
-		$config         = new Config(
+		$config = new Config(
 			$this->get_option( 'base_url' ),
 			$this->get_option( 'http_user' ),
 			$this->get_option( 'http_pass' ),
@@ -210,6 +209,25 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 		$config->add( $payment_config );
 
 		return $config;
+	}
+
+	function add_checkout_script() {
+        $config             = $this->create_payment_config();
+	    $transactionService = new \Wirecard\PaymentSdk\TransactionService($config);
+	    ?>
+        <script src="<?= $this->get_option( 'base_url' ) ?>/engine/hpp/paymentPageLoader.js" type="text/javascript"></script>
+        <script type="application/javascript">
+            WirecardPaymentPage.seamlessRenderForm({
+                requestData: <?= $transactionService->getDataForCreditCardUi(); ?>,
+                wrappingDivId: "payment_method_woocommerce_wirecard_creditcard",
+                onSuccess: logCallback,
+                onError: logCallback
+            });
+            function logCallback(response) {
+                console.log(response);
+            }
+        </script>
+		<?php
 	}
 
 }
