@@ -31,6 +31,11 @@
 
 require_once __DIR__ . '/class-wc-wirecard-payment-gateway.php';
 
+use Wirecard\PaymentSdk\Config\Config;
+use Wirecard\PaymentSdk\Entity\Amount;
+use Wirecard\PaymentSdk\Config\CreditCardConfig;
+use Wirecard\PaymentSdk\Transaction\CreditCardTransaction;
+
 /**
  * Class WC_Gateway_Wirecard_CreditCard
  *
@@ -160,4 +165,52 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 			),
 		);
 	}
+
+	/**
+	 * Create payment method Configuration
+	 *
+	 * @return Config
+	 *
+	 * @since 1.0.0
+	 */
+	public function create_payment_config() {
+
+		$config         = new Config(
+			$this->get_option( 'base_url' ),
+			$this->get_option( 'http_user' ),
+			$this->get_option( 'http_pass' ),
+			'EUR'
+		);
+
+		$payment_config = new CreditCardConfig(
+			$this->get_option( 'merchant_account_id' ),
+			$this->get_option( 'secret' )
+		);
+
+		if ( $this->get_option( 'three_d_merchant_account_id' ) !== '' ) {
+			$payment_config->setThreeDCredentials(
+				$this->get_option( 'three_d_merchant_account_id' ),
+				$this->get_option( 'three_d_secret' )
+			);
+		}
+
+		if ( $this->get_option( 'ssl_max_limit' ) !== '' ) {
+			$payment_config->addSslMaxLimit(new Amount(
+				$this->get_option( 'ssl_max_limit' ),
+				'EUR'
+			));
+		}
+
+		if ( $this->get_option( 'three_d_min_limit' ) !== '' ) {
+			$payment_config->addSslMaxLimit(new Amount(
+				$this->get_option( 'three_d_min_limit' ),
+				'EUR'
+			));
+		}
+
+		$config->add( $payment_config );
+
+		return $config;
+	}
+
 }
