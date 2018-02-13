@@ -35,11 +35,7 @@ use Wirecard\PaymentSdk\Config\Config;
 use Wirecard\PaymentSdk\Config\PaymentMethodConfig;
 use Wirecard\PaymentSdk\Entity\Amount;
 use Wirecard\PaymentSdk\Entity\Redirect;
-use Wirecard\PaymentSdk\Response\Response;
-use Wirecard\PaymentSdk\Response\FailureResponse;
-use Wirecard\PaymentSdk\Response\InteractionResponse;
 use Wirecard\PaymentSdk\Transaction\PayPalTransaction;
-use Wirecard\PaymentSdk\TransactionService;
 
 /**
  * Class WC_Gateway_Wirecard_Paypal
@@ -168,53 +164,16 @@ class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 			$this->create_redirect_url( $order, 'cancel' )
 		);
 
-		$notification_url = add_query_arg(
-			'wc-api', 'WC_Wirecard_Payment_Gateway',
-			site_url( '/', is_ssl() ? 'https' : 'http' )
-		);
-
+		$config = $this->create_payment_config();
 		$amount = new Amount( $order->get_total(), 'EUR' );
+		$operation = $this->get_option( 'payment_action' );
 
 		$transaction = new PayPalTransaction();
-		$transaction->setNotificationUrl( $notification_url );
+		$transaction->setNotificationUrl( $this->create_notification_url() );
 		$transaction->setRedirect( $redirect_urls );
 		$transaction->setAmount( $amount );
 
-		$config = $this->create_payment_config();
-
-		$transaction_service = new TransactionService( $config );
-		try {
-			/** @var $response Response */
-			$response = $transaction_service->process( $transaction, 'reserve' );
-			$this->_logger->error( print_r( $response, true ) );
-		}
-		catch ( \Exception $exception ) {
-			$this->_logger->error( print_r( $exception, true ) );
-		}
-
-		$page_url = $order->get_checkout_payment_url( true );
-		$page_url = add_query_arg( 'key', $order->get_order_key(), $page_url );
-		$page_url = add_query_arg( 'order-pay', $order_id, $page_url );
-
-		if ( $response instanceof InteractionResponse ) {
-			$page_url = $response->getRedirectUrl();
-		}
-
-		// FailureResponse, redirect should be implemented
-		if ( $response instanceof FailureResponse ) {
-			$errors = "";
-			foreach ( $response->getStatusCollection()->getIterator() as $item ) {
-				/** @var Status $item */
-				$errors .= $item->getDescription() . "<br>\n";
-			}
-			throw new InvalidArgumentException( $errors );
-		}
-
-		return array(
-			'result'   => 'success',
-			'redirect' => $page_url
-		);
-
+		return $this->execute_transaction( $transaction, $config, $operation, $order, $order_id );
 	}
 
 	/**

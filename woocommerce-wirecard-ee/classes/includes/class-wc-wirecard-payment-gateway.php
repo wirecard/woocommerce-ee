@@ -33,6 +33,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+use Wirecard\PaymentSdk\Response\Response;
+use Wirecard\PaymentSdk\Response\FailureResponse;
+use Wirecard\PaymentSdk\Response\InteractionResponse;
+use Wirecard\PaymentSdk\TransactionService;
+
 /**
  * Class WC_Wirecard_Payment_Gateway
  */
@@ -100,5 +105,68 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 		);
 
 		return $return_url;
+	}
+
+	/**
+	 * Create notification url
+	 *
+	 * @return string
+	 *
+	 * @since 1.0.0
+	 */
+	public function create_notification_url() {
+		return add_query_arg(
+			'wc-api', 'WC_Wirecard_Payment_Gateway',
+			site_url( '/', is_ssl() ? 'https' : 'http' )
+		);
+	}
+
+	/**
+	 * Execute transactions via wirecard payment gateway
+	 *
+	 * @param $transaction
+	 * @param $config
+	 * @param $operation
+	 * @param $order
+	 * @param $order_id
+	 *
+	 * @return array
+	 *
+	 * @since 1.0.0
+	 */
+	public function execute_transaction( $transaction, $config, $operation, $order, $order_id ) {
+		$logger              = new WC_Logger();
+		$transaction_service = new TransactionService( $config );
+		try {
+			/** @var $response Response */
+			$response = $transaction_service->process( $transaction, $operation );
+			$logger->error( print_r( $response, true ) );
+		}
+		catch ( \Exception $exception ) {
+			$logger->error( print_r( $exception, true ) );
+		}
+
+		$page_url = $order->get_checkout_payment_url( true );
+		$page_url = add_query_arg( 'key', $order->get_order_key(), $page_url );
+		$page_url = add_query_arg( 'order-pay', $order_id, $page_url );
+
+		if ( $response instanceof InteractionResponse ) {
+			$page_url = $response->getRedirectUrl();
+		}
+
+		// FailureResponse, redirect should be implemented
+		if ( $response instanceof FailureResponse ) {
+			$errors = "";
+			foreach ( $response->getStatusCollection()->getIterator() as $item ) {
+				/** @var Status $item */
+				$errors .= $item->getDescription() . "<br>\n";
+			}
+			throw new InvalidArgumentException( $errors );
+		}
+
+		return array(
+			'result'   => 'success',
+			'redirect' => $page_url
+		);
 	}
 }
