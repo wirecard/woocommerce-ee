@@ -32,9 +32,8 @@
 require_once __DIR__ . '/class-wc-wirecard-payment-gateway.php';
 
 use Wirecard\PaymentSdk\Config\Config;
-use Wirecard\PaymentSdk\Entity\Amount;
 use Wirecard\PaymentSdk\Config\CreditCardConfig;
-use Wirecard\PaymentSdk\Transaction\CreditCardTransaction;
+use Wirecard\PaymentSdk\Entity\Amount;
 
 /**
  * Class WC_Gateway_Wirecard_CreditCard
