@@ -110,7 +110,7 @@ class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 			'credentials'         => array(
 				'title'       => __( 'Credentials', 'woocommerce-gateway-wirecard' ),
 				'type'        => 'title',
-				'description' => __( 'Enter your Wirecard Processing Payment Gateway credentials and test it.', 'woocommerce-gateway-wirecard' )
+				'description' => __( 'Enter your Wirecard Processing Payment Gateway credentials and test it.', 'woocommerce-gateway-wirecard' ),
 			),
 			'base_url'            => array(
 				'title'       => __( 'Base Url', 'woocommerce-gateway-wirecard' ),
@@ -135,7 +135,7 @@ class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 			'advanced'            => array(
 				'title'       => __( 'Advanced options', 'woocommerce-gateway-wirecard' ),
 				'type'        => 'title',
-				'description' => ''
+				'description' => '',
 			),
 			'payment_action'      => array(
 				'title'   => __( 'Payment Action', 'woocommerce-gateway-wirecard' ),
