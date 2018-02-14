@@ -33,6 +33,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+use Wirecard\PaymentSdk\Entity\AccountHolder;
 use Wirecard\PaymentSdk\Entity\Amount;
 use Wirecard\PaymentSdk\Entity\Basket;
 use Wirecard\PaymentSdk\Entity\Item;
@@ -231,5 +232,32 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 		}
 
 		return $basket;
+	}
+
+	/**
+	 * Create accountholder with specific address data
+	 *
+	 * @param WC_Order $order
+	 * @param string $type
+	 *
+	 * @return AccountHolder
+	 */
+	public function create_address_data( $order, $type ) {
+		$account_holder = new AccountHolder();
+		if ( $type == 'shipping' ) {
+			$account_holder->setAddress($order->get_shipping_address_1());
+			$account_holder->setEmail();
+			$account_holder->setFirstName($order->get_shipping_first_name());
+			$account_holder->setLastName( $order->get_shipping_last_name());
+		} else {
+			$account_holder->setAddress( $order->get_billing_address_1());
+			$account_holder->setEmail( $order->get_billing_email());
+			$account_holder->setFirstName( $order->get_billing_first_name());
+			$account_holder->setLastName( $order->get_billing_last_name());
+			$account_holder->setPhone( $order->get_billing_phone());
+			//$account_holder->setDateOfBirth();
+		}
+
+		return $account_holder;
 	}
 }
