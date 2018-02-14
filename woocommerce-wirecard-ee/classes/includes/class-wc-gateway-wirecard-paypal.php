@@ -251,14 +251,18 @@ class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 	/**
 	 * Create payment method configuration
 	 *
-	 * @return Config
+	 * @param null $base_url
+	 * @param null $http_user
+	 * @param null $http_pass
 	 *
-	 * @since 1.0.0
+	 * @return Config
 	 */
-	public function create_payment_config() {
-		$base_url      = $this->get_option( 'base_url' );
-		$http_user     = $this->get_option( 'http_user' );
-		$http_password = $this->get_option( 'http_pass' );
+	public function create_payment_config( $base_url = null, $http_user = null, $http_pass = null ) {
+		if ( $base_url != null ) {
+			$base_url      = $this->get_option( 'base_url' );
+			$http_user     = $this->get_option( 'http_user' );
+			$http_password = $this->get_option( 'http_pass' );
+		}
 
 		$config         = new Config( $base_url, $http_user, $http_password, 'EUR' );
 		$payment_config = new PaymentMethodConfig( PayPalTransaction::NAME, $this->get_option( 'merchant_account_id' ), $this->get_option( 'secret' ) );
@@ -278,11 +282,11 @@ class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 		$logger = new WC_Logger();
 		$logger->error( 'test credentials' );
 		if ( isset( $_POST['base_url'] ) ) {
-			$config              = $this->create_payment_config();
+			$config              = $this->create_payment_config( $_POST['base_url'], $_POST['http_user'], $_POST['http_pass'] );
 			$transaction_service = new TransactionService( $config );
 			$check               = $transaction_service->checkCredentials();
+			return $check;
 		}
-
 		return false;
 	}
 }
