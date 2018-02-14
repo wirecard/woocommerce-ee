@@ -40,6 +40,7 @@ use Wirecard\PaymentSdk\Entity\Item;
 use Wirecard\PaymentSdk\Response\Response;
 use Wirecard\PaymentSdk\Response\FailureResponse;
 use Wirecard\PaymentSdk\Response\InteractionResponse;
+use Wirecard\PaymentSdk\Transaction\Transaction;
 use Wirecard\PaymentSdk\TransactionService;
 
 /**
@@ -235,26 +236,56 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	}
 
 	/**
+	 * Set additional information
+	 *
+	 * @param WC_Order    $order
+	 * @param Transaction $transaction
+	 *
+	 * @return Transaction
+	 *
+	 * @since 1.0.0
+	 */
+	public function set_additional_information( $order, $transaction ) {
+		$transaction->setDescriptor(
+			sprintf(
+				'%s %s',
+				substr( get_bloginfo( 'name' ), 0, 9 ),
+				$order->get_order_number()
+			)
+		);
+		$transaction->setAccountHolder( $this->create_address_data( $order ) );
+		$transaction->setShipping( $this->create_address_data( $order, 'shipping' ) );
+		$transaction->setOrderNumber( $order->get_order_number() );
+		$transaction->setBasket( $this->create_shopping_basket( $transaction ) );
+		$transaction->setIpAddress( $order->get_customer_ip_address() );
+		$transaction->setConsumerId( $order->get_customer_id() );
+
+		return $transaction;
+	}
+
+	/**
 	 * Create accountholder with specific address data
 	 *
 	 * @param WC_Order $order
-	 * @param string $type
+	 * @param string   $type
 	 *
 	 * @return AccountHolder
+	 *
+	 * @since 1.0.0
 	 */
-	public function create_address_data( $order, $type ) {
+	public function create_address_data( $order, $type = null ) {
 		$account_holder = new AccountHolder();
 		if ( $type == 'shipping' ) {
-			$account_holder->setAddress($order->get_shipping_address_1());
+			$account_holder->setAddress( $order->get_shipping_address_1() );
 			$account_holder->setEmail();
-			$account_holder->setFirstName($order->get_shipping_first_name());
-			$account_holder->setLastName( $order->get_shipping_last_name());
+			$account_holder->setFirstName( $order->get_shipping_first_name() );
+			$account_holder->setLastName( $order->get_shipping_last_name() );
 		} else {
-			$account_holder->setAddress( $order->get_billing_address_1());
-			$account_holder->setEmail( $order->get_billing_email());
-			$account_holder->setFirstName( $order->get_billing_first_name());
-			$account_holder->setLastName( $order->get_billing_last_name());
-			$account_holder->setPhone( $order->get_billing_phone());
+			$account_holder->setAddress( $order->get_billing_address_1() );
+			$account_holder->setEmail( $order->get_billing_email() );
+			$account_holder->setFirstName( $order->get_billing_first_name() );
+			$account_holder->setLastName( $order->get_billing_last_name() );
+			$account_holder->setPhone( $order->get_billing_phone() );
 			//$account_holder->setDateOfBirth();
 		}
 
