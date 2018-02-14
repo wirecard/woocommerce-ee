@@ -34,6 +34,7 @@ require_once __DIR__ . '/class-wc-wirecard-payment-gateway.php';
 use Wirecard\PaymentSdk\Config\Config;
 use Wirecard\PaymentSdk\Config\CreditCardConfig;
 use Wirecard\PaymentSdk\Entity\Amount;
+use Wirecard\PaymentSdk\TransactionService;
 
 /**
  * Class WC_Gateway_Wirecard_CreditCard
@@ -48,6 +49,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 		$this->id                 = 'woocommerce_wirecard_creditcard';
 		$this->method_title       = __( 'Wirecard Payment Processing Gateway Credit Card', 'wooocommerce-gateway-wirecard' );
 		$this->method_description = __( 'Credit Card transactions via Wirecard Payment Processing Gateway', 'woocommerce-gateway-wirecard' );
+		$this->has_fields         = true;
 
 		// Load the form fields.
 		$this->init_form_fields();
@@ -211,23 +213,39 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 		return $config;
 	}
 
-	function add_checkout_script() {
-        $config             = $this->create_payment_config();
-	    $transactionService = new \Wirecard\PaymentSdk\TransactionService($config);
-	    ?>
+	public function add_checkout_script() {
+		$config              = $this->create_payment_config();
+		$transaction_service = new TransactionService( $config );
+
+?>
         <script src="<?= $this->get_option( 'base_url' ) ?>/engine/hpp/paymentPageLoader.js" type="text/javascript"></script>
         <script type="application/javascript">
-            WirecardPaymentPage.seamlessRenderForm({
-                requestData: <?= $transactionService->getDataForCreditCardUi(); ?>,
-                wrappingDivId: "payment_method_woocommerce_wirecard_creditcard",
-                onSuccess: logCallback,
-                onError: logCallback
-            });
-            function logCallback(response) {
-                console.log(response);
-            }
-        </script>
-		<?php
-	}
+            jQuery(document).ajaxComplete(function() {
+                if (jQuery("#payment_method_woocommerce_wirecard_creditcard").checked = true) {
+                    renderForm();
+                }
+                jQuery( ".wc_payment_methods" ).on( "click", ".payment_method_woocommerce_wirecard_creditcard", function() {
+                    renderForm();
+                });
+                function renderForm() {
+                    WirecardPaymentPage.seamlessRenderForm({
+                        requestData: <?= $transaction_service->getDataForCreditCardUi(); ?>,
+                        wrappingDivId: "wc_payment_method_wirecard_creditcard_form",
+                        onSuccess: resizeIframe,
+                        onError: logCallback
+                    });
+                }
+                function resizeIframe() {
+                    jQuery( "#wc_payment_method_wirecard_creditcard_form > iframe" ).height(550);
+                }
+                function logCallback() {
 
+                }
+            });
+        </script>
+<?php
+	}
+	public function payment_fields() {
+		echo "<div id='wc_payment_method_wirecard_creditcard_form'></div>";
+	}
 }
