@@ -34,6 +34,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/includes/class-wc-wirecard-payment-gateway.php' );
+require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/helper/class-additional-information.php' );
 
 use Wirecard\PaymentSdk\Config\Config;
 use Wirecard\PaymentSdk\Config\PaymentMethodConfig;
@@ -51,6 +52,8 @@ use Wirecard\PaymentSdk\TransactionService;
  */
 class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 
+	private $additional_helper;
+
 	public function __construct() {
 		$this->id                 = 'woocommerce_wirecard_paypal';
 		$this->icon               = WOOCOMMERCE_GATEWAY_WIRECARD_URL . 'assets/images/paypal.png';
@@ -65,6 +68,8 @@ class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 
 		$this->title   = $this->get_option( 'title' );
 		$this->enabled = $this->get_option( 'enabled' );
+
+		$this->additional_helper = new Additional_Information();
 
 		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
 		add_action( 'wp_ajax_test_credentials' . $this->id, array( $this, 'test_credentials' ) );
@@ -228,8 +233,16 @@ class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 		$transaction->setAmount( $amount );
 
 		if ( $this->get_option( 'shopping_basket' ) == 'yes' ) {
-			$basket = $this->create_shopping_basket( $order, $transaction );
+			$basket = $this->additional_helper->create_shopping_basket( $order, $transaction );
 			$transaction->setBasket( $basket );
+		}
+
+		if ( $this->get_option( 'descriptor' ) == 'yes' ) {
+			$transaction->setDescriptor( $this->additional_helper->create_descriptor( $order ) );
+		}
+
+		if ( $this->get_option( 'send_additional' ) == 'yes' ) {
+			$this->additional_helper->set_additional_information( $order, $transaction );
 		}
 
 		return $this->execute_transaction( $transaction, $config, $operation, $order, $order_id );
