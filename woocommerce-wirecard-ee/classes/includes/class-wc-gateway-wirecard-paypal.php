@@ -258,7 +258,7 @@ class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 	 * @return Config
 	 */
 	public function create_payment_config( $base_url = null, $http_user = null, $http_pass = null ) {
-		if ( $base_url != null ) {
+		if ( is_null( $base_url ) ) {
 			$base_url      = $this->get_option( 'base_url' );
 			$http_user     = $this->get_option( 'http_user' );
 			$http_password = $this->get_option( 'http_pass' );

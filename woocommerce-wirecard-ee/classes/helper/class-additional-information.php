@@ -49,6 +49,8 @@ use Wirecard\PaymentSdk\Transaction\Transaction;
  */
 class Additional_Information {
 
+	const SHIPPING = 'shipping';
+
 	/**
 	 * Create basket items and shipping item
 	 *
@@ -137,7 +139,7 @@ class Additional_Information {
 	 */
 	public function set_additional_information( $order, $transaction ) {
 		$transaction->setDescriptor( $this->create_descriptor( $order ) );
-		$transaction->setAccountHolder( $this->create_account_holder( $order ) );
+		$transaction->setAccountHolder( $this->create_account_holder( $order, 'billing' ) );
 		$transaction->setShipping( $this->create_account_holder( $order, 'shipping' ) );
 		$transaction->setOrderNumber( $order->get_order_number() );
 		$transaction->setBasket( $this->create_shopping_basket( $transaction ) );
@@ -157,9 +159,9 @@ class Additional_Information {
 	 *
 	 * @since 1.0.0
 	 */
-	public function create_account_holder( $order, $type = null ) {
+	public function create_account_holder( $order, $type ) {
 		$account_holder = new AccountHolder();
-		if ( $type == 'shipping' ) {
+		if ( self::SHIPPING == $type ) {
 			$account_holder->setAddress( $this->create_address_data( $order, $type ) );
 			$account_holder->setEmail();
 			$account_holder->setFirstName( $order->get_shipping_first_name() );
@@ -186,8 +188,8 @@ class Additional_Information {
 	 *
 	 * @since 1.0.0
 	 */
-	public function create_address_data( $order, $type = null ) {
-		if ( $type == 'shipping' ) {
+	public function create_address_data( $order, $type ) {
+		if ( self::SHIPPING == $type ) {
 			$address = new Address( $order->get_shipping_country(), $order->get_shipping_city(), $order->get_shipping_address_1() );
 			$address->setPostalCode( $order->get_shipping_postcode() );
 		} else {
