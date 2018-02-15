@@ -72,7 +72,6 @@ class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 		$this->additional_helper = new Additional_Information();
 
 		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
-		add_action( 'wp_ajax_test_credentials' . $this->id, array( $this, 'test_credentials' ) );
 
 		parent::add_payment_gateway_actions();
 	}
@@ -129,9 +128,6 @@ class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 				'type'    => 'text',
 				'default' => 'qD2wzQ_hrc!8',
 			),
-			'credentials_button'  => array(
-				'type' => 'credentials_button',
-			),
 			'advanced'            => array(
 				'title'       => __( 'Advanced options', 'woocommerce-gateway-wirecard' ),
 				'type'        => 'title',
@@ -166,44 +162,6 @@ class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 				'default' => 'yes',
 			),
 		);
-	}
-
-	/**
-	 * Create test credentials button (in progress)
-	 *
-	 * @return string
-	 *
-	 * @since 1.0.0
-	 */
-	public function generate_credentials_button_html() {
-		ob_start();
-		?>
-		<a class="test button" href="#" onclick="testCredentials();return false;"><?php _e( 'Test credentials', 'woocommerce-wirecard-gateway' ); ?></a>
-		<script type="text/javascript">
-			function testCredentials() {
-				var baseUrl = jQuery('#woocommerce_woocommerce_wirecard_paypal_base_url').val();
-				var httpUser = jQuery('#woocommerce_woocommerce_wirecard_paypal_http_user').val();
-				var httpPass = jQuery('#woocommerce_woocommerce_wirecard_paypal_http_pass').val();
-				var data = {
-					'base_url' : baseUrl,
-					'http_user': httpUser,
-					'http_pass': httpPass
-				};
-				jQuery.ajax({
-					type   : 'post',
-					action : 'test_credentials',
-					data   : {
-						'action': 'test_credentials',
-						'data'  : data
-					},
-					success: function (response) {
-						alert(response);
-					}
-				});
-			}
-		</script>
-		<?php
-		return ob_get_clean();
 	}
 
 	/**
@@ -269,24 +227,5 @@ class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 		$config->add( $payment_config );
 
 		return $config;
-	}
-
-	/**
-	 * Test current configuration before save
-	 *
-	 * @return bool
-	 *
-	 * @since 1.0.0
-	 */
-	public function test_credentials() {
-		$logger = new WC_Logger();
-		$logger->error( 'test credentials' );
-		if ( isset( $_POST['base_url'] ) ) {
-			$config              = $this->create_payment_config( $_POST['base_url'], $_POST['http_user'], $_POST['http_pass'] );
-			$transaction_service = new TransactionService( $config );
-			$check               = $transaction_service->checkCredentials();
-			return $check;
-		}
-		return false;
 	}
 }
