@@ -10,7 +10,7 @@ checkout_form.on( 'checkout_place_order', function() {
 			onError: logCallback,
 			wrappingDivId: "wc_payment_method_wirecard_creditcard_form"
 		});
-		 return false;
+		return false;
 	}
 });
 
@@ -32,7 +32,7 @@ function formSubmitSuccessHandler( response ) {
 
 jQuery( document ).ajaxComplete(function() {
 	if ( jQuery( "#payment_method_woocommerce_wirecard_creditcard" ).checked = true &&
-        jQuery( '#wc_payment_method_wirecard_creditcard_form' )[0].hasChildNodes() == false ) {
+		jQuery( '#wc_payment_method_wirecard_creditcard_form' )[0].hasChildNodes() == false ) {
 		renderForm();
 	}
 	jQuery( ".wc_payment_methods" ).on( "click", ".payment_method_woocommerce_wirecard_creditcard", function() {
@@ -49,6 +49,6 @@ jQuery( document ).ajaxComplete(function() {
 		});
 	}
 	function resizeIframe() {
-		jQuery( "#wc_payment_method_wirecard_creditcard_form > iframe" ).height(550);
+		jQuery( "#wc_payment_method_wirecard_creditcard_form > iframe" ).height( 550 );
 	}
 });
