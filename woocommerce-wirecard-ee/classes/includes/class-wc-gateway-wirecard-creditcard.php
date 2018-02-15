@@ -34,6 +34,8 @@ require_once __DIR__ . '/class-wc-wirecard-payment-gateway.php';
 use Wirecard\PaymentSdk\Config\Config;
 use Wirecard\PaymentSdk\Config\CreditCardConfig;
 use Wirecard\PaymentSdk\Entity\Amount;
+use Wirecard\PaymentSdk\Entity\Redirect;
+use Wirecard\PaymentSdk\Transaction\CreditCardTransaction;
 use Wirecard\PaymentSdk\TransactionService;
 
 /**
@@ -47,6 +49,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 
 	public function __construct() {
 		$this->id                 = 'woocommerce_wirecard_creditcard';
+		$this->icon               = WOOCOMMERCE_GATEWAY_WIRECARD_URL . 'assets/images/creditcard.png';
 		$this->method_title       = __( 'Wirecard Payment Processing Gateway Credit Card', 'wooocommerce-gateway-wirecard' );
 		$this->method_description = __( 'Credit Card transactions via Wirecard Payment Processing Gateway', 'woocommerce-gateway-wirecard' );
 		$this->has_fields         = true;
@@ -61,7 +64,6 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 		$this->enabled = $this->get_option( 'enabled' );
 
 		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
-		add_action( 'woocommerce_after_checkout_form', array( $this, 'add_checkout_script' ) );
 	}
 
 	/**
@@ -142,8 +144,8 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 				'default' => 'Authorization',
 				'label'   => __( 'Payment Action', 'woocommerce-gateway-wirecard' ),
 				'options' => array(
-					'authorization' => 'Authorization',
-					'capture'       => 'Capture',
+					'reserve' => 'Authorization',
+					'pay'     => 'Capture',
 				),
 			),
 			'shopping_basket'             => array(
@@ -213,39 +215,43 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 		return $config;
 	}
 
-	public function add_checkout_script() {
+	public function payment_fields() {
 		$config              = $this->create_payment_config();
 		$transaction_service = new TransactionService( $config );
+		$base_url            = $this->get_option( 'base_url' );
+		$gateway_url         = WOOCOMMERCE_GATEWAY_WIRECARD_URL;
+		$request_data        = $transaction_service->getDataForCreditCardUi();
 
-?>
-        <script src="<?= $this->get_option( 'base_url' ) ?>/engine/hpp/paymentPageLoader.js" type="text/javascript"></script>
-        <script type="application/javascript">
-            jQuery(document).ajaxComplete(function() {
-                if (jQuery("#payment_method_woocommerce_wirecard_creditcard").checked = true) {
-                    renderForm();
-                }
-                jQuery( ".wc_payment_methods" ).on( "click", ".payment_method_woocommerce_wirecard_creditcard", function() {
-                    renderForm();
-                });
-                function renderForm() {
-                    WirecardPaymentPage.seamlessRenderForm({
-                        requestData: <?= $transaction_service->getDataForCreditCardUi(); ?>,
-                        wrappingDivId: "wc_payment_method_wirecard_creditcard_form",
-                        onSuccess: resizeIframe,
-                        onError: logCallback
-                    });
-                }
-                function resizeIframe() {
-                    jQuery( "#wc_payment_method_wirecard_creditcard_form > iframe" ).height(550);
-                }
-                function logCallback() {
+        $html = <<<HTML
+            <script src='$base_url/engine/hpp/paymentPageLoader.js' type='text/javascript'></script>
+            <script type='application/javascript' src='$gateway_url/assets/js/creditcard.js'></script>
+            <script>
+                var request_data = $request_data;
+            </script>
+            <div id='wc_payment_method_wirecard_creditcard_form'></div>
+HTML;
 
-                }
-            });
-        </script>
-<?php
+        echo $html;
 	}
-	public function payment_fields() {
-		echo "<div id='wc_payment_method_wirecard_creditcard_form'></div>";
+
+	public function process_payment( $order_id ) {
+		$order = wc_get_order( $order_id );
+
+		$redirect_urls = new Redirect(
+			$this->create_redirect_url( $order, 'success' ),
+			$this->create_redirect_url( $order, 'cancel' )
+		);
+
+		$config    = $this->create_payment_config();
+		$amount    = new Amount( $order->get_total(), 'EUR' );
+		$operation = $this->get_option( 'payment_action' );
+		$token     = $_POST['tokenId'];
+
+		$transaction = new CreditCardTransaction();
+		$transaction->setAmount( $amount );
+		$transaction->setTokenId( $token );
+		$transaction->setTermUrl( $redirect_urls );
+
+        return $this->execute_transaction( $transaction, $config, $operation, $order, $order_id );
 	}
 }
