@@ -40,9 +40,9 @@ use Wirecard\PaymentSdk\Response\SuccessResponse;
 use Wirecard\PaymentSdk\TransactionService;
 
 /**
- * Class Wirecard_Response_Handler
+ * Class Wirecard_Notification_Handler
  */
-class Wirecard_Response_Handler extends Wirecard_Handler {
+class Wirecard_Notification_Handler extends Wirecard_Handler {
 
 	/**
 	 * Handle response via transaction service
@@ -53,18 +53,28 @@ class Wirecard_Response_Handler extends Wirecard_Handler {
 	 *
 	 * @since 1.0.0
 	 */
-	public function handle_response( $request ) {
+	public function handle_notification( $payment_method, $response ) {
 		/** @var WC_Wirecard_Payment_Gateway $payment */
-		$payment             = $this->get_payment_method( $request['payment-method'] );
-		$config              = $payment->create_payment_config();
-		$transaction_service = new TransactionService( $config );
-
-		/** @var Response $result */
-		$result = $transaction_service->handleResponse( $request );
-		if ( $result instanceof SuccessResponse ) {
-			return true;
+		$payment = $this->get_payment_method( $payment_method );
+		$config  = $payment->create_payment_config();
+		try {
+			$transaction_service = new TransactionService( $config );
+			/** @var Response $result */
+			$result = $transaction_service->handleNotification( $response );
 		}
+		catch ( \InvalidArgumentException $exception ) {
+			$this->logger->error( 'Invalid argument set: ' . $exception->getMessage() );
+			throw $exception;
+		}
+		$this->logger->debug( 'Notification response is instance of: ' . get_class( $result ) );
 
-		return false;
+		$order_id = $result->getCustomFields()->get( 'orderId' );
+		$order    = new WC_Order( $order_id );
+
+		if ( 'processing' == $order->get_status() || 'completed' == $order->get_status() ) {
+			$this->logger->error( 'Do not change completed transactions' );
+			die();
+		}
+		die();
 	}
 }

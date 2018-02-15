@@ -34,6 +34,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/handler/class-wirecard-response-handler.php' );
+require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/handler/class-wirecard-notification-handler.php' );
 
 use Wirecard\PaymentSdk\Response\Response;
 use Wirecard\PaymentSdk\Response\FailureResponse;
@@ -100,7 +101,14 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 * @since 1.0.0
 	 */
 	public function notify() {
-		echo 'notify';
+		if ( ! isset( $_REQUEST['payment-method'] ) ) {
+			return;
+		}
+		$payment_method       = $_REQUEST['payment-method'];
+		$notification         = file_get_contents( 'php://input' );
+		$notification_handler = new Wirecard_Notification_Handler();
+		$status               = $notification_handler->handle_notification( $payment_method, $notification );
+		die();
 	}
 
 	/**

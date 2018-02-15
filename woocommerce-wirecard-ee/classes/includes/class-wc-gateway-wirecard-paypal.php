@@ -39,9 +39,10 @@ require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/helper/class-addit
 use Wirecard\PaymentSdk\Config\Config;
 use Wirecard\PaymentSdk\Config\PaymentMethodConfig;
 use Wirecard\PaymentSdk\Entity\Amount;
+use Wirecard\PaymentSdk\Entity\CustomField;
+use Wirecard\PaymentSdk\Entity\CustomFieldCollection;
 use Wirecard\PaymentSdk\Entity\Redirect;
 use Wirecard\PaymentSdk\Transaction\PayPalTransaction;
-use Wirecard\PaymentSdk\TransactionService;
 
 /**
  * Class WC_Gateway_Wirecard_Paypal
@@ -192,6 +193,10 @@ class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 		$transaction->setNotificationUrl( $this->create_notification_url( $this->type ) );
 		$transaction->setRedirect( $redirect_urls );
 		$transaction->setAmount( $amount );
+
+		$custom_fields = new CustomFieldCollection();
+		$custom_fields->add( new CustomField( 'orderId', $order_id ) );
+		$transaction->setCustomFields( $custom_fields );
 
 		if ( $this->get_option( 'shopping_basket' ) == 'yes' ) {
 			$basket = $this->additional_helper->create_shopping_basket( $order, $transaction );

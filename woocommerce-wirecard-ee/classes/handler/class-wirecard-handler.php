@@ -33,38 +33,43 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/handler/class-wirecard-handler.php' );
-
-use Wirecard\PaymentSdk\Response\Response;
-use Wirecard\PaymentSdk\Response\SuccessResponse;
-use Wirecard\PaymentSdk\TransactionService;
-
 /**
- * Class Wirecard_Response_Handler
+ * Class Wirecard_Handler
  */
-class Wirecard_Response_Handler extends Wirecard_Handler {
+class Wirecard_Handler {
 
 	/**
-	 * Handle response via transaction service
+	 * Array of payment methods
 	 *
-	 * @param $request
-	 *
-	 * @return bool
+	 * @var array
 	 *
 	 * @since 1.0.0
 	 */
-	public function handle_response( $request ) {
-		/** @var WC_Wirecard_Payment_Gateway $payment */
-		$payment             = $this->get_payment_method( $request['payment-method'] );
-		$config              = $payment->create_payment_config();
-		$transaction_service = new TransactionService( $config );
+	private $payment_methods;
 
-		/** @var Response $result */
-		$result = $transaction_service->handleResponse( $request );
-		if ( $result instanceof SuccessResponse ) {
-			return true;
-		}
+	/**
+	 * @var WC_Logger
+	 */
+	protected $logger;
 
-		return false;
+	/**
+	 * Wirecard_Handler constructor.
+	 */
+	public function __construct() {
+		$this->payment_methods = array(
+			'paypal' => new WC_Gateway_Wirecard_Paypal(),
+		);
+		$this->logger          = new WC_Logger();
+	}
+
+	/**
+	 * Getter for payment gateway object for specific payment
+	 *
+	 * @param string $method_name
+	 *
+	 * @return WC_Wirecard_Payment_Gateway | null
+	 */
+	public function get_payment_method( $method_name ) {
+		return isset( $this->payment_methods[ $method_name ] ) ? $this->payment_methods[ $method_name ] : null;
 	}
 }
