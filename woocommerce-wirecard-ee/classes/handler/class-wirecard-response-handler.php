@@ -98,6 +98,6 @@ class Wirecard_Response_Handler {
 	 * @return WC_Wirecard_Payment_Gateway | null
 	 */
 	public function get_payment_method( $method_name ) {
-		return @$this->payment_methods[ $method_name ] ?: null;
+		return isset( $this->payment_methods[ $method_name ] ) ? $this->payment_methods[ $method_name ] : null;
 	}
 }
