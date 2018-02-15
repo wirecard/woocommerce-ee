@@ -94,8 +94,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 		$response_handler = new Wirecard_Response_Handler();
 		try {
 			$status = $response_handler->handle_response( $_REQUEST );
-		}
-		catch ( Exception $exception ) {
+		} catch ( Exception $exception ) {
 			wc_add_notice( __( 'An error occurred during the payment process. Please try again.', 'woocommerce-gateway-wirecard' ), 'error' );
 			header( 'Location:' . $order->get_cancel_endpoint() );
 			die();
@@ -137,8 +136,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 				}
 				$order->payment_complete();
 			}
-		}
-		catch ( Exception $exception ) {
+		} catch ( Exception $exception ) {
 			if ( ! $this->is_order_completed( $order->get_status() ) ) {
 				$order->update_status( 'failed', $exception->getMessage() );
 			}
@@ -205,8 +203,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 		try {
 			/** @var $response Response */
 			$response = $transaction_service->process( $transaction, $operation );
-		}
-		catch ( \Exception $exception ) {
+		} catch ( \Exception $exception ) {
 			$logger->error( $exception->getMessage() );
 
 			wc_add_notice( __( 'An error occurred during the payment process. Please try again.', 'woocommerce-gateway-wirecard' ), 'error' );
