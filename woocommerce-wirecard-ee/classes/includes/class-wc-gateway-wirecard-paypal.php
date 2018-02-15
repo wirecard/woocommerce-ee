@@ -191,7 +191,7 @@ class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 		$operation = $this->get_option( 'payment_action' );
 
 		$transaction = new PayPalTransaction();
-		$transaction->setNotificationUrl( $this->create_notification_url( $this->type ) );
+		$transaction->setNotificationUrl( $this->create_notification_url( $order, $this->type ) );
 		$transaction->setRedirect( $redirect_urls );
 		$transaction->setAmount( $amount );
 
@@ -228,10 +228,10 @@ class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 		if ( is_null( $base_url ) ) {
 			$base_url      = $this->get_option( 'base_url' );
 			$http_user     = $this->get_option( 'http_user' );
-			$http_password = $this->get_option( 'http_pass' );
+			$http_pass = $this->get_option( 'http_pass' );
 		}
 
-		$config         = new Config( $base_url, $http_user, $http_password, 'EUR' );
+		$config = parent::create_payment_config( $base_url, $http_user, $http_pass );
 		$payment_config = new PaymentMethodConfig( PayPalTransaction::NAME, $this->get_option( 'merchant_account_id' ), $this->get_option( 'secret' ) );
 		$config->add( $payment_config );
 

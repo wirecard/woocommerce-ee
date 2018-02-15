@@ -36,6 +36,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/handler/class-wirecard-response-handler.php' );
 require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/handler/class-wirecard-notification-handler.php' );
 
+use Wirecard\PaymentSdk\Config\Config;
 use Wirecard\PaymentSdk\Response\Response;
 use Wirecard\PaymentSdk\Response\FailureResponse;
 use Wirecard\PaymentSdk\Response\InteractionResponse;
@@ -93,7 +94,8 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 		$response_handler = new Wirecard_Response_Handler();
 		try {
 			$status = $response_handler->handle_response( $_REQUEST );
-		} catch ( Exception $exception ) {
+		}
+		catch ( Exception $exception ) {
 			wc_add_notice( __( 'An error occurred during the payment process. Please try again.', 'woocommerce-gateway-wirecard' ), 'error' );
 			header( 'Location:' . $order->get_cancel_endpoint() );
 			die();
@@ -103,6 +105,9 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 			wc_add_notice( __( 'An error occurred during the payment process. Please try again.', 'woocommerce-gateway-wirecard' ), 'error' );
 			$redirect_url = $order->get_cancel_endpoint();
 		} else {
+			if ( ! $this->is_order_completed( $order->get_status() ) ) {
+				$order->update_status( 'on-hold', __( 'Awaiting Wirecard Processing Gateway payment', 'woocommerce-gateway-wirecard' ) );
+			}
 			$redirect_url = $this->get_return_url( $order );
 		}
 		header( 'Location: ' . $redirect_url );
@@ -119,13 +124,24 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 			return;
 		}
 		$payment_method       = $_REQUEST['payment-method'];
+		$order_id             = $_REQUEST['order-id'];
+		$order                = new WC_Order( $order_id );
 		$notification         = file_get_contents( 'php://input' );
 		$notification_handler = new Wirecard_Notification_Handler();
 		try {
-			$status               = $notification_handler->handle_notification( $payment_method, $notification );
-		} catch ( Exception $exception ) {
-			wc_add_notice( __( 'An error occurred during the payment process. Please try again.', 'woocommerce-gateway-wirecard' ), 'error' );
-			header( 'Location:' . $this->get_return_url() );
+			$response = $notification_handler->handle_notification( $payment_method, $notification );
+			$this->save_response_data( $order, $response );
+			if ( ! $this->is_order_completed( $order->get_status() ) ) {
+				if ( ! $response ) {
+					$order->update_status( 'failed' );
+				}
+				$order->payment_complete();
+			}
+		}
+		catch ( Exception $exception ) {
+			if ( ! $this->is_order_completed( $order->get_status() ) ) {
+				$order->update_status( 'failed', $exception->getMessage() );
+			}
 			die();
 		}
 		die();
@@ -135,7 +151,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 * Create redirect url including orderinformation
 	 *
 	 * @param WC_Order $order
-	 * @param string $payment_state
+	 * @param string   $payment_state
 	 *
 	 * @return string
 	 */
@@ -160,11 +176,12 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 *
 	 * @since 1.0.0
 	 */
-	public function create_notification_url( $payment_method ) {
+	public function create_notification_url( $order, $payment_method ) {
 		return add_query_arg(
 			array(
 				'wc-api'         => 'WC_Wirecard_Payment_Gateway',
 				'payment-method' => $payment_method,
+				'order-id'       => $order->get_id(),
 			),
 			site_url( '/', is_ssl() ? 'https' : 'http' )
 		);
@@ -174,9 +191,9 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 * Execute transactions via wirecard payment gateway
 	 *
 	 * @param \Wirecard\PaymentSdk\Transaction\Transaction $transaction
-	 * @param \Wirecard\PaymentSdk\Config\Config $config
-	 * @param string $operation
-	 * @param WC_Order $order
+	 * @param \Wirecard\PaymentSdk\Config\Config           $config
+	 * @param string                                       $operation
+	 * @param WC_Order                                     $order
 	 *
 	 * @return array
 	 *
@@ -188,10 +205,12 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 		try {
 			/** @var $response Response */
 			$response = $transaction_service->process( $transaction, $operation );
-		} catch ( \Exception $exception ) {
+		}
+		catch ( \Exception $exception ) {
 			$logger->error( $exception->getMessage() );
 
 			wc_add_notice( __( 'An error occurred during the payment process. Please try again.', 'woocommerce-gateway-wirecard' ), 'error' );
+
 			return array(
 				'result'   => 'error',
 				'redirect' => '',
@@ -215,19 +234,12 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 			}
 
 			wc_add_notice( __( 'An error occurred during the payment process. Please try again.', 'woocommerce-gateway-wirecard' ), 'error' );
+
 			return array(
 				'result'   => 'error',
 				'redirect' => '',
 			);
 		}
-
-		$order->update_status( 'on-hold', __( 'Awaiting Wirecard Processing Gateway payment', 'woocommerce-gateway-wirecard' ) );
-
-		// Reduce stock levels
-		wc_reduce_stock_levels( $order->get_id() );
-
-		// Remove cart
-		WC()->cart->empty_cart();
 
 		return array(
 			'result'   => 'success',
@@ -245,13 +257,41 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 * @return Config
 	 */
 	public function create_payment_config( $base_url = null, $http_user = null, $http_pass = null ) {
-		if ( is_null( $base_url ) ) {
-			$base_url      = $this->get_option( 'base_url' );
-			$http_user     = $this->get_option( 'http_user' );
-			$http_password = $this->get_option( 'http_pass' );
-		}
-		$config = new Config( $base_url, $http_user, $http_password, 'EUR' );
+		$config = new Config( $base_url, $http_user, $http_pass, 'EUR' );
 
 		return $config;
+	}
+
+	/**
+	 * Check for completed orders
+	 *
+	 * @param $order_status
+	 *
+	 * @return bool
+	 */
+	public function is_order_completed( $order_status ) {
+		switch ( $order_status ) {
+			case 'completed':
+				return true;
+			case 'processing':
+				return true;
+			default:
+				return false;
+		}
+	}
+
+	/**
+	 * Save response data in order
+	 *
+	 * @param WC_Order $order
+	 * @param Response $response
+	 */
+	public function save_response_data( $order, $response ) {
+		$response_data = $response->getData();
+		if ( ! empty( $response_data ) ) {
+			foreach ( $response_data as $key => $value ) {
+				add_post_meta( $order->get_id(), $key, $value );
+			}
+		}
 	}
 }

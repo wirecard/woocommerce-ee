@@ -50,10 +50,12 @@ class Wirecard_Notification_Handler extends Wirecard_Handler {
 	 * Handle response via transaction service
 	 *
 	 * @param string $payment_method
-	 * @param $payload
+	 * @param        $payload
 	 *
 	 * @throws \InvalidArgumentException
 	 * @throws MalformedResponseException
+	 *
+	 * @return boolean
 	 *
 	 * @since 1.0.0
 	 */
@@ -74,41 +76,17 @@ class Wirecard_Notification_Handler extends Wirecard_Handler {
 		}
 		$this->logger->debug( 'Notification response is instance of: ' . get_class( $response ) );
 
-		$order_id = $response->getCustomFields()->get( 'orderId' );
-		$order    = new WC_Order( $order_id );
-
-		if ( 'processing' == $order->get_status() || 'completed' == $order->get_status() ) {
-			$this->logger->error( 'Do not change completed transactions' );
-			die();
-		}
-
 		if ( $response instanceof SuccessResponse ) {
-			$this->handle_success( $order, $response );
+			return $response;
 		} elseif ( $response instanceof FailureResponse ) {
 			/** @var \Wirecard\PaymentSdk\Entity\Status $status */
 			foreach ( $response->getStatusCollection() as $status ) {
 				$this->logger->error( sprintf( 'Error occured: %s (%s) ', $status->getDescription(), $status->getCode() ) );
 			}
-			//TODO: cancel order here!
+
+			return false;
 		} else {
 			$this->logger->warning( 'Unexpected result object for notifications.' );
 		}
-	}
-
-	/**
-	 * @param WC_Order $order
-	 * @param Response $response
-	 */
-	public function handle_success( $order, $response ) {
-		//TODO: update orderstatus to complete
-		//TODO: save transaction
-
-		$response_data = $response->getData();
-		if ( ! empty( $response_data ) ) {
-			foreach ( $response_data as $key => $value ) {
-				add_post_meta( $order->get_id(), $key, $value );
-			}
-		}
-		$order->payment_complete();
 	}
 }
