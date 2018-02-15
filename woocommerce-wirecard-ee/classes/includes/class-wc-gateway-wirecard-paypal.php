@@ -182,7 +182,8 @@ class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 
 		$redirect_urls = new Redirect(
 			$this->create_redirect_url( $order, 'success', $this->type ),
-			$this->create_redirect_url( $order, 'cancel', $this->type )
+			$this->create_redirect_url( $order, 'cancel', $this->type ),
+			$this->create_redirect_url( $order, 'failure', $this->type )
 		);
 
 		$config    = $this->create_payment_config();

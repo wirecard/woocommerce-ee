@@ -71,6 +71,8 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	/**
 	 * Handle redirects
 	 *
+	 * @throws \Wirecard\PaymentSdk\Exception\MalformedResponseException
+	 *
 	 * @since 1.0.0
 	 */
 	public function return_request() {
@@ -82,8 +84,20 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 		$order_id = $_REQUEST['order-id'];
 		$order    = new WC_Order( $order_id );
 
+		if ( 'cancel' == $_REQUEST['payment-state'] ) {
+			wc_add_notice( __( 'You have canceled the payment process.', 'woocommerce-gateway-wirecard' ), 'notice' );
+			header( 'Location:' . $order->get_cancel_endpoint() );
+			die();
+		}
+
 		$response_handler = new Wirecard_Response_Handler();
-		$status           = $response_handler->handle_response( $_REQUEST );
+		try {
+			$status = $response_handler->handle_response( $_REQUEST );
+		} catch ( Exception $exception ) {
+			wc_add_notice( __( 'An error occurred during the payment process. Please try again.', 'woocommerce-gateway-wirecard' ), 'error' );
+			header( 'Location:' . $order->get_cancel_endpoint() );
+			die();
+		}
 
 		if ( ! $status ) {
 			wc_add_notice( __( 'An error occurred during the payment process. Please try again.', 'woocommerce-gateway-wirecard' ), 'error' );
@@ -107,7 +121,13 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 		$payment_method       = $_REQUEST['payment-method'];
 		$notification         = file_get_contents( 'php://input' );
 		$notification_handler = new Wirecard_Notification_Handler();
-		$status               = $notification_handler->handle_notification( $payment_method, $notification );
+		try {
+			$status               = $notification_handler->handle_notification( $payment_method, $notification );
+		} catch ( Exception $exception ) {
+			wc_add_notice( __( 'An error occurred during the payment process. Please try again.', 'woocommerce-gateway-wirecard' ), 'error' );
+			header( 'Location:' . $this->get_return_url() );
+			die();
+		}
 		die();
 	}
 
@@ -168,9 +188,14 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 		try {
 			/** @var $response Response */
 			$response = $transaction_service->process( $transaction, $operation );
-			$logger->error( print_r( $response, true ) );
 		} catch ( \Exception $exception ) {
-			$logger->error( print_r( $exception, true ) );
+			$logger->error( $exception->getMessage() );
+
+			wc_add_notice( __( 'An error occurred during the payment process. Please try again.', 'woocommerce-gateway-wirecard' ), 'error' );
+			return array(
+				'result'   => 'error',
+				'redirect' => '',
+			);
 		}
 
 		$page_url = $order->get_checkout_payment_url( true );
@@ -188,8 +213,21 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 				/** @var Status $item */
 				$errors .= $item->getDescription() . "<br>\n";
 			}
-			throw new InvalidArgumentException( $errors );
+
+			wc_add_notice( __( 'An error occurred during the payment process. Please try again.', 'woocommerce-gateway-wirecard' ), 'error' );
+			return array(
+				'result'   => 'error',
+				'redirect' => '',
+			);
 		}
+
+		$order->update_status( 'on-hold', __( 'Awaiting Wirecard Processing Gateway payment', 'woocommerce-gateway-wirecard' ) );
+
+		// Reduce stock levels
+		wc_reduce_stock_levels( $order->get_id() );
+
+		// Remove cart
+		WC()->cart->empty_cart();
 
 		return array(
 			'result'   => 'success',

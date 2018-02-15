@@ -35,6 +35,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/handler/class-wirecard-handler.php' );
 
+use Wirecard\PaymentSdk\Exception\MalformedResponseException;
 use Wirecard\PaymentSdk\Response\Response;
 use Wirecard\PaymentSdk\Response\SuccessResponse;
 use Wirecard\PaymentSdk\TransactionService;
@@ -57,14 +58,21 @@ class Wirecard_Response_Handler extends Wirecard_Handler {
 		/** @var WC_Wirecard_Payment_Gateway $payment */
 		$payment             = $this->get_payment_method( $request['payment-method'] );
 		$config              = $payment->create_payment_config();
-		$transaction_service = new TransactionService( $config );
 
-		/** @var Response $result */
-		$result = $transaction_service->handleResponse( $request );
-		if ( $result instanceof SuccessResponse ) {
-			return true;
+		try {
+			$transaction_service = new TransactionService( $config );
+			/** @var Response $result */
+			$result = $transaction_service->handleResponse( $request );
+			if ( $result instanceof SuccessResponse ) {
+				return true;
+			}
+		} catch ( \InvalidArgumentException $exception ) {
+			$this->logger->error( 'Invalid argument set: ' . $exception->getMessage() );
+			throw $exception;
+		} catch ( MalformedResponseException $exception ) {
+			$this->logger->error( 'Response is malformed: ' . $exception->getMessage() );
+			throw $exception;
 		}
-
 		return false;
 	}
 }
