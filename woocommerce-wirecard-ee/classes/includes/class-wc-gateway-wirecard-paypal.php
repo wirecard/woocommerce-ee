@@ -34,6 +34,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/includes/class-wc-wirecard-payment-gateway.php' );
+require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/helper/class-additional-information.php' );
 
 use Wirecard\PaymentSdk\Config\Config;
 use Wirecard\PaymentSdk\Config\PaymentMethodConfig;
@@ -50,6 +51,8 @@ use Wirecard\PaymentSdk\Transaction\PayPalTransaction;
  */
 class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 
+	private $additional_helper;
+
 	public function __construct() {
 		$this->id                 = 'woocommerce_wirecard_paypal';
 		$this->icon               = WOOCOMMERCE_GATEWAY_WIRECARD_URL . 'assets/images/paypal.png';
@@ -64,6 +67,8 @@ class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 
 		$this->title   = $this->get_option( 'title' );
 		$this->enabled = $this->get_option( 'enabled' );
+
+		$this->additional_helper = new Additional_Information();
 
 		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
 
@@ -90,6 +95,21 @@ class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 				'default'     => __( 'Wirecard Payment Processing Gateway PayPal', 'woocommerce-gateway-wirecard' ),
 				'desc_tip'    => true,
 			),
+			'merchant_account_id' => array(
+				'title'   => __( 'Merchant Account ID', 'woocommerce-gateway-wirecard' ),
+				'type'    => 'text',
+				'default' => '2a0e9351-24ed-4110-9a1b-fd0fee6bec26',
+			),
+			'secret'              => array(
+				'title'   => __( 'Secret Key', 'woocommerce-gateway-wirecard' ),
+				'type'    => 'text',
+				'default' => 'dbc5a498-9a66-43b9-bf1d-a618dd399684',
+			),
+			'credentials'         => array(
+				'title'       => __( 'Credentials', 'woocommerce-gateway-wirecard' ),
+				'type'        => 'title',
+				'description' => __( 'Enter your Wirecard Processing Payment Gateway credentials and test it.', 'woocommerce-gateway-wirecard' ),
+			),
 			'base_url'            => array(
 				'title'       => __( 'Base Url', 'woocommerce-gateway-wirecard' ),
 				'type'        => 'text',
@@ -107,15 +127,10 @@ class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 				'type'    => 'text',
 				'default' => 'qD2wzQ_hrc!8',
 			),
-			'merchant_account_id' => array(
-				'title'   => __( 'Merchant Account ID', 'woocommerce-gateway-wirecard' ),
-				'type'    => 'text',
-				'default' => '2a0e9351-24ed-4110-9a1b-fd0fee6bec26',
-			),
-			'secret'              => array(
-				'title'   => __( 'Secret Key', 'woocommerce-gateway-wirecard' ),
-				'type'    => 'text',
-				'default' => 'dbc5a498-9a66-43b9-bf1d-a618dd399684',
+			'advanced'            => array(
+				'title'       => __( 'Advanced options', 'woocommerce-gateway-wirecard' ),
+				'type'        => 'title',
+				'description' => '',
 			),
 			'payment_action'      => array(
 				'title'   => __( 'Payment Action', 'woocommerce-gateway-wirecard' ),
@@ -175,8 +190,16 @@ class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 		$transaction->setAmount( $amount );
 
 		if ( $this->get_option( 'shopping_basket' ) == 'yes' ) {
-			$basket = $this->create_shopping_basket( $order, $transaction );
+			$basket = $this->additional_helper->create_shopping_basket( $order, $transaction );
 			$transaction->setBasket( $basket );
+		}
+
+		if ( $this->get_option( 'descriptor' ) == 'yes' ) {
+			$transaction->setDescriptor( $this->additional_helper->create_descriptor( $order ) );
+		}
+
+		if ( $this->get_option( 'send_additional' ) == 'yes' ) {
+			$this->additional_helper->set_additional_information( $order, $transaction );
 		}
 
 		return $this->execute_transaction( $transaction, $config, $operation, $order, $order_id );
@@ -185,16 +208,20 @@ class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 	/**
 	 * Create payment method configuration
 	 *
-	 * @return Config
+	 * @param null $base_url
+	 * @param null $http_user
+	 * @param null $http_pass
 	 *
-	 * @since 1.0.0
+	 * @return Config
 	 */
-	public function create_payment_config() {
-		$base_url      = $this->get_option( 'base_url' );
-		$http_user     = $this->get_option( 'http_user' );
-		$http_password = $this->get_option( 'http_pass' );
+	public function create_payment_config( $base_url = null, $http_user = null, $http_pass = null ) {
+		if ( is_null( $base_url ) ) {
+			$base_url  = $this->get_option( 'base_url' );
+			$http_user = $this->get_option( 'http_user' );
+			$http_pass = $this->get_option( 'http_pass' );
+		}
 
-		$config         = new Config( $base_url, $http_user, $http_password, 'EUR' );
+		$config         = new Config( $base_url, $http_user, $http_pass, 'EUR' );
 		$payment_config = new PaymentMethodConfig( PayPalTransaction::NAME, $this->get_option( 'merchant_account_id' ), $this->get_option( 'secret' ) );
 		$config->add( $payment_config );
 
