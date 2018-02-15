@@ -33,12 +33,140 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+use Wirecard\PaymentSdk\Response\Response;
+use Wirecard\PaymentSdk\Response\FailureResponse;
+use Wirecard\PaymentSdk\Response\InteractionResponse;
+use Wirecard\PaymentSdk\TransactionService;
+
 /**
  * Class WC_Wirecard_Payment_Gateway
  */
 abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 
-	public function is_available() {
-		return parent::is_available();
+	/**
+	 * Add global wirecard payment gateway actions
+	 *
+	 * @since 1.0.0
+	 */
+	public function add_payment_gateway_actions() {
+		add_action(
+			'woocommerce_api_wc_wirecard_payment_gateway',
+			array(
+				$this,
+				'notify',
+			)
+		);
+		add_action(
+			'woocommerce_api_wc_wirecard_payment_gateway_redirect',
+			array(
+				$this,
+				'return_request',
+			)
+		);
+	}
+
+	/**
+	 * Handle redirects
+	 *
+	 * @since 1.0.0
+	 */
+	public function return_request() {
+		$order_id = $_REQUEST['order-id'];
+		$order    = new WC_Order( $order_id );
+
+		$redirect_url = $this->get_return_url( $order );
+		header( 'Location: ' . $redirect_url );
+		die();
+	}
+
+	/**
+	 * Handle notifications
+	 *
+	 * @since 1.0.0
+	 */
+	public function notify() {
+		echo 'notify';
+	}
+
+	/**
+	 * Create redirect url including orderinformation
+	 *
+	 * @param WC_Order $order
+	 * @param string $payment_state
+	 *
+	 * @return string
+	 */
+	public function create_redirect_url( $order, $payment_state ) {
+		$return_url = add_query_arg(
+			array(
+				'wc-api'       => 'WC_Wirecard_Payment_Gateway_Redirect',
+				'order-id'     => $order->get_id(),
+				'paymentState' => $payment_state,
+			),
+			site_url( '/', is_ssl() ? 'https' : 'http' )
+		);
+
+		return $return_url;
+	}
+
+	/**
+	 * Create notification url
+	 *
+	 * @return string
+	 *
+	 * @since 1.0.0
+	 */
+	public function create_notification_url() {
+		return add_query_arg(
+			'wc-api', 'WC_Wirecard_Payment_Gateway',
+			site_url( '/', is_ssl() ? 'https' : 'http' )
+		);
+	}
+
+	/**
+	 * Execute transactions via wirecard payment gateway
+	 *
+	 * @param \Wirecard\PaymentSdk\Transaction\Transaction $transaction
+	 * @param \Wirecard\PaymentSdk\Config\Config $config
+	 * @param string $operation
+	 * @param WC_Order $order
+	 *
+	 * @return array
+	 *
+	 * @since 1.0.0
+	 */
+	public function execute_transaction( $transaction, $config, $operation, $order ) {
+		$logger              = new WC_Logger();
+		$transaction_service = new TransactionService( $config );
+		try {
+			/** @var $response Response */
+			$response = $transaction_service->process( $transaction, $operation );
+			$logger->error( print_r( $response, true ) );
+		} catch ( \Exception $exception ) {
+			$logger->error( print_r( $exception, true ) );
+		}
+
+		$page_url = $order->get_checkout_payment_url( true );
+		$page_url = add_query_arg( 'key', $order->get_order_key(), $page_url );
+		$page_url = add_query_arg( 'order-pay', $order->get_order_number(), $page_url );
+
+		if ( $response instanceof InteractionResponse ) {
+			$page_url = $response->getRedirectUrl();
+		}
+
+		// FailureResponse, redirect should be implemented
+		if ( $response instanceof FailureResponse ) {
+			$errors = '';
+			foreach ( $response->getStatusCollection()->getIterator() as $item ) {
+				/** @var Status $item */
+				$errors .= $item->getDescription() . "<br>\n";
+			}
+			throw new InvalidArgumentException( $errors );
+		}
+
+		return array(
+			'result'   => 'success',
+			'redirect' => $page_url,
+		);
 	}
 }
