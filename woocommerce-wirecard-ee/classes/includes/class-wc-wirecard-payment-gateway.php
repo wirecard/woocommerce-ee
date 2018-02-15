@@ -33,6 +33,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/handler/class-wirecard-response-handler.php' );
+
 use Wirecard\PaymentSdk\Response\Response;
 use Wirecard\PaymentSdk\Response\FailureResponse;
 use Wirecard\PaymentSdk\Response\InteractionResponse;
@@ -71,10 +73,23 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 * @since 1.0.0
 	 */
 	public function return_request() {
+		$redirect_url = $this->get_return_url();
+		if ( ! array_key_exists( 'order-id', $_REQUEST ) ) {
+			header( 'Location:' . $redirect_url );
+			die();
+		}
 		$order_id = $_REQUEST['order-id'];
 		$order    = new WC_Order( $order_id );
 
-		$redirect_url = $this->get_return_url( $order );
+		$response_handler = new Wirecard_Response_Handler();
+		$status           = $response_handler->handle_response( $_REQUEST );
+
+		if ( ! $status ) {
+			wc_add_notice( __( 'An error occurred during the payment process. Please try again.', 'woocommerce-gateway-wirecard' ), 'error' );
+			$redirect_url = $order->get_cancel_endpoint();
+		} else {
+			$redirect_url = $this->get_return_url( $order );
+		}
 		header( 'Location: ' . $redirect_url );
 		die();
 	}
@@ -96,12 +111,13 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 *
 	 * @return string
 	 */
-	public function create_redirect_url( $order, $payment_state ) {
+	public function create_redirect_url( $order, $payment_state, $payment_method ) {
 		$return_url = add_query_arg(
 			array(
-				'wc-api'       => 'WC_Wirecard_Payment_Gateway_Redirect',
-				'order-id'     => $order->get_id(),
-				'paymentState' => $payment_state,
+				'wc-api'         => 'WC_Wirecard_Payment_Gateway_Redirect',
+				'order-id'       => $order->get_id(),
+				'payment-state'  => $payment_state,
+				'payment-method' => $payment_method,
 			),
 			site_url( '/', is_ssl() ? 'https' : 'http' )
 		);
@@ -116,9 +132,12 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 *
 	 * @since 1.0.0
 	 */
-	public function create_notification_url() {
+	public function create_notification_url( $payment_method ) {
 		return add_query_arg(
-			'wc-api', 'WC_Wirecard_Payment_Gateway',
+			array(
+				'wc-api'         => 'WC_Wirecard_Payment_Gateway',
+				'payment-method' => $payment_method,
+			),
 			site_url( '/', is_ssl() ? 'https' : 'http' )
 		);
 	}
@@ -168,5 +187,25 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 			'result'   => 'success',
 			'redirect' => $page_url,
 		);
+	}
+
+	/**
+	 * Create default payment method configuration
+	 *
+	 * @param null $base_url
+	 * @param null $http_user
+	 * @param null $http_pass
+	 *
+	 * @return Config
+	 */
+	public function create_payment_config( $base_url = null, $http_user = null, $http_pass = null ) {
+		if ( is_null( $base_url ) ) {
+			$base_url      = $this->get_option( 'base_url' );
+			$http_user     = $this->get_option( 'http_user' );
+			$http_password = $this->get_option( 'http_pass' );
+		}
+		$config = new Config( $base_url, $http_user, $http_password, 'EUR' );
+
+		return $config;
 	}
 }
