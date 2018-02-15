@@ -35,6 +35,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/handler/class-wirecard-handler.php' );
 
+use Wirecard\PaymentSdk\Exception\MalformedResponseException;
+use Wirecard\PaymentSdk\Response\FailureResponse;
 use Wirecard\PaymentSdk\Response\Response;
 use Wirecard\PaymentSdk\Response\SuccessResponse;
 use Wirecard\PaymentSdk\TransactionService;
@@ -47,34 +49,66 @@ class Wirecard_Notification_Handler extends Wirecard_Handler {
 	/**
 	 * Handle response via transaction service
 	 *
-	 * @param $request
+	 * @param string $payment_method
+	 * @param $payload
 	 *
-	 * @return bool
+	 * @throws \InvalidArgumentException
+	 * @throws MalformedResponseException
 	 *
 	 * @since 1.0.0
 	 */
-	public function handle_notification( $payment_method, $response ) {
+	public function handle_notification( $payment_method, $payload ) {
 		/** @var WC_Wirecard_Payment_Gateway $payment */
 		$payment = $this->get_payment_method( $payment_method );
 		$config  = $payment->create_payment_config();
 		try {
 			$transaction_service = new TransactionService( $config );
-			/** @var Response $result */
-			$result = $transaction_service->handleNotification( $response );
-		}
-		catch ( \InvalidArgumentException $exception ) {
+			/** @var Response $response */
+			$response = $transaction_service->handleNotification( $payload );
+		} catch ( \InvalidArgumentException $exception ) {
 			$this->logger->error( 'Invalid argument set: ' . $exception->getMessage() );
 			throw $exception;
+		} catch ( MalformedResponseException $exception ) {
+			$this->logger->error( 'Response is malformed: ' . $exception->getMessage() );
+			throw $exception;
 		}
-		$this->logger->debug( 'Notification response is instance of: ' . get_class( $result ) );
+		$this->logger->debug( 'Notification response is instance of: ' . get_class( $response ) );
 
-		$order_id = $result->getCustomFields()->get( 'orderId' );
+		$order_id = $response->getCustomFields()->get( 'orderId' );
 		$order    = new WC_Order( $order_id );
 
 		if ( 'processing' == $order->get_status() || 'completed' == $order->get_status() ) {
 			$this->logger->error( 'Do not change completed transactions' );
 			die();
 		}
-		die();
+
+		if ( $response instanceof SuccessResponse ) {
+			$this->handle_success( $order, $response );
+		} elseif ( $response instanceof FailureResponse ) {
+			/** @var \Wirecard\PaymentSdk\Entity\Status $status */
+			foreach ( $response->getStatusCollection() as $status ) {
+				$this->logger->error( sprintf( 'Error occured: %s (%s) ', $status->getDescription(), $status->getCode() ) );
+			}
+			//TODO: cancel order here!
+		} else {
+			$this->logger->warning( 'Unexpected result object for notifications.' );
+		}
+	}
+
+	/**
+	 * @param WC_Order $order
+	 * @param Response $response
+	 */
+	public function handle_success( $order, $response ) {
+		//TODO: update orderstatus to complete
+		//TODO: save transaction
+
+		$response_data = $response->getData();
+		if ( ! empty( $response_data ) ) {
+			foreach ( $response_data as $key => $value ) {
+				add_post_meta( $order->get_id(), $key, $value );
+			}
+		}
+		$order->payment_complete();
 	}
 }
