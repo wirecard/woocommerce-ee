@@ -163,7 +163,6 @@ class Additional_Information {
 		$account_holder = new AccountHolder();
 		if ( self::SHIPPING == $type ) {
 			$account_holder->setAddress( $this->create_address_data( $order, $type ) );
-			$account_holder->setEmail();
 			$account_holder->setFirstName( $order->get_shipping_first_name() );
 			$account_holder->setLastName( $order->get_shipping_last_name() );
 		} else {

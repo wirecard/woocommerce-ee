@@ -41,7 +41,6 @@ use Wirecard\PaymentSdk\Config\PaymentMethodConfig;
 use Wirecard\PaymentSdk\Entity\Amount;
 use Wirecard\PaymentSdk\Entity\Redirect;
 use Wirecard\PaymentSdk\Transaction\PayPalTransaction;
-use Wirecard\PaymentSdk\TransactionService;
 
 /**
  * Class WC_Gateway_Wirecard_Paypal
@@ -217,12 +216,12 @@ class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 	 */
 	public function create_payment_config( $base_url = null, $http_user = null, $http_pass = null ) {
 		if ( is_null( $base_url ) ) {
-			$base_url      = $this->get_option( 'base_url' );
-			$http_user     = $this->get_option( 'http_user' );
-			$http_password = $this->get_option( 'http_pass' );
+			$base_url  = $this->get_option( 'base_url' );
+			$http_user = $this->get_option( 'http_user' );
+			$http_pass = $this->get_option( 'http_pass' );
 		}
 
-		$config         = new Config( $base_url, $http_user, $http_password, 'EUR' );
+		$config         = new Config( $base_url, $http_user, $http_pass, 'EUR' );
 		$payment_config = new PaymentMethodConfig( PayPalTransaction::NAME, $this->get_option( 'merchant_account_id' ), $this->get_option( 'secret' ) );
 		$config->add( $payment_config );
 
