@@ -222,7 +222,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 		$gateway_url         = WOOCOMMERCE_GATEWAY_WIRECARD_URL;
 		$request_data        = $transaction_service->getDataForCreditCardUi();
 
-        $html = <<<HTML
+		$html = <<<HTML
             <script src='$base_url/engine/hpp/paymentPageLoader.js' type='text/javascript'></script>
             <script type='application/javascript' src='$gateway_url/assets/js/creditcard.js'></script>
             <script>
@@ -231,7 +231,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
             <div id='wc_payment_method_wirecard_creditcard_form'></div>
 HTML;
 
-        echo $html;
+		echo $html;
 	}
 
 	public function process_payment( $order_id ) {
@@ -252,6 +252,6 @@ HTML;
 		$transaction->setTokenId( $token );
 		$transaction->setTermUrl( $redirect_urls );
 
-        return $this->execute_transaction( $transaction, $config, $operation, $order, $order_id );
+		return $this->execute_transaction( $transaction, $config, $operation, $order, $order_id );
 	}
 }
