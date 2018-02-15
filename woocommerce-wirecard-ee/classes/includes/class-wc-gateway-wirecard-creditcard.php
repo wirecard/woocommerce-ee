@@ -47,6 +47,8 @@ use Wirecard\PaymentSdk\TransactionService;
  */
 class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 
+	private $additional_helper;
+
 	public function __construct() {
 		$this->id                 = 'woocommerce_wirecard_creditcard';
 		$this->icon               = WOOCOMMERCE_GATEWAY_WIRECARD_URL . 'assets/images/creditcard.png';
@@ -63,7 +65,11 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 		$this->title   = $this->get_option( 'title' );
 		$this->enabled = $this->get_option( 'enabled' );
 
+		$this->additional_helper = new Additional_Information();
+
 		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
+
+		parent::add_payment_gateway_actions();
 	}
 
 	/**
@@ -85,11 +91,6 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 				'description' => __( 'This controls the title which the user sees during checkout.', 'woocommerce-gateway-wirecard' ),
 				'default'     => __( 'Wirecard Payment Processing Gateway Credit Card', 'woocommerce-gateway-wirecard' ),
 				'desc_tip'    => true,
-			),
-			'description'                 => array(
-				'title'   => __( 'Customer Message', 'woocommerce-gateway-wirecard' ),
-				'type'    => 'textarea',
-				'default' => '',
 			),
 			'base_url'                    => array(
 				'title'       => __( 'Base Url', 'woocommerce-gateway-wirecard' ),
@@ -266,6 +267,19 @@ HTML;
 		$transaction->setAmount( $amount );
 		$transaction->setTokenId( $token );
 		$transaction->setTermUrl( $redirect_urls );
+
+		if ( $this->get_option( 'shopping_basket' ) == 'yes' ) {
+			$basket = $this->additional_helper->create_shopping_basket( $order, $transaction );
+			$transaction->setBasket( $basket );
+		}
+
+		if ( $this->get_option( 'descriptor' ) == 'yes' ) {
+			$transaction->setDescriptor( $this->additional_helper->create_descriptor( $order ) );
+		}
+
+		if ( $this->get_option( 'send_additional' ) == 'yes' ) {
+			$this->additional_helper->set_additional_information( $order, $transaction );
+		}
 
 		return $this->execute_transaction( $transaction, $config, $operation, $order, $order_id );
 	}

@@ -46,7 +46,7 @@ function formSubmitSuccessHandler( response ) {
 }
 
 jQuery( document ).ajaxComplete(function() {
-	if ( jQuery( "#payment_method_woocommerce_wirecard_creditcard" ).checked = true &&
+	if ( jQuery( "#payment_method_woocommerce_wirecard_creditcard" ).checked == true &&
 		jQuery( '#wc_payment_method_wirecard_creditcard_form' )[0].hasChildNodes() == false ) {
 		renderForm();
 	}
