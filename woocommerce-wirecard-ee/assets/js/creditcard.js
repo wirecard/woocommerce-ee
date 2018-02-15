@@ -1,6 +1,11 @@
 var token         = null;
 var checkout_form = jQuery( 'form.checkout' );
 
+/**
+ * Submit the seamless form before order is placed
+ *
+ * @since 1.0.0
+ */
 checkout_form.on( 'checkout_place_order', function() {
 	if ( token != null ) {
 		return true;
@@ -14,10 +19,20 @@ checkout_form.on( 'checkout_place_order', function() {
 	}
 });
 
+/**
+ * Display error massages
+ *
+ * @since 1.0.0
+ */
 function logCallback( response ) {
 	console.error( response );
 }
 
+/**
+ * Add the tokenId to the submited form
+ *
+ * @since 1.0.0
+ */
 function formSubmitSuccessHandler( response ) {
 	token = response.token_id;
 	jQuery( '<input>' ).attr({
@@ -40,6 +55,12 @@ jQuery( document ).ajaxComplete(function() {
 			renderForm();
 		}
 	});
+
+	/**
+	 * Render the credit card form
+	 *
+	 * @since 1.0.0
+	 */
 	function renderForm() {
 		WirecardPaymentPage.seamlessRenderForm({
 			requestData: request_data,
@@ -48,6 +69,12 @@ jQuery( document ).ajaxComplete(function() {
 			onError: logCallback
 		});
 	}
+
+	/**
+	 * Resize the credit card form when loaded
+	 *
+	 * @since 1.0.0
+	 */
 	function resizeIframe() {
 		jQuery( "#wc_payment_method_wirecard_creditcard_form > iframe" ).height( 550 );
 	}

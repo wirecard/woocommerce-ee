@@ -215,6 +215,12 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 		return $config;
 	}
 
+	/**
+	 * Add payment fields to payment method
+	 *
+	 *
+	 * @since 1.0.0
+	 */
 	public function payment_fields() {
 		$config              = $this->create_payment_config();
 		$transaction_service = new TransactionService( $config );
@@ -234,6 +240,15 @@ HTML;
 		echo $html;
 	}
 
+	/**
+	 * Process payment gateway transactions
+	 *
+	 * @param int $order_id
+	 *
+	 * @return array
+	 *
+	 * @since 1.0.0
+	 */
 	public function process_payment( $order_id ) {
 		$order = wc_get_order( $order_id );
 
