@@ -89,9 +89,9 @@ class Additional_Information {
 				$tax_rate = number_format( $item_tax_rate * 100, 2 );
 			}
 			$item = new Item( $name, $amount, $item_quantity );
-			$item->setDescription( $description )
-				->setArticleNumber( $article_nr )
-				->setTaxRate( $tax_rate );
+			$item->setDescription( $description );
+			$item->setArticleNumber( $article_nr );
+			$item->setTaxRate( $tax_rate );
 			$basket->add( $item );
 		}
 
@@ -101,9 +101,9 @@ class Additional_Information {
 
 			$amount = new Amount( $amount, get_woocommerce_currency() );
 			$item   = new Item( 'Shipping', $amount, 1 );
-			$item->setDescription( 'Shipping' )
-				->setArticleNumber( 'Shipping' )
-				->setTaxRate( number_format( $unit_tax_rate * 100, 2 ) );
+			$item->setDescription( 'Shipping' );
+			$item->setArticleNumber( 'Shipping' );
+			$item->setTaxRate( number_format( $unit_tax_rate * 100, 2 ) );
 			$basket->add( $item );
 		}
 
@@ -138,13 +138,13 @@ class Additional_Information {
 	 * @since 1.0.0
 	 */
 	public function set_additional_information( $order, $transaction ) {
-		$transaction->setDescriptor( $this->create_descriptor( $order ) )
-			->setAccountHolder( $this->create_account_holder( $order, 'billing' ) )
-			->setShipping( $this->create_account_holder( $order, 'shipping' ) )
-			->setOrderNumber( $order->get_order_number() )
-			->setBasket( $this->create_shopping_basket( $transaction ) )
-			->setIpAddress( $order->get_customer_ip_address() )
-			->setConsumerId( $order->get_customer_id() );
+		$transaction->setDescriptor( $this->create_descriptor( $order ) );
+		$transaction->setAccountHolder( $this->create_account_holder( $order, 'billing' ) );
+		$transaction->setShipping( $this->create_account_holder( $order, 'shipping' ) );
+		$transaction->setOrderNumber( $order->get_order_number() );
+		$transaction->setBasket( $this->create_shopping_basket( $transaction ) );
+		$transaction->setIpAddress( $order->get_customer_ip_address() );
+		$transaction->setConsumerId( $order->get_customer_id() );
 
 		return $transaction;
 	}
