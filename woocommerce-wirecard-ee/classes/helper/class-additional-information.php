@@ -84,14 +84,14 @@ class Additional_Information {
 			$description = $product->get_short_description();
 			$amount      = new Amount( $item_unit_gross_amount, get_woocommerce_currency() );
 
+			$tax_rate = 0;
+			if ( $product->is_taxable() ) {
+				$tax_rate = number_format( $item_tax_rate * 100, 2 );
+			}
 			$item = new Item( $name, $amount, $item_quantity );
 			$item->setDescription( $description );
 			$item->setArticleNumber( $article_nr );
-			if ( $product->is_taxable() ) {
-				$item->setTaxRate( number_format( $item_tax_rate * 100, 2 ) );
-			} else {
-				$item->setTaxRate( 0 );
-			}
+			$item->setTaxRate( $tax_rate );
 			$basket->add( $item );
 		}
 
@@ -171,7 +171,8 @@ class Additional_Information {
 			$account_holder->setFirstName( $order->get_billing_first_name() );
 			$account_holder->setLastName( $order->get_billing_last_name() );
 			$account_holder->setPhone( $order->get_billing_phone() );
-			//$account_holder->setDateOfBirth();
+			// No birthday provided by WordPress -> create birthday param for invoice/installment
+			// $account_holder->setDateOfBirth();
 		}
 
 		return $account_holder;
