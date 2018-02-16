@@ -39,6 +39,8 @@ require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/helper/class-addit
 use Wirecard\PaymentSdk\Config\Config;
 use Wirecard\PaymentSdk\Config\PaymentMethodConfig;
 use Wirecard\PaymentSdk\Entity\Amount;
+use Wirecard\PaymentSdk\Entity\CustomField;
+use Wirecard\PaymentSdk\Entity\CustomFieldCollection;
 use Wirecard\PaymentSdk\Entity\Redirect;
 use Wirecard\PaymentSdk\Transaction\PayPalTransaction;
 
@@ -51,9 +53,12 @@ use Wirecard\PaymentSdk\Transaction\PayPalTransaction;
  */
 class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 
+	private $type;
+
 	private $additional_helper;
 
 	public function __construct() {
+		$this->type               = 'paypal';
 		$this->id                 = 'woocommerce_wirecard_paypal';
 		$this->icon               = WOOCOMMERCE_GATEWAY_WIRECARD_URL . 'assets/images/paypal.png';
 		$this->method_title       = __( 'Wirecard Payment Processing Gateway PayPal', 'wooocommerce-gateway-wirecard' );
@@ -176,8 +181,9 @@ class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 		$order = wc_get_order( $order_id );
 
 		$redirect_urls = new Redirect(
-			$this->create_redirect_url( $order, 'success' ),
-			$this->create_redirect_url( $order, 'cancel' )
+			$this->create_redirect_url( $order, 'success', $this->type ),
+			$this->create_redirect_url( $order, 'cancel', $this->type ),
+			$this->create_redirect_url( $order, 'failure', $this->type )
 		);
 
 		$config    = $this->create_payment_config();
@@ -185,9 +191,13 @@ class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 		$operation = $this->get_option( 'payment_action' );
 
 		$transaction = new PayPalTransaction();
-		$transaction->setNotificationUrl( $this->create_notification_url() );
+		$transaction->setNotificationUrl( $this->create_notification_url( $order, $this->type ) );
 		$transaction->setRedirect( $redirect_urls );
 		$transaction->setAmount( $amount );
+
+		$custom_fields = new CustomFieldCollection();
+		$custom_fields->add( new CustomField( 'orderId', $order_id ) );
+		$transaction->setCustomFields( $custom_fields );
 
 		if ( $this->get_option( 'shopping_basket' ) == 'yes' ) {
 			$basket = $this->additional_helper->create_shopping_basket( $order, $transaction );
@@ -221,7 +231,7 @@ class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 			$http_pass = $this->get_option( 'http_pass' );
 		}
 
-		$config         = new Config( $base_url, $http_user, $http_pass, 'EUR' );
+		$config         = parent::create_payment_config( $base_url, $http_user, $http_pass );
 		$payment_config = new PaymentMethodConfig( PayPalTransaction::NAME, $this->get_option( 'merchant_account_id' ), $this->get_option( 'secret' ) );
 		$config->add( $payment_config );
 
