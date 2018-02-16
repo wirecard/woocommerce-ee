@@ -104,7 +104,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 			wc_add_notice( __( 'An error occurred during the payment process. Please try again.', 'woocommerce-gateway-wirecard' ), 'error' );
 			$redirect_url = $order->get_cancel_endpoint();
 		} else {
-			if ( ! $this->is_order_completed( $order->get_status() ) ) {
+			if ( ! $order->is_paid() ) {
 				$order->update_status( 'on-hold', __( 'Awaiting Wirecard Processing Gateway payment', 'woocommerce-gateway-wirecard' ) );
 			}
 			$redirect_url = $this->get_return_url( $order );
@@ -128,16 +128,18 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 		$notification         = file_get_contents( 'php://input' );
 		$notification_handler = new Wirecard_Notification_Handler();
 		try {
+			/** @var Response $response */
 			$response = $notification_handler->handle_notification( $payment_method, $notification );
 			$this->save_response_data( $order, $response );
-			if ( ! $this->is_order_completed( $order->get_status() ) ) {
+			if ( ! $order->is_paid() ) {
 				if ( ! $response ) {
 					$order->update_status( 'failed' );
 				}
+				$this->update_payment_transaction( $order, $response );
 				$order->payment_complete();
 			}
 		} catch ( Exception $exception ) {
-			if ( ! $this->is_order_completed( $order->get_status() ) ) {
+			if ( ! $order->is_paid() ) {
 				$order->update_status( 'failed', $exception->getMessage() );
 			}
 			die();
@@ -260,24 +262,6 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	}
 
 	/**
-	 * Check for completed orders
-	 *
-	 * @param $order_status
-	 *
-	 * @return bool
-	 */
-	public function is_order_completed( $order_status ) {
-		switch ( $order_status ) {
-			case 'completed':
-				return true;
-			case 'processing':
-				return true;
-			default:
-				return false;
-		}
-	}
-
-	/**
 	 * Save response data in order
 	 *
 	 * @param WC_Order $order
@@ -290,5 +274,15 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 				add_post_meta( $order->get_id(), $key, $value );
 			}
 		}
+	}
+
+	/**
+	 * Update payment
+	 *
+	 * @param WC_Order $order
+	 * @param \Wirecard\PaymentSdk\Response\SuccessResponse $response
+	 */
+	public function update_payment_transaction ( $order, $response ) {
+		$order->set_transaction_id( $response->getTransactionId() );
 	}
 }
