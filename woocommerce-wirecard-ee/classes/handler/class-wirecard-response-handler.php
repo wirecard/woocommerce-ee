@@ -67,10 +67,10 @@ class Wirecard_Response_Handler extends Wirecard_Handler {
 				return true;
 			}
 		} catch ( \InvalidArgumentException $exception ) {
-			$this->logger->error( 'Invalid argument set: ' . $exception->getMessage() );
+			$this->logger->error( __METHOD__ . ':' . 'Invalid argument set: ' . $exception->getMessage() );
 			throw $exception;
 		} catch ( MalformedResponseException $exception ) {
-			$this->logger->error( 'Response is malformed: ' . $exception->getMessage() );
+			$this->logger->error( __METHOD__ . ':' . 'Response is malformed: ' . $exception->getMessage() );
 			throw $exception;
 		}
 		return false;

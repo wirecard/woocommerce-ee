@@ -68,25 +68,25 @@ class Wirecard_Notification_Handler extends Wirecard_Handler {
 			/** @var Response $response */
 			$response = $transaction_service->handleNotification( $payload );
 		} catch ( \InvalidArgumentException $exception ) {
-			$this->logger->error( 'Invalid argument set: ' . $exception->getMessage() );
+			$this->logger->error( __METHOD__ . ':' . 'Invalid argument set: ' . $exception->getMessage() );
 			throw $exception;
 		} catch ( MalformedResponseException $exception ) {
-			$this->logger->error( 'Response is malformed: ' . $exception->getMessage() );
+			$this->logger->error( __METHOD__ . ':' . 'Response is malformed: ' . $exception->getMessage() );
 			throw $exception;
 		}
-		$this->logger->debug( 'Notification response is instance of: ' . get_class( $response ) );
+		$this->logger->debug( __METHOD__ . ':' . 'Notification response is instance of: ' . get_class( $response ) );
 
 		if ( $response instanceof SuccessResponse ) {
 			return $response;
 		} elseif ( $response instanceof FailureResponse ) {
 			/** @var \Wirecard\PaymentSdk\Entity\Status $status */
 			foreach ( $response->getStatusCollection() as $status ) {
-				$this->logger->error( sprintf( 'Error occured: %s (%s) ', $status->getDescription(), $status->getCode() ) );
+				$this->logger->error( sprintf( __METHOD__ . ': Error occured: %s (%s) ', $status->getDescription(), $status->getCode() ) );
 			}
 
 			return false;
 		} else {
-			$this->logger->warning( 'Unexpected result object for notifications.' );
+			$this->logger->warning( __METHOD__ . ':' . 'Unexpected result object for notifications.' );
 		}
 	}
 }

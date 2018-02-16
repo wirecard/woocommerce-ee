@@ -204,7 +204,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 			/** @var $response Response */
 			$response = $transaction_service->process( $transaction, $operation );
 		} catch ( \Exception $exception ) {
-			$logger->error( $exception->getMessage() );
+			$logger->error( __METHOD__ . ':' . $exception->getMessage() );
 
 			wc_add_notice( __( 'An error occurred during the payment process. Please try again.', 'woocommerce-gateway-wirecard' ), 'error' );
 
