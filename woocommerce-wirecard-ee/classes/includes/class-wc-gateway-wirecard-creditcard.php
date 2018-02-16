@@ -34,6 +34,8 @@ require_once __DIR__ . '/class-wc-wirecard-payment-gateway.php';
 use Wirecard\PaymentSdk\Config\Config;
 use Wirecard\PaymentSdk\Config\CreditCardConfig;
 use Wirecard\PaymentSdk\Entity\Amount;
+use Wirecard\PaymentSdk\Entity\CustomField;
+use Wirecard\PaymentSdk\Entity\CustomFieldCollection;
 use Wirecard\PaymentSdk\Entity\Redirect;
 use Wirecard\PaymentSdk\Transaction\CreditCardTransaction;
 use Wirecard\PaymentSdk\TransactionService;
@@ -46,10 +48,12 @@ use Wirecard\PaymentSdk\TransactionService;
  * @since   1.0.0
  */
 class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
+	private $type;
 
 	private $additional_helper;
 
 	public function __construct() {
+		$this->type               = 'creditcard';
 		$this->id                 = 'woocommerce_wirecard_creditcard';
 		$this->icon               = WOOCOMMERCE_GATEWAY_WIRECARD_URL . 'assets/images/creditcard.png';
 		$this->method_title       = __( 'Wirecard Payment Processing Gateway Credit Card', 'wooocommerce-gateway-wirecard' );
@@ -177,14 +181,14 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	 *
 	 * @since 1.0.0
 	 */
-	public function create_payment_config() {
-		$config = new Config(
-			$this->get_option( 'base_url' ),
-			$this->get_option( 'http_user' ),
-			$this->get_option( 'http_pass' ),
-			'EUR'
-		);
+	public function create_payment_config( $base_url = null, $http_user = null, $http_pass = null ) {
+		if ( is_null( $base_url ) ) {
+			$base_url  = $this->get_option( 'base_url' );
+			$http_user = $this->get_option( 'http_user' );
+			$http_pass = $this->get_option( 'http_pass' );
+		}
 
+		$config         = parent::create_payment_config( $base_url, $http_user, $http_pass );
 		$payment_config = new CreditCardConfig(
 			$this->get_option( 'merchant_account_id' ),
 			$this->get_option( 'secret' )
@@ -254,8 +258,9 @@ HTML;
 		$order = wc_get_order( $order_id );
 
 		$redirect_urls = new Redirect(
-			$this->create_redirect_url( $order, 'success' ),
-			$this->create_redirect_url( $order, 'cancel' )
+			$this->create_redirect_url( $order, 'success', $this->type ),
+			$this->create_redirect_url( $order, 'cancel', $this->type ),
+			$this->create_redirect_url( $order, 'failure', $this->type )
 		);
 
 		$config    = $this->create_payment_config();
@@ -264,9 +269,14 @@ HTML;
 		$token     = $_POST['tokenId'];
 
 		$transaction = new CreditCardTransaction();
+		$transaction->setNotificationUrl( $this->create_notification_url( $order, $this->type ) );
 		$transaction->setAmount( $amount );
 		$transaction->setTokenId( $token );
 		$transaction->setTermUrl( $redirect_urls );
+
+		$custom_fields = new CustomFieldCollection();
+		$custom_fields->add( new CustomField( 'orderId', $order_id ) );
+		$transaction->setCustomFields( $custom_fields );
 
 		if ( $this->get_option( 'shopping_basket' ) == 'yes' ) {
 			$basket = $this->additional_helper->create_shopping_basket( $order, $transaction );
