@@ -254,7 +254,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 * @return Config
 	 */
 	public function create_payment_config( $base_url = null, $http_user = null, $http_pass = null ) {
-		$config = new Config( $base_url, $http_user, $http_pass, 'EUR' );
+		$config = new Config( $base_url, $http_user, $http_pass );
 
 		return $config;
 	}
