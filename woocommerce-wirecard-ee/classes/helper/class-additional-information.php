@@ -166,7 +166,7 @@ class Additional_Information {
 			$account_holder->setFirstName( $order->get_shipping_first_name() );
 			$account_holder->setLastName( $order->get_shipping_last_name() );
 		} else {
-			$account_holder->setAddress( $this->create_address_data( $order ) );
+			$account_holder->setAddress( $this->create_address_data( $order, $type ) );
 			$account_holder->setEmail( $order->get_billing_email() );
 			$account_holder->setFirstName( $order->get_billing_first_name() );
 			$account_holder->setLastName( $order->get_billing_last_name() );
