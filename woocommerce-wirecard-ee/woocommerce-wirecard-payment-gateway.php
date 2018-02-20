@@ -108,6 +108,7 @@ function install_wirecard_payment_gateway() {
 		amount float NOT NULL,
 		currency varchar(3) NOT NULL,
 		response TEXT default NULL,
+		tinyint(1) NOT NULL default '0',
 		created DATETIME NOT NULL default '0000-00-00 00:00:00',
 		modified DATETIME default NULL,
  		PRIMARY KEY (tx_id)

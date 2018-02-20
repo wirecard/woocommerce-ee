@@ -35,11 +35,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/handler/class-wirecard-response-handler.php' );
 require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/handler/class-wirecard-notification-handler.php' );
+require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/admin/class-wirecard-transaction-factory.php' );
 
 use Wirecard\PaymentSdk\Config\Config;
 use Wirecard\PaymentSdk\Response\Response;
 use Wirecard\PaymentSdk\Response\FailureResponse;
 use Wirecard\PaymentSdk\Response\InteractionResponse;
+use Wirecard\PaymentSdk\Response\SuccessResponse;
 use Wirecard\PaymentSdk\TransactionService;
 
 /**
@@ -67,6 +69,9 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 				'return_request',
 			)
 		);
+
+		add_action( 'woocommerce_order_status_processing_to_completed', array( $this, 'capture_payment' ) );
+		add_action( 'woocommerce_order_status_processing_to_cancelled', array( $this, 'cancel_payment' ) );
 	}
 
 	/**
@@ -136,7 +141,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 					$order->update_status( 'failed' );
 				}
 				$this->update_payment_transaction( $order, $response );
-				$order->payment_complete();
+				$order->update_status( 'processing', __( 'Wirecard Processing Gateway notification recieved', 'woocommerce-gateway-wirecard' ) );
 			}
 		} catch ( Exception $exception ) {
 			if ( ! $order->is_paid() ) {
@@ -279,10 +284,48 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	/**
 	 * Update payment
 	 *
-	 * @param WC_Order $order
-	 * @param \Wirecard\PaymentSdk\Response\SuccessResponse $response
+	 * @param WC_Order        $order
+	 * @param SuccessResponse $response
 	 */
-	public function update_payment_transaction ( $order, $response ) {
+	public function update_payment_transaction( $order, $response ) {
 		$order->set_transaction_id( $response->getTransactionId() );
+		//create table entry
+		$transaction_factory = new Wirecard_Transaction_Factory();
+		$result              = $transaction_factory->create_transaction( $order, $response );
+		if ( ! $result ) {
+			$logger = new WC_Logger();
+			$logger->debug( 'Transaction could not be saved in transaction table' );
+		}
+	}
+
+	/**
+	 * @param WC_Order $order
+	 *
+	 * @return bool
+	 */
+	public function can_refund_order( $order ) {
+		return $order && $order->get_transaction_id();
+	}
+
+	public function process_refund( $order_id, $amount = null, $reason = '' ) {
+		$order = wc_get_order( $order_id );
+
+		if ( ! $this->can_refund_order( $order ) ) {
+			return new WP_Error( 'error', __( 'Refund failed: No transaction ID', 'woocommerce' ) );
+		}
+		//handle refund
+		return new WP_Error( 'error', __( 'Do not refund yet', 'woocommerce-gateway-wirecard' ) );
+	}
+
+	// Hook for capture_payment on statuschange complete
+	public function capture_payment( $order_id ) {
+		$order = wc_get_order( $order_id );
+		//handle capture
+	}
+
+	// Hook for cancel_payment on statuschange
+	public function cancel_payment( $order_id ) {
+		$order = wc_get_order($order_id);
+		//handle cancel payment
 	}
 }

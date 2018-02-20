@@ -81,7 +81,6 @@ class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 		$this->additional_helper = new Additional_Information();
 
 		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
-		add_action( 'woocommerce_order_status_on-hold_to_completed', array( $this, 'capture_payment' ) );
 
 		parent::add_payment_gateway_actions();
 	}
@@ -222,25 +221,6 @@ class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 	}
 
 	/**
-	 * @param WC_Order $order
-	 *
-	 * @return bool
-	 */
-	public function can_refund_order( $order ) {
-		return $order && $order->get_transaction_id();
-	}
-
-	public function process_refund( $order_id, $amount = null, $reason = '' ) {
-		$order = wc_get_order( $order_id );
-
-		if ( ! $this->can_refund_order( $order ) ) {
-			return new WP_Error( 'error', __( 'Refund failed: No transaction ID', 'woocommerce' ) );
-		}
-		//handle refund
-		return new WP_Error( 'error', __( 'Do not refund yet', 'woocommerce-gateway-wirecard' ) );
-	}
-
-	/**
 	 * Create payment method configuration
 	 *
 	 * @param null $base_url
@@ -261,15 +241,5 @@ class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 		$config->add( $payment_config );
 
 		return $config;
-	}
-
-	// Hook for capture_payment on statuschange complete
-	public function capture_payment( $order_id ) {
-		$order = wc_get_order( $order_id );
-
-		$logger = new WC_Logger();
-		$logger->error( 'this is a the capture method!!!!' );
-		//handle capture
-		return false;
 	}
 }
