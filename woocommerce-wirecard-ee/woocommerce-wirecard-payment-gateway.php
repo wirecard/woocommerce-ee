@@ -134,4 +134,12 @@ function wirecard_gateway_options_page() {
 		'wirecardpayment',
 		array( $admin, 'wirecard_payment_gateway_settings' )
 	);
+	add_submenu_page(
+		null,
+		__( 'Cancel Transaction', 'woocommerce-wirecard-checkout-seamless' ),
+		__( 'Cancel Transaction', 'woocommerce-wirecard-checkout-seamless' ),
+		'manage_options',
+		'cancelpayment',
+		array( $admin, 'cancel_transaction' )
+	);
 }

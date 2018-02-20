@@ -69,6 +69,10 @@ class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 			'refunds',
 		);
 
+		$this->cancel = true;
+		$this->capture = false;
+		$this->refund = false;
+
 		// Load the form fields.
 		$this->init_form_fields();
 

@@ -49,6 +49,12 @@ use Wirecard\PaymentSdk\TransactionService;
  */
 abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 
+	protected $cancel;
+
+	protected $refund;
+
+	protected $capture;
+
 	/**
 	 * Add global wirecard payment gateway actions
 	 *
@@ -296,6 +302,39 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 			$logger = new WC_Logger();
 			$logger->debug( 'Transaction could not be saved in transaction table' );
 		}
+	}
+
+	/**
+	 * Check if payment method can use capture
+	 *
+	 * @return boolean
+	 *
+	 * @since 1.0.0
+	 */
+	public function can_capture() {
+		return $this->capture;
+	}
+
+	/**
+	 * Check if payment method can use cancel
+	 *
+	 * @return boolean
+	 *
+	 * @since 1.0.0
+	 */
+	public function can_cancel() {
+		return $this->cancel;
+	}
+
+	/**
+	 * Check if payment method can use refund
+	 *
+	 * @return boolean
+	 *
+	 * @since 1.0.0
+	 */
+	public function can_refund() {
+		return $this->refund;
 	}
 
 	/**

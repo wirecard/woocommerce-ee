@@ -33,47 +33,27 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/admin/class-wirecard-transaction-factory.php' );
+require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/handler/class-wirecard-handler.php' );
 
-class Wirecard_Settings {
+use Wirecard\PaymentSdk\TransactionService;
 
-	private $transaction_factory;
+/**
+ * Class Wirecard_Transaction_Handler
+ */
+class Wirecard_Transaction_Handler extends Wirecard_Handler {
 
-	public function __construct() {
-		$this->transaction_factory = new Wirecard_Transaction_Factory();
-	}
-
-	public function wirecard_payment_gateway_settings() {
-		if ( isset( $_REQUEST['id'] ) ) {
-			$this->transaction_factory->show_transaction( $_REQUEST['id'] );
-		} elseif ( isset( $_GET['transaction_start'] ) ) {
-			$this->show_dashboard( $_GET['transaction_start'] );
-		} else {
-			$this->show_dashboard();
-		}
-	}
-
-	public function show_dashboard( $start = null ) {
-		?>
-		<div class="wrap">
-			<h1 class="wp-heading-inline">Wirecard Payment Processing Gateway</h1>
-			<hr class="wp-header-end">
-			<img src="<?= plugins_url( 'woocommerce-wirecard-ee/assets/images/wirecard-logo.png' ) ?>">
-			<p>Global settings, Transactiondetails, Back-end Operations and Support Requests will be implemented here</p>
-			<table class="wp-list-table widefat fixed striped posts">
-				<?php
-				$pages = $this->transaction_factory->get_rows();
-				?>
-			</table>
-		</div>
-		<?php
-	}
-
-	public function cancel_transaction() {
-		if ( isset( $_REQUEST['id'] ) ) {
-			$this->transaction_factory->handle_cancel( $_REQUEST['id'] );
-		} else {
-			$this->show_dashboard();
-		}
+	/**
+	 * Cancel transaction via Payment Gateway
+	 *
+	 * @param stdClass                    $transaction
+	 *
+	 * @since 1.0.0
+	 */
+	public function cancel_transaction( $transaction ) {
+		/** @var WC_Wirecard_Payment_Gateway $payment */
+		$payment = $this->get_payment_method( $transaction->payment_method );
+		$config  = $payment->create_payment_config();
+		$transaction_service = new TransactionService( $config );
+		echo 'do cancel';
 	}
 }
