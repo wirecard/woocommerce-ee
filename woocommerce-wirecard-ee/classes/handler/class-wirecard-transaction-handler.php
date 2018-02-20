@@ -35,25 +35,45 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/handler/class-wirecard-handler.php' );
 
+use Wirecard\PaymentSdk\Response\FailureResponse;
+use Wirecard\PaymentSdk\Response\SuccessResponse;
 use Wirecard\PaymentSdk\TransactionService;
 
 /**
  * Class Wirecard_Transaction_Handler
  */
 class Wirecard_Transaction_Handler extends Wirecard_Handler {
-
 	/**
 	 * Cancel transaction via Payment Gateway
 	 *
-	 * @param stdClass                    $transaction
+	 * @param stdClass                    $transaction_data
 	 *
 	 * @since 1.0.0
 	 */
-	public function cancel_transaction( $transaction ) {
+	public function cancel_transaction( $transaction_data ) {
 		/** @var WC_Wirecard_Payment_Gateway $payment */
-		$payment = $this->get_payment_method( $transaction->payment_method );
+		$payment = $this->get_payment_method( $transaction_data->payment_method );
 		$config  = $payment->create_payment_config();
+		$transaction = $payment->cancel_payment( $transaction_data );
+
 		$transaction_service = new TransactionService( $config );
-		echo 'do cancel';
+		try {
+			/** @var $response Response */
+			$response = $transaction_service->process( $transaction, 'cancel' );
+		} catch ( \Exception $exception ) {
+			$this->logger->error( __METHOD__ . ':' . $exception->getMessage() );
+		}
+
+		if ( $response instanceof SuccessResponse ) {
+			$order = wc_get_order( $transaction_data->order_id );
+			$order->set_transaction_id( $response->getTransactionId() );
+			$order->update_status( 'cancelled', __( 'Cancelled order via Wirecard Payment Processing Gateway', 'woocommerce-gateway-wirecard' ) );
+			$redirect_url = '/admin.php?page=wirecardpayment&id=' . $response->getTransactionId();
+			wp_redirect( admin_url( $redirect_url ), 301 );
+			die();
+		}
+		if ( $response instanceof FailureResponse ) {
+			echo 'failed to cancel';
+		}
 	}
 }

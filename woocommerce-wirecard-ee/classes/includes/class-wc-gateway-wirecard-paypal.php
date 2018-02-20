@@ -225,6 +225,25 @@ class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 	}
 
 	/**
+	 * Create transaction for cancel
+	 *
+	 * @param stdClass $data
+	 *
+	 * @return PayPalTransaction
+	 *
+	 * @since 1.0.0
+	 */
+	public function cancel_payment( $data ) {
+		$amount = new Amount( $data->amount, $data->currency );
+
+		$transaction = new PayPalTransaction();
+		$transaction->setParentTransactionId( $data->transaction_id );
+		$transaction->setAmount( $amount );
+
+		return $transaction;
+	}
+
+	/**
 	 * Create payment method configuration
 	 *
 	 * @param null $base_url

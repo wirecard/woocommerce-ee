@@ -147,7 +147,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 					$order->update_status( 'failed' );
 				}
 				$this->update_payment_transaction( $order, $response );
-				$order->update_status( 'processing', __( 'Wirecard Processing Gateway notification recieved', 'woocommerce-gateway-wirecard' ) );
+				$order = $this->update_order_state( $order, $response->getTransactionType() );
 			}
 		} catch ( Exception $exception ) {
 			if ( ! $order->is_paid() ) {
@@ -304,6 +304,23 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 		}
 	}
 
+	public function update_order_state( $order, $transaction_type ) {
+		switch ( $transaction_type ) {
+			case 'capture-authorization':
+				$state = 'completed';
+				break;
+			case 'void-authorization':
+				$state = 'cancelled';
+				break;
+			case 'authorization':
+			default:
+				$state = 'processing';
+				break;
+		}
+		$order->update_status( $state, __( 'Update order status via Wirecard Payment Processing Gateway', 'woocommerce-gateway-wirecard' ) );
+		return $order;
+	}
+
 	/**
 	 * Check if payment method can use capture
 	 *
@@ -354,17 +371,5 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 		}
 		//handle refund
 		return new WP_Error( 'error', __( 'Do not refund yet', 'woocommerce-gateway-wirecard' ) );
-	}
-
-	// Hook for capture_payment on statuschange complete
-	public function capture_payment( $order_id ) {
-		$order = wc_get_order( $order_id );
-		//handle capture
-	}
-
-	// Hook for cancel_payment on statuschange
-	public function cancel_payment( $order_id ) {
-		$order = wc_get_order($order_id);
-		//handle cancel payment
 	}
 }
