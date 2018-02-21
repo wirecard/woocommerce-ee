@@ -8,7 +8,7 @@ var processing    = false;
  * @since 1.0.0
  */
 checkout_form.on( 'checkout_place_order', function() {
-	if ( jQuery('#payment_method_woocommerce_wirecard_creditcard')[0].checked === true && processing === false ) {
+	if ( jQuery( '#payment_method_woocommerce_wirecard_creditcard' )[0].checked === true && processing === false ) {
 		processing = true;
 		if ( token !== null ) {
 			return true;
@@ -53,12 +53,12 @@ $ = jQuery;
 
 jQuery( document ).ready(function() {
 
-	if ($("#wc_payment_method_wirecard_creditcard_form").is(":visible")) {
+	if ( $( "#wc_payment_method_wirecard_creditcard_form" ).is( ":visible" ) ) {
 		getRequestData();
 	}
 
 	jQuery( "input[name=payment_method]" ).change(function() {
-		if ($(this).val() === 'woocommerce_wirecard_creditcard') {
+		if ( $(this).val() === 'woocommerce_wirecard_creditcard' ) {
 			getRequestData();
 			return false;
 		}
@@ -76,10 +76,10 @@ jQuery( document ).ready(function() {
 			data: { 'action' : 'get_credit_card_request_data' },
 			dataType: 'json',
 			success: function (data) {
-				renderForm(JSON.parse(data.data));
+				renderForm( JSON.parse( data.data ) );
 			},
 			error: function (data) {
-				console.log(data);
+				console.log( data );
 			}
 		});
 	}
