@@ -73,7 +73,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 
 		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
 		add_action( 'woocommerce_api_checkout_form_submit_' . $this->id, array( $this, 'post_form' ) );
-		add_action( 'woocommerce_api_get_request_data_' . $this->id, array( $this, 'get_request_data' ) );
+		add_action( 'woocommerce_api_get_credit_card_request_data', array( $this, 'get_request_data' ) );
 
 		parent::add_payment_gateway_actions();
 	}
@@ -230,7 +230,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	public function payment_fields() {
 		$base_url    = $this->get_option( 'base_url' );
 		$gateway_url = WOOCOMMERCE_GATEWAY_WIRECARD_URL;
-		$page_url    = add_query_arg( [ 'wc-api' => 'get_request_data' ],
+		$page_url    = add_query_arg( [ 'wc-api' => 'get_credit_card_request_data' ],
 			site_url( '/', is_ssl() ? 'https' : 'http' )
 		);
 

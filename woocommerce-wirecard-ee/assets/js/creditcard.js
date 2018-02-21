@@ -73,7 +73,7 @@ jQuery( document ).ready(function() {
 		$.ajax({
 			type: 'POST',
 			url: ajax_url,
-			data: { 'action' : 'get_credit_card_request_data_woocommerce_wirecard_creditcard' },
+			data: { 'action' : 'get_credit_card_request_data' },
 			dataType: 'json',
 			success: function (data) {
 				renderForm(JSON.parse(data.data));
