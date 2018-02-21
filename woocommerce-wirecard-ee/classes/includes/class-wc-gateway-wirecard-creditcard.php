@@ -273,7 +273,8 @@ HTML;
 		$transaction->setNotificationUrl( $this->create_notification_url( $order, $this->type ) );
 		$transaction->setAmount( $amount );
 		$transaction->setTokenId( $token );
-		$transaction->setTermUrl( $redirect_urls );
+		$transaction->setTermUrl( $this->create_redirect_url( $order, 'success', $this->type ) );
+		$transaction->setRedirect( $redirect_urls );
 
 		$custom_fields = new CustomFieldCollection();
 		$custom_fields->add( new CustomField( 'orderId', $order_id ) );
@@ -319,11 +320,7 @@ HTML;
 		$html  = '';
 		$html .= '<form id="credit_card_form" method="' . $data['method'] . '" action="' . $data['url'] . '">';
 		foreach ( $data['form_fields'] as $key => $value ) {
-			if ( $value instanceof Redirect ) {
-				$html .= '<input type="hidden" name="' . $key . '" value="' . $value->getSuccessUrl() . '">';
-			} else {
-				$html .= '<input type="hidden" name="' . $key . '" value="' . $value . '">';
-			}
+			$html .= '<input type="hidden" name="' . $key . '" value="' . $value . '">';
 		}
 		$html .= '</form>';
 		$html .= '<script>document.getElementsByTagName("form")[0].submit();</script>';
