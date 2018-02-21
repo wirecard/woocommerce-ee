@@ -49,35 +49,35 @@ class Wirecard_Transaction_Factory {
 		global $wpdb;
 
 		$this->transaction_handler = new Wirecard_Transaction_Handler();
-		$this->table_name = $wpdb->base_prefix . 'wirecard_payment_gateway_tx';
-		$this->fields_list = array(
+		$this->table_name          = $wpdb->base_prefix . 'wirecard_payment_gateway_tx';
+		$this->fields_list         = array(
 			'tx_id'                 => array(
-				'title' => __( 'Transaction', 'woocommerce-gateway-wirecard' )
+				'title' => __( 'Transaction', 'woocommerce-gateway-wirecard' ),
 			),
 			'transaction_id'        => array(
-				'title' => __( 'Transaction ID', 'woocommerce-gateway-wirecard' )
+				'title' => __( 'Transaction ID', 'woocommerce-gateway-wirecard' ),
 			),
 			'parent_transaction_id' => array(
-				'title' => __( 'Parenttransaction ID', 'woocommerce-gateway-wirecard' )
+				'title' => __( 'Parenttransaction ID', 'woocommerce-gateway-wirecard' ),
 			),
 			'payment_method'        => array(
-				'title' => __( 'Payment method', 'woocommerce-gateway-wirecard' )
+				'title' => __( 'Payment method', 'woocommerce-gateway-wirecard' ),
 			),
 			'transaction_state'     => array(
-				'title' => __( 'Transaction state', 'woocommerce-gateway-wirecard' )
+				'title' => __( 'Transaction state', 'woocommerce-gateway-wirecard' ),
 			),
 			'transaction_type'      => array(
-				'title' => __( 'Action', 'woocommerce-gateway-wirecard' )
+				'title' => __( 'Action', 'woocommerce-gateway-wirecard' ),
 			),
 			'amount'                => array(
-				'title' => __( 'Amount', 'woocommerce-gateway-wirecard' )
+				'title' => __( 'Amount', 'woocommerce-gateway-wirecard' ),
 			),
 			'currency'              => array(
-				'title' => __( 'Currency', 'woocommerce-gateway-wirecard' )
+				'title' => __( 'Currency', 'woocommerce-gateway-wirecard' ),
 			),
 			'order_id'              => array(
-				'title' => __( 'Order number', 'woocommerce-gateway-wirecard' )
-			)
+				'title' => __( 'Order number', 'woocommerce-gateway-wirecard' ),
+			),
 		);
 	}
 
@@ -159,35 +159,35 @@ class Wirecard_Transaction_Factory {
 
 		$pages = $wpdb->get_row( $sum_query );
 
-		if ( $pages == null ) {
+		if ( is_null( $pages ) ) {
 			$pages        = new stdClass();
 			$pages->pages = 1;
 		}
 
-		echo "<tr>";
+		echo '<tr>';
 		foreach ( $this->fields_list as $field_key => $field_value ) {
-			echo "<th>";
+			echo '<th>';
 			echo $field_value['title'];
-			echo "</th>";
+			echo '</th>';
 		}
-		echo "</tr>";
+		echo '</tr>';
 
 		foreach ( $rows as $row ) {
-			echo "<tr>";
+			echo '<tr>';
 
 			foreach ( $this->fields_list as $field_key => $field_value ) {
-				echo "<td>";
+				echo '<td>';
 				if ( key_exists( $field_key, $row ) ) {
-					if ( 'transaction_id' == $field_key || ( 'parent_transaction_id' == $field_key && !empty( $field_value ) ) ) {
-						echo "<a href='?page=wirecardpayment&id={$row[ $field_key ]}'>" . $row[$field_key] . "</a>";
+					if ( 'transaction_id' == $field_key || ( 'parent_transaction_id' == $field_key && ! empty( $field_value ) ) ) {
+						echo "<a href='?page=wirecardpayment&id={$row[ $field_key ]}'>" . $row[ $field_key ] . '</a>';
 					} else {
-						echo $row[$field_key];
+						echo $row[ $field_key ];
 					}
 				}
-				echo "</td>";
+				echo '</td>';
 			}
 
-			echo "</tr>";
+			echo '</tr>';
 		}
 
 		return $pages->pages;
@@ -224,7 +224,7 @@ class Wirecard_Transaction_Factory {
 	public function show_transaction( $transaction_id ) {
 		$transaction = $this->get_transaction( $transaction_id );
 		if ( ! $transaction ) {
-			echo "An error occured. The desired transaction could not be found!";
+			echo 'An error occured. The desired transaction could not be found!';
 
 			return;
 		}
@@ -232,15 +232,14 @@ class Wirecard_Transaction_Factory {
 		$payment       = $this->transaction_handler->get_payment_method( $transaction->payment_method );
 		$response_data = json_decode( $transaction->response );
 		?>
-		<link rel='stylesheet'
-			  href='<?= plugins_url( 'woocommerce-wirecard-ee/assets/styles/admin.css' ) ?>'>
+		<link rel='stylesheet' href='<?php echo plugins_url( 'woocommerce-wirecard-ee/assets/styles/admin.css' ); ?>'>
 		<div class="wrap">
 			<div class="postbox-container">
 			<div class="postbox">
 				<div class="inside">
 					<div class="panel-wrap woocommerce">
 						<div class="panel woocommerce-order-data">
-							<h2 class="woocommerce-order-data__heading">Transaction <?php echo $transaction_id ?></h2>
+							<h2 class="woocommerce-order-data__heading">Transaction <?php echo $transaction_id; ?></h2>
 							<h3>
 								Payment via <?php echo $transaction->payment_method; ?>
 							</h3>
@@ -250,13 +249,13 @@ class Wirecard_Transaction_Factory {
 							<br>
 							<div class="wc-order-data-row">
 								<?php
-								if ( $payment->can_cancel( $transaction->transaction_type ) && !$transaction->closed ) {
+								if ( $payment->can_cancel( $transaction->transaction_type ) && ! $transaction->closed ) {
 									echo "<a href='?page=cancelpayment&id={$transaction_id}' class='button'>Cancel Transaction</a> ";
 								}
-								if ( $payment->can_capture( $transaction->transaction_type ) && !$transaction->closed ) {
+								if ( $payment->can_capture( $transaction->transaction_type ) && ! $transaction->closed ) {
 									echo "<a href='?page=capturepayment&id={$transaction_id}' class='button'>Capture Transaction</a> ";
 								}
-								if ( $payment->can_refund( $transaction->transaction_type ) && !$transaction->closed ) {
+								if ( $payment->can_refund( $transaction->transaction_type ) && ! $transaction->closed ) {
 									echo "<a href='?page=refundpayment&id={$transaction_id}' class='button'>Refund Transaction</a> ";
 								}
 								if ( $transaction->closed ) {
@@ -281,9 +280,9 @@ class Wirecard_Transaction_Factory {
 									</tr>
 									<?php
 									foreach ( $response_data as $key => $value ) {
-										echo "<tr>";
-										echo "<td>" . $key . "</td><td>" . $value . "</td>";
-										echo "</tr>";
+										echo '<tr>';
+										echo '<td>' . $key . '</td><td>' . $value . '</td>';
+										echo '</tr>';
 									}
 									?>
 								</table>
@@ -308,7 +307,7 @@ class Wirecard_Transaction_Factory {
 		/** @var stdClass $transaction */
 		$transaction = $this->get_transaction( $transaction_id );
 		if ( ! $transaction ) {
-			echo "No transaction found";
+			echo 'No transaction found';
 
 			return;
 		}
@@ -326,7 +325,7 @@ class Wirecard_Transaction_Factory {
 		/** @var stdClass $transaction */
 		$transaction = $this->get_transaction( $transaction_id );
 		if ( ! $transaction ) {
-			echo "No transaction found";
+			echo 'No transaction found';
 
 			return;
 		}
@@ -345,14 +344,14 @@ class Wirecard_Transaction_Factory {
 	 */
 	public function get_transaction_link( $base_url, $response ) {
 		$transaction_id = $response->getTransactionId();
-		$output = 'For more transaction information click ';
-		$output .= sprintf(
+		$output         = 'For more transaction information click ';
+		$output        .= sprintf(
 			'<a target="_blank" href="' . $base_url . '/engine/rest/merchants/%s/payments/%s">',
-			$response->findElement('merchant-account-id'),
+			$response->findElement( 'merchant-account-id' ),
 			$transaction_id
 		);
-		$output .= 'here';
-		$output .= '</a>';
+		$output        .= 'here';
+		$output        .= '</a>';
 		return $output;
 	}
 }

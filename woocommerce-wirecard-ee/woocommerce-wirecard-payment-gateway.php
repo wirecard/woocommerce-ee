@@ -69,12 +69,12 @@ function init_wirecard_payment_gateway() {
 	register_post_status(
 		'wc-authorization',
 		array(
-			'label'                     => __( 'Authorized', 'Order status', 'woocommerce-gateway-wirecard' ),
+			'label'                     => _x( 'Authorized', 'Order status', 'woocommerce-gateway-wirecard' ),
 			'public'                    => true,
 			'exclude_from_search'       => false,
 			'show_in_admin_all_list'    => true,
 			'show_in_admin_status_list' => true,
-			'label_count'               => _n_noop( 'Authorized <span class="count">(%s)</span>', 'Authorized<span class="count">(%s)</span>', 'woocommerce-gateway-wirecard' )
+			'label_count'               => _n_noop( 'Authorized <span class="count">(%s)</span>', 'Authorized<span class="count">(%s)</span>', 'woocommerce-gateway-wirecard' ),
 		)
 	);
 }
@@ -104,7 +104,7 @@ function add_wirecard_payment_gateway( $methods ) {
  * @since 1.0.0
  */
 function wirecard_wc_order_statuses( $order_statuses ) {
-	$order_statuses['wc-authorization'] = __( 'Authorized', 'Order status', 'woocommerce-gateway-wirecard' );
+	$order_statuses['wc-authorization'] = _x( 'Authorized', 'Order status', 'woocommerce-gateway-wirecard' );
 
 	return $order_statuses;
 }

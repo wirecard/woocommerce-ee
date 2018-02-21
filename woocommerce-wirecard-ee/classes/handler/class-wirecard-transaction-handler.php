@@ -52,8 +52,8 @@ class Wirecard_Transaction_Handler extends Wirecard_Handler {
 	 */
 	public function cancel_transaction( $transaction_data ) {
 		/** @var WC_Wirecard_Payment_Gateway $payment */
-		$payment = $this->get_payment_method( $transaction_data->payment_method );
-		$config  = $payment->create_payment_config();
+		$payment     = $this->get_payment_method( $transaction_data->payment_method );
+		$config      = $payment->create_payment_config();
 		$transaction = $payment->process_cancel( $transaction_data );
 
 		$transaction_service = new TransactionService( $config );
@@ -86,8 +86,8 @@ class Wirecard_Transaction_Handler extends Wirecard_Handler {
 	 */
 	public function capture_transaction( $transaction_data ) {
 		/** @var WC_Wirecard_Payment_Gateway $payment */
-		$payment = $this->get_payment_method( $transaction_data->payment_method );
-		$config  = $payment->create_payment_config();
+		$payment     = $this->get_payment_method( $transaction_data->payment_method );
+		$config      = $payment->create_payment_config();
 		$transaction = $payment->process_capture( $transaction_data );
 
 		$transaction_service = new TransactionService( $config );

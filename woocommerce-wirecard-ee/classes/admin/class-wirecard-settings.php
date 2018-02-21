@@ -58,7 +58,7 @@ class Wirecard_Settings {
 		<div class="wrap">
 			<h1 class="wp-heading-inline">Wirecard Payment Processing Gateway</h1>
 			<hr class="wp-header-end">
-			<img src="<?= plugins_url( 'woocommerce-wirecard-ee/assets/images/wirecard-logo.png' ) ?>">
+			<img src="<?php echo plugins_url( 'woocommerce-wirecard-ee/assets/images/wirecard-logo.png' ); ?>">
 			<p>Global settings, Transactiondetails, Back-end Operations and Support Requests will be implemented here</p>
 			<table class="wp-list-table widefat fixed striped posts">
 				<?php
