@@ -82,22 +82,26 @@ class Wirecard_Transaction_Factory {
 	}
 
 	/**
-	 * Create transaction entry in database
+	 * Create new transaction entry in database
 	 *
 	 * @param WC_Order                        $order
 	 * @param SuccessResponse $response
+	 * @param string $base_url
+	 *
+	 * @return int
+	 *
+	 * @since 1.0.0
 	 */
-	public function create_transaction( $order, $response ) {
+	public function create_transaction( $order, $response, $base_url ) {
 		global $wpdb;
 
 		$parent_transaction_id = '';
 		$parent_transaction    = $this->get_transaction( $response->getParentTransactionId() );
 		$transaction_state     = 'success';
-		$transaction_link = NULL;
 
 		if ( $parent_transaction ) {
 			$parent_transaction_id = $response->getParentTransactionId();
-			// update to closed
+			// update parent transaction to closed, since there are no back-end ops possible anymore
 			$wpdb->update(
 				$this->table_name,
 				array(
@@ -108,11 +112,12 @@ class Wirecard_Transaction_Factory {
 					'transaction_id' => $parent_transaction_id,
 				)
 			);
+			// should be updated by other end transaction types
 			if ( $response->getTransactionType() == 'void-authorization' ) {
 				$transaction_state = 'closed';
 			}
 		}
-		//$transaction_link = $this->get_transaction_link( $base_url, $response );
+		$transaction_link = $this->get_transaction_link( $base_url, $response );
 		$wpdb->insert(
 			$this->table_name,
 			array(
@@ -210,20 +215,22 @@ class Wirecard_Transaction_Factory {
 	}
 
 	/**
-	 * Default transaction dashboard
+	 * Print transaction detail information and possible back-end operations
 	 *
 	 * @param $transaction_id
+	 *
+	 * @since 1.0.0
 	 */
 	public function show_transaction( $transaction_id ) {
 		$transaction = $this->get_transaction( $transaction_id );
 		if ( ! $transaction ) {
-			echo "No transaction found";
+			echo "An error occured. The desired transaction could not be found!";
 
 			return;
 		}
 		/** @var WC_Wirecard_Payment_Gateway $payment */
-		$payment = $this->transaction_handler->get_payment_method( $transaction->payment_method );
-		$response_data = json_decode($transaction->response);
+		$payment       = $this->transaction_handler->get_payment_method( $transaction->payment_method );
+		$response_data = json_decode( $transaction->response );
 		?>
 		<link rel='stylesheet'
 			  href='<?= plugins_url( 'woocommerce-wirecard-ee/assets/styles/admin.css' ) ?>'>
@@ -237,7 +244,7 @@ class Wirecard_Transaction_Factory {
 							<h3>
 								Payment via <?php echo $transaction->payment_method; ?>
 							</h3>
-							<!-- div><?php //echo $transaction->transaction_link; ?></div -->
+							<div><?php echo $transaction->transaction_link; ?></div>
 							<br>
 							<div class="transaction-type type-authorization"><?php echo $transaction->transaction_type; ?></div>
 							<br>
@@ -300,8 +307,9 @@ class Wirecard_Transaction_Factory {
 	public function handle_cancel( $transaction_id ) {
 		/** @var stdClass $transaction */
 		$transaction = $this->get_transaction( $transaction_id );
-		if (! $transaction) {
+		if ( ! $transaction ) {
 			echo "No transaction found";
+
 			return;
 		}
 		$this->transaction_handler->cancel_transaction( $transaction );
@@ -317,13 +325,24 @@ class Wirecard_Transaction_Factory {
 	public function handle_capture( $transaction_id ) {
 		/** @var stdClass $transaction */
 		$transaction = $this->get_transaction( $transaction_id );
-		if (! $transaction) {
+		if ( ! $transaction ) {
 			echo "No transaction found";
+
 			return;
 		}
 		$this->transaction_handler->capture_transaction( $transaction );
 	}
 
+	/**
+	 * Create transaction link for detailed information
+	 *
+	 * @param string $base_url
+	 * @param Wirecard\PaymentSdk\Response\Response $response
+	 *
+	 * @return string
+	 *
+	 * @since 1.0.0
+	 */
 	public function get_transaction_link( $base_url, $response ) {
 		$transaction_id = $response->getTransactionId();
 		$output = 'For more transaction information click ';

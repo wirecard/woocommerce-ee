@@ -112,7 +112,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 			wc_add_notice( __( 'An error occurred during the payment process. Please try again.', 'woocommerce-gateway-wirecard' ), 'error' );
 			$redirect_url = $order->get_cancel_endpoint();
 		} else {
-			if ( ! $order->is_paid() ) {
+			if ( ! $order->is_paid() && ! $order->get_status( 'authorization' ) ) {
 				$order->update_status( 'on-hold', __( 'Awaiting Wirecard Processing Gateway payment', 'woocommerce-gateway-wirecard' ) );
 			}
 			$redirect_url = $this->get_return_url( $order );
@@ -138,14 +138,10 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 		try {
 			/** @var Response $response */
 			$response = $notification_handler->handle_notification( $payment_method, $notification );
-			if ( ! $order->is_paid() ) {
-				if ( ! $response ) {
-					$order->update_status( 'failed' );
-				} else {
-					$this->save_response_data( $order, $response );
-					$this->update_payment_transaction( $order, $response );
-					$order = $this->update_order_state( $order, $response->getTransactionType() );
-				}
+			if ( $response ) {
+				$this->save_response_data( $order, $response );
+				$this->update_payment_transaction( $order, $response );
+				$order = $this->update_order_state( $order, $response->getTransactionType() );
 			}
 		} catch ( Exception $exception ) {
 			if ( ! $order->is_paid() ) {
@@ -279,9 +275,10 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	public function save_response_data( $order, $response ) {
 		$response_data = $response->getData();
 		if ( ! empty( $response_data ) ) {
-			foreach ( $response_data as $key => $value ) {
+			/*foreach ( $response_data as $key => $value ) {
 				add_post_meta( $order->get_id(), $key, $value );
-			}
+			}*/
+			add_post_meta( $order->get_id(), 'response_data', wp_json_encode( $response_data ) );
 		}
 	}
 
@@ -295,24 +292,35 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 		$order->set_transaction_id( $response->getTransactionId() );
 		//create table entry
 		$transaction_factory = new Wirecard_Transaction_Factory();
-		$result              = $transaction_factory->create_transaction( $order, $response );
+		$result              = $transaction_factory->create_transaction( $order, $response, $this->get_option( 'base_url' ) );
 		if ( ! $result ) {
 			$logger = new WC_Logger();
 			$logger->debug( 'Transaction could not be saved in transaction table' );
 		}
 	}
 
+	/**
+	 * Update order with specific order state
+	 *
+	 * @param WC_Order $order
+	 * @param string $transaction_type
+	 *
+	 * @return WC_Order
+	 *
+	 * @since 1.0.0
+	 */
 	public function update_order_state( $order, $transaction_type ) {
 		switch ( $transaction_type ) {
 			case 'capture-authorization':
-				$state = 'completed';
+			case 'debit':
+				$state = 'processing';
 				break;
 			case 'void-authorization':
 				$state = 'cancelled';
 				break;
 			case 'authorization':
 			default:
-				$state = 'processing';
+				$state = 'authorization';
 				break;
 		}
 		$order->update_status( $state, __( 'Update order status via Wirecard Payment Processing Gateway', 'woocommerce-gateway-wirecard' ) );

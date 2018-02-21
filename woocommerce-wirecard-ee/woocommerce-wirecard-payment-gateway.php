@@ -65,6 +65,18 @@ function init_wirecard_payment_gateway() {
 	require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'vendor/autoload.php' );
 
 	add_filter( 'woocommerce_payment_gateways', 'add_wirecard_payment_gateway', 0 );
+	add_filter( 'wc_order_statuses', 'wirecard_wc_order_statuses' );
+	register_post_status(
+		'wc-authorization',
+		array(
+			'label'                     => __( 'Authorized', 'Order status', 'woocommerce-gateway-wirecard' ),
+			'public'                    => true,
+			'exclude_from_search'       => false,
+			'show_in_admin_all_list'    => true,
+			'show_in_admin_status_list' => true,
+			'label_count'               => _n_noop( 'Authorized <span class="count">(%s)</span>', 'Authorized<span class="count">(%s)</span>', 'woocommerce-gateway-wirecard' )
+		)
+	);
 }
 
 /**
@@ -80,6 +92,21 @@ function add_wirecard_payment_gateway( $methods ) {
 	$methods[] = 'WC_Gateway_Wirecard_Paypal';
 
 	return $methods;
+}
+
+/**
+ * Add Wirecard Authorization order status
+ *
+ * @param array $order_statuses
+ *
+ * @return array
+ *
+ * @since 1.0.0
+ */
+function wirecard_wc_order_statuses( $order_statuses ) {
+	$order_statuses['wc-authorization'] = __( 'Authorized', 'Order status', 'woocommerce-gateway-wirecard' );
+
+	return $order_statuses;
 }
 
 /**
@@ -120,7 +147,7 @@ function install_wirecard_payment_gateway() {
 }
 
 /**
- * Add Wirecard Payment Gateway options page
+ * Add Wirecard Payment Gateway options page and back-end pages
  *
  * @since 1.0.0
  */
