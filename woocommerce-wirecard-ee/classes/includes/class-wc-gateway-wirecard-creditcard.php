@@ -72,8 +72,8 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 		$this->additional_helper = new Additional_Information();
 
 		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
-		add_action( 'wp_ajax_update_request_id_' . $this->id, array( $this, 'get_request_id' ) );
 		add_action( 'woocommerce_api_checkout_form_submit_' . $this->id, array( $this, 'post_form' ) );
+		add_action( 'woocommerce_api_get_request_data_' . $this->id, array( $this, 'get_request_data' ) );
 
 		parent::add_payment_gateway_actions();
 	}
@@ -225,21 +225,20 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	/**
 	 * Add payment fields to payment method
 	 *
-	 *
 	 * @since 1.0.0
 	 */
 	public function payment_fields() {
-		$config              = $this->create_payment_config();
-		$transaction_service = new TransactionService( $config );
-		$base_url            = $this->get_option( 'base_url' );
-		$gateway_url         = WOOCOMMERCE_GATEWAY_WIRECARD_URL;
-		$request_data        = $transaction_service->getDataForCreditCardUi();
+		$base_url    = $this->get_option( 'base_url' );
+		$gateway_url = WOOCOMMERCE_GATEWAY_WIRECARD_URL;
+		$page_url    = add_query_arg( [ 'wc-api' => 'get_request_data' ],
+			site_url( '/', is_ssl() ? 'https' : 'http' )
+		);
 
 		$html = <<<HTML
 			<script src='$base_url/engine/hpp/paymentPageLoader.js' type='text/javascript'></script>
             <script type='application/javascript' src='$gateway_url/assets/js/creditcard.js'></script>
             <script>
-                var request_data = $request_data;
+                var ajax_url = "$page_url";
             </script>
             <div id='wc_payment_method_wirecard_creditcard_form'></div>
 HTML;
@@ -296,27 +295,40 @@ HTML;
 		return $this->execute_transaction( $transaction, $config, $operation, $order, $order_id );
 	}
 
-	public function get_request_id() {
-		return hash('sha256', trim(['request_id' => substr( bin2hex( openssl_random_pseudo_bytes( 64 ) ), 0, 64 )] ));
+	/**
+	 * Return request data for the credit card form
+	 *
+	 * @since 1.0.0
+	 */
+	public function get_request_data() {
+		$config              = $this->create_payment_config();
+		$transaction_service = new TransactionService( $config );
+		wp_send_json_success( $transaction_service->getDataForCreditCardUi() );
+		die();
 	}
 
+	/**
+	 * Process 3ds redirect
+	 *
+	 * @since 1.0.0
+	 */
 	public function post_form() {
 		$data = WC()->session->get( 'credit_card_post_data' );
 		WC()->session->__unset( 'credit_card_post_data' );
-		?>
-		<form id="myform" method="<?= $data['method']; ?>" action="<?= $data['url']; ?>">
-		<?php foreach ($data['form_fields'] as $key => $value): ?>
-			<?php if ($value instanceof Redirect): ?>
-				<input type="hidden" name="<?= $key ?>" value="<?= $value->getSuccessUrl() ?>">
-			<?php else: ?>
-				<input type="hidden" name="<?= $key ?>" value="<?= $value ?>">
-			<?php endif; ?>
-		<?php
-			endforeach;
-		?>
-		</form>
-		<script>document.getElementsByTagName('form')[0].submit();</script>
-		<?php
+
+		$html  = '';
+		$html .= '<form id="credit_card_form" method="' . $data['method'] . '" action="' . $data['url'] . '">';
+		foreach ( $data['form_fields'] as $key => $value ) {
+			if ( $value instanceof Redirect ) {
+				$html .= '<input type="hidden" name="' . $key . '" value="' . $value->getSuccessUrl() . '">';
+			} else {
+				$html .= '<input type="hidden" name="' . $key . '" value="' . $value . '">';
+			}
+		}
+		$html .= '</form>';
+		$html .= '<script>document.getElementsByTagName("form")[0].submit();</script>';
+
+		echo $html;
 		die();
 	}
 }

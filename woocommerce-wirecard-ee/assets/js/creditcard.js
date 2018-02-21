@@ -49,25 +49,47 @@ function formSubmitSuccessHandler( response ) {
 
 	checkout_form.submit();
 }
+$ = jQuery;
 
-jQuery( document ).ajaxComplete(function() {
-	if ( jQuery( "#payment_method_woocommerce_wirecard_creditcard" )[0].checked === true &&
-		jQuery( '#wc_payment_method_wirecard_creditcard_form' )[0].hasChildNodes() === false ) {
-		renderForm();
+jQuery( document ).ready(function() {
+
+	if ($("#wc_payment_method_wirecard_creditcard_form").is(":visible")) {
+		getRequestData();
 	}
-	jQuery( ".wc_payment_methods" ).on( "click", '#payment_method_woocommerce_wirecard_creditcard', function() {
-		if ( jQuery( '#wc_payment_method_wirecard_creditcard_form' )[0].hasChildNodes() === false) {
-			renderForm();
+
+	jQuery( "input[name=payment_method]" ).change(function() {
+		if ($(this).val() === 'woocommerce_wirecard_creditcard') {
+			getRequestData();
+			return false;
 		}
 	});
+
+	/**
+	 * Get data rquired to render the form
+	 *
+	 * @since 1.0.0
+	 */
+	function getRequestData() {
+		$.ajax({
+			type: 'POST',
+			url: ajax_url,
+			data: { 'action' : 'get_credit_card_request_data_woocommerce_wirecard_creditcard' },
+			dataType: 'json',
+			success: function (data) {
+				renderForm(JSON.parse(data.data));
+			},
+			error: function (data) {
+				console.log(data);
+			}
+		});
+	}
 
 	/**
 	 * Render the credit card form
 	 *
 	 * @since 1.0.0
 	 */
-	function renderForm() {
-		console.log("render");
+	function renderForm( request_data ) {
 		WirecardPaymentPage.seamlessRenderForm({
 			requestData: request_data,
 			wrappingDivId: "wc_payment_method_wirecard_creditcard_form",
