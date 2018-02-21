@@ -90,18 +90,42 @@ class Wirecard_Transaction_Factory {
 	public function create_transaction( $order, $response ) {
 		global $wpdb;
 
+		$parent_transaction_id = '';
+		$parent_transaction    = $this->get_transaction( $response->getParentTransactionId() );
+		$transaction_state     = 'success';
+		$transaction_link = NULL;
+
+		if ( $parent_transaction ) {
+			$parent_transaction_id = $response->getParentTransactionId();
+			// update to closed
+			$wpdb->update(
+				$this->table_name,
+				array(
+					'closed'            => '1',
+					'transaction_state' => 'closed',
+				),
+				array(
+					'transaction_id' => $parent_transaction_id,
+				)
+			);
+			if ( $response->getTransactionType() == 'void-authorization' ) {
+				$transaction_state = 'closed';
+			}
+		}
+		//$transaction_link = $this->get_transaction_link( $base_url, $response );
 		$wpdb->insert(
 			$this->table_name,
 			array(
 				'transaction_id'        => $response->getTransactionId(),
-				'parent_transaction_id' => $response->getParentTransactionId(),
+				'parent_transaction_id' => $parent_transaction_id,
 				'payment_method'        => $response->getPaymentMethod(),
-				'transaction_state'     => 'success',
+				'transaction_state'     => $transaction_state,
 				'transaction_type'      => $response->getTransactionType(),
 				'amount'                => $order->get_total(),
 				'currency'              => get_woocommerce_currency(),
 				'order_id'              => $order->get_id(),
-				'response'				=> wp_json_encode( $response->getData() ),
+				'response'              => wp_json_encode( $response->getData() ),
+				'transaction_link'      => $transaction_link,
 			)
 		);
 
@@ -149,7 +173,7 @@ class Wirecard_Transaction_Factory {
 			foreach ( $this->fields_list as $field_key => $field_value ) {
 				echo "<td>";
 				if ( key_exists( $field_key, $row ) ) {
-					if ( 'transaction_id' == $field_key || 'parent_transaction_id' == $field_key ) {
+					if ( 'transaction_id' == $field_key || ( 'parent_transaction_id' == $field_key && !empty( $field_value ) ) ) {
 						echo "<a href='?page=wirecardpayment&id={$row[ $field_key ]}'>" . $row[$field_key] . "</a>";
 					} else {
 						echo $row[$field_key];
@@ -192,13 +216,17 @@ class Wirecard_Transaction_Factory {
 	 */
 	public function show_transaction( $transaction_id ) {
 		$transaction = $this->get_transaction( $transaction_id );
-		if (! $transaction) {
+		if ( ! $transaction ) {
 			echo "No transaction found";
+
 			return;
 		}
 		/** @var WC_Wirecard_Payment_Gateway $payment */
 		$payment = $this->transaction_handler->get_payment_method( $transaction->payment_method );
+		$response_data = json_decode($transaction->response);
 		?>
+		<link rel='stylesheet'
+			  href='<?= plugins_url( 'woocommerce-wirecard-ee/assets/styles/admin.css' ) ?>'>
 		<div class="wrap">
 			<div class="postbox-container">
 			<div class="postbox">
@@ -206,30 +234,52 @@ class Wirecard_Transaction_Factory {
 					<div class="panel-wrap woocommerce">
 						<div class="panel woocommerce-order-data">
 							<h2 class="woocommerce-order-data__heading">Transaction <?php echo $transaction_id ?></h2>
-							<h4>
+							<h3>
 								Payment via <?php echo $transaction->payment_method; ?>
-							</h4>
+							</h3>
+							<!-- div><?php //echo $transaction->transaction_link; ?></div -->
+							<br>
+							<div class="transaction-type type-authorization"><?php echo $transaction->transaction_type; ?></div>
+							<br>
+							<div class="wc-order-data-row">
+								<?php
+								if ( $payment->can_cancel( $transaction->transaction_type ) && !$transaction->closed ) {
+									echo "<a href='?page=cancelpayment&id={$transaction_id}' class='button'>Cancel Transaction</a> ";
+								}
+								if ( $payment->can_capture( $transaction->transaction_type ) && !$transaction->closed ) {
+									echo "<a href='?page=capturepayment&id={$transaction_id}' class='button'>Capture Transaction</a> ";
+								}
+								if ( $payment->can_refund( $transaction->transaction_type ) && !$transaction->closed ) {
+									echo "<a href='?page=refundpayment&id={$transaction_id}' class='button'>Refund Transaction</a> ";
+								}
+								if ( $transaction->closed ) {
+									echo "<p class='add-items'>No Back-end operations available for this transaction</p>";
+								}
+								?>
+								<p class="add-items">
+									<a href="?page=wirecardpayment" class="button">Wirecard Payment Gateway Dashboard</a>
+								</p>
+							</div>
+							<hr>
+							<h3>Responsedata:</h3>
 							<div class="order_data_column_container">
 								<table>
 									<tr>
 										<td>
-											Beschriftung
+											<b>Total</b>
 										</td>
 										<td>
-											Inhalt
+											<b><?php echo $transaction->amount . ' ' . $transaction->currency; ?></b>
 										</td>
 									</tr>
+									<?php
+									foreach ( $response_data as $key => $value ) {
+										echo "<tr>";
+										echo "<td>" . $key . "</td><td>" . $value . "</td>";
+										echo "</tr>";
+									}
+									?>
 								</table>
-							</div>
-							<?php
-							if ( $payment->can_cancel() ) {
-								echo "<div class='wc-order-data-row'><p class='add-items'><a href='?page=cancelpayment&id={$transaction_id}' class='button'>Cancel Transaction</a></p></div>";
-							}
-							?>
-							<div class="wc-order-data-row">
-								<p class="add-items">
-									<a href="?page=wirecardpayment" class="button">Wirecard Payment Gateway Dashboard</a>
-								</p>
 							</div>
 						</div>
 					</div>
@@ -255,5 +305,35 @@ class Wirecard_Transaction_Factory {
 			return;
 		}
 		$this->transaction_handler->cancel_transaction( $transaction );
+	}
+
+	/**
+	 * Handles capture transaction calls
+	 *
+	 * @param $transaction_id
+	 *
+	 * @since 1.0.0
+	 */
+	public function handle_capture( $transaction_id ) {
+		/** @var stdClass $transaction */
+		$transaction = $this->get_transaction( $transaction_id );
+		if (! $transaction) {
+			echo "No transaction found";
+			return;
+		}
+		$this->transaction_handler->capture_transaction( $transaction );
+	}
+
+	public function get_transaction_link( $base_url, $response ) {
+		$transaction_id = $response->getTransactionId();
+		$output = 'For more transaction information click ';
+		$output .= sprintf(
+			'<a target="_blank" href="' . $base_url . '/engine/rest/merchants/%s/payments/%s">',
+			$response->findElement('merchant-account-id'),
+			$transaction_id
+		);
+		$output .= 'here';
+		$output .= '</a>';
+		return $output;
 	}
 }

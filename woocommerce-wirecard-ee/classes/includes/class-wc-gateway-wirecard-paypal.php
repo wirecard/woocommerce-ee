@@ -69,9 +69,9 @@ class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 			'refunds',
 		);
 
-		$this->cancel = true;
-		$this->capture = false;
-		$this->refund = false;
+		$this->cancel = array( 'authorization' );
+		$this->capture = array( 'authorization' );
+		$this->refund = array( 'debit', 'capture-authorization' );
 
 		// Load the form fields.
 		$this->init_form_fields();
@@ -233,12 +233,31 @@ class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 	 *
 	 * @since 1.0.0
 	 */
-	public function cancel_payment( $data ) {
+	public function process_cancel( $data ) {
 		$amount = new Amount( $data->amount, $data->currency );
 
 		$transaction = new PayPalTransaction();
 		$transaction->setParentTransactionId( $data->transaction_id );
 		$transaction->setAmount( $amount );
+
+		return $transaction;
+	}
+
+	/**
+	 * Create transaction for capture
+	 *
+	 * @param stdClass $data
+	 *
+	 * @return PayPalTransaction
+	 *
+	 * @since 1.0.0
+	 */
+	public function process_capture( $data ) {
+		$amount = new Amount( $data->amount, $data->currency );
+
+		$transaction = new PayPalTransaction();
+		$transaction->setParentTransactionId( $data->transaction_id );
+		//$transaction->setAmount( $amount );
 
 		return $transaction;
 	}

@@ -108,9 +108,10 @@ function install_wirecard_payment_gateway() {
 		amount float NOT NULL,
 		currency varchar(3) NOT NULL,
 		response TEXT default NULL,
-		tinyint(1) NOT NULL default '0',
-		created DATETIME NOT NULL default '0000-00-00 00:00:00',
-		modified DATETIME default NULL,
+		transaction_link varchar(255) default NULL,
+		closed tinyint(1) NOT NULL default '0',
+		created DATETIME NOT NULL default CURRENT_TIMESTAMP,
+		modified DATETIME NOT NULL default CURRENT_TIMESTAMP,
  		PRIMARY KEY (tx_id)
 	)$collate;";
 
@@ -136,10 +137,18 @@ function wirecard_gateway_options_page() {
 	);
 	add_submenu_page(
 		null,
-		__( 'Cancel Transaction', 'woocommerce-wirecard-checkout-seamless' ),
-		__( 'Cancel Transaction', 'woocommerce-wirecard-checkout-seamless' ),
+		__( 'Cancel Transaction', 'woocommerce-gateway-wirecard' ),
+		__( 'Cancel Transaction', 'woocommerce-gateway-wirecard' ),
 		'manage_options',
 		'cancelpayment',
 		array( $admin, 'cancel_transaction' )
+	);
+	add_submenu_page(
+		null,
+		__( 'Capture Transaction', 'woocommerce-gateway-wirecard' ),
+		__( 'Capture Transaction', 'woocommerce-gateway-wirecard' ),
+		'manage_options',
+		'capturepayment',
+		array( $admin, 'capture_transaction' )
 	);
 }

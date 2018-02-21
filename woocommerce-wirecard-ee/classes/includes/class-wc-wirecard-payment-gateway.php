@@ -49,11 +49,11 @@ use Wirecard\PaymentSdk\TransactionService;
  */
 abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 
-	protected $cancel;
+	protected $cancel = array( 'authorization' );
 
-	protected $refund;
+	protected $refund = array( 'capture-authorization' );
 
-	protected $capture;
+	protected $capture = array( 'authorization' );
 
 	/**
 	 * Add global wirecard payment gateway actions
@@ -75,9 +75,6 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 				'return_request',
 			)
 		);
-
-		add_action( 'woocommerce_order_status_processing_to_completed', array( $this, 'capture_payment' ) );
-		add_action( 'woocommerce_order_status_processing_to_cancelled', array( $this, 'cancel_payment' ) );
 	}
 
 	/**
@@ -141,13 +138,14 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 		try {
 			/** @var Response $response */
 			$response = $notification_handler->handle_notification( $payment_method, $notification );
-			$this->save_response_data( $order, $response );
 			if ( ! $order->is_paid() ) {
 				if ( ! $response ) {
 					$order->update_status( 'failed' );
+				} else {
+					$this->save_response_data( $order, $response );
+					$this->update_payment_transaction( $order, $response );
+					$order = $this->update_order_state( $order, $response->getTransactionType() );
 				}
-				$this->update_payment_transaction( $order, $response );
-				$order = $this->update_order_state( $order, $response->getTransactionType() );
 			}
 		} catch ( Exception $exception ) {
 			if ( ! $order->is_paid() ) {
@@ -328,8 +326,12 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 *
 	 * @since 1.0.0
 	 */
-	public function can_capture() {
-		return $this->capture;
+	public function can_capture( $type ) {
+		if ( in_array( $type, $this->capture ) ) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**
@@ -339,8 +341,12 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 *
 	 * @since 1.0.0
 	 */
-	public function can_cancel() {
-		return $this->cancel;
+	public function can_cancel( $type ) {
+		if ( in_array( $type, $this->cancel ) ) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**
@@ -350,8 +356,12 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 *
 	 * @since 1.0.0
 	 */
-	public function can_refund() {
-		return $this->refund;
+	public function can_refund( $type ) {
+		if ( in_array( $type, $this->refund ) ) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**
