@@ -58,7 +58,7 @@ jQuery( document ).ready(function() {
 	}
 
 	jQuery( "input[name=payment_method]" ).change(function() {
-		if ( $(this).val() === 'woocommerce_wirecard_creditcard' ) {
+		if ( $( this ).val() === 'woocommerce_wirecard_creditcard' ) {
 			getRequestData();
 			return false;
 		}
