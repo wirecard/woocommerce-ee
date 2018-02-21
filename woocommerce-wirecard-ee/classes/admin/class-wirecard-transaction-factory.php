@@ -152,12 +152,8 @@ class Wirecard_Transaction_Factory {
 		$start = ( $page * 20 ) - 19;
 
 		$start --;
-		$query = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}wirecard_payment_gateway_tx ORDER BY tx_id DESC LIMIT %d,20", $start );
-		$rows  = $wpdb->get_results( $query, ARRAY_A );
-
-		$sum_query = "SELECT CEILING(COUNT(*)/20) as pages FROM {$wpdb->prefix}wirecard_payment_gateway_tx";
-
-		$pages = $wpdb->get_row( $sum_query );
+		$rows  = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}wirecard_payment_gateway_tx ORDER BY tx_id DESC LIMIT %d,20", $start ), ARRAY_A );
+		$pages = $wpdb->get_row( "SELECT CEILING(COUNT(*)/20) as pages FROM {$wpdb->prefix}wirecard_payment_gateway_tx" );
 
 		if ( is_null( $pages ) ) {
 			$pages        = new stdClass();
@@ -205,7 +201,7 @@ class Wirecard_Transaction_Factory {
 	public function get_transaction( $transaction_id ) {
 		global $wpdb;
 
-		$transaction = $wpdb->get_row( "SELECT * FROM {$wpdb->prefix}wirecard_payment_gateway_tx WHERE transaction_id = '$transaction_id'" );
+		$transaction = $wpdb->get_row( "SELECT * FROM {$wpdb->prefix}wirecard_payment_gateway_tx WHERE transaction_id = %s", $transaction_id );
 
 		if ( empty( $transaction ) ) {
 			return false;
