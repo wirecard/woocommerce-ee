@@ -73,6 +73,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 
 		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
 		add_action( 'wp_ajax_update_request_id_' . $this->id, array( $this, 'get_request_id' ) );
+		add_action( 'woocommerce_api_checkout_form_submit_' . $this->id, array( $this, 'post_form' ) );
 
 		parent::add_payment_gateway_actions();
 	}
@@ -297,5 +298,25 @@ HTML;
 
 	public function get_request_id() {
 		return hash('sha256', trim(['request_id' => substr( bin2hex( openssl_random_pseudo_bytes( 64 ) ), 0, 64 )] ));
+	}
+
+	public function post_form() {
+		$data = WC()->session->get( 'credit_card_post_data' );
+		WC()->session->__unset( 'credit_card_post_data' );
+		?>
+		<form id="myform" method="<?= $data['method']; ?>" action="<?= $data['url']; ?>">
+		<?php foreach ($data['form_fields'] as $key => $value): ?>
+			<?php if ($value instanceof Redirect): ?>
+				<input type="hidden" name="<?= $key ?>" value="<?= $value->getSuccessUrl() ?>">
+			<?php else: ?>
+				<input type="hidden" name="<?= $key ?>" value="<?= $value ?>">
+			<?php endif; ?>
+		<?php
+			endforeach;
+		?>
+		</form>
+		<script>document.getElementsByTagName('form')[0].submit();</script>
+		<?php
+		die();
 	}
 }

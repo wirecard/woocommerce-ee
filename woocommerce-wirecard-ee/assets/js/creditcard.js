@@ -10,21 +10,9 @@ var processing    = false;
 checkout_form.on( 'checkout_place_order', function() {
 	if ( jQuery('#payment_method_woocommerce_wirecard_creditcard')[0].checked === true && processing === false ) {
 		processing = true;
-		console.log("creditcard selected");
 		if ( token !== null ) {
-			console.log("token not set");
 			return true;
 		} else {
-			console.log("token set");
-			/*jQuery.get(
-				ajaxurl,
-				{
-					'action' : 'update_request_id_woocommerce_wirecard_creditcard'
-				},
-				function (response) {
-					console.log(response);
-				}
-			);*/
 			WirecardPaymentPage.seamlessSubmitForm({
 				onSuccess: formSubmitSuccessHandler,
 				onError: logCallback,
@@ -63,10 +51,10 @@ function formSubmitSuccessHandler( response ) {
 }
 
 jQuery( document ).ajaxComplete(function() {
-	/*if ( jQuery( "#payment_method_woocommerce_wirecard_creditcard" )[0].checked === true &&
+	if ( jQuery( "#payment_method_woocommerce_wirecard_creditcard" )[0].checked === true &&
 		jQuery( '#wc_payment_method_wirecard_creditcard_form' )[0].hasChildNodes() === false ) {
 		renderForm();
-	}*/
+	}
 	jQuery( ".wc_payment_methods" ).on( "click", '#payment_method_woocommerce_wirecard_creditcard', function() {
 		if ( jQuery( '#wc_payment_method_wirecard_creditcard_form' )[0].hasChildNodes() === false) {
 			renderForm();
@@ -79,6 +67,7 @@ jQuery( document ).ajaxComplete(function() {
 	 * @since 1.0.0
 	 */
 	function renderForm() {
+		console.log("render");
 		WirecardPaymentPage.seamlessRenderForm({
 			requestData: request_data,
 			wrappingDivId: "wc_payment_method_wirecard_creditcard_form",
