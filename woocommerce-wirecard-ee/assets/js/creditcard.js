@@ -1,5 +1,6 @@
 var token         = null;
 var checkout_form = jQuery( 'form.checkout' );
+var processing    = false;
 
 /**
  * Submit the seamless form before order is placed
@@ -7,16 +8,32 @@ var checkout_form = jQuery( 'form.checkout' );
  * @since 1.0.0
  */
 checkout_form.on( 'checkout_place_order', function() {
-	if ( token != null ) {
-		return true;
-	} else {
-		WirecardPaymentPage.seamlessSubmitForm({
-			onSuccess: formSubmitSuccessHandler,
-			onError: logCallback,
-			wrappingDivId: "wc_payment_method_wirecard_creditcard_form"
-		});
-		return false;
+	if ( jQuery('#payment_method_woocommerce_wirecard_creditcard')[0].checked === true && processing === false ) {
+		processing = true;
+		console.log("creditcard selected");
+		if ( token !== null ) {
+			console.log("token not set");
+			return true;
+		} else {
+			console.log("token set");
+			/*jQuery.get(
+				ajaxurl,
+				{
+					'action' : 'update_request_id_woocommerce_wirecard_creditcard'
+				},
+				function (response) {
+					console.log(response);
+				}
+			);*/
+			WirecardPaymentPage.seamlessSubmitForm({
+				onSuccess: formSubmitSuccessHandler,
+				onError: logCallback,
+				wrappingDivId: "wc_payment_method_wirecard_creditcard_form"
+			});
+			return false;
+		}
 	}
+	processing = false;
 });
 
 /**
@@ -46,12 +63,12 @@ function formSubmitSuccessHandler( response ) {
 }
 
 jQuery( document ).ajaxComplete(function() {
-	if ( jQuery( "#payment_method_woocommerce_wirecard_creditcard" ).checked == true &&
-		jQuery( '#wc_payment_method_wirecard_creditcard_form' )[0].hasChildNodes() == false ) {
+	/*if ( jQuery( "#payment_method_woocommerce_wirecard_creditcard" )[0].checked === true &&
+		jQuery( '#wc_payment_method_wirecard_creditcard_form' )[0].hasChildNodes() === false ) {
 		renderForm();
-	}
-	jQuery( ".wc_payment_methods" ).on( "click", ".payment_method_woocommerce_wirecard_creditcard", function() {
-		if ( jQuery( '#wc_payment_method_wirecard_creditcard_form' )[0].hasChildNodes() == false) {
+	}*/
+	jQuery( ".wc_payment_methods" ).on( "click", '#payment_method_woocommerce_wirecard_creditcard', function() {
+		if ( jQuery( '#wc_payment_method_wirecard_creditcard_form' )[0].hasChildNodes() === false) {
 			renderForm();
 		}
 	});

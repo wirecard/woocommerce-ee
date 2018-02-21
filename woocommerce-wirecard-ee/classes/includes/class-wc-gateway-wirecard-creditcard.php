@@ -72,6 +72,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 		$this->additional_helper = new Additional_Information();
 
 		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
+		add_action( 'wp_ajax_update_request_id_' . $this->id, array( $this, 'get_request_id' ) );
 
 		parent::add_payment_gateway_actions();
 	}
@@ -234,7 +235,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 		$request_data        = $transaction_service->getDataForCreditCardUi();
 
 		$html = <<<HTML
-            <script src='$base_url/engine/hpp/paymentPageLoader.js' type='text/javascript'></script>
+			<script src='$base_url/engine/hpp/paymentPageLoader.js' type='text/javascript'></script>
             <script type='application/javascript' src='$gateway_url/assets/js/creditcard.js'></script>
             <script>
                 var request_data = $request_data;
@@ -292,5 +293,9 @@ HTML;
 		}
 
 		return $this->execute_transaction( $transaction, $config, $operation, $order, $order_id );
+	}
+
+	public function get_request_id() {
+		return hash('sha256', trim(['request_id' => substr( bin2hex( openssl_random_pseudo_bytes( 64 ) ), 0, 64 )] ));
 	}
 }

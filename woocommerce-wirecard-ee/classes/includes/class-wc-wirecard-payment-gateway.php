@@ -40,6 +40,7 @@ use Wirecard\PaymentSdk\Config\Config;
 use Wirecard\PaymentSdk\Response\Response;
 use Wirecard\PaymentSdk\Response\FailureResponse;
 use Wirecard\PaymentSdk\Response\InteractionResponse;
+use Wirecard\PaymentSdk\Response\FormInteractionResponse;
 use Wirecard\PaymentSdk\TransactionService;
 
 /**
@@ -220,6 +221,87 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 
 		if ( $response instanceof InteractionResponse ) {
 			$page_url = $response->getRedirectUrl();
+		} elseif ( $response instanceof FormInteractionResponse ) {
+			// START1
+
+			foreach ( $response->getFormFields() as $key => $value ) {
+				$post_data[$key] = $value;
+			}
+			$post_data['TermUrl'] = "http://nxclebq83o.ngrok.io/woocommerce/?wc-api=WC_Wirecard_Payment_Gateway_Redirect&order-id=52&payment-state=success&payment-method=creditcard";
+
+			//$logger->error("form fields: " . print_r($post_items, true));
+
+			$ch = curl_init($response->getUrl());
+			curl_setopt($ch, CURLOPT_POST, 1);
+			curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+			curl_setopt($ch, CURLOPT_VERBOSE, true);
+			curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+				'Content-Type: multipart/form-data',
+			));
+			curl_setopt($ch, CURLOPT_HEADER, 1);
+			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+
+			$response = curl_exec($ch);
+			$logger->error("response1: " . print_r(curl_getinfo($ch), true));
+			$logger->error("response2: " . print_r($response, true));
+			curl_close($ch);
+			/*
+
+			$options = array(
+				'http' => array(
+					'header'  => "Content-type: multipart/form-data\r\n" .
+						         "User-Agent: " . $_SERVER['HTTP_USER_AGENT'],
+					'method'  => 'POST',
+					'content' => $post_data,
+				)
+			);
+			$logger->error("context: " . print_r($options, true));
+			$context  = stream_context_create($options);
+
+			$logger->error("context: " . print_r($context, true));
+
+
+			//$result = file_get_contents( $response->getUrl(), false, $context );
+
+			$result = file_get_contents($response->getUrl(), false, $context);
+
+
+			$logger->error("result: " . print_r($result, true));
+
+
+			$response_test = wp_safe_remote_post($response->getUrl(), array(
+				'method' => 'POST',
+				'httpversion' => '1.1',
+				'timeout' => 60,
+				'headers' => array(
+					'Content-Type' => 'multipart/form-data',
+					'User-Agent' => $_SERVER['HTTP_USER_AGENT'],
+				),
+				'body' => $post_data,
+			));
+
+			$logger->error("WP result 2: " . print_r($response_test, true));
+			//START2
+			/*foreach ( $response->getFormFields() as $key => $value ) {
+				$post_items[] = $key . '=' . $value;
+			}
+
+			$post_string = implode ( '&', $post_items );
+
+			$post_string = '?' . $post_string;
+
+			$data_length = strlen($post_string);
+
+			$connection = fsockopen($response->getUrl(), 80);
+
+			fputs($connection, "POST /target_url.php HTTP/1.1rn");
+			fputs($connection, "Host: www.domainname.com rn");
+			fputs($connection, "Content-Type: application/x-www-form-urlencodedrn");
+			fputs($connection, "Content-Length: $data_length");
+			fputs($connection, "Connection: closernrn");
+			fputs($connection, $post_string);*/
+
 		}
 
 		// FailureResponse, redirect should be implemented
