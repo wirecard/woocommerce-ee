@@ -386,7 +386,7 @@ HTML;
 	 * Create transaction for capture
 	 *
 	 * @param int $order_id
-	 * @param flaot|null $amount
+	 * @param float|null $amount
 	 *
 	 * @return CreditCardTransaction
 	 *

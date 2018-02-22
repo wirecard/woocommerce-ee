@@ -250,7 +250,7 @@ class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 	 * Create transaction for capture
 	 *
 	 * @param int $order_id
-	 * @param flaot|null $amount
+	 * @param float|null $amount
 	 *
 	 * @return PayPalTransaction
 	 *
