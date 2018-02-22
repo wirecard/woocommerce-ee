@@ -227,18 +227,21 @@ class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 	/**
 	 * Create transaction for cancel
 	 *
-	 * @param stdClass $data
+	 * @param int $order_id
+	 * @param float|null $amount
 	 *
 	 * @return PayPalTransaction
 	 *
 	 * @since 1.0.0
 	 */
-	public function process_cancel( $data ) {
-		$amount = new Amount( $data->amount, $data->currency );
+	public function process_cancel( $order_id, $amount = null ) {
+		$order = wc_get_order( $order_id );
 
 		$transaction = new PayPalTransaction();
-		$transaction->setParentTransactionId( $data->transaction_id );
-		$transaction->setAmount( $amount );
+		$transaction->setParentTransactionId( $order->get_transaction_id() );
+		if ( ! is_null( $amount ) ) {
+			$transaction->setAmount( new Amount( $amount, $order->get_currency() ) );
+		}
 
 		return $transaction;
 	}
@@ -246,20 +249,47 @@ class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 	/**
 	 * Create transaction for capture
 	 *
-	 * @param stdClass $data
+	 * @param int $order_id
+	 * @param flaot|null $amount
 	 *
 	 * @return PayPalTransaction
 	 *
 	 * @since 1.0.0
 	 */
-	public function process_capture( $data ) {
-		$amount = new Amount( $data->amount, $data->currency );
+	public function process_capture( $order_id, $amount = null ) {
+		$order = wc_get_order( $order_id );
 
 		$transaction = new PayPalTransaction();
-		$transaction->setParentTransactionId( $data->transaction_id );
-		//$transaction->setAmount( $amount );
+		$transaction->setParentTransactionId( $order->get_transaction_id() );
+		if ( ! is_null( $amount ) ) {
+			$transaction->setAmount( new Amount( $amount, $order->get_currency() ) );
+		}
 
 		return $transaction;
+	}
+
+	/**
+	 * Create transaction for refund
+	 *
+	 * @param int    $order_id
+	 * @param float|null   $amount
+	 * @param string $reason
+	 *
+	 * @return bool|PayPalTransaction|WP_Error
+	 *
+	 * @since 1.0.0
+	 */
+	public function process_refund( $order_id, $amount = null, $reason = '' ) {
+		parent::process_refund( $order_id, $amount, '' );
+		$order  = wc_get_order( $order_id );
+		$config = $this->create_payment_config();
+
+		$transaction = new PayPalTransaction();
+		$transaction->setParentTransactionId( $order->get_transaction_id() );
+		if ( ! is_null( $amount ) ) {
+			$transaction->setAmount( new Amount( $amount, $order->get_currency() ) );
+		}
+		return $this->execute_refund( $transaction, $config, $order );
 	}
 
 	/**

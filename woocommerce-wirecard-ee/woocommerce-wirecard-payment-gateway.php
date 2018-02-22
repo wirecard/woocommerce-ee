@@ -178,4 +178,12 @@ function wirecard_gateway_options_page() {
 		'capturepayment',
 		array( $admin, 'capture_transaction' )
 	);
+	add_submenu_page(
+		null,
+		__( 'Refund Transaction', 'woocommerce-gateway-wirecard' ),
+		__( 'Refund Transaction', 'woocommerce-gateway-wirecard' ),
+		'manage_options',
+		'refundpayment',
+		array( $admin, 'refund_transaction' )
+	);
 }

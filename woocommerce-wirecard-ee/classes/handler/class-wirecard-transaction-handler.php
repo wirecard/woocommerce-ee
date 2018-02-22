@@ -43,10 +43,11 @@ use Wirecard\PaymentSdk\TransactionService;
  * Class Wirecard_Transaction_Handler
  */
 class Wirecard_Transaction_Handler extends Wirecard_Handler {
+
 	/**
 	 * Cancel transaction via Payment Gateway
 	 *
-	 * @param stdClass                    $transaction_data
+	 * @param stdClass $transaction_data
 	 *
 	 * @since 1.0.0
 	 */
@@ -54,7 +55,7 @@ class Wirecard_Transaction_Handler extends Wirecard_Handler {
 		/** @var WC_Wirecard_Payment_Gateway $payment */
 		$payment     = $this->get_payment_method( $transaction_data->payment_method );
 		$config      = $payment->create_payment_config();
-		$transaction = $payment->process_cancel( $transaction_data );
+		$transaction = $payment->process_cancel( $transaction_data->order_id, $transaction_data->amount );
 
 		$transaction_service = new TransactionService( $config );
 		try {
@@ -67,7 +68,6 @@ class Wirecard_Transaction_Handler extends Wirecard_Handler {
 		if ( $response instanceof SuccessResponse ) {
 			$order = wc_get_order( $transaction_data->order_id );
 			$order->set_transaction_id( $response->getTransactionId() );
-			$order->update_status( 'cancelled', __( 'Cancelled order via Wirecard Payment Processing Gateway', 'woocommerce-gateway-wirecard' ) );
 			$redirect_url = '/admin.php?page=wirecardpayment&id=' . $response->getTransactionId();
 			wp_redirect( admin_url( $redirect_url ), 301 );
 			die();
@@ -80,7 +80,7 @@ class Wirecard_Transaction_Handler extends Wirecard_Handler {
 	/**
 	 * Capture transaction via Payment Gateway
 	 *
-	 * @param stdClass                    $transaction_data
+	 * @param stdClass $transaction_data
 	 *
 	 * @since 1.0.0
 	 */
@@ -88,7 +88,7 @@ class Wirecard_Transaction_Handler extends Wirecard_Handler {
 		/** @var WC_Wirecard_Payment_Gateway $payment */
 		$payment     = $this->get_payment_method( $transaction_data->payment_method );
 		$config      = $payment->create_payment_config();
-		$transaction = $payment->process_capture( $transaction_data );
+		$transaction = $payment->process_capture( $transaction_data->order_id, $transaction_data->amount );
 
 		$transaction_service = new TransactionService( $config );
 		try {
@@ -101,7 +101,6 @@ class Wirecard_Transaction_Handler extends Wirecard_Handler {
 		if ( $response instanceof SuccessResponse ) {
 			$order = wc_get_order( $transaction_data->order_id );
 			$order->set_transaction_id( $response->getTransactionId() );
-			$order->update_status( 'completed', __( 'Captured order via Wirecard Payment Processing Gateway', 'woocommerce-gateway-wirecard' ) );
 			$redirect_url = '/admin.php?page=wirecardpayment&id=' . $response->getTransactionId();
 			wp_redirect( admin_url( $redirect_url ), 301 );
 			die();
@@ -109,5 +108,25 @@ class Wirecard_Transaction_Handler extends Wirecard_Handler {
 		if ( $response instanceof FailureResponse ) {
 			echo 'failed to capture';
 		}
+	}
+
+	/**
+	 * Refund transaction via Payment Gateway
+	 *
+	 * @param stdClass $transaction_data
+	 *
+	 * @return bool|WP_Error
+	 *
+	 * @since 1.0.0
+	 */
+	public function refund_transaction( $transaction_data ) {
+		/** @var WC_Wirecard_Payment_Gateway $payment */
+		$payment = $this->get_payment_method( $transaction_data->payment_method );
+		$return  = $payment->process_refund( $transaction_data->order_id, $transaction_data->amount );
+		if ( is_wp_error( $return ) ) {
+			echo $return->get_error_message();
+		}
+		wp_redirect( admin_url( $return ), 301 );
+		die();
 	}
 }

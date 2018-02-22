@@ -101,7 +101,7 @@ class Wirecard_Transaction_Factory {
 
 		if ( $parent_transaction ) {
 			$parent_transaction_id = $response->getParentTransactionId();
-			// update parent transaction to closed, since there are no back-end ops possible anymore
+			// update parent transaction to closed, no back-end ops possible anymore
 			$wpdb->update(
 				$this->table_name,
 				array(
@@ -112,10 +112,6 @@ class Wirecard_Transaction_Factory {
 					'transaction_id' => $parent_transaction_id,
 				)
 			);
-			// should be updated by other end transaction types
-			if ( $response->getTransactionType() == 'void-authorization' ) {
-				$transaction_state = 'closed';
-			}
 		}
 		$transaction_link = $this->get_transaction_link( $base_url, $response );
 		$wpdb->insert(
@@ -201,7 +197,7 @@ class Wirecard_Transaction_Factory {
 	public function get_transaction( $transaction_id ) {
 		global $wpdb;
 
-		$transaction = $wpdb->get_row( "SELECT * FROM {$wpdb->prefix}wirecard_payment_gateway_tx WHERE transaction_id = %s", $transaction_id );
+		$transaction = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}wirecard_payment_gateway_tx WHERE transaction_id = %s", $transaction_id ) );
 
 		if ( empty( $transaction ) ) {
 			return false;
@@ -326,6 +322,24 @@ class Wirecard_Transaction_Factory {
 			return;
 		}
 		$this->transaction_handler->capture_transaction( $transaction );
+	}
+
+	/**
+	 * Handles refund transaction calls
+	 *
+	 * @param $transaction_id
+	 *
+	 * @since 1.0.0
+	 */
+	public function handle_refund( $transaction_id ) {
+		/** @var stdClass $transaction */
+		$transaction = $this->get_transaction( $transaction_id );
+		if ( ! $transaction ) {
+			echo 'No transaction found';
+
+			return;
+		}
+		$this->transaction_handler->refund_transaction( $transaction );
 	}
 
 	/**

@@ -229,7 +229,6 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 			$page_url = $response->getRedirectUrl();
 		}
 
-		// FailureResponse, redirect should be implemented
 		if ( $response instanceof FailureResponse ) {
 			$errors = '';
 			foreach ( $response->getStatusCollection()->getIterator() as $item ) {
@@ -249,6 +248,39 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 			'result'   => 'success',
 			'redirect' => $page_url,
 		);
+	}
+
+	/**
+	 * Execute refund transaction
+	 *
+	 * @param \Wirecard\PaymentSdk\Transaction\Transaction $transaction
+	 * @param Config                                       $config
+	 * @param WC_Order                                     $order
+	 *
+	 * @return string|WP_Error
+	 *
+	 * @since 1.0.0
+	 */
+	public function execute_refund( $transaction, $config, $order ) {
+		$logger              = new WC_Logger();
+		$transaction_service = new TransactionService( $config );
+		try {
+			/** @var $response Response */
+			$response = $transaction_service->process( $transaction, 'cancel' );
+		} catch ( \Exception $exception ) {
+			$logger->error( __METHOD__ . ':' . $exception->getMessage() );
+			return new WP_Error( 'error', __( 'Processing refund failed.', 'woocommerce-gateway-wirecard' ) );
+		}
+		if ( $response instanceof SuccessResponse ) {
+			$order->set_transaction_id( $response->getTransactionId() );
+
+			return '/admin.php?page=wirecardpayment&id=' . $response->getTransactionId();
+		}
+		if ( $response instanceof FailureResponse ) {
+			return new WP_Error( 'error', __( 'Refund via Wirecard Payment Processing Gateway failed.', 'woocommerce-gateway-wirecard' ) );
+		}
+
+		return new WP_Error( 'error', __( 'Refund via Wirecard Payment Processing Gateway failed.', 'woocommerce-gateway-wirecard' ) );
 	}
 
 	/**
@@ -295,7 +327,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 		$result              = $transaction_factory->create_transaction( $order, $response, $this->get_option( 'base_url' ) );
 		if ( ! $result ) {
 			$logger = new WC_Logger();
-			$logger->debug( 'Transaction could not be saved in transaction table' );
+			$logger->debug( __METHOD__ . 'Transaction could not be saved in transaction table' );
 		}
 	}
 
@@ -317,6 +349,10 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 				break;
 			case 'void-authorization':
 				$state = 'cancelled';
+				break;
+			case 'refund-capture':
+			case 'refund-debit':
+				$state = 'refunded';
 				break;
 			case 'authorization':
 			default:
@@ -387,7 +423,5 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 		if ( ! $this->can_refund_order( $order ) ) {
 			return new WP_Error( 'error', __( 'No online refund possible at this time.', 'woocommerce-gateway-wirecard' ) );
 		}
-		//handle refund
-		return new WP_Error( 'error', __( 'Do not refund yet', 'woocommerce-gateway-wirecard' ) );
 	}
 }

@@ -84,4 +84,12 @@ class Wirecard_Settings {
 			$this->show_dashboard();
 		}
 	}
+
+	public function refund_transaction() {
+		if ( isset( $_REQUEST['id'] ) ) {
+			$this->transaction_factory->handle_refund( $_REQUEST['id'] );
+		} else {
+			$this->show_dashboard();
+		}
+	}
 }
