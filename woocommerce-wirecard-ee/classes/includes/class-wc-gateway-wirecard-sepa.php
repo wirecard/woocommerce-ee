@@ -42,7 +42,9 @@ use Wirecard\PaymentSdk\Entity\Amount;
 use Wirecard\PaymentSdk\Entity\CustomField;
 use Wirecard\PaymentSdk\Entity\CustomFieldCollection;
 use Wirecard\PaymentSdk\Entity\Redirect;
-use Wirecard\PaymentSdk\Transaction\PayPalTransaction;
+use Wirecard\PaymentSdk\Transaction\SepaTransaction;
+use Wirecard\PaymentSdk\Entity\AccountHolder;
+use Wirecard\PaymentSdk\Entity\Mandate;
 
 /**
  * Class WC_Gateway_Wirecard_Sepa
@@ -70,6 +72,8 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 
 		$this->title   = $this->get_option( 'title' );
 		$this->enabled = $this->get_option( 'enabled' );
+
+		$this->additional_helper = new Additional_Information();
 
 		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
 
@@ -198,7 +202,7 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 	 * @since 1.0.0
 	 */
 	public function payment_fields() {
-		$html = '
+		$html       = '
 			<p class="form-row form-row-wide validate-required">
 				<label for="sepa_firstname">' . __( 'Firstname', 'wooocommerce-gateway-wirecard' ) . '</label>
 				<input id="sepa_firstname" class="input-text" type="text" name="sepa_firstname">
@@ -230,7 +234,8 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 			return false;
 		}
 
-		$order = wc_get_order( $order_id );
+		$order      = wc_get_order( $order_id );
+		$mandate_id = $this->get_option( 'enable_bic' ) . '-' . $order_id . '-' . strtotime( date( 'Y-m-d H:i:s' ) );
 
 		$redirect_urls = new Redirect(
 			$this->create_redirect_url( $order, 'success', $this->type ),
@@ -238,6 +243,64 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 			$this->create_redirect_url( $order, 'failure', $this->type )
 		);
 
-		var_dump(" process");die();
+		$config    = $this->create_payment_config();
+		$amount    = new Amount( $order->get_total(), 'EUR' );
+		$operation = $this->get_option( 'payment_action' );
+
+		$account_holder = new AccountHolder();
+		$account_holder->setFirstName( $_POST['sepa_lastname'] );
+		$account_holder->setLastName( $_POST['sepa_firstname'] );
+
+		$transaction = new SepaTransaction();
+		$transaction->setNotificationUrl( $this->create_notification_url( $order, $this->type ) );
+		$transaction->setRedirect( $redirect_urls );
+		$transaction->setAmount( $amount );
+		$transaction->setAccountHolder( $account_holder );
+		$transaction->setIban( $_POST['sepa_iban'] );
+
+		$mandate = new Mandate( $mandate_id );
+		$transaction->setMandate( $mandate );
+
+		$custom_fields = new CustomFieldCollection();
+		$custom_fields->add( new CustomField( 'orderId', $order_id ) );
+		$transaction->setCustomFields( $custom_fields );
+
+		if ( $this->get_option( 'shopping_basket' ) == 'yes' ) {
+			$basket = $this->additional_helper->create_shopping_basket( $order, $transaction );
+			$transaction->setBasket( $basket );
+		}
+
+		if ( $this->get_option( 'descriptor' ) == 'yes' ) {
+			$transaction->setDescriptor( $this->additional_helper->create_descriptor( $order ) );
+		}
+
+		if ( $this->get_option( 'send_additional' ) == 'yes' ) {
+			$this->additional_helper->set_additional_information( $order, $transaction );
+		}
+
+		return $this->execute_transaction( $transaction, $config, $operation, $order, $order_id );
+	}
+
+	/**
+	 * Create payment method configuration
+	 *
+	 * @param null $base_url
+	 * @param null $http_user
+	 * @param null $http_pass
+	 *
+	 * @return Config
+	 */
+	public function create_payment_config( $base_url = null, $http_user = null, $http_pass = null ) {
+		if ( is_null( $base_url ) ) {
+			$base_url  = $this->get_option( 'base_url' );
+			$http_user = $this->get_option( 'http_user' );
+			$http_pass = $this->get_option( 'http_pass' );
+		}
+
+		$config         = parent::create_payment_config( $base_url, $http_user, $http_pass );
+		$payment_config = new PaymentMethodConfig( SepaTransaction::NAME, $this->get_option( 'merchant_account_id' ), $this->get_option( 'secret' ) );
+		$config->add( $payment_config );
+
+		return $config;
 	}
 }
