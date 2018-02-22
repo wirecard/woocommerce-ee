@@ -40,6 +40,7 @@ use Wirecard\PaymentSdk\Config\Config;
 use Wirecard\PaymentSdk\Response\Response;
 use Wirecard\PaymentSdk\Response\FailureResponse;
 use Wirecard\PaymentSdk\Response\InteractionResponse;
+use Wirecard\PaymentSdk\Response\FormInteractionResponse;
 use Wirecard\PaymentSdk\TransactionService;
 
 /**
@@ -220,9 +221,16 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 
 		if ( $response instanceof InteractionResponse ) {
 			$page_url = $response->getRedirectUrl();
+		} elseif ( $response instanceof FormInteractionResponse ) {
+			$data['url']         = $response->getUrl();
+			$data['method']      = $response->getMethod();
+			$data['form_fields'] = $response->getFormFields();
+			WC()->session->set( 'credit_card_post_data', $data );
+			$page_url = add_query_arg( [ 'wc-api' => 'checkout_form_submit_woocommerce_wirecard_creditcard' ],
+				site_url( '/', is_ssl() ? 'https' : 'http' )
+			);
 		}
 
-		// FailureResponse, redirect should be implemented
 		if ( $response instanceof FailureResponse ) {
 			$errors = '';
 			foreach ( $response->getStatusCollection()->getIterator() as $item ) {
