@@ -192,22 +192,22 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 		$html = '
 			<p class="form-row form-row-wide validate-required">
 				<label for="sepa_firstname">' . __( 'Firstname', 'wooocommerce-gateway-wirecard' ) . '</label>
-				<input id="sepa_firstname" class="input-text" type="text" name="firstname">
+				<input id="sepa_firstname" class="input-text" type="text" name="sepa_firstname">
 			</p>
 			<p class="form-row form-row-wide validate-required">
 				<label for="sepa_lastname">' . __( 'Lastname', 'wooocommerce-gateway-wirecard' ) . '</label>
-				<input id="sepa_lastname" class="input-text" type="text" name="lastname">
+				<input id="sepa_lastname" class="input-text" type="text" name="sepa_lastname">
 			</p>
 			<p class="form-row form-row-wide validate-required">
 				<label for="sepa_iban">' . __( 'Iban', 'wooocommerce-gateway-wirecard' ) . '</label>
-				<input id="sepa_iban" class="input-text" type="text" name="iban">
+				<input id="sepa_iban" class="input-text" type="text" name="sepa_iban">
 			</p>';
 
 		if ( $this->get_option( 'enable_bic' ) == 'yes' ) {
 			$html .= '			
 			<p class="form-row form-row-wide validate-required">
 				<label for="sepa_bic">' . __( 'Bic', 'wooocommerce-gateway-wirecard' ) . '</label>
-				<input id="sepa_bic" class="input-text" type="text" name="bic">
+				<input id="sepa_bic" class="input-text" type="text" name="sepa_bic">
 			</p>';
 		}
 
@@ -215,6 +215,12 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 	}
 
 	public function process_payment( $order_id ) {
+		if ( ! $_POST['sepa_firstname'] || ! $_POST['sepa_lastname'] || ! $_POST['sepa_iban'] || ( $this->get_option( 'enable_bic' ) == 'yes' && ! $_POST['sepa_bic'] ) ) {
+			var_dump("first");die();
+			wc_add_notice( __( 'Please fill in the SEPA fields and try again.', 'woocommerce-gateway-wirecard' ), 'error' );
+			return false;
+		}
+
 		var_dump(" process");die();
 	}
 }
