@@ -55,16 +55,10 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 		$this->method_title       = __( 'Wirecard Payment Processing Gateway SEPA', 'wooocommerce-gateway-wirecard' );
 		$this->method_description = __( 'SEPA transactions via Wirecard Payment Processing Gateway', 'woocommerce-gateway-wirecard' );
 
-		// Load the form fields.
 		$this->init_form_fields();
-
-		// Load the settings.
-		$this->init_settings();
 
 		$this->title   = $this->get_option( 'title' );
 		$this->enabled = $this->get_option( 'enabled' );
-
-		$this->additional_helper = new Additional_Information();
 
 		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
 
@@ -81,14 +75,15 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 			'enabled'             => array(
 				'title'   => __( 'Enable/Disable', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'checkbox',
-				'label'   => __( 'Enable Wirecard Payment Processing Gateway PayPal', 'woocommerce-gateway-wirecard' ),
+				'label'   => __( 'Enable Wirecard Payment Processing Gateway SEPA', 'woocommerce-gateway-wirecard' ),
 				'default' => 'yes',
 			),
 			'title'               => array(
 				'title'       => __( 'Title', 'woocommerce-gateway-wirecard' ),
 				'type'        => 'text',
-				'description' => __( 'This controls the title which the user sees during checkout.', 'woocommerce-gateway-wirecard' ),
-				'default'     => __( 'Wirecard Payment Processing Gateway PayPal', 'woocommerce-gateway-wirecard' ),
+				'description' => __( 'This controls the title which the user sees during checkout.',
+				'woocommerce-gateway-wirecard' ),
+				'default'     => __( 'Wirecard Payment Processing Gateway SEPA', 'woocommerce-gateway-wirecard' ),
 				'desc_tip'    => true,
 			),
 			'merchant_account_id' => array(
@@ -104,7 +99,8 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 			'credentials'         => array(
 				'title'       => __( 'Credentials', 'woocommerce-gateway-wirecard' ),
 				'type'        => 'title',
-				'description' => __( 'Enter your Wirecard Processing Payment Gateway credentials and test it.', 'woocommerce-gateway-wirecard' ),
+				'description' => __( 'Enter your Wirecard Processing Payment Gateway credentials and test it.',
+				'woocommerce-gateway-wirecard' ),
 			),
 			'base_url'            => array(
 				'title'       => __( 'Base Url', 'woocommerce-gateway-wirecard' ),
@@ -122,6 +118,21 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 				'title'   => __( 'Http Password', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'text',
 				'default' => 'qD2wzQ_hrc!8',
+			),
+			'creditor_id'         => array(
+				'title'   => __( 'Creditor ID', 'woocommerce-gateway-wirecard' ),
+				'type'    => 'text',
+				'default' => 'DE98ZZZ09999999999',
+			),
+			'creditor_name'       => array(
+				'title'   => __( 'Creditor Name', 'woocommerce-gateway-wirecard' ),
+				'type'    => 'text',
+				'default' => '',
+			),
+			'creditor_city'       => array(
+				'title'   => __( 'Creditor City', 'woocommerce-gateway-wirecard' ),
+				'type'    => 'text',
+				'default' => '',
 			),
 			'advanced'            => array(
 				'title'       => __( 'Advanced options', 'woocommerce-gateway-wirecard' ),
@@ -156,5 +167,12 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 				'label'   => __( 'Send additional information', 'woocommerce-gateway-wirecard' ),
 				'default' => 'yes',
 			),
+			'enable_bic'          => array(
+				'title'   => __( 'Enable/Disable', 'woocommerce-gateway-wirecard' ),
+				'type'    => 'checkbox',
+				'label'   => __( 'BIC enabled', 'woocommerce-gateway-wirecard' ),
+				'default' => 'no',
+			),
 		);
 	}
+}
