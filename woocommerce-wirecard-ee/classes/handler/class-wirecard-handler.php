@@ -57,7 +57,8 @@ class Wirecard_Handler {
 	 */
 	public function __construct() {
 		$this->payment_methods = array(
-			'paypal' => new WC_Gateway_Wirecard_Paypal(),
+			'paypal'     => new WC_Gateway_Wirecard_Paypal(),
+			'creditcard' => new WC_Gateway_Wirecard_Creditcard(),
 		);
 		$this->logger          = new WC_Logger();
 	}
