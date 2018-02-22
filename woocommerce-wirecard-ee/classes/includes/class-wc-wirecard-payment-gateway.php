@@ -231,7 +231,6 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 			);
 		}
 
-		// FailureResponse, redirect should be implemented
 		if ( $response instanceof FailureResponse ) {
 			$errors = '';
 			foreach ( $response->getStatusCollection()->getIterator() as $item ) {
