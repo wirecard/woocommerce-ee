@@ -315,6 +315,15 @@ HTML;
 		WC()->session->__unset( 'credit_card_post_data' );
 
 		$html  = '';
+		$html .= '<script>window.setInterval( function() {
+                    var wait = document.getElementById( "wait" );
+    				if ( wait.innerHTML.length > 3 ) 
+       					 wait.innerHTML = "";
+    				else 
+        				wait.innerHTML += ".";
+    		}, 200); 
+    		</script>
+			<span id="wait" style="font-size: 60px;">.</span> ';
 		$html .= '<form id="credit_card_form" method="' . $data['method'] . '" action="' . $data['url'] . '">';
 		foreach ( $data['form_fields'] as $key => $value ) {
 			$html .= '<input type="hidden" name="' . $key . '" value="' . $value . '">';
