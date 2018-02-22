@@ -60,10 +60,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 		$this->method_description = __( 'Credit Card transactions via Wirecard Payment Processing Gateway', 'woocommerce-gateway-wirecard' );
 		$this->has_fields         = true;
 
-		// Load the form fields.
 		$this->init_form_fields();
-
-		// Load the settings.
 		$this->init_settings();
 
 		$this->title   = $this->get_option( 'title' );
