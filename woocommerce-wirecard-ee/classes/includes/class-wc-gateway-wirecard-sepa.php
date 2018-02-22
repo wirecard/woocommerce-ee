@@ -54,6 +54,7 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 		$this->icon               = WOOCOMMERCE_GATEWAY_WIRECARD_URL . 'assets/images/sepa.png';
 		$this->method_title       = __( 'Wirecard Payment Processing Gateway SEPA', 'wooocommerce-gateway-wirecard' );
 		$this->method_description = __( 'SEPA transactions via Wirecard Payment Processing Gateway', 'woocommerce-gateway-wirecard' );
+		$this->has_fields         = true;
 
 		$this->init_form_fields();
 		$this->init_settings();
@@ -90,12 +91,12 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 			'merchant_account_id' => array(
 				'title'   => __( 'Merchant Account ID', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'text',
-				'default' => '2a0e9351-24ed-4110-9a1b-fd0fee6bec26',
+				'default' => '4c901196-eff7-411e-82a3-5ef6b6860d64',
 			),
 			'secret'              => array(
 				'title'   => __( 'Secret Key', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'text',
-				'default' => 'dbc5a498-9a66-43b9-bf1d-a618dd399684',
+				'default' => 'ecdf5990-0372-47cd-a55d-037dccfe9d25',
 			),
 			'credentials'         => array(
 				'title'       => __( 'Credentials', 'woocommerce-gateway-wirecard' ),
@@ -119,6 +120,11 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 				'title'   => __( 'Http Password', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'text',
 				'default' => 'qD2wzQ_hrc!8',
+			),
+			'sepa_credentials'    => array(
+				'title'       => __( 'SEPA credentials', 'woocommerce-gateway-wirecard' ),
+				'type'        => 'title',
+				'description' => __( 'Enter your SEPA credentials', 'woocommerce-gateway-wirecard' ),
 			),
 			'creditor_id'         => array(
 				'title'   => __( 'Creditor ID', 'woocommerce-gateway-wirecard' ),
@@ -175,5 +181,40 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 				'default' => 'no',
 			),
 		);
+	}
+
+	/**
+	 * Add payment fields to payment method
+	 *
+	 * @since 1.0.0
+	 */
+	public function payment_fields() {
+		$html = '
+			<p class="form-row form-row-wide validate-required">
+				<label for="sepa_firstname">' . __( 'Firstname', 'wooocommerce-gateway-wirecard' ) . '</label>
+				<input id="sepa_firstname" class="input-text" type="text" name="firstname">
+			</p>
+			<p class="form-row form-row-wide validate-required">
+				<label for="sepa_lastname">' . __( 'Lastname', 'wooocommerce-gateway-wirecard' ) . '</label>
+				<input id="sepa_lastname" class="input-text" type="text" name="lastname">
+			</p>
+			<p class="form-row form-row-wide validate-required">
+				<label for="sepa_iban">' . __( 'Iban', 'wooocommerce-gateway-wirecard' ) . '</label>
+				<input id="sepa_iban" class="input-text" type="text" name="iban">
+			</p>';
+
+		if ( $this->get_option( 'enable_bic' ) == 'yes' ) {
+			$html .= '			
+			<p class="form-row form-row-wide validate-required">
+				<label for="sepa_bic">' . __( 'Bic', 'wooocommerce-gateway-wirecard' ) . '</label>
+				<input id="sepa_bic" class="input-text" type="text" name="bic">
+			</p>';
+		}
+
+		echo $html;
+	}
+
+	public function process_payment( $order_id ) {
+		var_dump(" process");die();
 	}
 }
