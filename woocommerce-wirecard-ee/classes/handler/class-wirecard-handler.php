@@ -59,6 +59,7 @@ class Wirecard_Handler {
 		$this->payment_methods = array(
 			'paypal'     => new WC_Gateway_Wirecard_Paypal(),
 			'creditcard' => new WC_Gateway_Wirecard_Creditcard(),
+			'sepa'       => new WC_Gateway_Wirecard_Sepa(),
 		);
 		$this->logger          = new WC_Logger();
 	}
