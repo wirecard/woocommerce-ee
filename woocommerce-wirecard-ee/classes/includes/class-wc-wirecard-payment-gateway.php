@@ -233,7 +233,8 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 			$data['method']      = $response->getMethod();
 			$data['form_fields'] = $response->getFormFields();
 			WC()->session->set( 'credit_card_post_data', $data );
-			$page_url = add_query_arg( [ 'wc-api' => 'checkout_form_submit_woocommerce_wirecard_creditcard' ],
+			$page_url = add_query_arg(
+				[ 'wc-api' => 'checkout_form_submit_woocommerce_wirecard_creditcard' ],
 				site_url( '/', is_ssl() ? 'https' : 'http' )
 			);
 		}
@@ -274,8 +275,13 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 		$logger              = new WC_Logger();
 		$transaction_service = new TransactionService( $config );
 		try {
-			/** @var $response Response */
-			$response = $transaction_service->process( $transaction, 'cancel' );
+			if ( $transaction instanceof \Wirecard\PaymentSdk\Transaction\CreditCardTransaction ) {
+				/** @var $response Response */
+				$response = $transaction_service->process( $transaction, 'refund' );
+			} else {
+				/** @var $response Response */
+				$response = $transaction_service->process( $transaction, 'cancel' );
+			}
 		} catch ( \Exception $exception ) {
 			$logger->error( __METHOD__ . ':' . $exception->getMessage() );
 			return new WP_Error( 'error', __( 'Processing refund failed.', 'woocommerce-gateway-wirecard' ) );
@@ -354,6 +360,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 		switch ( $transaction_type ) {
 			case 'capture-authorization':
 			case 'debit':
+			case 'purchase':
 				$state = 'processing';
 				break;
 			case 'void-authorization':
@@ -361,6 +368,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 				break;
 			case 'refund-capture':
 			case 'refund-debit':
+			case 'refund-purchase':
 				$state = 'refunded';
 				break;
 			case 'authorization':

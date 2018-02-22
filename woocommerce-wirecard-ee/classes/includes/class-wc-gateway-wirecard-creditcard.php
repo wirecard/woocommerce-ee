@@ -48,6 +48,7 @@ use Wirecard\PaymentSdk\TransactionService;
  * @since   1.0.0
  */
 class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
+
 	private $type;
 
 	private $additional_helper;
@@ -59,6 +60,15 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 		$this->method_title       = __( 'Wirecard Payment Processing Gateway Credit Card', 'wooocommerce-gateway-wirecard' );
 		$this->method_description = __( 'Credit Card transactions via Wirecard Payment Processing Gateway', 'woocommerce-gateway-wirecard' );
 		$this->has_fields         = true;
+
+		$this->supports = array(
+			'products',
+			'refunds',
+		);
+
+		$this->cancel  = array( 'authorization' );
+		$this->capture = array( 'authorization' );
+		$this->refund  = array( 'purchase', 'capture-authorization' );
 
 		$this->init_form_fields();
 		$this->init_settings();
@@ -95,23 +105,6 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 				'default'     => __( 'Wirecard Payment Processing Gateway Credit Card', 'woocommerce-gateway-wirecard' ),
 				'desc_tip'    => true,
 			),
-			'base_url'                    => array(
-				'title'       => __( 'Base Url', 'woocommerce-gateway-wirecard' ),
-				'type'        => 'text',
-				'description' => __( 'The elastic engine base url. (e.g. https://api.wirecard.com)' ),
-				'default'     => 'https://api-test.wirecard.com',
-				'desc_tip'    => true,
-			),
-			'http_user'                   => array(
-				'title'   => __( 'Http User', 'woocommerce-gateway-wirecard' ),
-				'type'    => 'text',
-				'default' => '70000-APITEST-AP',
-			),
-			'http_pass'                   => array(
-				'title'   => __( 'Http Password', 'woocommerce-gateway-wirecard' ),
-				'type'    => 'text',
-				'default' => 'qD2wzQ_hrc!8',
-			),
 			'merchant_account_id'         => array(
 				'title'   => __( 'Merchant Account ID', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'text',
@@ -141,6 +134,33 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 				'title'   => __( '3-D Secure Min Limit', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'text',
 				'default' => '50.0',
+			),
+			'credentials'                 => array(
+				'title'       => __( 'Credentials', 'woocommerce-gateway-wirecard' ),
+				'type'        => 'title',
+				'description' => __( 'Enter your Wirecard Processing Payment Gateway credentials and test it.', 'woocommerce-gateway-wirecard' ),
+			),
+			'base_url'                    => array(
+				'title'       => __( 'Base Url', 'woocommerce-gateway-wirecard' ),
+				'type'        => 'text',
+				'description' => __( 'The elastic engine base url. (e.g. https://api.wirecard.com)' ),
+				'default'     => 'https://api-test.wirecard.com',
+				'desc_tip'    => true,
+			),
+			'http_user'                   => array(
+				'title'   => __( 'Http User', 'woocommerce-gateway-wirecard' ),
+				'type'    => 'text',
+				'default' => '70000-APITEST-AP',
+			),
+			'http_pass'                   => array(
+				'title'   => __( 'Http Password', 'woocommerce-gateway-wirecard' ),
+				'type'    => 'text',
+				'default' => 'qD2wzQ_hrc!8',
+			),
+			'advanced'                    => array(
+				'title'       => __( 'Advanced options', 'woocommerce-gateway-wirecard' ),
+				'type'        => 'title',
+				'description' => '',
 			),
 			'payment_action'              => array(
 				'title'   => __( 'Payment Action', 'woocommerce-gateway-wirecard' ),
@@ -201,17 +221,21 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 		}
 
 		if ( $this->get_option( 'ssl_max_limit' ) !== '' ) {
-			$payment_config->addSslMaxLimit(new Amount(
-				$this->get_option( 'ssl_max_limit' ),
-				'EUR'
-			));
+			$payment_config->addSslMaxLimit(
+				new Amount(
+					$this->get_option( 'ssl_max_limit' ),
+					'EUR'
+				)
+			);
 		}
 
 		if ( $this->get_option( 'three_d_min_limit' ) !== '' ) {
-			$payment_config->addSslMaxLimit(new Amount(
-				$this->get_option( 'three_d_min_limit' ),
-				'EUR'
-			));
+			$payment_config->addSslMaxLimit(
+				new Amount(
+					$this->get_option( 'three_d_min_limit' ),
+					'EUR'
+				)
+			);
 		}
 
 		$config->add( $payment_config );
@@ -227,7 +251,8 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	public function payment_fields() {
 		$base_url    = $this->get_option( 'base_url' );
 		$gateway_url = WOOCOMMERCE_GATEWAY_WIRECARD_URL;
-		$page_url    = add_query_arg( [ 'wc-api' => 'get_credit_card_request_data' ],
+		$page_url    = add_query_arg(
+			[ 'wc-api' => 'get_credit_card_request_data' ],
 			site_url( '/', is_ssl() ? 'https' : 'http' )
 		);
 
@@ -333,5 +358,73 @@ HTML;
 
 		echo $html;
 		die();
+	}
+
+	/**
+	 * Create transaction for cancel
+	 *
+	 * @param int $order_id
+	 * @param float|null $amount
+	 *
+	 * @return CreditCardTransaction
+	 *
+	 * @since 1.0.0
+	 */
+	public function process_cancel( $order_id, $amount = null ) {
+		$order = wc_get_order( $order_id );
+
+		$transaction = new CreditCardTransaction();
+		$transaction->setParentTransactionId( $order->get_transaction_id() );
+		if ( ! is_null( $amount ) ) {
+			$transaction->setAmount( new Amount( $amount, $order->get_currency() ) );
+		}
+
+		return $transaction;
+	}
+
+	/**
+	 * Create transaction for capture
+	 *
+	 * @param int $order_id
+	 * @param flaot|null $amount
+	 *
+	 * @return CreditCardTransaction
+	 *
+	 * @since 1.0.0
+	 */
+	public function process_capture( $order_id, $amount = null ) {
+		$order = wc_get_order( $order_id );
+
+		$transaction = new CreditCardTransaction();
+		$transaction->setParentTransactionId( $order->get_transaction_id() );
+		if ( ! is_null( $amount ) ) {
+			$transaction->setAmount( new Amount( $amount, $order->get_currency() ) );
+		}
+
+		return $transaction;
+	}
+
+	/**
+	 * Create transaction for refund
+	 *
+	 * @param int    $order_id
+	 * @param float|null   $amount
+	 * @param string $reason
+	 *
+	 * @return bool|CreditCardTransaction|WP_Error
+	 *
+	 * @since 1.0.0
+	 */
+	public function process_refund( $order_id, $amount = null, $reason = '' ) {
+		parent::process_refund( $order_id, $amount, '' );
+		$order  = wc_get_order( $order_id );
+		$config = $this->create_payment_config();
+
+		$transaction = new CreditCardTransaction();
+		$transaction->setParentTransactionId( $order->get_transaction_id() );
+		if ( ! is_null( $amount ) ) {
+			$transaction->setAmount( new Amount( $amount, $order->get_currency() ) );
+		}
+		return $this->execute_refund( $transaction, $config, $order );
 	}
 }
