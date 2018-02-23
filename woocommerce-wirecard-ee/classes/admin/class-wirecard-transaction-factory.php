@@ -275,29 +275,29 @@ class Wirecard_Transaction_Factory {
 							<div class="wc-order-data-row">
 								<?php
 								if ( $payment->can_cancel( $transaction->transaction_type ) && ! $transaction->closed ) {
-									echo "<a href='?page=cancelpayment&id={$transaction_id}' class='button'>" . __( 'Cancel Transaction', 'woocommerce-gateway-wirecard' ) . "</a> ";
+									echo "<a href='?page=cancelpayment&id={$transaction_id}' class='button'>" . __( 'Cancel Transaction', 'woocommerce-gateway-wirecard' ) . '</a> ';
 								}
 								if ( $payment->can_capture( $transaction->transaction_type ) && ! $transaction->closed ) {
-									echo "<a href='?page=capturepayment&id={$transaction_id}' class='button'>" . __( 'Capture Transaction', 'woocommerce-gateway-wirecard' ) . "</a> ";
+									echo "<a href='?page=capturepayment&id={$transaction_id}' class='button'>" . __( 'Capture Transaction', 'woocommerce-gateway-wirecard' ) . '</a> ';
 								}
 								if ( $payment->can_refund( $transaction->transaction_type ) && ! $transaction->closed ) {
-									echo "<a href='?page=refundpayment&id={$transaction_id}' class='button'>" . __( 'Refund Transaction', 'woocommerce-gateway-wirecard' ) . "</a> ";
+									echo "<a href='?page=refundpayment&id={$transaction_id}' class='button'>" . __( 'Refund Transaction', 'woocommerce-gateway-wirecard' ) . '</a> ';
 								}
 								if ( $transaction->closed ) {
-									echo "<p class='add-items'>" . __( 'No Back-end operations available for this transaction', 'woocommerce-gateway-wirecard' ) . "</p>";
+									echo "<p class='add-items'>" . __( 'No Back-end operations available for this transaction', 'woocommerce-gateway-wirecard' ) . '</p>';
 								}
 								?>
 								<p class="add-items">
-									<a href="?page=wirecardpayment" class="button"><?php echo __( 'Wirecard Payment Gateway Dashboard', 'woocommerce-gateway-wirecard' ) ?></a>
+									<a href="?page=wirecardpayment" class="button"><?php echo __( 'Wirecard Payment Gateway Dashboard', 'woocommerce-gateway-wirecard' ); ?></a>
 								</p>
 							</div>
 							<hr>
-							<h3><?php echo __( 'Responsedata:', 'woocommerce-gateway-wirecard' ) ?></h3>
+							<h3><?php echo __( 'Responsedata:', 'woocommerce-gateway-wirecard' ); ?></h3>
 							<div class="order_data_column_container">
 								<table>
 									<tr>
 										<td>
-											<b><?php echo __( 'Total', 'woocommerce-gateway-wirecard' ) ?></b>
+											<b><?php echo __( 'Total', 'woocommerce-gateway-wirecard' ); ?></b>
 										</td>
 										<td>
 											<b><?php echo $transaction->amount . ' ' . $transaction->currency; ?></b>

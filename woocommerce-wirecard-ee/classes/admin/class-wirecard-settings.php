@@ -95,10 +95,72 @@ class Wirecard_Settings {
 			<table class="wp-list-table widefat fixed striped posts">
 				<?php
 				$pages = $this->transaction_factory->get_rows( $start );
+				echo '</table>';
+				$this->add_pagination( $start, $pages );
 				?>
-			</table>
 		</div>
 		<?php
+	}
+
+	/**
+	 * Create pagination view
+	 *
+	 * @param int $start
+	 * @param stdClass $pages
+	 *
+	 * @since 1.0.0
+	 */
+	public function add_pagination( $start = 1, $pages ) {
+		$back = __( '< Back', 'woocommerce-gateway-wirecard' );
+		$next = __( 'Next >', 'woocommerce-gateway-wirecard' );
+		if ( $start > 1 ) {
+			$prev_page = $start - 1;
+			echo "<a class='button-primary' href='?page=wirecardpayment&transaction_start=$prev_page'>$back</a>";
+		}
+
+		if ( $pages < 5 ) {
+			for ( $i = 0; $i < $pages; $i ++ ) {
+				$pagenr = $i + 1;
+				$active = ( $pagenr == $start ) ? ' active' : '';
+				$href   = ( $pagenr == $start ) ? 'javascript:void(0)' : "?page=wirecardpayment&transaction_start=$pagenr";
+				echo "<a class='button-primary$active' href='$href'>$pagenr</a>";
+			}
+		}
+
+		if ( $start < $pages && $pages > 4 ) {
+			echo "<select onchange='goToWctPage(this.value)'>";
+			$start = $start - 10;
+			if ( $start < 1 ) {
+				$start = 1;
+			}
+
+			$stop = $start + 10;
+			if ( $stop > $pages ) {
+				$stop = $pages;
+			}
+			for ( $i = $start; $i < $stop + 1; $i ++ ) {
+				$selected = ( $i == $start ) ? "selected='selected'" : '';
+				echo "<option value='$i' $selected>$i</option>";
+			}
+			echo '</select>';
+			?>
+
+
+			<script language="javascript" type="text/javascript">
+				var start = 1;
+				function goToWctPage(page) {
+					start = "?page=wirecardpayment&transaction_start=" + page;
+					window.location.href = start;
+				}
+			</script>
+
+			<?php
+		}
+
+		if ( $start < $pages ) {
+			$next_page = $start + 1;
+			echo "<a class='button-primary' href='?page=wirecardpayment&transaction_start=$next_page'>$next</a>";
+		}
 	}
 
 	/**
