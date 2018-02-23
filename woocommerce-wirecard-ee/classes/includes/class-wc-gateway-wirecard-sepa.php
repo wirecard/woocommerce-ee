@@ -38,13 +38,13 @@ require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/helper/class-addit
 
 use Wirecard\PaymentSdk\Config\Config;
 use Wirecard\PaymentSdk\Config\PaymentMethodConfig;
+use Wirecard\PaymentSdk\Entity\AccountHolder;
 use Wirecard\PaymentSdk\Entity\Amount;
 use Wirecard\PaymentSdk\Entity\CustomField;
 use Wirecard\PaymentSdk\Entity\CustomFieldCollection;
+use Wirecard\PaymentSdk\Entity\Mandate;
 use Wirecard\PaymentSdk\Entity\Redirect;
 use Wirecard\PaymentSdk\Transaction\SepaTransaction;
-use Wirecard\PaymentSdk\Entity\AccountHolder;
-use Wirecard\PaymentSdk\Entity\Mandate;
 
 /**
  * Class WC_Gateway_Wirecard_Sepa
@@ -202,7 +202,7 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 	 * @since 1.0.0
 	 */
 	public function payment_fields() {
-		$html       = '
+		$html = '
 			<p class="form-row form-row-wide validate-required">
 				<label for="sepa_firstname">' . __( 'Firstname', 'wooocommerce-gateway-wirecard' ) . '</label>
 				<input id="sepa_firstname" class="input-text" type="text" name="sepa_firstname">
@@ -227,6 +227,15 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 		echo $html;
 	}
 
+	/**
+	 * Process payment gateway transactions
+	 *
+	 * @param int $order_id
+	 *
+	 * @return array
+	 *
+	 * @since 1.0.0
+	 */
 	public function process_payment( $order_id ) {
 		if ( ! $_POST['sepa_firstname'] || ! $_POST['sepa_lastname'] || ! $_POST['sepa_iban']
 			|| ( $this->get_option( 'enable_bic' ) == 'yes' && ! $_POST['sepa_bic'] ) ) {
@@ -234,8 +243,7 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 			return false;
 		}
 
-		$order      = wc_get_order( $order_id );
-		$mandate_id = $this->get_option( 'enable_bic' ) . '-' . $order_id . '-' . strtotime( date( 'Y-m-d H:i:s' ) );
+		$order = wc_get_order( $order_id );
 
 		$redirect_urls = new Redirect(
 			$this->create_redirect_url( $order, 'success', $this->type ),
@@ -258,7 +266,7 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 		$transaction->setAccountHolder( $account_holder );
 		$transaction->setIban( $_POST['sepa_iban'] );
 
-		$mandate = new Mandate( $mandate_id );
+		$mandate = new Mandate( $this->generate_mandate_id( $order_id ) );
 		$transaction->setMandate( $mandate );
 
 		$custom_fields = new CustomFieldCollection();
@@ -302,5 +310,13 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 		$config->add( $payment_config );
 
 		return $config;
+	}
+
+	/**
+	 * @param $order_id
+	 * @return string
+	 */
+	private function generate_mandate_id( $order_id ) {
+		return $this->get_option( 'enable_bic' ) . '-' . $order_id . '-' . strtotime( date( 'Y-m-d H:i:s' ) );
 	}
 }

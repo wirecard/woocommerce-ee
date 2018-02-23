@@ -69,7 +69,6 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 		$this->additional_helper = new Additional_Information();
 
 		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
-		add_action( 'woocommerce_api_checkout_form_submit_' . $this->id, array( $this, 'post_form' ) );
 		add_action( 'woocommerce_api_get_credit_card_request_data', array( $this, 'get_request_data' ) );
 
 		parent::add_payment_gateway_actions();
@@ -302,36 +301,6 @@ HTML;
 		$config              = $this->create_payment_config();
 		$transaction_service = new TransactionService( $config );
 		wp_send_json_success( $transaction_service->getDataForCreditCardUi() );
-		die();
-	}
-
-	/**
-	 * Process 3ds redirect
-	 *
-	 * @since 1.0.0
-	 */
-	public function post_form() {
-		$data = WC()->session->get( 'credit_card_post_data' );
-		WC()->session->__unset( 'credit_card_post_data' );
-
-		$html  = '';
-		$html .= '<script>window.setInterval( function() {
-                    var wait = document.getElementById( "wait" );
-    				if ( wait.innerHTML.length > 3 ) 
-       					 wait.innerHTML = "";
-    				else 
-        				wait.innerHTML += ".";
-    		}, 200); 
-    		</script>
-			<span id="wait" style="font-size: 60px;">.</span> ';
-		$html .= '<form id="credit_card_form" method="' . $data['method'] . '" action="' . $data['url'] . '">';
-		foreach ( $data['form_fields'] as $key => $value ) {
-			$html .= '<input type="hidden" name="' . $key . '" value="' . $value . '">';
-		}
-		$html .= '</form>';
-		$html .= '<script>document.getElementsByTagName("form")[0].submit();</script>';
-
-		echo $html;
 		die();
 	}
 }

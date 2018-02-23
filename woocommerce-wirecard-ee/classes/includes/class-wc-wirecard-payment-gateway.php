@@ -35,6 +35,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/handler/class-wirecard-response-handler.php' );
 require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/handler/class-wirecard-notification-handler.php' );
+require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/handler/class-wirecard-callback.php' );
 
 use Wirecard\PaymentSdk\Config\Config;
 use Wirecard\PaymentSdk\Response\Response;
@@ -66,6 +67,13 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 			array(
 				$this,
 				'return_request',
+			)
+		);
+		add_action(
+			'woocommerce_api_checkout_form_submit',
+			array(
+				$this,
+				'callback',
 			)
 		);
 	}
@@ -225,8 +233,8 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 			$data['url']         = $response->getUrl();
 			$data['method']      = $response->getMethod();
 			$data['form_fields'] = $response->getFormFields();
-			WC()->session->set( 'credit_card_post_data', $data );
-			$page_url = add_query_arg( [ 'wc-api' => 'checkout_form_submit_woocommerce_wirecard_creditcard' ],
+			WC()->session->set( 'wirecard_post_data', $data );
+			$page_url = add_query_arg( [ 'wc-api' => 'checkout_form_submit' ],
 				site_url( '/', is_ssl() ? 'https' : 'http' )
 			);
 		}
@@ -298,5 +306,14 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 				add_post_meta( $order->get_id(), $key, $value );
 			}
 		}
+	}
+
+	/**
+	 * Submit a form with the data from the response
+	 *
+	 */
+	public function callback() {
+		$callback = new Wirecard_Callback();
+		$callback->post_form();
 	}
 }
