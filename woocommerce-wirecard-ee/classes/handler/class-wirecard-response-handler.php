@@ -42,6 +42,10 @@ use Wirecard\PaymentSdk\TransactionService;
 
 /**
  * Class Wirecard_Response_Handler
+ *
+ * Handles responses recieved via Wirecard Payment Gateway
+ *
+ * @since 1.0.0
  */
 class Wirecard_Response_Handler extends Wirecard_Handler {
 
@@ -49,6 +53,9 @@ class Wirecard_Response_Handler extends Wirecard_Handler {
 	 * Handle response via transaction service
 	 *
 	 * @param $request
+	 *
+	 * @throws \InvalidArgumentException
+	 * @throws MalformedResponseException
 	 *
 	 * @return bool
 	 *

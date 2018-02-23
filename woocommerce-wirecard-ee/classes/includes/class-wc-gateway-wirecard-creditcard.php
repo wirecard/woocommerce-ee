@@ -49,10 +49,29 @@ use Wirecard\PaymentSdk\TransactionService;
  */
 class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 
+	/**
+	 * Payment type
+	 *
+	 * @since 1.0.0
+	 * @access private
+	 * @var string
+	 */
 	private $type;
 
+	/**
+	 * Additional helper for basket and risk management
+	 *
+	 * @since 1.0.0
+	 * @access private
+	 * @var Additional_Information
+	 */
 	private $additional_helper;
 
+	/**
+	 * WC_Gateway_Wirecard_Creditcard constructor.
+	 *
+	 * @since 1.0.0
+	 */
 	public function __construct() {
 		$this->type               = 'creditcard';
 		$this->id                 = 'woocommerce_wirecard_creditcard';

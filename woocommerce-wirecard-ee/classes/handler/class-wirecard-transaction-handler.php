@@ -41,6 +41,10 @@ use Wirecard\PaymentSdk\TransactionService;
 
 /**
  * Class Wirecard_Transaction_Handler
+ *
+ * Handles/processes back-end operations via Wirecard Payment Gateway
+ *
+ * @since 1.0.0
  */
 class Wirecard_Transaction_Handler extends Wirecard_Handler {
 
@@ -48,6 +52,8 @@ class Wirecard_Transaction_Handler extends Wirecard_Handler {
 	 * Cancel transaction via Payment Gateway
 	 *
 	 * @param stdClass $transaction_data
+	 *
+	 * @throws Exception
 	 *
 	 * @since 1.0.0
 	 */
@@ -82,6 +88,8 @@ class Wirecard_Transaction_Handler extends Wirecard_Handler {
 	 *
 	 * @param stdClass $transaction_data
 	 *
+	 * @throws Exception
+	 *
 	 * @since 1.0.0
 	 */
 	public function capture_transaction( $transaction_data ) {
@@ -114,8 +122,6 @@ class Wirecard_Transaction_Handler extends Wirecard_Handler {
 	 * Refund transaction via Payment Gateway
 	 *
 	 * @param stdClass $transaction_data
-	 *
-	 * @return bool|WP_Error
 	 *
 	 * @since 1.0.0
 	 */

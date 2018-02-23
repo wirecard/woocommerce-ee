@@ -43,6 +43,10 @@ use Wirecard\PaymentSdk\TransactionService;
 
 /**
  * Class Wirecard_Notification_Handler
+ *
+ * Handles notifications recieved via Wirecard Payment Gateway
+ *
+ * @since 1.0.0
  */
 class Wirecard_Notification_Handler extends Wirecard_Handler {
 

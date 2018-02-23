@@ -48,13 +48,38 @@ use Wirecard\PaymentSdk\TransactionService;
 
 /**
  * Class WC_Wirecard_Payment_Gateway
+ *
+ * @extends WC_Payment_Gateway
+ *
+ * @since 1.0.0
  */
 abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 
+	/**
+	 * Parent transaction types which support cancel operation
+	 *
+	 * @since 1.0.0
+	 * @access protected
+	 * @var array
+	 */
 	protected $cancel = array( 'authorization' );
 
+	/**
+	 * Parent transaction types which support refund/cancel(refund) operation
+	 *
+	 * @since 1.0.0
+	 * @access protected
+	 * @var array
+	 */
 	protected $refund = array( 'capture-authorization' );
 
+	/**
+	 * Parent transaction types which support pay(capture) operation
+	 *
+	 * @since 1.0.0
+	 * @access protected
+	 * @var array
+	 */
 	protected $capture = array( 'authorization' );
 
 	/**
@@ -162,6 +187,8 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 * @param string   $payment_state
 	 *
 	 * @return string
+	 *
+	 * @since 1.0.0
 	 */
 	public function create_redirect_url( $order, $payment_state, $payment_method ) {
 		$return_url = add_query_arg(
@@ -269,6 +296,8 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 * @param Config                                       $config
 	 * @param WC_Order                                     $order
 	 *
+	 * @throws Exception
+	 *
 	 * @return string|WP_Error
 	 *
 	 * @since 1.0.0
@@ -308,6 +337,8 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 * @param null $http_pass
 	 *
 	 * @return Config
+	 *
+	 * @since 1.0.0
 	 */
 	public function create_payment_config( $base_url = null, $http_user = null, $http_pass = null ) {
 		$config = new Config( $base_url, $http_user, $http_pass );
@@ -320,6 +351,8 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 *
 	 * @param WC_Order $order
 	 * @param Response $response
+	 *
+	 * @since 1.0.0
 	 */
 	public function save_response_data( $order, $response ) {
 		$response_data = $response->getData();
@@ -336,6 +369,8 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 *
 	 * @param WC_Order        $order
 	 * @param SuccessResponse $response
+	 *
+	 * @since 1.0.0
 	 */
 	public function update_payment_transaction( $order, $response ) {
 		$order->set_transaction_id( $response->getTransactionId() );
@@ -431,11 +466,22 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 * @param WC_Order $order
 	 *
 	 * @return bool
+	 *
+	 * @since 1.0.0
 	 */
 	public function can_refund_order( $order ) {
 		return $order && $order->is_paid();
 	}
 
+	/**
+	 * @param int    $order_id
+	 * @param null   $amount
+	 * @param string $reason
+	 *
+	 * @return bool|WP_Error
+	 *
+	 * @since 1.0.0
+	 */
 	public function process_refund( $order_id, $amount = null, $reason = '' ) {
 		$order = wc_get_order( $order_id );
 

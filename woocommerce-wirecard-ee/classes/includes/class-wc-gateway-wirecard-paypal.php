@@ -53,10 +53,29 @@ use Wirecard\PaymentSdk\Transaction\PayPalTransaction;
  */
 class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 
+	/**
+	 * Payment type
+	 *
+	 * @since 1.0.0
+	 * @access private
+	 * @var string
+	 */
 	private $type;
 
+	/**
+	 * Additional helper for basket and risk management
+	 *
+	 * @since 1.0.0
+	 * @access private
+	 * @var Additional_Information
+	 */
 	private $additional_helper;
 
+	/**
+	 * WC_Gateway_Wirecard_Paypal constructor.
+	 *
+	 * @since 1.0.0
+	 */
 	public function __construct() {
 		$this->type               = 'paypal';
 		$this->id                 = 'woocommerce_wirecard_paypal';
@@ -73,10 +92,7 @@ class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 		$this->capture = array( 'authorization' );
 		$this->refund  = array( 'debit', 'capture-authorization' );
 
-		// Load the form fields.
 		$this->init_form_fields();
-
-		// Load the settings.
 		$this->init_settings();
 
 		$this->title   = $this->get_option( 'title' );

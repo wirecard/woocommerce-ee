@@ -33,7 +33,15 @@ require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'vendor/autoload.php' );
 
 use Psr\Log\LoggerInterface;
 
+/**
+ * Class Logger
+ *
+ * @implements LoggerInterface
+ *
+ * @since 1.0.0
+ */
 class Logger implements LoggerInterface {
+
 	/**
 	 * System is unusable.
 	 *
@@ -41,6 +49,8 @@ class Logger implements LoggerInterface {
 	 * @param array  $context
 	 *
 	 * @return void
+	 *
+	 * @since 1.0.0
 	 */
 	public function emergency( $message, array $context = array() ) {
 		$this->log( 4, $message, $context );
@@ -56,6 +66,8 @@ class Logger implements LoggerInterface {
 	 * @param array  $context
 	 *
 	 * @return void
+	 *
+	 * @since 1.0.0
 	 */
 	public function alert( $message, array $context = array() ) {
 		$this->log( 4, $message, $context );
@@ -70,6 +82,8 @@ class Logger implements LoggerInterface {
 	 * @param array  $context
 	 *
 	 * @return void
+	 *
+	 * @since 1.0.0
 	 */
 	public function critical( $message, array $context = array() ) {
 		$this->log( 4, $message, $context );
@@ -83,6 +97,8 @@ class Logger implements LoggerInterface {
 	 * @param array  $context
 	 *
 	 * @return void
+	 *
+	 * @since 1.0.0
 	 */
 	public function error( $message, array $context = array() ) {
 		$this->log( 3, $message, $context );
@@ -98,6 +114,8 @@ class Logger implements LoggerInterface {
 	 * @param array  $context
 	 *
 	 * @return void
+	 *
+	 * @since 1.0.0
 	 */
 	public function warning( $message, array $context = array() ) {
 		$this->log( 2, $message, $context );
@@ -110,6 +128,8 @@ class Logger implements LoggerInterface {
 	 * @param array  $context
 	 *
 	 * @return void
+	 *
+	 * @since 1.0.0
 	 */
 	public function notice( $message, array $context = array() ) {
 		$this->log( 1, $message, $context );
@@ -124,6 +144,8 @@ class Logger implements LoggerInterface {
 	 * @param array  $context
 	 *
 	 * @return void
+	 *
+	 * @since 1.0.0
 	 */
 	public function info( $message, array $context = array() ) {
 		$this->log( 1, $message, $context );
@@ -136,6 +158,8 @@ class Logger implements LoggerInterface {
 	 * @param array  $context
 	 *
 	 * @return void
+	 *
+	 * @since 1.0.0
 	 */
 	public function debug( $message, array $context = array() ) {
 		$this->log( 1, $message, $context );
@@ -149,6 +173,8 @@ class Logger implements LoggerInterface {
 	 * @param array  $context
 	 *
 	 * @return void
+	 *
+	 * @since 1.0.0
 	 */
 	public function log( $level, $message, array $context = array() ) {
 		$log = new WC_Logger();

@@ -37,25 +37,35 @@ require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/helper/class-logge
 
 /**
  * Class Wirecard_Handler
+ *
+ * Basic Wirecard handler for payment gateway payments
+ *
+ * @since 1.0.0
  */
 class Wirecard_Handler {
 
 	/**
 	 * Array of payment methods
 	 *
-	 * @var array
-	 *
 	 * @since 1.0.0
+	 * @access private
+	 * @var array
 	 */
 	private $payment_methods;
 
 	/**
+	 * Logger
+	 *
+	 * @since 1.0.0
+	 * @access protected
 	 * @var Logger
 	 */
 	protected $logger;
 
 	/**
 	 * Wirecard_Handler constructor.
+	 *
+	 * @since 1.0.0
 	 */
 	public function __construct() {
 		$this->payment_methods = array(
@@ -71,6 +81,8 @@ class Wirecard_Handler {
 	 * @param string $method_name
 	 *
 	 * @return WC_Wirecard_Payment_Gateway | null
+	 *
+	 * @since 1.0.0
 	 */
 	public function get_payment_method( $method_name ) {
 		return isset( $this->payment_methods[ $method_name ] ) ? $this->payment_methods[ $method_name ] : null;
