@@ -64,7 +64,7 @@ class Wirecard_Notification_Handler extends Wirecard_Handler {
 		$payment = $this->get_payment_method( $payment_method );
 		$config  = $payment->create_payment_config();
 		try {
-			$transaction_service = new TransactionService( $config );
+			$transaction_service = new TransactionService( $config, $this->logger );
 			/** @var Response $response */
 			$response = $transaction_service->handleNotification( $payload );
 		} catch ( \InvalidArgumentException $exception ) {

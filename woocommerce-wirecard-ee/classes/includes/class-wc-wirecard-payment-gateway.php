@@ -36,6 +36,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/handler/class-wirecard-response-handler.php' );
 require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/handler/class-wirecard-notification-handler.php' );
 require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/admin/class-wirecard-transaction-factory.php' );
+require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/helper/class-logger.php' );
 
 use Wirecard\PaymentSdk\Config\Config;
 use Wirecard\PaymentSdk\Response\Response;
@@ -146,7 +147,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 			}
 		} catch ( Exception $exception ) {
 			if ( ! $order->is_paid() ) {
-				$logger              = new WC_Logger();
+				$logger              = new Logger();
 				$logger->debug( __METHOD__ . $exception->getMessage() );
 			}
 			die();
@@ -207,8 +208,8 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 * @since 1.0.0
 	 */
 	public function execute_transaction( $transaction, $config, $operation, $order ) {
-		$logger              = new WC_Logger();
-		$transaction_service = new TransactionService( $config );
+		$logger              = new Logger();
+		$transaction_service = new TransactionService( $config, $logger );
 		try {
 			/** @var $response Response */
 			$response = $transaction_service->process( $transaction, $operation );
@@ -273,8 +274,8 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 * @since 1.0.0
 	 */
 	public function execute_refund( $transaction, $config, $order ) {
-		$logger              = new WC_Logger();
-		$transaction_service = new TransactionService( $config );
+		$logger              = new Logger();
+		$transaction_service = new TransactionService( $config, $logger );
 		try {
 			if ( $transaction instanceof \Wirecard\PaymentSdk\Transaction\CreditCardTransaction ) {
 				/** @var $response Response */

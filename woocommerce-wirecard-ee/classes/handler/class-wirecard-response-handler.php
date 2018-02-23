@@ -57,10 +57,10 @@ class Wirecard_Response_Handler extends Wirecard_Handler {
 	public function handle_response( $request ) {
 		/** @var WC_Wirecard_Payment_Gateway $payment */
 		$payment = $this->get_payment_method( $request['payment-method'] );
-		$config  = $payment->create_payment_config();
+		$config  = $payment->create_payment_config();;
 
 		try {
-			$transaction_service = new TransactionService( $config );
+			$transaction_service = new TransactionService( $config, $this->logger );
 			/** @var Response $result */
 			$result = $transaction_service->handleResponse( $request );
 			if ( $result instanceof SuccessResponse ) {

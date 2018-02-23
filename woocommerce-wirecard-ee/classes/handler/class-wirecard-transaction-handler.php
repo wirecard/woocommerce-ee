@@ -57,7 +57,7 @@ class Wirecard_Transaction_Handler extends Wirecard_Handler {
 		$config      = $payment->create_payment_config();
 		$transaction = $payment->process_cancel( $transaction_data->order_id, $transaction_data->amount );
 
-		$transaction_service = new TransactionService( $config );
+		$transaction_service = new TransactionService( $config, $this->logger );
 		try {
 			/** @var $response Response */
 			$response = $transaction_service->process( $transaction, 'cancel' );
@@ -90,7 +90,7 @@ class Wirecard_Transaction_Handler extends Wirecard_Handler {
 		$config      = $payment->create_payment_config();
 		$transaction = $payment->process_capture( $transaction_data->order_id, $transaction_data->amount );
 
-		$transaction_service = new TransactionService( $config );
+		$transaction_service = new TransactionService( $config, $this->logger );
 		try {
 			/** @var $response Response */
 			$response = $transaction_service->process( $transaction, 'pay' );

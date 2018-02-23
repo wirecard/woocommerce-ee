@@ -33,6 +33,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/helper/class-logger.php' );
+
 /**
  * Class Wirecard_Handler
  */
@@ -48,7 +50,7 @@ class Wirecard_Handler {
 	private $payment_methods;
 
 	/**
-	 * @var WC_Logger
+	 * @var Logger
 	 */
 	protected $logger;
 
@@ -60,7 +62,7 @@ class Wirecard_Handler {
 			'paypal'     => new WC_Gateway_Wirecard_Paypal(),
 			'creditcard' => new WC_Gateway_Wirecard_Creditcard(),
 		);
-		$this->logger          = new WC_Logger();
+		$this->logger          = new Logger();
 	}
 
 	/**
