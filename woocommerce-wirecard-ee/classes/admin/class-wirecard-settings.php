@@ -95,7 +95,7 @@ class Wirecard_Settings {
 			<table class="wp-list-table widefat fixed striped posts">
 				<?php
 				$pages = $this->transaction_factory->get_rows( $start );
-				echo '</table>';
+				echo '</table><br/>';
 				$this->add_pagination( $start, $pages );
 				?>
 		</div>
