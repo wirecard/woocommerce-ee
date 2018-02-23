@@ -37,14 +37,47 @@ require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/handler/class-wire
 
 use Wirecard\PaymentSdk\Response\SuccessResponse;
 
+/**
+ * Class Wirecard_Transaction_Factory
+ *
+ * Factory for transaction creation and basic views
+ *
+ * @since 1.0.0
+ */
 class Wirecard_Transaction_Factory {
 
+	/**
+	 * Transaction table name in database
+	 *
+	 * @since 1.0.0
+	 * @access private
+	 * @var string
+	 */
 	private $table_name;
 
+	/**
+	 * Fields for transaction table view
+	 *
+	 * @since 1.0.0
+	 * @access private
+	 * @var array
+	 */
 	private $fields_list;
 
+	/**
+	 * Handles back-end operations
+	 *
+	 * @since 1.0.0
+	 * @access private
+	 * @var Wirecard_Transaction_Handler
+	 */
 	private $transaction_handler;
 
+	/**
+	 * Wirecard_Transaction_Factory constructor.
+	 *
+	 * @since 1.0.0
+	 */
 	public function __construct() {
 		global $wpdb;
 

@@ -35,14 +35,38 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/admin/class-wirecard-transaction-factory.php' );
 
+/**
+ * Class Wirecard_Settings
+ *
+ * Handles main dashboard for Wirecard transactions
+ *
+ * @since 1.0.0
+ */
 class Wirecard_Settings {
 
+	/**
+	 * Factory for transaction table
+	 *
+	 * @since 1.0.0
+	 * @access private
+	 * @var Wirecard_Transaction_Factory
+	 */
 	private $transaction_factory;
 
+	/**
+	 * Wirecard_Settings constructor.
+	 *
+	 * @since 1.0.0
+	 */
 	public function __construct() {
 		$this->transaction_factory = new Wirecard_Transaction_Factory();
 	}
 
+	/**
+	 * Handles various views
+	 *
+	 * @since 1.0.0
+	 */
 	public function wirecard_payment_gateway_settings() {
 		if ( isset( $_REQUEST['id'] ) ) {
 			$this->transaction_factory->show_transaction( $_REQUEST['id'] );
@@ -53,6 +77,13 @@ class Wirecard_Settings {
 		}
 	}
 
+	/**
+	 * Show main dashboard including transaction table
+	 *
+	 * @param null|int $start
+	 *
+	 * @since 1.0.0
+	 */
 	public function show_dashboard( $start = null ) {
 		?>
 		<div class="wrap">
@@ -62,13 +93,18 @@ class Wirecard_Settings {
 			<p>Global settings, Transactiondetails, Back-end Operations and Support Requests will be implemented here</p>
 			<table class="wp-list-table widefat fixed striped posts">
 				<?php
-				$pages = $this->transaction_factory->get_rows();
+				$pages = $this->transaction_factory->get_rows( $start );
 				?>
 			</table>
 		</div>
 		<?php
 	}
 
+	/**
+	 * Handle cancel transactions if transaction_id is set
+	 *
+	 * @since 1.0.0
+	 */
 	public function cancel_transaction() {
 		if ( isset( $_REQUEST['id'] ) ) {
 			$this->transaction_factory->handle_cancel( $_REQUEST['id'] );
@@ -77,6 +113,11 @@ class Wirecard_Settings {
 		}
 	}
 
+	/**
+	 * Handle capture transactions if transaction_id is set
+	 *
+	 * @since 1.0.0
+	 */
 	public function capture_transaction() {
 		if ( isset( $_REQUEST['id'] ) ) {
 			$this->transaction_factory->handle_capture( $_REQUEST['id'] );
@@ -85,6 +126,11 @@ class Wirecard_Settings {
 		}
 	}
 
+	/**
+	 * Handle refund transactions if transaction_id is set
+	 *
+	 * @since 1.0.0
+	 */
 	public function refund_transaction() {
 		if ( isset( $_REQUEST['id'] ) ) {
 			$this->transaction_factory->handle_refund( $_REQUEST['id'] );

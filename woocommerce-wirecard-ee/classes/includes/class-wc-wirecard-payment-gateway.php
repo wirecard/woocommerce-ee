@@ -147,7 +147,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 			}
 		} catch ( Exception $exception ) {
 			if ( ! $order->is_paid() ) {
-				$logger              = new Logger();
+				$logger = new Logger();
 				$logger->debug( __METHOD__ . $exception->getMessage() );
 			}
 			die();
