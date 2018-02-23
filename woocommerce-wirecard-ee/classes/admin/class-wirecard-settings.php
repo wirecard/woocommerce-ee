@@ -80,17 +80,18 @@ class Wirecard_Settings {
 	/**
 	 * Show main dashboard including transaction table
 	 *
-	 * @param null|int $start
+	 * @param int $start
 	 *
 	 * @since 1.0.0
 	 */
-	public function show_dashboard( $start = null ) {
+	public function show_dashboard( $start = 1 ) {
 		?>
 		<div class="wrap">
 			<h1 class="wp-heading-inline">Wirecard Payment Processing Gateway</h1>
 			<hr class="wp-header-end">
 			<img src="<?php echo plugins_url( 'woocommerce-wirecard-ee/assets/images/wirecard-logo.png' ); ?>">
-			<p>Global settings, Transactiondetails, Back-end Operations and Support Requests will be implemented here</p>
+			<br/>
+			<br/>
 			<table class="wp-list-table widefat fixed striped posts">
 				<?php
 				$pages = $this->transaction_factory->get_rows( $start );
