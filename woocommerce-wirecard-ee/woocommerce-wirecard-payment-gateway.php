@@ -67,6 +67,18 @@ function init_wirecard_payment_gateway() {
 	require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'vendor/autoload.php' );
 
 	add_filter( 'woocommerce_payment_gateways', 'add_wirecard_payment_gateway', 0 );
+	add_filter( 'wc_order_statuses', 'wirecard_wc_order_statuses' );
+	register_post_status(
+		'wc-authorization',
+		array(
+			'label'                     => _x( 'Authorized', 'Order status', 'woocommerce-gateway-wirecard' ),
+			'public'                    => true,
+			'exclude_from_search'       => false,
+			'show_in_admin_all_list'    => true,
+			'show_in_admin_status_list' => true,
+			'label_count'               => _n_noop( 'Authorized <span class="count">(%s)</span>', 'Authorized<span class="count">(%s)</span>', 'woocommerce-gateway-wirecard' ),
+		)
+	);
 }
 
 /**
@@ -87,16 +99,59 @@ function add_wirecard_payment_gateway( $methods ) {
 }
 
 /**
- * Default method for installation process
+ * Add Wirecard Authorization order status
+ *
+ * @param array $order_statuses
+ *
+ * @return array
+ *
+ * @since 1.0.0
+ */
+function wirecard_wc_order_statuses( $order_statuses ) {
+	$order_statuses['wc-authorization'] = _x( 'Authorized', 'Order status', 'woocommerce-gateway-wirecard' );
+
+	return $order_statuses;
+}
+
+/**
+ * Create transaction table in activation process
  *
  * @since 1.0.0
  */
 function install_wirecard_payment_gateway() {
 	global $wpdb;
+
+	$table_name = $wpdb->base_prefix . 'wirecard_payment_gateway_tx';
+	$collate    = '';
+	if ( $wpdb->has_cap( 'collation' ) ) {
+		$collate = $wpdb->get_charset_collate();
+	}
+	$sql = "CREATE TABLE IF NOT EXISTS {$table_name} (
+		tx_id int(10) unsigned NOT NULL auto_increment,
+		transaction_id varchar(128) default NULL,
+		parent_transaction_id VARCHAR(128) default NULL,
+		order_id int(10) NULL,
+		cart_id int(10) unsigned NOT NULL,
+		carthash varchar(255),
+		payment_method varchar(32) NOT NULL,
+		transaction_state varchar(32) NOT NULL,
+		transaction_type varchar(32) NOT NULL,
+		amount float NOT NULL,
+		currency varchar(3) NOT NULL,
+		response TEXT default NULL,
+		transaction_link varchar(255) default NULL,
+		closed tinyint(1) NOT NULL default '0',
+		created DATETIME NOT NULL default CURRENT_TIMESTAMP,
+		modified DATETIME NOT NULL default CURRENT_TIMESTAMP,
+ 		PRIMARY KEY (tx_id)
+	)$collate;";
+
+	require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+	dbDelta( $sql );
 }
 
 /**
- * Add Wirecard Payment Gateway options page
+ * Add Wirecard Payment Gateway options page and back-end pages
  *
  * @since 1.0.0
  */
@@ -110,5 +165,29 @@ function wirecard_gateway_options_page() {
 		'manage_options',
 		'wirecardpayment',
 		array( $admin, 'wirecard_payment_gateway_settings' )
+	);
+	add_submenu_page(
+		null,
+		__( 'Cancel Transaction', 'woocommerce-gateway-wirecard' ),
+		__( 'Cancel Transaction', 'woocommerce-gateway-wirecard' ),
+		'manage_options',
+		'cancelpayment',
+		array( $admin, 'cancel_transaction' )
+	);
+	add_submenu_page(
+		null,
+		__( 'Capture Transaction', 'woocommerce-gateway-wirecard' ),
+		__( 'Capture Transaction', 'woocommerce-gateway-wirecard' ),
+		'manage_options',
+		'capturepayment',
+		array( $admin, 'capture_transaction' )
+	);
+	add_submenu_page(
+		null,
+		__( 'Refund Transaction', 'woocommerce-gateway-wirecard' ),
+		__( 'Refund Transaction', 'woocommerce-gateway-wirecard' ),
+		'manage_options',
+		'refundpayment',
+		array( $admin, 'refund_transaction' )
 	);
 }
