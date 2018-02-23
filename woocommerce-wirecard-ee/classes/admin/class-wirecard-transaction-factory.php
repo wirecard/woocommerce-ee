@@ -392,7 +392,7 @@ class Wirecard_Transaction_Factory {
 			__( 'For more transaction information click ', 'woocommerce-wirecard-gateway' ),
 			$response->findElement( 'merchant-account-id' ),
 			$transaction_id,
-			__( 'here', 'woocommer-wirecard-gateway' )
+			__( 'here', 'woocommerce-wirecard-gateway' )
 		);
 		return $output;
 	}
