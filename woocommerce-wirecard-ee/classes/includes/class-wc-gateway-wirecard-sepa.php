@@ -76,6 +76,7 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 		$this->additional_helper = new Additional_Information();
 
 		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
+		add_action( 'woocommerce_api_get_sepa_mandate', array( $this, 'get_sepa_mandate' ) );
 
 		parent::add_payment_gateway_actions();
 	}
@@ -203,6 +204,7 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 	 */
 	public function payment_fields() {
 		$html = '
+			<script type="application/javascript" src="' . WOOCOMMERCE_GATEWAY_WIRECARD_URL . '/assets/js/sepa.js"></script>
 			<p class="form-row form-row-wide validate-required">
 				<label for="sepa_firstname">' . __( 'Firstname', 'wooocommerce-gateway-wirecard' ) . '</label>
 				<input id="sepa_firstname" class="input-text" type="text" name="sepa_firstname">
