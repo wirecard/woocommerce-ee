@@ -156,7 +156,7 @@ class Wirecard_Transaction_Factory {
 				'transaction_state'     => $transaction_state,
 				'transaction_type'      => $response->getTransactionType(),
 				'amount'                => $order->get_total(),
-				'currency'              => get_woocommerce_currency(),
+				'currency'              => $order->get_currency(),
 				'order_id'              => $order->get_id(),
 				'response'              => wp_json_encode( $response->getData() ),
 				'transaction_link'      => $transaction_link,
