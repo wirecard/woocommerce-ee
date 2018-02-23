@@ -45,6 +45,8 @@ use Wirecard\PaymentSdk\Transaction\Transaction;
 /**
  * Class Additional_Information
  *
+ * Handles basket creation and risk management parameter creation
+ *
  * @since   1.0.0
  */
 class Additional_Information {
