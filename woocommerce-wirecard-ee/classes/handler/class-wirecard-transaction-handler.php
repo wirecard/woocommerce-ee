@@ -79,7 +79,7 @@ class Wirecard_Transaction_Handler extends Wirecard_Handler {
 			die();
 		}
 		if ( $response instanceof FailureResponse ) {
-			echo 'failed to cancel';
+			echo __( 'An error occured. The transaction could not be cancelled!', 'woocommercer-gateway-wirecard' );
 		}
 	}
 
@@ -114,7 +114,7 @@ class Wirecard_Transaction_Handler extends Wirecard_Handler {
 			die();
 		}
 		if ( $response instanceof FailureResponse ) {
-			echo 'failed to capture';
+			echo __( 'An error occured. The transaction could not be captured!', 'woocommercer-gateway-wirecard' );
 		}
 	}
 
