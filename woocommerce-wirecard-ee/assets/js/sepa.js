@@ -1,35 +1,101 @@
-$ = jQuery;
+$                 = jQuery;
+var popup         = $('#dialog');
+var checkout_form = $( 'form.checkout' );
+var sepa_check    = false;
 
-$( document ).ready(function() {
+$( document ).ready( function() {
+	/**
+	 * Create popup window
+	 */
+	popup.dialog({
+		autoOpen :false,
+		modal: true,
+		show: "blind",
+		hide: "blind"
+	});
+
 	/**
 	 * Submit the seamless form before order is placed
 	 *
 	 * @since 1.0.0
 	 */
 	checkout_form.on( 'checkout_place_order', function() {
-		if ( $( '#payment_method_woocommerce_wirecard_sepa' )[0].checked === true ) {
-			console.log("stop");
-			render_sepa_mandate();
+		if ( window.sepaplaceorderchecked ) {
+			window.sepaplaceorderchecked = false;
+			return;
+		} else  {
+			window.sepaplaceorderchecked = true;
+		}
+		if ( $( '#payment_method_woocommerce_wirecard_sepa' ).is( ':checked' )  && ! sepa_check ) {
+			get_sepa_mandate_data();
 			return false;
+		} else {
+			sepa_check = false;
+			popup.dialog( 'close' );
+			$( 'body' ).css( 'overflow', 'auto' );
+			return true;
 		}
 	});
-	
-	function render_sepa_mandate() {
-		$data = get_sepa_mandate_data();
-	}
-	
+
+	/**
+	 * Get sepa mandate template
+	 */
 	function get_sepa_mandate_data() {
 		$.ajax({
-			type: 'POST',
-			url: ajax_url,
+			type: 'GET',
+			url: sepa_url,
 			data: { 'action' : 'get_sepa_mandate' },
 			dataType: 'json',
-			success: function (data) {
-
+			success: function ( response ) {
+				openPopup( response.data );
 			},
-			error: function (data) {
-				console.log( data );
+			error: function ( response ) {
+				console.log( response );
 			}
 		});
+	}
+
+	/**
+	 * Process data and open popup
+	 *
+	 * @param content
+	 * @returns {boolean}
+	 */
+	function openPopup( content ) {
+		popup.html( content );
+		popup.find( '.first_last_name' ).text( $('#sepa_firstname' ).val() + ' ' + $( '#sepa_lastname' ).val() );
+		popup.find( '.bank_iban' ).text( $( '#sepa_iban' ).val() );
+		popup.find( '.bank_bic' ).text( $( '#sepa_bic' ).val() );
+
+		popup.dialog({height:'auto', width:'auto'});
+		popup.dialog( 'open' );
+
+		$( 'body' ).css( 'overflow', 'hidden' );
+
+		var button = document.getElementById( 'sepa-button' );
+		button.addEventListener( 'click', process_order, false );
+
+		var check_box = document.getElementById( 'sepa-check' );
+		check_box.addEventListener( 'change', check_change, false );
+
+		return false;
+	}
+
+	function process_order() {
+		if ( document.getElementById( 'sepa-check' ).checked ) {
+			sepa_check = true;
+			checkout_form.submit();
+		} else {
+			popup.dialog( 'close' );
+			$( 'body' ).css( 'overflow', 'auto' );
+		}
+	}
+	
+	function check_change() {
+		if ( document.getElementById('sepa-check').checked ) {
+			$( '#sepa-button' ).text( 'Process' );
+		} else {
+			$( '#sepa-button' ).text( 'Cancel' );
+		}
 	}
 });

@@ -76,7 +76,7 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 		$this->additional_helper = new Additional_Information();
 
 		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
-		add_action( 'woocommerce_api_get_sepa_mandate', array( $this, 'get_sepa_mandate' ) );
+		add_action( 'woocommerce_api_get_sepa_mandate', array( $this, 'sepa_mandate' ) );
 
 		parent::add_payment_gateway_actions();
 	}
@@ -88,13 +88,13 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 	 */
 	public function init_form_fields() {
 		$this->form_fields = array(
-			'enabled'             => array(
+			'enabled'                => array(
 				'title'   => __( 'Enable/Disable', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'checkbox',
 				'label'   => __( 'Enable Wirecard Payment Processing Gateway SEPA', 'woocommerce-gateway-wirecard' ),
 				'default' => 'yes',
 			),
-			'title'               => array(
+			'title'                  => array(
 				'title'       => __( 'Title', 'woocommerce-gateway-wirecard' ),
 				'type'        => 'text',
 				'description' => __( 'This controls the title which the user sees during checkout.',
@@ -102,65 +102,70 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 				'default'     => __( 'Wirecard Payment Processing Gateway SEPA', 'woocommerce-gateway-wirecard' ),
 				'desc_tip'    => true,
 			),
-			'merchant_account_id' => array(
+			'merchant_account_id'    => array(
 				'title'   => __( 'Merchant Account ID', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'text',
 				'default' => '4c901196-eff7-411e-82a3-5ef6b6860d64',
 			),
-			'secret'              => array(
+			'secret'                 => array(
 				'title'   => __( 'Secret Key', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'text',
 				'default' => 'ecdf5990-0372-47cd-a55d-037dccfe9d25',
 			),
-			'credentials'         => array(
+			'credentials'            => array(
 				'title'       => __( 'Credentials', 'woocommerce-gateway-wirecard' ),
 				'type'        => 'title',
 				'description' => __( 'Enter your Wirecard Processing Payment Gateway credentials and test it.',
 				'woocommerce-gateway-wirecard' ),
 			),
-			'base_url'            => array(
+			'base_url'               => array(
 				'title'       => __( 'Base Url', 'woocommerce-gateway-wirecard' ),
 				'type'        => 'text',
 				'description' => __( 'The elastic engine base url. (e.g. https://api.wirecard.com)' ),
 				'default'     => 'https://api-test.wirecard.com',
 				'desc_tip'    => true,
 			),
-			'http_user'           => array(
+			'http_user'              => array(
 				'title'   => __( 'Http User', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'text',
 				'default' => '70000-APITEST-AP',
 			),
-			'http_pass'           => array(
+			'http_pass'              => array(
 				'title'   => __( 'Http Password', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'text',
 				'default' => 'qD2wzQ_hrc!8',
 			),
-			'sepa_credentials'    => array(
+			'sepa_credentials'       => array(
 				'title'       => __( 'SEPA credentials', 'woocommerce-gateway-wirecard' ),
 				'type'        => 'title',
 				'description' => __( 'Enter your SEPA credentials', 'woocommerce-gateway-wirecard' ),
 			),
-			'creditor_id'         => array(
+			'creditor_id'            => array(
 				'title'   => __( 'Creditor ID', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'text',
 				'default' => 'DE98ZZZ09999999999',
 			),
-			'creditor_name'       => array(
+			'creditor_name'          => array(
 				'title'   => __( 'Creditor Name', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'text',
 				'default' => '',
 			),
-			'creditor_city'       => array(
+			'creditor_city'          => array(
 				'title'   => __( 'Creditor City', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'text',
 				'default' => '',
 			),
-			'advanced'            => array(
+			'sepa_mandate_textextra' => array(
+				'title'   => __( 'Additional text', 'woocommerce-gateway-wirecard' ),
+				'type'    => 'textarea',
+				'default' => '',
+			),
+			'advanced'               => array(
 				'title'       => __( 'Advanced options', 'woocommerce-gateway-wirecard' ),
 				'type'        => 'title',
 				'description' => '',
 			),
-			'payment_action'      => array(
+			'payment_action'         => array(
 				'title'   => __( 'Payment Action', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'select',
 				'default' => 'Authorization',
@@ -170,25 +175,25 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 					'pay'     => 'Capture',
 				),
 			),
-			'shopping_basket'     => array(
+			'shopping_basket'        => array(
 				'title'   => __( 'Enable/Disable', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'checkbox',
 				'label'   => __( 'Shopping Basket', 'woocommerce-gateway-wirecard' ),
 				'default' => 'no',
 			),
-			'descriptor'          => array(
+			'descriptor'             => array(
 				'title'   => __( 'Enable/Disable', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'checkbox',
 				'label'   => __( 'Descriptor', 'woocommerce-gateway-wirecard' ),
 				'default' => 'no',
 			),
-			'send_additional'     => array(
+			'send_additional'        => array(
 				'title'   => __( 'Enable/Disable', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'checkbox',
 				'label'   => __( 'Send additional information', 'woocommerce-gateway-wirecard' ),
 				'default' => 'yes',
 			),
-			'enable_bic'          => array(
+			'enable_bic'             => array(
 				'title'   => __( 'Enable/Disable', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'checkbox',
 				'label'   => __( 'BIC enabled', 'woocommerce-gateway-wirecard' ),
@@ -203,8 +208,17 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 	 * @since 1.0.0
 	 */
 	public function payment_fields() {
+		$page_url = add_query_arg(
+			[ 'wc-api' => 'get_sepa_mandate' ],
+			site_url( '/', is_ssl() ? 'https' : 'http' )
+		);
+
 		$html = '
+			<div id="dialog" title="Sepa"></div>
+			<link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css" type="text/css" rel="stylesheet" />
+			<script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
 			<script type="application/javascript" src="' . WOOCOMMERCE_GATEWAY_WIRECARD_URL . '/assets/js/sepa.js"></script>
+			<script>var sepa_url = "' . $page_url . '"</script>
 			<p class="form-row form-row-wide validate-required">
 				<label for="sepa_firstname">' . __( 'Firstname', 'wooocommerce-gateway-wirecard' ) . '</label>
 				<input id="sepa_firstname" class="input-text" type="text" name="sepa_firstname">
@@ -268,6 +282,10 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 		$transaction->setAccountHolder( $account_holder );
 		$transaction->setIban( $_POST['sepa_iban'] );
 
+		if ( $this->get_option( 'enable_bic' ) == 'yes' ) {
+			$transaction->setBic( $_POST['sepa_bic'] );
+		}
+
 		$mandate = new Mandate( $this->generate_mandate_id( $order_id ) );
 		$transaction->setMandate( $mandate );
 
@@ -319,6 +337,87 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 	 * @return string
 	 */
 	private function generate_mandate_id( $order_id ) {
-		return $this->get_option( 'enable_bic' ) . '-' . $order_id . '-' . strtotime( date( 'Y-m-d H:i:s' ) );
+		return $this->get_option( 'creditor_id' ) . '-' . $order_id . '-' . strtotime( date( 'Y-m-d H:i:s' ) );
+	}
+
+	public function sepa_mandate() {
+		$creditor_name       = $this->get_option( 'creditor_name' );
+		$creditor_store_city = $this->get_option( 'creditor_city' );
+		$creditor_id         = $this->get_option( 'creditor_id' );
+		$additional_text     = $this->get_option( 'sepa_mandate_textextra' );
+		$mandate_id          = $this->generate_mandate_id( '105' );
+
+		$html = '';
+		require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/helper/sepa-template.php' );
+
+		wp_send_json_success( $html );
+	}
+
+	/**
+	 * Create transaction for cancel
+	 *
+	 * @param int $order_id
+	 * @param float|null $amount
+	 *
+	 * @return SepaTransaction
+	 *
+	 * @since 1.0.0
+	 */
+	public function process_cancel( $order_id, $amount = null ) {
+		$order = wc_get_order( $order_id );
+
+		$transaction = new SepaTransaction();
+		$transaction->setParentTransactionId( $order->get_transaction_id() );
+		if ( ! is_null( $amount ) ) {
+			$transaction->setAmount( new Amount( $amount, $order->get_currency() ) );
+		}
+
+		return $transaction;
+	}
+
+	/**
+	 * Create transaction for capture
+	 *
+	 * @param int $order_id
+	 * @param float|null $amount
+	 *
+	 * @return SepaTransaction
+	 *
+	 * @since 1.0.0
+	 */
+	public function process_capture( $order_id, $amount = null ) {
+		$order = wc_get_order( $order_id );
+
+		$transaction = new SepaTransaction();
+		$transaction->setParentTransactionId( $order->get_transaction_id() );
+		if ( ! is_null( $amount ) ) {
+			$transaction->setAmount( new Amount( $amount, $order->get_currency() ) );
+		}
+
+		return $transaction;
+	}
+
+	/**
+	 * Create transaction for refund
+	 *
+	 * @param int    $order_id
+	 * @param float|null   $amount
+	 * @param string $reason
+	 *
+	 * @return bool|SepaTransaction|WP_Error
+	 *
+	 * @since 1.0.0
+	 */
+	public function process_refund( $order_id, $amount = null, $reason = '' ) {
+		parent::process_refund( $order_id, $amount, '' );
+		$order  = wc_get_order( $order_id );
+		$config = $this->create_payment_config();
+
+		$transaction = new SepaTransaction();
+		$transaction->setParentTransactionId( $order->get_transaction_id() );
+		if ( ! is_null( $amount ) ) {
+			$transaction->setAmount( new Amount( $amount, $order->get_currency() ) );
+		}
+		return $this->execute_refund( $transaction, $config, $order );
 	}
 }
