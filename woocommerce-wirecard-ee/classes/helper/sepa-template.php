@@ -37,9 +37,7 @@ $html = '
 					<td class="text11justify">
 						<i>' . __( 'Creditor', 'wooocommerce-gateway-wirecard' ) . '</i><br />' .
 						$creditor_name . ' ' . $creditor_store_city . '<br />' .
-						__( 'Creditor ID:', 'wooocommerce-gateway-wirecard' ) . $creditor_id . '<br />' .
-						__( 'Mandate reference:', 'wooocommerce-gateway-wirecard' ) . $mandate_id . '<br />
-						<input type="hidden" name="mandateId" value="' . $mandate_id . '">
+						__( 'Creditor ID:', 'wooocommerce-gateway-wirecard' ) . $creditor_id . '<br />
 					</td>
 					<td width="10%">&nbsp;</td>
 				</tr>

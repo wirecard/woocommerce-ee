@@ -345,7 +345,6 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 		$creditor_store_city = $this->get_option( 'creditor_city' );
 		$creditor_id         = $this->get_option( 'creditor_id' );
 		$additional_text     = $this->get_option( 'sepa_mandate_textextra' );
-		$mandate_id          = $this->generate_mandate_id( '105' );
 
 		$html = '';
 		require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/helper/sepa-template.php' );
