@@ -54,10 +54,10 @@ $html = '
 						<i>' . __( 'Debitor', 'wooocommerce-gateway-wirecard' ) . '</i><br />' .
 						__( 'Account owner:', 'wooocommerce-gateway-wirecard' ) . ' <span class="first_last_name"></span><br />' .
 						__( 'IBAN:', 'wooocommerce-gateway-wirecard' ) . ' <span class="bank_iban"></span><br />';
-                            if ( ( $this->get_option( 'enable_bic' ) == 'yes' ) ) {
-                                $html .= __( 'BIC:', 'wooocommerce-gateway-wirecard' ) . '<span class="bank_bic"></span><br />';
-						    }
-$html .=				'</td>
+if ( ( $this->get_option( 'enable_bic' ) == 'yes' ) ) {
+	$html .= __( 'BIC:', 'wooocommerce-gateway-wirecard' ) . '<span class="bank_bic"></span><br />';
+}
+$html .= '</td>
 					<td width="10%">&nbsp;</td>
 				</tr>
 			</table>
@@ -68,9 +68,9 @@ $html .=				'</td>
 			<table border="0" width="100%">
 				<tr>
 					<td class="text11justify">' .
-                        __( 'I authorize the creditor ', 'wooocommerce-gateway-wirecard' ) .
-							$creditor_name .
-							__( ' to send instructions to my bank to collect one single direct debit from my account. At the same time I instruct my bank to debit my account in accordance with the instructions from the creditor ', 'wooocommerce-gateway-wirecard' ) .
+						__( 'I authorize the creditor ', 'wooocommerce-gateway-wirecard' ) .
+						$creditor_name .
+						__( ' to send instructions to my bank to collect one single direct debit from my account. At the same time I instruct my bank to debit my account in accordance with the instructions from the creditor ', 'wooocommerce-gateway-wirecard' ) .
 							$creditor_name . ' ' . $additional_text . '
 					</td>
 					<td width="10%">&nbsp;</td>
@@ -97,7 +97,7 @@ $html .=				'</td>
 			<table border="0" width="100%">
 				<tr>
 					<td class="text11justify">' .
-						$creditor_store_city . ' ' . date( 'd.m.Y' )  . ' <span class="first_last_name"></span>
+						$creditor_store_city . ' ' . date( 'd.m.Y' ) . ' <span class="first_last_name"></span>
 					</td>
 					<td width="10%">&nbsp;</td>
 				</tr>
@@ -107,7 +107,7 @@ $html .=				'</td>
 					</td>
 				</tr>
 				<tr>
-					<td style="text-align: right;"><button id="sepa-button"> '. __( 'Cancle', 'wooocommerce-gateway-wirecard' ) . '</button></td>
+					<td style="text-align: right;"><button id="sepa-button"> ' . __( 'Cancle', 'wooocommerce-gateway-wirecard' ) . '</button></td>
 				</tr>
 			</table>
 		</td>
