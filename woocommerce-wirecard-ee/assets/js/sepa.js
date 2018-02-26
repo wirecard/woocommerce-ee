@@ -27,6 +27,9 @@ $( document ).ready( function() {
 			window.sepaplaceorderchecked = true;
 		}
 		if ( $( '#payment_method_woocommerce_wirecard_sepa' ).is( ':checked' ) && ! sepa_check ) {
+			if ( validate_inputs() === false ) {
+				return false;
+			}
 			get_sepa_mandate_data();
 			return false;
 		} else {
@@ -36,6 +39,21 @@ $( document ).ready( function() {
 			return true;
 		}
 	});
+
+	/**
+	 * Validate if inputs are set
+	 */
+	function validate_inputs() {
+		var validation = true;
+		$( '.wc-sepa-input' ).each(function () {
+			if ( ! $(this).val() ) {
+				$(this).focus();
+				validation = false;
+				return;
+			}
+		});
+		return validation;
+	}
 
 	/**
 	 * Get sepa mandate template

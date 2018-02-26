@@ -221,22 +221,22 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 			<script>var sepa_url = "' . $page_url . '"</script>
 			<p class="form-row form-row-wide validate-required">
 				<label for="sepa_firstname">' . __( 'Firstname', 'wooocommerce-gateway-wirecard' ) . '</label>
-				<input id="sepa_firstname" class="input-text" type="text" name="sepa_firstname">
+				<input id="sepa_firstname" class="input-text wc-sepa-input" type="text" name="sepa_firstname">
 			</p>
 			<p class="form-row form-row-wide validate-required">
 				<label for="sepa_lastname">' . __( 'Lastname', 'wooocommerce-gateway-wirecard' ) . '</label>
-				<input id="sepa_lastname" class="input-text" type="text" name="sepa_lastname">
+				<input id="sepa_lastname" class="input-text wc-sepa-input" type="text" name="sepa_lastname">
 			</p>
 			<p class="form-row form-row-wide validate-required">
 				<label for="sepa_iban">' . __( 'Iban', 'wooocommerce-gateway-wirecard' ) . '</label>
-				<input id="sepa_iban" class="input-text" type="text" name="sepa_iban">
+				<input id="sepa_iban" class="input-text wc-sepa-input" type="text" name="sepa_iban">
 			</p>';
 
 		if ( $this->get_option( 'enable_bic' ) == 'yes' ) {
 			$html .= '			
 			<p class="form-row form-row-wide validate-required">
 				<label for="sepa_bic">' . __( 'Bic', 'wooocommerce-gateway-wirecard' ) . '</label>
-				<input id="sepa_bic" class="input-text" type="text" name="sepa_bic">
+				<input id="sepa_bic" class="input-text wc-sepa-input" type="text" name="sepa_bic">
 			</p>';
 		}
 
