@@ -158,7 +158,7 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 			'sepa_mandate_textextra' => array(
 				'title'   => __( 'Additional text', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'textarea',
-				'default' => '',
+				'default' => __( 'Enter aditional text shown on sepa mandate page.', 'woocommerce-gateway-wirecard' ),
 			),
 			'advanced'               => array(
 				'title'       => __( 'Advanced options', 'woocommerce-gateway-wirecard' ),
@@ -216,6 +216,7 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 		$html = '
 			<div id="dialog" title="Sepa"></div>
 			<link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css" type="text/css" rel="stylesheet" />
+			<link href="' . WOOCOMMERCE_GATEWAY_WIRECARD_URL . '/assets/styles/sepa.css" type="text/css" rel="stylesheet" />
 			<script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
 			<script type="application/javascript" src="' . WOOCOMMERCE_GATEWAY_WIRECARD_URL . '/assets/js/sepa.js"></script>
 			<script>var sepa_url = "' . $page_url . '"</script>

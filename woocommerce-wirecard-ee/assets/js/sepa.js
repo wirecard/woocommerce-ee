@@ -66,6 +66,7 @@ $( document ).ready( function() {
 			dataType: 'json',
 			success: function ( response ) {
 				openPopup( response.data );
+				$( '.ui-dialog' ).css( 'margin-top', '40px' );
 			},
 			error: function ( response ) {
 				console.log( response );

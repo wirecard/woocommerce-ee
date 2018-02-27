@@ -148,7 +148,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 			wc_add_notice( __( 'An error occurred during the payment process. Please try again.', 'woocommerce-gateway-wirecard' ), 'error' );
 			$redirect_url = $order->get_cancel_endpoint();
 		} else {
-			if ( ! $order->is_paid() && ! $order->get_status( 'authorization' ) ) {
+			if ( ! $order->is_paid() && ( 'authorization' != $order->get_status() ) ) {
 				$order->update_status( 'on-hold', __( 'Awaiting Wirecard Processing Gateway payment', 'woocommerce-gateway-wirecard' ) );
 			}
 			$redirect_url = $this->get_return_url( $order );

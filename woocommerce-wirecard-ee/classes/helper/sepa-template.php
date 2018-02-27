@@ -105,7 +105,7 @@ $html .= '</td>
 					</td>
 				</tr>
 				<tr>
-					<td style="text-align: right;"><button id="sepa-button"> ' . __( 'Cancle', 'wooocommerce-gateway-wirecard' ) . '</button></td>
+					<td style="text-align: right;"><button id="sepa-button"> ' . __( 'Cancel', 'wooocommerce-gateway-wirecard' ) . '</button></td>
 				</tr>
 			</table>
 		</td>
