@@ -47,7 +47,7 @@ $( document ).ready( function() {
 		var validation = true;
 		$( '.wc-sepa-input' ).each(function () {
 			if ( ! $( this ).val() ) {
-				$( this) .focus();
+				$( this ) .focus();
 				validation = false;
 				return;
 			}
