@@ -35,8 +35,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/handler/class-wirecard-response-handler.php' );
 require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/handler/class-wirecard-notification-handler.php' );
+require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/handler/class-wirecard-callback.php' );
 require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/admin/class-wirecard-transaction-factory.php' );
 require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/helper/class-logger.php' );
+
 
 use Wirecard\PaymentSdk\Config\Config;
 use Wirecard\PaymentSdk\Response\Response;
@@ -102,6 +104,13 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 				'return_request',
 			)
 		);
+		add_action(
+			'woocommerce_api_checkout_form_submit',
+			array(
+				$this,
+				'callback',
+			)
+		);
 	}
 
 	/**
@@ -139,7 +148,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 			wc_add_notice( __( 'An error occurred during the payment process. Please try again.', 'woocommerce-gateway-wirecard' ), 'error' );
 			$redirect_url = $order->get_cancel_endpoint();
 		} else {
-			if ( ! $order->is_paid() && ! $order->get_status( 'authorization' ) ) {
+			if ( ! $order->is_paid() && ( 'authorization' != $order->get_status() ) ) {
 				$order->update_status( 'on-hold', __( 'Awaiting Wirecard Processing Gateway payment', 'woocommerce-gateway-wirecard' ) );
 			}
 			$redirect_url = $this->get_return_url( $order );
@@ -261,9 +270,8 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 			$data['url']         = $response->getUrl();
 			$data['method']      = $response->getMethod();
 			$data['form_fields'] = $response->getFormFields();
-			WC()->session->set( 'credit_card_post_data', $data );
-			$page_url = add_query_arg(
-				[ 'wc-api' => 'checkout_form_submit_woocommerce_wirecard_creditcard' ],
+			WC()->session->set( 'wirecard_post_data', $data );
+			$page_url = add_query_arg( [ 'wc-api' => 'checkout_form_submit' ],
 				site_url( '/', is_ssl() ? 'https' : 'http' )
 			);
 		}
@@ -488,5 +496,14 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 		if ( ! $this->can_refund_order( $order ) ) {
 			return new WP_Error( 'error', __( 'No online refund possible at this time.', 'woocommerce-gateway-wirecard' ) );
 		}
+	}
+
+	/**
+	 * Submit a form with the data from the response
+	 *
+	 */
+	public function callback() {
+		$callback = new Wirecard_Callback();
+		$callback->post_form();
 	}
 }

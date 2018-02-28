@@ -33,59 +33,39 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/helper/class-logger.php' );
-
 /**
- * Class Wirecard_Handler
- *
- * Basic Wirecard handler for payment gateway payments
- *
- * @since 1.0.0
+ * Class Wirecard_Callback
  */
-class Wirecard_Handler {
-
+class Wirecard_Callback {
 	/**
-	 * Array of payment methods
-	 *
-	 * @since 1.0.0
-	 * @access private
-	 * @var array
-	 */
-	private $payment_methods;
-
-	/**
-	 * Logger
-	 *
-	 * @since 1.0.0
-	 * @access protected
-	 * @var Logger
-	 */
-	protected $logger;
-
-	/**
-	 * Wirecard_Handler constructor.
+	 * Process 3ds redirect
 	 *
 	 * @since 1.0.0
 	 */
-	public function __construct() {
-		$this->payment_methods = array(
-			'paypal'     => new WC_Gateway_Wirecard_Paypal(),
-			'creditcard' => new WC_Gateway_Wirecard_Creditcard(),
-			'sepa'       => new WC_Gateway_Wirecard_Sepa(),
-		);
-		$this->logger          = new Logger();
-	}
+	public function post_form() {
+		$data = WC()->session->get( 'wirecard_post_data' );
+		WC()->session->__unset( 'wirecard_post_data' );
 
-	/**
-	 * Getter for payment gateway object for specific payment
-	 *
-	 * @param string $method_name
-	 *
-	 * @return WC_Wirecard_Payment_Gateway | null
-	 *
-	 * @since 1.0.0
-	 */
-	public function get_payment_method( $method_name ) {
-		return isset( $this->payment_methods[ $method_name ] ) ? $this->payment_methods[ $method_name ] : null;
+		$html  = '';
+		$html .= '<script>window.setInterval( function() {
+                    var wait = document.getElementById( "wait" );
+    				if ( wait.innerHTML.length > 3 ) 
+       					 wait.innerHTML = "";
+    				else 
+        				wait.innerHTML += ".";
+    		}, 200); 
+    		</script>
+			<div style="display: flex; justify-content: center; font-size: 20px;">' .
+			__( 'You are being redirected. Please wait', 'woocommerce-gateway-wirecard' ) . '
+			<span id="wait" style="font-size: 20px; width: 50px;">.</span></div>';
+		$html .= '<form id="credit_card_form" method="' . $data['method'] . '" action="' . $data['url'] . '">';
+		foreach ( $data['form_fields'] as $key => $value ) {
+			$html .= '<input type="hidden" name="' . $key . '" value="' . $value . '">';
+		}
+		$html .= '</form>';
+		$html .= '<script>document.getElementsByTagName("form")[0].submit();</script>';
+
+		echo $html;
+		die();
 	}
 }
