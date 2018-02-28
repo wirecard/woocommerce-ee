@@ -66,7 +66,6 @@ $( document ).ready( function() {
 			dataType: 'json',
 			success: function ( response ) {
 				openPopup( response.data );
-				$( '.ui-dialog' ).css( 'margin-top', '40px' );
 			},
 			error: function ( response ) {
 				console.log( response );
@@ -85,10 +84,11 @@ $( document ).ready( function() {
 		popup.find( '.first_last_name' ).text( $( '#sepa_firstname' ).val() + ' ' + $( '#sepa_lastname' ).val() );
 		popup.find( '.bank_iban' ).text( $( '#sepa_iban' ).val() );
 		popup.find( '.bank_bic' ).text( $( '#sepa_bic' ).val() );
-
-		popup.dialog( {height:'auto', width:'auto'} );
+		popup.dialog({
+			height: '800',
+			width: 'auto'
+		});
 		popup.dialog( 'open' );
-
 		$( 'body' ).css( 'overflow', 'hidden' );
 
 		var button = document.getElementById( 'sepa-button' );

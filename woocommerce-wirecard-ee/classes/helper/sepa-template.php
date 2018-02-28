@@ -49,7 +49,7 @@ $html = '
 			<table border="0" width="100%">
 				<tr>
 					<td class="text11">
-						<i>' . __( 'Debitor', 'wooocommerce-gateway-wirecard' ) . '</i><br />' .
+						<i>' . __( 'Debtor', 'wooocommerce-gateway-wirecard' ) . '</i><br />' .
 						__( 'Account owner:', 'wooocommerce-gateway-wirecard' ) . ' <span class="first_last_name"></span><br />' .
 						__( 'IBAN:', 'wooocommerce-gateway-wirecard' ) . ' <span class="bank_iban"></span><br />';
 if ( ( $this->get_option( 'enable_bic' ) == 'yes' ) ) {

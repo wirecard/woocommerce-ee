@@ -37,7 +37,7 @@ require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/includes/class-wc-
 require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/helper/class-additional-information.php' );
 
 use Wirecard\PaymentSdk\Config\Config;
-use Wirecard\PaymentSdk\Config\PaymentMethodConfig;
+use Wirecard\PaymentSdk\Config\SepaConfig;
 use Wirecard\PaymentSdk\Entity\AccountHolder;
 use Wirecard\PaymentSdk\Entity\Amount;
 use Wirecard\PaymentSdk\Entity\CustomField;
@@ -66,6 +66,15 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 		$this->method_title       = __( 'Wirecard Payment Processing Gateway SEPA', 'wooocommerce-gateway-wirecard' );
 		$this->method_description = __( 'SEPA transactions via Wirecard Payment Processing Gateway', 'woocommerce-gateway-wirecard' );
 		$this->has_fields         = true;
+
+		$this->supports = array(
+			'products',
+			'refunds',
+		);
+
+		$this->cancel  = array( 'pending-debit' );
+		$this->capture = array( 'authorization' );
+		$this->refund  = array( 'debit' );
 
 		$this->init_form_fields();
 		$this->init_settings();
@@ -156,9 +165,10 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 				'default' => '',
 			),
 			'sepa_mandate_textextra' => array(
-				'title'   => __( 'Additional text', 'woocommerce-gateway-wirecard' ),
-				'type'    => 'textarea',
-				'default' => __( 'Enter aditional text shown on sepa mandate page.', 'woocommerce-gateway-wirecard' ),
+				'title'       => __( 'Additional text', 'woocommerce-gateway-wirecard' ),
+				'type'        => 'textarea',
+				'default'     => '',
+				'description' => __( 'Text enterd here will be shown on sepa mandate page at the end of the first paragraph.', 'woocommerce-gateway-wirecard' ),
 			),
 			'advanced'               => array(
 				'title'       => __( 'Advanced options', 'woocommerce-gateway-wirecard' ),
@@ -327,7 +337,8 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 		}
 
 		$config         = parent::create_payment_config( $base_url, $http_user, $http_pass );
-		$payment_config = new PaymentMethodConfig( SepaTransaction::NAME, $this->get_option( 'merchant_account_id' ), $this->get_option( 'secret' ) );
+		$payment_config = new SepaConfig( $this->get_option( 'merchant_account_id' ), $this->get_option( 'secret' ) );
+		$payment_config->setCreditorId( $this->get_option( 'creditor_id' ) );
 		$config->add( $payment_config );
 
 		return $config;
