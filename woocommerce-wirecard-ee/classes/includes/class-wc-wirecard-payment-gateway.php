@@ -126,8 +126,8 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 			header( 'Location:' . $redirect_url );
 			die();
 		}
-		$order_id = $_REQUEST['order-id'];
-		$order    = new WC_Order( $order_id );
+		$order_id     = $_REQUEST['order-id'];
+		$order        = new WC_Order( $order_id );
 
 		if ( 'cancel' == $_REQUEST['payment-state'] ) {
 			wc_add_notice( __( 'You have canceled the payment process.', 'woocommerce-gateway-wirecard' ), 'notice' );
