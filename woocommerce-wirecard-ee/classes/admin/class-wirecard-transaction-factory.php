@@ -91,7 +91,7 @@ class Wirecard_Transaction_Factory {
 				'title' => __( 'Transaction ID', 'woocommerce-gateway-wirecard' ),
 			),
 			'parent_transaction_id' => array(
-				'title' => __( 'Parenttransaction ID', 'woocommerce-gateway-wirecard' ),
+				'title' => __( 'Parent transaction ID', 'woocommerce-gateway-wirecard' ),
 			),
 			'payment_method'        => array(
 				'title' => __( 'Payment method', 'woocommerce-gateway-wirecard' ),
@@ -249,7 +249,7 @@ class Wirecard_Transaction_Factory {
 	public function show_transaction( $transaction_id ) {
 		$transaction = $this->get_transaction( $transaction_id );
 		if ( ! $transaction ) {
-			echo __( 'An error occured. The desired transaction could not be found!', 'woocommerce-gateway-wirecard' );
+			echo __( 'An error occured. The requested transaction could not be found!', 'woocommerce-gateway-wirecard' );
 
 			return;
 		}
@@ -275,13 +275,13 @@ class Wirecard_Transaction_Factory {
 							<div class="wc-order-data-row">
 								<?php
 								if ( $payment->can_cancel( $transaction->transaction_type ) && ! $transaction->closed ) {
-									echo "<a href='?page=cancelpayment&id={$transaction_id}' class='button'>" . __( 'Cancel Transaction', 'woocommerce-gateway-wirecard' ) . '</a> ';
+									echo "<a href='?page=cancelpayment&id={$transaction_id}' class='button'>" . __( 'Cancel transaction', 'woocommerce-gateway-wirecard' ) . '</a> ';
 								}
 								if ( $payment->can_capture( $transaction->transaction_type ) && ! $transaction->closed ) {
-									echo "<a href='?page=capturepayment&id={$transaction_id}' class='button'>" . __( 'Capture Transaction', 'woocommerce-gateway-wirecard' ) . '</a> ';
+									echo "<a href='?page=capturepayment&id={$transaction_id}' class='button'>" . __( 'Capture transaction', 'woocommerce-gateway-wirecard' ) . '</a> ';
 								}
 								if ( $payment->can_refund( $transaction->transaction_type ) && ! $transaction->closed ) {
-									echo "<a href='?page=refundpayment&id={$transaction_id}' class='button'>" . __( 'Refund Transaction', 'woocommerce-gateway-wirecard' ) . '</a> ';
+									echo "<a href='?page=refundpayment&id={$transaction_id}' class='button'>" . __( 'Refund transaction', 'woocommerce-gateway-wirecard' ) . '</a> ';
 								}
 								if ( $transaction->closed ) {
 									echo "<p class='add-items'>" . __( 'No Back-end operations available for this transaction', 'woocommerce-gateway-wirecard' ) . '</p>';
@@ -292,7 +292,7 @@ class Wirecard_Transaction_Factory {
 								</p>
 							</div>
 							<hr>
-							<h3><?php echo __( 'Responsedata:', 'woocommerce-gateway-wirecard' ); ?></h3>
+							<h3><?php echo __( 'Response data:', 'woocommerce-gateway-wirecard' ); ?></h3>
 							<div class="order_data_column_container">
 								<table>
 									<tr>

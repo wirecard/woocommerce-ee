@@ -168,24 +168,24 @@ function wirecard_gateway_options_page() {
 	);
 	add_submenu_page(
 		null,
-		__( 'Cancel Transaction', 'woocommerce-gateway-wirecard' ),
-		__( 'Cancel Transaction', 'woocommerce-gateway-wirecard' ),
+		__( 'Cancel transaction', 'woocommerce-gateway-wirecard' ),
+		__( 'Cancel transaction', 'woocommerce-gateway-wirecard' ),
 		'manage_options',
 		'cancelpayment',
 		array( $admin, 'cancel_transaction' )
 	);
 	add_submenu_page(
 		null,
-		__( 'Capture Transaction', 'woocommerce-gateway-wirecard' ),
-		__( 'Capture Transaction', 'woocommerce-gateway-wirecard' ),
+		__( 'Capture transaction', 'woocommerce-gateway-wirecard' ),
+		__( 'Capture transaction', 'woocommerce-gateway-wirecard' ),
 		'manage_options',
 		'capturepayment',
 		array( $admin, 'capture_transaction' )
 	);
 	add_submenu_page(
 		null,
-		__( 'Refund Transaction', 'woocommerce-gateway-wirecard' ),
-		__( 'Refund Transaction', 'woocommerce-gateway-wirecard' ),
+		__( 'Refund transaction', 'woocommerce-gateway-wirecard' ),
+		__( 'Refund transaction', 'woocommerce-gateway-wirecard' ),
 		'manage_options',
 		'refundpayment',
 		array( $admin, 'refund_transaction' )
