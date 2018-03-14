@@ -76,6 +76,7 @@ function init_wirecard_payment_gateway() {
 			'exclude_from_search'       => false,
 			'show_in_admin_all_list'    => true,
 			'show_in_admin_status_list' => true,
+			// translators:
 			'label_count'               => _n_noop( 'Authorized <span class="count">(%s)</span>', 'Authorized<span class="count">(%s)</span>', 'woocommerce-gateway-wirecard' ),
 		)
 	);
@@ -126,7 +127,7 @@ function install_wirecard_payment_gateway() {
 	if ( $wpdb->has_cap( 'collation' ) ) {
 		$collate = $wpdb->get_charset_collate();
 	}
-	$sql = "CREATE TABLE IF NOT EXISTS {$table_name} (
+	$sql        = "CREATE TABLE IF NOT EXISTS {$table_name} (
 		tx_id int(10) unsigned NOT NULL auto_increment,
 		transaction_id varchar(128) default NULL,
 		parent_transaction_id VARCHAR(128) default NULL,
@@ -168,24 +169,24 @@ function wirecard_gateway_options_page() {
 	);
 	add_submenu_page(
 		null,
-		__( 'Cancel Transaction', 'woocommerce-gateway-wirecard' ),
-		__( 'Cancel Transaction', 'woocommerce-gateway-wirecard' ),
+		__( 'Cancel transaction', 'woocommerce-gateway-wirecard' ),
+		__( 'Cancel transaction', 'woocommerce-gateway-wirecard' ),
 		'manage_options',
 		'cancelpayment',
 		array( $admin, 'cancel_transaction' )
 	);
 	add_submenu_page(
 		null,
-		__( 'Capture Transaction', 'woocommerce-gateway-wirecard' ),
-		__( 'Capture Transaction', 'woocommerce-gateway-wirecard' ),
+		__( 'Capture transaction', 'woocommerce-gateway-wirecard' ),
+		__( 'Capture transaction', 'woocommerce-gateway-wirecard' ),
 		'manage_options',
 		'capturepayment',
 		array( $admin, 'capture_transaction' )
 	);
 	add_submenu_page(
 		null,
-		__( 'Refund Transaction', 'woocommerce-gateway-wirecard' ),
-		__( 'Refund Transaction', 'woocommerce-gateway-wirecard' ),
+		__( 'Refund transaction', 'woocommerce-gateway-wirecard' ),
+		__( 'Refund transaction', 'woocommerce-gateway-wirecard' ),
 		'manage_options',
 		'refundpayment',
 		array( $admin, 'refund_transaction' )

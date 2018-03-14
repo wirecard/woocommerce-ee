@@ -78,9 +78,9 @@ class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 	 */
 	public function __construct() {
 		$this->type               = 'paypal';
-		$this->id                 = 'woocommerce_wirecard_paypal';
+		$this->id                 = 'wirecard_ee_paypal';
 		$this->icon               = WOOCOMMERCE_GATEWAY_WIRECARD_URL . 'assets/images/paypal.png';
-		$this->method_title       = __( 'Wirecard Payment Processing Gateway PayPal', 'wooocommerce-gateway-wirecard' );
+		$this->method_title       = __( 'Wirecard PayPal', 'wooocommerce-gateway-wirecard' );
 		$this->method_description = __( 'PayPal transactions via Wirecard Payment Processing Gateway', 'woocommerce-gateway-wirecard' );
 
 		$this->supports = array(
@@ -115,14 +115,14 @@ class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 			'enabled'             => array(
 				'title'   => __( 'Enable/Disable', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'checkbox',
-				'label'   => __( 'Enable Wirecard Payment Processing Gateway PayPal', 'woocommerce-gateway-wirecard' ),
+				'label'   => __( 'Enable Wirecard PayPal', 'woocommerce-gateway-wirecard' ),
 				'default' => 'yes',
 			),
 			'title'               => array(
 				'title'       => __( 'Title', 'woocommerce-gateway-wirecard' ),
 				'type'        => 'text',
 				'description' => __( 'This controls the title which the user sees during checkout.', 'woocommerce-gateway-wirecard' ),
-				'default'     => __( 'Wirecard Payment Processing Gateway PayPal', 'woocommerce-gateway-wirecard' ),
+				'default'     => __( 'Wirecard PayPal', 'woocommerce-gateway-wirecard' ),
 				'desc_tip'    => true,
 			),
 			'merchant_account_id' => array(
@@ -148,12 +148,12 @@ class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 				'desc_tip'    => true,
 			),
 			'http_user'           => array(
-				'title'   => __( 'Http User', 'woocommerce-gateway-wirecard' ),
+				'title'   => __( 'HTTP User', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'text',
 				'default' => '70000-APITEST-AP',
 			),
 			'http_pass'           => array(
-				'title'   => __( 'Http Password', 'woocommerce-gateway-wirecard' ),
+				'title'   => __( 'HTTP Password', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'text',
 				'default' => 'qD2wzQ_hrc!8',
 			),
@@ -287,13 +287,14 @@ class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 	/**
 	 * Create transaction for refund
 	 *
-	 * @param int    $order_id
-	 * @param float|null   $amount
+	 * @param int $order_id
+	 * @param float|null $amount
 	 * @param string $reason
 	 *
 	 * @return bool|PayPalTransaction|WP_Error
 	 *
 	 * @since 1.0.0
+	 * @throws Exception
 	 */
 	public function process_refund( $order_id, $amount = null, $reason = '' ) {
 		parent::process_refund( $order_id, $amount, '' );

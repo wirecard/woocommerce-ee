@@ -61,9 +61,9 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 
 	public function __construct() {
 		$this->type               = 'sepa';
-		$this->id                 = 'woocommerce_wirecard_sepa';
+		$this->id                 = 'wirecard_ee_sepa';
 		$this->icon               = WOOCOMMERCE_GATEWAY_WIRECARD_URL . 'assets/images/sepa.png';
-		$this->method_title       = __( 'Wirecard Payment Processing Gateway SEPA', 'wooocommerce-gateway-wirecard' );
+		$this->method_title       = __( 'Wirecard SEPA', 'wooocommerce-gateway-wirecard' );
 		$this->method_description = __( 'SEPA transactions via Wirecard Payment Processing Gateway', 'woocommerce-gateway-wirecard' );
 		$this->has_fields         = true;
 
@@ -100,7 +100,7 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 			'enabled'                => array(
 				'title'   => __( 'Enable/Disable', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'checkbox',
-				'label'   => __( 'Enable Wirecard Payment Processing Gateway SEPA', 'woocommerce-gateway-wirecard' ),
+				'label'   => __( 'Enable Wirecard SEPA', 'woocommerce-gateway-wirecard' ),
 				'default' => 'yes',
 			),
 			'title'                  => array(
@@ -108,7 +108,7 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 				'type'        => 'text',
 				'description' => __( 'This controls the title which the user sees during checkout.',
 				'woocommerce-gateway-wirecard' ),
-				'default'     => __( 'Wirecard Payment Processing Gateway SEPA', 'woocommerce-gateway-wirecard' ),
+				'default'     => __( 'Wirecard SEPA', 'woocommerce-gateway-wirecard' ),
 				'desc_tip'    => true,
 			),
 			'merchant_account_id'    => array(
@@ -135,19 +135,19 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 				'desc_tip'    => true,
 			),
 			'http_user'              => array(
-				'title'   => __( 'Http User', 'woocommerce-gateway-wirecard' ),
+				'title'   => __( 'HTTP User', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'text',
 				'default' => '70000-APITEST-AP',
 			),
 			'http_pass'              => array(
-				'title'   => __( 'Http Password', 'woocommerce-gateway-wirecard' ),
+				'title'   => __( 'HTTP Password', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'text',
 				'default' => 'qD2wzQ_hrc!8',
 			),
 			'sepa_credentials'       => array(
 				'title'       => __( 'SEPA credentials', 'woocommerce-gateway-wirecard' ),
 				'type'        => 'title',
-				'description' => __( 'Enter your SEPA credentials', 'woocommerce-gateway-wirecard' ),
+				'description' => __( 'Enter your SEPA credentials.', 'woocommerce-gateway-wirecard' ),
 			),
 			'creditor_id'            => array(
 				'title'   => __( 'Creditor ID', 'woocommerce-gateway-wirecard' ),
@@ -168,7 +168,7 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 				'title'       => __( 'Additional text', 'woocommerce-gateway-wirecard' ),
 				'type'        => 'textarea',
 				'default'     => '',
-				'description' => __( 'Text enterd here will be shown on sepa mandate page at the end of the first paragraph.', 'woocommerce-gateway-wirecard' ),
+				'description' => __( 'Text entered here will be shown on the SEPA mandate page at the end of the first paragraph.', 'woocommerce-gateway-wirecard' ),
 			),
 			'advanced'               => array(
 				'title'       => __( 'Advanced options', 'woocommerce-gateway-wirecard' ),
@@ -184,12 +184,6 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 					'reserve' => 'Authorization',
 					'pay'     => 'Capture',
 				),
-			),
-			'shopping_basket'        => array(
-				'title'   => __( 'Enable/Disable', 'woocommerce-gateway-wirecard' ),
-				'type'    => 'checkbox',
-				'label'   => __( 'Shopping Basket', 'woocommerce-gateway-wirecard' ),
-				'default' => 'no',
 			),
 			'descriptor'             => array(
 				'title'   => __( 'Enable/Disable', 'woocommerce-gateway-wirecard' ),
@@ -231,15 +225,15 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 			<script type="application/javascript" src="' . WOOCOMMERCE_GATEWAY_WIRECARD_URL . '/assets/js/sepa.js"></script>
 			<script>var sepa_url = "' . $page_url . '"</script>
 			<p class="form-row form-row-wide validate-required">
-				<label for="sepa_firstname">' . __( 'Firstname', 'wooocommerce-gateway-wirecard' ) . '</label>
+				<label for="sepa_firstname">' . __( 'First name', 'wooocommerce-gateway-wirecard' ) . '</label>
 				<input id="sepa_firstname" class="input-text wc-sepa-input" type="text" name="sepa_firstname">
 			</p>
 			<p class="form-row form-row-wide validate-required">
-				<label for="sepa_lastname">' . __( 'Lastname', 'wooocommerce-gateway-wirecard' ) . '</label>
+				<label for="sepa_lastname">' . __( 'Last name', 'wooocommerce-gateway-wirecard' ) . '</label>
 				<input id="sepa_lastname" class="input-text wc-sepa-input" type="text" name="sepa_lastname">
 			</p>
 			<p class="form-row form-row-wide validate-required">
-				<label for="sepa_iban">' . __( 'Iban', 'wooocommerce-gateway-wirecard' ) . '</label>
+				<label for="sepa_iban">' . __( 'IBAN', 'wooocommerce-gateway-wirecard' ) . '</label>
 				<input id="sepa_iban" class="input-text wc-sepa-input" type="text" name="sepa_iban">
 			</p>';
 
@@ -303,11 +297,6 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 		$custom_fields = new CustomFieldCollection();
 		$custom_fields->add( new CustomField( 'orderId', $order_id ) );
 		$transaction->setCustomFields( $custom_fields );
-
-		if ( $this->get_option( 'shopping_basket' ) == 'yes' ) {
-			$basket = $this->additional_helper->create_shopping_basket( $order, $transaction );
-			$transaction->setBasket( $basket );
-		}
 
 		if ( $this->get_option( 'descriptor' ) == 'yes' ) {
 			$transaction->setDescriptor( $this->additional_helper->create_descriptor( $order ) );

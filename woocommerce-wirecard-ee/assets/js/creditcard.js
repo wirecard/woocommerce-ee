@@ -11,7 +11,7 @@ $( document ).ready(
 
 		$( "input[name=payment_method]" ).change(
 			function() {
-				if ( $( this ).val() === 'woocommerce_wirecard_creditcard' ) {
+				if ( $( this ).val() === 'wirecard_ee_creditcard' ) {
 					getRequestData();
 					return false;
 				}
@@ -25,7 +25,7 @@ $( document ).ready(
 	 */
 		checkout_form.on(
 			'checkout_place_order', function() {
-				if ( $( '#payment_method_woocommerce_wirecard_creditcard' )[0].checked === true && processing === false ) {
+				if ( $( '#payment_method_wirecard_ee_creditcard' )[0].checked === true && processing === false ) {
 					processing = true;
 					if ( token !== null ) {
 						return true;

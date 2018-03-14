@@ -26,7 +26,7 @@ $( document ).ready( function() {
 		} else {
 			window.sepaplaceorderchecked = true;
 		}
-		if ( $( '#payment_method_woocommerce_wirecard_sepa' ).is( ':checked' ) && ! sepa_check ) {
+		if ( $( '#payment_method_wirecard_ee_sepa' ).is( ':checked' ) && ! sepa_check ) {
 			if ( validate_inputs() === false ) {
 				return false;
 			}
@@ -56,7 +56,7 @@ $( document ).ready( function() {
 	}
 
 	/**
-	 * Get sepa mandate template
+	 * Get SEPA mandate template
 	 */
 	function get_sepa_mandate_data() {
 		$.ajax({
