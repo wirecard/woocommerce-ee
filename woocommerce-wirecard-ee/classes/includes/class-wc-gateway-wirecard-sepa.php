@@ -223,7 +223,7 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 		);
 
 		$html = '
-			<div id="dialog" title="Sepa"></div>
+			<div id="dialog" title="SEPA"></div>
 			<link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css" type="text/css" rel="stylesheet" />
 			<link href="' . WOOCOMMERCE_GATEWAY_WIRECARD_URL . '/assets/styles/sepa.css" type="text/css" rel="stylesheet" />
 			<script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
