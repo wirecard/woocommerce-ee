@@ -64,6 +64,7 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 		$this->id                 = 'wirecard_ee_sepa';
 		$this->icon               = WOOCOMMERCE_GATEWAY_WIRECARD_URL . 'assets/images/sepa.png';
 		$this->method_title       = __( 'Wirecard SEPA', 'wooocommerce-gateway-wirecard' );
+		$this->method_name        = __( 'SEPA', 'wooocommerce-gateway-wirecard' );
 		$this->method_description = __( 'SEPA transactions via Wirecard Payment Processing Gateway', 'woocommerce-gateway-wirecard' );
 		$this->has_fields         = true;
 
@@ -106,8 +107,10 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 			'title'                  => array(
 				'title'       => __( 'Title', 'woocommerce-gateway-wirecard' ),
 				'type'        => 'text',
-				'description' => __( 'This controls the title which the user sees during checkout.',
-				'woocommerce-gateway-wirecard' ),
+				'description' => __(
+					'This controls the title which the user sees during checkout.',
+					'woocommerce-gateway-wirecard'
+				),
 				'default'     => __( 'Wirecard SEPA', 'woocommerce-gateway-wirecard' ),
 				'desc_tip'    => true,
 			),
@@ -124,8 +127,10 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 			'credentials'            => array(
 				'title'       => __( 'Credentials', 'woocommerce-gateway-wirecard' ),
 				'type'        => 'title',
-				'description' => __( 'Enter your Wirecard Processing Payment Gateway credentials and test it.',
-				'woocommerce-gateway-wirecard' ),
+				'description' => __(
+					'Enter your Wirecard Processing Payment Gateway credentials and test it.',
+					'woocommerce-gateway-wirecard'
+				),
 			),
 			'base_url'               => array(
 				'title'       => __( 'Base Url', 'woocommerce-gateway-wirecard' ),
@@ -145,7 +150,7 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 				'default' => 'qD2wzQ_hrc!8',
 			),
 			'sepa_credentials'       => array(
-				'title'       => __( 'SEPA credentials', 'woocommerce-gateway-wirecard' ),
+				'title'       => __( 'SEPA Credentials', 'woocommerce-gateway-wirecard' ),
 				'type'        => 'title',
 				'description' => __( 'Enter your SEPA credentials.', 'woocommerce-gateway-wirecard' ),
 			),
@@ -165,13 +170,13 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 				'default' => '',
 			),
 			'sepa_mandate_textextra' => array(
-				'title'       => __( 'Additional text', 'woocommerce-gateway-wirecard' ),
+				'title'       => __( 'Additional Text', 'woocommerce-gateway-wirecard' ),
 				'type'        => 'textarea',
 				'default'     => '',
-				'description' => __( 'Text entered here will be shown on the SEPA mandate page at the end of the first paragraph.', 'woocommerce-gateway-wirecard' ),
+				'description' => __( 'This text appears on the SEPA mandate page at the end of the first paragraph.', 'woocommerce-gateway-wirecard' ),
 			),
 			'advanced'               => array(
-				'title'       => __( 'Advanced options', 'woocommerce-gateway-wirecard' ),
+				'title'       => __( 'Advanced Options', 'woocommerce-gateway-wirecard' ),
 				'type'        => 'title',
 				'description' => '',
 			),
@@ -261,6 +266,7 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 		if ( ! $_POST['sepa_firstname'] || ! $_POST['sepa_lastname'] || ! $_POST['sepa_iban']
 			|| ( $this->get_option( 'enable_bic' ) == 'yes' && ! $_POST['sepa_bic'] ) ) {
 			wc_add_notice( __( 'Please fill in the SEPA fields and try again.', 'woocommerce-gateway-wirecard' ), 'error' );
+
 			return false;
 		}
 
@@ -335,6 +341,7 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 
 	/**
 	 * @param $order_id
+	 *
 	 * @return string
 	 */
 	private function generate_mandate_id( $order_id ) {
@@ -356,7 +363,7 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 	/**
 	 * Create transaction for cancel
 	 *
-	 * @param int $order_id
+	 * @param int        $order_id
 	 * @param float|null $amount
 	 *
 	 * @return SepaTransaction
@@ -378,7 +385,7 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 	/**
 	 * Create transaction for capture
 	 *
-	 * @param int $order_id
+	 * @param int        $order_id
 	 * @param float|null $amount
 	 *
 	 * @return SepaTransaction
@@ -400,9 +407,9 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 	/**
 	 * Create transaction for refund
 	 *
-	 * @param int    $order_id
-	 * @param float|null   $amount
-	 * @param string $reason
+	 * @param int        $order_id
+	 * @param float|null $amount
+	 * @param string     $reason
 	 *
 	 * @return bool|SepaTransaction|WP_Error
 	 *
@@ -418,6 +425,7 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 		if ( ! is_null( $amount ) ) {
 			$transaction->setAmount( new Amount( $amount, $order->get_currency() ) );
 		}
+
 		return $this->execute_refund( $transaction, $config, $order );
 	}
 }

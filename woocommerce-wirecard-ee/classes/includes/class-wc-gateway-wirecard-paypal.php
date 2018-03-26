@@ -56,7 +56,7 @@ class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 	/**
 	 * Payment type
 	 *
-	 * @since 1.0.0
+	 * @since  1.0.0
 	 * @access private
 	 * @var string
 	 */
@@ -65,7 +65,7 @@ class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 	/**
 	 * Additional helper for basket and risk management
 	 *
-	 * @since 1.0.0
+	 * @since  1.0.0
 	 * @access private
 	 * @var Additional_Information
 	 */
@@ -81,6 +81,7 @@ class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 		$this->id                 = 'wirecard_ee_paypal';
 		$this->icon               = WOOCOMMERCE_GATEWAY_WIRECARD_URL . 'assets/images/paypal.png';
 		$this->method_title       = __( 'Wirecard PayPal', 'wooocommerce-gateway-wirecard' );
+		$this->method_name        = __( 'Pay Pal', 'wooocommerce-gateway-wirecard' );
 		$this->method_description = __( 'PayPal transactions via Wirecard Payment Processing Gateway', 'woocommerce-gateway-wirecard' );
 
 		$this->supports = array(
@@ -141,7 +142,7 @@ class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 				'description' => __( 'Enter your Wirecard Processing Payment Gateway credentials and test it.', 'woocommerce-gateway-wirecard' ),
 			),
 			'base_url'            => array(
-				'title'       => __( 'Base Url', 'woocommerce-gateway-wirecard' ),
+				'title'       => __( 'Base URL', 'woocommerce-gateway-wirecard' ),
 				'type'        => 'text',
 				'description' => __( 'The elastic engine base url. (e.g. https://api.wirecard.com)' ),
 				'default'     => 'https://api-test.wirecard.com',
@@ -158,7 +159,7 @@ class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 				'default' => 'qD2wzQ_hrc!8',
 			),
 			'advanced'            => array(
-				'title'       => __( 'Advanced options', 'woocommerce-gateway-wirecard' ),
+				'title'       => __( 'Advanced Options', 'woocommerce-gateway-wirecard' ),
 				'type'        => 'title',
 				'description' => '',
 			),
@@ -243,7 +244,7 @@ class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 	/**
 	 * Create transaction for cancel
 	 *
-	 * @param int $order_id
+	 * @param int        $order_id
 	 * @param float|null $amount
 	 *
 	 * @return PayPalTransaction
@@ -265,7 +266,7 @@ class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 	/**
 	 * Create transaction for capture
 	 *
-	 * @param int $order_id
+	 * @param int        $order_id
 	 * @param float|null $amount
 	 *
 	 * @return PayPalTransaction
@@ -287,9 +288,9 @@ class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 	/**
 	 * Create transaction for refund
 	 *
-	 * @param int $order_id
+	 * @param int        $order_id
 	 * @param float|null $amount
-	 * @param string $reason
+	 * @param string     $reason
 	 *
 	 * @return bool|PayPalTransaction|WP_Error
 	 *
@@ -306,6 +307,7 @@ class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 		if ( ! is_null( $amount ) ) {
 			$transaction->setAmount( new Amount( $amount, $order->get_currency() ) );
 		}
+
 		return $this->execute_refund( $transaction, $config, $order );
 	}
 
