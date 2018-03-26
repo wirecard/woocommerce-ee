@@ -84,7 +84,7 @@ $( document ).ready( function() {
 		popup.find( '.first_last_name' ).text( $( '#sepa_firstname' ).val() + ' ' + $( '#sepa_lastname' ).val() );
 		popup.find( '.bank_iban' ).text( $( '#sepa_iban' ).val() );
 		popup.find( '.bank_bic' ).text( $( '#sepa_bic' ).val() );
-		var screen_height = window.screen.height;
+		var screen_height    = window.screen.height;
 		var adjust_to_screen = screen_height * 0.8;
 
 		if ( screen_height > 1000 ) {
