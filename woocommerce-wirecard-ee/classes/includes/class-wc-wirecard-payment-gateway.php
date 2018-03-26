@@ -53,14 +53,14 @@ use Wirecard\PaymentSdk\TransactionService;
  *
  * @extends WC_Payment_Gateway
  *
- * @since 1.0.0
+ * @since   1.0.0
  */
 abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 
 	/**
 	 * Parent transaction types which support cancel operation
 	 *
-	 * @since 1.0.0
+	 * @since  1.0.0
 	 * @access protected
 	 * @var array
 	 */
@@ -69,7 +69,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	/**
 	 * Parent transaction types which support refund/cancel(refund) operation
 	 *
-	 * @since 1.0.0
+	 * @since  1.0.0
 	 * @access protected
 	 * @var array
 	 */
@@ -78,7 +78,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	/**
 	 * Parent transaction types which support pay(capture) operation
 	 *
-	 * @since 1.0.0
+	 * @since  1.0.0
 	 * @access protected
 	 * @var array
 	 */
@@ -126,8 +126,8 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 			header( 'Location:' . $redirect_url );
 			die();
 		}
-		$order_id     = $_REQUEST['order-id'];
-		$order        = new WC_Order( $order_id );
+		$order_id = $_REQUEST['order-id'];
+		$order    = new WC_Order( $order_id );
 
 		if ( 'cancel' == $_REQUEST['payment-state'] ) {
 			wc_add_notice( __( 'You have canceled the payment process.', 'woocommerce-gateway-wirecard' ), 'notice' );
@@ -138,7 +138,8 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 		$response_handler = new Wirecard_Response_Handler();
 		try {
 			$status = $response_handler->handle_response( $_REQUEST );
-		} catch ( Exception $exception ) {
+		}
+		catch ( Exception $exception ) {
 			wc_add_notice( __( 'An error occurred during the payment process. Please try again.', 'woocommerce-gateway-wirecard' ), 'error' );
 			header( 'Location:' . $order->get_cancel_endpoint() );
 			die();
@@ -179,7 +180,8 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 				$this->update_payment_transaction( $order, $response );
 				$order = $this->update_order_state( $order, $response->getTransactionType() );
 			}
-		} catch ( Exception $exception ) {
+		}
+		catch ( Exception $exception ) {
 			if ( ! $order->is_paid() ) {
 				$logger = new Logger();
 				$logger->debug( __METHOD__ . $exception->getMessage() );
@@ -249,7 +251,8 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 		try {
 			/** @var $response Response */
 			$response = $transaction_service->process( $transaction, $operation );
-		} catch ( \Exception $exception ) {
+		}
+		catch ( \Exception $exception ) {
 			$logger->error( __METHOD__ . ':' . $exception->getMessage() );
 
 			wc_add_notice( __( 'An error occurred during the payment process. Please try again.', 'woocommerce-gateway-wirecard' ), 'error' );
@@ -271,7 +274,8 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 			$data['method']      = $response->getMethod();
 			$data['form_fields'] = $response->getFormFields();
 			WC()->session->set( 'wirecard_post_data', $data );
-			$page_url = add_query_arg( [ 'wc-api' => 'checkout_form_submit' ],
+			$page_url = add_query_arg(
+				[ 'wc-api' => 'checkout_form_submit' ],
 				site_url( '/', is_ssl() ? 'https' : 'http' )
 			);
 		}
@@ -321,8 +325,10 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 				/** @var $response Response */
 				$response = $transaction_service->process( $transaction, 'cancel' );
 			}
-		} catch ( \Exception $exception ) {
+		}
+		catch ( \Exception $exception ) {
 			$logger->error( __METHOD__ . ':' . $exception->getMessage() );
+
 			return new WP_Error( 'error', __( 'Processing refund failed.', 'woocommerce-gateway-wirecard' ) );
 		}
 		if ( $response instanceof SuccessResponse ) {
@@ -395,7 +401,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 * Update order with specific order state
 	 *
 	 * @param WC_Order $order
-	 * @param string $transaction_type
+	 * @param string   $transaction_type
 	 *
 	 * @return WC_Order
 	 *
@@ -422,6 +428,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 				break;
 		}
 		$order->update_status( $state, __( 'Update order status via Wirecard Payment Processing Gateway.', 'woocommerce-gateway-wirecard' ) );
+
 		return $order;
 	}
 

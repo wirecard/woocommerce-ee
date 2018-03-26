@@ -216,9 +216,9 @@ class Wirecard_Transaction_Factory {
 				echo '<td>';
 				if ( key_exists( $field_key, $row ) ) {
 					if ( 'transaction_id' == $field_key || ( 'parent_transaction_id' == $field_key && ! empty( $field_value ) ) ) {
-						echo "<a href='?page=wirecardpayment&id={$row[ $field_key ]}'>" . $row[$field_key] . '</a>';
+						echo "<a href='?page=wirecardpayment&id={$row[ $field_key ]}'>" . $row[ $field_key ] . '</a>';
 					} else {
-						echo $row[$field_key];
+						echo $row[ $field_key ];
 					}
 				}
 				echo '</td>';
@@ -286,7 +286,7 @@ class Wirecard_Transaction_Factory {
 							<div class="panel woocommerce-order-data">
 								<h2 class="woocommerce-order-data__heading"><?php echo __( 'Transaction', 'woocommerce-gateway-wirecard' ) . $transaction_id; ?></h2>
 								<h3>
-									<?php echo __( $payment->method_name.' '.'payment', 'woocommerce-gateway-wirecard' ); ?>
+									<?php echo __( $payment->method_name . ' ' . 'payment', 'woocommerce-gateway-wirecard' ); ?>
 								</h3>
 								<div><?php echo $transaction->transaction_link; ?></div>
 								<br>
