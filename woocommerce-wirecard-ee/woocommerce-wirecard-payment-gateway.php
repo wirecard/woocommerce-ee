@@ -5,7 +5,7 @@
  * Description: Wirecard Payment Processing Gateway Plugin for WooCommerce
  * Version: 1.0.0
  * Author: Wirecard
- * Author URI: https://www.wirecard.at/
+ * Author URI: https://www.wirecard.com/
  * License: GPL3
  *
  * Shop System Plugins - Terms of Use
@@ -92,9 +92,9 @@ function init_wirecard_payment_gateway() {
  * @since 1.0.0
  */
 function add_wirecard_payment_gateway( $methods ) {
+	$methods[] = 'WC_Gateway_Wirecard_Creditcard';
 	$methods[] = 'WC_Gateway_Wirecard_Paypal';
 	$methods[] = 'WC_Gateway_Wirecard_Sepa';
-	$methods[] = 'WC_Gateway_Wirecard_Creditcard';
 
 	return $methods;
 }
@@ -160,7 +160,8 @@ function wirecard_gateway_options_page() {
 	require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/admin/class-wirecard-settings.php' );
 
 	$admin = new Wirecard_Settings();
-	add_menu_page(
+	add_submenu_page(
+		'woocommerce',
 		'Wirecard Payment Gateway',
 		'Wirecard Payment Gateway',
 		'manage_options',

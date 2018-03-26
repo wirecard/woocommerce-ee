@@ -157,12 +157,12 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 			'credentials'                 => array(
 				'title'       => __( 'Credentials', 'woocommerce-gateway-wirecard' ),
 				'type'        => 'title',
-				'description' => __( 'Enter your Wirecard Processing Payment Gateway credentials and test it.', 'woocommerce-gateway-wirecard' ),
+				'description' => __( 'Enter your Wirecard credentials.', 'woocommerce-gateway-wirecard' ),
 			),
 			'base_url'                    => array(
 				'title'       => __( 'Base URL', 'woocommerce-gateway-wirecard' ),
 				'type'        => 'text',
-				'description' => __( 'The elastic engine base url. (e.g. https://api.wirecard.com)' ),
+				'description' => __( 'The Wirecard base URL. (e.g. https://api.wirecard.com)' ),
 				'default'     => 'https://api-test.wirecard.com',
 				'desc_tip'    => true,
 			),

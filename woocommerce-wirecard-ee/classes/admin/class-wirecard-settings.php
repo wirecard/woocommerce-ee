@@ -87,7 +87,6 @@ class Wirecard_Settings {
 	public function show_dashboard( $start = 1 ) {
 		?>
 		<div class="wrap">
-			<h1 class="wp-heading-inline">Wirecard Payment Processing Gateway</h1>
 			<hr class="wp-header-end">
 			<img src="<?php echo plugins_url( 'woocommerce-wirecard-ee/assets/images/wirecard-logo.png' ); ?>">
 			<br/>

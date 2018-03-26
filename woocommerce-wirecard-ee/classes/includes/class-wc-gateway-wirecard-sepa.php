@@ -128,14 +128,14 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 				'title'       => __( 'Credentials', 'woocommerce-gateway-wirecard' ),
 				'type'        => 'title',
 				'description' => __(
-					'Enter your Wirecard Processing Payment Gateway credentials and test it.',
+					'Enter your Wirecard credentials.',
 					'woocommerce-gateway-wirecard'
 				),
 			),
 			'base_url'               => array(
-				'title'       => __( 'Base Url', 'woocommerce-gateway-wirecard' ),
+				'title'       => __( 'Base URL', 'woocommerce-gateway-wirecard' ),
 				'type'        => 'text',
-				'description' => __( 'The elastic engine base url. (e.g. https://api.wirecard.com)' ),
+				'description' => __( 'The Wirecard base URL. (e.g. https://api.wirecard.com)' ),
 				'default'     => 'https://api-test.wirecard.com',
 				'desc_tip'    => true,
 			),
@@ -245,7 +245,7 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 		if ( $this->get_option( 'enable_bic' ) == 'yes' ) {
 			$html .= '			
 			<p class="form-row form-row-wide validate-required">
-				<label for="sepa_bic">' . __( 'Bic', 'wooocommerce-gateway-wirecard' ) . '</label>
+				<label for="sepa_bic">' . __( 'BIC', 'wooocommerce-gateway-wirecard' ) . '</label>
 				<input id="sepa_bic" class="input-text wc-sepa-input" type="text" name="sepa_bic">
 			</p>';
 		}
