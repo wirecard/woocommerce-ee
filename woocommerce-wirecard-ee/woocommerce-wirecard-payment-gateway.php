@@ -127,7 +127,7 @@ function install_wirecard_payment_gateway() {
 	if ( $wpdb->has_cap( 'collation' ) ) {
 		$collate = $wpdb->get_charset_collate();
 	}
-	$sql        = "CREATE TABLE IF NOT EXISTS {$table_name} (
+	$sql = "CREATE TABLE IF NOT EXISTS {$table_name} (
 		tx_id int(10) unsigned NOT NULL auto_increment,
 		transaction_id varchar(128) default NULL,
 		parent_transaction_id VARCHAR(128) default NULL,

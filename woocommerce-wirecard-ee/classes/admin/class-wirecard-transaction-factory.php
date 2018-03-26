@@ -286,7 +286,7 @@ class Wirecard_Transaction_Factory {
 							<div class="panel woocommerce-order-data">
 								<h2 class="woocommerce-order-data__heading"><?php echo __( 'Transaction', 'woocommerce-gateway-wirecard' ) . $transaction_id; ?></h2>
 								<h3>
-									<?php echo __( $payment->method_name . ' ' . 'payment', 'woocommerce-gateway-wirecard' ); ?>
+									<?php echo __( $payment->method_name.' '.'payment', 'woocommerce-gateway-wirecard' ); ?>
 								</h3>
 								<div><?php echo $transaction->transaction_link; ?></div>
 								<br>

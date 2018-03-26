@@ -90,7 +90,7 @@ class Additional_Information {
 			if ( $product->is_taxable() ) {
 				$tax_rate = number_format( $item_tax_rate * 100, 2 );
 			}
-			$item     = new Item( $name, $amount, $item_quantity );
+			$item = new Item( $name, $amount, $item_quantity );
 			$item->setDescription( $description );
 			$item->setArticleNumber( $article_nr );
 			$item->setTaxRate( $tax_rate );
