@@ -53,7 +53,7 @@ class Logger implements LoggerInterface {
 	 * @since 1.0.0
 	 */
 	public function emergency( $message, array $context = array() ) {
-		$this->log( 800, $message, $context );
+		$this->log( WC_Log_Levels::EMERGENCY, $message, $context );
 	}
 
 	/**
@@ -70,7 +70,7 @@ class Logger implements LoggerInterface {
 	 * @since 1.0.0
 	 */
 	public function alert( $message, array $context = array() ) {
-		$this->log( 700, $message, $context );
+		$this->log( WC_Log_Levels::ALERT, $message, $context );
 	}
 
 	/**
@@ -86,7 +86,7 @@ class Logger implements LoggerInterface {
 	 * @since 1.0.0
 	 */
 	public function critical( $message, array $context = array() ) {
-		$this->log( 600, $message, $context );
+		$this->log( WC_Log_Levels::CRITICAL, $message, $context );
 	}
 
 	/**
@@ -101,7 +101,7 @@ class Logger implements LoggerInterface {
 	 * @since 1.0.0
 	 */
 	public function error( $message, array $context = array() ) {
-		$this->log( 500, $message, $context );
+		$this->log( WC_Log_Levels::ERROR, $message, $context );
 	}
 
 	/**
@@ -118,7 +118,7 @@ class Logger implements LoggerInterface {
 	 * @since 1.0.0
 	 */
 	public function warning( $message, array $context = array() ) {
-		$this->log( 400, $message, $context );
+		$this->log( WC_Log_Levels::WARNING, $message, $context );
 	}
 
 	/**
@@ -132,7 +132,7 @@ class Logger implements LoggerInterface {
 	 * @since 1.0.0
 	 */
 	public function notice( $message, array $context = array() ) {
-		$this->log( 300, $message, $context );
+		$this->log( WC_Log_Levels::NOTICE, $message, $context );
 	}
 
 	/**
@@ -148,7 +148,7 @@ class Logger implements LoggerInterface {
 	 * @since 1.0.0
 	 */
 	public function info( $message, array $context = array() ) {
-		$this->log( 200, $message, $context );
+		$this->log( WC_Log_Levels::INFO, $message, $context );
 	}
 
 	/**
@@ -162,7 +162,7 @@ class Logger implements LoggerInterface {
 	 * @since 1.0.0
 	 */
 	public function debug( $message, array $context = array() ) {
-		$this->log( 100, $message, $context );
+		$this->log( WC_Log_Levels::DEBUG, $message, $context );
 	}
 
 	/**
