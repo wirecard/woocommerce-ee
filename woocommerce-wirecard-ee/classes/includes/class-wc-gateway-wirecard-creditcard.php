@@ -184,7 +184,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 			'payment_action'              => array(
 				'title'   => __( 'Payment Action', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'select',
-				'default' => 'Authorization',
+				'default' => 'Capture',
 				'label'   => __( 'Payment Action', 'woocommerce-gateway-wirecard' ),
 				'options' => array(
 					'reserve' => 'Authorization',
@@ -243,7 +243,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 		}
 
 		if ( $this->get_option( 'three_d_min_limit' ) !== '' ) {
-			$payment_config->addSslMaxLimit(
+			$payment_config->addThreeDMinLimit(
 				new Amount(
 					$this->get_option( 'three_d_min_limit' ),
 					'EUR'
