@@ -53,7 +53,7 @@ class Logger implements LoggerInterface {
 	 * @since 1.0.0
 	 */
 	public function emergency( $message, array $context = array() ) {
-		$this->log( 4, $message, $context );
+		$this->log( 800, $message, $context );
 	}
 
 	/**
@@ -70,7 +70,7 @@ class Logger implements LoggerInterface {
 	 * @since 1.0.0
 	 */
 	public function alert( $message, array $context = array() ) {
-		$this->log( 4, $message, $context );
+		$this->log( 700, $message, $context );
 	}
 
 	/**
@@ -86,7 +86,7 @@ class Logger implements LoggerInterface {
 	 * @since 1.0.0
 	 */
 	public function critical( $message, array $context = array() ) {
-		$this->log( 4, $message, $context );
+		$this->log( 600, $message, $context );
 	}
 
 	/**
@@ -101,7 +101,7 @@ class Logger implements LoggerInterface {
 	 * @since 1.0.0
 	 */
 	public function error( $message, array $context = array() ) {
-		$this->log( 3, $message, $context );
+		$this->log( 500, $message, $context );
 	}
 
 	/**
@@ -118,7 +118,7 @@ class Logger implements LoggerInterface {
 	 * @since 1.0.0
 	 */
 	public function warning( $message, array $context = array() ) {
-		$this->log( 2, $message, $context );
+		$this->log( 400, $message, $context );
 	}
 
 	/**
@@ -132,7 +132,7 @@ class Logger implements LoggerInterface {
 	 * @since 1.0.0
 	 */
 	public function notice( $message, array $context = array() ) {
-		$this->log( 1, $message, $context );
+		$this->log( 300, $message, $context );
 	}
 
 	/**
@@ -148,7 +148,7 @@ class Logger implements LoggerInterface {
 	 * @since 1.0.0
 	 */
 	public function info( $message, array $context = array() ) {
-		$this->log( 1, $message, $context );
+		$this->log( 200, $message, $context );
 	}
 
 	/**
@@ -162,7 +162,7 @@ class Logger implements LoggerInterface {
 	 * @since 1.0.0
 	 */
 	public function debug( $message, array $context = array() ) {
-		$this->log( 1, $message, $context );
+		$this->log( 100, $message, $context );
 	}
 
 	/**
