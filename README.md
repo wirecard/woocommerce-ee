@@ -1,4 +1,18 @@
-# woocommerce-ee
-Wirecard Payment Processing Gateway Plugin for WooCommerce
+# WooCommerce Wirecard Payment Processing Gateway Shop Plugin
+[![Build Status](https://travis-ci.org/wirecard/woocommerce-ee.svg?branch=master)](https://travis-ci.org/wirecard/woocommerce-ee)
 
-**The plugin is currently under development and should not be used yet.**
+[![License](https://img.shields.io/badge/license-GPLv3-blue.svg)](https://raw.githubusercontent.com/wirecard/woocommerce-ee/master/LICENSE)
+[![PHP v5.6](https://img.shields.io/badge/php-v5.6-yellow.svg)](http://www.php.net)
+[![PHP v7.0](https://img.shields.io/badge/php-v7.0-yellow.svg)](http://www.php.net)
+[![WooCommerce v3.3.4](https://img.shields.io/badge/woocommerce-v3.3.4-green.svg)](https://woocommerce.com/)
+
+***
+## General information 
+Before proceeding, we recommend to read [general information](https://github.com/wirecard/woocommerce-ee/wiki/Wirecard-Shop-Plugins-General-Information), as it provides information on Wirecard shop plugins functionality and features.
+
+***
+## WooCommerce documentation - Wiki
+
+[WooCommerce Wiki](https://github.com/wirecard/woocommerce-ee/wiki) provides detailed technical documentation.
+It lists all available [payment methods](https://github.com/wirecard/woocommerce-ee/wiki#supported-payment-methods) and back-end operations.
+Furthermore, it includes extensive instructions how to [install](https://github.com/wirecard/woocommerce-ee/wiki/Installation) and [configure](https://github.com/wirecard/woocommerce-ee/wiki/Configuration).
