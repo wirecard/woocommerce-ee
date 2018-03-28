@@ -20,23 +20,25 @@ $( document ).ready( function() {
 	 * @since 1.0.0
 	 */
 	checkout_form.on( 'checkout_place_order', function() {
-		if ( window.sepaplaceorderchecked ) {
-			window.sepaplaceorderchecked = false;
-			return;
-		} else {
-			window.sepaplaceorderchecked = true;
-		}
-		if ( $( '#payment_method_wirecard_ee_sepa' ).is( ':checked' ) && ! sepa_check ) {
-			if ( validate_inputs() === false ) {
-				return false;
+		if ( $( '#payment_method_wirecard_ee_sepa' ).is( ':checked' )) {
+			if (window.sepaplaceorderchecked) {
+				window.sepaplaceorderchecked = false;
+				return;
+			} else {
+				window.sepaplaceorderchecked = true;
 			}
-			get_sepa_mandate_data();
-			return false;
-		} else {
-			sepa_check = false;
-			popup.dialog( 'close' );
-			$( 'body' ).css( 'overflow', 'auto' );
-			return true;
+			if (!sepa_check) {
+				if (validate_inputs() === false) {
+					return false;
+				}
+				get_sepa_mandate_data();
+				return false;
+			} else {
+				sepa_check = false;
+				popup.dialog('close');
+				$('body').css('overflow', 'auto');
+				return true;
+			}
 		}
 	});
 
