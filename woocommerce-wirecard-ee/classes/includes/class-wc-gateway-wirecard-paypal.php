@@ -166,7 +166,7 @@ class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 			'payment_action'      => array(
 				'title'   => __( 'Payment Action', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'select',
-				'default' => 'Authorization',
+				'default' => 'Capture',
 				'label'   => __( 'Payment Action', 'woocommerce-gateway-wirecard' ),
 				'options' => array(
 					'reserve' => 'Authorization',
