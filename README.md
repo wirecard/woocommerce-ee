@@ -1,5 +1,4 @@
 # WooCommerce Wirecard Payment Processing Gateway Shop Plugin
-[![Build Status](https://travis-ci.org/wirecard/woocommerce-ee.svg?branch=master)](https://travis-ci.org/wirecard/woocommerce-ee)
 
 [![License](https://img.shields.io/badge/license-GPLv3-blue.svg)](https://raw.githubusercontent.com/wirecard/woocommerce-ee/master/LICENSE)
 [![PHP v5.6](https://img.shields.io/badge/php-v5.6-yellow.svg)](http://www.php.net)
