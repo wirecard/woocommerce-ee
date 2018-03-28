@@ -27,7 +27,7 @@ $( document ).ready( function() {
 			} else {
 				window.sepaplaceorderchecked = true;
 			}
-			if (!sepa_check) {
+			if ( !sepa_check ) {
 				if (validate_inputs() === false) {
 					return false;
 				}
@@ -35,8 +35,8 @@ $( document ).ready( function() {
 				return false;
 			} else {
 				sepa_check = false;
-				popup.dialog('close');
-				$('body').css('overflow', 'auto');
+				popup.dialog( 'close' );
+				$( 'body' ).css( 'overflow', 'auto' );
 				return true;
 			}
 		}
