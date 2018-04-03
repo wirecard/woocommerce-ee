@@ -315,7 +315,9 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 		$logger              = new Logger();
 		$transaction_service = new TransactionService( $config, $logger );
 		try {
-			if ( $transaction instanceof \Wirecard\PaymentSdk\Transaction\CreditCardTransaction ) {
+			if ( $transaction instanceof \Wirecard\PaymentSdk\Transaction\SepaTransaction ) {
+				$response = $transaction_service->process( $transaction, 'credit' );
+			} elseif ( $transaction instanceof \Wirecard\PaymentSdk\Transaction\CreditCardTransaction ) {
 				/** @var $response Response */
 				$response = $transaction_service->process( $transaction, 'refund' );
 			} else {
