@@ -74,6 +74,7 @@ class Wirecard_Handler {
 			'sepa'          => new WC_Gateway_Wirecard_Sepa(),
 			'ideal'         => new WC_Gateway_Wirecard_Ideal(),
 			'sofortbanking' => new WC_Gateway_Wirecard_Sofort(),
+			'invoice'       => new WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay(),
 		);
 		$this->logger          = new Logger();
 	}
