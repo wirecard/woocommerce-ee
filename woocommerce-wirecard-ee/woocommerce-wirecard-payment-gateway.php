@@ -95,14 +95,31 @@ function init_wirecard_payment_gateway() {
  * @since 1.0.0
  */
 function add_wirecard_payment_gateway( $methods ) {
-	$methods[] = 'WC_Gateway_Wirecard_Creditcard';
-	$methods[] = 'WC_Gateway_Wirecard_Paypal';
-	$methods[] = 'WC_Gateway_Wirecard_Sepa';
-	$methods[] = 'WC_Gateway_Wirecard_Ideal';
-	$methods[] = 'WC_Gateway_Wirecard_Sofort';
-	$methods[] = 'WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay';
+	foreach ( get_payments() as $key => $payment_method ) {
+		if ( $payment_method->is_availible() ) {
+			$methods[] = $key;
+		}
+	}
 
 	return $methods;
+}
+
+/**
+ * Return payment methods
+ *
+ * @return array
+ *
+ * @since 1.1.0
+ */
+function get_payments() {
+	return array(
+		'WC_Gateway_Wirecard_Creditcard'                 => new WC_Gateway_Wirecard_Creditcard(),
+		'WC_Gateway_Wirecard_Paypal'                     => new WC_Gateway_Wirecard_Paypal(),
+		'WC_Gateway_Wirecard_Sepa'                       => new WC_Gateway_Wirecard_Sepa(),
+		'WC_Gateway_Wirecard_Ideal'                      => new WC_Gateway_Wirecard_Ideal(),
+		'WC_Gateway_Wirecard_Sofort'                     => new WC_Gateway_Wirecard_Sofort(),
+		'WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay' => new WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay(),
+	);
 }
 
 /**

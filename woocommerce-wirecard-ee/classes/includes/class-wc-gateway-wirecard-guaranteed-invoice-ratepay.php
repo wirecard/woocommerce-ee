@@ -46,18 +46,18 @@ use Wirecard\PaymentSdk\Transaction\RatepayInvoiceTransaction;
 
 
 /**
- * Class WC_Gateway_Wirecard_Paypal
+ * Class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay
  *
  * @extends WC_Wirecard_Payment_Gateway
  *
- * @since   1.0.0
+ * @since   1.1.0
  */
 class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment_Gateway {
 
 	/**
 	 * Payment type
 	 *
-	 * @since  1.0.0
+	 * @since  1.1.0
 	 * @access private
 	 * @var string
 	 */
@@ -66,7 +66,7 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 	/**
 	 * Additional helper for basket and risk management
 	 *
-	 * @since  1.0.0
+	 * @since  1.1.0
 	 * @access private
 	 * @var Additional_Information
 	 */
@@ -75,7 +75,7 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 	/**
 	 * WC_Gateway_Wirecard_Paypal constructor.
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 */
 	public function __construct() {
 		$this->type               = 'invoice';
@@ -84,7 +84,6 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 		$this->method_title       = __( 'Wirecard Guaranteed Invoice', 'wooocommerce-gateway-wirecard' );
 		$this->method_name        = __( 'Guaranteed Invoice', 'wooocommerce-gateway-wirecard' );
 		$this->method_description = __( 'Guaranteed Invoice transactions via Wirecard Payment Processing Gateway', 'woocommerce-gateway-wirecard' );
-		$this->has_fields         = true;
 
 		$this->supports = array(
 			'products',
@@ -111,7 +110,7 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 	/**
 	 * Load form fields for configuration
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 */
 	public function init_form_fields() {
 		$countries_obj = new WC_Countries();
@@ -122,7 +121,7 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 				'title'   => __( 'Enable/Disable', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'checkbox',
 				'label'   => __( 'Enable Wirecard Guaranteed Invoice', 'woocommerce-gateway-wirecard' ),
-				'default' => 'yes',
+				'default' => 'no',
 			),
 			'title'                 => array(
 				'title'       => __( 'Title', 'woocommerce-gateway-wirecard' ),
@@ -182,7 +181,7 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 				'title'          => __( 'Allowed billing countries', 'woocommerce-gateway-wirecard' ),
 				'type'           => 'multiselect',
 				'options'        => $countries,
-				'default'        => array( 'AT', 'DE', 'CH' ),
+				'default'        => array( 'AT', 'DE' ),
 				'multiple'       => true,
 				'select_buttons' => true,
 			),
@@ -190,7 +189,7 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 				'title'          => __( 'Allowed shipping countries', 'woocommerce-gateway-wirecard' ),
 				'type'           => 'multiselect',
 				'options'        => $countries,
-				'default'        => array( 'AT', 'DE', 'CH' ),
+				'default'        => array( 'AT', 'DE' ),
 				'multiple'       => true,
 				'select_buttons' => true,
 			),
@@ -204,7 +203,7 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 			),
 			'min_amount'            => array(
 				'title'   => __( 'Minimum Amount', 'woocommerce-gateway-wirecard' ),
-				'default' => 10,
+				'default' => 20,
 			),
 			'max_amount'            => array(
 				'title'   => __( 'Maximum Amount', 'woocommerce-gateway-wirecard' ),
@@ -230,22 +229,13 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 	}
 
 	/**
-	 * Add payment fields to payment method
-	 *
-	 * @since 1.0.0
-	 */
-	public function payment_fields() {
-
-	}
-
-	/**
 	 * Process payment gateway transactions
 	 *
 	 * @param int $order_id
 	 *
 	 * @return array
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 */
 	public function process_payment( $order_id ) {
 		$order = wc_get_order( $order_id );
@@ -288,6 +278,7 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 	 * @param null $http_pass
 	 *
 	 * @return Config
+	 * @since 1.1.0
 	 */
 	public function create_payment_config( $base_url = null, $http_user = null, $http_pass = null ) {
 		if ( is_null( $base_url ) ) {
@@ -301,5 +292,120 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 		$config->add( $payment_config );
 
 		return $config;
+	}
+
+	/**
+	 * Check if all cretireiars are fullfiled
+	 *
+	 * @return bool
+	 * @since 1.1.0
+	 */
+	public function is_availible() {
+		if ( is_checkout() ) {
+			global $woocommerce;
+			$customer = $woocommerce->customer;
+
+			$cart = new WC_Cart();
+			$cart->get_cart_from_session();
+
+			if ( ! in_array( get_woocommerce_currency(), $this->get_option( 'allowed_currencies' ) ) &&
+				! $this->validate_cart_amounts( $cart->total ) &&
+				! $this->validate_cart_products( $cart ) &&
+				! $this->validate_billing_shipping_address( $customer ) &&
+				! $this->validate_countries( $customer ) ) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	/**
+	 * Check the cart for digital items
+	 *
+	 * @param $cart
+	 * @return bool
+	 * @since 1.1.0
+	 */
+	private function validate_cart_products( $cart ) {
+		foreach ( $cart->cart_contents as $hash => $item ) {
+			$product = new WC_Product( $item['product_id'] );
+			if ( $product->is_downloadable() || $product->is_virtual() ) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	/**
+	 * Check for the allowed countries
+	 *
+	 * @param WC_Customer $customer
+	 * @return bool
+	 * @since 1.1.0
+	 */
+	private function validate_countries( $customer ) {
+		if ( ! in_array( $customer->get_shipping_country(), $this->get_option( 'shipping_countries' ) ) &&
+		! empty( $customer->get_shipping_country() ) ) {
+			return false;
+		}
+
+		if ( ! in_array( $customer->get_billing_country(), $this->get_option( 'billing_countries' ) ) &&
+		! empty( $customer->get_billing_country() ) ) {
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * Check that the shipping and billing adresses are equal
+	 *
+	 * @param WC_Customer $customer
+	 * @return bool
+	 * @since 1.1.0
+	 */
+	private function validate_billing_shipping_address( $customer ) {
+		$fields = array(
+			'first_name',
+			'last_name',
+			'address_1',
+			'address_2',
+			'city',
+			'country',
+			'postcode',
+			'state',
+		);
+		foreach ( $fields as $field ) {
+			$billing  = 'get_billing_' . $field;
+			$shipping = 'get_shipping_' . $field;
+
+			if ( call_user_func( array( $customer, $billing ) ) != call_user_func( array( $customer, $shipping ) ) &&
+			! empty( call_user_func( array( $customer, $shipping ) ) ) ) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	/**
+	 * Validate cart amounts
+	 *
+	 * @param float $total
+	 * @return bool
+	 * @since 1.1.0
+	 */
+	private function validate_cart_amounts( $total ) {
+		if ( $total <= floatval( $this->get_option( 'min_amount' ) ) ) {
+			return false;
+		}
+
+		if ( $total >= floatval( $this->get_option( 'max_amount' ) ) ) {
+			return false;
+		}
+
+		return true;
 	}
 }
