@@ -280,6 +280,11 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 		$account_holder = $this->additional_helper->create_account_holder( $order, 'billing', new \DateTime( $_POST['invoice_date_of_birth'] ) );
 		$transaction->setAccountHolder( $account_holder );
 
+		$ident  = WC()->session->get( 'ratepay_device_ident' );
+		$device = new \Wirecard\PaymentSdk\Entity\Device();
+		$transaction->setDevice( $device->setFingerprint( $ident ) );
+		unset( WC()->session->ratepay_device_ident );
+
 		return $this->execute_transaction( $transaction, $config, $operation, $order, $order_id );
 	}
 
@@ -339,7 +344,8 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 	 * @since 1.1.0
 	 */
 	public function payment_fields() {
-		$html = '<p class="form-row form-row-wide validate-required">
+		$html  = $this->create_ratepay_script();
+		$html .= '<p class="form-row form-row-wide validate-required">
 		<label for="invoice_dateofbirth" class="">' . __( 'Date of birth', 'woocommerce-gateway-wirecard' ) . '
 		<abbr class="required" title="required">*</abbr></label>
 		<input class="input-text " name="invoice_date_of_birth" id="invoice_date_of_birth" placeholder="" type="date">
@@ -452,5 +458,42 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 		}
 
 		return true;
+	}
+
+	/**
+	 * Create ratepay script
+	 *
+	 * @return string
+	 * @since 1.1.0
+	 */
+	private function create_ratepay_script() {
+		if ( null == WC()->session->get( 'ratepay_device_ident' ) ) {
+			WC()->session->set( 'ratepay_device_ident', $this->create_device_ident() );
+		}
+		$device_ident = WC()->session->get( 'ratepay_device_ident' );
+
+		return '<script language="JavaScript">
+			var di = ' . $device_ident . '
+			</script>
+				<script type="text/javascript" src="//d.ratepay.com/WDWL/di.js">
+			</script>
+			<noscript>
+				<link rel="stylesheet" type="text/css" href="//d.ratepay.com/di.css?t=' . $device_ident . '&v=WDWL&l=Checkout" >
+			</noscript>
+			<object type="application/x-shockwave-flash" data="//d.ratepay.com/WDWL/c.swf" width="0" height="0">
+			<param name="movie" value="//d.ratepay.com/WDWL/c.swf" />
+			<param name="flashvars" value="t= ' . $device_ident . ' &v=WDWL"/>
+			<param name="AllowScriptAccess" value="always"/>
+			</object>';
+	}
+
+	/**
+	 * Returns deviceIdentToken for ratepayscript
+	 *
+	 * @return string
+	 * @since 1.1.0
+	 */
+	private function create_device_ident() {
+		return md5( $this->get_option( 'merchant_account_id' ) . '_' . microtime() );
 	}
 }
