@@ -82,7 +82,7 @@ class Additional_Information {
 			$item_unit_gross_amount = wc_format_decimal( $item_unit_net_amount + $item_unit_tax_amount, wc_get_price_decimals() );
 			$item_tax_rate          = $item_unit_tax_amount / $item_unit_gross_amount;
 
-			$article_nr  = $product->get_sku();
+			$article_nr  = $product->get_id();
 			$description = $product->get_short_description();
 			$amount      = new Amount( $item_unit_gross_amount, get_woocommerce_currency() );
 
@@ -156,12 +156,13 @@ class Additional_Information {
 	 *
 	 * @param WC_Order $order
 	 * @param string   $type
+	 * @param DateTime $date_of_birth
 	 *
 	 * @return AccountHolder
 	 *
 	 * @since 1.0.0
 	 */
-	public function create_account_holder( $order, $type ) {
+	public function create_account_holder( $order, $type, $date_of_birth = null ) {
 		$account_holder = new AccountHolder();
 		if ( self::SHIPPING == $type ) {
 			$account_holder->setAddress( $this->create_address_data( $order, $type ) );
@@ -173,8 +174,9 @@ class Additional_Information {
 			$account_holder->setFirstName( $order->get_billing_first_name() );
 			$account_holder->setLastName( $order->get_billing_last_name() );
 			$account_holder->setPhone( $order->get_billing_phone() );
-			// No birthday provided by WordPress -> create birthday param for invoice/installment
-			// $account_holder->setDateOfBirth();
+			if ( null != $date_of_birth ) {
+				$account_holder->setDateOfBirth( $date_of_birth );
+			}
 		}
 
 		return $account_holder;

@@ -78,12 +78,13 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 	 * @since 1.1.0
 	 */
 	public function __construct() {
-		$this->type               = 'invoice';
+		$this->type               = 'ratepay-invoice';
 		$this->id                 = 'wirecard_ee_invoice';
 		$this->icon               = WOOCOMMERCE_GATEWAY_WIRECARD_URL . 'assets/images/invoice.png';
 		$this->method_title       = __( 'Wirecard Guaranteed Invoice', 'wooocommerce-gateway-wirecard' );
 		$this->method_name        = __( 'Guaranteed Invoice', 'wooocommerce-gateway-wirecard' );
 		$this->method_description = __( 'Guaranteed Invoice transactions via Wirecard Payment Processing Gateway', 'woocommerce-gateway-wirecard' );
+		$this->has_fields         = true;
 
 		$this->supports = array(
 			'products',
@@ -103,6 +104,7 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 		$this->additional_helper = new Additional_Information();
 
 		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
+		add_action( 'woocommerce_after_checkout_validation', 'validate', 10, 2 );
 
 		parent::add_payment_gateway_actions();
 	}
@@ -240,6 +242,10 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 	public function process_payment( $order_id ) {
 		$order = wc_get_order( $order_id );
 
+		if ( ! $this->validate_date_of_birth( $_POST['invoice_date_of_birth'] ) ) {
+			return false;
+		}
+
 		$redirect_urls = new Redirect(
 			$this->create_redirect_url( $order, 'success', $this->type ),
 			$this->create_redirect_url( $order, 'cancel', $this->type ),
@@ -258,6 +264,7 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 		$custom_fields = new CustomFieldCollection();
 		$custom_fields->add( new CustomField( 'orderId', $order_id ) );
 		$transaction->setCustomFields( $custom_fields );
+		$transaction->setOrderNumber( $order_id );
 
 		if ( $this->get_option( 'descriptor' ) == 'yes' ) {
 			$transaction->setDescriptor( $this->additional_helper->create_descriptor( $order ) );
@@ -266,6 +273,12 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 		if ( $this->get_option( 'send_additional' ) == 'yes' ) {
 			$this->additional_helper->set_additional_information( $order, $transaction );
 		}
+
+		$basket = $this->additional_helper->create_shopping_basket( $order, $transaction );
+		$transaction->setBasket( $basket );
+
+		$account_holder = $this->additional_helper->create_account_holder( $order, 'billing', new \DateTime( $_POST['invoice_date_of_birth'] ) );
+		$transaction->setAccountHolder( $account_holder );
 
 		return $this->execute_transaction( $transaction, $config, $operation, $order, $order_id );
 	}
@@ -309,7 +322,7 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 			$cart->get_cart_from_session();
 
 			if ( ! in_array( get_woocommerce_currency(), $this->get_option( 'allowed_currencies' ) ) &&
-				! $this->validate_cart_amounts( $cart->total ) &&
+				! $this->validate_cart_amounts( floatval( $cart->get_total( 'total' ) ) ) &&
 				! $this->validate_cart_products( $cart ) &&
 				! $this->validate_billing_shipping_address( $customer ) &&
 				! $this->validate_countries( $customer ) ) {
@@ -317,6 +330,38 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 			}
 		}
 
+		return true;
+	}
+
+	/**
+	 * Add payment fields to payment method
+	 *
+	 * @since 1.1.0
+	 */
+	public function payment_fields() {
+		$html = '<p class="form-row form-row-wide validate-required">
+		<label for="invoice_dateofbirth" class="">' . __( 'Date of birth', 'woocommerce-gateway-wirecard' ) . '
+		<abbr class="required" title="required">*</abbr></label>
+		<input class="input-text " name="invoice_date_of_birth" id="invoice_date_of_birth" placeholder="" type="date">
+		</p>';
+
+		echo $html;
+	}
+
+	/**
+	 * Validate date of birth
+	 *
+	 * @param $date
+	 * @return bool
+	 */
+	public function validate_date_of_birth( $date ) {
+		$birth_day  = new \DateTime( $date );
+		$difference = $birth_day->diff( new \DateTime() );
+		$age        = $difference->format( '%y' );
+		if ( $age < 18 ) {
+			wc_add_notice( __( 'You need to be order then 18 to order.', 'woocommerce-gateway-wirecard' ), 'error' );
+			return false;
+		}
 		return true;
 	}
 
