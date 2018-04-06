@@ -227,10 +227,8 @@ class Additional_Information {
 	 * @return Basket
 	 */
 	private function set_basket_item( $basket, $product, $quantity, $total, $tax ) {
-		$item_unit_net_amount   = $total / $quantity;
-		$item_unit_tax_amount   = $tax / $quantity;
-		$item_unit_gross_amount = wc_format_decimal( $item_unit_net_amount + $item_unit_tax_amount, wc_get_price_decimals() );
-		$item_tax_rate          = $item_unit_tax_amount / $item_unit_gross_amount;
+		$item_unit_gross_amount = floatval( number_format( $total + $tax, wc_get_price_decimals() ) );
+		$item_tax_rate          = $tax / $item_unit_gross_amount;
 
 		$article_nr  = $product->get_id();
 		$description = $product->get_short_description();
@@ -238,12 +236,12 @@ class Additional_Information {
 
 		$tax_rate = 0;
 		if ( $product->is_taxable() ) {
-			$tax_rate = number_format( $item_tax_rate * 100, 2 );
+			$tax_rate = number_format( $item_tax_rate * 100, wc_get_price_decimals() );
 		}
-		$item = new Item( $product->get_name(), $amount, $quantity );
+		$item = new Item( $product->get_name() . ' x' . $quantity, $amount, 1 );
 		$item->setDescription( $description );
 		$item->setArticleNumber( $article_nr );
-		$item->setTaxRate( $tax_rate );
+		$item->setTaxRate( floatval( number_format( $tax_rate, wc_get_price_decimals() ) ) );
 		$basket->add( $item );
 
 		return $basket;
@@ -258,14 +256,14 @@ class Additional_Information {
 	 * @return Basket
 	 */
 	private function set_shipping_item( $basket, $shipping_total, $shipping_tax ) {
-		$amount        = wc_format_decimal( $shipping_total + $shipping_tax, wc_get_price_decimals() );
+		$amount        = floatval( number_format( $shipping_total + $shipping_tax, wc_get_price_decimals() ) );
 		$unit_tax_rate = $shipping_tax / $shipping_total;
 
 		$amount = new Amount( $amount, get_woocommerce_currency() );
 		$item   = new Item( 'Shipping', $amount, 1 );
 		$item->setDescription( 'Shipping' );
 		$item->setArticleNumber( 'Shipping' );
-		$item->setTaxRate( number_format( $unit_tax_rate * 100, 2 ) );
+		$item->setTaxRate( floatval( number_format( $unit_tax_rate * 100, 2 ) ) );
 		$basket->add( $item );
 
 		return $basket;
