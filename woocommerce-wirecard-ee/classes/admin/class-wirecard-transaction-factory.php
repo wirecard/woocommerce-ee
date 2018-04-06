@@ -139,7 +139,7 @@ class Wirecard_Transaction_Factory {
 
 		//prevent possible duplicated transactions
 		if ( $this->get_transaction( $response->getTransactionId() ) ) {
-            return;
+		    return;
 		}
 
 		$parent_transaction_id = '';

@@ -73,40 +73,18 @@ class Additional_Information {
 
 		foreach ( $cart->get_cart() as $cart_item_key => $cart_item ) {
 			/** @var $product WC_Product */
-			$product       = $cart_item['data'];
-			$name          = $product->get_name();
-			$item_quantity = $cart_item['quantity'];
-
-			$item_unit_net_amount   = $cart_item['line_total'] / $item_quantity;
-			$item_unit_tax_amount   = $cart_item['line_tax'] / $item_quantity;
-			$item_unit_gross_amount = wc_format_decimal( $item_unit_net_amount + $item_unit_tax_amount, wc_get_price_decimals() );
-			$item_tax_rate          = $item_unit_tax_amount / $item_unit_gross_amount;
-
-			$article_nr  = $product->get_id();
-			$description = $product->get_short_description();
-			$amount      = new Amount( $item_unit_gross_amount, get_woocommerce_currency() );
-
-			$tax_rate = 0;
-			if ( $product->is_taxable() ) {
-				$tax_rate = number_format( $item_tax_rate * 100, 2 );
-			}
-			$item = new Item( $name, $amount, $item_quantity );
-			$item->setDescription( $description );
-			$item->setArticleNumber( $article_nr );
-			$item->setTaxRate( $tax_rate );
-			$basket->add( $item );
+			$product = $cart_item['data'];
+			$basket  = $this->set_basket_item(
+				$basket,
+				$product,
+				$cart_item['quantity'],
+				$cart_item['line_total'],
+				$cart_item['line_tax']
+			);
 		}
 
 		if ( $cart->get_shipping_total() > 0 ) {
-			$amount        = wc_format_decimal( $cart->get_shipping_total() + $cart->get_shipping_tax(), wc_get_price_decimals() );
-			$unit_tax_rate = $cart->get_shipping_tax() / $cart->get_shipping_total();
-
-			$amount = new Amount( $amount, get_woocommerce_currency() );
-			$item   = new Item( 'Shipping', $amount, 1 );
-			$item->setDescription( 'Shipping' );
-			$item->setArticleNumber( 'Shipping' );
-			$item->setTaxRate( number_format( $unit_tax_rate * 100, 2 ) );
-			$basket->add( $item );
+			$basket = $this->set_shipping_item( $basket, $cart->get_shipping_total(), $cart->get_shipping_tax() );
 		}
 
 		return $basket;
@@ -205,5 +183,91 @@ class Additional_Information {
 		}
 
 		return $address;
+	}
+
+	/**
+	 * Create basket from order
+	 *
+	 * @param array $orderd_products
+	 * @param Basket $basket
+	 * @param Transaction $transaction
+	 * @param float $shipping_total
+	 * @param float $shipping_tax
+	 * @return Basket
+	 * @since 1.1.0
+	 */
+	public function create_basket_from_order( $orderd_products, $basket, $transaction, $shipping_total, $shipping_tax ) {
+		$basket->setVersion( $transaction );
+		foreach ( $orderd_products as $item_id => $item ) {
+			$product = new WC_Product( $orderd_products[ $item_id ]->get_product_id() );
+			$basket  = $this->set_basket_item(
+				$basket,
+				$product,
+				$orderd_products[ $item_id ]->get_quantity(),
+				$orderd_products[ $item_id ]->get_total(),
+				wc_format_decimal( $orderd_products[ $item_id ]->get_total_tax(), wc_get_price_decimals() )
+			);
+		}
+
+		if ( $shipping_total > 0 ) {
+			$basket = $this->set_shipping_item( $basket, $shipping_total, $shipping_tax );
+		}
+
+		return $basket;
+	}
+
+	/**
+	 * Set an Item to basket
+	 *
+	 * @param Basket $basket
+	 * @param WC_Product $product
+	 * @param int $quantity
+	 * @param float $total
+	 * @param float $tax
+	 * @return Basket
+	 */
+	private function set_basket_item( $basket, $product, $quantity, $total, $tax ) {
+		$item_unit_net_amount   = $total / $quantity;
+		$item_unit_tax_amount   = $tax / $quantity;
+		$item_unit_gross_amount = wc_format_decimal( $item_unit_net_amount + $item_unit_tax_amount, wc_get_price_decimals() );
+		$item_tax_rate          = $item_unit_tax_amount / $item_unit_gross_amount;
+
+		$article_nr  = $product->get_id();
+		$description = $product->get_short_description();
+		$amount      = new Amount( $item_unit_gross_amount, get_woocommerce_currency() );
+
+		$tax_rate = 0;
+		if ( $product->is_taxable() ) {
+			$tax_rate = number_format( $item_tax_rate * 100, 2 );
+		}
+		$item = new Item( $product->get_name(), $amount, $quantity );
+		$item->setDescription( $description );
+		$item->setArticleNumber( $article_nr );
+		$item->setTaxRate( $tax_rate );
+		$basket->add( $item );
+
+		return $basket;
+	}
+
+	/**
+	 * Set the shipping item
+	 *
+	 * @param Basket $basket
+	 * @param float $shipping_total
+	 * @param float $shipping_tax
+	 * @return Basket
+	 */
+	private function set_shipping_item( $basket, $shipping_total, $shipping_tax ) {
+		$amount        = wc_format_decimal( $shipping_total + $shipping_tax, wc_get_price_decimals() );
+		$unit_tax_rate = $shipping_tax / $shipping_total;
+
+		$amount = new Amount( $amount, get_woocommerce_currency() );
+		$item   = new Item( 'Shipping', $amount, 1 );
+		$item->setDescription( 'Shipping' );
+		$item->setArticleNumber( 'Shipping' );
+		$item->setTaxRate( number_format( $unit_tax_rate * 100, 2 ) );
+		$basket->add( $item );
+
+		return $basket;
 	}
 }
