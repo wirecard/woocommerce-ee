@@ -155,7 +155,7 @@ class Wirecard_Transaction_Factory {
 			$wpdb->update(
 				$this->table_name,
 				$this->set_transaction_parameters( $response, $parent_transaction_id, $transaction_state, $order,
-					$transaction_link),
+				$transaction_link),
 				array(
 					'transaction_id' => $response->getTransactionId(),
 				)
@@ -164,7 +164,7 @@ class Wirecard_Transaction_Factory {
 			$wpdb->insert(
 				$this->table_name,
 				$this->set_transaction_parameters($response, $parent_transaction_id, $transaction_state, $order,
-					$transaction_link)
+				$transaction_link)
 			);
 		}
 
