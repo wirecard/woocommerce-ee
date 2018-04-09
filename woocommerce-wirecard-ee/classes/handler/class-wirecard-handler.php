@@ -87,6 +87,6 @@ class Wirecard_Handler {
 	 * @since 1.0.0
 	 */
 	public function get_payment_method( $method_name ) {
-		return isset( $this->payment_methods[$method_name] ) ? $this->payment_methods[$method_name] : null;
+		return isset( $this->payment_methods[ $method_name ] ) ? $this->payment_methods[ $method_name ] : null;
 	}
 }

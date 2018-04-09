@@ -99,7 +99,7 @@ class WC_Gateway_Wirecard_Poipia extends WC_Wirecard_Payment_Gateway {
 		);
 
 		$this->payment_action = 'reserve';
-		$this->cancel  = array( 'authorization' );
+		$this->cancel         = array( 'authorization' );
 
 		$this->init_form_fields();
 		$this->init_settings();
@@ -110,7 +110,7 @@ class WC_Gateway_Wirecard_Poipia extends WC_Wirecard_Payment_Gateway {
 		$this->additional_helper = new Additional_Information();
 
 		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
-		add_action( 'woocommerce_thankyou_' . $this->id, array($this, 'thankyou_page'));
+		add_action( 'woocommerce_thankyou_' . $this->id, array( $this, 'thankyou_page' ) );
 
 		parent::add_payment_gateway_actions();
 	}
@@ -122,73 +122,73 @@ class WC_Gateway_Wirecard_Poipia extends WC_Wirecard_Payment_Gateway {
 	 */
 	public function init_form_fields() {
 		$this->form_fields = array(
-			'enabled'                     => array(
+			'enabled'             => array(
 				'title'   => __( 'Enable/Disable', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'checkbox',
 				'label'   => __( 'Enable Wirecard Payment on Invoice / Payment in Advance', 'woocommerce-gateway-wirecard' ),
 				'default' => 'yes',
 			),
-			'title'                       => array(
+			'title'               => array(
 				'title'       => __( 'Title', 'woocommerce-gateway-wirecard' ),
 				'type'        => 'text',
 				'description' => __( 'This controls the title which the user sees during checkout.', 'woocommerce-gateway-wirecard' ),
 				'default'     => __( 'Wirecard Payment on Invoice / Payment in Advance', 'woocommerce-gateway-wirecard' ),
 				'desc_tip'    => true,
 			),
-			'merchant_account_id'         => array(
+			'merchant_account_id' => array(
 				'title'   => __( 'Merchant Account ID', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'text',
 				'default' => '105ab3e8-d16b-4fa0-9f1f-18dd9b390c94',
 			),
-			'secret'                      => array(
+			'secret'              => array(
 				'title'   => __( 'Secret Key', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'text',
 				'default' => '2d96596b-9d10-4c98-ac47-4d56e22fd878',
 			),
-			'credentials'                 => array(
+			'credentials'         => array(
 				'title'       => __( 'Credentials', 'woocommerce-gateway-wirecard' ),
 				'type'        => 'title',
 				'description' => __( 'Enter your Wirecard credentials.', 'woocommerce-gateway-wirecard' ),
 			),
-			'base_url'                    => array(
+			'base_url'            => array(
 				'title'       => __( 'Base URL', 'woocommerce-gateway-wirecard' ),
 				'type'        => 'text',
 				'description' => __( 'The Wirecard base URL. (e.g. https://api.wirecard.com)' ),
 				'default'     => 'https://api-test.wirecard.com',
 				'desc_tip'    => true,
 			),
-			'http_user'                   => array(
+			'http_user'           => array(
 				'title'   => __( 'HTTP User', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'text',
 				'default' => '70000-APITEST-AP',
 			),
-			'http_pass'                   => array(
+			'http_pass'           => array(
 				'title'   => __( 'HTTP Password', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'text',
 				'default' => 'qD2wzQ_hrc!8',
 			),
-			'advanced'                    => array(
+			'advanced'            => array(
 				'title'       => __( 'Advanced Options', 'woocommerce-gateway-wirecard' ),
 				'type'        => 'title',
 				'description' => '',
 			),
-			'payment_type'      => array(
+			'payment_type'        => array(
 				'title'   => __( 'Payment Type', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'select',
 				'default' => 'Payment on Invoice',
 				'label'   => __( 'Payment Type', 'woocommerce-gateway-wirecard' ),
 				'options' => array(
 					'poi' => 'Payment on Invoice',
-					'pia'     => 'Payment in Advance',
+					'pia' => 'Payment in Advance',
 				),
 			),
-			'descriptor'                  => array(
+			'descriptor'          => array(
 				'title'   => __( 'Enable/Disable', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'checkbox',
 				'label'   => __( 'Descriptor', 'woocommerce-gateway-wirecard' ),
 				'default' => 'no',
 			),
-			'send_additional'             => array(
+			'send_additional'     => array(
 				'title'   => __( 'Enable/Disable', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'checkbox',
 				'label'   => __( 'Send additional information', 'woocommerce-gateway-wirecard' ),
@@ -228,7 +228,7 @@ class WC_Gateway_Wirecard_Poipia extends WC_Wirecard_Payment_Gateway {
 		$custom_fields->add( new CustomField( 'orderId', $order_id ) );
 		$transaction->setCustomFields( $custom_fields );
 
-		$transaction->setAccountHolder($this->additional_helper->create_account_holder($order, 'billing'));
+		$transaction->setAccountHolder( $this->additional_helper->create_account_holder( $order, 'billing' ) );
 
 		if ( $this->get_option( 'descriptor' ) == 'yes' ) {
 			$transaction->setDescriptor( $this->additional_helper->create_descriptor( $order ) );
@@ -296,21 +296,20 @@ class WC_Gateway_Wirecard_Poipia extends WC_Wirecard_Payment_Gateway {
 	 *
 	 * @since 1.1.0
 	 */
-	public function thankyou_page( $order_id )
-	{
+	public function thankyou_page( $order_id ) {
 		$order = wc_get_order( $order_id );
 		if ( $this->get_option( 'payment_type' ) == 'pia' ) {
-			$iban = get_post_meta( $order_id, 'pia-iban', true);
-			$bic = get_post_meta( $order_id, 'pia-bic', true);
-			$reference_id = get_post_meta( $order_id, 'pia-reference-id', true);
-			$result = '<table class="woocommerce-table woocommerce-table--order-details shop_table order_details">';
-			$result .= '<thead><tr><th>';
-			$result .= __('Please transfer the amount using the following data:', 'woocommerce-gateway-wirecard' );
-			$result .= '</th></tr></thead>';
-			$result .= '<tr><td>' . __('Amount', 'woocommerce-gateway-wirecard') . '</td><td>' . $order->get_total() . '</td></tr>';
-			$result .= '<tr><td>' . __('IBAN', 'wooocommerce-gateway-wirecard') . '</td><td>' . $iban . '</td></tr>';
-			$result .= '<tr><td>' . __('BIC', 'woocommerce-gateway-wirecard') . '</td><td>' . $bic . '</td></tr>';
-			$result .= '<tr><td>' . __('Provider transaction reference id', 'woocommerce-gateway-wirecard') . '</td><td>' . $reference_id . '</td></tr>';
+			$iban         = get_post_meta( $order_id, 'pia-iban', true );
+			$bic          = get_post_meta( $order_id, 'pia-bic', true );
+			$reference_id = get_post_meta( $order_id, 'pia-reference-id', true );
+			$result       = '<table class="woocommerce-table woocommerce-table--order-details shop_table order_details">';
+			$result      .= '<thead><tr><th>';
+			$result      .= __( 'Please transfer the amount using the following data:', 'woocommerce-gateway-wirecard' );
+			$result      .= '</th></tr></thead>';
+			$result      .= '<tr><td>' . __( 'Amount', 'woocommerce-gateway-wirecard' ) . '</td><td>' . $order->get_total() . '</td></tr>';
+			$result      .= '<tr><td>' . __( 'IBAN', 'wooocommerce-gateway-wirecard' ) . '</td><td>' . $iban . '</td></tr>';
+			$result      .= '<tr><td>' . __( 'BIC', 'woocommerce-gateway-wirecard' ) . '</td><td>' . $bic . '</td></tr>';
+			$result      .= '<tr><td>' . __( 'Provider transaction reference id', 'woocommerce-gateway-wirecard' ) . '</td><td>' . $reference_id . '</td></tr>';
 			echo $result;
 		}
 	}

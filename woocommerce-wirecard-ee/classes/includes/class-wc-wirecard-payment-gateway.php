@@ -151,9 +151,9 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 			if ( ! $order->is_paid() && ( 'authorization' != $order->get_status() ) ) {
 				$order->update_status( 'on-hold', __( 'Awaiting payment from Wirecard', 'woocommerce-gateway-wirecard' ) );
 			}
-			if ( is_array($status) ) {
-				foreach ($status as $key => $value) {
-					add_post_meta( $order->get_id(), $key, $value);
+			if ( is_array( $status ) ) {
+				foreach ( $status as $key => $value ) {
+					add_post_meta( $order->get_id(), $key, $value );
 				}
 			}
 			$redirect_url = $this->get_return_url( $order );
@@ -309,6 +309,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 * @param \Wirecard\PaymentSdk\Transaction\Transaction $transaction
 	 * @param Config                                       $config
 	 * @param WC_Order                                     $order
+	 * @param string                                       $operation
 	 *
 	 * @throws Exception
 	 *
