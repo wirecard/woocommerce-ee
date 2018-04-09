@@ -76,7 +76,7 @@ class WC_Gateway_Wirecard_Sofort extends WC_Wirecard_Payment_Gateway {
 	private $additional_helper;
 
 	/**
-	 * WC_Gateway_Wirecard_Paypal constructor.
+	 * WC_Gateway_Wirecard_Sofort constructor.
 	 *
 	 * @since 1.1.0
 	 */
@@ -193,7 +193,7 @@ class WC_Gateway_Wirecard_Sofort extends WC_Wirecard_Payment_Gateway {
 		);
 
 		$config = $this->create_payment_config();
-		$amount = new Amount( $order->get_total(), 'EUR' );
+		$amount = new Amount( $order->get_total(), $order->get_currency() );
 
 		$transaction = new SofortTransaction();
 		$transaction->setNotificationUrl( $this->create_notification_url( $order, $this->type ) );
