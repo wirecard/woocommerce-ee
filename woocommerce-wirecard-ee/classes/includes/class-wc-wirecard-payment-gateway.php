@@ -316,17 +316,12 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 *
 	 * @since 1.0.0
 	 */
-	public function execute_refund( $transaction, $config, $order ) {
+	public function execute_refund( $transaction, $config, $order, $operation = 'cancel' ) {
 		$logger              = new Logger();
 		$transaction_service = new TransactionService( $config, $logger );
 		try {
-			if ( $transaction instanceof \Wirecard\PaymentSdk\Transaction\CreditCardTransaction ) {
-				/** @var $response Response */
-				$response = $transaction_service->process( $transaction, 'refund' );
-			} else {
-				/** @var $response Response */
-				$response = $transaction_service->process( $transaction, 'cancel' );
-			}
+			/** @var $response Response */
+			$response = $transaction_service->process( $transaction, $operation );
 		} catch ( \Exception $exception ) {
 			$logger->error( __METHOD__ . ':' . $exception->getMessage() );
 

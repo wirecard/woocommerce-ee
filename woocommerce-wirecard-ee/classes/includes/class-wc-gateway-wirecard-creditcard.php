@@ -404,6 +404,6 @@ HTML;
 			$transaction->setAmount( new Amount( $amount, $order->get_currency() ) );
 		}
 
-		return $this->execute_refund( $transaction, $config, $order );
+		return $this->execute_refund( $transaction, $config, $order, \Wirecard\PaymentSdk\Transaction\Operation::REFUND );
 	}
 }
