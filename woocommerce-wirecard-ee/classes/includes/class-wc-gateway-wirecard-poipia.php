@@ -132,12 +132,12 @@ class WC_Gateway_Wirecard_Poipia extends WC_Wirecard_Payment_Gateway {
 			'merchant_account_id'         => array(
 				'title'   => __( 'Merchant Account ID', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'text',
-				'default' => '53f2895a-e4de-4e82-a813-0d87a10e55e6',
+				'default' => '105ab3e8-d16b-4fa0-9f1f-18dd9b390c94',
 			),
 			'secret'                      => array(
 				'title'   => __( 'Secret Key', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'text',
-				'default' => 'dbc5a498-9a66-43b9-bf1d-a618dd399684',
+				'default' => '2d96596b-9d10-4c98-ac47-4d56e22fd878',
 			),
 			'credentials'                 => array(
 				'title'       => __( 'Credentials', 'woocommerce-gateway-wirecard' ),
