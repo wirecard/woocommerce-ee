@@ -122,23 +122,17 @@ class Wirecard_Transaction_Factory {
 	* @param WC_Order        $order
 	* @param SuccessResponse $response
 	* @param string          $base_url
-	* @param string          $from
+	* @param string          $transaction_state
 	*
 	* @return int
 	*
 	* @since 1.0.0
 	*/
-	public function create_transaction( $order, $response, $base_url, $from ) {
+	public function create_transaction( $order, $response, $base_url, $transaction_state ) {
 		global $wpdb;
 
 		$parent_transaction_id = '';
 		$parent_transaction    = $this->get_transaction( $response->getParentTransactionId() );
-
-		if ( 'notifiy' == $from ) {
-			$transaction_state = 'success';
-		} else {
-			$transaction_state = 'awaiting';
-		}
 
 		if ( $parent_transaction ) {
 			$parent_transaction_id = $response->getParentTransactionId();
@@ -157,44 +151,22 @@ class Wirecard_Transaction_Factory {
 		$transaction_link = $this->get_transaction_link( $base_url, $response );
 		$transaction      = $this->get_transaction( $response->getTransactionId() );
 
-		//Update the transaction
 		if ( $transaction ) {
 			$wpdb->update(
 				$this->table_name,
-				array(
-					'transaction_id'        => $response->getTransactionId(),
-					'parent_transaction_id' => $parent_transaction_id,
-					'payment_method'        => $response->getPaymentMethod(),
-					'transaction_state'     => $transaction_state,
-					'transaction_type'      => $response->getTransactionType(),
-					'amount'                => $order->get_total(),
-					'currency'              => $order->get_currency(),
-					'order_id'              => $order->get_id(),
-					'response'              => wp_json_encode( $response->getData() ),
-					'transaction_link'      => $transaction_link,
-				),
+				$this->set_transaction_parameters( $response, $parent_transaction_id, $transaction_state, $order,
+					$transaction_link),
 				array(
 					'transaction_id' => $response->getTransactionId(),
 				)
 			);
-			return;
+		} else {
+			$wpdb->insert(
+				$this->table_name,
+				$this->set_transaction_parameters($response, $parent_transaction_id, $transaction_state, $order,
+					$transaction_link)
+			);
 		}
-
-		$wpdb->insert(
-			$this->table_name,
-			array(
-				'transaction_id'        => $response->getTransactionId(),
-				'parent_transaction_id' => $parent_transaction_id,
-				'payment_method'        => $response->getPaymentMethod(),
-				'transaction_state'     => $transaction_state,
-				'transaction_type'      => $response->getTransactionType(),
-				'amount'                => $order->get_total(),
-				'currency'              => $order->get_currency(),
-				'order_id'              => $order->get_id(),
-				'response'              => wp_json_encode( $response->getData() ),
-				'transaction_link'      => $transaction_link,
-			)
-		);
 
 		return $wpdb->insert_id;
 	}
@@ -435,5 +407,38 @@ class Wirecard_Transaction_Factory {
 		);
 
 		return $output;
+	}
+
+	/**
+	 * Set parameters for the transaction
+	 *
+	 * @param SuccessResponse $response
+	 * @param string          $parent_transaction_id
+	 * @param string          $transaction_state
+	 * @param WC_Order        $order
+	 * @param string          $transaction_link
+	 * @return array
+	 *
+	 * @since 1.1.0
+	 */
+	private function set_transaction_parameters(
+		$response,
+		$parent_transaction_id,
+		$transaction_state,
+		$order,
+		$transaction_link
+	) {
+		return array(
+			'transaction_id'        => $response->getTransactionId(),
+			'parent_transaction_id' => $parent_transaction_id,
+			'payment_method'        => $response->getPaymentMethod(),
+			'transaction_state'     => $transaction_state,
+			'transaction_type'      => $response->getTransactionType(),
+			'amount'                => $order->get_total(),
+			'currency'              => $order->get_currency(),
+			'order_id'              => $order->get_id(),
+			'response'              => wp_json_encode( $response->getData() ),
+			'transaction_link'      => $transaction_link,
+		);
 	}
 }
