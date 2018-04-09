@@ -37,6 +37,7 @@ require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/handler/class-wire
 
 use Wirecard\PaymentSdk\Response\FailureResponse;
 use Wirecard\PaymentSdk\Response\SuccessResponse;
+use Wirecard\PaymentSdk\Transaction\Operation;
 use Wirecard\PaymentSdk\TransactionService;
 
 /**
@@ -66,7 +67,7 @@ class Wirecard_Transaction_Handler extends Wirecard_Handler {
 		$transaction_service = new TransactionService( $config, $this->logger );
 		try {
 			/** @var $response Response */
-			$response = $transaction_service->process( $transaction, 'cancel' );
+			$response = $transaction_service->process( $transaction, Operation::CANCEL );
 		} catch ( \Exception $exception ) {
 			$this->logger->error( __METHOD__ . ':' . $exception->getMessage() );
 		}
@@ -101,7 +102,7 @@ class Wirecard_Transaction_Handler extends Wirecard_Handler {
 		$transaction_service = new TransactionService( $config, $this->logger );
 		try {
 			/** @var $response Response */
-			$response = $transaction_service->process( $transaction, 'pay' );
+			$response = $transaction_service->process( $transaction, Operation::PAY );
 		} catch ( \Exception $exception ) {
 			$this->logger->error( __METHOD__ . ':' . $exception->getMessage() );
 		}

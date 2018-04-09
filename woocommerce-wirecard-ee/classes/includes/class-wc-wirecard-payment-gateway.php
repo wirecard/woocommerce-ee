@@ -515,4 +515,11 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 		$callback = new Wirecard_Callback();
 		$callback->post_form();
 	}
+
+	/**
+	 * Return true if the payment method is availeible
+	 */
+	public function is_availible() {
+		return true;
+	}
 }
