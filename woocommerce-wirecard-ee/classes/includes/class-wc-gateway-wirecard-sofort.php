@@ -51,14 +51,14 @@ use Wirecard\PaymentSdk\Transaction\SepaTransaction;
  *
  * @extends WC_Wirecard_Payment_Gateway
  *
- * @since   1.0.0
+ * @since   1.1.0
  */
 class WC_Gateway_Wirecard_Sofort extends WC_Wirecard_Payment_Gateway {
 
 	/**
 	 * Payment type
 	 *
-	 * @since  1.0.0
+	 * @since  1.1.0
 	 * @access private
 	 * @var string
 	 */
@@ -67,7 +67,7 @@ class WC_Gateway_Wirecard_Sofort extends WC_Wirecard_Payment_Gateway {
 	/**
 	 * Additional helper for basket and risk management
 	 *
-	 * @since  1.0.0
+	 * @since  1.1.0
 	 * @access private
 	 * @var Additional_Information
 	 */
@@ -76,7 +76,7 @@ class WC_Gateway_Wirecard_Sofort extends WC_Wirecard_Payment_Gateway {
 	/**
 	 * WC_Gateway_Wirecard_Paypal constructor.
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 */
 	public function __construct() {
 		$this->type               = 'sofortbanking';
@@ -109,7 +109,7 @@ class WC_Gateway_Wirecard_Sofort extends WC_Wirecard_Payment_Gateway {
 	/**
 	 * Load form fields for configuration
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 */
 	public function init_form_fields() {
 		$this->form_fields = array(
@@ -163,16 +163,6 @@ class WC_Gateway_Wirecard_Sofort extends WC_Wirecard_Payment_Gateway {
 				'type'        => 'title',
 				'description' => '',
 			),
-			'payment_action'      => array(
-				'title'   => __( 'Payment Action', 'woocommerce-gateway-wirecard' ),
-				'type'    => 'hidden',
-				'default' => 'pay',
-			),
-			'descriptor'          => array(
-				'title'   => __( 'Enable/Disable', 'woocommerce-gateway-wirecard' ),
-				'type'    => 'hidden',
-				'default' => 'yes',
-			),
 			'send_additional'     => array(
 				'title'   => __( 'Enable/Disable', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'checkbox',
@@ -189,7 +179,7 @@ class WC_Gateway_Wirecard_Sofort extends WC_Wirecard_Payment_Gateway {
 	 *
 	 * @return array
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 */
 	public function process_payment( $order_id ) {
 		$order = wc_get_order( $order_id );
@@ -200,9 +190,8 @@ class WC_Gateway_Wirecard_Sofort extends WC_Wirecard_Payment_Gateway {
 			$this->create_redirect_url( $order, 'failure', $this->type )
 		);
 
-		$config    = $this->create_payment_config();
-		$amount    = new Amount( $order->get_total(), 'EUR' );
-		$operation = $this->get_option( 'payment_action' );
+		$config = $this->create_payment_config();
+		$amount = new Amount( $order->get_total(), 'EUR' );
 
 		$transaction = new SofortTransaction();
 		$transaction->setNotificationUrl( $this->create_notification_url( $order, $this->type ) );
@@ -213,15 +202,13 @@ class WC_Gateway_Wirecard_Sofort extends WC_Wirecard_Payment_Gateway {
 		$custom_fields->add( new CustomField( 'orderId', $order_id ) );
 		$transaction->setCustomFields( $custom_fields );
 
-		if ( $this->get_option( 'descriptor' ) == 'yes' ) {
-			$transaction->setDescriptor( $this->additional_helper->create_descriptor( $order ) );
-		}
+		$transaction->setDescriptor( $this->additional_helper->create_descriptor( $order ) );
 
 		if ( $this->get_option( 'send_additional' ) == 'yes' ) {
 			$this->additional_helper->set_additional_information( $order, $transaction );
 		}
 
-		return $this->execute_transaction( $transaction, $config, $operation, $order, $order_id );
+		return $this->execute_transaction( $transaction, $config, 'pay', $order, $order_id );
 	}
 
 	/**
@@ -233,7 +220,7 @@ class WC_Gateway_Wirecard_Sofort extends WC_Wirecard_Payment_Gateway {
 	 *
 	 * @return bool|SepaTransaction|WP_Error
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 * @throws Exception
 	 */
 	public function process_refund( $order_id, $amount = null, $reason = '' ) {
@@ -247,7 +234,7 @@ class WC_Gateway_Wirecard_Sofort extends WC_Wirecard_Payment_Gateway {
 	 * @param null $base_url
 	 * @param null $http_user
 	 * @param null $http_pass
-	 *
+	 * @since 1.1.0
 	 * @return Config
 	 */
 	public function create_payment_config( $base_url = null, $http_user = null, $http_pass = null ) {
