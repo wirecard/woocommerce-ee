@@ -55,8 +55,7 @@ class Wirecard_Transaction_Factory {
 	 * @access private
 	 * @var string
 	 */
-	private
-		$table_name;
+	private $table_name;
 
 	/**
 	 * Fields for transaction table view
@@ -65,8 +64,7 @@ class Wirecard_Transaction_Factory {
 	 * @access private
 	 * @var array
 	 */
-	private
-		$fields_list;
+	private $fields_list;
 
 	/**
 	 * Handles back-end operations
@@ -75,16 +73,14 @@ class Wirecard_Transaction_Factory {
 	 * @access private
 	 * @var Wirecard_Transaction_Handler
 	 */
-	private
-		$transaction_handler;
+	private $transaction_handler;
 
 	/**
 	 * Wirecard_Transaction_Factory constructor.
 	 *
 	 * @since 1.0.0
 	 */
-	public
-	function __construct() {
+	public function __construct() {
 		global $wpdb;
 
 		$this->transaction_handler = new Wirecard_Transaction_Handler();
@@ -131,10 +127,7 @@ class Wirecard_Transaction_Factory {
 	 *
 	 * @since 1.0.0
 	 */
-	public
-	function create_transaction(
-		$order, $response, $base_url
-	) {
+	public function create_transaction( $order, $response, $base_url ) {
 		global $wpdb;
 
 		$parent_transaction_id = '';
@@ -184,10 +177,7 @@ class Wirecard_Transaction_Factory {
 	 *
 	 * @return int $row_count
 	 */
-	public
-	function get_rows(
-		$page = 1
-	) {
+	public function get_rows( $page = 1 ) {
 		global $wpdb;
 
 		$start = ( $page * 20 ) - 19;
@@ -239,10 +229,7 @@ class Wirecard_Transaction_Factory {
 	 *
 	 * @since 1.0.0
 	 */
-	public
-	function get_transaction(
-		$transaction_id
-	) {
+	public function get_transaction( $transaction_id ) {
 		global $wpdb;
 
 		$transaction = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}wirecard_payment_gateway_tx WHERE transaction_id = %s", $transaction_id ) );
@@ -262,10 +249,7 @@ class Wirecard_Transaction_Factory {
 	 *
 	 * @since 1.0.0
 	 */
-	public
-	function show_transaction(
-		$transaction_id
-	) {
+	public function show_transaction( $transaction_id ) {
 		$transaction = $this->get_transaction( $transaction_id );
 		if ( ! $transaction ) {
 			echo __( 'An error occured. The requested transaction could not be found!', 'woocommerce-gateway-wirecard' );
@@ -348,10 +332,7 @@ class Wirecard_Transaction_Factory {
 	 *
 	 * @since 1.0.0
 	 */
-	public
-	function handle_cancel(
-		$transaction_id
-	) {
+	public function handle_cancel( $transaction_id ) {
 		/** @var stdClass $transaction */
 		$transaction = $this->get_transaction( $transaction_id );
 		if ( ! $transaction ) {
@@ -369,10 +350,7 @@ class Wirecard_Transaction_Factory {
 	 *
 	 * @since 1.0.0
 	 */
-	public
-	function handle_capture(
-		$transaction_id
-	) {
+	public function handle_capture( $transaction_id ) {
 		/** @var stdClass $transaction */
 		$transaction = $this->get_transaction( $transaction_id );
 		if ( ! $transaction ) {
@@ -390,10 +368,7 @@ class Wirecard_Transaction_Factory {
 	 *
 	 * @since 1.0.0
 	 */
-	public
-	function handle_refund(
-		$transaction_id
-	) {
+	public function handle_refund( $transaction_id ) {
 		/** @var stdClass $transaction */
 		$transaction = $this->get_transaction( $transaction_id );
 		if ( ! $transaction ) {
@@ -414,10 +389,7 @@ class Wirecard_Transaction_Factory {
 	 *
 	 * @since 1.0.0
 	 */
-	public
-	function get_transaction_link(
-		$base_url, $response
-	) {
+	public function get_transaction_link( $base_url, $response ) {
 		$transaction_id = $response->getTransactionId();
 		$output         = sprintf(
 			'%s <a target="_blank" href="' . $base_url . '/engine/rest/merchants/%s/payments/%s">%s</a>',
