@@ -38,7 +38,6 @@ use Wirecard\PaymentSdk\Entity\CustomField;
 use Wirecard\PaymentSdk\Entity\CustomFieldCollection;
 use Wirecard\PaymentSdk\Entity\Redirect;
 use Wirecard\PaymentSdk\Transaction\AlipayCrossborderTransaction;
-use Wirecard\PaymentSdk\TransactionService;
 
 const PAYMENT_ACTION = 'pay';
 
@@ -88,7 +87,7 @@ class WC_Gateway_Wirecard_Alipay_Crossborder extends WC_Wirecard_Payment_Gateway
 			'refunds',
 		);
 
-		$this->refund  = array( 'debit' );
+		$this->refund = array( 'debit' );
 
 		$this->init_form_fields();
 		$this->init_settings();
@@ -110,63 +109,63 @@ class WC_Gateway_Wirecard_Alipay_Crossborder extends WC_Wirecard_Payment_Gateway
 	 */
 	public function init_form_fields() {
 		$this->form_fields = array(
-			'enabled'                     => array(
+			'enabled'             => array(
 				'title'   => __( 'Enable/Disable', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'checkbox',
 				'label'   => __( 'Enable Wirecard Alipay Crossborder', 'woocommerce-gateway-wirecard' ),
 				'default' => 'yes',
 			),
-			'title'                       => array(
+			'title'               => array(
 				'title'       => __( 'Title', 'woocommerce-gateway-wirecard' ),
 				'type'        => 'text',
 				'description' => __( 'This controls the title which the user sees during checkout.', 'woocommerce-gateway-wirecard' ),
 				'default'     => __( 'Wirecard Alipay Crossborder', 'woocommerce-gateway-wirecard' ),
 				'desc_tip'    => true,
 			),
-			'merchant_account_id'         => array(
+			'merchant_account_id' => array(
 				'title'   => __( 'Merchant Account ID', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'text',
 				'default' => '7ca48aa0-ab12-4560-ab4a-af1c477cce43',
 			),
-			'secret'                      => array(
+			'secret'              => array(
 				'title'   => __( 'Secret Key', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'text',
 				'default' => 'dbc5a498-9a66-43b9-bf1d-a618dd399684',
 			),
-			'credentials'                 => array(
+			'credentials'         => array(
 				'title'       => __( 'Credentials', 'woocommerce-gateway-wirecard' ),
 				'type'        => 'title',
 				'description' => __( 'Enter your Wirecard credentials.', 'woocommerce-gateway-wirecard' ),
 			),
-			'base_url'                    => array(
+			'base_url'            => array(
 				'title'       => __( 'Base URL', 'woocommerce-gateway-wirecard' ),
 				'type'        => 'text',
 				'description' => __( 'The Wirecard base URL. (e.g. https://api.wirecard.com)' ),
 				'default'     => 'https://api-test.wirecard.com',
 				'desc_tip'    => true,
 			),
-			'http_user'                   => array(
+			'http_user'           => array(
 				'title'   => __( 'HTTP User', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'text',
 				'default' => '70000-APITEST-AP',
 			),
-			'http_pass'                   => array(
+			'http_pass'           => array(
 				'title'   => __( 'HTTP Password', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'text',
 				'default' => 'qD2wzQ_hrc!8',
 			),
-			'advanced'                    => array(
+			'advanced'            => array(
 				'title'       => __( 'Advanced Options', 'woocommerce-gateway-wirecard' ),
 				'type'        => 'title',
 				'description' => '',
 			),
-			'descriptor'                  => array(
+			'descriptor'          => array(
 				'title'   => __( 'Enable/Disable', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'checkbox',
 				'label'   => __( 'Descriptor', 'woocommerce-gateway-wirecard' ),
 				'default' => 'no',
 			),
-			'send_additional'             => array(
+			'send_additional'     => array(
 				'title'   => __( 'Enable/Disable', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'checkbox',
 				'label'   => __( 'Send additional information', 'woocommerce-gateway-wirecard' ),
