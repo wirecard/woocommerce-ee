@@ -47,7 +47,7 @@ class Wirecard_Handler {
 	/**
 	 * Array of payment methods
 	 *
-	 * @since 1.0.0
+	 * @since  1.0.0
 	 * @access private
 	 * @var array
 	 */
@@ -56,7 +56,7 @@ class Wirecard_Handler {
 	/**
 	 * Logger
 	 *
-	 * @since 1.0.0
+	 * @since  1.0.0
 	 * @access protected
 	 * @var Logger
 	 */
@@ -69,9 +69,10 @@ class Wirecard_Handler {
 	 */
 	public function __construct() {
 		$this->payment_methods = array(
-			'paypal'     => new WC_Gateway_Wirecard_Paypal(),
-			'creditcard' => new WC_Gateway_Wirecard_Creditcard(),
-			'sepa'       => new WC_Gateway_Wirecard_Sepa(),
+			'paypal'       => new WC_Gateway_Wirecard_Paypal(),
+			'creditcard'   => new WC_Gateway_Wirecard_Creditcard(),
+			'sepa'         => new WC_Gateway_Wirecard_Sepa(),
+			'wiretransfer' => new WC_Gateway_Wirecard_Poipia(),
 		);
 		$this->logger          = new Logger();
 	}
@@ -86,6 +87,6 @@ class Wirecard_Handler {
 	 * @since 1.0.0
 	 */
 	public function get_payment_method( $method_name ) {
-		return isset( $this->payment_methods[ $method_name ] ) ? $this->payment_methods[ $method_name ] : null;
+		return isset( $this->payment_methods[$method_name] ) ? $this->payment_methods[$method_name] : null;
 	}
 }

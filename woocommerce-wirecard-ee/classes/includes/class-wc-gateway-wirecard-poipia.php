@@ -29,15 +29,20 @@
  * Please do not use the plugin if you do not agree to these terms of use!
  */
 
-require_once __DIR__ . '/class-wc-wirecard-payment-gateway.php';
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/includes/class-wc-wirecard-payment-gateway.php' );
+require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/helper/class-additional-information.php' );
 
 use Wirecard\PaymentSdk\Config\Config;
+use Wirecard\PaymentSdk\Config\PaymentMethodConfig;
 use Wirecard\PaymentSdk\Entity\Amount;
 use Wirecard\PaymentSdk\Entity\CustomField;
 use Wirecard\PaymentSdk\Entity\CustomFieldCollection;
 use Wirecard\PaymentSdk\Entity\Redirect;
 use Wirecard\PaymentSdk\Transaction\PoiPiaTransaction;
-use Wirecard\PaymentSdk\TransactionService;
 
 /**
  * Class WC_Gateway_Wirecard_Poipia
@@ -238,7 +243,6 @@ class WC_Gateway_Wirecard_Poipia extends WC_Wirecard_Payment_Gateway {
 			$http_user = $this->get_option( 'http_user' );
 			$http_pass = $this->get_option( 'http_pass' );
 		}
-
 		$config         = parent::create_payment_config( $base_url, $http_user, $http_pass );
 		$payment_config = new PaymentMethodConfig( PoiPiaTransaction::NAME, $this->get_option( 'merchant_account_id' ), $this->get_option( 'secret' ) );
 		$config->add( $payment_config );
