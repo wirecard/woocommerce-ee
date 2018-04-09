@@ -176,7 +176,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 			$response = $notification_handler->handle_notification( $payment_method, $notification );
 			if ( $response ) {
 				$this->save_response_data( $order, $response );
-				$this->update_payment_transaction( $order, $response );
+				$this->update_payment_transaction( $order, $response, 'success' );
 				$order = $this->update_order_state( $order, $response->getTransactionType() );
 			}
 		} catch ( Exception $exception ) {
@@ -315,7 +315,9 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 		$logger              = new Logger();
 		$transaction_service = new TransactionService( $config, $logger );
 		try {
-			if ( $transaction instanceof \Wirecard\PaymentSdk\Transaction\CreditCardTransaction ) {
+			if ( $transaction instanceof \Wirecard\PaymentSdk\Transaction\SepaTransaction ) {
+				$response = $transaction_service->process( $transaction, 'credit' );
+			} elseif ( $transaction instanceof \Wirecard\PaymentSdk\Transaction\CreditCardTransaction ) {
 				/** @var $response Response */
 				$response = $transaction_service->process( $transaction, 'refund' );
 			} else {
@@ -328,7 +330,9 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 			return new WP_Error( 'error', __( 'Processing refund failed.', 'woocommerce-gateway-wirecard' ) );
 		}
 		if ( $response instanceof SuccessResponse ) {
+			$this->update_payment_transaction( $order, $response, 'awaiting' );
 			$order->set_transaction_id( $response->getTransactionId() );
+			$order = $this->update_order_state( $order, $response->getTransactionType() );
 
 			return '/admin.php?page=wirecardpayment&id=' . $response->getTransactionId();
 		}
@@ -379,14 +383,15 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 *
 	 * @param WC_Order        $order
 	 * @param SuccessResponse $response
+	 * @param string          $transaction_state
 	 *
 	 * @since 1.0.0
 	 */
-	public function update_payment_transaction( $order, $response ) {
+	public function update_payment_transaction( $order, $response, $transaction_state ) {
 		$order->set_transaction_id( $response->getTransactionId() );
 		//create table entry
 		$transaction_factory = new Wirecard_Transaction_Factory();
-		$result              = $transaction_factory->create_transaction( $order, $response, $this->get_option( 'base_url' ) );
+		$result              = $transaction_factory->create_transaction( $order, $response, $this->get_option( 'base_url' ), $transaction_state );
 		if ( ! $result ) {
 			$logger = new WC_Logger();
 			$logger->debug( __METHOD__ . 'Transaction could not be saved in transaction table' );
@@ -416,6 +421,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 			case 'refund-capture':
 			case 'refund-debit':
 			case 'refund-purchase':
+			case 'credit':
 				$state = 'refunded';
 				break;
 			case 'authorization':

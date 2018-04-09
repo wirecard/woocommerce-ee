@@ -27,7 +27,7 @@ $( document ).ready( function() {
 			} else {
 				window.sepaplaceorderchecked = true;
 			}
-			if ( !sepa_check ) {
+			if ( ! sepa_check ) {
 				if (validate_inputs() === false) {
 					return false;
 				}
