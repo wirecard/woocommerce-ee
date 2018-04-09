@@ -321,7 +321,7 @@ class Wirecard_Transaction_Factory {
 									if ( $transaction->closed ) {
 										echo "<p class='add-items'>" . __( 'No Back-end operations available for this transaction', 'woocommerce-gateway-wirecard' ) . '</p>';
 									}
-                                    if ( 'awaiting' == $transaction->transaction_state ) {
+									if ( 'awaiting' == $transaction->transaction_state ) {
 										echo "<p class='add-items'>"
 											. __( 'No Back-end operations available for this transaction, the transaction is not confirmed yet.', 'woocommerce-gateway-wirecard' ) . '</p>';
 									}
