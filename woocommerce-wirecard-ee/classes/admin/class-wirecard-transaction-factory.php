@@ -138,7 +138,7 @@ class Wirecard_Transaction_Factory {
 			$transaction_state = 'success';
 		} else {
 			$transaction_state = 'awaiting';
-        }
+		}
 
 		if ( $parent_transaction ) {
 			$parent_transaction_id = $response->getParentTransactionId();
@@ -162,19 +162,19 @@ class Wirecard_Transaction_Factory {
 			$wpdb->update(
 				$this->table_name,
 				array(
-				'transaction_id'        => $response->getTransactionId(),
-				'parent_transaction_id' => $parent_transaction_id,
-				'payment_method'        => $response->getPaymentMethod(),
-				'transaction_state'     => $transaction_state,
-				'transaction_type'      => $response->getTransactionType(),
-				'amount'                => $order->get_total(),
-				'currency'              => $order->get_currency(),
-				'order_id'              => $order->get_id(),
-				'response'              => wp_json_encode( $response->getData() ),
-				'transaction_link'      => $transaction_link,
+					'transaction_id'        => $response->getTransactionId(),
+					'parent_transaction_id' => $parent_transaction_id,
+					'payment_method'        => $response->getPaymentMethod(),
+					'transaction_state'     => $transaction_state,
+					'transaction_type'      => $response->getTransactionType(),
+					'amount'                => $order->get_total(),
+					'currency'              => $order->get_currency(),
+					'order_id'              => $order->get_id(),
+					'response'              => wp_json_encode( $response->getData() ),
+					'transaction_link'      => $transaction_link,
 				),
 				array(
-				'transaction_id' => $response->getTransactionId()
+					'transaction_id' => $response->getTransactionId(),
 				)
 			);
 			return;
@@ -309,22 +309,22 @@ class Wirecard_Transaction_Factory {
 								<br>
 								<div class="wc-order-data-row">
 									<?php
-									if ( $payment->can_cancel( $transaction->transaction_type ) && ! $transaction->closed && $transaction->transaction_state != 'awaiting' ) {
+									if ( $payment->can_cancel( $transaction->transaction_type ) && ! $transaction->closed && 'awaiting' != $transaction->transaction_state ) {
 										echo "<a href='?page=cancelpayment&id={$transaction_id}' class='button'>" . __( 'Cancel transaction', 'woocommerce-gateway-wirecard' ) . '</a> ';
 									}
-									if ( $payment->can_capture( $transaction->transaction_type ) && ! $transaction->closed && $transaction->transaction_state != 'awaiting' ) {
+									if ( $payment->can_capture( $transaction->transaction_type ) && ! $transaction->closed && 'awaiting' != $transaction->transaction_state ) {
 										echo "<a href='?page=capturepayment&id={$transaction_id}' class='button'>" . __( 'Capture transaction', 'woocommerce-gateway-wirecard' ) . '</a> ';
 									}
-									if ( $payment->can_refund( $transaction->transaction_type ) && ! $transaction->closed && $transaction->transaction_state != 'awaiting' ) {
+									if ( $payment->can_refund( $transaction->transaction_type ) && ! $transaction->closed && 'awaiting' != $transaction->transaction_state ) {
 										echo "<a href='?page=refundpayment&id={$transaction_id}' class='button'>" . __( 'Refund transaction', 'woocommerce-gateway-wirecard' ) . '</a> ';
 									}
 									if ( $transaction->closed ) {
 										echo "<p class='add-items'>" . __( 'No Back-end operations available for this transaction', 'woocommerce-gateway-wirecard' ) . '</p>';
 									}
-                                    if ( $transaction->transaction_state == 'awaiting' ) {
+                                    if ( 'awaiting' == $transaction->transaction_state ) {
 										echo "<p class='add-items'>"
 											. __( 'No Back-end operations available for this transaction, the transaction is not confirmed yet.', 'woocommerce-gateway-wirecard' ) . '</p>';
-										}
+									}
 									?>
 									<p class="add-items">
 										<a href="?page=wirecardpayment" class="button"><?php echo __( 'Wirecard Payment Gateway', 'woocommerce-gateway-wirecard' ); ?></a> <!---->
