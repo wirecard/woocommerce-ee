@@ -71,6 +71,15 @@ class Wirecard_Response_Handler extends Wirecard_Handler {
 			/** @var Response $result */
 			$result = $transaction_service->handleResponse( $request );
 			if ( $result instanceof SuccessResponse ) {
+				if ( 'wiretransfer' == $result->getPaymentMethod() ) {
+					$response_data = $result->getData();
+					$data = array(
+						'pia-iban' => $response_data['merchant-bank-account.0.iban'],
+						'pia-bic' => $response_data['merchant-bank-account.0.bic'],
+						'pia-reference-id' => $response_data['provider-transaction-reference-id']
+					);
+					return $data;
+				}
 				return true;
 			}
 		} catch ( \InvalidArgumentException $exception ) {
