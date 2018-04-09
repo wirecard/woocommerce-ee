@@ -116,18 +116,18 @@ class Wirecard_Transaction_Factory {
 		);
 	}
 
-    /**
-    * Create new transaction entry in database
-    *
-    * @param WC_Order        $order
-    * @param SuccessResponse $response
-    * @param string          $base_url
-    * @param string          $from
-    *
-    * @return int
-    *
-    * @since 1.0.0
-    */
+	/**
+	* Create new transaction entry in database
+	*
+	* @param WC_Order        $order
+	* @param SuccessResponse $response
+	* @param string          $base_url
+	* @param string          $from
+	*
+	* @return int
+	*
+	* @since 1.0.0
+	*/
 	public function create_transaction( $order, $response, $base_url, $from ) {
 		global $wpdb;
 
@@ -159,26 +159,26 @@ class Wirecard_Transaction_Factory {
 
 		//Update the transaction
 		if ( $transaction ) {
-            $wpdb->update(
-              $this->table_name,
-	            array(
-		            'transaction_id'        => $response->getTransactionId(),
-		            'parent_transaction_id' => $parent_transaction_id,
-		            'payment_method'        => $response->getPaymentMethod(),
-		            'transaction_state'     => $transaction_state,
-		            'transaction_type'      => $response->getTransactionType(),
-		            'amount'                => $order->get_total(),
-		            'currency'              => $order->get_currency(),
-		            'order_id'              => $order->get_id(),
-		            'response'              => wp_json_encode( $response->getData() ),
-		            'transaction_link'      => $transaction_link,
-	            ),
-              array(
-	              'transaction_id' => $response->getTransactionId()
-              )
-            );
-            return;
-        }
+			$wpdb->update(
+				$this->table_name,
+				array(
+				'transaction_id'        => $response->getTransactionId(),
+				'parent_transaction_id' => $parent_transaction_id,
+				'payment_method'        => $response->getPaymentMethod(),
+				'transaction_state'     => $transaction_state,
+				'transaction_type'      => $response->getTransactionType(),
+				'amount'                => $order->get_total(),
+				'currency'              => $order->get_currency(),
+				'order_id'              => $order->get_id(),
+				'response'              => wp_json_encode( $response->getData() ),
+				'transaction_link'      => $transaction_link,
+				),
+				array(
+				'transaction_id' => $response->getTransactionId()
+				)
+			);
+			return;
+		}
 
 		$wpdb->insert(
 			$this->table_name,
@@ -323,8 +323,8 @@ class Wirecard_Transaction_Factory {
 									}
                                     if ( $transaction->transaction_state == 'awaiting' ) {
 										echo "<p class='add-items'>"
-                                            . __( 'No Back-end operations available for this transaction, the transaction is not confirmed yet.', 'woocommerce-gateway-wirecard' ) . '</p>';
-                                    }
+											. __( 'No Back-end operations available for this transaction, the transaction is not confirmed yet.', 'woocommerce-gateway-wirecard' ) . '</p>';
+										}
 									?>
 									<p class="add-items">
 										<a href="?page=wirecardpayment" class="button"><?php echo __( 'Wirecard Payment Gateway', 'woocommerce-gateway-wirecard' ); ?></a> <!---->
