@@ -47,8 +47,6 @@ use Wirecard\PaymentSdk\Transaction\IdealTransaction;
 use Wirecard\PaymentSdk\Transaction\SepaTransaction;
 use Wirecard\PaymentSdk\Entity\IdealBic;
 
-const PAYMENT_ACTION = 'pay';
-
 /**
  * Class WC_Gateway_Wirecard_Ideal
  *
@@ -58,6 +56,13 @@ const PAYMENT_ACTION = 'pay';
  */
 class WC_Gateway_Wirecard_Ideal extends WC_Wirecard_Payment_Gateway {
 
+	/**
+	 * Payment action
+	 *
+	 * @since 1.1.0
+	 * @var string
+	 */
+	const PAYMENT_ACTION = 'pay';
 	/**
 	 * Payment type
 	 *
@@ -236,7 +241,7 @@ class WC_Gateway_Wirecard_Ideal extends WC_Wirecard_Payment_Gateway {
 			$this->additional_helper->set_additional_information( $order, $transaction );
 		}
 
-		return $this->execute_transaction( $transaction, $config, PAYMENT_ACTION, $order, $order_id );
+		return $this->execute_transaction( $transaction, $config, self::PAYMENT_ACTION, $order, $order_id );
 	}
 
 	/**
