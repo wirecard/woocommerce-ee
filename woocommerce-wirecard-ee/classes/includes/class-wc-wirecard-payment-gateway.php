@@ -597,13 +597,13 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 		if ( ! $this->can_refund_order( $order ) ) {
 			return new WP_Error( 'error', __( 'No online refund possible at this time.', 'woocommerce-gateway-wirecard' ) );
 		}
-		$config = $this->create_payment_config();
+		$this->config = $this->create_payment_config();
 		$this->transaction->setParentTransactionId( $order->get_transaction_id() );
 		if ( ! is_null( $amount ) ) {
 			$this->transaction->setAmount( new Amount( $amount, $order->get_currency() ) );
 		}
 
-		return $this->execute_refund( $this->transaction, $config, $order, $this->refund_action );
+		return $this->execute_refund( $this->transaction, $this->config, $order, $this->refund_action );
 	}
 
 	/**

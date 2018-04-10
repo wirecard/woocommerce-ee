@@ -305,26 +305,26 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 	 * @since 1.1.0
 	 */
 	public function process_refund( $order_id, $amount = null, $reason = '' ) {
-		parent::process_refund( $order_id, $amount, '' );
 		/** @var WC_Order $order */
 		$order = wc_get_order( $order_id );
 
 		$basket      = new \Wirecard\PaymentSdk\Entity\Basket();
-		$transaction = new RatepayInvoiceTransaction();
+		$this->transaction = new RatepayInvoiceTransaction();
+		parent::process_refund( $order_id, $amount, '' );
 
-		$transaction->setParentTransactionId( $order->get_transaction_id() );
-		$transaction->setAmount( new Amount( $amount, $order->get_currency() ) );
+		$this->transaction->setParentTransactionId( $order->get_transaction_id() );
+		$this->transaction->setAmount( new Amount( $amount, $order->get_currency() ) );
 
 		$basket = $this->additional_helper->create_basket_from_order(
 			$order->get_items(),
 			$basket,
-			$transaction,
+			$this->transaction,
 			$order->get_shipping_total(),
 			$order->get_shipping_tax()
 		);
-		$transaction->setBasket( $basket );
+		$this->transaction->setBasket( $basket );
 		$config = $this->create_payment_config();
-		return $this->execute_refund( $transaction, $config, $order );
+		return $this->execute_refund( $this->transaction, $config, $order );
 	}
 
 	/**
