@@ -38,7 +38,7 @@ require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/handler/class-wire
 require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/handler/class-wirecard-callback.php' );
 require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/admin/class-wirecard-transaction-factory.php' );
 require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/helper/class-logger.php' );
-
+require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/helper/class-additional-information.php' );
 
 use Wirecard\PaymentSdk\Config\Config;
 use Wirecard\PaymentSdk\Entity\Amount;
@@ -123,6 +123,15 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 * @var string
 	 */
 	protected $refund_action;
+
+	/**
+	 * Additional helper for basket and risk management
+	 *
+	 * @since  1.1.0
+	 * @access private
+	 * @var Additional_Information
+	 */
+	private $additional_helper;
 
 	/**
 	 * Add global wirecard payment gateway actions
@@ -536,8 +545,9 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 * @since 1.1.0
 	 */
 	public function process_payment( $order_id ) {
-		$order         = wc_get_order( $order_id );
-		$redirect_urls = new Redirect(
+		$this->additional_helper = new Additional_Information();
+		$order                   = wc_get_order( $order_id );
+		$redirect_urls           = new Redirect(
 			$this->create_redirect_url( $order, 'success', $this->type ),
 			$this->create_redirect_url( $order, 'cancel', $this->type ),
 			$this->create_redirect_url( $order, 'failure', $this->type )
@@ -559,7 +569,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 		}
 
 		if ( $this->get_option( 'send_additional' ) == 'yes' ) {
-			$this->additional_helper->set_additional_information( $order, $this->transaction );
+			$this->transaction = $this->additional_helper->set_additional_information( $order, $this->transaction );
 		}
 
 		return $this->execute_transaction( $this->transaction, $config, $this->payment_action, $order );
