@@ -96,7 +96,7 @@ function init_wirecard_payment_gateway() {
  */
 function add_wirecard_payment_gateway( $methods ) {
 	foreach ( get_payments() as $key => $payment_method ) {
-		if ( $payment_method->is_availible() ) {
+		if ( $payment_method->is_available() ) {
 			$methods[] = $key;
 		}
 	}

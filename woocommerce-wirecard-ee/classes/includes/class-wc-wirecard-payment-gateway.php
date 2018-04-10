@@ -518,7 +518,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	/**
 	 * Return true if the payment method is availeible
 	 */
-	public function is_availible() {
+	public function is_available() {
 		return true;
 	}
 }

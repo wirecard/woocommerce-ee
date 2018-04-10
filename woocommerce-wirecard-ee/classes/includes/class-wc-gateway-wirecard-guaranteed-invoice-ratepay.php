@@ -73,7 +73,7 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 	private $additional_helper;
 
 	/**
-	 * WC_Gateway_Wirecard_Paypal constructor.
+	 * WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay constructor.
 	 *
 	 * @since 1.1.0
 	 */
@@ -211,10 +211,6 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 				'title'   => __( 'Maximum Amount', 'woocommerce-gateway-wirecard' ),
 				'default' => 3500,
 			),
-			'shopping_basket'       => array(
-				'type'    => 'hidden',
-				'default' => 'yes',
-			),
 			'descriptor'            => array(
 				'title'   => __( 'Enable/Disable', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'checkbox',
@@ -297,7 +293,7 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 	 *
 	 * @return RatepayInvoiceTransaction
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 */
 	public function process_cancel( $order_id, $amount = null ) {
 		$order = wc_get_order( $order_id );
@@ -319,7 +315,7 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 	 *
 	 * @return RatepayInvoiceTransaction
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 */
 	public function process_capture( $order_id, $amount = null ) {
 		/** @var WC_Order $order */
@@ -352,7 +348,7 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 	 *
 	 * @return bool|RatepayInvoiceTransaction|WP_Error
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 */
 	public function process_refund( $order_id, $amount = null, $reason = '' ) {
 		parent::process_refund( $order_id, $amount, '' );
@@ -402,12 +398,12 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 	}
 
 	/**
-	 * Check if all cretireiars are fullfiled
+	 * Check if all criteria are fulfilled
 	 *
 	 * @return bool
 	 * @since 1.1.0
 	 */
-	public function is_availible() {
+	public function is_available() {
 		if ( is_checkout() ) {
 			global $woocommerce;
 			$customer = $woocommerce->customer;
@@ -446,7 +442,7 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 	/**
 	 * Validate date of birth
 	 *
-	 * @param $date
+	 * @param string $date
 	 * @return bool
 	 */
 	public function validate_date_of_birth( $date ) {
@@ -463,7 +459,7 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 	/**
 	 * Check the cart for digital items
 	 *
-	 * @param $cart
+	 * @param WC_Cart $cart
 	 * @return bool
 	 * @since 1.1.0
 	 */
@@ -550,7 +546,7 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 	}
 
 	/**
-	 * Create ratepay script
+	 * Create RatePay script
 	 *
 	 * @return string
 	 * @since 1.1.0
