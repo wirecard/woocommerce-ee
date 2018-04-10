@@ -122,17 +122,17 @@ class Wirecard_Transaction_Factory {
 	 * @param WC_Order        $order
 	 * @param SuccessResponse $response
 	 * @param string          $base_url
+	 * @param string          $transaction_state
 	 *
 	 * @return int
 	 *
 	 * @since 1.0.0
 	 */
-	public function create_transaction( $order, $response, $base_url ) {
+	public function create_transaction( $order, $response, $base_url, $transaction_state) {
 		global $wpdb;
 
 		$parent_transaction_id = '';
 		$parent_transaction    = $this->get_transaction( $response->getParentTransactionId() );
-		$transaction_state     = 'success';
 
 		if ( $parent_transaction ) {
 			$parent_transaction_id = $response->getParentTransactionId();
@@ -149,21 +149,24 @@ class Wirecard_Transaction_Factory {
 			);
 		}
 		$transaction_link = $this->get_transaction_link( $base_url, $response );
-		$wpdb->insert(
-			$this->table_name,
-			array(
-				'transaction_id'        => $response->getTransactionId(),
-				'parent_transaction_id' => $parent_transaction_id,
-				'payment_method'        => $response->getPaymentMethod(),
-				'transaction_state'     => $transaction_state,
-				'transaction_type'      => $response->getTransactionType(),
-				'amount'                => $order->get_total(),
-				'currency'              => $order->get_currency(),
-				'order_id'              => $order->get_id(),
-				'response'              => wp_json_encode( $response->getData() ),
-				'transaction_link'      => $transaction_link,
-			)
-		);
+		$transaction      = $this->get_transaction( $response->getTransactionId() );
+
+		if ( $transaction ) {
+			$wpdb->update(
+				$this->table_name,
+				$this->set_transaction_parameters( $response, $parent_transaction_id, $transaction_state, $order,
+				$transaction_link),
+				array(
+					'transaction_id' => $response->getTransactionId(),
+				)
+			);
+		} else {
+			$wpdb->insert(
+				$this->table_name,
+				$this->set_transaction_parameters($response, $parent_transaction_id, $transaction_state, $order,
+				$transaction_link)
+			);
+		}
 
 		return $wpdb->insert_id;
 	}
@@ -278,17 +281,21 @@ class Wirecard_Transaction_Factory {
 								<br>
 								<div class="wc-order-data-row">
 									<?php
-									if ( $payment->can_cancel( $transaction->transaction_type ) && ! $transaction->closed ) {
+									if ( $payment->can_cancel( $transaction->transaction_type ) && ! $transaction->closed && 'awaiting' != $transaction->transaction_state ) {
 										echo "<a href='?page=cancelpayment&id={$transaction_id}' class='button'>" . __( 'Cancel transaction', 'woocommerce-gateway-wirecard' ) . '</a> ';
 									}
-									if ( $payment->can_capture( $transaction->transaction_type ) && ! $transaction->closed ) {
+									if ( $payment->can_capture( $transaction->transaction_type ) && ! $transaction->closed && 'awaiting' != $transaction->transaction_state ) {
 										echo "<a href='?page=capturepayment&id={$transaction_id}' class='button'>" . __( 'Capture transaction', 'woocommerce-gateway-wirecard' ) . '</a> ';
 									}
-									if ( $payment->can_refund( $transaction->transaction_type ) && ! $transaction->closed ) {
+									if ( $payment->can_refund( $transaction->transaction_type ) && ! $transaction->closed && 'awaiting' != $transaction->transaction_state ) {
 										echo "<a href='?page=refundpayment&id={$transaction_id}' class='button'>" . __( 'Refund transaction', 'woocommerce-gateway-wirecard' ) . '</a> ';
 									}
 									if ( $transaction->closed ) {
 										echo "<p class='add-items'>" . __( 'No Back-end operations available for this transaction', 'woocommerce-gateway-wirecard' ) . '</p>';
+									}
+									if ( 'awaiting' == $transaction->transaction_state ) {
+										echo "<p class='add-items'>"
+											. __( 'No Back-end operations available for this transaction, the transaction is not confirmed yet.', 'woocommerce-gateway-wirecard' ) . '</p>';
 									}
 									?>
 									<p class="add-items">
@@ -400,5 +407,38 @@ class Wirecard_Transaction_Factory {
 		);
 
 		return $output;
+	}
+
+	/**
+	 * Set parameters for the transaction
+	 *
+	 * @param SuccessResponse $response
+	 * @param string          $parent_transaction_id
+	 * @param string          $transaction_state
+	 * @param WC_Order        $order
+	 * @param string          $transaction_link
+	 * @return array
+	 *
+	 * @since 1.1.0
+	 */
+	private function set_transaction_parameters(
+		$response,
+		$parent_transaction_id,
+		$transaction_state,
+		$order,
+		$transaction_link
+	) {
+		return array(
+			'transaction_id'        => $response->getTransactionId(),
+			'parent_transaction_id' => $parent_transaction_id,
+			'payment_method'        => $response->getPaymentMethod(),
+			'transaction_state'     => $transaction_state,
+			'transaction_type'      => $response->getTransactionType(),
+			'amount'                => $order->get_total(),
+			'currency'              => $order->get_currency(),
+			'order_id'              => $order->get_id(),
+			'response'              => wp_json_encode( $response->getData() ),
+			'transaction_link'      => $transaction_link,
+		);
 	}
 }
