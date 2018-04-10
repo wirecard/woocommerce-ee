@@ -199,16 +199,16 @@ function wirecard_gateway_options_page() {
 		array( $admin, 'refund_transaction' )
 	);
 
-/**
- * Add the support chat script
- *
- * @since 1.1.0
- */
-function add_support_chat() {
-	echo '<script
-            type="text/javascript" 
-			id="936f87cd4ce16e1e60bea40b45b0596a"
-		    src="http://www.provusgroup.com/livezilla/script.php?id=936f87cd4ce16e1e60bea40b45b0596a">
-    </script>';
-}
+	 /**
+	 * Add the support chat script
+	 *
+	 * @since 1.1.0
+	 */
+	function add_support_chat() {
+		echo '<script
+                type="text/javascript" 
+				id="936f87cd4ce16e1e60bea40b45b0596a"
+			    src="http://www.provusgroup.com/livezilla/script.php?id=936f87cd4ce16e1e60bea40b45b0596a">
+        </script>';
+	}
 }
