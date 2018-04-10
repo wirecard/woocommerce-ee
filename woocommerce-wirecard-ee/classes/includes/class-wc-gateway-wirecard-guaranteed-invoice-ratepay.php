@@ -179,12 +179,14 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 				'select_buttons' => true,
 			),
 			'min_amount'            => array(
-				'title'   => __( 'Minimum Amount', 'woocommerce-gateway-wirecard' ),
-				'default' => 20,
+				'title'       => __( 'Minimum Amount', 'woocommerce-gateway-wirecard' ),
+				'description' => __( 'Amount in default shop currency', 'woocommerce-gateway-wirecard' ),
+				'default'     => 20,
 			),
 			'max_amount'            => array(
-				'title'   => __( 'Maximum Amount', 'woocommerce-gateway-wirecard' ),
-				'default' => 3500,
+				'title'       => __( 'Maximum Amount', 'woocommerce-gateway-wirecard' ),
+				'description' => __( 'Amount in default shop currency', 'woocommerce-gateway-wirecard' ),
+				'default'     => 3500,
 			),
 			'descriptor'            => array(
 				'title'   => __( 'Enable/Disable', 'woocommerce-gateway-wirecard' ),
