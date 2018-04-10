@@ -57,6 +57,8 @@ use Wirecard\PaymentSdk\TransactionService;
  */
 abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 
+	const PAYMENT_ACTION = 'reserve';
+
 	/**
 	 * Parent transaction types which support cancel operation
 	 *
@@ -83,6 +85,24 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 * @var array
 	 */
 	protected $capture = array( 'authorization' );
+
+	/**
+	 * Payment method type
+	 *
+	 * @since 1.1.0
+	 * @access protected
+	 * @var string
+	 */
+	protected $type;
+
+	/**
+	 * Specific transaction per payment method
+	 *
+	 * @since 1.1.0
+	 * @access protected
+	 * @var Wirecard\PaymentSdk\Transaction\Transaction
+	 */
+	protected $transaction;
 
 	/**
 	 * Add global wirecard payment gateway actions
@@ -486,6 +506,46 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 */
 	public function can_refund_order( $order ) {
 		return $order && $order->is_paid();
+	}
+
+	/**
+	 * Process payment gateway transactions
+	 *
+	 * @param int $order_id
+	 *
+	 * @return array
+	 *
+	 * @since 1.1.0
+	 */
+	public function process_payment( $order_id ) {
+		$order = wc_get_order( $order_id );
+
+		$redirect_urls = new Redirect(
+			$this->create_redirect_url( $order, 'success', $this->type ),
+			$this->create_redirect_url( $order, 'cancel', $this->type ),
+			$this->create_redirect_url( $order, 'failure', $this->type )
+		);
+
+		$config = $this->create_payment_config();
+		$amount = new Amount( $order->get_total(), 'EUR' );
+
+		$this->transaction->setNotificationUrl( $this->create_notification_url( $order, $this->type ) );
+		$this->transaction->setRedirect( $redirect_urls );
+		$this->transaction->setAmount( $amount );
+
+		$custom_fields = new CustomFieldCollection();
+		$custom_fields->add( new CustomField( 'orderId', $order_id ) );
+		$this->transaction->setCustomFields( $custom_fields );
+
+		if ( $this->get_option( 'descriptor' ) == 'yes' ) {
+			$this->transaction->setDescriptor( $this->additional_helper->create_descriptor( $order ) );
+		}
+
+		if ( $this->get_option( 'send_additional' ) == 'yes' ) {
+			$this->additional_helper->set_additional_information( $order, $this->transaction );
+		}
+
+		return $this->execute_transaction( $this->transaction, $config, self::PAYMENT_ACTION, $order );
 	}
 
 	/**
