@@ -82,9 +82,9 @@ class WC_Gateway_Wirecard_Sofort extends WC_Wirecard_Payment_Gateway {
 			'refunds',
 		);
 
-		$this->refund = array( 'debit' );
+		$this->refund         = array( 'debit' );
 		$this->payment_action = 'pay';
-		$this->refund_action = 'credit';
+		$this->refund_action  = 'credit';
 
 		$this->init_form_fields();
 		$this->init_settings();

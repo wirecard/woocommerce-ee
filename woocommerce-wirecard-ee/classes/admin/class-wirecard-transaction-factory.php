@@ -128,7 +128,7 @@ class Wirecard_Transaction_Factory {
 	 *
 	 * @since 1.0.0
 	 */
-	public function create_transaction( $order, $response, $base_url, $transaction_state) {
+	public function create_transaction( $order, $response, $base_url, $transaction_state ) {
 		global $wpdb;
 
 		$parent_transaction_id = '';
@@ -154,8 +154,10 @@ class Wirecard_Transaction_Factory {
 		if ( $transaction ) {
 			$wpdb->update(
 				$this->table_name,
-				$this->set_transaction_parameters( $response, $parent_transaction_id, $transaction_state, $order,
-				$transaction_link),
+				$this->set_transaction_parameters(
+					$response, $parent_transaction_id, $transaction_state, $order,
+					$transaction_link
+				),
 				array(
 					'transaction_id' => $response->getTransactionId(),
 				)
@@ -163,8 +165,10 @@ class Wirecard_Transaction_Factory {
 		} else {
 			$wpdb->insert(
 				$this->table_name,
-				$this->set_transaction_parameters($response, $parent_transaction_id, $transaction_state, $order,
-				$transaction_link)
+				$this->set_transaction_parameters(
+					$response, $parent_transaction_id, $transaction_state, $order,
+					$transaction_link
+				)
 			);
 		}
 

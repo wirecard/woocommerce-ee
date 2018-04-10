@@ -76,7 +76,7 @@ class WC_Gateway_Wirecard_Poipia extends WC_Wirecard_Payment_Gateway {
 		$this->method_description = __( 'Payment on Invoice / Payment in Advance transactions via Wirecard Payment Processing Gateway', 'woocommerce-gateway-wirecard' );
 		$this->has_fields         = true;
 
-		$this->supports = array(
+		$this->supports       = array(
 			'products',
 		);
 		$this->cancel         = array( 'authorization' );

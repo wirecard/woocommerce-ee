@@ -75,7 +75,7 @@ class Wirecard_Handler {
 			'sepacredit'    => new WC_Gateway_Wirecard_Sepa(),
 			'ideal'         => new WC_Gateway_Wirecard_Ideal(),
 			'sofortbanking' => new WC_Gateway_Wirecard_Sofort(),
-			'wiretransfer' => new WC_Gateway_Wirecard_Poipia(),
+			'wiretransfer'  => new WC_Gateway_Wirecard_Poipia(),
 		);
 		$this->logger          = new Logger();
 	}

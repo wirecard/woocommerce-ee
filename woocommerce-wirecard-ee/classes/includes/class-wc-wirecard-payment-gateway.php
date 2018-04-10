@@ -409,9 +409,6 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	public function save_response_data( $order, $response ) {
 		$response_data = $response->getData();
 		if ( ! empty( $response_data ) ) {
-			/*foreach ( $response_data as $key => $value ) {
-				add_post_meta( $order->get_id(), $key, $value );
-			}*/
 			add_post_meta( $order->get_id(), 'response_data', wp_json_encode( $response_data ) );
 		}
 	}
@@ -424,6 +421,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 * @param string          $transaction_state
 	 *
 	 * @since 1.0.0
+	 * @throws Exception
 	 */
 	public function update_payment_transaction( $order, $response, $transaction_state ) {
 		$order->set_transaction_id( $response->getTransactionId() );
@@ -538,7 +536,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 * @since 1.1.0
 	 */
 	public function process_payment( $order_id ) {
-		$order = wc_get_order( $order_id );
+		$order         = wc_get_order( $order_id );
 		$redirect_urls = new Redirect(
 			$this->create_redirect_url( $order, 'success', $this->type ),
 			$this->create_redirect_url( $order, 'cancel', $this->type ),

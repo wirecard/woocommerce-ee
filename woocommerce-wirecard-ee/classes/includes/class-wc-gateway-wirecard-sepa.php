@@ -71,9 +71,9 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 			'refunds',
 		);
 
-		$this->cancel  = array( 'pending-debit' );
-		$this->capture = array( 'authorization' );
-		$this->refund  = array( 'debit' );
+		$this->cancel        = array( 'pending-debit' );
+		$this->capture       = array( 'authorization' );
+		$this->refund        = array( 'debit' );
 		$this->refund_action = 'credit';
 
 		$this->init_form_fields();

@@ -77,9 +77,9 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 			'refunds',
 		);
 
-		$this->cancel  = array( 'authorization' );
-		$this->capture = array( 'authorization' );
-		$this->refund  = array( 'purchase', 'capture-authorization' );
+		$this->cancel        = array( 'authorization' );
+		$this->capture       = array( 'authorization' );
+		$this->refund        = array( 'purchase', 'capture-authorization' );
 		$this->refund_action = 'refund';
 
 		$this->init_form_fields();
@@ -286,7 +286,7 @@ HTML;
 		$order = wc_get_order( $order_id );
 
 		$this->payment_action = $this->get_option( 'payment_action' );
-		$token     = $_POST['tokenId'];
+		$token                = $_POST['tokenId'];
 
 		$this->transaction = new CreditCardTransaction();
 		$this->transaction->setTokenId( $token );
