@@ -34,47 +34,39 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/includes/class-wc-wirecard-payment-gateway.php' );
-require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-sepa.php' );
 
 use Wirecard\PaymentSdk\Config\Config;
 use Wirecard\PaymentSdk\Config\PaymentMethodConfig;
 use Wirecard\PaymentSdk\Entity\Amount;
-use Wirecard\PaymentSdk\Entity\CustomField;
-use Wirecard\PaymentSdk\Entity\CustomFieldCollection;
-use Wirecard\PaymentSdk\Entity\Redirect;
-use Wirecard\PaymentSdk\Transaction\SofortTransaction;
-use Wirecard\PaymentSdk\Transaction\SepaTransaction;
+use Wirecard\PaymentSdk\Transaction\PoiPiaTransaction;
 
 /**
- * Class WC_Gateway_Wirecard_Sofort
+ * Class WC_Gateway_Wirecard_Poipia
  *
  * @extends WC_Wirecard_Payment_Gateway
  *
  * @since   1.1.0
  */
-class WC_Gateway_Wirecard_Sofort extends WC_Wirecard_Payment_Gateway {
+class WC_Gateway_Wirecard_Poipia extends WC_Wirecard_Payment_Gateway {
 
 	/**
-	 * WC_Gateway_Wirecard_Sofort constructor.
+	 * WC_Gateway_Wirecard_Poipia constructor.
 	 *
 	 * @since 1.1.0
 	 */
 	public function __construct() {
-		$this->type               = 'sofortbanking';
-		$this->id                 = 'wirecard_ee_sofortbanking';
-		$this->icon               = WOOCOMMERCE_GATEWAY_WIRECARD_URL . 'assets/images/sofortbanking.png';
-		$this->method_title       = __( 'Wirecard Sofort.', 'wooocommerce-gateway-wirecard' );
-		$this->method_name        = __( 'Sofort.', 'wooocommerce-gateway-wirecard' );
-		$this->method_description = __( 'Sofort. transactions via Wirecard Payment Processing Gateway', 'woocommerce-gateway-wirecard' );
+		$this->type               = 'wiretransfer';
+		$this->id                 = 'wirecard_ee_poipia';
+		$this->icon               = WOOCOMMERCE_GATEWAY_WIRECARD_URL . 'assets/images/poipia.png';
+		$this->method_title       = __( 'Wirecard Payment on Invoice / Payment in Advance', 'wooocommerce-gateway-wirecard' );
+		$this->method_name        = __( 'Payment on Invoice / Payment in Advance', 'wooocommerce-gateway-wirecard' );
+		$this->method_description = __( 'Payment on Invoice / Payment in Advance transactions via Wirecard Payment Processing Gateway', 'woocommerce-gateway-wirecard' );
 
-		$this->supports = array(
+		$this->supports       = array(
 			'products',
-			'refunds',
 		);
-
-		$this->refund         = array( 'debit' );
-		$this->payment_action = 'pay';
-		$this->refund_action  = 'credit';
+		$this->cancel         = array( 'authorization' );
+		$this->payment_action = 'reserve';
 
 		$this->init_form_fields();
 		$this->init_settings();
@@ -85,6 +77,7 @@ class WC_Gateway_Wirecard_Sofort extends WC_Wirecard_Payment_Gateway {
 		$this->additional_helper = new Additional_Information();
 
 		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
+		add_action( 'woocommerce_thankyou_' . $this->id, array( $this, 'thankyou_page' ) );
 
 		parent::add_payment_gateway_actions();
 	}
@@ -99,25 +92,25 @@ class WC_Gateway_Wirecard_Sofort extends WC_Wirecard_Payment_Gateway {
 			'enabled'             => array(
 				'title'   => __( 'Enable/Disable', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'checkbox',
-				'label'   => __( 'Enable Wirecard Sofort.', 'woocommerce-gateway-wirecard' ),
+				'label'   => __( 'Enable Wirecard Payment on Invoice / Payment in Advance', 'woocommerce-gateway-wirecard' ),
 				'default' => 'yes',
 			),
 			'title'               => array(
 				'title'       => __( 'Title', 'woocommerce-gateway-wirecard' ),
 				'type'        => 'text',
 				'description' => __( 'This controls the title which the user sees during checkout.', 'woocommerce-gateway-wirecard' ),
-				'default'     => __( 'Wirecard Sofort.', 'woocommerce-gateway-wirecard' ),
+				'default'     => __( 'Wirecard Payment on Invoice / Payment in Advance', 'woocommerce-gateway-wirecard' ),
 				'desc_tip'    => true,
 			),
 			'merchant_account_id' => array(
 				'title'   => __( 'Merchant Account ID', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'text',
-				'default' => 'c021a23a-49a5-4987-aa39-e8e858d29bad',
+				'default' => '105ab3e8-d16b-4fa0-9f1f-18dd9b390c94',
 			),
 			'secret'              => array(
 				'title'   => __( 'Secret Key', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'text',
-				'default' => 'dbc5a498-9a66-43b9-bf1d-a618dd399684',
+				'default' => '2d96596b-9d10-4c98-ac47-4d56e22fd878',
 			),
 			'credentials'         => array(
 				'title'       => __( 'Credentials', 'woocommerce-gateway-wirecard' ),
@@ -146,6 +139,22 @@ class WC_Gateway_Wirecard_Sofort extends WC_Wirecard_Payment_Gateway {
 				'type'        => 'title',
 				'description' => '',
 			),
+			'payment_type'        => array(
+				'title'   => __( 'Payment Type', 'woocommerce-gateway-wirecard' ),
+				'type'    => 'select',
+				'default' => 'Payment in Advance',
+				'label'   => __( 'Payment Type', 'woocommerce-gateway-wirecard' ),
+				'options' => array(
+					'poi' => 'Payment on Invoice',
+					'pia' => 'Payment in Advance',
+				),
+			),
+			'descriptor'          => array(
+				'title'   => __( 'Enable/Disable', 'woocommerce-gateway-wirecard' ),
+				'type'    => 'checkbox',
+				'label'   => __( 'Descriptor', 'woocommerce-gateway-wirecard' ),
+				'default' => 'no',
+			),
 			'send_additional'     => array(
 				'title'   => __( 'Enable/Disable', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'checkbox',
@@ -167,28 +176,32 @@ class WC_Gateway_Wirecard_Sofort extends WC_Wirecard_Payment_Gateway {
 	public function process_payment( $order_id ) {
 		$order = wc_get_order( $order_id );
 
-		$this->transaction = new SofortTransaction();
-		$this->transaction->setDescriptor( $this->additional_helper->create_descriptor( $order ) );
+		$this->transaction = new PoiPiaTransaction();
+		$this->transaction->setAccountHolder( $this->additional_helper->create_account_holder( $order, 'billing' ) );
 
 		return parent::process_payment( $order_id );
 	}
 
 	/**
-	 * Create transaction for refund
+	 * Process cancel transaction
 	 *
-	 * @param int        $order_id
+	 * @param int     $order_id
 	 * @param float|null $amount
-	 * @param string     $reason
 	 *
-	 * @return bool|SepaTransaction|WP_Error
+	 * @return PoiPiaTransaction
 	 *
 	 * @since 1.1.0
-	 * @throws Exception
 	 */
-	public function process_refund( $order_id, $amount = null, $reason = '' ) {
-		$sepa_payment = new WC_Gateway_Wirecard_Sepa();
+	public function process_cancel( $order_id, $amount = null ) {
+		$order = wc_get_order( $order_id );
 
-		return $sepa_payment->process_refund( $order_id, $amount, $reason );
+		$transaction = new PoiPiaTransaction();
+		$transaction->setParentTransactionId( $order->get_transaction_id() );
+		if ( ! is_null( $amount ) ) {
+			$transaction->setAmount( new Amount( $amount, $order->get_currency() ) );
+		}
+
+		return $transaction;
 	}
 
 	/**
@@ -197,8 +210,10 @@ class WC_Gateway_Wirecard_Sofort extends WC_Wirecard_Payment_Gateway {
 	 * @param null $base_url
 	 * @param null $http_user
 	 * @param null $http_pass
-	 * @since 1.1.0
+	 *
 	 * @return Config
+	 *
+	 * @since 1.1.0
 	 */
 	public function create_payment_config( $base_url = null, $http_user = null, $http_pass = null ) {
 		if ( is_null( $base_url ) ) {
@@ -206,11 +221,38 @@ class WC_Gateway_Wirecard_Sofort extends WC_Wirecard_Payment_Gateway {
 			$http_user = $this->get_option( 'http_user' );
 			$http_pass = $this->get_option( 'http_pass' );
 		}
-
 		$config         = parent::create_payment_config( $base_url, $http_user, $http_pass );
-		$payment_config = new PaymentMethodConfig( SofortTransaction::NAME, $this->get_option( 'merchant_account_id' ), $this->get_option( 'secret' ) );
+		$payment_config = new PaymentMethodConfig( PoiPiaTransaction::NAME, $this->get_option( 'merchant_account_id' ), $this->get_option( 'secret' ) );
 		$config->add( $payment_config );
 
 		return $config;
 	}
+
+	/**
+	 * Hook for thankyou page text
+	 *
+	 * @param $order_id
+	 *
+	 * @return string|void
+	 *
+	 * @since 1.1.0
+	 */
+	public function thankyou_page( $order_id ) {
+		$order = wc_get_order( $order_id );
+		if ( $this->get_option( 'payment_type' ) == 'pia' ) {
+			$iban         = get_post_meta( $order_id, 'pia-iban', true );
+			$bic          = get_post_meta( $order_id, 'pia-bic', true );
+			$reference_id = get_post_meta( $order_id, 'pia-reference-id', true );
+			$result       = '<table class="woocommerce-table woocommerce-table--order-details shop_table order_details">';
+			$result      .= '<thead><tr><th>';
+			$result      .= __( 'Please transfer the amount using the following data:', 'woocommerce-gateway-wirecard' );
+			$result      .= '</th></tr></thead>';
+			$result      .= '<tr><td>' . __( 'Amount', 'woocommerce-gateway-wirecard' ) . '</td><td>' . $order->get_total() . '</td></tr>';
+			$result      .= '<tr><td>' . __( 'IBAN', 'wooocommerce-gateway-wirecard' ) . '</td><td>' . $iban . '</td></tr>';
+			$result      .= '<tr><td>' . __( 'BIC', 'woocommerce-gateway-wirecard' ) . '</td><td>' . $bic . '</td></tr>';
+			$result      .= '<tr><td>' . __( 'Provider transaction reference id', 'woocommerce-gateway-wirecard' ) . '</td><td>' . $reference_id . '</td></tr>';
+			echo $result;
+		}
+	}
+
 }
