@@ -70,7 +70,7 @@ function init_wirecard_payment_gateway() {
 
 	add_filter( 'woocommerce_payment_gateways', 'add_wirecard_payment_gateway', 0 );
 	add_filter( 'wc_order_statuses', 'wirecard_wc_order_statuses' );
-	add_action( 'woocommerce_settings_checkout', 'add_support_chat', 0);
+	add_action( 'woocommerce_settings_checkout', 'add_support_chat', 0 );
 
 	register_post_status(
 		'wc-authorization',
@@ -199,8 +199,8 @@ function wirecard_gateway_options_page() {
 		array( $admin, 'refund_transaction' )
 	);
 
-	 /**
-	 * Add the support chat script
+	/**
+	 * Add support chat script
 	 *
 	 * @since 1.1.0
 	 */
