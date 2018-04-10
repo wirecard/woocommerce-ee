@@ -332,7 +332,6 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 		if ( $response instanceof SuccessResponse ) {
 			$this->update_payment_transaction( $order, $response, 'awaiting' );
 			$order->set_transaction_id( $response->getTransactionId() );
-			$order = $this->update_order_state( $order, $response->getTransactionType() );
 
 			return '/admin.php?page=wirecardpayment&id=' . $response->getTransactionId();
 		}
