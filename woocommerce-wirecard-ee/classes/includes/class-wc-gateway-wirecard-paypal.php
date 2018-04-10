@@ -54,15 +54,6 @@ use Wirecard\PaymentSdk\Transaction\PayPalTransaction;
 class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 
 	/**
-	 * Payment type
-	 *
-	 * @since  1.0.0
-	 * @access private
-	 * @var string
-	 */
-	private $type;
-
-	/**
 	 * Additional helper for basket and risk management
 	 *
 	 * @since  1.0.0
@@ -206,39 +197,17 @@ class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 	public function process_payment( $order_id ) {
 		$order = wc_get_order( $order_id );
 
-		$redirect_urls = new Redirect(
-			$this->create_redirect_url( $order, 'success', $this->type ),
-			$this->create_redirect_url( $order, 'cancel', $this->type ),
-			$this->create_redirect_url( $order, 'failure', $this->type )
-		);
+		$this->transaction = new PayPalTransaction();
+		$this->transaction->setAccountHolder( $this->additional_helper->create_account_holder( $order, 'billing' ) );
 
-		$config    = $this->create_payment_config();
-		$amount    = new Amount( $order->get_total(), 'EUR' );
-		$operation = $this->get_option( 'payment_action' );
-
-		$transaction = new PayPalTransaction();
-		$transaction->setNotificationUrl( $this->create_notification_url( $order, $this->type ) );
-		$transaction->setRedirect( $redirect_urls );
-		$transaction->setAmount( $amount );
-
-		$custom_fields = new CustomFieldCollection();
-		$custom_fields->add( new CustomField( 'orderId', $order_id ) );
-		$transaction->setCustomFields( $custom_fields );
+		$this->payment_action = $this->get_option( 'payment_action' );
 
 		if ( $this->get_option( 'shopping_basket' ) == 'yes' ) {
-			$basket = $this->additional_helper->create_shopping_basket( $order, $transaction );
-			$transaction->setBasket( $basket );
+			$basket = $this->additional_helper->create_shopping_basket( $order, $this->transaction );
+			$this->transaction->setBasket( $basket );
 		}
 
-		if ( $this->get_option( 'descriptor' ) == 'yes' ) {
-			$transaction->setDescriptor( $this->additional_helper->create_descriptor( $order ) );
-		}
-
-		if ( $this->get_option( 'send_additional' ) == 'yes' ) {
-			$this->additional_helper->set_additional_information( $order, $transaction );
-		}
-
-		return $this->execute_transaction( $transaction, $config, $operation, $order, $order_id );
+		return parent::process_payment( $order_id );
 	}
 
 	/**

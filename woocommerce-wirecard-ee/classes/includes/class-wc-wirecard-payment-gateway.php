@@ -41,6 +41,10 @@ require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/helper/class-logge
 
 
 use Wirecard\PaymentSdk\Config\Config;
+use Wirecard\PaymentSdk\Entity\Amount;
+use Wirecard\PaymentSdk\Entity\CustomField;
+use Wirecard\PaymentSdk\Entity\CustomFieldCollection;
+use Wirecard\PaymentSdk\Entity\Redirect;
 use Wirecard\PaymentSdk\Response\Response;
 use Wirecard\PaymentSdk\Response\FailureResponse;
 use Wirecard\PaymentSdk\Response\InteractionResponse;
@@ -103,6 +107,15 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 * @var Wirecard\PaymentSdk\Transaction\Transaction
 	 */
 	protected $transaction;
+
+	/**
+	 * Initial payment action for payment method
+	 *
+	 * @since 1.1.0
+	 * @access protected
+	 * @var string
+	 */
+	protected $payment_action;
 
 	/**
 	 * Add global wirecard payment gateway actions
@@ -519,7 +532,6 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 */
 	public function process_payment( $order_id ) {
 		$order = wc_get_order( $order_id );
-
 		$redirect_urls = new Redirect(
 			$this->create_redirect_url( $order, 'success', $this->type ),
 			$this->create_redirect_url( $order, 'cancel', $this->type ),
@@ -545,7 +557,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 			$this->additional_helper->set_additional_information( $order, $this->transaction );
 		}
 
-		return $this->execute_transaction( $this->transaction, $config, self::PAYMENT_ACTION, $order );
+		return $this->execute_transaction( $this->transaction, $config, $this->payment_action, $order );
 	}
 
 	/**

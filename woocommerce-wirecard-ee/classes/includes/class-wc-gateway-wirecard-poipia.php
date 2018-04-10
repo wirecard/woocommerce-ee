@@ -54,23 +54,6 @@ use Wirecard\PaymentSdk\Transaction\PoiPiaTransaction;
 class WC_Gateway_Wirecard_Poipia extends WC_Wirecard_Payment_Gateway {
 
 	/**
-	 * Payment action
-	 *
-	 * @since 1.1.0
-	 * @var string
-	 */
-	const PAYMENT_ACTION = 'reserve';
-
-	/**
-	 * Payment type
-	 *
-	 * @since  1.1.0
-	 * @access private
-	 * @var string
-	 */
-	private $type;
-
-	/**
 	 * Additional helper for basket and risk management
 	 *
 	 * @since  1.1.0
@@ -97,6 +80,7 @@ class WC_Gateway_Wirecard_Poipia extends WC_Wirecard_Payment_Gateway {
 			'products',
 		);
 		$this->cancel         = array( 'authorization' );
+		$this->payment_action = 'reserve';
 
 		$this->init_form_fields();
 		$this->init_settings();

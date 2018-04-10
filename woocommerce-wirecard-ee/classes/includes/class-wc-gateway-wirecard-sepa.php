@@ -55,8 +55,6 @@ use Wirecard\PaymentSdk\Transaction\SepaTransaction;
  */
 class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 
-	private $type;
-
 	private $additional_helper;
 
 	public function __construct() {
@@ -269,50 +267,24 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 
 			return false;
 		}
-
-		$order = wc_get_order( $order_id );
-
-		$redirect_urls = new Redirect(
-			$this->create_redirect_url( $order, 'success', $this->type ),
-			$this->create_redirect_url( $order, 'cancel', $this->type ),
-			$this->create_redirect_url( $order, 'failure', $this->type )
-		);
-
-		$config    = $this->create_payment_config();
-		$amount    = new Amount( $order->get_total(), 'EUR' );
-		$operation = $this->get_option( 'payment_action' );
+		$this->payment_action = $this->get_option( 'payment_action' );
 
 		$account_holder = new AccountHolder();
 		$account_holder->setFirstName( $_POST['sepa_lastname'] );
 		$account_holder->setLastName( $_POST['sepa_firstname'] );
 
-		$transaction = new SepaTransaction();
-		$transaction->setNotificationUrl( $this->create_notification_url( $order, $this->type ) );
-		$transaction->setRedirect( $redirect_urls );
-		$transaction->setAmount( $amount );
-		$transaction->setAccountHolder( $account_holder );
-		$transaction->setIban( $_POST['sepa_iban'] );
+		$this->transaction = new SepaTransaction();
+		$this->transaction->setAccountHolder( $account_holder );
+		$this->transaction->setIban( $_POST['sepa_iban'] );
 
 		if ( $this->get_option( 'enable_bic' ) == 'yes' ) {
-			$transaction->setBic( $_POST['sepa_bic'] );
+			$this->transaction->setBic( $_POST['sepa_bic'] );
 		}
 
 		$mandate = new Mandate( $this->generate_mandate_id( $order_id ) );
-		$transaction->setMandate( $mandate );
+		$this->transaction->setMandate( $mandate );
 
-		$custom_fields = new CustomFieldCollection();
-		$custom_fields->add( new CustomField( 'orderId', $order_id ) );
-		$transaction->setCustomFields( $custom_fields );
-
-		if ( $this->get_option( 'descriptor' ) == 'yes' ) {
-			$transaction->setDescriptor( $this->additional_helper->create_descriptor( $order ) );
-		}
-
-		if ( $this->get_option( 'send_additional' ) == 'yes' ) {
-			$this->additional_helper->set_additional_information( $order, $transaction );
-		}
-
-		return $this->execute_transaction( $transaction, $config, $operation, $order, $order_id );
+		return parent::process_payment( $order_id );
 	}
 
 	/**

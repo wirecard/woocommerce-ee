@@ -56,22 +56,6 @@ use Wirecard\PaymentSdk\Transaction\SepaTransaction;
 class WC_Gateway_Wirecard_Sofort extends WC_Wirecard_Payment_Gateway {
 
 	/**
-	 * Payment action
-	 *
-	 * @since 1.1.0
-	 * @var string
-	 */
-	const PAYMENT_ACTION = 'pay';
-	/**
-	 * Payment type
-	 *
-	 * @since  1.1.0
-	 * @access private
-	 * @var string
-	 */
-	private $type;
-
-	/**
 	 * Additional helper for basket and risk management
 	 *
 	 * @since  1.1.0
@@ -99,6 +83,7 @@ class WC_Gateway_Wirecard_Sofort extends WC_Wirecard_Payment_Gateway {
 		);
 
 		$this->refund = array( 'debit' );
+		$this->payment_action = 'pay';
 
 		$this->init_form_fields();
 		$this->init_settings();
@@ -191,31 +176,10 @@ class WC_Gateway_Wirecard_Sofort extends WC_Wirecard_Payment_Gateway {
 	public function process_payment( $order_id ) {
 		$order = wc_get_order( $order_id );
 
-		$redirect_urls = new Redirect(
-			$this->create_redirect_url( $order, 'success', $this->type ),
-			$this->create_redirect_url( $order, 'cancel', $this->type ),
-			$this->create_redirect_url( $order, 'failure', $this->type )
-		);
+		$this->transaction = new SofortTransaction();
+		$this->transaction->setDescriptor( $this->additional_helper->create_descriptor( $order ) );
 
-		$config = $this->create_payment_config();
-		$amount = new Amount( $order->get_total(), $order->get_currency() );
-
-		$transaction = new SofortTransaction();
-		$transaction->setNotificationUrl( $this->create_notification_url( $order, $this->type ) );
-		$transaction->setRedirect( $redirect_urls );
-		$transaction->setAmount( $amount );
-
-		$custom_fields = new CustomFieldCollection();
-		$custom_fields->add( new CustomField( 'orderId', $order_id ) );
-		$transaction->setCustomFields( $custom_fields );
-
-		$transaction->setDescriptor( $this->additional_helper->create_descriptor( $order ) );
-
-		if ( $this->get_option( 'send_additional' ) == 'yes' ) {
-			$this->additional_helper->set_additional_information( $order, $transaction );
-		}
-
-		return $this->execute_transaction( $transaction, $config, self::PAYMENT_ACTION, $order, $order_id );
+		return parent::process_payment( $order_id );
 	}
 
 	/**
