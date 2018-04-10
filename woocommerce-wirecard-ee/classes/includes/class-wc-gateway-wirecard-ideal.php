@@ -48,18 +48,25 @@ use Wirecard\PaymentSdk\Transaction\SepaTransaction;
 use Wirecard\PaymentSdk\Entity\IdealBic;
 
 /**
- * Class WC_Gateway_Wirecard_Paypal
+ * Class WC_Gateway_Wirecard_Ideal
  *
  * @extends WC_Wirecard_Payment_Gateway
  *
- * @since   1.0.0
+ * @since   1.1.0
  */
 class WC_Gateway_Wirecard_Ideal extends WC_Wirecard_Payment_Gateway {
 
 	/**
+	 * Payment action
+	 *
+	 * @since 1.1.0
+	 * @var string
+	 */
+	const PAYMENT_ACTION = 'pay';
+	/**
 	 * Payment type
 	 *
-	 * @since  1.0.0
+	 * @since  1.1.0
 	 * @access private
 	 * @var string
 	 */
@@ -68,16 +75,16 @@ class WC_Gateway_Wirecard_Ideal extends WC_Wirecard_Payment_Gateway {
 	/**
 	 * Additional helper for basket and risk management
 	 *
-	 * @since  1.0.0
+	 * @since  1.1.0
 	 * @access private
 	 * @var Additional_Information
 	 */
 	private $additional_helper;
 
 	/**
-	 * WC_Gateway_Wirecard_Paypal constructor.
+	 * WC_Gateway_Wirecard_Ideal constructor.
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 */
 	public function __construct() {
 		$this->type               = 'ideal';
@@ -111,7 +118,7 @@ class WC_Gateway_Wirecard_Ideal extends WC_Wirecard_Payment_Gateway {
 	/**
 	 * Load form fields for configuration
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 */
 	public function init_form_fields() {
 		$this->form_fields = array(
@@ -165,11 +172,6 @@ class WC_Gateway_Wirecard_Ideal extends WC_Wirecard_Payment_Gateway {
 				'type'        => 'title',
 				'description' => '',
 			),
-			'payment_action'      => array(
-				'title'   => __( 'Payment Action', 'woocommerce-gateway-wirecard' ),
-				'type'    => 'hidden',
-				'default' => 'pay',
-			),
 			'descriptor'          => array(
 				'title'   => __( 'Enable/Disable', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'checkbox',
@@ -188,10 +190,10 @@ class WC_Gateway_Wirecard_Ideal extends WC_Wirecard_Payment_Gateway {
 	/**
 	 * Add payment fields to payment method
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 */
 	public function payment_fields() {
-		$html = '<select class="" name="ideal_bank_bic">';
+		$html = '<select name="ideal_bank_bic">';
 		foreach ( $this->get_ideal_bic()['banks'] as $bank ) {
 			$html .= '<option value="' . $bank['key'] . '">' . $bank['label'] . '</option>';
 		}
@@ -206,9 +208,10 @@ class WC_Gateway_Wirecard_Ideal extends WC_Wirecard_Payment_Gateway {
 	 *
 	 * @return array
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 */
 	public function process_payment( $order_id ) {
+		/** @var WC_Order $order */
 		$order = wc_get_order( $order_id );
 
 		$redirect_urls = new Redirect(
@@ -217,9 +220,8 @@ class WC_Gateway_Wirecard_Ideal extends WC_Wirecard_Payment_Gateway {
 			$this->create_redirect_url( $order, 'failure', $this->type )
 		);
 
-		$config    = $this->create_payment_config();
-		$amount    = new Amount( $order->get_total(), 'EUR' );
-		$operation = $this->get_option( 'payment_action' );
+		$config = $this->create_payment_config();
+		$amount = new Amount( $order->get_total(), $order->get_currency() );
 
 		$transaction = new IdealTransaction();
 		$transaction->setNotificationUrl( $this->create_notification_url( $order, $this->type ) );
@@ -239,7 +241,7 @@ class WC_Gateway_Wirecard_Ideal extends WC_Wirecard_Payment_Gateway {
 			$this->additional_helper->set_additional_information( $order, $transaction );
 		}
 
-		return $this->execute_transaction( $transaction, $config, $operation, $order, $order_id );
+		return $this->execute_transaction( $transaction, $config, self::PAYMENT_ACTION, $order, $order_id );
 	}
 
 	/**
@@ -251,7 +253,7 @@ class WC_Gateway_Wirecard_Ideal extends WC_Wirecard_Payment_Gateway {
 	 *
 	 * @return bool|SepaTransaction|WP_Error
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 * @throws Exception
 	 */
 	public function process_refund( $order_id, $amount = null, $reason = '' ) {
@@ -286,7 +288,7 @@ class WC_Gateway_Wirecard_Ideal extends WC_Wirecard_Payment_Gateway {
 	 * Returns all supported banks from iDEAL
 	 *
 	 * @return array
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 */
 	private function get_ideal_bic() {
 		return array(
