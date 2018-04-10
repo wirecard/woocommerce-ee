@@ -134,6 +134,15 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	protected $additional_helper;
 
 	/**
+	 * Payment method config
+	 *
+	 * @since 1.1.0
+	 * @access protected
+	 * @var Config
+	 */
+	protected $config;
+
+	/**
 	 * Add global wirecard payment gateway actions
 	 *
 	 * @since 1.0.0
@@ -552,7 +561,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 			$this->create_redirect_url( $order, 'failure', $this->type )
 		);
 
-		$config = $this->create_payment_config();
+		$this->config = $this->create_payment_config();
 		$amount = new Amount( $order->get_total(), $order->get_currency() );
 
 		$this->transaction->setNotificationUrl( $this->create_notification_url( $order, $this->type ) );
@@ -570,8 +579,6 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 		if ( $this->get_option( 'send_additional' ) == 'yes' ) {
 			$this->transaction = $this->additional_helper->set_additional_information( $order, $this->transaction );
 		}
-
-		return $this->execute_transaction( $this->transaction, $config, $this->payment_action, $order );
 	}
 
 	/**
@@ -609,9 +616,15 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	}
 
 	/**
-	 * Return true if the payment method is availeible
+	 * Return true if the payment method is available
+	 *
+	 * @since 1.1.0
+	 * @return bool
 	 */
 	public function is_available() {
-		return true;
+		if ( $this->get_option( 'enabled' )  == 'yes' ) {
+			return true;
+		}
+		return false;
 	}
 }

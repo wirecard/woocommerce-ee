@@ -280,10 +280,12 @@ HTML;
 		$token                = $_POST['tokenId'];
 
 		$this->transaction = new CreditCardTransaction();
+		parent::process_payment( $order_id );
+
 		$this->transaction->setTokenId( $token );
 		$this->transaction->setTermUrl( $this->create_redirect_url( $order, 'success', $this->type ) );
 
-		return parent::process_payment( $order_id );
+		return $this->execute_transaction( $this->transaction, $this->config, $this->payment_action, $order );
 	}
 
 	/**

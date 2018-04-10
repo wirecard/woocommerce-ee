@@ -34,14 +34,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/includes/class-wc-wirecard-payment-gateway.php' );
-require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/helper/class-additional-information.php' );
 
 use Wirecard\PaymentSdk\Config\Config;
 use Wirecard\PaymentSdk\Config\PaymentMethodConfig;
 use Wirecard\PaymentSdk\Entity\Amount;
-use Wirecard\PaymentSdk\Entity\CustomField;
-use Wirecard\PaymentSdk\Entity\CustomFieldCollection;
-use Wirecard\PaymentSdk\Entity\Redirect;
 use Wirecard\PaymentSdk\Transaction\RatepayInvoiceTransaction;
 
 
@@ -53,24 +49,6 @@ use Wirecard\PaymentSdk\Transaction\RatepayInvoiceTransaction;
  * @since   1.1.0
  */
 class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment_Gateway {
-
-	/**
-	 * Payment type
-	 *
-	 * @since  1.1.0
-	 * @access private
-	 * @var string
-	 */
-	private $type;
-
-	/**
-	 * Additional helper for basket and risk management
-	 *
-	 * @since  1.1.0
-	 * @access private
-	 * @var Additional_Information
-	 */
-	private $additional_helper;
 
 	/**
 	 * WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay constructor.
@@ -91,9 +69,10 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 			'refunds',
 		);
 
-		$this->cancel  = array( 'authorization' );
-		$this->capture = array( 'authorization' );
-		$this->refund  = array( 'capture-authorization' );
+		$this->cancel         = array( 'authorization' );
+		$this->capture        = array( 'authorization' );
+		$this->refund         = array( 'capture-authorization' );
+		$this->payment_action = 'reserve';
 
 		$this->init_form_fields();
 		$this->init_settings();
@@ -169,10 +148,6 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 				'type'        => 'title',
 				'description' => '',
 			),
-			'payment_action'        => array(
-				'type'    => 'hidden',
-				'default' => 'reserve',
-			),
 			'billing_shipping_same' => array(
 				'title'   => __( 'Enable/Disable', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'checkbox',
@@ -241,48 +216,25 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 		if ( ! $this->validate_date_of_birth( $_POST['invoice_date_of_birth'] ) ) {
 			return false;
 		}
+		$this->transaction = new RatepayInvoiceTransaction();
+		parent::process_payment( $order_id );
 
-		$redirect_urls = new Redirect(
-			$this->create_redirect_url( $order, 'success', $this->type ),
-			$this->create_redirect_url( $order, 'cancel', $this->type ),
-			$this->create_redirect_url( $order, 'failure', $this->type )
+		$this->transaction->setOrderNumber( $order_id );
+		$this->transaction->setBasket( $this->additional_helper->create_shopping_basket( $this->transaction ) );
+		$this->transaction->setAccountHolder(
+			$this->additional_helper->create_account_holder(
+				$order,
+				'billing',
+				new \DateTime( $_POST['invoice_date_of_birth'] )
+			)
 		);
-
-		$config    = $this->create_payment_config();
-		$amount    = new Amount( $order->get_total(), 'EUR' );
-		$operation = $this->get_option( 'payment_action' );
-
-		$transaction = new RatepayInvoiceTransaction();
-		$transaction->setNotificationUrl( $this->create_notification_url( $order, $this->type ) );
-		$transaction->setRedirect( $redirect_urls );
-		$transaction->setAmount( $amount );
-
-		$custom_fields = new CustomFieldCollection();
-		$custom_fields->add( new CustomField( 'orderId', $order_id ) );
-		$transaction->setCustomFields( $custom_fields );
-		$transaction->setOrderNumber( $order_id );
-
-		if ( $this->get_option( 'descriptor' ) == 'yes' ) {
-			$transaction->setDescriptor( $this->additional_helper->create_descriptor( $order ) );
-		}
-
-		if ( $this->get_option( 'send_additional' ) == 'yes' ) {
-			$this->additional_helper->set_additional_information( $order, $transaction );
-		}
-
-		$basket = $this->additional_helper->create_shopping_basket( $order, $transaction );
-		$transaction->setBasket( $basket );
-
-		$account_holder = $this->additional_helper->create_account_holder( $order, 'billing', new \DateTime( $_POST['invoice_date_of_birth'] ) );
-		$transaction->setAccountHolder( $account_holder );
 
 		$ident  = WC()->session->get( 'ratepay_device_ident' );
 		$device = new \Wirecard\PaymentSdk\Entity\Device();
 		$device->setFingerprint( $ident );
-		$transaction->setDevice( $device );
-		unset( WC()->session->ratepay_device_ident );
+		$this->transaction->setDevice( $device );
 
-		return $this->execute_transaction( $transaction, $config, $operation, $order, $order_id );
+		return $this->execute_transaction( $this->transaction, $this->config, $this->payment_action, $order );
 	}
 
 	/**
@@ -404,23 +356,23 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 	 * @since 1.1.0
 	 */
 	public function is_available() {
-		if ( is_checkout() ) {
+		if ( parent::is_available() ) {
 			global $woocommerce;
 			$customer = $woocommerce->customer;
 
 			$cart = new WC_Cart();
 			$cart->get_cart_from_session();
 
-			if ( ! in_array( get_woocommerce_currency(), $this->get_option( 'allowed_currencies' ) ) &&
-				! $this->validate_cart_amounts( floatval( $cart->get_total( 'total' ) ) ) &&
-				! $this->validate_cart_products( $cart ) &&
-				! $this->validate_billing_shipping_address( $customer ) &&
+			if ( ! in_array( get_woocommerce_currency(), $this->get_option( 'allowed_currencies' ) ) ||
+				! $this->validate_cart_amounts( floatval( $cart->get_total( 'total' ) ) ) ||
+				! $this->validate_cart_products( $cart ) ||
+				! $this->validate_billing_shipping_address( $customer ) ||
 				! $this->validate_countries( $customer ) ) {
 				return false;
 			}
+			return true;
 		}
-
-		return true;
+		return false;
 	}
 
 	/**
@@ -503,26 +455,27 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 	 * @since 1.1.0
 	 */
 	private function validate_billing_shipping_address( $customer ) {
-		$fields = array(
-			'first_name',
-			'last_name',
-			'address_1',
-			'address_2',
-			'city',
-			'country',
-			'postcode',
-			'state',
-		);
-		foreach ( $fields as $field ) {
-			$billing  = 'get_billing_' . $field;
-			$shipping = 'get_shipping_' . $field;
+		if ( $this->get_option( 'billing_shipping_same' ) == 'yes' ) {
+			$fields = array(
+				'first_name',
+				'last_name',
+				'address_1',
+				'address_2',
+				'city',
+				'country',
+				'postcode',
+				'state',
+			);
+			foreach ($fields as $field) {
+				$billing = 'get_billing_' . $field;
+				$shipping = 'get_shipping_' . $field;
 
-			if ( call_user_func( array( $customer, $billing ) ) != call_user_func( array( $customer, $shipping ) ) &&
-			! empty( call_user_func( array( $customer, $shipping ) ) ) ) {
-				return false;
+				if (call_user_func(array($customer, $billing)) != call_user_func(array($customer, $shipping)) &&
+					!empty(call_user_func(array($customer, $shipping)))) {
+					return false;
+				}
 			}
 		}
-
 		return true;
 	}
 

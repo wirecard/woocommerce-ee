@@ -71,6 +71,7 @@ class Wirecard_Response_Handler extends Wirecard_Handler {
 			/** @var Response $result */
 			$result = $transaction_service->handleResponse( $request );
 			if ( $result instanceof SuccessResponse ) {
+				unset( WC()->session->ratepay_device_ident );
 				if ( 'wiretransfer' == $result->getPaymentMethod() ) {
 					$response_data = $result->getData();
 					$data          = array(
