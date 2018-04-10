@@ -38,9 +38,13 @@ require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/handler/class-wire
 require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/handler/class-wirecard-callback.php' );
 require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/admin/class-wirecard-transaction-factory.php' );
 require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/helper/class-logger.php' );
-
+require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/helper/class-additional-information.php' );
 
 use Wirecard\PaymentSdk\Config\Config;
+use Wirecard\PaymentSdk\Entity\Amount;
+use Wirecard\PaymentSdk\Entity\CustomField;
+use Wirecard\PaymentSdk\Entity\CustomFieldCollection;
+use Wirecard\PaymentSdk\Entity\Redirect;
 use Wirecard\PaymentSdk\Response\Response;
 use Wirecard\PaymentSdk\Response\FailureResponse;
 use Wirecard\PaymentSdk\Response\InteractionResponse;
@@ -83,6 +87,51 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 * @var array
 	 */
 	protected $capture = array( 'authorization' );
+
+	/**
+	 * Payment method type
+	 *
+	 * @since 1.1.0
+	 * @access protected
+	 * @var string
+	 */
+	protected $type;
+
+	/**
+	 * Specific transaction per payment method
+	 *
+	 * @since 1.1.0
+	 * @access protected
+	 * @var Wirecard\PaymentSdk\Transaction\Transaction
+	 */
+	protected $transaction;
+
+	/**
+	 * Initial payment action for payment method
+	 *
+	 * @since 1.1.0
+	 * @access protected
+	 * @var string
+	 */
+	protected $payment_action;
+
+	/**
+	 * Payment action for refund
+	 *
+	 * @since 1.1.0
+	 * @access protected
+	 * @var string
+	 */
+	protected $refund_action;
+
+	/**
+	 * Additional helper for basket and risk management
+	 *
+	 * @since  1.1.0
+	 * @access protected
+	 * @var Additional_Information
+	 */
+	protected $additional_helper;
 
 	/**
 	 * Add global wirecard payment gateway actions
@@ -150,6 +199,11 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 		} else {
 			if ( ! $order->is_paid() && ( 'authorization' != $order->get_status() ) ) {
 				$order->update_status( 'on-hold', __( 'Awaiting payment from Wirecard', 'woocommerce-gateway-wirecard' ) );
+			}
+			if ( is_array( $status ) ) {
+				foreach ( $status as $key => $value ) {
+					add_post_meta( $order->get_id(), $key, $value );
+				}
 			}
 			$redirect_url = $this->get_return_url( $order );
 		}
@@ -304,6 +358,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 * @param \Wirecard\PaymentSdk\Transaction\Transaction $transaction
 	 * @param Config                                       $config
 	 * @param WC_Order                                     $order
+	 * @param string                                       $operation
 	 *
 	 * @throws Exception
 	 *
@@ -311,19 +366,12 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 *
 	 * @since 1.0.0
 	 */
-	public function execute_refund( $transaction, $config, $order ) {
+	public function execute_refund( $transaction, $config, $order, $operation = 'cancel' ) {
 		$logger              = new Logger();
 		$transaction_service = new TransactionService( $config, $logger );
 		try {
-			if ( $transaction instanceof \Wirecard\PaymentSdk\Transaction\SepaTransaction ) {
-				$response = $transaction_service->process( $transaction, 'credit' );
-			} elseif ( $transaction instanceof \Wirecard\PaymentSdk\Transaction\CreditCardTransaction ) {
-				/** @var $response Response */
-				$response = $transaction_service->process( $transaction, 'refund' );
-			} else {
-				/** @var $response Response */
-				$response = $transaction_service->process( $transaction, 'cancel' );
-			}
+			/** @var $response Response */
+			$response = $transaction_service->process( $transaction, $operation );
 		} catch ( \Exception $exception ) {
 			$logger->error( __METHOD__ . ':' . $exception->getMessage() );
 
@@ -370,9 +418,6 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	public function save_response_data( $order, $response ) {
 		$response_data = $response->getData();
 		if ( ! empty( $response_data ) ) {
-			/*foreach ( $response_data as $key => $value ) {
-				add_post_meta( $order->get_id(), $key, $value );
-			}*/
 			add_post_meta( $order->get_id(), 'response_data', wp_json_encode( $response_data ) );
 		}
 	}
@@ -385,6 +430,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 * @param string          $transaction_state
 	 *
 	 * @since 1.0.0
+	 * @throws Exception
 	 */
 	public function update_payment_transaction( $order, $response, $transaction_state ) {
 		$order->set_transaction_id( $response->getTransactionId() );
@@ -490,6 +536,45 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	}
 
 	/**
+	 * Process payment gateway transactions
+	 *
+	 * @param int $order_id
+	 *
+	 * @return array
+	 *
+	 * @since 1.1.0
+	 */
+	public function process_payment( $order_id ) {
+		$order                   = wc_get_order( $order_id );
+		$redirect_urls           = new Redirect(
+			$this->create_redirect_url( $order, 'success', $this->type ),
+			$this->create_redirect_url( $order, 'cancel', $this->type ),
+			$this->create_redirect_url( $order, 'failure', $this->type )
+		);
+
+		$config = $this->create_payment_config();
+		$amount = new Amount( $order->get_total(), $order->get_currency() );
+
+		$this->transaction->setNotificationUrl( $this->create_notification_url( $order, $this->type ) );
+		$this->transaction->setRedirect( $redirect_urls );
+		$this->transaction->setAmount( $amount );
+
+		$custom_fields = new CustomFieldCollection();
+		$custom_fields->add( new CustomField( 'orderId', $order_id ) );
+		$this->transaction->setCustomFields( $custom_fields );
+
+		if ( $this->get_option( 'descriptor' ) == 'yes' ) {
+			$this->transaction->setDescriptor( $this->additional_helper->create_descriptor( $order ) );
+		}
+
+		if ( $this->get_option( 'send_additional' ) == 'yes' ) {
+			$this->transaction = $this->additional_helper->set_additional_information( $order, $this->transaction );
+		}
+
+		return $this->execute_transaction( $this->transaction, $config, $this->payment_action, $order );
+	}
+
+	/**
 	 * @param int    $order_id
 	 * @param null   $amount
 	 * @param string $reason
@@ -497,6 +582,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 * @return bool|WP_Error
 	 *
 	 * @since 1.0.0
+	 * @throws Exception
 	 */
 	public function process_refund( $order_id, $amount = null, $reason = '' ) {
 		$order = wc_get_order( $order_id );
@@ -504,6 +590,13 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 		if ( ! $this->can_refund_order( $order ) ) {
 			return new WP_Error( 'error', __( 'No online refund possible at this time.', 'woocommerce-gateway-wirecard' ) );
 		}
+		$config = $this->create_payment_config();
+		$this->transaction->setParentTransactionId( $order->get_transaction_id() );
+		if ( ! is_null( $amount ) ) {
+			$this->transaction->setAmount( new Amount( $amount, $order->get_currency() ) );
+		}
+
+		return $this->execute_refund( $this->transaction, $config, $order, $this->refund_action );
 	}
 
 	/**
