@@ -513,7 +513,7 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 		$device_ident = WC()->session->get( 'ratepay_device_ident' );
 
 		return '<script language="JavaScript">
-			var di = ' . $device_ident . '
+			var di = {t: "' . $device_ident . '", v: "WDWL", l: "Checkout"};
 			</script>
 				<script type="text/javascript" src="//d.ratepay.com/WDWL/di.js">
 			</script>
