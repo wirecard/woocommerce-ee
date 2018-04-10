@@ -466,12 +466,12 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 				'postcode',
 				'state',
 			);
-			foreach ($fields as $field) {
-				$billing = 'get_billing_' . $field;
+			foreach ( $fields as $field ) {
+				$billing  = 'get_billing_' . $field;
 				$shipping = 'get_shipping_' . $field;
 
-				if (call_user_func(array($customer, $billing)) != call_user_func(array($customer, $shipping)) &&
-					!empty(call_user_func(array($customer, $shipping)))) {
+				if ( call_user_func( array( $customer, $billing ) ) != call_user_func( array( $customer, $shipping ) ) &&
+					! empty( call_user_func( array( $customer, $shipping ) ) ) ) {
 					return false;
 				}
 			}

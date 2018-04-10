@@ -554,15 +554,15 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 * @since 1.1.0
 	 */
 	public function process_payment( $order_id ) {
-		$order                   = wc_get_order( $order_id );
-		$redirect_urls           = new Redirect(
+		$order         = wc_get_order( $order_id );
+		$redirect_urls = new Redirect(
 			$this->create_redirect_url( $order, 'success', $this->type ),
 			$this->create_redirect_url( $order, 'cancel', $this->type ),
 			$this->create_redirect_url( $order, 'failure', $this->type )
 		);
 
 		$this->config = $this->create_payment_config();
-		$amount = new Amount( $order->get_total(), $order->get_currency() );
+		$amount       = new Amount( $order->get_total(), $order->get_currency() );
 
 		$this->transaction->setNotificationUrl( $this->create_notification_url( $order, $this->type ) );
 		$this->transaction->setRedirect( $redirect_urls );
@@ -622,7 +622,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 * @return bool
 	 */
 	public function is_available() {
-		if ( $this->get_option( 'enabled' )  == 'yes' ) {
+		if ( $this->get_option( 'enabled' ) == 'yes' ) {
 			return true;
 		}
 		return false;
