@@ -128,16 +128,16 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 				'default' => 'dbc5a498-9a66-43b9-bf1d-a618dd399684',
 			),
 			'ssl_max_limit'               => array(
-				'title'   => __( 'Non 3-D Secure Max. Limit', 'woocommerce-gateway-wirecard' ),
-				'type'    => 'text',
+				'title'       => __( 'Non 3-D Secure Max. Limit', 'woocommerce-gateway-wirecard' ),
+				'type'        => 'text',
 				'description' => __( 'Amount in default shop currency', 'woocommerce-gateway-wirecard' ),
-				'default' => '100.0',
+				'default'     => '100.0',
 			),
 			'three_d_min_limit'           => array(
-				'title'   => __( '3-D Secure Min. Limit', 'woocommerce-gateway-wirecard' ),
-				'type'    => 'text',
+				'title'       => __( '3-D Secure Min. Limit', 'woocommerce-gateway-wirecard' ),
+				'type'        => 'text',
 				'description' => __( 'Amount in default shop currency', 'woocommerce-gateway-wirecard' ),
-				'default' => '50.0',
+				'default'     => '50.0',
 			),
 			'credentials'                 => array(
 				'title'       => __( 'Credentials', 'woocommerce-gateway-wirecard' ),

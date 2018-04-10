@@ -39,6 +39,7 @@ use Wirecard\PaymentSdk\Config\Config;
 use Wirecard\PaymentSdk\Config\PaymentMethodConfig;
 use Wirecard\PaymentSdk\Entity\Amount;
 use Wirecard\PaymentSdk\Transaction\RatepayInvoiceTransaction;
+use Wirecard\PaymentSdk\Entity\Basket;
 
 
 /**
@@ -275,7 +276,7 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 		/** @var WC_Order $order */
 		$order = wc_get_order( $order_id );
 
-		$basket      = new \Wirecard\PaymentSdk\Entity\Basket();
+		$basket      = new Basket();
 		$transaction = new RatepayInvoiceTransaction();
 
 		$transaction->setParentTransactionId( $order->get_transaction_id() );
@@ -308,7 +309,7 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 		/** @var WC_Order $order */
 		$order = wc_get_order( $order_id );
 
-		$basket      = new \Wirecard\PaymentSdk\Entity\Basket();
+		$basket            = new Basket();
 		$this->transaction = new RatepayInvoiceTransaction();
 		parent::process_refund( $order_id, $amount, '' );
 
