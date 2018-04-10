@@ -54,6 +54,14 @@ use Wirecard\PaymentSdk\Transaction\PoiPiaTransaction;
 class WC_Gateway_Wirecard_Poipia extends WC_Wirecard_Payment_Gateway {
 
 	/**
+	 * Payment action
+	 *
+	 * @since 1.1.0
+	 * @var string
+	 */
+	const PAYMENT_ACTION = 'reserve';
+
+	/**
 	 * Payment type
 	 *
 	 * @since  1.1.0
@@ -70,15 +78,6 @@ class WC_Gateway_Wirecard_Poipia extends WC_Wirecard_Payment_Gateway {
 	 * @var Additional_Information
 	 */
 	private $additional_helper;
-
-	/**
-	 * Payment action
-	 *
-	 * @since 1.1.0
-	 * @access private
-	 * @var string
-	 */
-	private $payment_action;
 
 	/**
 	 * WC_Gateway_Wirecard_Poipia constructor.
@@ -217,7 +216,6 @@ class WC_Gateway_Wirecard_Poipia extends WC_Wirecard_Payment_Gateway {
 
 		$config    = $this->create_payment_config();
 		$amount    = new Amount( $order->get_total(), 'EUR' );
-		$operation = $this->payment_action;
 
 		$transaction = new PoiPiaTransaction();
 		$transaction->setNotificationUrl( $this->create_notification_url( $order, $this->type ) );
@@ -238,7 +236,7 @@ class WC_Gateway_Wirecard_Poipia extends WC_Wirecard_Payment_Gateway {
 			$this->additional_helper->set_additional_information( $order, $transaction );
 		}
 
-		return $this->execute_transaction( $transaction, $config, $operation, $order, $order_id );
+		return $this->execute_transaction( $transaction, $config, self::PAYMENT_ACTION, $order, $order_id );
 	}
 
 	/**
