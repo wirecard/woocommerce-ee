@@ -61,8 +61,6 @@ use Wirecard\PaymentSdk\TransactionService;
  */
 abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 
-	const PAYMENT_ACTION = 'reserve';
-
 	/**
 	 * Parent transaction types which support cancel operation
 	 *
@@ -116,6 +114,15 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 * @var string
 	 */
 	protected $payment_action;
+
+	/**
+	 * Payment action for refund
+	 *
+	 * @since 1.1.0
+	 * @access protected
+	 * @var string
+	 */
+	protected $refund_action;
 
 	/**
 	 * Add global wirecard payment gateway actions
@@ -568,6 +575,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 * @return bool|WP_Error
 	 *
 	 * @since 1.0.0
+	 * @throws Exception
 	 */
 	public function process_refund( $order_id, $amount = null, $reason = '' ) {
 		$order = wc_get_order( $order_id );
@@ -575,6 +583,13 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 		if ( ! $this->can_refund_order( $order ) ) {
 			return new WP_Error( 'error', __( 'No online refund possible at this time.', 'woocommerce-gateway-wirecard' ) );
 		}
+		$config = $this->create_payment_config();
+		$this->transaction->setParentTransactionId( $order->get_transaction_id() );
+		if ( ! is_null( $amount ) ) {
+			$this->transaction->setAmount( new Amount( $amount, $order->get_currency() ) );
+		}
+
+		return $this->execute_refund( $this->transaction, $config, $order, $this->refund_action );
 	}
 
 	/**

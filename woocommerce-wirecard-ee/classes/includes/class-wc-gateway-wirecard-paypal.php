@@ -83,6 +83,7 @@ class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 		$this->cancel  = array( 'authorization' );
 		$this->capture = array( 'authorization' );
 		$this->refund  = array( 'debit', 'capture-authorization' );
+		$this->refund_action = 'cancel';
 
 		$this->init_form_fields();
 		$this->init_settings();
@@ -267,17 +268,9 @@ class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 	 * @throws Exception
 	 */
 	public function process_refund( $order_id, $amount = null, $reason = '' ) {
-		parent::process_refund( $order_id, $amount, '' );
-		$order  = wc_get_order( $order_id );
-		$config = $this->create_payment_config();
+		$this->transaction = new PayPalTransaction();
 
-		$transaction = new PayPalTransaction();
-		$transaction->setParentTransactionId( $order->get_transaction_id() );
-		if ( ! is_null( $amount ) ) {
-			$transaction->setAmount( new Amount( $amount, $order->get_currency() ) );
-		}
-
-		return $this->execute_refund( $transaction, $config, $order );
+		return parent::process_refund( $order_id, $amount, '' );
 	}
 
 	/**

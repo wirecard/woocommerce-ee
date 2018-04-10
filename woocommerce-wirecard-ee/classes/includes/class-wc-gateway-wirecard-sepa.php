@@ -74,6 +74,7 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 		$this->cancel  = array( 'pending-debit' );
 		$this->capture = array( 'authorization' );
 		$this->refund  = array( 'debit' );
+		$this->refund_action = 'credit';
 
 		$this->init_form_fields();
 		$this->init_settings();
@@ -386,18 +387,11 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 	 * @return bool|SepaTransaction|WP_Error
 	 *
 	 * @since 1.0.0
+	 * @throws Exception
 	 */
 	public function process_refund( $order_id, $amount = null, $reason = '' ) {
-		parent::process_refund( $order_id, $amount, '' );
-		$order  = wc_get_order( $order_id );
-		$config = $this->create_payment_config();
+		$this->transaction = new SepaTransaction();
 
-		$transaction = new SepaTransaction();
-		$transaction->setParentTransactionId( $order->get_transaction_id() );
-		if ( ! is_null( $amount ) ) {
-			$transaction->setAmount( new Amount( $amount, $order->get_currency() ) );
-		}
-
-		return $this->execute_refund( $transaction, $config, $order );
+		return parent::process_refund( $order_id, $amount, '' );
 	}
 }

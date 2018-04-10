@@ -84,6 +84,7 @@ class WC_Gateway_Wirecard_Sofort extends WC_Wirecard_Payment_Gateway {
 
 		$this->refund = array( 'debit' );
 		$this->payment_action = 'pay';
+		$this->refund_action = 'credit';
 
 		$this->init_form_fields();
 		$this->init_settings();
@@ -195,8 +196,9 @@ class WC_Gateway_Wirecard_Sofort extends WC_Wirecard_Payment_Gateway {
 	 * @throws Exception
 	 */
 	public function process_refund( $order_id, $amount = null, $reason = '' ) {
-		$sepa = new WC_Gateway_Wirecard_Sepa();
-		return $sepa->process_refund( $order_id, $amount, $reason );
+		$sepa_payment = new WC_Gateway_Wirecard_Sepa();
+
+		return $sepa_payment->process_refund( $order_id, $amount, $reason );
 	}
 
 	/**
