@@ -50,15 +50,6 @@ use Wirecard\PaymentSdk\TransactionService;
 class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 
 	/**
-	 * Additional helper for basket and risk management
-	 *
-	 * @since  1.0.0
-	 * @access private
-	 * @var Additional_Information
-	 */
-	private $additional_helper;
-
-	/**
 	 * WC_Gateway_Wirecard_Creditcard constructor.
 	 *
 	 * @since 1.0.0

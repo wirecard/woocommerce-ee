@@ -54,15 +54,6 @@ use Wirecard\PaymentSdk\Transaction\PayPalTransaction;
 class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 
 	/**
-	 * Additional helper for basket and risk management
-	 *
-	 * @since  1.0.0
-	 * @access private
-	 * @var Additional_Information
-	 */
-	private $additional_helper;
-
-	/**
 	 * WC_Gateway_Wirecard_Paypal constructor.
 	 *
 	 * @since 1.0.0

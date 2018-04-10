@@ -56,15 +56,6 @@ use Wirecard\PaymentSdk\Transaction\SepaTransaction;
 class WC_Gateway_Wirecard_Sofort extends WC_Wirecard_Payment_Gateway {
 
 	/**
-	 * Additional helper for basket and risk management
-	 *
-	 * @since  1.1.0
-	 * @access private
-	 * @var Additional_Information
-	 */
-	private $additional_helper;
-
-	/**
 	 * WC_Gateway_Wirecard_Sofort constructor.
 	 *
 	 * @since 1.1.0

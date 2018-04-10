@@ -55,8 +55,6 @@ use Wirecard\PaymentSdk\Transaction\SepaTransaction;
  */
 class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 
-	private $additional_helper;
-
 	public function __construct() {
 		$this->type               = 'sepa';
 		$this->id                 = 'wirecard_ee_sepa';

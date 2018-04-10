@@ -57,15 +57,6 @@ use Wirecard\PaymentSdk\Entity\IdealBic;
 class WC_Gateway_Wirecard_Ideal extends WC_Wirecard_Payment_Gateway {
 
 	/**
-	 * Additional helper for basket and risk management
-	 *
-	 * @since  1.1.0
-	 * @access private
-	 * @var Additional_Information
-	 */
-	private $additional_helper;
-
-	/**
 	 * WC_Gateway_Wirecard_Ideal constructor.
 	 *
 	 * @since 1.1.0

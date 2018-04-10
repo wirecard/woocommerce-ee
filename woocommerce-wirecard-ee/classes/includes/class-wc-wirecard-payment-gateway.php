@@ -128,10 +128,10 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 * Additional helper for basket and risk management
 	 *
 	 * @since  1.1.0
-	 * @access private
+	 * @access protected
 	 * @var Additional_Information
 	 */
-	private $additional_helper;
+	protected $additional_helper;
 
 	/**
 	 * Add global wirecard payment gateway actions
@@ -545,7 +545,6 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 * @since 1.1.0
 	 */
 	public function process_payment( $order_id ) {
-		$this->additional_helper = new Additional_Information();
 		$order                   = wc_get_order( $order_id );
 		$redirect_urls           = new Redirect(
 			$this->create_redirect_url( $order, 'success', $this->type ),
