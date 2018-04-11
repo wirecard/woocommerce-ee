@@ -75,6 +75,7 @@ class Wirecard_Handler {
 			'sepacredit'      => new WC_Gateway_Wirecard_Sepa(),
 			'ideal'           => new WC_Gateway_Wirecard_Ideal(),
 			'sofortbanking'   => new WC_Gateway_Wirecard_Sofort(),
+			'wiretransfer'    => new WC_Gateway_Wirecard_Poipia(),
 			'ratepay-invoice' => new WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay(),
 			'alipay-xborder'  => new WC_Gateway_Wirecard_Alipay_Crossborder(),
 		);

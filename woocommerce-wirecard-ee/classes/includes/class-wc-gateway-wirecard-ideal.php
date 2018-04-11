@@ -35,7 +35,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/includes/class-wc-wirecard-payment-gateway.php' );
 require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-sepa.php' );
-require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/helper/class-additional-information.php' );
 
 use Wirecard\PaymentSdk\Config\Config;
 use Wirecard\PaymentSdk\Config\PaymentMethodConfig;
@@ -47,8 +46,6 @@ use Wirecard\PaymentSdk\Transaction\IdealTransaction;
 use Wirecard\PaymentSdk\Transaction\SepaTransaction;
 use Wirecard\PaymentSdk\Entity\IdealBic;
 
-const PAYMENT_ACTION = 'pay';
-
 /**
  * Class WC_Gateway_Wirecard_Ideal
  *
@@ -57,24 +54,6 @@ const PAYMENT_ACTION = 'pay';
  * @since   1.1.0
  */
 class WC_Gateway_Wirecard_Ideal extends WC_Wirecard_Payment_Gateway {
-
-	/**
-	 * Payment type
-	 *
-	 * @since  1.1.0
-	 * @access private
-	 * @var string
-	 */
-	private $type;
-
-	/**
-	 * Additional helper for basket and risk management
-	 *
-	 * @since  1.1.0
-	 * @access private
-	 * @var Additional_Information
-	 */
-	private $additional_helper;
 
 	/**
 	 * WC_Gateway_Wirecard_Ideal constructor.
@@ -95,7 +74,9 @@ class WC_Gateway_Wirecard_Ideal extends WC_Wirecard_Payment_Gateway {
 			'refunds',
 		);
 
-		$this->refund = array( 'debit' );
+		$this->refund         = array( 'debit' );
+		$this->payment_action = 'pay';
+		$this->refund_action  = 'credit';
 
 		$this->init_form_fields();
 		$this->init_settings();
@@ -209,34 +190,11 @@ class WC_Gateway_Wirecard_Ideal extends WC_Wirecard_Payment_Gateway {
 		/** @var WC_Order $order */
 		$order = wc_get_order( $order_id );
 
-		$redirect_urls = new Redirect(
-			$this->create_redirect_url( $order, 'success', $this->type ),
-			$this->create_redirect_url( $order, 'cancel', $this->type ),
-			$this->create_redirect_url( $order, 'failure', $this->type )
-		);
+		$this->transaction = new IdealTransaction();
+		parent::process_payment( $order_id );
+		$this->transaction->setBic( $_POST['ideal_bank_bic'] );
 
-		$config = $this->create_payment_config();
-		$amount = new Amount( $order->get_total(), $order->get_currency() );
-
-		$transaction = new IdealTransaction();
-		$transaction->setNotificationUrl( $this->create_notification_url( $order, $this->type ) );
-		$transaction->setRedirect( $redirect_urls );
-		$transaction->setAmount( $amount );
-
-		$custom_fields = new CustomFieldCollection();
-		$custom_fields->add( new CustomField( 'orderId', $order_id ) );
-		$transaction->setCustomFields( $custom_fields );
-		$transaction->setBic( $_POST['ideal_bank_bic'] );
-
-		if ( $this->get_option( 'descriptor' ) == 'yes' ) {
-			$transaction->setDescriptor( $this->additional_helper->create_descriptor( $order ) );
-		}
-
-		if ( $this->get_option( 'send_additional' ) == 'yes' ) {
-			$this->additional_helper->set_additional_information( $order, $transaction );
-		}
-
-		return $this->execute_transaction( $transaction, $config, PAYMENT_ACTION, $order, $order_id );
+		return $this->execute_transaction( $this->transaction, $this->config, $this->payment_action, $order );
 	}
 
 	/**
@@ -252,8 +210,9 @@ class WC_Gateway_Wirecard_Ideal extends WC_Wirecard_Payment_Gateway {
 	 * @throws Exception
 	 */
 	public function process_refund( $order_id, $amount = null, $reason = '' ) {
-		$sepa = new WC_Gateway_Wirecard_Sepa();
-		return $sepa->process_refund( $order_id, $amount, $reason );
+		$sepa_payment = new WC_Gateway_Wirecard_Sepa();
+
+		return $sepa_payment->process_refund( $order_id, $amount, $reason );
 	}
 
 	/**

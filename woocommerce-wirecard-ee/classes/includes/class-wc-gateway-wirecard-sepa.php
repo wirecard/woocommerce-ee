@@ -34,16 +34,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/includes/class-wc-wirecard-payment-gateway.php' );
-require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/helper/class-additional-information.php' );
 
 use Wirecard\PaymentSdk\Config\Config;
 use Wirecard\PaymentSdk\Config\SepaConfig;
 use Wirecard\PaymentSdk\Entity\AccountHolder;
 use Wirecard\PaymentSdk\Entity\Amount;
-use Wirecard\PaymentSdk\Entity\CustomField;
-use Wirecard\PaymentSdk\Entity\CustomFieldCollection;
 use Wirecard\PaymentSdk\Entity\Mandate;
-use Wirecard\PaymentSdk\Entity\Redirect;
 use Wirecard\PaymentSdk\Transaction\SepaTransaction;
 
 /**
@@ -54,10 +50,6 @@ use Wirecard\PaymentSdk\Transaction\SepaTransaction;
  * @since   1.0.0
  */
 class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
-
-	private $type;
-
-	private $additional_helper;
 
 	public function __construct() {
 		$this->type               = 'sepa';
@@ -73,9 +65,10 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 			'refunds',
 		);
 
-		$this->cancel  = array( 'pending-debit' );
-		$this->capture = array( 'authorization' );
-		$this->refund  = array( 'debit' );
+		$this->cancel        = array( 'pending-debit' );
+		$this->capture       = array( 'authorization' );
+		$this->refund        = array( 'debit' );
+		$this->refund_action = 'credit';
 
 		$this->init_form_fields();
 		$this->init_settings();
@@ -225,7 +218,6 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 		$html = '
 			<div id="dialog" title="SEPA"></div>
 			<link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css" type="text/css" rel="stylesheet" />
-			<link href="' . WOOCOMMERCE_GATEWAY_WIRECARD_URL . '/assets/styles/sepa.css" type="text/css" rel="stylesheet" />
 			<script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
 			<script type="application/javascript" src="' . WOOCOMMERCE_GATEWAY_WIRECARD_URL . '/assets/js/sepa.js"></script>
 			<script>var sepa_url = "' . $page_url . '"</script>
@@ -263,56 +255,32 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 	 * @since 1.0.0
 	 */
 	public function process_payment( $order_id ) {
+		$order = wc_get_order( $order_id );
 		if ( ! $_POST['sepa_firstname'] || ! $_POST['sepa_lastname'] || ! $_POST['sepa_iban']
 			|| ( $this->get_option( 'enable_bic' ) == 'yes' && ! $_POST['sepa_bic'] ) ) {
 			wc_add_notice( __( 'Please fill in the SEPA fields and try again.', 'woocommerce-gateway-wirecard' ), 'error' );
 
 			return false;
 		}
-
-		$order = wc_get_order( $order_id );
-
-		$redirect_urls = new Redirect(
-			$this->create_redirect_url( $order, 'success', $this->type ),
-			$this->create_redirect_url( $order, 'cancel', $this->type ),
-			$this->create_redirect_url( $order, 'failure', $this->type )
-		);
-
-		$config    = $this->create_payment_config();
-		$amount    = new Amount( $order->get_total(), 'EUR' );
-		$operation = $this->get_option( 'payment_action' );
+		$this->payment_action = $this->get_option( 'payment_action' );
 
 		$account_holder = new AccountHolder();
 		$account_holder->setFirstName( $_POST['sepa_lastname'] );
 		$account_holder->setLastName( $_POST['sepa_firstname'] );
 
-		$transaction = new SepaTransaction();
-		$transaction->setNotificationUrl( $this->create_notification_url( $order, $this->type ) );
-		$transaction->setRedirect( $redirect_urls );
-		$transaction->setAmount( $amount );
-		$transaction->setAccountHolder( $account_holder );
-		$transaction->setIban( $_POST['sepa_iban'] );
+		$this->transaction = new SepaTransaction();
+		parent::process_payment( $order_id );
+		$this->transaction->setAccountHolder( $account_holder );
+		$this->transaction->setIban( $_POST['sepa_iban'] );
 
 		if ( $this->get_option( 'enable_bic' ) == 'yes' ) {
-			$transaction->setBic( $_POST['sepa_bic'] );
+			$this->transaction->setBic( $_POST['sepa_bic'] );
 		}
 
 		$mandate = new Mandate( $this->generate_mandate_id( $order_id ) );
-		$transaction->setMandate( $mandate );
+		$this->transaction->setMandate( $mandate );
 
-		$custom_fields = new CustomFieldCollection();
-		$custom_fields->add( new CustomField( 'orderId', $order_id ) );
-		$transaction->setCustomFields( $custom_fields );
-
-		if ( $this->get_option( 'descriptor' ) == 'yes' ) {
-			$transaction->setDescriptor( $this->additional_helper->create_descriptor( $order ) );
-		}
-
-		if ( $this->get_option( 'send_additional' ) == 'yes' ) {
-			$this->additional_helper->set_additional_information( $order, $transaction );
-		}
-
-		return $this->execute_transaction( $transaction, $config, $operation, $order, $order_id );
+		return $this->execute_transaction( $this->transaction, $this->config, $this->payment_action, $order );
 	}
 
 	/**
@@ -414,18 +382,11 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 	 * @return bool|SepaTransaction|WP_Error
 	 *
 	 * @since 1.0.0
+	 * @throws Exception
 	 */
 	public function process_refund( $order_id, $amount = null, $reason = '' ) {
-		parent::process_refund( $order_id, $amount, '' );
-		$order  = wc_get_order( $order_id );
-		$config = $this->create_payment_config();
+		$this->transaction = new SepaTransaction();
 
-		$transaction = new SepaTransaction();
-		$transaction->setParentTransactionId( $order->get_transaction_id() );
-		if ( ! is_null( $amount ) ) {
-			$transaction->setAmount( new Amount( $amount, $order->get_currency() ) );
-		}
-
-		return $this->execute_refund( $transaction, $config, $order );
+		return parent::process_refund( $order_id, $amount, '' );
 	}
 }
