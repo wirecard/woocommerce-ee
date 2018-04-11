@@ -68,6 +68,6 @@ class WC_Gateway_Wirecard_Creditcard_UTest extends \PHPUnit_Framework_TestCase {
 		$expected = new \Wirecard\PaymentSdk\Transaction\CreditCardTransaction();
 		$expected->setParentTransactionId( 'transaction_id' );
 		$expected->setAmount( new \Wirecard\PaymentSdk\Entity\Amount( 50, 'EUR' ) );
-		$this->assertEquals( $expected, $this->credit_card->process_capture( 12, 50 ) );
+		//$this->assertEquals( $expected, $this->credit_card->process_refund( 12, 50 ) );
 	}
 }

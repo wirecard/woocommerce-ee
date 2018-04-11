@@ -46,4 +46,8 @@ class WC_Order {
 	function get_transaction_id() {
 		return 'transaction_id';
 	}
+
+	function is_paid() {
+		return true;
+	}
 }
