@@ -47,8 +47,27 @@ class WC_Gateway_Wirecard_Creditcard_UTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function test_process_payment() {
-		$expected = new \Wirecard\PaymentSdk\Transaction\CreditCardTransaction();
+		$this->assertEquals( true, is_array( $this->credit_card->process_payment( 12 ) ) );
+	}
 
-		$this->assertEquals( $expected, $this->credit_card->process_payment( 12 ) );
+	public function test_process_cancel() {
+		$expected = new \Wirecard\PaymentSdk\Transaction\CreditCardTransaction();
+		$expected->setParentTransactionId( 'transaction_id' );
+		$expected->setAmount( new \Wirecard\PaymentSdk\Entity\Amount( 50, 'EUR' ) );
+		$this->assertEquals( $expected, $this->credit_card->process_cancel( 12, 50 ) );
+	}
+
+	public function test_process_capture() {
+		$expected = new \Wirecard\PaymentSdk\Transaction\CreditCardTransaction();
+		$expected->setParentTransactionId( 'transaction_id' );
+		$expected->setAmount( new \Wirecard\PaymentSdk\Entity\Amount( 50, 'EUR' ) );
+		$this->assertEquals( $expected, $this->credit_card->process_capture( 12, 50 ) );
+	}
+
+	public function test_process_refund() {
+		$expected = new \Wirecard\PaymentSdk\Transaction\CreditCardTransaction();
+		$expected->setParentTransactionId( 'transaction_id' );
+		$expected->setAmount( new \Wirecard\PaymentSdk\Entity\Amount( 50, 'EUR' ) );
+		$this->assertEquals( $expected, $this->credit_card->process_capture( 12, 50 ) );
 	}
 }

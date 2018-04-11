@@ -42,4 +42,8 @@ class WC_Order {
 	function get_currency() {
 		return 'EUR';
 	}
+
+	function get_transaction_id() {
+		return 'transaction_id';
+	}
 }
