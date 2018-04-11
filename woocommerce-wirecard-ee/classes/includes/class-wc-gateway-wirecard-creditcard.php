@@ -50,24 +50,6 @@ use Wirecard\PaymentSdk\TransactionService;
 class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 
 	/**
-	 * Payment type
-	 *
-	 * @since  1.0.0
-	 * @access private
-	 * @var string
-	 */
-	private $type;
-
-	/**
-	 * Additional helper for basket and risk management
-	 *
-	 * @since  1.0.0
-	 * @access private
-	 * @var Additional_Information
-	 */
-	private $additional_helper;
-
-	/**
 	 * WC_Gateway_Wirecard_Creditcard constructor.
 	 *
 	 * @since 1.0.0
@@ -86,9 +68,10 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 			'refunds',
 		);
 
-		$this->cancel  = array( 'authorization' );
-		$this->capture = array( 'authorization' );
-		$this->refund  = array( 'purchase', 'capture-authorization' );
+		$this->cancel        = array( 'authorization' );
+		$this->capture       = array( 'authorization' );
+		$this->refund        = array( 'purchase', 'capture-authorization' );
+		$this->refund_action = 'refund';
 
 		$this->init_form_fields();
 		$this->init_settings();
@@ -145,14 +128,16 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 				'default' => 'dbc5a498-9a66-43b9-bf1d-a618dd399684',
 			),
 			'ssl_max_limit'               => array(
-				'title'   => __( 'Non 3-D Secure Max. Limit', 'woocommerce-gateway-wirecard' ),
-				'type'    => 'text',
-				'default' => '100.0',
+				'title'       => __( 'Non 3-D Secure Max. Limit', 'woocommerce-gateway-wirecard' ),
+				'type'        => 'text',
+				'description' => __( 'Amount in default shop currency', 'woocommerce-gateway-wirecard' ),
+				'default'     => '100.0',
 			),
 			'three_d_min_limit'           => array(
-				'title'   => __( '3-D Secure Min. Limit', 'woocommerce-gateway-wirecard' ),
-				'type'    => 'text',
-				'default' => '50.0',
+				'title'       => __( '3-D Secure Min. Limit', 'woocommerce-gateway-wirecard' ),
+				'type'        => 'text',
+				'description' => __( 'Amount in default shop currency', 'woocommerce-gateway-wirecard' ),
+				'default'     => '50.0',
 			),
 			'credentials'                 => array(
 				'title'       => __( 'Credentials', 'woocommerce-gateway-wirecard' ),
@@ -237,7 +222,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 			$payment_config->addSslMaxLimit(
 				new Amount(
 					$this->get_option( 'ssl_max_limit' ),
-					'EUR'
+					$this->get_option( 'woocommerce_currency' )
 				)
 			);
 		}
@@ -246,7 +231,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 			$payment_config->addThreeDMinLimit(
 				new Amount(
 					$this->get_option( 'three_d_min_limit' ),
-					'EUR'
+					$this->get_option( 'woocommerce_currency' )
 				)
 			);
 		}
@@ -293,37 +278,16 @@ HTML;
 	public function process_payment( $order_id ) {
 		$order = wc_get_order( $order_id );
 
-		$redirect_urls = new Redirect(
-			$this->create_redirect_url( $order, 'success', $this->type ),
-			$this->create_redirect_url( $order, 'cancel', $this->type ),
-			$this->create_redirect_url( $order, 'failure', $this->type )
-		);
+		$this->payment_action = $this->get_option( 'payment_action' );
+		$token                = $_POST['tokenId'];
 
-		$config    = $this->create_payment_config();
-		$amount    = new Amount( $order->get_total(), 'EUR' );
-		$operation = $this->get_option( 'payment_action' );
-		$token     = $_POST['tokenId'];
+		$this->transaction = new CreditCardTransaction();
+		parent::process_payment( $order_id );
 
-		$transaction = new CreditCardTransaction();
-		$transaction->setNotificationUrl( $this->create_notification_url( $order, $this->type ) );
-		$transaction->setAmount( $amount );
-		$transaction->setTokenId( $token );
-		$transaction->setTermUrl( $this->create_redirect_url( $order, 'success', $this->type ) );
-		$transaction->setRedirect( $redirect_urls );
+		$this->transaction->setTokenId( $token );
+		$this->transaction->setTermUrl( $this->create_redirect_url( $order, 'success', $this->type ) );
 
-		$custom_fields = new CustomFieldCollection();
-		$custom_fields->add( new CustomField( 'orderId', $order_id ) );
-		$transaction->setCustomFields( $custom_fields );
-
-		if ( $this->get_option( 'descriptor' ) == 'yes' ) {
-			$transaction->setDescriptor( $this->additional_helper->create_descriptor( $order ) );
-		}
-
-		if ( $this->get_option( 'send_additional' ) == 'yes' ) {
-			$this->additional_helper->set_additional_information( $order, $transaction );
-		}
-
-		return $this->execute_transaction( $transaction, $config, $operation, $order, $order_id );
+		return $this->execute_transaction( $this->transaction, $this->config, $this->payment_action, $order );
 	}
 
 	/**
@@ -392,18 +356,11 @@ HTML;
 	 * @return bool|CreditCardTransaction|WP_Error
 	 *
 	 * @since 1.0.0
+	 * @throws Exception
 	 */
 	public function process_refund( $order_id, $amount = null, $reason = '' ) {
-		parent::process_refund( $order_id, $amount, '' );
-		$order  = wc_get_order( $order_id );
-		$config = $this->create_payment_config();
+		$this->transaction = new CreditCardTransaction();
 
-		$transaction = new CreditCardTransaction();
-		$transaction->setParentTransactionId( $order->get_transaction_id() );
-		if ( ! is_null( $amount ) ) {
-			$transaction->setAmount( new Amount( $amount, $order->get_currency() ) );
-		}
-
-		return $this->execute_refund( $transaction, $config, $order );
+		return parent::process_refund( $order_id, $amount, '' );
 	}
 }

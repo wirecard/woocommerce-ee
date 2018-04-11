@@ -117,19 +117,24 @@ class Wirecard_Transaction_Factory {
 	}
 
 	/**
-	* Create new transaction entry in database
-	*
-	* @param WC_Order        $order
-	* @param SuccessResponse $response
-	* @param string          $base_url
-	* @param string          $transaction_state
-	*
-	* @return int
-	*
-	* @since 1.0.0
-	*/
+	 * Create new transaction entry in database
+	 *
+	 * @param WC_Order        $order
+	 * @param SuccessResponse $response
+	 * @param string          $base_url
+	 * @param string          $transaction_state
+	 *
+	 * @return int
+	 *
+	 * @since 1.0.0
+	 */
 	public function create_transaction( $order, $response, $base_url, $transaction_state ) {
 		global $wpdb;
+
+		//prevent possible duplicated transactions
+		if ( $this->get_transaction( $response->getTransactionId() ) ) {
+			return;
+		}
 
 		$parent_transaction_id = '';
 		$parent_transaction    = $this->get_transaction( $response->getParentTransactionId() );
@@ -154,8 +159,10 @@ class Wirecard_Transaction_Factory {
 		if ( $transaction ) {
 			$wpdb->update(
 				$this->table_name,
-				$this->set_transaction_parameters( $response, $parent_transaction_id, $transaction_state, $order,
-				$transaction_link),
+				$this->set_transaction_parameters(
+					$response, $parent_transaction_id, $transaction_state, $order,
+					$transaction_link
+				),
 				array(
 					'transaction_id' => $response->getTransactionId(),
 				)
@@ -163,8 +170,10 @@ class Wirecard_Transaction_Factory {
 		} else {
 			$wpdb->insert(
 				$this->table_name,
-				$this->set_transaction_parameters($response, $parent_transaction_id, $transaction_state, $order,
-				$transaction_link)
+				$this->set_transaction_parameters(
+					$response, $parent_transaction_id, $transaction_state, $order,
+					$transaction_link
+				)
 			);
 		}
 
