@@ -29,15 +29,17 @@
  * Please do not use the plugin if you do not agree to these terms of use!
  */
 
-define('ABSPATH', true);
-define('WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR', __DIR__ . '/../');
-define('WOOCOMMERCE_GATEWAY_WIRECARD_URL', __DIR__ . '/../');
+class WC_Order {
 
-require_once __DIR__ . '/../vendor/autoload.php';
+	function get_id() {
+		return 12;
+	}
 
-//stub objects
-require __DIR__ . '/stubs/wc-payment-gateway.php';
-require_once __DIR__ . '/stubs/functions.php';
-require_once __DIR__ . '/stubs/wc-settings-api.php';
-require_once __DIR__ . '/stubs/wc-order.php';
+	function get_total() {
+		return 20.56;
+	}
 
+	function get_currency() {
+		return 'EUR';
+	}
+}

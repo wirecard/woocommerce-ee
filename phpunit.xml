@@ -6,7 +6,7 @@
 >
     <testsuites>
         <testsuite name="unit-tests">
-            <directory prefix="test-" suffix=".php">woocommerce-wirecard-ee/Test</directory>
+            <directory prefix="utest-" suffix=".php">woocommerce-wirecard-ee/Test</directory>
         </testsuite>
     </testsuites>
     <filter>

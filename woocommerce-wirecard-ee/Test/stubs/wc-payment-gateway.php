@@ -29,5 +29,11 @@
  * Please do not use the plugin if you do not agree to these terms of use!
  */
 
-class WC_Payment_Gateway {
+require_once __DIR__ . '/wc-settings-api.php';
+
+class WC_Payment_Gateway extends WC_Settings_API {
+
+	public function init_settings() {
+		return;
+	}
 }

@@ -29,15 +29,30 @@
  * Please do not use the plugin if you do not agree to these terms of use!
  */
 
-define('ABSPATH', true);
-define('WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR', __DIR__ . '/../');
-define('WOOCOMMERCE_GATEWAY_WIRECARD_URL', __DIR__ . '/../');
+function __( $text, $domain = 'default' ) {
+	return $text;
+}
 
-require_once __DIR__ . '/../vendor/autoload.php';
+function add_action( $tag, $function_to_add, $priority = 10, $accepted_args = 1) {
+	return;
+}
 
-//stub objects
-require __DIR__ . '/stubs/wc-payment-gateway.php';
-require_once __DIR__ . '/stubs/functions.php';
-require_once __DIR__ . '/stubs/wc-settings-api.php';
-require_once __DIR__ . '/stubs/wc-order.php';
+function wc_get_order() {
+	return new WC_Order();
+}
 
+function add_query_arg( $arguments ) {
+	$url = 'my-base-url.com';
+	foreach ($arguments as $key => $value) {
+		$url .= '&' . $key . '=' . $value;
+	}
+	return $url;
+}
+
+function site_url() {
+	return;
+}
+
+function is_ssl() {
+	return false;
+}

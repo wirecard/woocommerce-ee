@@ -29,15 +29,26 @@
  * Please do not use the plugin if you do not agree to these terms of use!
  */
 
-define('ABSPATH', true);
-define('WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR', __DIR__ . '/../');
-define('WOOCOMMERCE_GATEWAY_WIRECARD_URL', __DIR__ . '/../');
+require_once __DIR__ . '/../../../../classes/includes/class-wc-gateway-wirecard-creditcard.php';
 
-require_once __DIR__ . '/../vendor/autoload.php';
+class WC_Gateway_Wirecard_Creditcard_UTest extends \PHPUnit_Framework_TestCase {
 
-//stub objects
-require __DIR__ . '/stubs/wc-payment-gateway.php';
-require_once __DIR__ . '/stubs/functions.php';
-require_once __DIR__ . '/stubs/wc-settings-api.php';
-require_once __DIR__ . '/stubs/wc-order.php';
+	/** @var WC_Gateway_Wirecard_Creditcard */
+	private $credit_card;
 
+	public function setUp() {
+		$this->credit_card = new WC_Gateway_Wirecard_Creditcard();
+		$_POST['tokenId'] = 'test';
+	}
+
+	public function test_init_form_fields() {
+		$this->credit_card->init_form_fields();
+		$this->assertTrue( is_array( $this->credit_card->form_fields ) );
+	}
+
+	public function test_process_payment() {
+		$expected = new \Wirecard\PaymentSdk\Transaction\CreditCardTransaction();
+
+		$this->assertEquals( $expected, $this->credit_card->process_payment( 12 ) );
+	}
+}
