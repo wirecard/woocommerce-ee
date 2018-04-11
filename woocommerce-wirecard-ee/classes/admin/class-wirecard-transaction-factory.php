@@ -131,6 +131,11 @@ class Wirecard_Transaction_Factory {
 	public function create_transaction( $order, $response, $base_url, $transaction_state ) {
 		global $wpdb;
 
+		//prevent possible duplicated transactions
+		if ( $this->get_transaction( $response->getTransactionId() ) ) {
+			return;
+		}
+
 		$parent_transaction_id = '';
 		$parent_transaction    = $this->get_transaction( $response->getParentTransactionId() );
 

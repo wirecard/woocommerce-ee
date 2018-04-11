@@ -177,9 +177,10 @@ class WC_Gateway_Wirecard_Poipia extends WC_Wirecard_Payment_Gateway {
 		$order = wc_get_order( $order_id );
 
 		$this->transaction = new PoiPiaTransaction();
+		parent::process_payment( $order_id );
 		$this->transaction->setAccountHolder( $this->additional_helper->create_account_holder( $order, 'billing' ) );
 
-		return parent::process_payment( $order_id );
+		return $this->execute_transaction( $this->transaction, $this->config, $this->payment_action, $order );
 	}
 
 	/**

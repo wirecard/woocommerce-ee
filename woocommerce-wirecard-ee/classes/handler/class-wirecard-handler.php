@@ -47,7 +47,7 @@ class Wirecard_Handler {
 	/**
 	 * Array of payment methods
 	 *
-	 * @since  1.0.0
+	 * @since 1.0.0
 	 * @access private
 	 * @var array
 	 */
@@ -56,7 +56,7 @@ class Wirecard_Handler {
 	/**
 	 * Logger
 	 *
-	 * @since  1.0.0
+	 * @since 1.0.0
 	 * @access protected
 	 * @var Logger
 	 */
@@ -69,13 +69,14 @@ class Wirecard_Handler {
 	 */
 	public function __construct() {
 		$this->payment_methods = array(
-			'paypal'        => new WC_Gateway_Wirecard_Paypal(),
-			'creditcard'    => new WC_Gateway_Wirecard_Creditcard(),
-			'sepa'          => new WC_Gateway_Wirecard_Sepa(),
-			'sepacredit'    => new WC_Gateway_Wirecard_Sepa(),
-			'ideal'         => new WC_Gateway_Wirecard_Ideal(),
-			'sofortbanking' => new WC_Gateway_Wirecard_Sofort(),
-			'wiretransfer'  => new WC_Gateway_Wirecard_Poipia(),
+			'paypal'          => new WC_Gateway_Wirecard_Paypal(),
+			'creditcard'      => new WC_Gateway_Wirecard_Creditcard(),
+			'sepa'            => new WC_Gateway_Wirecard_Sepa(),
+			'sepacredit'      => new WC_Gateway_Wirecard_Sepa(),
+			'ideal'           => new WC_Gateway_Wirecard_Ideal(),
+			'sofortbanking'   => new WC_Gateway_Wirecard_Sofort(),
+			'wiretransfer'    => new WC_Gateway_Wirecard_Poipia(),
+			'ratepay-invoice' => new WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay(),
 		);
 		$this->logger          = new Logger();
 	}

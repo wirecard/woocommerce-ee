@@ -128,14 +128,16 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 				'default' => 'dbc5a498-9a66-43b9-bf1d-a618dd399684',
 			),
 			'ssl_max_limit'               => array(
-				'title'   => __( 'Non 3-D Secure Max. Limit', 'woocommerce-gateway-wirecard' ),
-				'type'    => 'text',
-				'default' => '100.0',
+				'title'       => __( 'Non 3-D Secure Max. Limit', 'woocommerce-gateway-wirecard' ),
+				'type'        => 'text',
+				'description' => __( 'Amount in default shop currency', 'woocommerce-gateway-wirecard' ),
+				'default'     => '100.0',
 			),
 			'three_d_min_limit'           => array(
-				'title'   => __( '3-D Secure Min. Limit', 'woocommerce-gateway-wirecard' ),
-				'type'    => 'text',
-				'default' => '50.0',
+				'title'       => __( '3-D Secure Min. Limit', 'woocommerce-gateway-wirecard' ),
+				'type'        => 'text',
+				'description' => __( 'Amount in default shop currency', 'woocommerce-gateway-wirecard' ),
+				'default'     => '50.0',
 			),
 			'credentials'                 => array(
 				'title'       => __( 'Credentials', 'woocommerce-gateway-wirecard' ),
@@ -220,7 +222,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 			$payment_config->addSslMaxLimit(
 				new Amount(
 					$this->get_option( 'ssl_max_limit' ),
-					'EUR'
+					$this->get_option( 'woocommerce_currency' )
 				)
 			);
 		}
@@ -229,7 +231,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 			$payment_config->addThreeDMinLimit(
 				new Amount(
 					$this->get_option( 'three_d_min_limit' ),
-					'EUR'
+					$this->get_option( 'woocommerce_currency' )
 				)
 			);
 		}
@@ -280,10 +282,12 @@ HTML;
 		$token                = $_POST['tokenId'];
 
 		$this->transaction = new CreditCardTransaction();
+		parent::process_payment( $order_id );
+
 		$this->transaction->setTokenId( $token );
 		$this->transaction->setTermUrl( $this->create_redirect_url( $order, 'success', $this->type ) );
 
-		return parent::process_payment( $order_id );
+		return $this->execute_transaction( $this->transaction, $this->config, $this->payment_action, $order );
 	}
 
 	/**

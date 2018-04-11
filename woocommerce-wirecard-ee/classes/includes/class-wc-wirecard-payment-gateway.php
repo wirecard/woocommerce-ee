@@ -134,6 +134,15 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	protected $additional_helper;
 
 	/**
+	 * Payment method config
+	 *
+	 * @since 1.1.0
+	 * @access protected
+	 * @var Config
+	 */
+	protected $config;
+
+	/**
 	 * Add global wirecard payment gateway actions
 	 *
 	 * @since 1.0.0
@@ -545,15 +554,15 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 * @since 1.1.0
 	 */
 	public function process_payment( $order_id ) {
-		$order                   = wc_get_order( $order_id );
-		$redirect_urls           = new Redirect(
+		$order         = wc_get_order( $order_id );
+		$redirect_urls = new Redirect(
 			$this->create_redirect_url( $order, 'success', $this->type ),
 			$this->create_redirect_url( $order, 'cancel', $this->type ),
 			$this->create_redirect_url( $order, 'failure', $this->type )
 		);
 
-		$config = $this->create_payment_config();
-		$amount = new Amount( $order->get_total(), $order->get_currency() );
+		$this->config = $this->create_payment_config();
+		$amount       = new Amount( $order->get_total(), $order->get_currency() );
 
 		$this->transaction->setNotificationUrl( $this->create_notification_url( $order, $this->type ) );
 		$this->transaction->setRedirect( $redirect_urls );
@@ -570,8 +579,6 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 		if ( $this->get_option( 'send_additional' ) == 'yes' ) {
 			$this->transaction = $this->additional_helper->set_additional_information( $order, $this->transaction );
 		}
-
-		return $this->execute_transaction( $this->transaction, $config, $this->payment_action, $order );
 	}
 
 	/**
@@ -590,13 +597,13 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 		if ( ! $this->can_refund_order( $order ) ) {
 			return new WP_Error( 'error', __( 'No online refund possible at this time.', 'woocommerce-gateway-wirecard' ) );
 		}
-		$config = $this->create_payment_config();
+		$this->config = $this->create_payment_config();
 		$this->transaction->setParentTransactionId( $order->get_transaction_id() );
 		if ( ! is_null( $amount ) ) {
 			$this->transaction->setAmount( new Amount( $amount, $order->get_currency() ) );
 		}
 
-		return $this->execute_refund( $this->transaction, $config, $order, $this->refund_action );
+		return $this->execute_refund( $this->transaction, $this->config, $order, $this->refund_action );
 	}
 
 	/**
@@ -606,5 +613,18 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	public function callback() {
 		$callback = new Wirecard_Callback();
 		$callback->post_form();
+	}
+
+	/**
+	 * Return true if the payment method is available
+	 *
+	 * @since 1.1.0
+	 * @return bool
+	 */
+	public function is_available() {
+		if ( $this->get_option( 'enabled' ) == 'yes' ) {
+			return true;
+		}
+		return false;
 	}
 }

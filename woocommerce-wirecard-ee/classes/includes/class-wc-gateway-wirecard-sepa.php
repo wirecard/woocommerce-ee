@@ -39,10 +39,7 @@ use Wirecard\PaymentSdk\Config\Config;
 use Wirecard\PaymentSdk\Config\SepaConfig;
 use Wirecard\PaymentSdk\Entity\AccountHolder;
 use Wirecard\PaymentSdk\Entity\Amount;
-use Wirecard\PaymentSdk\Entity\CustomField;
-use Wirecard\PaymentSdk\Entity\CustomFieldCollection;
 use Wirecard\PaymentSdk\Entity\Mandate;
-use Wirecard\PaymentSdk\Entity\Redirect;
 use Wirecard\PaymentSdk\Transaction\SepaTransaction;
 
 /**
@@ -221,7 +218,6 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 		$html = '
 			<div id="dialog" title="SEPA"></div>
 			<link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css" type="text/css" rel="stylesheet" />
-			<link href="' . WOOCOMMERCE_GATEWAY_WIRECARD_URL . '/assets/styles/sepa.css" type="text/css" rel="stylesheet" />
 			<script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
 			<script type="application/javascript" src="' . WOOCOMMERCE_GATEWAY_WIRECARD_URL . '/assets/js/sepa.js"></script>
 			<script>var sepa_url = "' . $page_url . '"</script>
@@ -259,6 +255,7 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 	 * @since 1.0.0
 	 */
 	public function process_payment( $order_id ) {
+		$order = wc_get_order( $order_id );
 		if ( ! $_POST['sepa_firstname'] || ! $_POST['sepa_lastname'] || ! $_POST['sepa_iban']
 			|| ( $this->get_option( 'enable_bic' ) == 'yes' && ! $_POST['sepa_bic'] ) ) {
 			wc_add_notice( __( 'Please fill in the SEPA fields and try again.', 'woocommerce-gateway-wirecard' ), 'error' );
@@ -272,6 +269,7 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 		$account_holder->setLastName( $_POST['sepa_firstname'] );
 
 		$this->transaction = new SepaTransaction();
+		parent::process_payment( $order_id );
 		$this->transaction->setAccountHolder( $account_holder );
 		$this->transaction->setIban( $_POST['sepa_iban'] );
 
@@ -282,7 +280,7 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 		$mandate = new Mandate( $this->generate_mandate_id( $order_id ) );
 		$this->transaction->setMandate( $mandate );
 
-		return parent::process_payment( $order_id );
+		return $this->execute_transaction( $this->transaction, $this->config, $this->payment_action, $order );
 	}
 
 	/**
