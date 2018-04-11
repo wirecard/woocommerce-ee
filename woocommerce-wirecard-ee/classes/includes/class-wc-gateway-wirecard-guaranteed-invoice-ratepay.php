@@ -405,7 +405,7 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 		$difference = $birth_day->diff( new \DateTime() );
 		$age        = $difference->format( '%y' );
 		if ( $age < 18 ) {
-			wc_add_notice( __( 'You need to be order then 18 to order.', 'woocommerce-gateway-wirecard' ), 'error' );
+			wc_add_notice( __( 'You need to be older then 18 to order.', 'woocommerce-gateway-wirecard' ), 'error' );
 			return false;
 		}
 		return true;
