@@ -68,6 +68,7 @@ class WC_Gateway_Wirecard_Alipay_Crossborder extends WC_Wirecard_Payment_Gateway
 
 		$this->refund = array( 'debit' );
 		$this->payment_action = 'pay';
+		$this->refund_action = 'cancel';
 
 		$this->init_form_fields();
 		$this->init_settings();
