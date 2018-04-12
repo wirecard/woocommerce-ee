@@ -60,3 +60,7 @@ function is_ssl() {
 function wc_add_notice( $message, $type ) {
 
 }
+
+function get_bloginfo( ) {
+	return 'name';
+}

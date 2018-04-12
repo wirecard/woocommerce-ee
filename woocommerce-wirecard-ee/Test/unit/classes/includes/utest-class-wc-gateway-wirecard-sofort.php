@@ -29,29 +29,27 @@
  * Please do not use the plugin if you do not agree to these terms of use!
  */
 
-class WC_Order {
+require_once __DIR__ . '/../../../../classes/includes/class-wc-gateway-wirecard-sofort.php';
 
-	function get_id() {
-		return 12;
+class WC_Gateway_Wirecard_Sofort_Utest extends \PHPUnit_Framework_TestCase {
+
+	/** @var WC_Gateway_Wirecard_Sofort */
+	private $payment;
+
+	public function setUp() {
+		$this->payment = new WC_Gateway_Wirecard_Sofort();
 	}
 
-	function get_total() {
-		return 20.56;
+	public function test_init_form_fields() {
+		$this->payment->init_form_fields();
+		$this->assertTrue( is_array( $this->payment->form_fields ) );
 	}
 
-	function get_currency() {
-		return 'EUR';
+	public function test_process_payment() {
+		$this->assertEquals( true, is_array( $this->payment->process_payment( 12 ) ) );
 	}
 
-	function get_transaction_id() {
-		return 'transaction_id';
-	}
-
-	function is_paid() {
-		return true;
-	}
-
-	function get_order_number() {
-		return 12;
+	public function test_process_refund() {
+		$this->assertNotNull( $this->payment->process_refund( 12 ) );
 	}
 }
