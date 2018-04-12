@@ -62,7 +62,7 @@ class Additional_Information {
 	 *
 	 * @since 1.0.0
 	 */
-	public function create_shopping_basket( $transaction ) {
+	public function create_shopping_basket( $transaction, $order_total = 0 ) {
 		global $woocommerce;
 
 		/** @var $cart WC_Cart */
@@ -71,20 +71,32 @@ class Additional_Information {
 		$basket = new Basket();
 		$basket->setVersion( $transaction );
 
+		$sum = 0;
 		foreach ( $cart->get_cart() as $cart_item_key => $cart_item ) {
 			/** @var $product WC_Product */
 			$product = $cart_item['data'];
+			$sum += number_format( wc_get_price_including_tax($product), wc_get_price_decimals() );
 			$basket  = $this->set_basket_item(
 				$basket,
 				$product,
 				$cart_item['quantity'],
-				$cart_item['line_total'],
-				$cart_item['line_tax']
+				wc_get_price_excluding_tax( $product ),
+				( wc_get_price_including_tax($product) - wc_get_price_excluding_tax( $product ) )
 			);
 		}
 
 		if ( $cart->get_shipping_total() > 0 ) {
+			$sum += $cart->get_shipping_total() + $cart->get_shipping_tax();
 			$basket = $this->set_shipping_item( $basket, $cart->get_shipping_total(), $cart->get_shipping_tax() );
+		}
+
+		if ( ( $order_total - $sum ) > 0 ) {
+			$amount = new Amount( number_format( ( $order_total - $sum ), wc_get_price_decimals() ) , get_woocommerce_currency() );
+			$item   = new Item( 'Rounding', $amount, 1 );
+			$item->setDescription( 'Rounding' );
+			$item->setArticleNumber( 'Rounding' );
+			$item->setTaxRate( 20.00 );
+			$basket->add( $item );
 		}
 
 		return $basket;
@@ -117,12 +129,12 @@ class Additional_Information {
 	 *
 	 * @since 1.0.0
 	 */
-	public function set_additional_information( $order, $transaction ) {
+	public function set_additional_information( $order, $transaction, $total ) {
 		$transaction->setDescriptor( $this->create_descriptor( $order ) );
 		$transaction->setAccountHolder( $this->create_account_holder( $order, 'billing' ) );
 		$transaction->setShipping( $this->create_account_holder( $order, 'shipping' ) );
 		$transaction->setOrderNumber( $order->get_order_number() );
-		$transaction->setBasket( $this->create_shopping_basket( $transaction ) );
+		$transaction->setBasket( $this->create_shopping_basket( $transaction, $total ) );
 		$transaction->setIpAddress( $order->get_customer_ip_address() );
 		$transaction->setConsumerId( $order->get_customer_id() );
 
@@ -196,21 +208,33 @@ class Additional_Information {
 	 * @return Basket
 	 * @since 1.1.0
 	 */
-	public function create_basket_from_order( $orderd_products, $basket, $transaction, $shipping_total, $shipping_tax ) {
+	public function create_basket_from_order( $orderd_products, $basket, $transaction, $shipping_total, $shipping_tax, $order_total ) {
 		$basket->setVersion( $transaction );
+		$sum = 0;
 		foreach ( $orderd_products as $item_id => $item ) {
 			$product = new WC_Product( $orderd_products[ $item_id ]->get_product_id() );
+			$sum += number_format( wc_get_price_including_tax($product), wc_get_price_decimals() );
 			$basket  = $this->set_basket_item(
 				$basket,
 				$product,
 				$orderd_products[ $item_id ]->get_quantity(),
-				$orderd_products[ $item_id ]->get_total(),
-				wc_format_decimal( $orderd_products[ $item_id ]->get_total_tax(), wc_get_price_decimals() )
+				wc_get_price_excluding_tax($product),
+				(wc_get_price_including_tax($product) - wc_get_price_excluding_tax($product))
 			);
 		}
 
 		if ( $shipping_total > 0 ) {
+			$sum += $shipping_total + $shipping_tax;
 			$basket = $this->set_shipping_item( $basket, $shipping_total, $shipping_tax );
+		}
+
+		if ( ( $order_total - $sum ) > 0 ) {
+			$amount = new Amount( number_format( ( $order_total - $sum ), wc_get_price_decimals() ) , get_woocommerce_currency() );
+			$item   = new Item( 'Rounding', $amount, 1 );
+			$item->setDescription( 'Rounding' );
+			$item->setArticleNumber( 'Rounding' );
+			$item->setTaxRate( 20.00 );
+			$basket->add( $item );
 		}
 
 		return $basket;
@@ -227,13 +251,11 @@ class Additional_Information {
 	 * @return Basket
 	 */
 	private function set_basket_item( $basket, $product, $quantity, $total, $tax ) {
-		$item_unit_gross_amount = floatval( number_format( $total + $tax, wc_get_price_decimals() ) );
+		$item_unit_gross_amount = $total + $tax;
 		$item_tax_rate          = $tax / $item_unit_gross_amount;
-
 		$article_nr  = $product->get_id();
 		$description = $product->get_short_description();
-		$amount      = new Amount( $item_unit_gross_amount, get_woocommerce_currency() );
-
+		$amount      = new Amount( number_format( $item_unit_gross_amount, wc_get_price_decimals() ), get_woocommerce_currency() );
 		$tax_rate = 0;
 		if ( $product->is_taxable() ) {
 			$tax_rate = number_format( $item_tax_rate * 100, wc_get_price_decimals() );
