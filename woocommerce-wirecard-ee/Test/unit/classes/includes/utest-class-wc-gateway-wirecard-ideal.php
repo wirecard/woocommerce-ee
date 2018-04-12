@@ -29,18 +29,30 @@
  * Please do not use the plugin if you do not agree to these terms of use!
  */
 
-define('ABSPATH', true);
-define('WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR', __DIR__ . '/../');
-define('WOOCOMMERCE_GATEWAY_WIRECARD_URL', __DIR__ . '/../');
+require_once __DIR__ . '/../../../../classes/includes/class-wc-gateway-wirecard-ideal.php';
 
-require_once __DIR__ . '/../vendor/autoload.php';
+use Wirecard\PaymentSdk\Entity\IdealBic;
 
-//stub objects
-require_once __DIR__ . '/stubs/wc-payment-gateway.php';
-require_once __DIR__ . '/stubs/functions.php';
-require_once __DIR__ . '/stubs/wc-settings-api.php';
-require_once __DIR__ . '/stubs/wc-order.php';
-require_once __DIR__ . '/stubs/wc-log-levels.php';
-require_once __DIR__ . '/stubs/wp-error.php';
-require_once __DIR__ . '/stubs/wc-logger.php';
+class WC_Gateway_Wirecard_Ideal_Utest extends \PHPUnit_Framework_TestCase {
 
+	/** @var WC_Gateway_Wirecard_Ideal */
+	private $payment;
+
+	public function setUp() {
+		$this->payment = new WC_Gateway_Wirecard_Ideal();
+		$_POST['ideal_bank_bic'] = IdealBic::INGBNL2A;
+	}
+
+	public function test_init_form_fields() {
+		$this->payment->init_form_fields();
+		$this->assertTrue( is_array( $this->payment->form_fields ) );
+	}
+
+	public function test_get_ideal_bic() {
+		$this->assertTrue( is_array( $this->payment->get_ideal_bic() ) );
+	}
+
+	public function test_process_payment() {
+		$this->assertEquals( true, is_array( $this->payment->process_payment( 12 ) ) );
+	}
+}
