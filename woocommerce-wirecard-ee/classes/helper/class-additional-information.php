@@ -75,23 +75,23 @@ class Additional_Information {
 		foreach ( $cart->get_cart() as $cart_item_key => $cart_item ) {
 			/** @var $product WC_Product */
 			$product = $cart_item['data'];
-			$sum += number_format( wc_get_price_including_tax($product), wc_get_price_decimals() );
+			$sum    += number_format( wc_get_price_including_tax( $product ), wc_get_price_decimals() );
 			$basket  = $this->set_basket_item(
 				$basket,
 				$product,
 				$cart_item['quantity'],
 				wc_get_price_excluding_tax( $product ),
-				( wc_get_price_including_tax($product) - wc_get_price_excluding_tax( $product ) )
+				( wc_get_price_including_tax( $product ) - wc_get_price_excluding_tax( $product ) )
 			);
 		}
 
 		if ( $cart->get_shipping_total() > 0 ) {
-			$sum += $cart->get_shipping_total() + $cart->get_shipping_tax();
+			$sum   += $cart->get_shipping_total() + $cart->get_shipping_tax();
 			$basket = $this->set_shipping_item( $basket, $cart->get_shipping_total(), $cart->get_shipping_tax() );
 		}
 
 		if ( ( $order_total - $sum ) > 0 ) {
-			$amount = new Amount( number_format( ( $order_total - $sum ), wc_get_price_decimals() ) , get_woocommerce_currency() );
+			$amount = new Amount( number_format( ( $order_total - $sum ), wc_get_price_decimals() ), get_woocommerce_currency() );
 			$item   = new Item( 'Rounding', $amount, 1 );
 			$item->setDescription( 'Rounding' );
 			$item->setArticleNumber( 'Rounding' );
@@ -213,23 +213,23 @@ class Additional_Information {
 		$sum = 0;
 		foreach ( $orderd_products as $item_id => $item ) {
 			$product = new WC_Product( $orderd_products[ $item_id ]->get_product_id() );
-			$sum += number_format( wc_get_price_including_tax($product), wc_get_price_decimals() );
+			$sum    += number_format( wc_get_price_including_tax( $product ), wc_get_price_decimals() );
 			$basket  = $this->set_basket_item(
 				$basket,
 				$product,
 				$orderd_products[ $item_id ]->get_quantity(),
-				wc_get_price_excluding_tax($product),
-				(wc_get_price_including_tax($product) - wc_get_price_excluding_tax($product))
+				wc_get_price_excluding_tax( $product ),
+				( wc_get_price_including_tax( $product ) - wc_get_price_excluding_tax( $product ) )
 			);
 		}
 
 		if ( $shipping_total > 0 ) {
-			$sum += $shipping_total + $shipping_tax;
+			$sum   += $shipping_total + $shipping_tax;
 			$basket = $this->set_shipping_item( $basket, $shipping_total, $shipping_tax );
 		}
 
 		if ( ( $order_total - $sum ) > 0 ) {
-			$amount = new Amount( number_format( ( $order_total - $sum ), wc_get_price_decimals() ) , get_woocommerce_currency() );
+			$amount = new Amount( number_format( ( $order_total - $sum ), wc_get_price_decimals() ), get_woocommerce_currency() );
 			$item   = new Item( 'Rounding', $amount, 1 );
 			$item->setDescription( 'Rounding' );
 			$item->setArticleNumber( 'Rounding' );
@@ -253,13 +253,16 @@ class Additional_Information {
 	private function set_basket_item( $basket, $product, $quantity, $total, $tax ) {
 		$item_unit_gross_amount = $total + $tax;
 		$item_tax_rate          = $tax / $item_unit_gross_amount;
+
 		$article_nr  = $product->get_id();
 		$description = $product->get_short_description();
 		$amount      = new Amount( number_format( $item_unit_gross_amount, wc_get_price_decimals() ), get_woocommerce_currency() );
+
 		$tax_rate = 0;
 		if ( $product->is_taxable() ) {
 			$tax_rate = number_format( $item_tax_rate * 100, wc_get_price_decimals() );
 		}
+
 		$item = new Item( $product->get_name() . ' x' . $quantity, $amount, 1 );
 		$item->setDescription( $description );
 		$item->setArticleNumber( $article_nr );
