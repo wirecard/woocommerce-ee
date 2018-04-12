@@ -68,10 +68,13 @@ function init_wirecard_payment_gateway() {
 	require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-sofort.php' );
 	require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-poipia.php' );
 	require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php' );
+	require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php' );
 	require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'vendor/autoload.php' );
 
 	add_filter( 'woocommerce_payment_gateways', 'add_wirecard_payment_gateway', 0 );
 	add_filter( 'wc_order_statuses', 'wirecard_wc_order_statuses' );
+	add_action( 'woocommerce_settings_checkout', 'add_support_chat', 0 );
+
 	register_post_status(
 		'wc-authorization',
 		array(
@@ -123,6 +126,7 @@ function get_payments() {
 		'WC_Gateway_Wirecard_Sofort'                     => new WC_Gateway_Wirecard_Sofort(),
 		'WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay' => new WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay(),
 		'WC_Gateway_Wirecard_Poipia'                     => new WC_Gateway_Wirecard_Poipia(),
+		'WC_Gateway_Wirecard_Alipay_Crossborder'         => new WC_Gateway_Wirecard_Alipay_Crossborder(),
 	);
 }
 
@@ -219,4 +223,17 @@ function wirecard_gateway_options_page() {
 		'refundpayment',
 		array( $admin, 'refund_transaction' )
 	);
+
+	/**
+	 * Add support chat script
+	 *
+	 * @since 1.1.0
+	 */
+	function add_support_chat() {
+		echo '<script
+                type="text/javascript" 
+				id="936f87cd4ce16e1e60bea40b45b0596a"
+			    src="http://www.provusgroup.com/livezilla/script.php?id=936f87cd4ce16e1e60bea40b45b0596a">
+        </script>';
+	}
 }
