@@ -14,6 +14,8 @@
             <directory suffix=".php">./woocommerce-wirecard-ee/*</directory>
             <exclude>
                 <directory>woocommerce-wirecard-ee/vendor</directory>
+                <directory>woocommerce-wirecard-ee/assets</directory>
+                <directory>woocommerce-wirecard-ee/Test</directory>
                 <file>./woocommerce-wirecard-ee/classes/helper/sepa-template.php</file>
             </exclude>
         </whitelist>
