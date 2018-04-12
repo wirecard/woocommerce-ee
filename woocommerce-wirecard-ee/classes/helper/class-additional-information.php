@@ -57,12 +57,13 @@ class Additional_Information {
 	 * Create basket items and shipping item
 	 *
 	 * @param Transaction $transaction
+	 * @param float $order_total
 	 *
 	 * @return Basket
 	 *
 	 * @since 1.0.0
 	 */
-	public function create_shopping_basket( $transaction, $order_total = 0 ) {
+	public function create_shopping_basket( $transaction, $order_total = 0.0 ) {
 		global $woocommerce;
 
 		/** @var $cart WC_Cart */
@@ -205,6 +206,7 @@ class Additional_Information {
 	 * @param Transaction $transaction
 	 * @param float $shipping_total
 	 * @param float $shipping_tax
+	 * @param float $order_total
 	 * @return Basket
 	 * @since 1.1.0
 	 */
