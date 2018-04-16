@@ -92,7 +92,7 @@ class WC_Gateway_Wirecard_Unionpay_International extends WC_Wirecard_Payment_Gat
 				'title'   => __( 'Enable/Disable', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'checkbox',
 				'label'   => __( 'Enable Wirecard Unionpay International', 'woocommerce-gateway-wirecard' ),
-				'default' => 'yes',
+				'default' => 'no',
 			),
 			'title'                       => array(
 				'title'       => __( 'Title', 'woocommerce-gateway-wirecard' ),
