@@ -121,13 +121,13 @@ function add_wirecard_payment_gateway( $methods ) {
 function get_payments() {
 	return array(
 		'WC_Gateway_Wirecard_Creditcard'                 => new WC_Gateway_Wirecard_Creditcard(),
-		'WC_Gateway_Wirecard_Paypal'                     => new WC_Gateway_Wirecard_Paypal(),
-		'WC_Gateway_Wirecard_Sepa'                       => new WC_Gateway_Wirecard_Sepa(),
-		'WC_Gateway_Wirecard_Ideal'                      => new WC_Gateway_Wirecard_Ideal(),
-		'WC_Gateway_Wirecard_Sofort'                     => new WC_Gateway_Wirecard_Sofort(),
-		'WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay' => new WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay(),
-		'WC_Gateway_Wirecard_Poipia'                     => new WC_Gateway_Wirecard_Poipia(),
 		'WC_Gateway_Wirecard_Alipay_Crossborder'         => new WC_Gateway_Wirecard_Alipay_Crossborder(),
+		'WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay' => new WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay(),
+		'WC_Gateway_Wirecard_Ideal'                      => new WC_Gateway_Wirecard_Ideal(),
+		'WC_Gateway_Wirecard_Paypal'                     => new WC_Gateway_Wirecard_Paypal(),
+		'WC_Gateway_Wirecard_Poipia'                     => new WC_Gateway_Wirecard_Poipia(),
+		'WC_Gateway_Wirecard_Sepa'                       => new WC_Gateway_Wirecard_Sepa(),
+		'WC_Gateway_Wirecard_Sofort'                     => new WC_Gateway_Wirecard_Sofort(),
 		'WC_Gateway_Wirecard_Masterpass'                 => new WC_Gateway_Wirecard_Masterpass(),
 	);
 }
