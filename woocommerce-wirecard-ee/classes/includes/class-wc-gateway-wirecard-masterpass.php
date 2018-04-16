@@ -38,6 +38,7 @@ require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/includes/class-wc-
 use Wirecard\PaymentSdk\Config\Config;
 use Wirecard\PaymentSdk\Config\PaymentMethodConfig;
 use Wirecard\PaymentSdk\Transaction\MasterpassTransaction;
+use Wirecard\PaymentSdk\Entity\Amount;
 
 /**
  * Class WC_Gateway_Wirecard_Masterpass
@@ -172,7 +173,8 @@ class WC_Gateway_Wirecard_Masterpass extends WC_Wirecard_Payment_Gateway {
 	public function process_payment( $order_id ) {
 		$order = wc_get_order( $order_id );
 
-		$this->transaction = new MasterpassTransaction();
+		$this->payment_action = $this->get_option( 'payment_action' );
+		$this->transaction    = new MasterpassTransaction();
 		parent::process_payment( $order_id );
 		$this->transaction->setAccountHolder(
 			$this->additional_helper->create_account_holder(
@@ -205,5 +207,49 @@ class WC_Gateway_Wirecard_Masterpass extends WC_Wirecard_Payment_Gateway {
 		$config->add( $payment_config );
 
 		return $config;
+	}
+
+	/**
+	 * Create transaction for cancel
+	 *
+	 * @param int        $order_id
+	 * @param float|null $amount
+	 *
+	 * @return MasterpassTransaction
+	 *
+	 * @since 1.0.0
+	 */
+	public function process_cancel( $order_id, $amount = null ) {
+		$order = wc_get_order( $order_id );
+
+		$transaction = new MasterpassTransaction();
+		$transaction->setParentTransactionId( $order->get_transaction_id() );
+		if ( ! is_null( $amount ) ) {
+			$transaction->setAmount( new Amount( $amount, $order->get_currency() ) );
+		}
+
+		return $transaction;
+	}
+
+	/**
+	 * Create transaction for capture
+	 *
+	 * @param int        $order_id
+	 * @param float|null $amount
+	 *
+	 * @return MasterpassTransaction
+	 *
+	 * @since 1.0.0
+	 */
+	public function process_capture( $order_id, $amount = null ) {
+		$order = wc_get_order( $order_id );
+
+		$transaction = new MasterpassTransaction();
+		$transaction->setParentTransactionId( $order->get_transaction_id() );
+		if ( ! is_null( $amount ) ) {
+			$transaction->setAmount( new Amount( $amount, $order->get_currency() ) );
+		}
+
+		return $transaction;
 	}
 }
