@@ -95,14 +95,14 @@ class Wirecard_Transaction_Factory {
 			'parent_transaction_id' => array(
 				'title' => __( 'Parent transaction ID', 'woocommerce-gateway-wirecard' ),
 			),
+			'transaction_type'      => array(
+				'title' => __( 'Action', 'woocommerce-gateway-wirecard' ),
+			),
 			'payment_method'        => array(
 				'title' => __( 'Payment method', 'woocommerce-gateway-wirecard' ),
 			),
 			'transaction_state'     => array(
 				'title' => __( 'Transaction state', 'woocommerce-gateway-wirecard' ),
-			),
-			'transaction_type'      => array(
-				'title' => __( 'Action', 'woocommerce-gateway-wirecard' ),
 			),
 			'amount'                => array(
 				'title' => __( 'Amount', 'woocommerce-gateway-wirecard' ),
