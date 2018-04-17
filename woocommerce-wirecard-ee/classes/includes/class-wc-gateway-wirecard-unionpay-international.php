@@ -90,57 +90,57 @@ class WC_Gateway_Wirecard_Unionpay_International extends WC_Wirecard_Payment_Gat
 	 */
 	public function init_form_fields() {
 		$this->form_fields = array(
-			'enabled'                     => array(
+			'enabled'             => array(
 				'title'   => __( 'Enable/Disable', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'checkbox',
 				'label'   => __( 'Enable Wirecard Unionpay International', 'woocommerce-gateway-wirecard' ),
 				'default' => 'no',
 			),
-			'title'                       => array(
+			'title'               => array(
 				'title'       => __( 'Title', 'woocommerce-gateway-wirecard' ),
 				'type'        => 'text',
 				'description' => __( 'This controls the title which the user sees during checkout.', 'woocommerce-gateway-wirecard' ),
 				'default'     => __( 'Wirecard Unionpay International', 'woocommerce-gateway-wirecard' ),
 				'desc_tip'    => true,
 			),
-			'merchant_account_id'         => array(
+			'merchant_account_id' => array(
 				'title'   => __( 'Merchant Account ID', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'text',
 				'default' => 'c6e9331c-5c1f-4fc6-8a08-ef65ce09ddb0',
 			),
-			'secret'                      => array(
+			'secret'              => array(
 				'title'   => __( 'Secret Key', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'text',
 				'default' => '16d85b73-79e2-4c33-932a-7da99fb04a9c',
 			),
-			'credentials'                 => array(
+			'credentials'         => array(
 				'title'       => __( 'Credentials', 'woocommerce-gateway-wirecard' ),
 				'type'        => 'title',
 				'description' => __( 'Enter your Wirecard credentials.', 'woocommerce-gateway-wirecard' ),
 			),
-			'base_url'                    => array(
+			'base_url'            => array(
 				'title'       => __( 'Base URL', 'woocommerce-gateway-wirecard' ),
 				'type'        => 'text',
 				'description' => __( 'The Wirecard base URL. (e.g. https://api.wirecard.com)' ),
 				'default'     => 'https://api-test.wirecard.com',
 				'desc_tip'    => true,
 			),
-			'http_user'                   => array(
+			'http_user'           => array(
 				'title'   => __( 'HTTP User', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'text',
 				'default' => '70000-APILUHN-CARD',
 			),
-			'http_pass'                   => array(
+			'http_pass'           => array(
 				'title'   => __( 'HTTP Password', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'text',
 				'default' => '8mhwavKVb91T',
 			),
-			'advanced'                    => array(
+			'advanced'            => array(
 				'title'       => __( 'Advanced Options', 'woocommerce-gateway-wirecard' ),
 				'type'        => 'title',
 				'description' => '',
 			),
-			'payment_action'              => array(
+			'payment_action'      => array(
 				'title'   => __( 'Payment Action', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'select',
 				'default' => 'Capture',
@@ -150,13 +150,13 @@ class WC_Gateway_Wirecard_Unionpay_International extends WC_Wirecard_Payment_Gat
 					'pay'     => 'Capture',
 				),
 			),
-			'descriptor'                  => array(
+			'descriptor'          => array(
 				'title'   => __( 'Enable/Disable', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'checkbox',
 				'label'   => __( 'Descriptor', 'woocommerce-gateway-wirecard' ),
 				'default' => 'no',
 			),
-			'send_additional'             => array(
+			'send_additional'     => array(
 				'title'   => __( 'Enable/Disable', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'checkbox',
 				'label'   => __( 'Send additional information', 'woocommerce-gateway-wirecard' ),
@@ -200,6 +200,30 @@ HTML;
 		$transaction_service = new TransactionService( $config );
 		wp_send_json_success( $transaction_service->getDataForUpiUi() );
 		die();
+	}
+
+	/**
+	 * Process payment gateway transactions
+	 *
+	 * @param int $order_id
+	 *
+	 * @return array
+	 *
+	 * @since 1.1.0
+	 */
+	public function process_payment( $order_id ) {
+		$order = wc_get_order( $order_id );
+
+		$this->payment_action = $this->get_option( 'payment_action' );
+		$token                = $_POST['tokenId'];
+
+		$this->transaction = new UpiTransaction();
+		parent::process_payment( $order_id );
+
+		$this->transaction->setTokenId( $token );
+		$this->transaction->setTermUrl( $this->create_redirect_url( $order, 'success', $this->type ) );
+
+		return $this->execute_transaction( $this->transaction, $this->config, $this->payment_action, $order );
 	}
 
 	/**
