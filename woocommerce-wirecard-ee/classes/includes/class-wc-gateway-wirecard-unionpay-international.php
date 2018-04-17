@@ -33,6 +33,7 @@ require_once __DIR__ . '/class-wc-wirecard-payment-gateway.php';
 
 use Wirecard\PaymentSdk\Config\Config;
 use Wirecard\PaymentSdk\Config\PaymentMethodConfig;
+use Wirecard\PaymentSdk\Entity\Amount;
 use Wirecard\PaymentSdk\Transaction\UpiTransaction;
 use Wirecard\PaymentSdk\TransactionService;
 
@@ -224,6 +225,28 @@ HTML;
 		$this->transaction->setTermUrl( $this->create_redirect_url( $order, 'success', $this->type ) );
 
 		return $this->execute_transaction( $this->transaction, $this->config, $this->payment_action, $order );
+	}
+
+	/**
+	 * Create transaction for cancel
+	 *
+	 * @param int        $order_id
+	 * @param float|null $amount
+	 *
+	 * @return UpiTransaction
+	 *
+	 * @since 1.1.0
+	 */
+	public function process_cancel( $order_id, $amount = null ) {
+		$order = wc_get_order( $order_id );
+
+		$transaction = new UpiTransaction();
+		$transaction->setParentTransactionId( $order->get_transaction_id() );
+		if ( ! is_null( $amount ) ) {
+			$transaction->setAmount( new Amount( $amount, $order->get_currency() ) );
+		}
+
+		return $transaction;
 	}
 
 	/**
