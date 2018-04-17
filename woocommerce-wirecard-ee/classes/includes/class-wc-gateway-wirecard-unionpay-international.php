@@ -33,6 +33,8 @@ require_once __DIR__ . '/class-wc-wirecard-payment-gateway.php';
 
 use Wirecard\PaymentSdk\Config\Config;
 use Wirecard\PaymentSdk\Config\PaymentMethodConfig;
+use Wirecard\PaymentSdk\Transaction\UpiTransaction;
+use Wirecard\PaymentSdk\TransactionService;
 
 /**
  * Class WC_Gateway_Wirecard_Unionpay_International
@@ -76,7 +78,7 @@ class WC_Gateway_Wirecard_Unionpay_International extends WC_Wirecard_Payment_Gat
 		$this->additional_helper = new Additional_Information();
 
 		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
-		add_action( 'woocommerce_api_get_credit_card_request_data', array( $this, 'get_request_data' ) );
+		add_action( 'woocommerce_api_get_upi_request_data', array( $this, 'get_request_data' ) );
 
 		parent::add_payment_gateway_actions();
 	}
@@ -164,6 +166,43 @@ class WC_Gateway_Wirecard_Unionpay_International extends WC_Wirecard_Payment_Gat
 	}
 
 	/**
+	 * Add payment fields to payment method
+	 *
+	 * @since 1.1.0
+	 */
+	public function payment_fields() {
+		$base_url    = $this->get_option( 'base_url' );
+		$gateway_url = WOOCOMMERCE_GATEWAY_WIRECARD_URL;
+		$page_url    = add_query_arg(
+			[ 'wc-api' => 'get_upi_request_data' ],
+			site_url( '/', is_ssl() ? 'https' : 'http' )
+		);
+
+		$html = <<<HTML
+			<script src='$base_url/engine/hpp/paymentPageLoader.js' type='text/javascript'></script>
+            <script type='application/javascript' src='$gateway_url/assets/js/unionpayinternational.js'></script>
+            <script>
+                var ajax_url = "$page_url";
+            </script>
+            <div id='wc_payment_method_wirecard_unionpayinternational_form'></div>
+HTML;
+
+		echo $html;
+	}
+
+	/**
+	 * Return request data for the unionpay international form
+	 *
+	 * @since 1.1.0
+	 */
+	public function get_request_data() {
+		$config              = $this->create_payment_config();
+		$transaction_service = new TransactionService( $config );
+		wp_send_json_success( $transaction_service->getDataForUpiUi() );
+		die();
+	}
+
+	/**
 	 * Create payment method Configuration
 	 *
 	 * @return Config
@@ -179,7 +218,7 @@ class WC_Gateway_Wirecard_Unionpay_International extends WC_Wirecard_Payment_Gat
 
 		$config         = parent::create_payment_config( $base_url, $http_user, $http_pass );
 		$payment_config = new PaymentMethodConfig(
-			\Wirecard\PaymentSdk\Transaction\UpiTransaction::NAME,
+			UpiTransaction::NAME,
 			$this->get_option( 'merchant_account_id' ),
 			$this->get_option( 'secret' )
 		);
