@@ -477,6 +477,8 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 			case 'refund-debit':
 			case 'refund-purchase':
 			case 'credit':
+			case 'void-capture':
+			case 'void-purchase':
 				$state = 'refunded';
 				break;
 			case 'authorization':

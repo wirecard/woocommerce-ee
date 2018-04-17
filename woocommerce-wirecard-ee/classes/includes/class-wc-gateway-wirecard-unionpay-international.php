@@ -68,7 +68,7 @@ class WC_Gateway_Wirecard_Unionpay_International extends WC_Wirecard_Payment_Gat
 		$this->cancel        = array( 'authorization' );
 		$this->capture       = array( 'authorization' );
 		$this->refund        = array( 'purchase', 'capture-authorization' );
-		$this->refund_action = 'refund';
+		$this->refund_action = 'cancel';
 
 		$this->init_form_fields();
 		$this->init_settings();
@@ -269,6 +269,24 @@ HTML;
 		}
 
 		return $transaction;
+	}
+
+	/**
+	 * Create transaction for refund
+	 *
+	 * @param int        $order_id
+	 * @param float|null $amount
+	 * @param string     $reason
+	 *
+	 * @return bool|UpiTransaction|WP_Error
+	 *
+	 * @since 1.1.0
+	 * @throws Exception
+	 */
+	public function process_refund( $order_id, $amount = null, $reason = '' ) {
+		$this->transaction = new UpiTransaction();
+
+		return parent::process_refund( $order_id, $amount, '' );
 	}
 
 	/**
