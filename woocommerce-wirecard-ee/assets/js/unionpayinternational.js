@@ -6,13 +6,13 @@ $                 = jQuery;
 $( document ).ready(
 	function() {
 		if ( $( "#wc_payment_method_wirecard_unionpayinternational_form" ).is( ":visible" ) ) {
-			getRequestData();
+			getUpiRequestData();
 		}
 
 		$( "input[name=payment_method]" ).change(
 			function() {
 				if ( $( this ).val() === 'wirecard_ee_unionpayinternational' ) {
-					getRequestData();
+					getUpiRequestData();
 					return false;
 				}
 			}
@@ -21,7 +21,7 @@ $( document ).ready(
 		/**
 	 * Submit the seamless form before order is placed
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 */
 		checkout_form.on(
 			'checkout_place_order', function() {
@@ -32,7 +32,7 @@ $( document ).ready(
 					} else {
 						WirecardPaymentPage.seamlessSubmitForm(
 							{
-								onSuccess: formSubmitSuccessHandler,
+								onSuccess: formSubmitUpiSuccessHandler,
 								onError: logCallback,
 								wrappingDivId: "wc_payment_method_wirecard_unionpayinternational_form"
 							}
@@ -47,7 +47,7 @@ $( document ).ready(
 		/**
 	 * Display error massages
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 */
 		function logCallback( response ) {
 			console.error( response );
@@ -56,9 +56,9 @@ $( document ).ready(
 		/**
 	 * Add the tokenId to the submited form
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 */
-		function formSubmitSuccessHandler( response ) {
+		function formSubmitUpiSuccessHandler( response ) {
 			token = response.token_id;
 			jQuery( '<input>' ).attr(
 				{
@@ -73,19 +73,19 @@ $( document ).ready(
 		}
 
 		/**
-	 * Get data rquired to render the form
+	 * Get data required to render the form
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 */
-		function getRequestData() {
+		function getUpiRequestData() {
 			$.ajax(
 				{
 					type: 'POST',
 					url: ajax_url,
-					data: { 'action' : 'get_credit_card_request_data' },
+					data: { 'action' : 'get_upi_request_data' },
 					dataType: 'json',
 					success: function (data) {
-						renderForm( JSON.parse( data.data ) );
+						renderUpiForm( JSON.parse( data.data ) );
 					},
 					error: function (data) {
 						console.log( data );
@@ -95,27 +95,27 @@ $( document ).ready(
 		}
 
 		/**
-	 * Render the credit card form
+	 * Render the unionpayinternational form
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 */
-		function renderForm( request_data ) {
+		function renderUpiForm( request_data ) {
 			WirecardPaymentPage.seamlessRenderForm(
 				{
 					requestData: request_data,
 					wrappingDivId: "wc_payment_method_wirecard_unionpayinternational_form",
-					onSuccess: resizeIframe,
+					onSuccess: resizeUpiIframe,
 					onError: logCallback
 				}
 			);
 		}
 
 		/**
-	 * Resize the credit card form when loaded
+	 * Resize the unionpayinternational form when loaded
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 */
-		function resizeIframe() {
+		function resizeUpiIframe() {
 			$( "#wc_payment_method_wirecard_unionpayinternational_form > iframe" ).height( 550 );
 		}
 	}

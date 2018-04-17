@@ -78,7 +78,7 @@ class WC_Gateway_Wirecard_Unionpay_International extends WC_Wirecard_Payment_Gat
 		$this->additional_helper = new Additional_Information();
 
 		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
-		add_action( 'woocommerce_api_get_upi_request_data', array( $this, 'get_request_data' ) );
+		add_action( 'woocommerce_api_get_upi_request_data', array( $this, 'get_request_data_upi' ) );
 
 		parent::add_payment_gateway_actions();
 	}
@@ -195,7 +195,7 @@ HTML;
 	 *
 	 * @since 1.1.0
 	 */
-	public function get_request_data() {
+	public function get_request_data_upi() {
 		$config              = $this->create_payment_config();
 		$transaction_service = new TransactionService( $config );
 		wp_send_json_success( $transaction_service->getDataForUpiUi() );
