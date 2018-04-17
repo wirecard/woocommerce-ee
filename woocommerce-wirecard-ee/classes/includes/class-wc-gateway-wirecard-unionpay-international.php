@@ -183,7 +183,7 @@ class WC_Gateway_Wirecard_Unionpay_International extends WC_Wirecard_Payment_Gat
 			<script src='$base_url/engine/hpp/paymentPageLoader.js' type='text/javascript'></script>
             <script type='application/javascript' src='$gateway_url/assets/js/unionpayinternational.js'></script>
             <script>
-                var ajax_url = "$page_url";
+                var ajax_url_upi = "$page_url";
             </script>
             <div id='wc_payment_method_wirecard_unionpayinternational_form'></div>
 HTML;
@@ -313,5 +313,15 @@ HTML;
 		$config->add( $payment_config );
 
 		return $config;
+	}
+
+	/**
+	 * Submit a form with the data from the response
+	 *
+	 * @since 1.1.0
+	 */
+	public function callback() {
+		$callback = new Wirecard_Callback();
+		$callback->post_upi_form();
 	}
 }

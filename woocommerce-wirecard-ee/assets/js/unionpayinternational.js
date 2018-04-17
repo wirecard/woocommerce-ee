@@ -81,7 +81,7 @@ $( document ).ready(
 			$.ajax(
 				{
 					type: 'POST',
-					url: ajax_url,
+					url: ajax_url_upi,
 					data: { 'action' : 'get_upi_request_data' },
 					dataType: 'json',
 					success: function (data) {
