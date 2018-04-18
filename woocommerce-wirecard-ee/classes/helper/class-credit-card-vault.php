@@ -70,14 +70,14 @@ class Credit_Card_Vault {
 	 * @return int
 	 * @since 1.1.0
 	 */
-	public function save_card($user_id, $token, $pan) {
+	public function save_card( $user_id, $token, $pan ) {
 		global $wpdb;
 		$wpdb->insert(
 			$this->table_name,
 			array(
-				'user_id'    => $user_id,
-				'token'      => $token,
-				'masked_pan' => $pan,
+				'user_id'        => $user_id,
+				'token'          => $token,
+				'masked_pan'     => $pan,
 			),
 			array('%d', '%s', '%s')
 		);
@@ -93,6 +93,15 @@ class Credit_Card_Vault {
 	 * @since 1.1.0
 	 */
 	public function get_cards_for_user( $user_id ) {
+		$cards = $this->get_cards_from_db( $user_id );
+		if ( false != $cards ) {
+			return $this->fetch_template_data( $cards );
+		}
+
+		return false;
+	}
+
+	private function get_cards_from_db( $user_id ) {
 		global $wpdb;
 
 		$cards = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}wirecard_payment_gateway_vault WHERE user_id = %s", $user_id ) );
@@ -102,5 +111,23 @@ class Credit_Card_Vault {
 		}
 
 		return $cards;
+	}
+
+	private function fetch_template_data( $cards ) {
+		$html = '<table id="vault-table">
+		<tr>
+			<th></th>
+			<th>' . __( 'Account number', 'woocommerce-gateway-wirecard' ) . '</th>
+			<th>' . __( 'Delete Card', 'woocommerce-gateway-wirecard' ) . '</th>
+		</tr>';
+		foreach ($cards as $card) {
+			$html .= '<tr>
+				<td><input class="token" name="token" onclick="javascript:setToken()" type="radio" data-token="' . $card->token . '" /></td>
+				<td>' . $card->masked_pan . '</td>
+				<td><button data-id="' . $card->vault_id . '">' . __( 'Delete', 'woocommerce-gateway-wirecard' ) . '</button></td>
+			</tr>';
+		}
+		$html .= '</table>';
+		return $html;
 	}
 }

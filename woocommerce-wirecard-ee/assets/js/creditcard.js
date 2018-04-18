@@ -2,21 +2,50 @@ var token         = null;
 var checkout_form = jQuery( 'form.checkout' );
 var processing    = false;
 $                 = jQuery;
+var creditcards   = $( "#wc_payment_method_wirecard_creditcard_vault" );
+var open          = $( "#open-vault-popup" );
+
+function setToken() {
+    token = $("input[name='token']:checked").data('token');
+    jQuery( '<input>' ).attr(
+        {
+            type: 'hidden',
+            name: 'tokenId',
+            id: 'tokenId',
+            value: token
+        }
+    ).appendTo( checkout_form );
+}
 
 $( document ).ready(
 	function() {
+        creditcards.hide();
+
 		if ( $( "#wc_payment_method_wirecard_creditcard_form" ).is( ":visible" ) ) {
 			getRequestData();
+			getVaultData();
 		}
 
 		$( "input[name=payment_method]" ).change(
 			function() {
 				if ( $( this ).val() === 'wirecard_ee_creditcard' ) {
 					getRequestData();
+                    getVaultData();
 					return false;
 				}
 			}
 		);
+
+		open.on( 'click', function () {
+            creditcards.slideToggle();
+            $( this ).find( 'span' ).toggleClass( 'dashicons-arrow-down' );
+            $( this ).find( 'span' ).toggleClass( 'dashicons-arrow-up' );
+        });
+
+        /*$( "#vault-table" ).on('click', '.token-radio', function () {
+        	console.log();
+			setToken( $(this) );
+        });*/
 
 		/**
 	 * Submit the seamless form before order is placed
@@ -60,7 +89,7 @@ $( document ).ready(
 	 */
 		function formSubmitSuccessHandler( response ) {
 			token = response.token_id;
-			if ( $("#wirecard-store-card").is(":checked") ) {
+			if ( $("#wirecard-store-card").is(":checked") && response.transaction_state == 'success' ) {
                 $.ajax(
                     {
                         type: 'POST',
@@ -134,5 +163,26 @@ $( document ).ready(
 		function resizeIframe() {
 			$( "#wc_payment_method_wirecard_creditcard_form > iframe" ).height( 550 );
 		}
+
+		function getVaultData() {
+            $.ajax(
+                {
+                    type: 'GET',
+                    url: vault_get_url,
+                    data: { 'action' : 'get_cc_from_vault' },
+                    dataType: 'json',
+                    success: function ( data ) {
+                    	addVaultData( data.data );
+                    },
+                    error: function (data) {
+                        console.log( data );
+                    }
+                }
+            );
+        }
+
+        function addVaultData( data ) {
+			creditcards.html( data );
+        }
 	}
 );

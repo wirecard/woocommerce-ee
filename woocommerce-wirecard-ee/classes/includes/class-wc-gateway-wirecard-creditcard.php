@@ -88,6 +88,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
 		add_action( 'woocommerce_api_get_credit_card_request_data', array( $this, 'get_request_data' ) );
 		add_action( 'woocommerce_api_save_cc_to_vault', array( $this, 'save_to_vault' ) );
+		add_action( 'woocommerce_api_get_cc_from_vault', array( $this, 'get_cc_from_vault' ) );
 
 		parent::add_payment_gateway_actions();
 	}
@@ -264,23 +265,49 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 			[ 'wc-api' => 'get_credit_card_request_data' ],
 			site_url( '/', is_ssl() ? 'https' : 'http' )
 		);
-		$vault_url  = add_query_arg(
+		$vault_save_url  = add_query_arg(
 			[ 'wc-api' => 'save_cc_to_vault' ],
+			site_url( '/', is_ssl() ? 'https' : 'http' )
+		);
+		$vault_get_url  = add_query_arg(
+			[ 'wc-api' => 'get_cc_from_vault' ],
 			site_url( '/', is_ssl() ? 'https' : 'http' )
 		);
 
 		$html = <<<HTML
 			<script src='$base_url/engine/hpp/paymentPageLoader.js' type='text/javascript'></script>
             <script type='application/javascript' src='$gateway_url/assets/js/creditcard.js'></script>
+            <link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css" type="text/css" rel="stylesheet" />
+			<script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
+			<style>
+		        #open-vault-popup {
+					background-color: #f5f5f5;
+					padding: 10px;
+		        }
+		        #open-vault-popup:hover {
+		            cursor: pointer;
+		        }
+		        #vault-table td, #vault-table th {
+		            padding: 5px !important;
+		        }
+		    </style>
             <script>
                 var ajax_url  = "$page_url";
-                var vault_url = "$vault_url";
+                var vault_url = "$vault_save_url";
+                var vault_get_url = "$vault_get_url";
             </script>
-            <div id='wc_payment_method_wirecard_creditcard_form'></div>
+            
 HTML;
 		if ( $this->get_option( 'cc_vault_enabled' )  == 'yes' ) {
+			$html .= '<div id="open-vault-popup"><span class="dashicons dashicons-arrow-down"></span>' . __( 'Use saved Card Cards', 'woocommerce-gateway-wirecard' ) . '</div>
+            <div id="wc_payment_method_wirecard_creditcard_vault"></div><br>';
+		}
+
+		$html .= '<div class="spinner"></div><div id="wc_payment_method_wirecard_creditcard_form"></div>';
+
+		if ( $this->get_option( 'cc_vault_enabled' )  == 'yes' ) {
 			$html .= '<label for="wirecard-store-card">
-			<input type="checkbox" id="wirecard-store-card" />' .
+			<input type="checkbox" id="wirecard-store-card" /> ' .
 				__('Save for later use.', 'woocommerce-gateway-wirecard') . '</label>';
 		}
 
@@ -393,14 +420,22 @@ HTML;
 	public function save_to_vault() {
 		$token    = $_POST['token'];
 		$mask_pan = $_POST['mask_pan'];
-		/** @var WP_User $user_id */
-		$user_id  = wp_get_current_user();
+		/** @var WP_User $user */
+		$user  = wp_get_current_user();
 
-		if ( false != $this->vault->save_card( $user_id->ID, $token, $mask_pan ) ) {
+		if ( false != $this->vault->save_card( $user->ID, $token, $mask_pan ) ) {
 			wp_send_json_success();
 		} else {
 			wp_send_json_error();
 		}
+		die();
+	}
+
+	public function get_cc_from_vault() {
+		/** @var WP_User $user */
+		$user  = wp_get_current_user();
+
+		wp_send_json_success( $this->vault->get_cards_for_user( $user->ID ) );
 		die();
 	}
 }
