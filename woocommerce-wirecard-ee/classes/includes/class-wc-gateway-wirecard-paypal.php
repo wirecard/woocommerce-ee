@@ -95,24 +95,26 @@ class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 			'enabled'             => array(
 				'title'   => __( 'Enable/Disable', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'checkbox',
+				'description' => __( 'Activate payment method PayPal', 'woocommerce-gateway-wirecard' ),
 				'label'   => __( 'Enable Wirecard PayPal', 'woocommerce-gateway-wirecard' ),
 				'default' => 'no',
 			),
 			'title'               => array(
 				'title'       => __( 'Title', 'woocommerce-gateway-wirecard' ),
 				'type'        => 'text',
-				'description' => __( 'This controls the title which the user sees during checkout.', 'woocommerce-gateway-wirecard' ),
+				'description' => __( 'This controls the title which the consumer sees during checkout.', 'woocommerce-gateway-wirecard' ),
 				'default'     => __( 'Wirecard PayPal', 'woocommerce-gateway-wirecard' ),
-				'desc_tip'    => true,
 			),
 			'merchant_account_id' => array(
 				'title'   => __( 'Merchant Account ID', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'text',
+				'description' => __( 'The unique identifier assigned for your Merchant Account.', 'woocommerce-gateway-wirecard' ),
 				'default' => '2a0e9351-24ed-4110-9a1b-fd0fee6bec26',
 			),
 			'secret'              => array(
 				'title'   => __( 'Secret Key', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'text',
+				'description' => __( 'Secret key is mandatory to calculate the Digital Signature for the payment.', 'woocommerce-gateway-wirecard' ),
 				'default' => 'dbc5a498-9a66-43b9-bf1d-a618dd399684',
 			),
 			'credentials'         => array(
@@ -123,7 +125,7 @@ class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 			'base_url'            => array(
 				'title'       => __( 'Base URL', 'woocommerce-gateway-wirecard' ),
 				'type'        => 'text',
-				'description' => __( 'The Wirecard base URL. (e.g. https://api.wirecard.com)' ),
+				'description' => __( 'The Wirecard base URL. (e.g. https://api.wirecard.com)', 'woocommerce-gateway-wirecard' ),
 				'default'     => 'https://api-test.wirecard.com',
 				'desc_tip'    => true,
 			),
@@ -156,18 +158,21 @@ class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 			'shopping_basket'     => array(
 				'title'   => __( 'Enable/Disable', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'checkbox',
+				'description' => __( 'For the purpose of confirmation, PayPal payment supports shopping basket display during checkout. To enable this feature, activate Shopping Basket.', 'woocommerce-gatewa-wirecard' ),
 				'label'   => __( 'Shopping Basket', 'woocommerce-gateway-wirecard' ),
 				'default' => 'no',
 			),
 			'descriptor'          => array(
 				'title'   => __( 'Enable/Disable', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'checkbox',
+				'description' => __( 'Send text which is displayed on the bank statement issued to your consumer by the financial service provider', 'woocommerce-gateway-wirecard' ),
 				'label'   => __( 'Descriptor', 'woocommerce-gateway-wirecard' ),
 				'default' => 'no',
 			),
 			'send_additional'     => array(
 				'title'   => __( 'Enable/Disable', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'checkbox',
+				'description' => __( 'Additional data will be sent for the purpose of fraud protection. This additional data includes billing / shipping address, shopping basket and descriptor.', 'woocommerce-gateway-wirecard' ),
 				'label'   => __( 'Send additional information', 'woocommerce-gateway-wirecard' ),
 				'default' => 'yes',
 			),
