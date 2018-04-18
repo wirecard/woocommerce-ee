@@ -100,11 +100,11 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 
 		$this->form_fields = array(
 			'enabled'               => array(
-				'title'   => __( 'Enable/Disable', 'woocommerce-gateway-wirecard' ),
-				'type'    => 'checkbox',
+				'title'       => __( 'Enable/Disable', 'woocommerce-gateway-wirecard' ),
+				'type'        => 'checkbox',
 				'description' => __( 'Activate payment method Guaranteed Invoice', 'woocommerce-gateway-wirecard' ),
-				'label'   => __( 'Enable Wirecard Guaranteed Invoice', 'woocommerce-gateway-wirecard' ),
-				'default' => 'no',
+				'label'       => __( 'Enable Wirecard Guaranteed Invoice', 'woocommerce-gateway-wirecard' ),
+				'default'     => 'no',
 			),
 			'title'                 => array(
 				'title'       => __( 'Title', 'woocommerce-gateway-wirecard' ),
@@ -113,16 +113,16 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 				'default'     => __( 'Wirecard Guaranteed Invoice', 'woocommerce-gateway-wirecard' ),
 			),
 			'merchant_account_id'   => array(
-				'title'   => __( 'Merchant Account ID', 'woocommerce-gateway-wirecard' ),
-				'type'    => 'text',
+				'title'       => __( 'Merchant Account ID', 'woocommerce-gateway-wirecard' ),
+				'type'        => 'text',
 				'description' => __( 'The unique identifier assigned for your Merchant Account.', 'woocommerce-gateway-wirecard' ),
-				'default' => 'fa02d1d4-f518-4e22-b42b-2abab5867a84',
+				'default'     => 'fa02d1d4-f518-4e22-b42b-2abab5867a84',
 			),
 			'secret'                => array(
-				'title'   => __( 'Secret Key', 'woocommerce-gateway-wirecard' ),
-				'type'    => 'text',
+				'title'       => __( 'Secret Key', 'woocommerce-gateway-wirecard' ),
+				'type'        => 'text',
 				'description' => __( 'Secret key is mandatory to calculate the Digital Signature for the payment.', 'woocommerce-gateway-wirecard' ),
-				'default' => 'dbc5a498-9a66-43b9-bf1d-a618dd399684',
+				'default'     => 'dbc5a498-9a66-43b9-bf1d-a618dd399684',
 			),
 			'credentials'           => array(
 				'title'       => __( 'Credentials', 'woocommerce-gateway-wirecard' ),
@@ -137,16 +137,16 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 				'desc_tip'    => true,
 			),
 			'http_user'             => array(
-				'title'   => __( 'HTTP User', 'woocommerce-gateway-wirecard' ),
-				'type'    => 'text',
+				'title'       => __( 'HTTP User', 'woocommerce-gateway-wirecard' ),
+				'type'        => 'text',
 				'description' => __( 'The http user provided in your Wirecard contract', 'woocommerce-gateway-wirecard' ),
-				'default' => '70000-APITEST-AP',
+				'default'     => '70000-APITEST-AP',
 			),
 			'http_pass'             => array(
-				'title'   => __( 'HTTP Password', 'woocommerce-gateway-wirecard' ),
-				'type'    => 'text',
+				'title'       => __( 'HTTP Password', 'woocommerce-gateway-wirecard' ),
+				'type'        => 'text',
 				'description' => __( 'The http password provided in your Wirecard contract', 'woocommerce-gateway-wirecard' ),
-				'default' => 'qD2wzQ_hrc!8',
+				'default'     => 'qD2wzQ_hrc!8',
 			),
 			'advanced'              => array(
 				'title'       => __( 'Advanced Options', 'woocommerce-gateway-wirecard' ),
@@ -154,17 +154,19 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 				'description' => '',
 			),
 			'billing_shipping_same' => array(
-				'title'   => __( 'Enable/Disable', 'woocommerce-gateway-wirecard' ),
-				'type'    => 'checkbox',
+				'title'       => __( 'Enable/Disable', 'woocommerce-gateway-wirecard' ),
+				'type'        => 'checkbox',
 				'description' => __( 'If activated, payment method Guaranteed Invoice will only be displayed if Billing/Shipping address are identical', 'woocommerce-gateway-wirecard' ),
-				'label'   => __( 'Billing/Shipping address must be identical', 'woocommerce-gateway-wirecard' ),
-				'default' => 'yes',
+				'label'       => __( 'Billing/Shipping address must be identical', 'woocommerce-gateway-wirecard' ),
+				'default'     => 'yes',
 			),
 			'billing_countries'     => array(
 				'title'          => __( 'Allowed billing countries', 'woocommerce-gateway-wirecard' ),
 				'type'           => 'multiselect',
-				'description' => __( 'Payment method Guaranteed Invoice will only be displayed if consumers billing country equals one of these chosen countries. 
-				Predefined the following countries are allowed: AT, DE.', 'woocommerce-gateway-wirecard' ),
+				'description'    => __(
+					'Payment method Guaranteed Invoice will only be displayed if consumers billing country equals one of these chosen countries. 
+				Predefined the following countries are allowed: AT, DE.', 'woocommerce-gateway-wirecard'
+				),
 				'options'        => $countries,
 				'default'        => array( 'AT', 'DE' ),
 				'multiple'       => true,
@@ -173,8 +175,10 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 			'shipping_countries'    => array(
 				'title'          => __( 'Allowed shipping countries', 'woocommerce-gateway-wirecard' ),
 				'type'           => 'multiselect',
-				'description' => __( 'Payment method Guaranteed Invoice will only be displayed if consumers shipping country equals one of these chosen countries. 
-				Predefined the following countries are allowed: AT, DE.', 'woocommerce-gateway-wirecard' ),
+				'description'    => __(
+					'Payment method Guaranteed Invoice will only be displayed if consumers shipping country equals one of these chosen countries. 
+				Predefined the following countries are allowed: AT, DE.', 'woocommerce-gateway-wirecard'
+				),
 				'options'        => $countries,
 				'default'        => array( 'AT', 'DE' ),
 				'multiple'       => true,
@@ -183,7 +187,7 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 			'allowed_currencies'    => array(
 				'title'          => __( 'Allowed currencies', 'woocommerce-gateway-wirecard' ),
 				'type'           => 'multiselect',
-				'description' => __( 'Payment method Guaranteed Invoice will only be displayed if the active currency equals one of these chosen currencies.', 'woocommerce-gateway-wirecard' ),
+				'description'    => __( 'Payment method Guaranteed Invoice will only be displayed if the active currency equals one of these chosen currencies.', 'woocommerce-gateway-wirecard' ),
 				'options'        => get_woocommerce_currencies(),
 				'default'        => array( 'EUR' ),
 				'multiple'       => true,
@@ -200,18 +204,18 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 				'default'     => 3500,
 			),
 			'descriptor'            => array(
-				'title'   => __( 'Enable/Disable', 'woocommerce-gateway-wirecard' ),
-				'type'    => 'checkbox',
+				'title'       => __( 'Enable/Disable', 'woocommerce-gateway-wirecard' ),
+				'type'        => 'checkbox',
 				'description' => __( 'Send text which is displayed on the bank statement issued to your consumer by the financial service provider', 'woocommerce-gateway-wirecard' ),
-				'label'   => __( 'Descriptor', 'woocommerce-gateway-wirecard' ),
-				'default' => 'no',
+				'label'       => __( 'Descriptor', 'woocommerce-gateway-wirecard' ),
+				'default'     => 'no',
 			),
 			'send_additional'       => array(
-				'title'   => __( 'Enable/Disable', 'woocommerce-gateway-wirecard' ),
-				'type'    => 'checkbox',
+				'title'       => __( 'Enable/Disable', 'woocommerce-gateway-wirecard' ),
+				'type'        => 'checkbox',
 				'description' => __( 'Additional data will be sent for the purpose of fraud protection. This additional data includes billing / shipping address, shopping basket and descriptor.', 'woocommerce-gateway-wirecard' ),
-				'label'   => __( 'Send additional information', 'woocommerce-gateway-wirecard' ),
-				'default' => 'yes',
+				'label'       => __( 'Send additional information', 'woocommerce-gateway-wirecard' ),
+				'default'     => 'yes',
 			),
 		);
 	}

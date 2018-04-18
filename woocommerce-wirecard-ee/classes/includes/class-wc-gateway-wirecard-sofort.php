@@ -93,11 +93,11 @@ class WC_Gateway_Wirecard_Sofort extends WC_Wirecard_Payment_Gateway {
 	public function init_form_fields() {
 		$this->form_fields = array(
 			'enabled'             => array(
-				'title'   => __( 'Enable/Disable', 'woocommerce-gateway-wirecard' ),
-				'type'    => 'checkbox',
+				'title'       => __( 'Enable/Disable', 'woocommerce-gateway-wirecard' ),
+				'type'        => 'checkbox',
 				'description' => __( 'Activate payment method Sofort.', 'woocommerce-gateway-wirecard' ),
-				'label'   => __( 'Enable Wirecard Sofort.', 'woocommerce-gateway-wirecard' ),
-				'default' => 'no',
+				'label'       => __( 'Enable Wirecard Sofort.', 'woocommerce-gateway-wirecard' ),
+				'default'     => 'no',
 			),
 			'title'               => array(
 				'title'       => __( 'Title', 'woocommerce-gateway-wirecard' ),
@@ -106,16 +106,16 @@ class WC_Gateway_Wirecard_Sofort extends WC_Wirecard_Payment_Gateway {
 				'default'     => __( 'Wirecard Sofort.', 'woocommerce-gateway-wirecard' ),
 			),
 			'merchant_account_id' => array(
-				'title'   => __( 'Merchant Account ID', 'woocommerce-gateway-wirecard' ),
-				'type'    => 'text',
+				'title'       => __( 'Merchant Account ID', 'woocommerce-gateway-wirecard' ),
+				'type'        => 'text',
 				'description' => __( 'The unique identifier assigned for your Merchant Account.', 'woocommerce-gateway-wirecard' ),
-				'default' => 'c021a23a-49a5-4987-aa39-e8e858d29bad',
+				'default'     => 'c021a23a-49a5-4987-aa39-e8e858d29bad',
 			),
 			'secret'              => array(
-				'title'   => __( 'Secret Key', 'woocommerce-gateway-wirecard' ),
-				'type'    => 'text',
+				'title'       => __( 'Secret Key', 'woocommerce-gateway-wirecard' ),
+				'type'        => 'text',
 				'description' => __( 'Secret key is mandatory to calculate the Digital Signature for the payment.', 'woocommerce-gateway-wirecard' ),
-				'default' => 'dbc5a498-9a66-43b9-bf1d-a618dd399684',
+				'default'     => 'dbc5a498-9a66-43b9-bf1d-a618dd399684',
 			),
 			'credentials'         => array(
 				'title'       => __( 'Credentials', 'woocommerce-gateway-wirecard' ),
@@ -129,16 +129,16 @@ class WC_Gateway_Wirecard_Sofort extends WC_Wirecard_Payment_Gateway {
 				'default'     => 'https://api-test.wirecard.com',
 			),
 			'http_user'           => array(
-				'title'   => __( 'HTTP User', 'woocommerce-gateway-wirecard' ),
-				'type'    => 'text',
+				'title'       => __( 'HTTP User', 'woocommerce-gateway-wirecard' ),
+				'type'        => 'text',
 				'description' => __( 'The http user provided in your Wirecard contract', 'woocommerce-gateway-wirecard' ),
-				'default' => '70000-APITEST-AP',
+				'default'     => '70000-APITEST-AP',
 			),
 			'http_pass'           => array(
-				'title'   => __( 'HTTP Password', 'woocommerce-gateway-wirecard' ),
-				'type'    => 'text',
+				'title'       => __( 'HTTP Password', 'woocommerce-gateway-wirecard' ),
+				'type'        => 'text',
 				'description' => __( 'The http password provided in your Wirecard contract', 'woocommerce-gateway-wirecard' ),
-				'default' => 'qD2wzQ_hrc!8',
+				'default'     => 'qD2wzQ_hrc!8',
 			),
 			'advanced'            => array(
 				'title'       => __( 'Advanced Options', 'woocommerce-gateway-wirecard' ),
@@ -146,12 +146,12 @@ class WC_Gateway_Wirecard_Sofort extends WC_Wirecard_Payment_Gateway {
 				'description' => '',
 			),
 			'send_additional'     => array(
-				'title'   => __( 'Enable/Disable', 'woocommerce-gateway-wirecard' ),
-				'type'    => 'checkbox',
+				'title'       => __( 'Enable/Disable', 'woocommerce-gateway-wirecard' ),
+				'type'        => 'checkbox',
 
 				'description' => __( 'Additional data will be sent for the purpose of fraud protection. This additional data includes billing / shipping address, shopping basket and descriptor.', 'woocommerce-gateway-wirecard' ),
-				'label'   => __( 'Send additional information', 'woocommerce-gateway-wirecard' ),
-				'default' => 'yes',
+				'label'       => __( 'Send additional information', 'woocommerce-gateway-wirecard' ),
+				'default'     => 'yes',
 			),
 		);
 	}
