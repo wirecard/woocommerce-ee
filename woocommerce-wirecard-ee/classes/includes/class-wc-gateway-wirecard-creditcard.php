@@ -157,11 +157,13 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 			'http_user'                   => array(
 				'title'   => __( 'HTTP User', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'text',
+				'description' => __( 'The http user provided in your Wirecard contract', 'woocommerce-gateway-wirecard' ),
 				'default' => '70000-APITEST-AP',
 			),
 			'http_pass'                   => array(
 				'title'   => __( 'HTTP Password', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'text',
+				'description' => __( 'The http password provided in your Wirecard contract', 'woocommerce-gateway-wirecard' ),
 				'default' => 'qD2wzQ_hrc!8',
 			),
 			'advanced'                    => array(
