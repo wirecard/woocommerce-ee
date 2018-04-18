@@ -60,6 +60,22 @@ $( document ).ready(
 	 */
 		function formSubmitSuccessHandler( response ) {
 			token = response.token_id;
+			if ( $("#wirecard-store-card").is(":checked") ) {
+                $.ajax(
+                    {
+                        type: 'POST',
+                        url: vault_url,
+                        data: { 'action' : 'save_cc_to_vault', 'token' : response.token_id, 'mask_pan' : response.masked_account_number },
+                        dataType: 'json',
+                        success: function (data) {
+                            console.log(data);
+                        },
+                        error: function (data) {
+                            console.log( data );
+                        }
+                    }
+                );
+			}
 			jQuery( '<input>' ).attr(
 				{
 					type: 'hidden',

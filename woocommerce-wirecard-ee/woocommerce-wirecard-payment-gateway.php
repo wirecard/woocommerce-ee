@@ -154,6 +154,7 @@ function install_wirecard_payment_gateway() {
 	global $wpdb;
 
 	$table_name = $wpdb->base_prefix . 'wirecard_payment_gateway_tx';
+	$vault_table_name = $wpdb->base_prefix . 'wirecard_payment_gateway_vault';
 	$collate    = '';
 	if ( $wpdb->has_cap( 'collation' ) ) {
 		$collate = $wpdb->get_charset_collate();
@@ -180,6 +181,15 @@ function install_wirecard_payment_gateway() {
 
 	require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 	dbDelta( $sql );
+
+	$sql2 = "CREATE TABLE IF NOT EXISTS {$vault_table_name} (
+ 		vault_id int(10) unsigned NOT NULL auto_increment,
+ 		user_id int(10) NOT NULL,
+ 		token varchar(20) NOT NULL UNIQUE,
+ 		masked_pan varchar(30) NOT NULL,
+ 		PRIMARY KEY (vault_id)
+ 		)$collate;";
+	dbDelta( $sql2 );
 }
 
 /**
