@@ -32,35 +32,32 @@
 require_once __DIR__ . '/class-wc-wirecard-payment-gateway.php';
 
 use Wirecard\PaymentSdk\Config\Config;
-use Wirecard\PaymentSdk\Config\CreditCardConfig;
+use Wirecard\PaymentSdk\Config\PaymentMethodConfig;
 use Wirecard\PaymentSdk\Entity\Amount;
-use Wirecard\PaymentSdk\Entity\CustomField;
-use Wirecard\PaymentSdk\Entity\CustomFieldCollection;
-use Wirecard\PaymentSdk\Entity\Redirect;
-use Wirecard\PaymentSdk\Transaction\CreditCardTransaction;
+use Wirecard\PaymentSdk\Transaction\UpiTransaction;
 use Wirecard\PaymentSdk\TransactionService;
 
 /**
- * Class WC_Gateway_Wirecard_CreditCard
+ * Class WC_Gateway_Wirecard_Unionpay_International
  *
  * @extends WC_Wirecard_Payment_Gateway
  *
- * @since   1.0.0
+ * @since   1.1.0
  */
-class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
+class WC_Gateway_Wirecard_Unionpay_International extends WC_Wirecard_Payment_Gateway {
 
 	/**
-	 * WC_Gateway_Wirecard_Creditcard constructor.
+	 * WC_Gateway_Wirecard_Unionpay_International constructor.
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 */
 	public function __construct() {
-		$this->type               = 'creditcard';
-		$this->id                 = 'wirecard_ee_creditcard';
-		$this->icon               = WOOCOMMERCE_GATEWAY_WIRECARD_URL . 'assets/images/creditcard.png';
-		$this->method_title       = __( 'Wirecard Credit Card', 'wooocommerce-gateway-wirecard' );
-		$this->method_name        = __( 'Credit Card', 'wooocommerce-gateway-wirecard' );
-		$this->method_description = __( 'Credit Card transactions via Wirecard Payment Processing Gateway', 'woocommerce-gateway-wirecard' );
+		$this->type               = 'unionpayinternational';
+		$this->id                 = 'wirecard_ee_unionpayinternational';
+		$this->icon               = WOOCOMMERCE_GATEWAY_WIRECARD_URL . 'assets/images/unionpayinternational.png';
+		$this->method_title       = __( 'Wirecard Unionpay International', 'wooocommerce-gateway-wirecard' );
+		$this->method_name        = __( 'Unionpay International', 'wooocommerce-gateway-wirecard' );
+		$this->method_description = __( 'Unionpay International transactions via Wirecard Payment Processing Gateway', 'woocommerce-gateway-wirecard' );
 		$this->has_fields         = true;
 
 		$this->supports = array(
@@ -71,7 +68,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 		$this->cancel        = array( 'authorization' );
 		$this->capture       = array( 'authorization' );
 		$this->refund        = array( 'purchase', 'capture-authorization' );
-		$this->refund_action = 'refund';
+		$this->refund_action = 'cancel';
 
 		$this->init_form_fields();
 		$this->init_settings();
@@ -82,7 +79,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 		$this->additional_helper = new Additional_Information();
 
 		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
-		add_action( 'woocommerce_api_get_credit_card_request_data', array( $this, 'get_request_data_credit_card' ) );
+		add_action( 'woocommerce_api_get_upi_request_data', array( $this, 'get_request_data_upi' ) );
 
 		parent::add_payment_gateway_actions();
 	}
@@ -90,83 +87,61 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	/**
 	 * Load form fields for configuration
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 */
 	public function init_form_fields() {
 		$this->form_fields = array(
-			'enabled'                     => array(
+			'enabled'             => array(
 				'title'   => __( 'Enable/Disable', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'checkbox',
-				'label'   => __( 'Enable Wirecard Credit Card', 'woocommerce-gateway-wirecard' ),
+				'label'   => __( 'Enable Wirecard Unionpay International', 'woocommerce-gateway-wirecard' ),
 				'default' => 'no',
 			),
-			'title'                       => array(
+			'title'               => array(
 				'title'       => __( 'Title', 'woocommerce-gateway-wirecard' ),
 				'type'        => 'text',
 				'description' => __( 'This controls the title which the user sees during checkout.', 'woocommerce-gateway-wirecard' ),
-				'default'     => __( 'Wirecard Credit Card', 'woocommerce-gateway-wirecard' ),
+				'default'     => __( 'Wirecard Unionpay International', 'woocommerce-gateway-wirecard' ),
 				'desc_tip'    => true,
 			),
-			'merchant_account_id'         => array(
+			'merchant_account_id' => array(
 				'title'   => __( 'Merchant Account ID', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'text',
-				'default' => '53f2895a-e4de-4e82-a813-0d87a10e55e6',
+				'default' => 'c6e9331c-5c1f-4fc6-8a08-ef65ce09ddb0',
 			),
-			'secret'                      => array(
+			'secret'              => array(
 				'title'   => __( 'Secret Key', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'text',
-				'default' => 'dbc5a498-9a66-43b9-bf1d-a618dd399684',
+				'default' => '16d85b73-79e2-4c33-932a-7da99fb04a9c',
 			),
-			'three_d_merchant_account_id' => array(
-				'title'   => __( '3-D Secure Merchant Account ID', 'woocommerce-gateway-wirecard' ),
-				'type'    => 'text',
-				'default' => '508b8896-b37d-4614-845c-26bf8bf2c948',
-			),
-			'three_d_secret'              => array(
-				'title'   => __( '3-D Secure Secret Key', 'woocommerce-gateway-wirecard' ),
-				'type'    => 'text',
-				'default' => 'dbc5a498-9a66-43b9-bf1d-a618dd399684',
-			),
-			'ssl_max_limit'               => array(
-				'title'       => __( 'Non 3-D Secure Max. Limit', 'woocommerce-gateway-wirecard' ),
-				'type'        => 'text',
-				'description' => __( 'Amount in default shop currency', 'woocommerce-gateway-wirecard' ),
-				'default'     => '100.0',
-			),
-			'three_d_min_limit'           => array(
-				'title'       => __( '3-D Secure Min. Limit', 'woocommerce-gateway-wirecard' ),
-				'type'        => 'text',
-				'description' => __( 'Amount in default shop currency', 'woocommerce-gateway-wirecard' ),
-				'default'     => '50.0',
-			),
-			'credentials'                 => array(
+			'credentials'         => array(
 				'title'       => __( 'Credentials', 'woocommerce-gateway-wirecard' ),
 				'type'        => 'title',
 				'description' => __( 'Enter your Wirecard credentials.', 'woocommerce-gateway-wirecard' ),
 			),
-			'base_url'                    => array(
+			'base_url'            => array(
 				'title'       => __( 'Base URL', 'woocommerce-gateway-wirecard' ),
 				'type'        => 'text',
 				'description' => __( 'The Wirecard base URL. (e.g. https://api.wirecard.com)' ),
 				'default'     => 'https://api-test.wirecard.com',
 				'desc_tip'    => true,
 			),
-			'http_user'                   => array(
+			'http_user'           => array(
 				'title'   => __( 'HTTP User', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'text',
-				'default' => '70000-APITEST-AP',
+				'default' => '70000-APILUHN-CARD',
 			),
-			'http_pass'                   => array(
+			'http_pass'           => array(
 				'title'   => __( 'HTTP Password', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'text',
-				'default' => 'qD2wzQ_hrc!8',
+				'default' => '8mhwavKVb91T',
 			),
-			'advanced'                    => array(
+			'advanced'            => array(
 				'title'       => __( 'Advanced Options', 'woocommerce-gateway-wirecard' ),
 				'type'        => 'title',
 				'description' => '',
 			),
-			'payment_action'              => array(
+			'payment_action'      => array(
 				'title'   => __( 'Payment Action', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'select',
 				'default' => 'Capture',
@@ -176,13 +151,13 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 					'pay'     => 'Capture',
 				),
 			),
-			'descriptor'                  => array(
+			'descriptor'          => array(
 				'title'   => __( 'Enable/Disable', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'checkbox',
 				'label'   => __( 'Descriptor', 'woocommerce-gateway-wirecard' ),
 				'default' => 'no',
 			),
-			'send_additional'             => array(
+			'send_additional'     => array(
 				'title'   => __( 'Enable/Disable', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'checkbox',
 				'label'   => __( 'Send additional information', 'woocommerce-gateway-wirecard' ),
@@ -192,78 +167,40 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	}
 
 	/**
-	 * Create payment method Configuration
-	 *
-	 * @return Config
-	 *
-	 * @since 1.0.0
-	 */
-	public function create_payment_config( $base_url = null, $http_user = null, $http_pass = null ) {
-		if ( is_null( $base_url ) ) {
-			$base_url  = $this->get_option( 'base_url' );
-			$http_user = $this->get_option( 'http_user' );
-			$http_pass = $this->get_option( 'http_pass' );
-		}
-
-		$config         = parent::create_payment_config( $base_url, $http_user, $http_pass );
-		$payment_config = new CreditCardConfig(
-			$this->get_option( 'merchant_account_id' ),
-			$this->get_option( 'secret' )
-		);
-
-		if ( $this->get_option( 'three_d_merchant_account_id' ) !== '' ) {
-			$payment_config->setThreeDCredentials(
-				$this->get_option( 'three_d_merchant_account_id' ),
-				$this->get_option( 'three_d_secret' )
-			);
-		}
-
-		if ( $this->get_option( 'ssl_max_limit' ) !== '' ) {
-			$payment_config->addSslMaxLimit(
-				new Amount(
-					$this->get_option( 'ssl_max_limit' ),
-					$this->get_option( 'woocommerce_currency' )
-				)
-			);
-		}
-
-		if ( $this->get_option( 'three_d_min_limit' ) !== '' ) {
-			$payment_config->addThreeDMinLimit(
-				new Amount(
-					$this->get_option( 'three_d_min_limit' ),
-					$this->get_option( 'woocommerce_currency' )
-				)
-			);
-		}
-
-		$config->add( $payment_config );
-
-		return $config;
-	}
-
-	/**
 	 * Add payment fields to payment method
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 */
 	public function payment_fields() {
 		$base_url    = $this->get_option( 'base_url' );
 		$gateway_url = WOOCOMMERCE_GATEWAY_WIRECARD_URL;
 		$page_url    = add_query_arg(
-			[ 'wc-api' => 'get_credit_card_request_data' ],
+			[ 'wc-api' => 'get_upi_request_data' ],
 			site_url( '/', is_ssl() ? 'https' : 'http' )
 		);
 
 		$html = <<<HTML
 			<script src='$base_url/engine/hpp/paymentPageLoader.js' type='text/javascript'></script>
-            <script type='application/javascript' src='$gateway_url/assets/js/creditcard.js'></script>
+            <script type='application/javascript' src='$gateway_url/assets/js/unionpayinternational.js'></script>
             <script>
-                var ajax_url = "$page_url";
+                var ajax_url_upi = "$page_url";
             </script>
-            <div id='wc_payment_method_wirecard_creditcard_form'></div>
+            <div id='wc_payment_method_wirecard_unionpayinternational_form'></div>
 HTML;
 
 		echo $html;
+	}
+
+	/**
+	 * Return request data for the unionpay international form
+	 *
+	 * @since 1.1.0
+	 */
+	public function get_request_data_upi() {
+		$config              = $this->create_payment_config();
+		$transaction_service = new TransactionService( $config );
+		wp_send_json_success( $transaction_service->getDataForUpiUi() );
+		die();
 	}
 
 	/**
@@ -273,7 +210,7 @@ HTML;
 	 *
 	 * @return array
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 */
 	public function process_payment( $order_id ) {
 		$order = wc_get_order( $order_id );
@@ -281,7 +218,7 @@ HTML;
 		$this->payment_action = $this->get_option( 'payment_action' );
 		$token                = $_POST['tokenId'];
 
-		$this->transaction = new CreditCardTransaction();
+		$this->transaction = new UpiTransaction();
 		parent::process_payment( $order_id );
 
 		$this->transaction->setTokenId( $token );
@@ -291,31 +228,19 @@ HTML;
 	}
 
 	/**
-	 * Return request data for the credit card form
-	 *
-	 * @since 1.0.0
-	 */
-	public function get_request_data_credit_card() {
-		$config              = $this->create_payment_config();
-		$transaction_service = new TransactionService( $config );
-		wp_send_json_success( $transaction_service->getDataForCreditCardUi() );
-		die();
-	}
-
-	/**
 	 * Create transaction for cancel
 	 *
 	 * @param int        $order_id
 	 * @param float|null $amount
 	 *
-	 * @return CreditCardTransaction
+	 * @return UpiTransaction
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 */
 	public function process_cancel( $order_id, $amount = null ) {
 		$order = wc_get_order( $order_id );
 
-		$transaction = new CreditCardTransaction();
+		$transaction = new UpiTransaction();
 		$transaction->setParentTransactionId( $order->get_transaction_id() );
 		if ( ! is_null( $amount ) ) {
 			$transaction->setAmount( new Amount( $amount, $order->get_currency() ) );
@@ -330,14 +255,14 @@ HTML;
 	 * @param int        $order_id
 	 * @param float|null $amount
 	 *
-	 * @return CreditCardTransaction
+	 * @return UpiTransaction
 	 *
 	 * @since 1.0.0
 	 */
 	public function process_capture( $order_id, $amount = null ) {
 		$order = wc_get_order( $order_id );
 
-		$transaction = new CreditCardTransaction();
+		$transaction = new UpiTransaction();
 		$transaction->setParentTransactionId( $order->get_transaction_id() );
 		if ( ! is_null( $amount ) ) {
 			$transaction->setAmount( new Amount( $amount, $order->get_currency() ) );
@@ -353,14 +278,50 @@ HTML;
 	 * @param float|null $amount
 	 * @param string     $reason
 	 *
-	 * @return bool|CreditCardTransaction|WP_Error
+	 * @return bool|UpiTransaction|WP_Error
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 * @throws Exception
 	 */
 	public function process_refund( $order_id, $amount = null, $reason = '' ) {
-		$this->transaction = new CreditCardTransaction();
+		$this->transaction = new UpiTransaction();
 
 		return parent::process_refund( $order_id, $amount, '' );
+	}
+
+	/**
+	 * Create payment method Configuration
+	 *
+	 * @return Config
+	 *
+	 * @since 1.1.0
+	 */
+	public function create_payment_config( $base_url = null, $http_user = null, $http_pass = null ) {
+		if ( is_null( $base_url ) ) {
+			$base_url  = $this->get_option( 'base_url' );
+			$http_user = $this->get_option( 'http_user' );
+			$http_pass = $this->get_option( 'http_pass' );
+		}
+
+		$config         = parent::create_payment_config( $base_url, $http_user, $http_pass );
+		$payment_config = new PaymentMethodConfig(
+			UpiTransaction::NAME,
+			$this->get_option( 'merchant_account_id' ),
+			$this->get_option( 'secret' )
+		);
+
+		$config->add( $payment_config );
+
+		return $config;
+	}
+
+	/**
+	 * Submit a form with the data from the response
+	 *
+	 * @since 1.1.0
+	 */
+	public function callback() {
+		$callback = new Wirecard_Callback();
+		$callback->post_upi_form();
 	}
 }

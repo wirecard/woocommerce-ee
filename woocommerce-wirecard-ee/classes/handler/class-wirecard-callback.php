@@ -68,4 +68,36 @@ class Wirecard_Callback {
 		echo $html;
 		die();
 	}
+
+	/**
+	 * Process 3ds redirect if necessary
+	 *
+	 * @since 1.1.0
+	 */
+	public function post_upi_form() {
+		$data = WC()->session->get( 'wirecard_post_data' );
+		WC()->session->__unset( 'wirecard_post_data' );
+
+		$html  = '';
+		$html .= '<script>window.setInterval( function() {
+                    var wait = document.getElementById( "wait" );
+    				if ( wait.innerHTML.length > 3 ) 
+       					 wait.innerHTML = "";
+    				else 
+        				wait.innerHTML += ".";
+    		}, 200); 
+    		</script>
+			<div style="display: flex; justify-content: center; font-size: 20px;">' .
+			__( 'You are being redirected. Please wait', 'woocommerce-gateway-wirecard' ) . '
+			<span id="wait" style="font-size: 20px; width: 50px;">.</span></div>';
+		$html .= '<form id="unionpayinternational_form" method="' . $data['method'] . '" action="' . $data['url'] . '">';
+		foreach ( $data['form_fields'] as $key => $value ) {
+			$html .= '<input type="hidden" name="' . $key . '" value="' . $value . '">';
+		}
+		$html .= '</form>';
+		$html .= '<script>document.getElementsByTagName("form")[0].submit();</script>';
+
+		echo $html;
+		die();
+	}
 }
