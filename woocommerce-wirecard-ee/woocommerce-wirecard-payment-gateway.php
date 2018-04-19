@@ -45,6 +45,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 define( 'WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR', plugin_dir_path( __FILE__ ) );
 define( 'WOOCOMMERCE_GATEWAY_WIRECARD_URL', plugin_dir_url( __FILE__ ) );
 
+load_plugin_textdomain(
+	'woocommerce-gateway-wirecard', false, dirname( plugin_basename( __FILE__ ) ) . '/languages'
+);
+
 register_activation_hook( __FILE__, 'install_wirecard_payment_gateway' );
 
 add_action( 'plugins_loaded', 'init_wirecard_payment_gateway' );

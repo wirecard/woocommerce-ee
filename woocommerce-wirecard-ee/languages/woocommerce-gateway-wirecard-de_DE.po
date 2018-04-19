@@ -1,0 +1,841 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Wirecard Payment Processing Gateway\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-04-18 11:27+0000\n"
+"PO-Revision-Date: 2018-04-19 11:04+0000\n"
+"Last-Translator: admin <admin@admin.at>\n"
+"Language-Team: Deutsch\n"
+"Language: de_DE\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco https://localise.biz/"
+
+#: classes/admin/class-wirecard-transaction-factory.php:280
+msgid " payment"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:123
+msgid "3-D Secure Merchant Account ID"
+msgstr "3-D Secure Händler-Konto-ID"
+
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:141
+msgid "3-D Secure Min. Limit"
+msgstr "3-D Secure Minimum Limit"
+
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:129
+msgid "3-D Secure Secret Key"
+msgstr "3-D Secure Geheimschlüssel"
+
+#: classes/admin/class-wirecard-settings.php:117
+msgid "< Back"
+msgstr "< Zurück"
+
+#: classes/admin/class-wirecard-transaction-factory.php:99
+msgid "Action"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:96
+msgid "Activate payment method Alipay Crossborder"
+msgstr "Zahlungsmittel Alipay Crossborder aktivieren."
+
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:101
+msgid "Activate payment method Credit Card"
+msgstr "Zahlungsmittel Kreditkarte aktivieren."
+
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:105
+msgid "Activate payment method Guaranteed Invoice"
+msgstr "Zahlungsmittel Garantierter Kauf auf Rechnung aktivieren."
+
+#: classes/includes/class-wc-gateway-wirecard-ideal.php:104
+msgid "Activate payment method iDEAL"
+msgstr "Zahlungsmittel iDEAL aktivieren."
+
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:95
+msgid "Activate payment method Payment on Invoice or Payment in Advance"
+msgstr "Zahlungsmittel Kauf auf Rechnung / Vorauskasse aktivieren"
+
+#: classes/includes/class-wc-gateway-wirecard-paypal.php:98
+msgid "Activate payment method PayPal"
+msgstr "Zahlungsmittel PayPal aktivieren."
+
+#: classes/includes/class-wc-gateway-wirecard-sepa.php:97
+msgid "Activate payment method SEPA Direct Debit"
+msgstr "Zahlungsmittel SEPA Lastschrift aktivieren."
+
+#: classes/includes/class-wc-gateway-wirecard-sofort.php:98
+msgid "Activate payment method Sofort."
+msgstr "Zahlungsmittel Sofort. aktivieren."
+
+#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:157
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:195
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:216
+#: classes/includes/class-wc-gateway-wirecard-ideal.php:165
+#: classes/includes/class-wc-gateway-wirecard-paypal.php:177
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:167
+#: classes/includes/class-wc-gateway-wirecard-sepa.php:203
+#: classes/includes/class-wc-gateway-wirecard-sofort.php:152
+msgid ""
+"Additional data will be sent for the purpose of fraud protection. This "
+"additional data includes billing / shipping address, shopping basket and "
+"descriptor."
+msgstr ""
+"Zusätzliche Informationen werden für Betrugsschutz gesendet. In diesen Daten "
+"sind  Rechnungs- / Lieferadresse, Warenkorb und Deskriptor inkludiert."
+
+#: classes/includes/class-wc-gateway-wirecard-sepa.php:172
+msgid "Additional Text"
+msgstr "Zustatztext"
+
+#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:143
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:170
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:152
+#: classes/includes/class-wc-gateway-wirecard-ideal.php:151
+#: classes/includes/class-wc-gateway-wirecard-paypal.php:145
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:142
+#: classes/includes/class-wc-gateway-wirecard-sepa.php:178
+#: classes/includes/class-wc-gateway-wirecard-sofort.php:144
+#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:140
+msgid "Advanced Options"
+msgstr "Erweiterte Einstellungen"
+
+#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:62
+msgid "Alipay Crossborder transactions via Wirecard Payment Processing Gateway"
+msgstr ""
+"Alipay Crossborder Transaktionen via Wirecard Payment Processing Gateway."
+
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:164
+msgid "Allowed billing countries"
+msgstr "Erlaubte Rechnungsempfängerländer"
+
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:188
+msgid "Allowed currencies"
+msgstr "Erlaubte Währungen"
+
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:176
+msgid "Allowed shipping countries"
+msgstr "Erlaubte Lieferländer"
+
+#: classes/admin/class-wirecard-transaction-factory.php:108
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:258
+msgid "Amount"
+msgstr "Betrag"
+
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:137
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:143
+msgid "Amount in default shop currency"
+msgstr "Betrag in Standard Shop Währung."
+
+#: classes/admin/class-wirecard-transaction-factory.php:262
+msgid "An error occured. The requested transaction could not be found!"
+msgstr ""
+"Ein Fehler ist aufgetreten. Die angeforderte Transaktion konnte nicht "
+"gefunden werden!"
+
+#: classes/includes/class-wc-wirecard-payment-gateway.php:200
+#: classes/includes/class-wc-wirecard-payment-gateway.php:206
+#: classes/includes/class-wc-wirecard-payment-gateway.php:318
+msgid "An error occurred during the payment process. Please try again."
+msgstr ""
+"Während des Zahlungsprozesses ist ein Fehler aufgetreten. Bitte versuchen "
+"Sie es erneut."
+
+#. translators:
+#: woocommerce-wirecard-payment-gateway.php:91
+#, php-format
+msgid "Authorized <span class=\"count\">(%s)</span>"
+msgid_plural "Authorized<span class=\"count\">(%s)</span>"
+msgstr[0] ""
+msgstr[1] ""
+
+#: classes/includes/class-wc-wirecard-payment-gateway.php:210
+msgid "Awaiting payment from Wirecard"
+msgstr "Ausständige Zahlung von Wirecard"
+
+#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:125
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:152
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:133
+#: classes/includes/class-wc-gateway-wirecard-ideal.php:132
+#: classes/includes/class-wc-gateway-wirecard-paypal.php:126
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:124
+#: classes/includes/class-wc-gateway-wirecard-sepa.php:131
+#: classes/includes/class-wc-gateway-wirecard-sofort.php:126
+#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:123
+msgid "Base URL"
+msgstr "Base URL"
+
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:260
+msgid "BIC"
+msgstr "BIC"
+
+#: classes/includes/class-wc-gateway-wirecard-sepa.php:211
+msgid "BIC enabled"
+msgstr "BIC aktivieren"
+
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:160
+msgid "Billing/Shipping address must be identical"
+msgstr "Rechnungsadresse und Versandadresse müssen übereinstimmen"
+
+#: woocommerce-wirecard-payment-gateway.php:208
+#: woocommerce-wirecard-payment-gateway.php:209
+#: classes/admin/class-wirecard-transaction-factory.php:289
+msgid "Cancel transaction"
+msgstr "Transaktion stornieren"
+
+#: woocommerce-wirecard-payment-gateway.php:216
+#: woocommerce-wirecard-payment-gateway.php:217
+#: classes/admin/class-wirecard-transaction-factory.php:292
+msgid "Capture transaction"
+msgstr "Transaktion buchen"
+
+#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:120
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:147
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:128
+#: classes/includes/class-wc-gateway-wirecard-ideal.php:127
+#: classes/includes/class-wc-gateway-wirecard-paypal.php:121
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:119
+#: classes/includes/class-wc-gateway-wirecard-sepa.php:123
+#: classes/includes/class-wc-gateway-wirecard-sofort.php:121
+#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:118
+msgid "Credentials"
+msgstr "Zugangsdaten"
+
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:63
+msgid "Credit Card transactions via Wirecard Payment Processing Gateway"
+msgstr "Kreditkarten Transaktionen via Wirecard Payment Processing Gateway."
+
+#: classes/includes/class-wc-gateway-wirecard-sepa.php:166
+msgid "Creditor City"
+msgstr "Gläubiger Stadt"
+
+#: classes/includes/class-wc-gateway-wirecard-sepa.php:154
+msgid "Creditor ID"
+msgstr "Creditor ID"
+
+#: classes/includes/class-wc-gateway-wirecard-sepa.php:160
+msgid "Creditor Name"
+msgstr "Gläubiger Name"
+
+#: classes/admin/class-wirecard-transaction-factory.php:111
+msgid "Currency"
+msgstr "Währung"
+
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:408
+msgid "Date of birth"
+msgstr "Geburtsdatum"
+
+#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:151
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:189
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:210
+#: classes/includes/class-wc-gateway-wirecard-ideal.php:159
+#: classes/includes/class-wc-gateway-wirecard-paypal.php:171
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:161
+#: classes/includes/class-wc-gateway-wirecard-sepa.php:197
+#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:157
+msgid "Descriptor"
+msgstr "Deskriptor"
+
+#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:97
+msgid "Enable Wirecard Alipay Crossborder"
+msgstr "Wirecard Alipay Crossborder aktivieren"
+
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:100
+msgid "Enable Wirecard Credit Card"
+msgstr "Wirecard Kreditkarte aktivieren"
+
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:106
+msgid "Enable Wirecard Guaranteed Invoice"
+msgstr "Wirecard Garantierter Kauf auf Rechnung aktivieren"
+
+#: classes/includes/class-wc-gateway-wirecard-ideal.php:105
+msgid "Enable Wirecard iDEAL"
+msgstr "Wirecard iDEAL aktivieren"
+
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:96
+msgid "Enable Wirecard Payment on Invoice / Payment in Advance"
+msgstr "Wirecard Kauf auf Rechnung / Vorauskasse aktivieren"
+
+#: classes/includes/class-wc-gateway-wirecard-paypal.php:99
+msgid "Enable Wirecard PayPal"
+msgstr "Wirecard PayPal aktivieren"
+
+#: classes/includes/class-wc-gateway-wirecard-sepa.php:98
+msgid "Enable Wirecard SEPA"
+msgstr "Wirecard SEPA aktivieren"
+
+#: classes/includes/class-wc-gateway-wirecard-sofort.php:99
+msgid "Enable Wirecard Sofort."
+msgstr "Wirecard Sofort. aktivieren"
+
+#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:97
+msgid "Enable Wirecard Unionpay International"
+msgstr "Wirecard Unionpay International aktivieren"
+
+#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:94
+#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:148
+#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:155
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:98
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:186
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:193
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:103
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:157
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:207
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:214
+#: classes/includes/class-wc-gateway-wirecard-ideal.php:102
+#: classes/includes/class-wc-gateway-wirecard-ideal.php:156
+#: classes/includes/class-wc-gateway-wirecard-ideal.php:163
+#: classes/includes/class-wc-gateway-wirecard-paypal.php:96
+#: classes/includes/class-wc-gateway-wirecard-paypal.php:161
+#: classes/includes/class-wc-gateway-wirecard-paypal.php:168
+#: classes/includes/class-wc-gateway-wirecard-paypal.php:175
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:93
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:158
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:165
+#: classes/includes/class-wc-gateway-wirecard-sepa.php:95
+#: classes/includes/class-wc-gateway-wirecard-sepa.php:194
+#: classes/includes/class-wc-gateway-wirecard-sepa.php:201
+#: classes/includes/class-wc-gateway-wirecard-sepa.php:208
+#: classes/includes/class-wc-gateway-wirecard-sofort.php:96
+#: classes/includes/class-wc-gateway-wirecard-sofort.php:149
+#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:95
+#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:155
+#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:161
+msgid "Enable/Disable"
+msgstr "Aktivieren/Deaktivieren"
+
+#: classes/includes/class-wc-gateway-wirecard-sepa.php:151
+msgid "Enter your SEPA credentials and SEPA Direct Debit Mandate settings."
+msgstr ""
+"Geben Sie Ihre SEPA Zugangsdaten und Ihre SEPA Lastschrift "
+"Mandatseinstellungen ein."
+
+#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:122
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:149
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:130
+#: classes/includes/class-wc-gateway-wirecard-ideal.php:129
+#: classes/includes/class-wc-gateway-wirecard-paypal.php:123
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:121
+#: classes/includes/class-wc-gateway-wirecard-sepa.php:125
+#: classes/includes/class-wc-gateway-wirecard-sofort.php:123
+#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:120
+msgid "Enter your Wirecard credentials."
+msgstr "Geben Sie Ihre Wirecard Zugangsdaten ein."
+
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:65
+msgid "Guaranteed Invoice transactions via Wirecard Payment Processing Gateway"
+msgstr ""
+"Garantierter Kauf auf Rechnung Transaktionen via Wirecard Payment Processing "
+"Gateway-"
+
+#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:137
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:164
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:146
+#: classes/includes/class-wc-gateway-wirecard-ideal.php:145
+#: classes/includes/class-wc-gateway-wirecard-paypal.php:139
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:136
+#: classes/includes/class-wc-gateway-wirecard-sepa.php:143
+#: classes/includes/class-wc-gateway-wirecard-sofort.php:138
+#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:135
+msgid "HTTP Password"
+msgstr "HTTP Passwort"
+
+#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:131
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:158
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:140
+#: classes/includes/class-wc-gateway-wirecard-ideal.php:139
+#: classes/includes/class-wc-gateway-wirecard-paypal.php:133
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:130
+#: classes/includes/class-wc-gateway-wirecard-sepa.php:137
+#: classes/includes/class-wc-gateway-wirecard-sofort.php:132
+#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:130
+msgid "HTTP User"
+msgstr "HTTP Benutzer"
+
+#. URI of the plugin
+msgid "https://github.com/wirecard/woocommerce-ee"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://www.wirecard.com/"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-ideal.php:69
+msgid "iDEAL transactions via Wirecard Payment Processing Gateway"
+msgstr "iDEAL Transaktionen via Wirecard Payment Processing Gateway."
+
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:159
+msgid ""
+"If activated, payment method Guaranteed Invoice will only be displayed if "
+"Billing/Shipping address are identical"
+msgstr ""
+"Bei Aktivierung wird Garantierter Kauf auf Rechnung nur im Zahlungsprozess "
+"angezeigt, wenn Rechnungs- und Lieferadresse übereinstimmen."
+
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:202
+msgid "Maximum Amount"
+msgstr "Maximaler Betrag"
+
+#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:108
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:111
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:116
+#: classes/includes/class-wc-gateway-wirecard-ideal.php:115
+#: classes/includes/class-wc-gateway-wirecard-paypal.php:109
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:107
+#: classes/includes/class-wc-gateway-wirecard-sepa.php:111
+#: classes/includes/class-wc-gateway-wirecard-sofort.php:109
+#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:108
+msgid "Merchant Account ID"
+msgstr "Händler-Konto-ID"
+
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:197
+msgid "Minimum Amount"
+msgstr "Minimaler Betrag"
+
+#: classes/admin/class-wirecard-settings.php:118
+msgid "Next >"
+msgstr "Weiter >"
+
+#: classes/admin/class-wirecard-transaction-factory.php:298
+msgid "No Back-end operations available for this transaction"
+msgstr "Für diese Transaktion sind keine Folgeoperationen möglich."
+
+#: classes/admin/class-wirecard-transaction-factory.php:302
+msgid ""
+"No Back-end operations available for this transaction, the transaction is "
+"not confirmed yet."
+msgstr ""
+"Für diese Transaktion sind keine Folgeoperationen möglich. Die Transaktion "
+"ist noch ausständig und nicht bestätigt."
+
+#: classes/includes/class-wc-wirecard-payment-gateway.php:598
+msgid "No online refund possible at this time."
+msgstr "Zur Zeit ist kein Online-Refund möglich."
+
+#: classes/admin/class-wirecard-transaction-factory.php:350
+#: classes/admin/class-wirecard-transaction-factory.php:368
+#: classes/admin/class-wirecard-transaction-factory.php:386
+msgid "No transaction found"
+msgstr "Es wurde keine Transaktion gefunden."
+
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:135
+msgid "Non 3-D Secure Max. Limit"
+msgstr "Non 3-D Secure Maximal Limit"
+
+#: classes/admin/class-wirecard-transaction-factory.php:114
+msgid "Order number"
+msgstr "Bestellnummer"
+
+#: woocommerce-wirecard-payment-gateway.php:85
+#: woocommerce-wirecard-payment-gateway.php:147
+msgctxt "Order status"
+msgid "Authorized"
+msgstr ""
+
+#: classes/admin/class-wirecard-transaction-factory.php:96
+msgid "Parent transaction ID"
+msgstr "Parent Transaction ID"
+
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:175
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:179
+#: classes/includes/class-wc-gateway-wirecard-paypal.php:150
+#: classes/includes/class-wc-gateway-wirecard-paypal.php:154
+#: classes/includes/class-wc-gateway-wirecard-sepa.php:183
+#: classes/includes/class-wc-gateway-wirecard-sepa.php:187
+#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:145
+#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:148
+msgid "Payment Action"
+msgstr "Zahlungsaktion"
+
+#: classes/admin/class-wirecard-transaction-factory.php:102
+msgid "Payment method"
+msgstr "Zahlungsmittel"
+
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:166
+msgid ""
+"Payment method Guaranteed Invoice will only be displayed if consumers "
+"billing country equals one of these chosen countries. \n"
+"\t\t\t\tPredefined the following countries are allowed: AT, DE."
+msgstr ""
+"Garantierter Kauf auf Rechnung wird nur im Zahlungsprozess angzeigt, wenn "
+"sich die vom Konsumenten gewählte Rechnungsadresse in einem der gewählten "
+"Länder befindet. <br/>\n"
+"Vorausgewählt sind Österreich und Deutschland."
+
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:178
+msgid ""
+"Payment method Guaranteed Invoice will only be displayed if consumers "
+"shipping country equals one of these chosen countries. \n"
+"\t\t\t\tPredefined the following countries are allowed: AT, DE."
+msgstr ""
+"Garantierter Kauf auf Rechnung wird nur im Zahlungsprozess angzeigt, wenn "
+"sich die vom Konsumenten gewählte Lieferadresse in einem der gewählten "
+"Länder befindet. <br/>\n"
+"Vorausgewählt sind Österreich und Deutschland."
+
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:190
+msgid ""
+"Payment method Guaranteed Invoice will only be displayed if the active "
+"currency equals one of these chosen currencies."
+msgstr ""
+"Garantierter Kauf auf Rechnung wird nur angezeigt, wenn eine der "
+"ausgewählten Währungen genutzt wird."
+
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:198
+msgid ""
+"Payment method Guaranteed Invoice will only be displayed if the ordered "
+"amount is bigger than this defined amount. Amount in default shop currency"
+msgstr ""
+"Garantierter Kauf auf Rechnung wird nur angezeigt, wenn der Bestellbetrag "
+"höher ist als der hier definierte Wert. Der Betrag wird in der "
+"Standardwährung gerechnet."
+
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:203
+msgid ""
+"Payment method Guaranteed Invoice will only be displayed if the ordered "
+"amount is smaller than this defined amount. Amount in default shop currency"
+msgstr ""
+"Garantierter Kauf auf Rechnung wird nur angezeigt, wenn der Bestellbetrag "
+"niedriger ist als der hier definierte Wert. Der Betrag wird in der "
+"Standardwährung gerechnet."
+
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:63
+msgid ""
+"Payment on Invoice / Payment in Advance transactions via Wirecard Payment "
+"Processing Gateway"
+msgstr ""
+"Kauf auf Rechnung / Vorauskasse Transaktionen via Wirecard Payment "
+"Processing Gateway."
+
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:147
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:151
+msgid "Payment Type"
+msgstr "Zahlungsart"
+
+#: classes/includes/class-wc-gateway-wirecard-paypal.php:63
+msgid "PayPal transactions via Wirecard Payment Processing Gateway"
+msgstr "PayPal Transaktionen via Wirecard Payment Processing Gateway."
+
+#: classes/includes/class-wc-gateway-wirecard-sepa.php:271
+msgid "Please fill in the SEPA fields and try again."
+msgstr "Bitte füllen Sie die SEPA Felder aus und versuchen Sie es erneut."
+
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:256
+msgid "Please transfer the amount using the following data:"
+msgstr "Bitte den Betrag mithilfe folgender Daten überweisen:"
+
+#: classes/includes/class-wc-wirecard-payment-gateway.php:387
+msgid "Processing refund failed."
+msgstr "Die Folgeoperation Refund ist fehlgeschlagen."
+
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:261
+msgid "Provider transaction reference id"
+msgstr ""
+
+#: woocommerce-wirecard-payment-gateway.php:224
+#: woocommerce-wirecard-payment-gateway.php:225
+#: classes/admin/class-wirecard-transaction-factory.php:295
+msgid "Refund transaction"
+msgstr "Transaktion refundieren"
+
+#: classes/includes/class-wc-wirecard-payment-gateway.php:396
+#: classes/includes/class-wc-wirecard-payment-gateway.php:399
+msgid "Refund via Wirecard Payment Processing Gateway failed."
+msgstr "Der Refund via Wirecard Payment Processing Gateway ist fehlgeschlagen."
+
+#: classes/admin/class-wirecard-transaction-factory.php:310
+msgid "Response data:"
+msgstr "Responsedaten:"
+
+#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:114
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:117
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:122
+#: classes/includes/class-wc-gateway-wirecard-ideal.php:121
+#: classes/includes/class-wc-gateway-wirecard-paypal.php:115
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:113
+#: classes/includes/class-wc-gateway-wirecard-sepa.php:117
+#: classes/includes/class-wc-gateway-wirecard-sofort.php:115
+#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:113
+msgid "Secret Key"
+msgstr "Geheimschlüssel"
+
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:131
+msgid ""
+"Secret key is mandatory to calculate the Digital Signature for the 3D "
+"payment."
+msgstr ""
+"Der Geheimschlüssel wird benötigt um die Digitale Signatur für diese 3D "
+"Zahlung zu berechnen."
+
+#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:116
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:119
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:124
+#: classes/includes/class-wc-gateway-wirecard-ideal.php:123
+#: classes/includes/class-wc-gateway-wirecard-paypal.php:117
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:115
+#: classes/includes/class-wc-gateway-wirecard-sepa.php:119
+#: classes/includes/class-wc-gateway-wirecard-sofort.php:117
+msgid ""
+"Secret key is mandatory to calculate the Digital Signature for the payment."
+msgstr ""
+"Der Geheimschlüssel wird benötigt um die Digitale Signatur für diese Zahlung "
+"zu berechnen."
+
+#: classes/includes/class-wc-gateway-wirecard-paypal.php:152
+#: classes/includes/class-wc-gateway-wirecard-sepa.php:185
+msgid ""
+"Select between \"Capture\" to capture / invoice your order automatically or "
+"\"Authorization\" to manually capture / invoice."
+msgstr ""
+"Wählen Sie zwischen \"Capture\" um automatisch eine Buchung durchzuführen "
+"oder \"Authorization\" um eine manuelle Buchung zu ermöglichen."
+
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:177
+msgid ""
+"Select between \"Capture\" to capture / invoice your order automatically or "
+"\"Authorization\" to manually capture / invoice. "
+msgstr ""
+"Wählen Sie zwischen \"Capture\" um automatisch eine Buchung durchzuführen "
+"oder \"Authorization\" um eine manuelle Buchung zu ermöglichen."
+
+#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:158
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:196
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:217
+#: classes/includes/class-wc-gateway-wirecard-ideal.php:166
+#: classes/includes/class-wc-gateway-wirecard-paypal.php:178
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:168
+#: classes/includes/class-wc-gateway-wirecard-sepa.php:204
+#: classes/includes/class-wc-gateway-wirecard-sofort.php:153
+#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:163
+msgid "Send additional information"
+msgstr "Zusätzliche Informationen mitsenden"
+
+#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:150
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:188
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:209
+#: classes/includes/class-wc-gateway-wirecard-ideal.php:158
+#: classes/includes/class-wc-gateway-wirecard-paypal.php:170
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:160
+#: classes/includes/class-wc-gateway-wirecard-sepa.php:196
+msgid ""
+"Send text which is displayed on the bank statement issued to your consumer "
+"by the financial service provider"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-sepa.php:149
+msgid "SEPA Credentials"
+msgstr "SEPA Zugangsdaten"
+
+#: classes/includes/class-wc-gateway-wirecard-sepa.php:168
+msgid ""
+"SEPA requires a Creditor City for display on the SEPA Direct Debit Mandate "
+"page."
+msgstr ""
+"Gläubiger Stadt wird benötigt für die Anzeigen am SEPA Lastschrift Mandat."
+
+#: classes/includes/class-wc-gateway-wirecard-sepa.php:162
+msgid ""
+"SEPA requires a Creditor Name for display on the SEPA Direct Debit Mandate "
+"page."
+msgstr ""
+"Gläubiger Name wird benötigt für die Anzeigen am SEPA Lastschrift Mandat."
+
+#: classes/includes/class-wc-gateway-wirecard-sepa.php:156
+msgid ""
+"SEPA requires Creditor ID to create SEPA Direct Debit Mandate. To get a "
+"Creditor ID apply at the responsible bank institute."
+msgstr ""
+"Die Creditor ID wird benötigt um das SEPA Lastschrift Mandat zu erstellen. "
+"Die Creditor ID muss bei dem zuständigen Bankinstitut angefordert werden."
+
+#: classes/includes/class-wc-gateway-wirecard-sepa.php:60
+msgid "SEPA transactions via Wirecard Payment Processing Gateway"
+msgstr "SEPA Transaktionen via Wirecard Payment Processing Gateway."
+
+#: classes/includes/class-wc-gateway-wirecard-paypal.php:164
+msgid "Shopping Basket"
+msgstr "Warenkorb"
+
+#: classes/includes/class-wc-gateway-wirecard-sofort.php:64
+msgid "Sofort. transactions via Wirecard Payment Processing Gateway"
+msgstr "Sofort. Transaktionen via Wirecard Payment Processing Gateway."
+
+#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:139
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:166
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:148
+#: classes/includes/class-wc-gateway-wirecard-ideal.php:147
+#: classes/includes/class-wc-gateway-wirecard-paypal.php:141
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:138
+#: classes/includes/class-wc-gateway-wirecard-sepa.php:145
+#: classes/includes/class-wc-gateway-wirecard-sofort.php:140
+msgid "The http password provided in your Wirecard contract"
+msgstr "Geben Sie Ihr Wirecard HTTP Passwort ein."
+
+#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:133
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:160
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:142
+#: classes/includes/class-wc-gateway-wirecard-ideal.php:141
+#: classes/includes/class-wc-gateway-wirecard-paypal.php:135
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:132
+#: classes/includes/class-wc-gateway-wirecard-sepa.php:139
+#: classes/includes/class-wc-gateway-wirecard-sofort.php:134
+msgid "The http user provided in your Wirecard contract"
+msgstr "Geben Sie Ihren Wirecard HTTP Benutzer ein."
+
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:125
+msgid "The unique identifier assigned for your 3D Merchant Account."
+msgstr "Geben Sie Ihren 3D Händler Bezeichner an."
+
+#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:110
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:113
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:118
+#: classes/includes/class-wc-gateway-wirecard-ideal.php:117
+#: classes/includes/class-wc-gateway-wirecard-paypal.php:111
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:109
+#: classes/includes/class-wc-gateway-wirecard-sepa.php:113
+#: classes/includes/class-wc-gateway-wirecard-sofort.php:111
+msgid "The unique identifier assigned for your Merchant Account."
+msgstr "Geben Sie Ihren Händler Bezeichner an."
+
+#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:127
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:135
+#: classes/includes/class-wc-gateway-wirecard-ideal.php:134
+#: classes/includes/class-wc-gateway-wirecard-paypal.php:128
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:126
+#: classes/includes/class-wc-gateway-wirecard-sepa.php:133
+#: classes/includes/class-wc-gateway-wirecard-sofort.php:128
+msgid "The Wirecard base URL. (e.g. https://api.wirecard.com)"
+msgstr "Wirecard Base URL. (z.B. https://api.wirecard.com)"
+
+#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:103
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:107
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:112
+#: classes/includes/class-wc-gateway-wirecard-ideal.php:111
+#: classes/includes/class-wc-gateway-wirecard-paypal.php:105
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:102
+#: classes/includes/class-wc-gateway-wirecard-sepa.php:104
+#: classes/includes/class-wc-gateway-wirecard-sofort.php:105
+msgid "This controls the title which the consumer sees during checkout."
+msgstr ""
+"Geben Sie hier den, im Zahlungsprozess sichtbaren, Titel für das "
+"Zahlungsmittel an."
+
+#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:103
+msgid "This controls the title which the user sees during checkout."
+msgstr ""
+"Geben Sie hier den, im Zahlungsprozess sichtbaren, Titel für das "
+"Zahlungsmittel an."
+
+#: classes/includes/class-wc-gateway-wirecard-sepa.php:175
+msgid ""
+"This text appears on the SEPA Direct Debit Mandate page at the end of the "
+"first paragraph."
+msgstr ""
+"Dieser Text wird am Ende des ersten Paragraphen des SEPA Lastschrift Mandats "
+"angezeigt."
+
+#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:101
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:105
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:110
+#: classes/includes/class-wc-gateway-wirecard-ideal.php:109
+#: classes/includes/class-wc-gateway-wirecard-paypal.php:103
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:100
+#: classes/includes/class-wc-gateway-wirecard-sepa.php:102
+#: classes/includes/class-wc-gateway-wirecard-sofort.php:103
+#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:101
+msgid "Title"
+msgstr "Titel"
+
+#: classes/admin/class-wirecard-transaction-factory.php:315
+msgid "Total"
+msgstr "Summe"
+
+#: classes/admin/class-wirecard-transaction-factory.php:90
+#: classes/admin/class-wirecard-transaction-factory.php:278
+msgid "Transaction"
+msgstr "Transaktion"
+
+#: classes/admin/class-wirecard-transaction-factory.php:93
+msgid "Transaction ID"
+msgstr ""
+
+#: classes/admin/class-wirecard-transaction-factory.php:105
+msgid "Transaction state"
+msgstr "Transaktionsstatus"
+
+#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:60
+msgid ""
+"Unionpay International transactions via Wirecard Payment Processing Gateway"
+msgstr ""
+"Unionpay International Transaktionen via Wirecard Payment Processing Gateway"
+
+#: classes/includes/class-wc-wirecard-payment-gateway.php:486
+msgid "Update order status via Wirecard Payment Processing Gateway."
+msgstr "Aktualisiere Bestellstatus via Wirecard Payment Processing Gateway."
+
+#. Author of the plugin
+msgid "Wirecard"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:104
+msgid "Wirecard Alipay Crossborder"
+msgstr "Wirecard Alipay Crossborder"
+
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:108
+msgid "Wirecard Credit Card"
+msgstr "Wirecard Kreditkarte"
+
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:113
+msgid "Wirecard Guaranteed Invoice"
+msgstr "Wirecard Garantierter Kauf auf Rechnung"
+
+#: classes/includes/class-wc-gateway-wirecard-ideal.php:112
+msgid "Wirecard iDEAL"
+msgstr "Wirecard iDEAL"
+
+#: classes/admin/class-wirecard-transaction-factory.php:306
+msgid "Wirecard Payment Gateway"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:103
+msgid "Wirecard Payment on Invoice / Payment in Advance"
+msgstr "Wirecard Kauf auf Rechnung / Vorauskasse"
+
+#. Name of the plugin
+msgid "Wirecard Payment Processing Gateway"
+msgstr ""
+
+#. Description of the plugin
+msgid "Wirecard Payment Processing Gateway Plugin for WooCommerce"
+msgstr "Wirecard Payment Processing Gateway Plugin für WooCommerce"
+
+#: classes/includes/class-wc-gateway-wirecard-paypal.php:106
+msgid "Wirecard PayPal"
+msgstr "Wirecard PayPal"
+
+#: classes/includes/class-wc-gateway-wirecard-sepa.php:108
+msgid "Wirecard SEPA"
+msgstr "Wirecard SEPA"
+
+#: classes/includes/class-wc-gateway-wirecard-sofort.php:106
+msgid "Wirecard Sofort."
+msgstr "Wirecard Sofort."
+
+#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:104
+msgid "Wirecard Unionpay International"
+msgstr "Wirecard Unionpay International"
+
+#: classes/handler/class-wirecard-callback.php:59
+msgid "You are being redirected. Please wait"
+msgstr "Sie werden weitergeleitet. Bitte warten."
+
+#: classes/includes/class-wc-wirecard-payment-gateway.php:191
+msgid "You have canceled the payment process."
+msgstr "Der Bezahlprozess wurde abgebrochen."
+
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:427
+msgid "You need to be older then 18 to order."
+msgstr ""
+"Für die Nutzung dieses Zahlungmittels müssen Sie mindestens 18 Jahre alt "
+"sein."
