@@ -20,6 +20,7 @@ function setToken() {
 $( document ).ready(
 	function() {
         creditcards.hide();
+        $( '.show-spinner' ).show();
 
 		if ( $( "#wc_payment_method_wirecard_creditcard_form" ).is( ":visible" ) ) {
 			getRequestData();
@@ -123,6 +124,7 @@ $( document ).ready(
 	 * @since 1.0.0
 	 */
 		function getRequestData() {
+            $( '.show-spinner' ).show();
 			$.ajax(
 				{
 					type: 'POST',
@@ -161,7 +163,9 @@ $( document ).ready(
 	 * @since 1.0.0
 	 */
 		function resizeIframe() {
-			$( "#wc_payment_method_wirecard_creditcard_form > iframe" ).height( 550 );
+            $( '.show-spinner' ).hide();
+            $( '.save-later' ).show();
+            $( "#wc_payment_method_wirecard_creditcard_form > iframe" ).height( 550 );
 		}
 
 		function getVaultData() {

@@ -276,21 +276,10 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 
 		$html = <<<HTML
 			<script src='$base_url/engine/hpp/paymentPageLoader.js' type='text/javascript'></script>
-            <script type='application/javascript' src='$gateway_url/assets/js/creditcard.js'></script>
+			<link href='$gateway_url/assets/styles/frontend.css' type="text/css" rel="stylesheet" />
             <link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css" type="text/css" rel="stylesheet" />
+			<script type='application/javascript' src='$gateway_url/assets/js/creditcard.js'></script>
 			<script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
-			<style>
-		        #open-vault-popup {
-					background-color: #f5f5f5;
-					padding: 10px;
-		        }
-		        #open-vault-popup:hover {
-		            cursor: pointer;
-		        }
-		        #vault-table td, #vault-table th {
-		            padding: 5px !important;
-		        }
-		    </style>
             <script>
                 var ajax_url  = "$page_url";
                 var vault_url = "$vault_save_url";
@@ -303,12 +292,12 @@ HTML;
             <div id="wc_payment_method_wirecard_creditcard_vault"></div><br>';
 		}
 
-		$html .= '<div class="spinner"></div><div id="wc_payment_method_wirecard_creditcard_form"></div>';
+		$html .= '<div class="show-spinner"><div class="spinner"></div></div><div id="wc_payment_method_wirecard_creditcard_form"></div>';
 
 		if ( $this->get_option( 'cc_vault_enabled' )  == 'yes' ) {
-			$html .= '<label for="wirecard-store-card">
+			$html .= '<div class="save-later"><label for="wirecard-store-card">
 			<input type="checkbox" id="wirecard-store-card" /> ' .
-				__('Save for later use.', 'woocommerce-gateway-wirecard') . '</label>';
+				__('Save for later use.', 'woocommerce-gateway-wirecard') . '</label></div>';
 		}
 
 		echo $html;
@@ -413,7 +402,7 @@ HTML;
 	}
 
 	/**
-	 *  Save Credit card data to vault
+	 *  Save Credit card data to Vault
 	 *
 	 * @since 1.1.0
 	 */
@@ -431,11 +420,25 @@ HTML;
 		die();
 	}
 
+	/**
+	 * Get Credit Cards from Vault
+	 *
+	 * @since 1.1.0
+	 */
 	public function get_cc_from_vault() {
 		/** @var WP_User $user */
 		$user  = wp_get_current_user();
 
 		wp_send_json_success( $this->vault->get_cards_for_user( $user->ID ) );
 		die();
+	}
+
+	/**
+	 * Remove Credit Card from Vault
+	 *
+	 * @since 1.1.0
+	 */
+	public function remove_cc_from_vault() {
+
 	}
 }
