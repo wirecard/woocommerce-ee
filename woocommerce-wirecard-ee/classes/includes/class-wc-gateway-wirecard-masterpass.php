@@ -58,7 +58,7 @@ class WC_Gateway_Wirecard_Masterpass extends WC_Wirecard_Payment_Gateway {
 		$this->type               = 'masterpass';
 		$this->id                 = 'wirecard_ee_masterpass';
 		$this->icon               = WOOCOMMERCE_GATEWAY_WIRECARD_URL . 'assets/images/masterpass.png';
-		$this->method_title       = __( 'Wirecard Masterpass.', 'wooocommerce-gateway-wirecard' );
+		$this->method_title       = __( 'Wirecard Masterpass', 'wooocommerce-gateway-wirecard' );
 		$this->method_name        = __( 'Masterpass', 'wooocommerce-gateway-wirecard' );
 		$this->method_description = __( 'Masterpass transactions via Wirecard Payment Processing Gateway', 'woocommerce-gateway-wirecard' );
 
