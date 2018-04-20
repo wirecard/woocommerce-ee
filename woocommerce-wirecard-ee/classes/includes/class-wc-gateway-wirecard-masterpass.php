@@ -69,7 +69,7 @@ class WC_Gateway_Wirecard_Masterpass extends WC_Wirecard_Payment_Gateway {
 
 		$this->cancel        = array( 'authorization' );
 		$this->capture       = array( 'authorization' );
-		$this->refund        = array( 'purchase', 'capture-authorization' );
+		//$this->refund        = array( 'purchase', 'capture-authorization' );
 		$this->refund_action = 'cancel';
 
 		$this->init_form_fields();
