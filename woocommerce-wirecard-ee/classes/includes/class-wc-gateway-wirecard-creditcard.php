@@ -35,9 +35,6 @@ require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/helper/class-credi
 use Wirecard\PaymentSdk\Config\Config;
 use Wirecard\PaymentSdk\Config\CreditCardConfig;
 use Wirecard\PaymentSdk\Entity\Amount;
-use Wirecard\PaymentSdk\Entity\CustomField;
-use Wirecard\PaymentSdk\Entity\CustomFieldCollection;
-use Wirecard\PaymentSdk\Entity\Redirect;
 use Wirecard\PaymentSdk\Transaction\CreditCardTransaction;
 use Wirecard\PaymentSdk\TransactionService;
 
@@ -89,6 +86,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 		add_action( 'woocommerce_api_get_credit_card_request_data', array( $this, 'get_request_data_credit_card' ) );
 		add_action( 'woocommerce_api_save_cc_to_vault', array( $this, 'save_to_vault' ) );
 		add_action( 'woocommerce_api_get_cc_from_vault', array( $this, 'get_cc_from_vault' ) );
+		add_action( 'woocommerce_api_remove_cc_from_vault', array( $this, 'remove_cc_from_vault' ) );
 
 		parent::add_payment_gateway_actions();
 	}
@@ -273,6 +271,10 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 			[ 'wc-api' => 'get_cc_from_vault' ],
 			site_url( '/', is_ssl() ? 'https' : 'http' )
 		);
+		$vault_delete_url  = add_query_arg(
+			[ 'wc-api' => 'remove_cc_from_vault' ],
+			site_url( '/', is_ssl() ? 'https' : 'http' )
+		);
 
 		$html = <<<HTML
 			<script src='$base_url/engine/hpp/paymentPageLoader.js' type='text/javascript'></script>
@@ -284,10 +286,11 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
                 var ajax_url  = "$page_url";
                 var vault_url = "$vault_save_url";
                 var vault_get_url = "$vault_get_url";
+                var vault_delete_url = "$vault_delete_url";
             </script>
             
 HTML;
-		if ( $this->get_option( 'cc_vault_enabled' )  == 'yes' ) {
+		if ( $this->get_option( 'cc_vault_enabled' )  == 'yes' && $this->has_cc_in_vault() ) {
 			$html .= '<div id="open-vault-popup"><span class="dashicons dashicons-arrow-down"></span>' . __( 'Use saved Card Cards', 'woocommerce-gateway-wirecard' ) . '</div>
             <div id="wc_payment_method_wirecard_creditcard_vault"></div><br>';
 		}
@@ -439,6 +442,30 @@ HTML;
 	 * @since 1.1.0
 	 */
 	public function remove_cc_from_vault() {
+		$vault_id = $_POST['vault_id'];
 
+		echo($this->vault->delete_credit_card( $vault_id ));die();
+		if ( isset( $vault_id ) && $this->vault->delete_credit_card( $vault_id ) > 0) {
+			wp_send_json_success();
+		} else {
+			wp_send_json_error();
+		}
+		die();
+	}
+
+	/**
+	 * Check if the user hase Credit Cards in Vault
+	 *
+	 * @return true|false
+	 * @since 1.1.0
+	 */
+	private function has_cc_in_vault() {
+		/** @var WP_User $user */
+		$user  = wp_get_current_user();
+
+		if ( false == $this->vault->get_cards_for_user( $user->ID ) ) {
+			return false;
+		}
+		return true;
 	}
 }

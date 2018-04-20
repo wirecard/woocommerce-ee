@@ -101,6 +101,12 @@ class Credit_Card_Vault {
 		return false;
 	}
 
+	public function delete_credit_card( $vault_id ) {
+		global $wpdb;
+
+		return $wpdb->query( $wpdb->prepare( "DELETE FROM {$wpdb->prefix}wirecard_payment_gateway_vault WHERE vault_id = %d", $vault_id ) );
+	}
+
 	private function get_cards_from_db( $user_id ) {
 		global $wpdb;
 
@@ -124,7 +130,7 @@ class Credit_Card_Vault {
 			$html .= '<tr>
 				<td><input class="token" name="token" onclick="javascript:setToken()" type="radio" data-token="' . $card->token . '" /></td>
 				<td>' . $card->masked_pan . '</td>
-				<td><button data-id="' . $card->vault_id . '">' . __( 'Delete', 'woocommerce-gateway-wirecard' ) . '</button></td>
+				<td><div class="delete-from-vault" onclick="javascript:deleteCard(' . $card->vault_id . ')">' . __( 'Delete', 'woocommerce-gateway-wirecard' ) . '</div></td>
 			</tr>';
 		}
 		$html .= '</table>';

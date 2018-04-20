@@ -17,6 +17,44 @@ function setToken() {
     ).appendTo( checkout_form );
 }
 
+function getVaultData() {
+    $.ajax(
+        {
+            type: 'GET',
+            url: vault_get_url,
+            data: { 'action' : 'get_cc_from_vault' },
+            dataType: 'json',
+            success: function ( data ) {
+                addVaultData( data.data );
+            },
+            error: function (data) {
+                console.log( data );
+            }
+        }
+    );
+}
+
+function addVaultData( data ) {
+    creditcards.html( data );
+}
+
+function deleteCard( id ) {
+    $.ajax(
+        {
+            type: 'POST',
+            url: vault_delete_url,
+            data: { 'action' : 'remove_cc_from_vault', 'vault_id': id },
+            dataType: 'json',
+            success: function ( data ) {
+                getVaultData();
+            },
+            error: function (data) {
+                console.log( data );
+            }
+        }
+    );
+}
+
 $( document ).ready(
 	function() {
         creditcards.hide();
@@ -42,11 +80,6 @@ $( document ).ready(
             $( this ).find( 'span' ).toggleClass( 'dashicons-arrow-down' );
             $( this ).find( 'span' ).toggleClass( 'dashicons-arrow-up' );
         });
-
-        /*$( "#vault-table" ).on('click', '.token-radio', function () {
-        	console.log();
-			setToken( $(this) );
-        });*/
 
 		/**
 	 * Submit the seamless form before order is placed
@@ -167,26 +200,5 @@ $( document ).ready(
             $( '.save-later' ).show();
             $( "#wc_payment_method_wirecard_creditcard_form > iframe" ).height( 550 );
 		}
-
-		function getVaultData() {
-            $.ajax(
-                {
-                    type: 'GET',
-                    url: vault_get_url,
-                    data: { 'action' : 'get_cc_from_vault' },
-                    dataType: 'json',
-                    success: function ( data ) {
-                    	addVaultData( data.data );
-                    },
-                    error: function (data) {
-                        console.log( data );
-                    }
-                }
-            );
-        }
-
-        function addVaultData( data ) {
-			creditcards.html( data );
-        }
 	}
 );
