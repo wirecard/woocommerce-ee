@@ -73,6 +73,7 @@ function init_wirecard_payment_gateway() {
 	require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-poipia.php' );
 	require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php' );
 	require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php' );
+	require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-unionpay-international.php' );
 	require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'vendor/autoload.php' );
 
 	add_filter( 'woocommerce_payment_gateways', 'add_wirecard_payment_gateway', 0 );
@@ -131,6 +132,7 @@ function get_payments() {
 		'WC_Gateway_Wirecard_Poipia'                     => new WC_Gateway_Wirecard_Poipia(),
 		'WC_Gateway_Wirecard_Sepa'                       => new WC_Gateway_Wirecard_Sepa(),
 		'WC_Gateway_Wirecard_Sofort'                     => new WC_Gateway_Wirecard_Sofort(),
+		'WC_Gateway_Wirecard_Unionpay_International'     => new WC_Gateway_Wirecard_Unionpay_International(),
 	);
 }
 
