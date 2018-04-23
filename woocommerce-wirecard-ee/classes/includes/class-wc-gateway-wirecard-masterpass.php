@@ -152,7 +152,7 @@ class WC_Gateway_Wirecard_Masterpass extends WC_Wirecard_Payment_Gateway {
 					'pay'     => 'Capture',
 				),
 			),
-			'descriptor'                  => array(
+			'descriptor'          => array(
 				'title'   => __( 'Enable/Disable', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'checkbox',
 				'label'   => __( 'Descriptor', 'woocommerce-gateway-wirecard' ),
