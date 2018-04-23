@@ -446,7 +446,6 @@ HTML;
 	public function remove_cc_from_vault() {
 		$vault_id = $_POST['vault_id'];
 
-		//echo($this->vault->delete_credit_card( $vault_id ));die();
 		if ( isset( $vault_id ) && $this->vault->delete_credit_card( $vault_id ) > 0 ) {
 			wp_send_json_success();
 		} else {
@@ -456,7 +455,7 @@ HTML;
 	}
 
 	/**
-	 * Check if the user hase Credit Cards in Vault
+	 * Check if the user has Credit Cards in Vault
 	 *
 	 * @return true|false
 	 * @since 1.1.0

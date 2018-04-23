@@ -101,12 +101,26 @@ class Credit_Card_Vault {
 		return false;
 	}
 
+	/**
+	 * Delete credit card from vault
+	 *
+	 * @param int $vault_id
+	 * @return false|int
+	 * @since 1.1.0
+	 */
 	public function delete_credit_card( $vault_id ) {
 		global $wpdb;
 
 		return $wpdb->query( $wpdb->prepare( "DELETE FROM {$wpdb->prefix}wirecard_payment_gateway_vault WHERE vault_id = %d", $vault_id ) );
 	}
 
+	/**
+	 * Get credit cards from vault
+	 *
+	 * @param int $user_id
+	 * @return array|bool|null|object
+	 * @since 1.1.0
+	 */
 	private function get_cards_from_db( $user_id ) {
 		global $wpdb;
 
@@ -119,6 +133,13 @@ class Credit_Card_Vault {
 		return $cards;
 	}
 
+	/**
+	 * Return html for the ajax
+	 *
+	 * @param array $cards
+	 * @return string
+	 * @since 1.1.0
+	 */
 	private function fetch_template_data( $cards ) {
 		$html = '<table id="vault-table">
 		<tr>

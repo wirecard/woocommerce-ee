@@ -5,6 +5,11 @@ $                      = jQuery;
 var saved_credit_cards = $( '#wc_payment_method_wirecard_creditcard_vault' );
 var new_credit_card    = $( '#wc_payment_method_wirecard_new_credit_card' );
 
+/**
+ * Add token to submit form
+ *
+ * @since 1.0.0
+ */
 function setToken() {
 	token = $( "input[name='token']:checked" ).data( 'token' );
 	jQuery( '<input>' ).attr(
@@ -17,6 +22,11 @@ function setToken() {
 	).appendTo( checkout_form );
 }
 
+/**
+ * Get stored cc from Vault
+ *
+ * @since 1.1.0
+ */
 function getVaultData() {
 	$.ajax(
 		{
@@ -34,18 +44,31 @@ function getVaultData() {
 	);
 }
 
+/**
+ * Append cc to frontend
+ *
+ * @param array data
+ * @since 1.1.0
+ */
 function addVaultData( data ) {
 	saved_credit_cards.html( data );
 }
 
+/**
+ * Delete cc from Vault
+ *
+ * @param int id
+ * @since 1.1.0
+ */
 function deleteCard( id ) {
+	token = null;
 	$.ajax(
 		{
 			type: 'POST',
 			url: vault_delete_url,
 			data: { 'action' : 'remove_cc_from_vault', 'vault_id': id },
 			dataType: 'json',
-			success: function ( data ) {
+			success: function () {
 				getVaultData();
 			},
 			error: function (data) {
@@ -75,6 +98,11 @@ $( document ).ready(
 			}
 		);
 
+        /**
+         * Click on stored credit card
+         *
+         * @since 1.1.0
+         */
 		$( '#open-vault-popup' ).on(
 			'click', function () {
 				saved_credit_cards.slideToggle();
@@ -84,6 +112,11 @@ $( document ).ready(
 			}
 		);
 
+        /**
+		 * Click on new credit card
+		 *
+		 * @since 1.1.0
+         */
 		$( '#open-new-card' ).on(
 			'click', function () {
 				token = null;
@@ -96,10 +129,10 @@ $( document ).ready(
 		);
 
 		/**
-	 * Submit the seamless form before order is placed
-	 *
-	 * @since 1.0.0
-	 */
+		* Submit the seamless form before order is placed
+		*
+		* @since 1.0.0
+		*/
 		checkout_form.on(
 			'checkout_place_order', function() {
 				if ( $( '#payment_method_wirecard_ee_creditcard' )[0].checked === true && processing === false ) {
@@ -122,19 +155,19 @@ $( document ).ready(
 		);
 
 		/**
-	 * Display error massages
-	 *
-	 * @since 1.0.0
-	 */
+		* Display error massages
+		*
+		* @since 1.0.0
+		*/
 		function logCallback( response ) {
 			console.error( response );
 		}
 
 		/**
-	 * Add the tokenId to the submited form
-	 *
-	 * @since 1.0.0
-	 */
+		* Add the tokenId to the submited form
+		*
+		* @since 1.0.0
+		*/
 		function formSubmitSuccessHandler( response ) {
 			token = response.token_id;
 			if ( $( "#wirecard-store-card" ).is( ":checked" ) && response.transaction_state == 'success' ) {
@@ -166,10 +199,10 @@ $( document ).ready(
 		}
 
 		/**
-	 * Get data rquired to render the form
-	 *
-	 * @since 1.0.0
-	 */
+		 * Get data rquired to render the form
+		 *
+		 * @since 1.0.0
+		 */
 		function getRequestData() {
 			$( '.show-spinner' ).show();
 			$.ajax(

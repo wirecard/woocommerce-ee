@@ -20,14 +20,21 @@
 }
 
 #open-vault-popup,
-#open-new-card {
+#open-new-card,
+.delete-from-vault {
 	background-color: #f5f5f5;
 	padding: 10px;
 }
 
+.delete-from-vault {
+	text-align: center;
+}
+
 #open-vault-popup:hover,
 .token:hover,
-#open-new-card:hover {
+#open-new-card:hover,
+.save-later:hover,
+.delete-from-vault:hover {
 	cursor: pointer;
 }
 
@@ -36,5 +43,5 @@
 }
 
 #vault-table td, #vault-table th {
-	padding: 5px !important;
+	padding: 5px;
 }
