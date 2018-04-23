@@ -77,14 +77,18 @@ $( document ).ready(
 
 		$( '#open-vault-popup' ).on( 'click', function () {
 			saved_credit_cards.slideToggle();
-			$( this ).find( 'span' ).toggleClass( 'dashicons-arrow-down' );
-			$( this ).find( 'span' ).toggleClass( 'dashicons-arrow-up' );
+			new_credit_card.slideUp();
+			$( '#open-new-card' ).find( 'span' ).removeClass( 'dashicons-arrow-up' ).addClass( 'dashicons-arrow-down' );
+			$( this ).find( 'span' ).toggleClass( 'dashicons-arrow-down' ).toggleClass( 'dashicons-arrow-up' );
 		});
 
 		$( '#open-new-card' ).on( 'click', function () {
+			token = null;
 			new_credit_card.slideToggle();
-			$( this ).find( 'span' ).toggleClass( 'dashicons-arrow-down' );
-			$( this ).find( 'span' ).toggleClass( 'dashicons-arrow-up' );
+			saved_credit_cards.slideUp();
+			saved_credit_cards.find( 'input' ).prop('checked', false);
+            $( '#open-vault-popup' ).find( 'span' ).removeClass( 'dashicons-arrow-up' ).addClass( 'dashicons-arrow-down' );
+			$( this ).find( 'span' ).toggleClass( 'dashicons-arrow-down' ).toggleClass( 'dashicons-arrow-up' );
 		});
 
 		/**
