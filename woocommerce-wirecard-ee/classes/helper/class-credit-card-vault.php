@@ -57,7 +57,7 @@ class Credit_Card_Vault {
 	public function __construct() {
 		global $wpdb;
 
-		$this->table_name  = $wpdb->prefix . 'wirecard_payment_gateway_vault';
+		$this->table_name = $wpdb->prefix . 'wirecard_payment_gateway_vault';
 
 	}
 
@@ -75,11 +75,11 @@ class Credit_Card_Vault {
 		$wpdb->insert(
 			$this->table_name,
 			array(
-				'user_id'        => $user_id,
-				'token'          => $token,
-				'masked_pan'     => $pan,
+				'user_id'    => $user_id,
+				'token'      => $token,
+				'masked_pan' => $pan,
 			),
-			array('%d', '%s', '%s')
+			array( '%d', '%s', '%s' )
 		);
 
 		return $wpdb->insert_id;
@@ -126,7 +126,7 @@ class Credit_Card_Vault {
 			<th>' . __( 'Account number', 'woocommerce-gateway-wirecard' ) . '</th>
 			<th>' . __( 'Delete Card', 'woocommerce-gateway-wirecard' ) . '</th>
 		</tr>';
-		foreach ($cards as $card) {
+		foreach ( $cards as $card ) {
 			$html .= '<tr>
 				<td><input class="token" name="token" onclick="javascript:setToken()" type="radio" data-token="' . $card->token . '" /></td>
 				<td>' . $card->masked_pan . '</td>

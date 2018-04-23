@@ -6,59 +6,59 @@ var saved_credit_cards = $( '#wc_payment_method_wirecard_creditcard_vault' );
 var new_credit_card    = $( '#wc_payment_method_wirecard_new_credit_card' );
 
 function setToken() {
-    token = $("input[name='token']:checked").data('token');
-    jQuery( '<input>' ).attr(
-        {
-            type: 'hidden',
-            name: 'tokenId',
-            id: 'tokenId',
-            value: token
-        }
-    ).appendTo( checkout_form );
+	token = $( "input[name='token']:checked" ).data( 'token' );
+	jQuery( '<input>' ).attr(
+		{
+			type: 'hidden',
+			name: 'tokenId',
+			id: 'tokenId',
+			value: token
+		}
+	).appendTo( checkout_form );
 }
 
 function getVaultData() {
-    $.ajax(
-        {
-            type: 'GET',
-            url: vault_get_url,
-            data: { 'action' : 'get_cc_from_vault' },
-            dataType: 'json',
-            success: function ( data ) {
-                addVaultData( data.data );
-            },
-            error: function (data) {
-                console.log( data );
-            }
-        }
-    );
+	$.ajax(
+		{
+			type: 'GET',
+			url: vault_get_url,
+			data: { 'action' : 'get_cc_from_vault' },
+			dataType: 'json',
+			success: function ( data ) {
+				addVaultData( data.data );
+			},
+			error: function (data) {
+				console.log( data );
+			}
+		}
+	);
 }
 
 function addVaultData( data ) {
-    saved_credit_cards.html( data );
+	saved_credit_cards.html( data );
 }
 
 function deleteCard( id ) {
-    $.ajax(
-        {
-            type: 'POST',
-            url: vault_delete_url,
-            data: { 'action' : 'remove_cc_from_vault', 'vault_id': id },
-            dataType: 'json',
-            success: function ( data ) {
-                getVaultData();
-            },
-            error: function (data) {
-                console.log( data );
-            }
-        }
-    );
+	$.ajax(
+		{
+			type: 'POST',
+			url: vault_delete_url,
+			data: { 'action' : 'remove_cc_from_vault', 'vault_id': id },
+			dataType: 'json',
+			success: function ( data ) {
+				getVaultData();
+			},
+			error: function (data) {
+				console.log( data );
+			}
+		}
+	);
 }
 
 $( document ).ready(
 	function() {
-        saved_credit_cards.hide();
-        $( '.show-spinner' ).show();
+		saved_credit_cards.hide();
+		$( '.show-spinner' ).show();
 
 		if ( $( "#wc_payment_method_wirecard_creditcard_form" ).is( ":visible" ) ) {
 			getRequestData();
@@ -69,27 +69,31 @@ $( document ).ready(
 			function() {
 				if ( $( this ).val() === 'wirecard_ee_creditcard' ) {
 					getRequestData();
-                    getVaultData();
+					getVaultData();
 					return false;
 				}
 			}
 		);
 
-		$( '#open-vault-popup' ).on( 'click', function () {
-			saved_credit_cards.slideToggle();
-			new_credit_card.slideUp();
-			$( '#open-new-card' ).find( 'span' ).removeClass( 'dashicons-arrow-up' ).addClass( 'dashicons-arrow-down' );
-			$( this ).find( 'span' ).toggleClass( 'dashicons-arrow-down' ).toggleClass( 'dashicons-arrow-up' );
-		});
+		$( '#open-vault-popup' ).on(
+			'click', function () {
+				saved_credit_cards.slideToggle();
+				new_credit_card.slideUp();
+				$( '#open-new-card' ).find( 'span' ).removeClass( 'dashicons-arrow-up' ).addClass( 'dashicons-arrow-down' );
+				$( this ).find( 'span' ).toggleClass( 'dashicons-arrow-down' ).toggleClass( 'dashicons-arrow-up' );
+			}
+		);
 
-		$( '#open-new-card' ).on( 'click', function () {
-			token = null;
-			new_credit_card.slideToggle();
-			saved_credit_cards.slideUp();
-			saved_credit_cards.find( 'input' ).prop('checked', false);
-            $( '#open-vault-popup' ).find( 'span' ).removeClass( 'dashicons-arrow-up' ).addClass( 'dashicons-arrow-down' );
-			$( this ).find( 'span' ).toggleClass( 'dashicons-arrow-down' ).toggleClass( 'dashicons-arrow-up' );
-		});
+		$( '#open-new-card' ).on(
+			'click', function () {
+				token = null;
+				new_credit_card.slideToggle();
+				saved_credit_cards.slideUp();
+				saved_credit_cards.find( 'input' ).prop( 'checked', false );
+				$( '#open-vault-popup' ).find( 'span' ).removeClass( 'dashicons-arrow-up' ).addClass( 'dashicons-arrow-down' );
+				$( this ).find( 'span' ).toggleClass( 'dashicons-arrow-down' ).toggleClass( 'dashicons-arrow-up' );
+			}
+		);
 
 		/**
 	 * Submit the seamless form before order is placed
@@ -133,21 +137,21 @@ $( document ).ready(
 	 */
 		function formSubmitSuccessHandler( response ) {
 			token = response.token_id;
-			if ( $("#wirecard-store-card").is(":checked") && response.transaction_state == 'success' ) {
-                $.ajax(
-                    {
-                        type: 'POST',
-                        url: vault_url,
-                        data: { 'action' : 'save_cc_to_vault', 'token' : response.token_id, 'mask_pan' : response.masked_account_number },
-                        dataType: 'json',
-                        success: function (data) {
-                            console.log(data);
-                        },
-                        error: function (data) {
-                            console.log( data );
-                        }
-                    }
-                );
+			if ( $( "#wirecard-store-card" ).is( ":checked" ) && response.transaction_state == 'success' ) {
+				$.ajax(
+					{
+						type: 'POST',
+						url: vault_url,
+						data: { 'action' : 'save_cc_to_vault', 'token' : response.token_id, 'mask_pan' : response.masked_account_number },
+						dataType: 'json',
+						success: function (data) {
+							console.log( data );
+						},
+						error: function (data) {
+							console.log( data );
+						}
+					}
+				);
 			}
 			jQuery( '<input>' ).attr(
 				{
@@ -167,7 +171,7 @@ $( document ).ready(
 	 * @since 1.0.0
 	 */
 		function getRequestData() {
-            $( '.show-spinner' ).show();
+			$( '.show-spinner' ).show();
 			$.ajax(
 				{
 					type: 'POST',
@@ -206,9 +210,9 @@ $( document ).ready(
 	 * @since 1.0.0
 	 */
 		function resizeIframe() {
-            $( '.show-spinner' ).hide();
-            $( '.save-later' ).show();
-            $( "#wc_payment_method_wirecard_creditcard_form > iframe" ).height( 550 );
+			$( '.show-spinner' ).hide();
+			$( '.save-later' ).show();
+			$( "#wc_payment_method_wirecard_creditcard_form > iframe" ).height( 550 );
 		}
 	}
 );

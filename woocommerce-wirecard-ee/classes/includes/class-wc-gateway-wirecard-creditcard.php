@@ -192,7 +192,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 				'label'   => __( 'Send additional information', 'woocommerce-gateway-wirecard' ),
 				'default' => 'yes',
 			),
-			'cc_vault_enabled'             => array(
+			'cc_vault_enabled'            => array(
 				'title'   => __( 'Enable/Disable', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'checkbox',
 				'label'   => __( 'Enable Recurring Payment', 'woocommerce-gateway-wirecard' ),
@@ -257,21 +257,21 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	 * @since 1.0.0
 	 */
 	public function payment_fields() {
-		$base_url    = $this->get_option( 'base_url' );
-		$gateway_url = WOOCOMMERCE_GATEWAY_WIRECARD_URL;
-		$page_url    = add_query_arg(
+		$base_url         = $this->get_option( 'base_url' );
+		$gateway_url      = WOOCOMMERCE_GATEWAY_WIRECARD_URL;
+		$page_url         = add_query_arg(
 			[ 'wc-api' => 'get_credit_card_request_data' ],
 			site_url( '/', is_ssl() ? 'https' : 'http' )
 		);
-		$vault_save_url  = add_query_arg(
+		$vault_save_url   = add_query_arg(
 			[ 'wc-api' => 'save_cc_to_vault' ],
 			site_url( '/', is_ssl() ? 'https' : 'http' )
 		);
-		$vault_get_url  = add_query_arg(
+		$vault_get_url    = add_query_arg(
 			[ 'wc-api' => 'get_cc_from_vault' ],
 			site_url( '/', is_ssl() ? 'https' : 'http' )
 		);
-		$vault_delete_url  = add_query_arg(
+		$vault_delete_url = add_query_arg(
 			[ 'wc-api' => 'remove_cc_from_vault' ],
 			site_url( '/', is_ssl() ? 'https' : 'http' )
 		);
@@ -290,7 +290,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
             </script>
             
 HTML;
-		if ( $this->get_option( 'cc_vault_enabled' )  == 'yes' && $this->has_cc_in_vault() ) {
+		if ( $this->get_option( 'cc_vault_enabled' ) == 'yes' && $this->has_cc_in_vault() ) {
 			$html .= '<div id="open-vault-popup"><span class="dashicons dashicons-arrow-down"></span>' . __( 'Use saved Credit Cards', 'woocommerce-gateway-wirecard' ) . '</div>
             <div id="wc_payment_method_wirecard_creditcard_vault"></div><br>
             <div id="open-new-card"><span class="dashicons dashicons-arrow-up"></span>' . __( 'Use new Credit Card', 'woocommerce-gateway-wirecard' ) . '</div>
@@ -299,10 +299,10 @@ HTML;
 
 		$html .= '<div class="show-spinner"><div class="spinner"></div></div><div id="wc_payment_method_wirecard_creditcard_form"></div>';
 
-		if ( $this->get_option( 'cc_vault_enabled' )  == 'yes' ) {
+		if ( $this->get_option( 'cc_vault_enabled' ) == 'yes' ) {
 			$html .= '<div class="save-later"><label for="wirecard-store-card">
 			<input type="checkbox" id="wirecard-store-card" /> ' .
-				__('Save for later use.', 'woocommerce-gateway-wirecard') . '</label></div></div>';
+				__( 'Save for later use.', 'woocommerce-gateway-wirecard' ) . '</label></div></div>';
 		}
 
 		echo $html;
@@ -415,7 +415,7 @@ HTML;
 		$token    = $_POST['token'];
 		$mask_pan = $_POST['mask_pan'];
 		/** @var WP_User $user */
-		$user  = wp_get_current_user();
+		$user = wp_get_current_user();
 
 		if ( false != $this->vault->save_card( $user->ID, $token, $mask_pan ) ) {
 			wp_send_json_success();
@@ -432,7 +432,7 @@ HTML;
 	 */
 	public function get_cc_from_vault() {
 		/** @var WP_User $user */
-		$user  = wp_get_current_user();
+		$user = wp_get_current_user();
 
 		wp_send_json_success( $this->vault->get_cards_for_user( $user->ID ) );
 		die();
@@ -447,7 +447,7 @@ HTML;
 		$vault_id = $_POST['vault_id'];
 
 		//echo($this->vault->delete_credit_card( $vault_id ));die();
-		if ( isset( $vault_id ) && $this->vault->delete_credit_card( $vault_id ) > 0) {
+		if ( isset( $vault_id ) && $this->vault->delete_credit_card( $vault_id ) > 0 ) {
 			wp_send_json_success();
 		} else {
 			wp_send_json_error();
@@ -463,7 +463,7 @@ HTML;
 	 */
 	private function has_cc_in_vault() {
 		/** @var WP_User $user */
-		$user  = wp_get_current_user();
+		$user = wp_get_current_user();
 
 		if ( false == $this->vault->get_cards_for_user( $user->ID ) ) {
 			return false;

@@ -155,9 +155,9 @@ function wirecard_wc_order_statuses( $order_statuses ) {
 function install_wirecard_payment_gateway() {
 	global $wpdb;
 
-	$table_name = $wpdb->base_prefix . 'wirecard_payment_gateway_tx';
+	$table_name       = $wpdb->base_prefix . 'wirecard_payment_gateway_tx';
 	$vault_table_name = $wpdb->base_prefix . 'wirecard_payment_gateway_vault';
-	$collate    = '';
+	$collate          = '';
 	if ( $wpdb->has_cap( 'collation' ) ) {
 		$collate = $wpdb->get_charset_collate();
 	}
