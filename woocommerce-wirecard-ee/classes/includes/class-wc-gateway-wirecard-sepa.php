@@ -142,6 +142,12 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 				'type'    => 'text',
 				'default' => 'qD2wzQ_hrc!8',
 			),
+			'test_button'            => array(
+				'title'   => __( 'Test configuration', 'woocommerce-gateway-wirecard' ),
+				'type'    => 'button',
+				'class'   => 'wc_wirecard_test_credentials_button button-primary',
+				'default' => __( 'Test', 'woocommerce-gateway-wirecard' ),
+			),
 			'sepa_credentials'       => array(
 				'title'       => __( 'SEPA Credentials', 'woocommerce-gateway-wirecard' ),
 				'type'        => 'title',
