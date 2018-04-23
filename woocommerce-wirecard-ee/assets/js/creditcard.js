@@ -1,9 +1,9 @@
-var token         = null;
-var checkout_form = jQuery( 'form.checkout' );
-var processing    = false;
-$                 = jQuery;
-var creditcards   = $( "#wc_payment_method_wirecard_creditcard_vault" );
-var open          = $( "#open-vault-popup" );
+var token              = null;
+var checkout_form      = jQuery( 'form.checkout' );
+var processing         = false;
+$                      = jQuery;
+var saved_credit_cards = $( '#wc_payment_method_wirecard_creditcard_vault' );
+var new_credit_card    = $( '#wc_payment_method_wirecard_new_credit_card' );
 
 function setToken() {
     token = $("input[name='token']:checked").data('token');
@@ -35,7 +35,7 @@ function getVaultData() {
 }
 
 function addVaultData( data ) {
-    creditcards.html( data );
+    saved_credit_cards.html( data );
 }
 
 function deleteCard( id ) {
@@ -57,7 +57,7 @@ function deleteCard( id ) {
 
 $( document ).ready(
 	function() {
-        creditcards.hide();
+        saved_credit_cards.hide();
         $( '.show-spinner' ).show();
 
 		if ( $( "#wc_payment_method_wirecard_creditcard_form" ).is( ":visible" ) ) {
@@ -75,11 +75,17 @@ $( document ).ready(
 			}
 		);
 
-		open.on( 'click', function () {
-            creditcards.slideToggle();
-            $( this ).find( 'span' ).toggleClass( 'dashicons-arrow-down' );
-            $( this ).find( 'span' ).toggleClass( 'dashicons-arrow-up' );
-        });
+		$( '#open-vault-popup' ).on( 'click', function () {
+			saved_credit_cards.slideToggle();
+			$( this ).find( 'span' ).toggleClass( 'dashicons-arrow-down' );
+			$( this ).find( 'span' ).toggleClass( 'dashicons-arrow-up' );
+		});
+
+		$( '#open-new-card' ).on( 'click', function () {
+			new_credit_card.slideToggle();
+			$( this ).find( 'span' ).toggleClass( 'dashicons-arrow-down' );
+			$( this ).find( 'span' ).toggleClass( 'dashicons-arrow-up' );
+		});
 
 		/**
 	 * Submit the seamless form before order is placed

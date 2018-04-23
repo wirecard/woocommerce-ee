@@ -19,14 +19,20 @@
     display: none;
 }
 
-#open-vault-popup {
+#open-vault-popup,
+#open-new-card {
     background-color: #f5f5f5;
     padding: 10px;
 }
 
 #open-vault-popup:hover,
-.token:hover {
+.token:hover,
+#open-new-card:hover {
     cursor: pointer;
+}
+
+.payment_method_wirecard_ee_creditcard .dashicons {
+    margin-top: 3px;
 }
 
 #vault-table td, #vault-table th {
