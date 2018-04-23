@@ -98,11 +98,11 @@ $( document ).ready(
 			}
 		);
 
-        /**
-         * Click on stored credit card
-         *
-         * @since 1.1.0
-         */
+		/**
+		 * Click on stored credit card
+		 *
+		 * @since 1.1.0
+		 */
 		$( '#open-vault-popup' ).on(
 			'click', function () {
 				saved_credit_cards.slideToggle();
@@ -112,11 +112,11 @@ $( document ).ready(
 			}
 		);
 
-        /**
+		/**
 		 * Click on new credit card
 		 *
 		 * @since 1.1.0
-         */
+		 */
 		$( '#open-new-card' ).on(
 			'click', function () {
 				token = null;
