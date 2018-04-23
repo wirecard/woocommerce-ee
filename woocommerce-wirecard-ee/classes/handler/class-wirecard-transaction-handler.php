@@ -132,8 +132,9 @@ class Wirecard_Transaction_Handler extends Wirecard_Handler {
 		$return  = $payment->process_refund( $transaction_data->order_id, $transaction_data->amount );
 		if ( is_wp_error( $return ) ) {
 			echo $return->get_error_message();
+		} else {
+			wp_redirect( admin_url( $return ), 301 );
 		}
-		wp_redirect( admin_url( $return ), 301 );
 		die();
 	}
 }
