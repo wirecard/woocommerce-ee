@@ -35,7 +35,9 @@ function getVaultData() {
 			data: { 'action' : 'get_cc_from_vault' },
 			dataType: 'json',
 			success: function ( data ) {
-				addVaultData( data.data );
+				if ( false != data.data) {
+                    addVaultData( data.data );
+                }
 			},
 			error: function (data) {
 				console.log( data );

@@ -302,7 +302,10 @@ HTML;
 		if ( $this->get_option( 'cc_vault_enabled' ) == 'yes' ) {
 			$html .= '<div class="save-later"><label for="wirecard-store-card">
 			<input type="checkbox" id="wirecard-store-card" /> ' .
-				__( 'Save for later use.', 'woocommerce-gateway-wirecard' ) . '</label></div></div>';
+				__( 'Save for later use.', 'woocommerce-gateway-wirecard' ) . '</label></div>';
+			if ( $this->has_cc_in_vault() ) {
+				$html .= '</div>';
+			}
 		}
 
 		echo $html;
@@ -431,6 +434,10 @@ HTML;
 	 * @since 1.1.0
 	 */
 	public function get_cc_from_vault() {
+		if ( $this->get_option( 'cc_vault_enabled' ) != 'yes' ) {
+			wp_send_json_success( false );
+		}
+
 		/** @var WP_User $user */
 		$user = wp_get_current_user();
 
