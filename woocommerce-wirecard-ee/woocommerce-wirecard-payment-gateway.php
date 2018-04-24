@@ -153,6 +153,7 @@ function wirecard_wc_order_statuses( $order_statuses ) {
  * @since 1.0.0
  */
 function install_wirecard_payment_gateway() {
+	check_if_woo_installed();
 	global $wpdb;
 
 	$table_name       = $wpdb->base_prefix . 'wirecard_payment_gateway_tx';
@@ -235,17 +236,29 @@ function wirecard_gateway_options_page() {
 		'refundpayment',
 		array( $admin, 'refund_transaction' )
 	);
+}
 
-	/**
-	 * Add support chat script
-	 *
-	 * @since 1.1.0
-	 */
-	function add_support_chat() {
-		echo '<script
+/**
+ * Add support chat script
+ *
+ * @since 1.1.0
+ */
+function add_support_chat() {
+	echo '<script
                 type="text/javascript" 
 				id="936f87cd4ce16e1e60bea40b45b0596a"
 			    src="http://www.provusgroup.com/livezilla/script.php?id=936f87cd4ce16e1e60bea40b45b0596a">
         </script>';
+}
+
+/**
+ * Check if the woocommerce plugin is installed else display error
+ *
+ * @since 1.1.0
+ */
+function check_if_woo_installed() {
+	if ( ! in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
+		wp_die(__('Sorry, but this plugin requires WooCommerce Plugin to be installed and active.', 'woocommerce-gateway-wirecard') .
+			'<br><a href="' . admin_url( 'plugins.php' ) . '">' . __('Go to Plugins', 'woocommerce-gateway-wirecard') . '</a>');
 	}
 }
