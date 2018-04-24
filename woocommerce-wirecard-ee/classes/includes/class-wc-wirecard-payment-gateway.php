@@ -649,7 +649,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 		$http_user = $_POST['http_user'];
 		$http_pass = $_POST['http_pass'];
 
-		$test_config        = new Config( $base_url, $http_user, $http_pass );
+		$test_config         = new Config( $base_url, $http_user, $http_pass );
 		$transaction_service = new TransactionService( $test_config, new Logger() );
 
 		if ( $transaction_service->checkCredentials() ) {
