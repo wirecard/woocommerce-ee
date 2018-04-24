@@ -36,8 +36,8 @@ function getVaultData() {
 			dataType: 'json',
 			success: function ( data ) {
 				if ( false != data.data) {
-                    addVaultData( data.data );
-                }
+					addVaultData( data.data );
+				}
 			},
 			error: function (data) {
 				console.log( data );
