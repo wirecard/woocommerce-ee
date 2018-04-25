@@ -48,7 +48,6 @@ define( 'WOOCOMMERCE_GATEWAY_WIRECARD_URL', plugin_dir_url( __FILE__ ) );
 register_activation_hook( __FILE__, 'install_wirecard_payment_gateway' );
 
 add_action( 'plugins_loaded', 'init_wirecard_payment_gateway' );
-add_action( 'admin_menu', 'wirecard_gateway_options_page' );
 
 /**
  * Initialize payment gateway
@@ -57,6 +56,9 @@ add_action( 'admin_menu', 'wirecard_gateway_options_page' );
  */
 function init_wirecard_payment_gateway() {
 	if ( ! class_exists( 'WC_PAYMENT_GATEWAY' ) ) {
+		global $error;
+		$error = new WP_Error('woocommerce', 'To use Wirecard Payment Processing Gateway you need to install and activate the WooCommerce');
+		echo '<div class="error notice">' . $error->get_error_message() . '</div>';
 		return;
 	}
 
@@ -76,6 +78,7 @@ function init_wirecard_payment_gateway() {
 	add_filter( 'woocommerce_payment_gateways', 'add_wirecard_payment_gateway', 0 );
 	add_filter( 'wc_order_statuses', 'wirecard_wc_order_statuses' );
 	add_action( 'woocommerce_settings_checkout', 'add_support_chat', 0 );
+	add_action( 'admin_menu', 'wirecard_gateway_options_page' );
 
 	register_post_status(
 		'wc-authorization',
@@ -238,6 +241,7 @@ function wirecard_gateway_options_page() {
 		'refundpayment',
 		array( $admin, 'refund_transaction' )
 	);
+}
 
 	/**
 	 * Add support chat script
