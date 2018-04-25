@@ -655,7 +655,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 		if ( $transaction_service->checkCredentials() ) {
 			wp_send_json_success( __( 'The merchant configuration was successfully tested.', 'woocommerce-gateway-wirecard' ) );
 		} else {
-			wp_send_json_error( __( 'Please check your credentials.', 'woocommerce-gateway-wirecard' ) );
+			wp_send_json_error( __( 'Test failed, please check your credentials.', 'woocommerce-gateway-wirecard' ) );
 		}
 		die();
 	}

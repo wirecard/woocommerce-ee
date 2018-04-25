@@ -243,7 +243,10 @@ function wirecard_gateway_options_page() {
 				id="936f87cd4ce16e1e60bea40b45b0596a"
 			    src="http://www.provusgroup.com/livezilla/script.php?id=936f87cd4ce16e1e60bea40b45b0596a">
         </script>
-        <script>var admin_url = "' . $admin_url . '"</script>
+        <script>
+            var admin_url = "' . $admin_url . '";
+            var test_credentials_button = "' . __( 'Test', 'woocommerce-gateway-wirecard' ) . '";
+        </script>
         <script type="application/javascript" src="' . WOOCOMMERCE_GATEWAY_WIRECARD_URL . 'assets\js\admin.js"></script>';
 	}
 }
