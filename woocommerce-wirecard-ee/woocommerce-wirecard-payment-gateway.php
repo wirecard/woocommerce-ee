@@ -58,7 +58,7 @@ function init_wirecard_payment_gateway() {
 	if ( ! class_exists( 'WC_PAYMENT_GATEWAY' ) ) {
 		global $error;
 		$error = new WP_Error('woocommerce', 'To use Wirecard Payment Processing Gateway you need to install and activate the WooCommerce');
-		echo '<div class="error notice">' . $error->get_error_message() . '</div>';
+		echo '<div class="error notice"><p>' . $error->get_error_message() . '</p></div>';
 		return;
 	}
 
