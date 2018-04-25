@@ -136,6 +136,12 @@ class WC_Gateway_Wirecard_Unionpay_International extends WC_Wirecard_Payment_Gat
 				'type'    => 'text',
 				'default' => '8mhwavKVb91T',
 			),
+			'test_button'         => array(
+				'title'   => __( 'Test configuration', 'woocommerce-gateway-wirecard' ),
+				'type'    => 'button',
+				'class'   => 'wc_wirecard_test_credentials_button button-primary',
+				'default' => __( 'Test', 'woocommerce-gateway-wirecard' ),
+			),
 			'advanced'            => array(
 				'title'       => __( 'Advanced Options', 'woocommerce-gateway-wirecard' ),
 				'type'        => 'title',
