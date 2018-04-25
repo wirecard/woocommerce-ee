@@ -144,6 +144,12 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 				'type'    => 'text',
 				'default' => 'qD2wzQ_hrc!8',
 			),
+			'test_button'           => array(
+				'title'   => __( 'Test configuration', 'woocommerce-gateway-wirecard' ),
+				'type'    => 'button',
+				'class'   => 'wc_wirecard_test_credentials_button button-primary',
+				'default' => __( 'Test', 'woocommerce-gateway-wirecard' ),
+			),
 			'advanced'              => array(
 				'title'       => __( 'Advanced Options', 'woocommerce-gateway-wirecard' ),
 				'type'        => 'title',
@@ -221,7 +227,6 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 		}
 		$this->transaction = new RatepayInvoiceTransaction();
 		parent::process_payment( $order_id );
-		//var_dump($this->additional_helper->create_shopping_basket( $this->transaction, $order->get_total() ));die();
 
 		$this->transaction->setOrderNumber( $order_id );
 		$this->transaction->setBasket( $this->additional_helper->create_shopping_basket( $this->transaction, $order->get_total() ) );

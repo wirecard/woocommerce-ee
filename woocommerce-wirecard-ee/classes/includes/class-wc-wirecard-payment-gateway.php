@@ -169,6 +169,13 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 				'callback',
 			)
 		);
+		add_action(
+			'woocommerce_api_test_payment_method_config',
+			array(
+				$this,
+				'test_payment_config',
+			)
+		);
 	}
 
 	/**
@@ -235,9 +242,15 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 		$notification         = file_get_contents( 'php://input' );
 		$notification_handler = new Wirecard_Notification_Handler();
 		try {
-			/** @var Response $response */
+			/** @var SuccessResponse $response */
 			$response = $notification_handler->handle_notification( $payment_method, $notification );
 			if ( $response ) {
+				if ( 'masterpass' == $response->getPaymentMethod() && (
+						\Wirecard\PaymentSdk\Transaction\Transaction::TYPE_DEBIT == $response->getTransactionType() ||
+						\Wirecard\PaymentSdk\Transaction\Transaction::TYPE_AUTHORIZATION == $response->getTransactionType() ) ) {
+					return;
+				}
+
 				$this->save_response_data( $order, $response );
 				$this->update_payment_transaction( $order, $response, 'success', $payment_method );
 				$order = $this->update_order_state( $order, $response->getTransactionType() );
@@ -629,5 +642,21 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 			return true;
 		}
 		return false;
+	}
+
+	public function test_payment_config() {
+		$base_url  = $_POST['base_url'];
+		$http_user = $_POST['http_user'];
+		$http_pass = $_POST['http_pass'];
+
+		$test_config         = new Config( $base_url, $http_user, $http_pass );
+		$transaction_service = new TransactionService( $test_config, new Logger() );
+
+		if ( $transaction_service->checkCredentials() ) {
+			wp_send_json_success( __( 'The merchant configuration was successfully tested.', 'woocommerce-gateway-wirecard' ) );
+		} else {
+			wp_send_json_error( __( 'Test failed, please check your credentials.', 'woocommerce-gateway-wirecard' ) );
+		}
+		die();
 	}
 }
