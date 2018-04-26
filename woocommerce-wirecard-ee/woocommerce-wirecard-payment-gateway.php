@@ -42,6 +42,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+define( 'WOOCOMMERCE_GATEWAY_WIRECARD_NAME', 'Wirecard Payment Processing Gateway' );
+define( 'WOOCOMMERCE_GATEWAY_WIRECARD_VERSION', '1.1.0' );
 define( 'WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR', plugin_dir_path( __FILE__ ) );
 define( 'WOOCOMMERCE_GATEWAY_WIRECARD_URL', plugin_dir_url( __FILE__ ) );
 
@@ -240,6 +242,22 @@ function wirecard_gateway_options_page() {
 		'manage_options',
 		'refundpayment',
 		array( $admin, 'refund_transaction' )
+	);
+	add_submenu_page(
+		'wirecardpayment',
+		'Wirecard Payment Gateway Support',
+		'Wirecard Payment Gateway Support',
+		'manage_options',
+		'wirecardsupport',
+		array( $admin, 'wirecard_payment_gateway_support' )
+	);
+	add_submenu_page(
+		null,
+		'Wirecard Payment Gateway Support',
+		'Wirecard Payment Gateway Support',
+		'manage_options',
+		'wirecardsendsupport',
+		array( $admin, 'send_email_to_support' )
 	);
 }
 
