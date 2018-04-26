@@ -426,7 +426,7 @@ HTML;
 		/** @var WP_User $user */
 		$user = wp_get_current_user();
 
-		if ( false != $this->vault->save_card( $user->ID, $token, $mask_pan ) ) {
+		if ( $this->vault->save_card( $user->ID, $token, $mask_pan ) ) {
 			wp_send_json_success();
 		} else {
 			wp_send_json_error();
@@ -477,9 +477,9 @@ HTML;
 		/** @var WP_User $user */
 		$user = wp_get_current_user();
 
-		if ( false == $this->vault->get_cards_for_user( $user->ID ) ) {
-			return false;
+		if ( $this->vault->get_cards_for_user( $user->ID ) ) {
+			return true;
 		}
-		return true;
+		return false;
 	}
 }
