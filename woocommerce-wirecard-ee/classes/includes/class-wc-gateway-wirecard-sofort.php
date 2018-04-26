@@ -140,6 +140,12 @@ class WC_Gateway_Wirecard_Sofort extends WC_Wirecard_Payment_Gateway {
 				'description' => __( 'The http password provided in your Wirecard contract', 'woocommerce-gateway-wirecard' ),
 				'default'     => 'qD2wzQ_hrc!8',
 			),
+			'test_button'         => array(
+				'title'   => __( 'Test configuration', 'woocommerce-gateway-wirecard' ),
+				'type'    => 'button',
+				'class'   => 'wc_wirecard_test_credentials_button button-primary',
+				'default' => __( 'Test', 'woocommerce-gateway-wirecard' ),
+			),
 			'advanced'            => array(
 				'title'       => __( 'Advanced Options', 'woocommerce-gateway-wirecard' ),
 				'type'        => 'title',

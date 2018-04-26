@@ -30,6 +30,7 @@
  */
 
 require_once __DIR__ . '/class-wc-wirecard-payment-gateway.php';
+require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/helper/class-credit-card-vault.php' );
 
 use Wirecard\PaymentSdk\Config\Config;
 use Wirecard\PaymentSdk\Config\CreditCardConfig;
@@ -46,6 +47,8 @@ use Wirecard\PaymentSdk\TransactionService;
  */
 class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 
+	private $vault;
+
 	/**
 	 * WC_Gateway_Wirecard_Creditcard constructor.
 	 *
@@ -59,6 +62,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 		$this->method_name        = __( 'Credit Card', 'wooocommerce-gateway-wirecard' );
 		$this->method_description = __( 'Credit Card transactions via Wirecard Payment Processing Gateway', 'woocommerce-gateway-wirecard' );
 		$this->has_fields         = true;
+		$this->vault              = new Credit_Card_Vault();
 
 		$this->supports = array(
 			'products',
@@ -80,6 +84,9 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 
 		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
 		add_action( 'woocommerce_api_get_credit_card_request_data', array( $this, 'get_request_data_credit_card' ) );
+		add_action( 'woocommerce_api_save_cc_to_vault', array( $this, 'save_to_vault' ) );
+		add_action( 'woocommerce_api_get_cc_from_vault', array( $this, 'get_cc_from_vault' ) );
+		add_action( 'woocommerce_api_remove_cc_from_vault', array( $this, 'remove_cc_from_vault' ) );
 
 		parent::add_payment_gateway_actions();
 	}
@@ -163,6 +170,12 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 				'description' => __( 'The http password provided in your Wirecard contract', 'woocommerce-gateway-wirecard' ),
 				'default'     => 'qD2wzQ_hrc!8',
 			),
+			'test_button'                 => array(
+				'title'   => __( 'Test configuration', 'woocommerce-gateway-wirecard' ),
+				'type'    => 'button',
+				'class'   => 'wc_wirecard_test_credentials_button button-primary',
+				'default' => __( 'Test', 'woocommerce-gateway-wirecard' ),
+			),
 			'advanced'                    => array(
 				'title'       => __( 'Advanced Options', 'woocommerce-gateway-wirecard' ),
 				'type'        => 'title',
@@ -192,6 +205,12 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 				'description' => __( 'Additional data will be sent for the purpose of fraud protection. This additional data includes billing / shipping address, shopping basket and descriptor.', 'woocommerce-gateway-wirecard' ),
 				'label'       => __( 'Send additional information', 'woocommerce-gateway-wirecard' ),
 				'default'     => 'yes',
+			),
+			'cc_vault_enabled'            => array(
+				'title'   => __( 'Enable/Disable', 'woocommerce-gateway-wirecard' ),
+				'type'    => 'checkbox',
+				'label'   => __( 'Enable Recurring Payment', 'woocommerce-gateway-wirecard' ),
+				'default' => 'no',
 			),
 		);
 	}
@@ -252,21 +271,56 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	 * @since 1.0.0
 	 */
 	public function payment_fields() {
-		$base_url    = $this->get_option( 'base_url' );
-		$gateway_url = WOOCOMMERCE_GATEWAY_WIRECARD_URL;
-		$page_url    = add_query_arg(
+		$base_url         = $this->get_option( 'base_url' );
+		$gateway_url      = WOOCOMMERCE_GATEWAY_WIRECARD_URL;
+		$page_url         = add_query_arg(
 			[ 'wc-api' => 'get_credit_card_request_data' ],
+			site_url( '/', is_ssl() ? 'https' : 'http' )
+		);
+		$vault_save_url   = add_query_arg(
+			[ 'wc-api' => 'save_cc_to_vault' ],
+			site_url( '/', is_ssl() ? 'https' : 'http' )
+		);
+		$vault_get_url    = add_query_arg(
+			[ 'wc-api' => 'get_cc_from_vault' ],
+			site_url( '/', is_ssl() ? 'https' : 'http' )
+		);
+		$vault_delete_url = add_query_arg(
+			[ 'wc-api' => 'remove_cc_from_vault' ],
 			site_url( '/', is_ssl() ? 'https' : 'http' )
 		);
 
 		$html = <<<HTML
 			<script src='$base_url/engine/hpp/paymentPageLoader.js' type='text/javascript'></script>
-            <script type='application/javascript' src='$gateway_url/assets/js/creditcard.js'></script>
+			<link href='$gateway_url/assets/styles/frontend.css' type="text/css" rel="stylesheet" />
+            <link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css" type="text/css" rel="stylesheet" />
+			<script type='application/javascript' src='$gateway_url/assets/js/creditcard.js'></script>
+			<script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
             <script>
-                var ajax_url = "$page_url";
+                var ajax_url  = "$page_url";
+                var vault_url = "$vault_save_url";
+                var vault_get_url = "$vault_get_url";
+                var vault_delete_url = "$vault_delete_url";
             </script>
-            <div id='wc_payment_method_wirecard_creditcard_form'></div>
+            
 HTML;
+		if ( $this->get_option( 'cc_vault_enabled' ) == 'yes' && $this->has_cc_in_vault() ) {
+			$html .= '<div id="open-vault-popup"><span class="dashicons dashicons-arrow-down"></span>' . __( 'Use saved Credit Cards', 'woocommerce-gateway-wirecard' ) . '</div>
+            <div id="wc_payment_method_wirecard_creditcard_vault"></div><br>
+            <div id="open-new-card"><span class="dashicons dashicons-arrow-up"></span>' . __( 'Use new Credit Card', 'woocommerce-gateway-wirecard' ) . '</div>
+            <div id="wc_payment_method_wirecard_new_credit_card">';
+		}
+
+		$html .= '<div class="show-spinner"><div class="spinner"></div></div><div id="wc_payment_method_wirecard_creditcard_form"></div>';
+
+		if ( $this->get_option( 'cc_vault_enabled' ) == 'yes' ) {
+			$html .= '<div class="save-later"><label for="wirecard-store-card">
+			<input type="checkbox" id="wirecard-store-card" /> ' .
+				__( 'Save for later use.', 'woocommerce-gateway-wirecard' ) . '</label></div>';
+			if ( $this->has_cc_in_vault() ) {
+				$html .= '</div>';
+			}
+		}
 
 		echo $html;
 	}
@@ -367,5 +421,73 @@ HTML;
 		$this->transaction = new CreditCardTransaction();
 
 		return parent::process_refund( $order_id, $amount, '' );
+	}
+
+	/**
+	 *  Save Credit card data to Vault
+	 *
+	 * @since 1.1.0
+	 */
+	public function save_to_vault() {
+		$token    = $_POST['token'];
+		$mask_pan = $_POST['mask_pan'];
+		/** @var WP_User $user */
+		$user = wp_get_current_user();
+
+		if ( $this->vault->save_card( $user->ID, $token, $mask_pan ) ) {
+			wp_send_json_success();
+		} else {
+			wp_send_json_error();
+		}
+		die();
+	}
+
+	/**
+	 * Get Credit Cards from Vault
+	 *
+	 * @since 1.1.0
+	 */
+	public function get_cc_from_vault() {
+		if ( $this->get_option( 'cc_vault_enabled' ) != 'yes' ) {
+			wp_send_json_success( false );
+		}
+
+		/** @var WP_User $user */
+		$user = wp_get_current_user();
+
+		wp_send_json_success( $this->vault->get_cards_for_user( $user->ID ) );
+		die();
+	}
+
+	/**
+	 * Remove Credit Card from Vault
+	 *
+	 * @since 1.1.0
+	 */
+	public function remove_cc_from_vault() {
+		$vault_id = $_POST['vault_id'];
+
+		if ( isset( $vault_id ) && $this->vault->delete_credit_card( $vault_id ) > 0 ) {
+			wp_send_json_success();
+		} else {
+			wp_send_json_error();
+		}
+		die();
+	}
+
+	/**
+	 * Check if the user has Credit Cards in Vault
+	 *
+	 * @return true|false
+	 * @since 1.1.0
+	 */
+	private function has_cc_in_vault() {
+		/** @var WP_User $user */
+		$user = wp_get_current_user();
+
+		if ( $this->vault->get_cards_for_user( $user->ID ) ) {
+			return true;
+		}
+		return false;
 	}
 }
