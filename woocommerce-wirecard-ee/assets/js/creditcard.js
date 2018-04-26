@@ -27,10 +27,13 @@
  * By installing the plugin into the shop system the customer agrees to these terms of use.
  * Please do not use the plugin if you do not agree to these terms of use!
  */
-var token         = null;
-var checkout_form = jQuery( 'form.checkout' );
-var processing    = false;
-$                 = jQuery;
+
+var token              = null;
+var checkout_form      = null;
+var processing         = false;
+$                      = jQuery;
+var saved_credit_cards = null;
+var new_credit_card    = null;
 
 /**
  * Add token to submit form
@@ -109,8 +112,9 @@ function deleteCard( id ) {
 
 $( document ).ready(
 	function() {
-		var saved_credit_cards = $( '#wc_payment_method_wirecard_creditcard_vault' );
-		var new_credit_card    = $( '#wc_payment_method_wirecard_new_credit_card' );
+		checkout_form      = $( 'form.checkout' );
+		saved_credit_cards = $( '#wc_payment_method_wirecard_creditcard_vault' );
+		new_credit_card    = $( '#wc_payment_method_wirecard_new_credit_card' );
 		saved_credit_cards.hide();
 		$( '.show-spinner' ).show();
 
@@ -138,8 +142,10 @@ $( document ).ready(
 			'click', function () {
 				saved_credit_cards.slideToggle();
 				new_credit_card.slideUp();
-				$( '#open-new-card' ).find( 'span' ).removeClass( 'dashicons-arrow-up' ).addClass( 'dashicons-arrow-down' );
-				$( this ).find( 'span' ).toggleClass( 'dashicons-arrow-down' ).toggleClass( 'dashicons-arrow-up' );
+				//$( '#open-new-card' ).find( 'span' ).removeClass( 'dashicons-arrow-up' ).addClass( 'dashicons-arrow-down' );
+				$( 'span', '#open-new-card' ).removeClass( 'dashicons-arrow-up' ).addClass( 'dashicons-arrow-down' );
+				//$( this ).find( 'span' ).toggleClass( 'dashicons-arrow-down' ).toggleClass( 'dashicons-arrow-up' );
+				$( 'span', $( this ) ).toggleClass( 'dashicons-arrow-down' ).toggleClass( 'dashicons-arrow-up' );
 			}
 		);
 
@@ -153,9 +159,12 @@ $( document ).ready(
 				token = null;
 				new_credit_card.slideToggle();
 				saved_credit_cards.slideUp();
-				saved_credit_cards.find( 'input' ).prop( 'checked', false );
-				$( '#open-vault-popup' ).find( 'span' ).removeClass( 'dashicons-arrow-up' ).addClass( 'dashicons-arrow-down' );
-				$( this ).find( 'span' ).toggleClass( 'dashicons-arrow-down' ).toggleClass( 'dashicons-arrow-up' );
+				//saved_credit_cards.find( 'input' ).prop( 'checked', false );
+				$( 'input', saved_credit_cards ).prop( 'checked', false );
+				//$( '#open-vault-popup' ).find( 'span' ).removeClass( 'dashicons-arrow-up' ).addClass( 'dashicons-arrow-down' );
+				$( 'span', '#open-vault-popup' ).removeClass( 'dashicons-arrow-up' ).addClass( 'dashicons-arrow-down' );
+				//$( this ).find( 'span' ).toggleClass( 'dashicons-arrow-down' ).toggleClass( 'dashicons-arrow-up' );
+				$( 'span', $( this ) ).toggleClass( 'dashicons-arrow-down' ).toggleClass( 'dashicons-arrow-up' );
 			}
 		);
 
