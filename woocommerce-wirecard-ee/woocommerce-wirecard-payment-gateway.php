@@ -57,7 +57,7 @@ add_action( 'plugins_loaded', 'init_wirecard_payment_gateway' );
 function init_wirecard_payment_gateway() {
 	if ( ! class_exists( 'WC_PAYMENT_GATEWAY' ) ) {
 		global $error;
-		$error = new WP_Error('woocommerce', 'To use Wirecard Payment Processing Gateway you need to install and activate the WooCommerce');
+		$error = new WP_Error( 'woocommerce', 'To use Wirecard Payment Processing Gateway you need to install and activate the WooCommerce' );
 		echo '<div class="error notice"><p>' . $error->get_error_message() . '</p></div>';
 		return;
 	}
@@ -243,26 +243,27 @@ function wirecard_gateway_options_page() {
 	);
 }
 
-	/**
-	 * Add support chat script
-	 *
-	 * @since 1.1.0
-	 */
-	function add_support_chat() {
-		$admin_url = add_query_arg(
-			[ 'wc-api' => 'test_payment_method_config' ],
-			site_url( '/', is_ssl() ? 'https' : 'http' )
-		);
-		echo '<script
-                type="text/javascript"
-				id="936f87cd4ce16e1e60bea40b45b0596a"
-			    src="http://www.provusgroup.com/livezilla/script.php?id=936f87cd4ce16e1e60bea40b45b0596a">
+/**
+ * Add support chat script
+ *
+ * @since 1.1.0
+ */
+function add_support_chat() {
+	$admin_url = add_query_arg(
+		[ 'wc-api' => 'test_payment_method_config' ],
+		site_url( '/', is_ssl() ? 'https' : 'http' )
+	);
+	echo '
+		<script
+            type="text/javascript"
+			id="936f87cd4ce16e1e60bea40b45b0596a"
+		    src="http://www.provusgroup.com/livezilla/script.php?id=936f87cd4ce16e1e60bea40b45b0596a">
         </script>
-        <script>
-            var admin_url = "' . $admin_url . '";
-            var test_credentials_button = "' . __( 'Test', 'woocommerce-gateway-wirecard' ) . '";
-        </script>
-        <script type="application/javascript" src="' . WOOCOMMERCE_GATEWAY_WIRECARD_URL . 'assets\js\admin.js"></script>';
+	    <script>
+	        var admin_url = "' . $admin_url . '";
+	        var test_credentials_button = "' . __( 'Test', 'woocommerce-gateway-wirecard' ) . '";
+	    </script>
+	    <script type="application/javascript" src="' . WOOCOMMERCE_GATEWAY_WIRECARD_URL . 'assets\js\admin.js"></script>';
 }
 
 /**
