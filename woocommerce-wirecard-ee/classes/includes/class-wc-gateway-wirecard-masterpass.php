@@ -96,23 +96,25 @@ class WC_Gateway_Wirecard_Masterpass extends WC_Wirecard_Payment_Gateway {
 				'title'   => __( 'Enable/Disable', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'checkbox',
 				'label'   => __( 'Enable Wirecard Masterpass', 'woocommerce-gateway-wirecard' ),
+				'description' => __( 'Activate payment method Masterpass', 'woocommerce-gateway-wirecard' ),
 				'default' => 'no',
 			),
 			'title'               => array(
 				'title'       => __( 'Title', 'woocommerce-gateway-wirecard' ),
 				'type'        => 'text',
-				'description' => __( 'This controls the title which the user sees during checkout.', 'woocommerce-gateway-wirecard' ),
+				'description' => __( 'This controls the title which the consumer sees during checkout.', 'woocommerce-gateway-wirecard' ),
 				'default'     => __( 'Wirecard Masterpass', 'woocommerce-gateway-wirecard' ),
-				'desc_tip'    => true,
 			),
 			'merchant_account_id' => array(
 				'title'   => __( 'Merchant Account ID', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'text',
+				'description' => __( 'The unique identifier assigned for your Merchant Account.', 'woocommerce-gateway-wirecard' ),
 				'default' => '8bc8ed6d-81a8-43be-bd7b-75b008f89fa6',
 			),
 			'secret'              => array(
 				'title'   => __( 'Secret Key', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'text',
+				'description' => __( 'Secret key is mandatory to calculate the Digital Signature for the payment.', 'woocommerce-gateway-wirecard' ),
 				'default' => '2d96596b-9d10-4c98-ac47-4d56e22fd878',
 			),
 			'credentials'         => array(
@@ -123,18 +125,19 @@ class WC_Gateway_Wirecard_Masterpass extends WC_Wirecard_Payment_Gateway {
 			'base_url'            => array(
 				'title'       => __( 'Base URL', 'woocommerce-gateway-wirecard' ),
 				'type'        => 'text',
-				'description' => __( 'The Wirecard base URL. (e.g. https://api.wirecard.com)' ),
+				'description' => __( 'The Wirecard base URL. (e.g. https://api.wirecard.com)', 'woocomerce-gateway-wirecard' ),
 				'default'     => 'https://api-test.wirecard.com',
-				'desc_tip'    => true,
 			),
 			'http_user'           => array(
 				'title'   => __( 'HTTP User', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'text',
+				'description' => __( 'The http user provided in your Wirecard contract', 'woocommerce-gateway-wirecard' ),
 				'default' => '70000-APITEST-AP',
 			),
 			'http_pass'           => array(
 				'title'   => __( 'HTTP Password', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'text',
+				'description' => __( 'The http password provided in your Wirecard contract', 'woocommerce-gateway-wirecard' ),
 				'default' => 'qD2wzQ_hrc!8',
 			),
 			'test_button'         => array(
@@ -151,6 +154,7 @@ class WC_Gateway_Wirecard_Masterpass extends WC_Wirecard_Payment_Gateway {
 			'payment_action'      => array(
 				'title'   => __( 'Payment Action', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'select',
+				'description' => __( 'Select between "Capture" to capture / invoice your order automatically or "Authorization" to manually capture / invoice. ', 'woocommerce-gateway-wirecard' ),
 				'default' => 'Capture',
 				'label'   => __( 'Payment Action', 'woocommerce-gateway-wirecard' ),
 				'options' => array(
@@ -161,12 +165,14 @@ class WC_Gateway_Wirecard_Masterpass extends WC_Wirecard_Payment_Gateway {
 			'descriptor'          => array(
 				'title'   => __( 'Enable/Disable', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'checkbox',
+				'description' => __( 'Send text which is displayed on the bank statement issued to your consumer by the financial service provider', 'woocommerce-gateway-wirecard' ),
 				'label'   => __( 'Descriptor', 'woocommerce-gateway-wirecard' ),
 				'default' => 'no',
 			),
 			'send_additional'     => array(
 				'title'   => __( 'Enable/Disable', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'checkbox',
+				'description' => __( 'Additional data will be sent for the purpose of fraud protection. This additional data includes billing / shipping address, shopping basket and descriptor.', 'woocommerce-gateway-wirecard' ),
 				'label'   => __( 'Send additional information', 'woocommerce-gateway-wirecard' ),
 				'default' => 'yes',
 			),
