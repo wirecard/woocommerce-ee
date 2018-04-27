@@ -100,8 +100,8 @@ function addVaultData( data ) {
  */
 function deleteCard( id ) {
 	token = null;
-    $( '.show-spinner', saved_credit_cards ).show();
-    $( '.cards', saved_credit_cards ).empty();
+	$( '.show-spinner', saved_credit_cards ).show();
+	$( '.cards', saved_credit_cards ).empty();
 	$.ajax(
 		{
 			type: 'POST',
