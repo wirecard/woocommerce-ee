@@ -58,6 +58,7 @@ function setToken() {
  * @since 1.1.0
  */
 function getVaultData() {
+	$( '.show-spinner', saved_credit_cards ).show();
 	$.ajax(
 		{
 			type: 'GET',
@@ -67,6 +68,10 @@ function getVaultData() {
 			success: function ( data ) {
 				if ( false != data.data) {
 					addVaultData( data.data );
+				} else {
+					$( '.cards', saved_credit_cards ).empty();
+					$( '.show-spinner', saved_credit_cards ).hide();
+					new_credit_card.trigger( 'click' );
 				}
 			},
 			error: function (data) {
@@ -83,7 +88,8 @@ function getVaultData() {
  * @since 1.1.0
  */
 function addVaultData( data ) {
-	saved_credit_cards.html( data );
+	$( '.cards', saved_credit_cards ).html( data );
+	$( '.show-spinner', saved_credit_cards ).hide();
 }
 
 /**
@@ -94,6 +100,8 @@ function addVaultData( data ) {
  */
 function deleteCard( id ) {
 	token = null;
+    $( '.show-spinner', saved_credit_cards ).show();
+    $( '.cards', saved_credit_cards ).empty();
 	$.ajax(
 		{
 			type: 'POST',
@@ -115,13 +123,10 @@ $( document ).ready(
 		checkout_form      = $( 'form.checkout' );
 		saved_credit_cards = $( '#wc_payment_method_wirecard_creditcard_vault' );
 		new_credit_card    = $( '#wc_payment_method_wirecard_new_credit_card' );
-		saved_credit_cards.hide();
-		$( '.show-spinner' ).show();
+		new_credit_card.hide();
 
-		if ( $( "#wc_payment_method_wirecard_creditcard_form" ).is( ":visible" ) ) {
-			getRequestData();
-			getVaultData();
-		}
+		getVaultData();
+		getRequestData();
 
 		$( "input[name=payment_method]" ).change(
 			function() {
