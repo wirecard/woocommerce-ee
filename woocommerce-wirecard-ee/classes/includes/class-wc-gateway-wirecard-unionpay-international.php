@@ -94,24 +94,26 @@ class WC_Gateway_Wirecard_Unionpay_International extends WC_Wirecard_Payment_Gat
 			'enabled'             => array(
 				'title'   => __( 'Enable/Disable', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'checkbox',
+				'description' => __( 'Activate payment method Unionpay International', 'woocommerce-gateway-wirecard' ),
 				'label'   => __( 'Enable Wirecard Unionpay International', 'woocommerce-gateway-wirecard' ),
 				'default' => 'no',
 			),
 			'title'               => array(
 				'title'       => __( 'Title', 'woocommerce-gateway-wirecard' ),
 				'type'        => 'text',
-				'description' => __( 'This controls the title which the user sees during checkout.', 'woocommerce-gateway-wirecard' ),
+				'description' => __( 'This controls the title which the consumer sees during checkout.', 'woocommerce-gateway-wirecard' ),
 				'default'     => __( 'Wirecard Unionpay International', 'woocommerce-gateway-wirecard' ),
-				'desc_tip'    => true,
 			),
 			'merchant_account_id' => array(
 				'title'   => __( 'Merchant Account ID', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'text',
+				'description' => __( 'The unique identifier assigned for your Merchant Account.', 'woocommerce-gateway-wirecard' ),
 				'default' => 'c6e9331c-5c1f-4fc6-8a08-ef65ce09ddb0',
 			),
 			'secret'              => array(
 				'title'   => __( 'Secret Key', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'text',
+				'description' => __( 'Secret key is mandatory to calculate the Digital Signature for the payment.', 'woocommerce-gateway-wirecard' ),
 				'default' => '16d85b73-79e2-4c33-932a-7da99fb04a9c',
 			),
 			'credentials'         => array(
@@ -122,18 +124,19 @@ class WC_Gateway_Wirecard_Unionpay_International extends WC_Wirecard_Payment_Gat
 			'base_url'            => array(
 				'title'       => __( 'Base URL', 'woocommerce-gateway-wirecard' ),
 				'type'        => 'text',
-				'description' => __( 'The Wirecard base URL. (e.g. https://api.wirecard.com)' ),
+				'description' => __( 'The Wirecard base URL. (e.g. https://api.wirecard.com)', 'woocomerce-gateway-wirecard' ),
 				'default'     => 'https://api-test.wirecard.com',
-				'desc_tip'    => true,
 			),
 			'http_user'           => array(
 				'title'   => __( 'HTTP User', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'text',
+				'description' => __( 'The http user provided in your Wirecard contract', 'woocommerce-gateway-wirecard' ),
 				'default' => '70000-APILUHN-CARD',
 			),
 			'http_pass'           => array(
 				'title'   => __( 'HTTP Password', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'text',
+				'description' => __( 'The http password provided in your Wirecard contract', 'woocommerce-gateway-wirecard' ),
 				'default' => '8mhwavKVb91T',
 			),
 			'test_button'         => array(
@@ -150,6 +153,7 @@ class WC_Gateway_Wirecard_Unionpay_International extends WC_Wirecard_Payment_Gat
 			'payment_action'      => array(
 				'title'   => __( 'Payment Action', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'select',
+				'description' => __( 'Select between "Capture" to capture / invoice your order automatically or "Authorization" to manually capture / invoice. ', 'woocommerce-gateway-wirecard' ),
 				'default' => 'Capture',
 				'label'   => __( 'Payment Action', 'woocommerce-gateway-wirecard' ),
 				'options' => array(
@@ -160,12 +164,14 @@ class WC_Gateway_Wirecard_Unionpay_International extends WC_Wirecard_Payment_Gat
 			'descriptor'          => array(
 				'title'   => __( 'Enable/Disable', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'checkbox',
+				'description' => __( 'Send text which is displayed on the bank statement issued to your consumer by the financial service provider', 'woocommerce-gateway-wirecard' ),
 				'label'   => __( 'Descriptor', 'woocommerce-gateway-wirecard' ),
 				'default' => 'no',
 			),
 			'send_additional'     => array(
 				'title'   => __( 'Enable/Disable', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'checkbox',
+				'description' => __( 'Additional data will be sent for the purpose of fraud protection. This additional data includes billing / shipping address, shopping basket and descriptor.', 'woocommerce-gateway-wirecard' ),
 				'label'   => __( 'Send additional information', 'woocommerce-gateway-wirecard' ),
 				'default' => 'yes',
 			),
