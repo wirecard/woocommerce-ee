@@ -1,9 +1,39 @@
+/**
+ * Shop System Plugins - Terms of Use
+ *
+ * The plugins offered are provided free of charge by Wirecard AG and are explicitly not part
+ * of the Wirecard AG range of products and services.
+ *
+ * They have been tested and approved for full functionality in the standard configuration
+ * (status on delivery) of the corresponding shop system. They are under General Public
+ * License version 3 (GPLv3) and can be used, developed and passed on to third parties under
+ * the same terms.
+ *
+ * However, Wirecard AG does not provide any guarantee or accept any liability for any errors
+ * occurring when used in an enhanced, customized shop system configuration.
+ *
+ * Operation in an enhanced, customized configuration is at your own risk and requires a
+ * comprehensive test phase by the user of the plugin.
+ *
+ * Customers use the plugins at their own risk. Wirecard AG does not guarantee their full
+ * functionality neither does Wirecard AG assume liability for any disadvantages related to
+ * the use of the plugins. Additionally, Wirecard AG does not guarantee the full functionality
+ * for customized shop systems or installed plugins of other vendors of plugins within the same
+ * shop system.
+ *
+ * Customers are responsible for testing the plugin's functionality before starting productive
+ * operation.
+ *
+ * By installing the plugin into the shop system the customer agrees to these terms of use.
+ * Please do not use the plugin if you do not agree to these terms of use!
+ */
+
 var token              = null;
-var checkout_form      = jQuery( 'form.checkout' );
+var checkout_form      = null;
 var processing         = false;
 $                      = jQuery;
-var saved_credit_cards = $( '#wc_payment_method_wirecard_creditcard_vault' );
-var new_credit_card    = $( '#wc_payment_method_wirecard_new_credit_card' );
+var saved_credit_cards = null;
+var new_credit_card    = null;
 
 /**
  * Add token to submit form
@@ -82,6 +112,9 @@ function deleteCard( id ) {
 
 $( document ).ready(
 	function() {
+		checkout_form      = $( 'form.checkout' );
+		saved_credit_cards = $( '#wc_payment_method_wirecard_creditcard_vault' );
+		new_credit_card    = $( '#wc_payment_method_wirecard_new_credit_card' );
 		saved_credit_cards.hide();
 		$( '.show-spinner' ).show();
 
@@ -109,8 +142,8 @@ $( document ).ready(
 			'click', function () {
 				saved_credit_cards.slideToggle();
 				new_credit_card.slideUp();
-				$( '#open-new-card' ).find( 'span' ).removeClass( 'dashicons-arrow-up' ).addClass( 'dashicons-arrow-down' );
-				$( this ).find( 'span' ).toggleClass( 'dashicons-arrow-down' ).toggleClass( 'dashicons-arrow-up' );
+				$( 'span', '#open-new-card' ).removeClass( 'dashicons-arrow-up' ).addClass( 'dashicons-arrow-down' );
+				$( 'span', $( this ) ).toggleClass( 'dashicons-arrow-down' ).toggleClass( 'dashicons-arrow-up' );
 			}
 		);
 
@@ -124,9 +157,9 @@ $( document ).ready(
 				token = null;
 				new_credit_card.slideToggle();
 				saved_credit_cards.slideUp();
-				saved_credit_cards.find( 'input' ).prop( 'checked', false );
-				$( '#open-vault-popup' ).find( 'span' ).removeClass( 'dashicons-arrow-up' ).addClass( 'dashicons-arrow-down' );
-				$( this ).find( 'span' ).toggleClass( 'dashicons-arrow-down' ).toggleClass( 'dashicons-arrow-up' );
+				$( 'input', saved_credit_cards ).prop( 'checked', false );
+				$( 'span', '#open-vault-popup' ).removeClass( 'dashicons-arrow-up' ).addClass( 'dashicons-arrow-down' );
+				$( 'span', $( this ) ).toggleClass( 'dashicons-arrow-down' ).toggleClass( 'dashicons-arrow-up' );
 			}
 		);
 
