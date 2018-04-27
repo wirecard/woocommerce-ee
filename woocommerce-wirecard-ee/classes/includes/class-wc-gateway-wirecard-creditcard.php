@@ -305,9 +305,9 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
             
 HTML;
 		if ( $this->get_option( 'cc_vault_enabled' ) == 'yes' && $this->has_cc_in_vault() ) {
-			$html .= '<div id="open-vault-popup"><span class="dashicons dashicons-arrow-down"></span>' . __( 'Use saved Credit Cards', 'woocommerce-gateway-wirecard' ) . '</div>
-            <div id="wc_payment_method_wirecard_creditcard_vault"></div><br>
-            <div id="open-new-card"><span class="dashicons dashicons-arrow-up"></span>' . __( 'Use new Credit Card', 'woocommerce-gateway-wirecard' ) . '</div>
+			$html .= '<div id="open-vault-popup"><span class="dashicons dashicons-arrow-up"></span>' . __( 'Use saved Credit Cards', 'woocommerce-gateway-wirecard' ) . '</div>
+            <div id="wc_payment_method_wirecard_creditcard_vault"><div class="show-spinner"><div class="spinner"></div></div><div class="cards"></div></div><br>
+            <div id="open-new-card"><span class="dashicons dashicons-arrow-down"></span>' . __( 'Use new Credit Card', 'woocommerce-gateway-wirecard' ) . '</div>
             <div id="wc_payment_method_wirecard_new_credit_card">';
 		}
 
