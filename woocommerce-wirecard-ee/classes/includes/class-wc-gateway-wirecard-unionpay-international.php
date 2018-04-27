@@ -92,11 +92,11 @@ class WC_Gateway_Wirecard_Unionpay_International extends WC_Wirecard_Payment_Gat
 	public function init_form_fields() {
 		$this->form_fields = array(
 			'enabled'             => array(
-				'title'   => __( 'Enable/Disable', 'woocommerce-gateway-wirecard' ),
-				'type'    => 'checkbox',
+				'title'       => __( 'Enable/Disable', 'woocommerce-gateway-wirecard' ),
+				'type'        => 'checkbox',
 				'description' => __( 'Activate payment method Unionpay International', 'woocommerce-gateway-wirecard' ),
-				'label'   => __( 'Enable Wirecard Unionpay International', 'woocommerce-gateway-wirecard' ),
-				'default' => 'no',
+				'label'       => __( 'Enable Wirecard Unionpay International', 'woocommerce-gateway-wirecard' ),
+				'default'     => 'no',
 			),
 			'title'               => array(
 				'title'       => __( 'Title', 'woocommerce-gateway-wirecard' ),
@@ -105,16 +105,16 @@ class WC_Gateway_Wirecard_Unionpay_International extends WC_Wirecard_Payment_Gat
 				'default'     => __( 'Wirecard Unionpay International', 'woocommerce-gateway-wirecard' ),
 			),
 			'merchant_account_id' => array(
-				'title'   => __( 'Merchant Account ID', 'woocommerce-gateway-wirecard' ),
-				'type'    => 'text',
+				'title'       => __( 'Merchant Account ID', 'woocommerce-gateway-wirecard' ),
+				'type'        => 'text',
 				'description' => __( 'The unique identifier assigned for your Merchant Account.', 'woocommerce-gateway-wirecard' ),
-				'default' => 'c6e9331c-5c1f-4fc6-8a08-ef65ce09ddb0',
+				'default'     => 'c6e9331c-5c1f-4fc6-8a08-ef65ce09ddb0',
 			),
 			'secret'              => array(
-				'title'   => __( 'Secret Key', 'woocommerce-gateway-wirecard' ),
-				'type'    => 'text',
+				'title'       => __( 'Secret Key', 'woocommerce-gateway-wirecard' ),
+				'type'        => 'text',
 				'description' => __( 'Secret key is mandatory to calculate the Digital Signature for the payment.', 'woocommerce-gateway-wirecard' ),
-				'default' => '16d85b73-79e2-4c33-932a-7da99fb04a9c',
+				'default'     => '16d85b73-79e2-4c33-932a-7da99fb04a9c',
 			),
 			'credentials'         => array(
 				'title'       => __( 'Credentials', 'woocommerce-gateway-wirecard' ),
@@ -128,16 +128,16 @@ class WC_Gateway_Wirecard_Unionpay_International extends WC_Wirecard_Payment_Gat
 				'default'     => 'https://api-test.wirecard.com',
 			),
 			'http_user'           => array(
-				'title'   => __( 'HTTP User', 'woocommerce-gateway-wirecard' ),
-				'type'    => 'text',
+				'title'       => __( 'HTTP User', 'woocommerce-gateway-wirecard' ),
+				'type'        => 'text',
 				'description' => __( 'The http user provided in your Wirecard contract', 'woocommerce-gateway-wirecard' ),
-				'default' => '70000-APILUHN-CARD',
+				'default'     => '70000-APILUHN-CARD',
 			),
 			'http_pass'           => array(
-				'title'   => __( 'HTTP Password', 'woocommerce-gateway-wirecard' ),
-				'type'    => 'text',
+				'title'       => __( 'HTTP Password', 'woocommerce-gateway-wirecard' ),
+				'type'        => 'text',
 				'description' => __( 'The http password provided in your Wirecard contract', 'woocommerce-gateway-wirecard' ),
-				'default' => '8mhwavKVb91T',
+				'default'     => '8mhwavKVb91T',
 			),
 			'test_button'         => array(
 				'title'   => __( 'Test configuration', 'woocommerce-gateway-wirecard' ),
@@ -151,29 +151,29 @@ class WC_Gateway_Wirecard_Unionpay_International extends WC_Wirecard_Payment_Gat
 				'description' => '',
 			),
 			'payment_action'      => array(
-				'title'   => __( 'Payment Action', 'woocommerce-gateway-wirecard' ),
-				'type'    => 'select',
+				'title'       => __( 'Payment Action', 'woocommerce-gateway-wirecard' ),
+				'type'        => 'select',
 				'description' => __( 'Select between "Capture" to capture / invoice your order automatically or "Authorization" to manually capture / invoice. ', 'woocommerce-gateway-wirecard' ),
-				'default' => 'Capture',
-				'label'   => __( 'Payment Action', 'woocommerce-gateway-wirecard' ),
-				'options' => array(
+				'default'     => 'Capture',
+				'label'       => __( 'Payment Action', 'woocommerce-gateway-wirecard' ),
+				'options'     => array(
 					'reserve' => 'Authorization',
 					'pay'     => 'Capture',
 				),
 			),
 			'descriptor'          => array(
-				'title'   => __( 'Enable/Disable', 'woocommerce-gateway-wirecard' ),
-				'type'    => 'checkbox',
+				'title'       => __( 'Enable/Disable', 'woocommerce-gateway-wirecard' ),
+				'type'        => 'checkbox',
 				'description' => __( 'Send text which is displayed on the bank statement issued to your consumer by the financial service provider', 'woocommerce-gateway-wirecard' ),
-				'label'   => __( 'Descriptor', 'woocommerce-gateway-wirecard' ),
-				'default' => 'no',
+				'label'       => __( 'Descriptor', 'woocommerce-gateway-wirecard' ),
+				'default'     => 'no',
 			),
 			'send_additional'     => array(
-				'title'   => __( 'Enable/Disable', 'woocommerce-gateway-wirecard' ),
-				'type'    => 'checkbox',
+				'title'       => __( 'Enable/Disable', 'woocommerce-gateway-wirecard' ),
+				'type'        => 'checkbox',
 				'description' => __( 'Additional data will be sent for the purpose of fraud protection. This additional data includes billing / shipping address, shopping basket and descriptor.', 'woocommerce-gateway-wirecard' ),
-				'label'   => __( 'Send additional information', 'woocommerce-gateway-wirecard' ),
-				'default' => 'yes',
+				'label'       => __( 'Send additional information', 'woocommerce-gateway-wirecard' ),
+				'default'     => 'yes',
 			),
 		);
 	}
