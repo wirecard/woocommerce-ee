@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wirecard Payment Processing Gateway\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-18 11:27+0000\n"
+"POT-Creation-Date: 2018-04-27 06:42+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -785,4 +785,18 @@ msgstr ""
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:427
 msgid "You need to be older then 18 to order."
+msgstr ""
+
+msgid "Your e-mail address:"
+msgstr ""
+
+msgid "Your message:"
+msgstr ""
+
+msgid ""
+"Sorry, but this plugin requires WooCommerce Plugin to be installed and "
+"active."
+msgstr ""
+
+msgid "Go to Plugins"
 msgstr ""
