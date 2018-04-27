@@ -33,7 +33,7 @@ $( document ).ready(
 	function () {
 			var button = $( '.wc_wirecard_test_credentials_button' );
 
-			button.removeClass( 'regular-input' );
+			button.removeClass( 'regular-input' ).val( test_credentials_button );
 			button.on(
 				'click', function () {
 					var base_id = $( this ).attr( 'id' ).replace( '_test_button', '' );

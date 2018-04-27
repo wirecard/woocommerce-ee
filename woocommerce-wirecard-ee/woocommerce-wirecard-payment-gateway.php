@@ -3,7 +3,7 @@
  * Plugin Name: Wirecard Payment Processing Gateway
  * Plugin URI: https://github.com/wirecard/woocommerce-ee
  * Description: Wirecard Payment Processing Gateway Plugin for WooCommerce
- * Version: 1.0.0
+ * Version: 1.1.0
  * Author: Wirecard
  * Author URI: https://www.wirecard.com/
  * License: GPL3
@@ -42,13 +42,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+define( 'WOOCOMMERCE_GATEWAY_WIRECARD_NAME', 'Wirecard Payment Processing Gateway' );
+define( 'WOOCOMMERCE_GATEWAY_WIRECARD_VERSION', '1.1.0' );
 define( 'WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR', plugin_dir_path( __FILE__ ) );
 define( 'WOOCOMMERCE_GATEWAY_WIRECARD_URL', plugin_dir_url( __FILE__ ) );
 
 register_activation_hook( __FILE__, 'install_wirecard_payment_gateway' );
 
 add_action( 'plugins_loaded', 'init_wirecard_payment_gateway' );
-add_action( 'admin_menu', 'wirecard_gateway_options_page' );
 
 /**
  * Initialize payment gateway
@@ -57,6 +58,9 @@ add_action( 'admin_menu', 'wirecard_gateway_options_page' );
  */
 function init_wirecard_payment_gateway() {
 	if ( ! class_exists( 'WC_PAYMENT_GATEWAY' ) ) {
+		global $error;
+		$error = new WP_Error( 'woocommerce', 'To use Wirecard Payment Processing Gateway you need to install and activate the WooCommerce' );
+		echo '<div class="error notice"><p>' . $error->get_error_message() . '</p></div>';
 		return;
 	}
 
@@ -76,6 +80,7 @@ function init_wirecard_payment_gateway() {
 	add_filter( 'woocommerce_payment_gateways', 'add_wirecard_payment_gateway', 0 );
 	add_filter( 'wc_order_statuses', 'wirecard_wc_order_statuses' );
 	add_action( 'woocommerce_settings_checkout', 'add_support_chat', 0 );
+	add_action( 'admin_menu', 'wirecard_gateway_options_page' );
 
 	register_post_status(
 		'wc-authorization',
@@ -155,10 +160,12 @@ function wirecard_wc_order_statuses( $order_statuses ) {
  * @since 1.0.0
  */
 function install_wirecard_payment_gateway() {
+	check_if_woo_installed();
 	global $wpdb;
 
-	$table_name = $wpdb->base_prefix . 'wirecard_payment_gateway_tx';
-	$collate    = '';
+	$table_name       = $wpdb->base_prefix . 'wirecard_payment_gateway_tx';
+	$vault_table_name = $wpdb->base_prefix . 'wirecard_payment_gateway_vault';
+	$collate          = '';
 	if ( $wpdb->has_cap( 'collation' ) ) {
 		$collate = $wpdb->get_charset_collate();
 	}
@@ -184,6 +191,15 @@ function install_wirecard_payment_gateway() {
 
 	require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 	dbDelta( $sql );
+
+	$sql2 = "CREATE TABLE IF NOT EXISTS {$vault_table_name} (
+ 		vault_id int(10) unsigned NOT NULL auto_increment,
+ 		user_id int(10) NOT NULL,
+ 		token varchar(20) NOT NULL UNIQUE,
+ 		masked_pan varchar(30) NOT NULL,
+ 		PRIMARY KEY (vault_id)
+ 		)$collate;";
+	dbDelta( $sql2 );
 }
 
 /**
@@ -227,23 +243,57 @@ function wirecard_gateway_options_page() {
 		'refundpayment',
 		array( $admin, 'refund_transaction' )
 	);
+	add_submenu_page(
+		'wirecardpayment',
+		'Wirecard Payment Gateway Support',
+		'Wirecard Payment Gateway Support',
+		'manage_options',
+		'wirecardsupport',
+		array( $admin, 'wirecard_payment_gateway_support' )
+	);
+	add_submenu_page(
+		null,
+		'Wirecard Payment Gateway Support',
+		'Wirecard Payment Gateway Support',
+		'manage_options',
+		'wirecardsendsupport',
+		array( $admin, 'send_email_to_support' )
+	);
+}
 
-	/**
-	 * Add support chat script
-	 *
-	 * @since 1.1.0
-	 */
-	function add_support_chat() {
-		$admin_url = add_query_arg(
-			[ 'wc-api' => 'test_payment_method_config' ],
-			site_url( '/', is_ssl() ? 'https' : 'http' )
-		);
-		echo '<script
-                type="text/javascript" 
-				id="936f87cd4ce16e1e60bea40b45b0596a"
-			    src="http://www.provusgroup.com/livezilla/script.php?id=936f87cd4ce16e1e60bea40b45b0596a">
+/**
+ * Add support chat script
+ *
+ * @since 1.1.0
+ */
+function add_support_chat() {
+	$admin_url = add_query_arg(
+		[ 'wc-api' => 'test_payment_method_config' ],
+		site_url( '/', is_ssl() ? 'https' : 'http' )
+	);
+	echo '
+		<script
+            type="text/javascript"
+			id="936f87cd4ce16e1e60bea40b45b0596a"
+		    src="http://www.provusgroup.com/livezilla/script.php?id=936f87cd4ce16e1e60bea40b45b0596a">
         </script>
-        <script>var admin_url = "' . $admin_url . '"</script>
-        <script type="application/javascript" src="' . WOOCOMMERCE_GATEWAY_WIRECARD_URL . 'assets\js\admin.js"></script>';
+	    <script>
+	        var admin_url = "' . $admin_url . '";
+	        var test_credentials_button = "' . __( 'Test', 'woocommerce-gateway-wirecard' ) . '";
+	    </script>
+	    <script type="application/javascript" src="' . WOOCOMMERCE_GATEWAY_WIRECARD_URL . 'assets\js\admin.js"></script>';
+}
+
+/**
+ * Check if the woocommerce plugin is installed else display error
+ *
+ * @since 1.1.0
+ */
+function check_if_woo_installed() {
+	if ( ! in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
+		wp_die(
+			__( 'Sorry, but this plugin requires WooCommerce Plugin to be installed and active.', 'woocommerce-gateway-wirecard' ) .
+			'<br><a href="' . admin_url( 'plugins.php' ) . '">' . __( 'Go to Plugins', 'woocommerce-gateway-wirecard' ) . '</a>'
+		);
 	}
 }
