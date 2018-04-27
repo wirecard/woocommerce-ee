@@ -142,9 +142,7 @@ $( document ).ready(
 			'click', function () {
 				saved_credit_cards.slideToggle();
 				new_credit_card.slideUp();
-				//$( '#open-new-card' ).find( 'span' ).removeClass( 'dashicons-arrow-up' ).addClass( 'dashicons-arrow-down' );
 				$( 'span', '#open-new-card' ).removeClass( 'dashicons-arrow-up' ).addClass( 'dashicons-arrow-down' );
-				//$( this ).find( 'span' ).toggleClass( 'dashicons-arrow-down' ).toggleClass( 'dashicons-arrow-up' );
 				$( 'span', $( this ) ).toggleClass( 'dashicons-arrow-down' ).toggleClass( 'dashicons-arrow-up' );
 			}
 		);
@@ -159,11 +157,8 @@ $( document ).ready(
 				token = null;
 				new_credit_card.slideToggle();
 				saved_credit_cards.slideUp();
-				//saved_credit_cards.find( 'input' ).prop( 'checked', false );
 				$( 'input', saved_credit_cards ).prop( 'checked', false );
-				//$( '#open-vault-popup' ).find( 'span' ).removeClass( 'dashicons-arrow-up' ).addClass( 'dashicons-arrow-down' );
 				$( 'span', '#open-vault-popup' ).removeClass( 'dashicons-arrow-up' ).addClass( 'dashicons-arrow-down' );
-				//$( this ).find( 'span' ).toggleClass( 'dashicons-arrow-down' ).toggleClass( 'dashicons-arrow-up' );
 				$( 'span', $( this ) ).toggleClass( 'dashicons-arrow-down' ).toggleClass( 'dashicons-arrow-up' );
 			}
 		);
