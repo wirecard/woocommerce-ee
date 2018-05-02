@@ -29,49 +29,49 @@
  * Please do not use the plugin if you do not agree to these terms of use!
  */
 
-require_once __DIR__ . '/../../../../classes/includes/class-wc-gateway-wirecard-creditcard.php';
+require_once __DIR__ . '/../../../../classes/includes/class-wc-gateway-wirecard-unionpay-international.php';
 
-class WC_Gateway_Wirecard_Creditcard_Utest extends \PHPUnit_Framework_TestCase {
+class WC_Gateway_Wirecard_Unionpay_International_Utest extends \PHPUnit_Framework_TestCase {
 
-	/** @var WC_Gateway_Wirecard_Creditcard */
-	private $credit_card;
+	/** @var WC_Gateway_Wirecard_Unionpay_International */
+	private $payment;
 
 	public function setUp() {
-		$this->credit_card = new WC_Gateway_Wirecard_Creditcard();
-		$_POST['tokenId'] = 'test';
+		$this->payment = new WC_Gateway_Wirecard_Unionpay_International();
 	}
 
 	public function test_init_form_fields() {
-		$this->credit_card->init_form_fields();
-		$this->assertTrue( is_array( $this->credit_card->form_fields ) );
+		$this->payment->init_form_fields();
+		$this->assertTrue( is_array( $this->payment->form_fields ) );
 	}
 
 	public function test_process_payment() {
-		$this->assertTrue( is_array( $this->credit_card->process_payment( 12 ) ) );
-	}
+		$_POST['tokenId'] = 'token';
 
-	public function test_process_cancel() {
-		$expected = new \Wirecard\PaymentSdk\Transaction\CreditCardTransaction();
-		$expected->setParentTransactionId( 'transaction_id' );
-		$expected->setAmount( new \Wirecard\PaymentSdk\Entity\Amount( 50, 'EUR' ) );
-		$this->assertEquals( $expected, $this->credit_card->process_cancel( 12, 50 ) );
-	}
-
-	public function test_process_capture() {
-		$expected = new \Wirecard\PaymentSdk\Transaction\CreditCardTransaction();
-		$expected->setParentTransactionId( 'transaction_id' );
-		$expected->setAmount( new \Wirecard\PaymentSdk\Entity\Amount( 50, 'EUR' ) );
-		$this->assertEquals( $expected, $this->credit_card->process_capture( 12, 50 ) );
+		$this->assertTrue( is_array( $this->payment->process_payment( 12 ) ) );
 	}
 
 	public function test_process_refund() {
-		$expected = new \Wirecard\PaymentSdk\Transaction\CreditCardTransaction();
+		$this->assertNotNull( $this->payment->process_refund( 12 ) );
+	}
+
+	public function test_process_cancel() {
+		$expected = new \Wirecard\PaymentSdk\Transaction\UpiTransaction();
 		$expected->setParentTransactionId( 'transaction_id' );
-		$expected->setAmount( new \Wirecard\PaymentSdk\Entity\Amount( 50, 'EUR' ) );
-		$this->assertNotNull( $this->credit_card->process_refund( 12, 50 ) );
+		$expected->setAmount( new \Wirecard\PaymentSdk\Entity\Amount( 20, 'EUR' ) );
+
+		$this->assertEquals( $expected, $this->payment->process_cancel( 12, 20 ) );
+	}
+
+	public function test_process_capture() {
+		$expected = new \Wirecard\PaymentSdk\Transaction\UpiTransaction();
+		$expected->setParentTransactionId( 'transaction_id' );
+		$expected->setAmount( new \Wirecard\PaymentSdk\Entity\Amount( 20, 'EUR' ) );
+
+		$this->assertEquals( $expected, $this->payment->process_capture( 12, 20 ) );
 	}
 
 	public function test_payment_fields() {
-		$this->assertTrue( $this->credit_card->payment_fields() );
+		$this->assertTrue( $this->payment->payment_fields() );
 	}
 }
