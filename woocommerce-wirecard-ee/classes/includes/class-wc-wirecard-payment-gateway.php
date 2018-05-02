@@ -676,9 +676,9 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	private function get_shop_version() {
 		global $wp_version;
 
-		$shop = 'WordPress';
-		$shop .= 'V' . $wp_version;
-		$woocommerce = '-WooCommerce';
+		$shop         = 'WordPress';
+		$shop        .= 'V' . $wp_version;
+		$woocommerce  = '-WooCommerce';
 		$woocommerce .= 'V' . WC()->version;
 
 		return $shop . $woocommerce;
