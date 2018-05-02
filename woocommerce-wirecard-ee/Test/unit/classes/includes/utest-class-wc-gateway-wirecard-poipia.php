@@ -29,65 +29,31 @@
  * Please do not use the plugin if you do not agree to these terms of use!
  */
 
-class WC_Order {
+require_once __DIR__ . '/../../../../classes/includes/class-wc-gateway-wirecard-poipia.php';
 
-	function get_id() {
-		return 12;
+class WC_Gateway_Wirecard_Poipia_Utest extends \PHPUnit_Framework_TestCase {
+
+	/** @var WC_Gateway_Wirecard_Poipia */
+	private $payment;
+
+	public function setUp() {
+		$this->payment = new WC_Gateway_Wirecard_Poipia();
 	}
 
-	function get_total() {
-		return 20.56;
+	public function test_init_form_fields() {
+		$this->payment->init_form_fields();
+		$this->assertTrue( is_array( $this->payment->form_fields ) );
 	}
 
-	function get_currency() {
-		return 'EUR';
+	public function test_process_payment() {
+		$this->assertTrue( is_array( $this->payment->process_payment( 12 ) ) );
 	}
 
-	function get_transaction_id() {
-		return 'transaction_id';
-	}
+	public function test_process_cancel() {
+		$expected = new \Wirecard\PaymentSdk\Transaction\PoiPiaTransaction();
+		$expected->setParentTransactionId( 'transaction_id' );
+		$expected->setAmount( new \Wirecard\PaymentSdk\Entity\Amount( 20, 'EUR' ) );
 
-	function is_paid() {
-		return true;
-	}
-
-	function get_order_number() {
-		return 12;
-	}
-
-	function get_billing_country() {
-		return 'EUR';
-	}
-
-	function get_billing_city() {
-		return 'City';
-	}
-
-	function get_billing_address_1() {
-		return true;
-	}
-
-	function get_billing_address_2() {
-		return false;
-	}
-
-	function get_billing_postcode() {
-		return '1234';
-	}
-
-	function get_billing_email() {
-		return 'test@email.com';
-	}
-
-	function get_billing_first_name() {
-		return 'name';
-	}
-
-	function get_billing_last_name() {
-		return 'last';
-	}
-
-	function get_billing_phone() {
-		return '123123123';
+		$this->assertEquals( $expected, $this->payment->process_cancel( 12, 20 ) );
 	}
 }

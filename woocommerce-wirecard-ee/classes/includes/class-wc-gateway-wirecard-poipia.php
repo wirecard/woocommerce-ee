@@ -268,5 +268,4 @@ class WC_Gateway_Wirecard_Poipia extends WC_Wirecard_Payment_Gateway {
 			echo $result;
 		}
 	}
-
 }
