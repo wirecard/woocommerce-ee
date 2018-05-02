@@ -34,45 +34,43 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/includes/class-wc-wirecard-payment-gateway.php' );
-require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-sepa.php' );
 
 use Wirecard\PaymentSdk\Config\Config;
 use Wirecard\PaymentSdk\Config\PaymentMethodConfig;
-use Wirecard\PaymentSdk\Transaction\IdealTransaction;
-use Wirecard\PaymentSdk\Transaction\SepaTransaction;
-use Wirecard\PaymentSdk\Entity\IdealBic;
+use Wirecard\PaymentSdk\Transaction\MasterpassTransaction;
+use Wirecard\PaymentSdk\Entity\Amount;
 
 /**
- * Class WC_Gateway_Wirecard_Ideal
+ * Class WC_Gateway_Wirecard_Masterpass
  *
  * @extends WC_Wirecard_Payment_Gateway
  *
  * @since   1.1.0
  */
-class WC_Gateway_Wirecard_Ideal extends WC_Wirecard_Payment_Gateway {
+class WC_Gateway_Wirecard_Masterpass extends WC_Wirecard_Payment_Gateway {
 
 	/**
-	 * WC_Gateway_Wirecard_Ideal constructor.
+	 * WC_Gateway_Wirecard_Masterpass constructor.
 	 *
 	 * @since 1.1.0
 	 */
 	public function __construct() {
-		$this->type               = 'ideal';
-		$this->id                 = 'wirecard_ee_ideal';
-		$this->icon               = WOOCOMMERCE_GATEWAY_WIRECARD_URL . 'assets/images/ideal.png';
-		$this->method_title       = __( 'Wirecard iDEAL', 'wooocommerce-gateway-wirecard' );
-		$this->method_name        = __( 'iDEAL', 'wooocommerce-gateway-wirecard' );
-		$this->method_description = __( 'iDEAL transactions via Wirecard Payment Processing Gateway', 'woocommerce-gateway-wirecard' );
-		$this->has_fields         = true;
+		$this->type               = 'masterpass';
+		$this->id                 = 'wirecard_ee_masterpass';
+		$this->icon               = WOOCOMMERCE_GATEWAY_WIRECARD_URL . 'assets/images/masterpass.png';
+		$this->method_title       = __( 'Wirecard Masterpass', 'wooocommerce-gateway-wirecard' );
+		$this->method_name        = __( 'Masterpass', 'wooocommerce-gateway-wirecard' );
+		$this->method_description = __( 'Masterpass transactions via Wirecard Payment Processing Gateway', 'woocommerce-gateway-wirecard' );
 
 		$this->supports = array(
 			'products',
 			'refunds',
 		);
 
-		$this->refund         = array( 'debit' );
-		$this->payment_action = 'pay';
-		$this->refund_action  = 'credit';
+		$this->cancel        = array( 'authorization' );
+		$this->capture       = array( 'authorization' );
+		$this->refund        = array( 'capture-authorization' );
+		$this->refund_action = 'cancel';
 
 		$this->init_form_fields();
 		$this->init_settings();
@@ -97,27 +95,27 @@ class WC_Gateway_Wirecard_Ideal extends WC_Wirecard_Payment_Gateway {
 			'enabled'             => array(
 				'title'       => __( 'Enable/Disable', 'woocommerce-gateway-wirecard' ),
 				'type'        => 'checkbox',
-				'description' => __( 'Activate payment method iDEAL', 'woocommerce-gateway-wirecard' ),
-				'label'       => __( 'Enable Wirecard iDEAL', 'woocommerce-gateway-wirecard' ),
+				'label'       => __( 'Enable Wirecard Masterpass', 'woocommerce-gateway-wirecard' ),
+				'description' => __( 'Activate payment method Masterpass', 'woocommerce-gateway-wirecard' ),
 				'default'     => 'no',
 			),
 			'title'               => array(
 				'title'       => __( 'Title', 'woocommerce-gateway-wirecard' ),
 				'type'        => 'text',
 				'description' => __( 'This controls the title which the consumer sees during checkout.', 'woocommerce-gateway-wirecard' ),
-				'default'     => __( 'Wirecard iDEAL', 'woocommerce-gateway-wirecard' ),
+				'default'     => __( 'Wirecard Masterpass', 'woocommerce-gateway-wirecard' ),
 			),
 			'merchant_account_id' => array(
 				'title'       => __( 'Merchant Account ID', 'woocommerce-gateway-wirecard' ),
 				'type'        => 'text',
 				'description' => __( 'The unique identifier assigned for your Merchant Account.', 'woocommerce-gateway-wirecard' ),
-				'default'     => 'b4ca14c0-bb9a-434d-8ce3-65fbff2c2267',
+				'default'     => '8bc8ed6d-81a8-43be-bd7b-75b008f89fa6',
 			),
 			'secret'              => array(
 				'title'       => __( 'Secret Key', 'woocommerce-gateway-wirecard' ),
 				'type'        => 'text',
 				'description' => __( 'Secret key is mandatory to calculate the Digital Signature for the payment.', 'woocommerce-gateway-wirecard' ),
-				'default'     => 'dbc5a498-9a66-43b9-bf1d-a618dd399684',
+				'default'     => '2d96596b-9d10-4c98-ac47-4d56e22fd878',
 			),
 			'credentials'         => array(
 				'title'       => __( 'Credentials', 'woocommerce-gateway-wirecard' ),
@@ -127,9 +125,8 @@ class WC_Gateway_Wirecard_Ideal extends WC_Wirecard_Payment_Gateway {
 			'base_url'            => array(
 				'title'       => __( 'Base URL', 'woocommerce-gateway-wirecard' ),
 				'type'        => 'text',
-				'description' => __( 'The Wirecard base URL. (e.g. https://api.wirecard.com)', 'woocommerce-gateway-wirecard' ),
+				'description' => __( 'The Wirecard base URL. (e.g. https://api.wirecard.com)', 'woocomerce-gateway-wirecard' ),
 				'default'     => 'https://api-test.wirecard.com',
-				'desc_tip'    => true,
 			),
 			'http_user'           => array(
 				'title'       => __( 'HTTP User', 'woocommerce-gateway-wirecard' ),
@@ -154,6 +151,17 @@ class WC_Gateway_Wirecard_Ideal extends WC_Wirecard_Payment_Gateway {
 				'type'        => 'title',
 				'description' => '',
 			),
+			'payment_action'      => array(
+				'title'       => __( 'Payment Action', 'woocommerce-gateway-wirecard' ),
+				'type'        => 'select',
+				'description' => __( 'Select between "Capture" to capture / invoice your order automatically or "Authorization" to manually capture / invoice. ', 'woocommerce-gateway-wirecard' ),
+				'default'     => 'Capture',
+				'label'       => __( 'Payment Action', 'woocommerce-gateway-wirecard' ),
+				'options'     => array(
+					'reserve' => 'Authorization',
+					'pay'     => 'Capture',
+				),
+			),
 			'descriptor'          => array(
 				'title'       => __( 'Enable/Disable', 'woocommerce-gateway-wirecard' ),
 				'type'        => 'checkbox',
@@ -172,20 +180,6 @@ class WC_Gateway_Wirecard_Ideal extends WC_Wirecard_Payment_Gateway {
 	}
 
 	/**
-	 * Add payment fields to payment method
-	 *
-	 * @since 1.1.0
-	 */
-	public function payment_fields() {
-		$html = '<select name="ideal_bank_bic">';
-		foreach ( $this->get_ideal_bic()['banks'] as $bank ) {
-			$html .= '<option value="' . $bank['key'] . '">' . $bank['label'] . '</option>';
-		}
-		$html .= '</select>';
-		echo $html;
-	}
-
-	/**
 	 * Process payment gateway transactions
 	 *
 	 * @param int $order_id
@@ -195,32 +189,19 @@ class WC_Gateway_Wirecard_Ideal extends WC_Wirecard_Payment_Gateway {
 	 * @since 1.1.0
 	 */
 	public function process_payment( $order_id ) {
-		/** @var WC_Order $order */
 		$order = wc_get_order( $order_id );
 
-		$this->transaction = new IdealTransaction();
+		$this->payment_action = $this->get_option( 'payment_action' );
+		$this->transaction    = new MasterpassTransaction();
 		parent::process_payment( $order_id );
-		$this->transaction->setBic( $_POST['ideal_bank_bic'] );
+		$this->transaction->setAccountHolder(
+			$this->additional_helper->create_account_holder(
+				$order,
+				'billing'
+			)
+		);
 
 		return $this->execute_transaction( $this->transaction, $this->config, $this->payment_action, $order );
-	}
-
-	/**
-	 * Create transaction for refund
-	 *
-	 * @param int        $order_id
-	 * @param float|null $amount
-	 * @param string     $reason
-	 *
-	 * @return bool|SepaTransaction|WP_Error
-	 *
-	 * @since 1.1.0
-	 * @throws Exception
-	 */
-	public function process_refund( $order_id, $amount = null, $reason = '' ) {
-		$sepa_payment = new WC_Gateway_Wirecard_Sepa();
-
-		return $sepa_payment->process_refund( $order_id, $amount, $reason );
 	}
 
 	/**
@@ -229,7 +210,7 @@ class WC_Gateway_Wirecard_Ideal extends WC_Wirecard_Payment_Gateway {
 	 * @param null $base_url
 	 * @param null $http_user
 	 * @param null $http_pass
-	 *
+	 * @since 1.1.0
 	 * @return Config
 	 */
 	public function create_payment_config( $base_url = null, $http_user = null, $http_pass = null ) {
@@ -240,62 +221,71 @@ class WC_Gateway_Wirecard_Ideal extends WC_Wirecard_Payment_Gateway {
 		}
 
 		$config         = parent::create_payment_config( $base_url, $http_user, $http_pass );
-		$payment_config = new PaymentMethodConfig( IdealTransaction::NAME, $this->get_option( 'merchant_account_id' ), $this->get_option( 'secret' ) );
+		$payment_config = new PaymentMethodConfig( MasterpassTransaction::NAME, $this->get_option( 'merchant_account_id' ), $this->get_option( 'secret' ) );
 		$config->add( $payment_config );
 
 		return $config;
 	}
 
 	/**
-	 * Returns all supported banks from iDEAL
+	 * Create transaction for cancel
 	 *
-	 * @return array
+	 * @param int        $order_id
+	 * @param float|null $amount
+	 *
+	 * @return MasterpassTransaction
+	 *
 	 * @since 1.1.0
 	 */
-	public function get_ideal_bic() {
-		return array(
-			'banks' => array(
-				array(
-					'key'   => IdealBic::ABNANL2A,
-					'label' => 'ABN Amro Bank',
-				),
-				array(
-					'key'   => IdealBic::ASNBNL21,
-					'label' => 'ASN Bank',
-				),
-				array(
-					'key'   => IdealBic::BUNQNL2A,
-					'label' => 'bunq',
-				),
-				array(
-					'key'   => IdealBic::INGBNL2A,
-					'label' => 'ING',
-				),
-				array(
-					'key'   => IdealBic::KNABNL2H,
-					'label' => 'Knab',
-				),
-				array(
-					'key'   => IdealBic::RABONL2U,
-					'label' => 'Rabobank',
-				),
-				array(
-					'key'   => IdealBic::RGGINL21,
-					'label' => 'Regio Bank',
-				),
-				array(
-					'key'   => IdealBic::SNSBNL2A,
-					'label' => 'SNS Bank',
-				),
-				array(
-					'key'   => IdealBic::TRIONL2U,
-					'label' => 'Triodos Bank',
-				),
-				array(
-					'key'   => IdealBic::FVLBNL22,
-					'label' => 'Van Lanschot Bankiers',
-				),
-			),
-		);
+	public function process_cancel( $order_id, $amount = null ) {
+		$order = wc_get_order( $order_id );
+
+		$transaction = new MasterpassTransaction();
+		$transaction->setParentTransactionId( $order->get_transaction_id() );
+		if ( ! is_null( $amount ) ) {
+			$transaction->setAmount( new Amount( $amount, $order->get_currency() ) );
+		}
+
+		return $transaction;
+	}
+
+	/**
+	 * Create transaction for capture
+	 *
+	 * @param int        $order_id
+	 * @param float|null $amount
+	 *
+	 * @return MasterpassTransaction
+	 *
+	 * @since 1.1.0
+	 */
+	public function process_capture( $order_id, $amount = null ) {
+		$order = wc_get_order( $order_id );
+
+		$transaction = new MasterpassTransaction();
+		$transaction->setParentTransactionId( $order->get_transaction_id() );
+		if ( ! is_null( $amount ) ) {
+			$transaction->setAmount( new Amount( $amount, $order->get_currency() ) );
+		}
+
+		return $transaction;
+	}
+
+	/**
+	 * Create transaction for refund
+	 *
+	 * @param int        $order_id
+	 * @param float|null $amount
+	 * @param string     $reason
+	 *
+	 * @return bool|MasterpassTransaction|WP_Error
+	 *
+	 * @since 1.1.0
+	 * @throws Exception
+	 */
+	public function process_refund( $order_id, $amount = null, $reason = '' ) {
+		$this->transaction = new MasterpassTransaction();
+
+		return parent::process_refund( $order_id, $amount, '' );
 	}
 }

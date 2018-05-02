@@ -29,40 +29,35 @@
  * Please do not use the plugin if you do not agree to these terms of use!
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
-
-require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/includes/class-wc-wirecard-payment-gateway.php' );
-require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-sepa.php' );
+require_once __DIR__ . '/class-wc-wirecard-payment-gateway.php';
 
 use Wirecard\PaymentSdk\Config\Config;
 use Wirecard\PaymentSdk\Config\PaymentMethodConfig;
-use Wirecard\PaymentSdk\Transaction\IdealTransaction;
-use Wirecard\PaymentSdk\Transaction\SepaTransaction;
-use Wirecard\PaymentSdk\Entity\IdealBic;
+use Wirecard\PaymentSdk\Entity\Amount;
+use Wirecard\PaymentSdk\Transaction\UpiTransaction;
+use Wirecard\PaymentSdk\TransactionService;
 
 /**
- * Class WC_Gateway_Wirecard_Ideal
+ * Class WC_Gateway_Wirecard_Unionpay_International
  *
  * @extends WC_Wirecard_Payment_Gateway
  *
  * @since   1.1.0
  */
-class WC_Gateway_Wirecard_Ideal extends WC_Wirecard_Payment_Gateway {
+class WC_Gateway_Wirecard_Unionpay_International extends WC_Wirecard_Payment_Gateway {
 
 	/**
-	 * WC_Gateway_Wirecard_Ideal constructor.
+	 * WC_Gateway_Wirecard_Unionpay_International constructor.
 	 *
 	 * @since 1.1.0
 	 */
 	public function __construct() {
-		$this->type               = 'ideal';
-		$this->id                 = 'wirecard_ee_ideal';
-		$this->icon               = WOOCOMMERCE_GATEWAY_WIRECARD_URL . 'assets/images/ideal.png';
-		$this->method_title       = __( 'Wirecard iDEAL', 'wooocommerce-gateway-wirecard' );
-		$this->method_name        = __( 'iDEAL', 'wooocommerce-gateway-wirecard' );
-		$this->method_description = __( 'iDEAL transactions via Wirecard Payment Processing Gateway', 'woocommerce-gateway-wirecard' );
+		$this->type               = 'unionpayinternational';
+		$this->id                 = 'wirecard_ee_unionpayinternational';
+		$this->icon               = WOOCOMMERCE_GATEWAY_WIRECARD_URL . 'assets/images/unionpayinternational.png';
+		$this->method_title       = __( 'Wirecard Unionpay International', 'wooocommerce-gateway-wirecard' );
+		$this->method_name        = __( 'Unionpay International', 'wooocommerce-gateway-wirecard' );
+		$this->method_description = __( 'Unionpay International transactions via Wirecard Payment Processing Gateway', 'woocommerce-gateway-wirecard' );
 		$this->has_fields         = true;
 
 		$this->supports = array(
@@ -70,9 +65,10 @@ class WC_Gateway_Wirecard_Ideal extends WC_Wirecard_Payment_Gateway {
 			'refunds',
 		);
 
-		$this->refund         = array( 'debit' );
-		$this->payment_action = 'pay';
-		$this->refund_action  = 'credit';
+		$this->cancel        = array( 'authorization' );
+		$this->capture       = array( 'authorization' );
+		$this->refund        = array( 'purchase', 'capture-authorization' );
+		$this->refund_action = 'cancel';
 
 		$this->init_form_fields();
 		$this->init_settings();
@@ -83,6 +79,7 @@ class WC_Gateway_Wirecard_Ideal extends WC_Wirecard_Payment_Gateway {
 		$this->additional_helper = new Additional_Information();
 
 		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
+		add_action( 'woocommerce_api_get_upi_request_data', array( $this, 'get_request_data_upi' ) );
 
 		parent::add_payment_gateway_actions();
 	}
@@ -97,27 +94,27 @@ class WC_Gateway_Wirecard_Ideal extends WC_Wirecard_Payment_Gateway {
 			'enabled'             => array(
 				'title'       => __( 'Enable/Disable', 'woocommerce-gateway-wirecard' ),
 				'type'        => 'checkbox',
-				'description' => __( 'Activate payment method iDEAL', 'woocommerce-gateway-wirecard' ),
-				'label'       => __( 'Enable Wirecard iDEAL', 'woocommerce-gateway-wirecard' ),
+				'description' => __( 'Activate payment method Unionpay International', 'woocommerce-gateway-wirecard' ),
+				'label'       => __( 'Enable Wirecard Unionpay International', 'woocommerce-gateway-wirecard' ),
 				'default'     => 'no',
 			),
 			'title'               => array(
 				'title'       => __( 'Title', 'woocommerce-gateway-wirecard' ),
 				'type'        => 'text',
 				'description' => __( 'This controls the title which the consumer sees during checkout.', 'woocommerce-gateway-wirecard' ),
-				'default'     => __( 'Wirecard iDEAL', 'woocommerce-gateway-wirecard' ),
+				'default'     => __( 'Wirecard Unionpay International', 'woocommerce-gateway-wirecard' ),
 			),
 			'merchant_account_id' => array(
 				'title'       => __( 'Merchant Account ID', 'woocommerce-gateway-wirecard' ),
 				'type'        => 'text',
 				'description' => __( 'The unique identifier assigned for your Merchant Account.', 'woocommerce-gateway-wirecard' ),
-				'default'     => 'b4ca14c0-bb9a-434d-8ce3-65fbff2c2267',
+				'default'     => 'c6e9331c-5c1f-4fc6-8a08-ef65ce09ddb0',
 			),
 			'secret'              => array(
 				'title'       => __( 'Secret Key', 'woocommerce-gateway-wirecard' ),
 				'type'        => 'text',
 				'description' => __( 'Secret key is mandatory to calculate the Digital Signature for the payment.', 'woocommerce-gateway-wirecard' ),
-				'default'     => 'dbc5a498-9a66-43b9-bf1d-a618dd399684',
+				'default'     => '16d85b73-79e2-4c33-932a-7da99fb04a9c',
 			),
 			'credentials'         => array(
 				'title'       => __( 'Credentials', 'woocommerce-gateway-wirecard' ),
@@ -127,21 +124,20 @@ class WC_Gateway_Wirecard_Ideal extends WC_Wirecard_Payment_Gateway {
 			'base_url'            => array(
 				'title'       => __( 'Base URL', 'woocommerce-gateway-wirecard' ),
 				'type'        => 'text',
-				'description' => __( 'The Wirecard base URL. (e.g. https://api.wirecard.com)', 'woocommerce-gateway-wirecard' ),
+				'description' => __( 'The Wirecard base URL. (e.g. https://api.wirecard.com)', 'woocomerce-gateway-wirecard' ),
 				'default'     => 'https://api-test.wirecard.com',
-				'desc_tip'    => true,
 			),
 			'http_user'           => array(
 				'title'       => __( 'HTTP User', 'woocommerce-gateway-wirecard' ),
 				'type'        => 'text',
 				'description' => __( 'The http user provided in your Wirecard contract', 'woocommerce-gateway-wirecard' ),
-				'default'     => '70000-APITEST-AP',
+				'default'     => '70000-APILUHN-CARD',
 			),
 			'http_pass'           => array(
 				'title'       => __( 'HTTP Password', 'woocommerce-gateway-wirecard' ),
 				'type'        => 'text',
 				'description' => __( 'The http password provided in your Wirecard contract', 'woocommerce-gateway-wirecard' ),
-				'default'     => 'qD2wzQ_hrc!8',
+				'default'     => '8mhwavKVb91T',
 			),
 			'test_button'         => array(
 				'title'   => __( 'Test configuration', 'woocommerce-gateway-wirecard' ),
@@ -153,6 +149,17 @@ class WC_Gateway_Wirecard_Ideal extends WC_Wirecard_Payment_Gateway {
 				'title'       => __( 'Advanced Options', 'woocommerce-gateway-wirecard' ),
 				'type'        => 'title',
 				'description' => '',
+			),
+			'payment_action'      => array(
+				'title'       => __( 'Payment Action', 'woocommerce-gateway-wirecard' ),
+				'type'        => 'select',
+				'description' => __( 'Select between "Capture" to capture / invoice your order automatically or "Authorization" to manually capture / invoice. ', 'woocommerce-gateway-wirecard' ),
+				'default'     => 'Capture',
+				'label'       => __( 'Payment Action', 'woocommerce-gateway-wirecard' ),
+				'options'     => array(
+					'reserve' => 'Authorization',
+					'pay'     => 'Capture',
+				),
 			),
 			'descriptor'          => array(
 				'title'       => __( 'Enable/Disable', 'woocommerce-gateway-wirecard' ),
@@ -177,12 +184,35 @@ class WC_Gateway_Wirecard_Ideal extends WC_Wirecard_Payment_Gateway {
 	 * @since 1.1.0
 	 */
 	public function payment_fields() {
-		$html = '<select name="ideal_bank_bic">';
-		foreach ( $this->get_ideal_bic()['banks'] as $bank ) {
-			$html .= '<option value="' . $bank['key'] . '">' . $bank['label'] . '</option>';
-		}
-		$html .= '</select>';
+		$base_url    = $this->get_option( 'base_url' );
+		$gateway_url = WOOCOMMERCE_GATEWAY_WIRECARD_URL;
+		$page_url    = add_query_arg(
+			[ 'wc-api' => 'get_upi_request_data' ],
+			site_url( '/', is_ssl() ? 'https' : 'http' )
+		);
+
+		$html = <<<HTML
+			<script src='$base_url/engine/hpp/paymentPageLoader.js' type='text/javascript'></script>
+            <script type='application/javascript' src='$gateway_url/assets/js/unionpayinternational.js'></script>
+            <script>
+                var ajax_url_upi = "$page_url";
+            </script>
+            <div id='wc_payment_method_wirecard_unionpayinternational_form'></div>
+HTML;
+
 		echo $html;
+	}
+
+	/**
+	 * Return request data for the unionpay international form
+	 *
+	 * @since 1.1.0
+	 */
+	public function get_request_data_upi() {
+		$config              = $this->create_payment_config();
+		$transaction_service = new TransactionService( $config );
+		wp_send_json_success( $transaction_service->getDataForUpiUi() );
+		die();
 	}
 
 	/**
@@ -195,14 +225,62 @@ class WC_Gateway_Wirecard_Ideal extends WC_Wirecard_Payment_Gateway {
 	 * @since 1.1.0
 	 */
 	public function process_payment( $order_id ) {
-		/** @var WC_Order $order */
 		$order = wc_get_order( $order_id );
 
-		$this->transaction = new IdealTransaction();
+		$this->payment_action = $this->get_option( 'payment_action' );
+		$token                = $_POST['tokenId'];
+
+		$this->transaction = new UpiTransaction();
 		parent::process_payment( $order_id );
-		$this->transaction->setBic( $_POST['ideal_bank_bic'] );
+
+		$this->transaction->setTokenId( $token );
+		$this->transaction->setTermUrl( $this->create_redirect_url( $order, 'success', $this->type ) );
 
 		return $this->execute_transaction( $this->transaction, $this->config, $this->payment_action, $order );
+	}
+
+	/**
+	 * Create transaction for cancel
+	 *
+	 * @param int        $order_id
+	 * @param float|null $amount
+	 *
+	 * @return UpiTransaction
+	 *
+	 * @since 1.1.0
+	 */
+	public function process_cancel( $order_id, $amount = null ) {
+		$order = wc_get_order( $order_id );
+
+		$transaction = new UpiTransaction();
+		$transaction->setParentTransactionId( $order->get_transaction_id() );
+		if ( ! is_null( $amount ) ) {
+			$transaction->setAmount( new Amount( $amount, $order->get_currency() ) );
+		}
+
+		return $transaction;
+	}
+
+	/**
+	 * Create transaction for capture
+	 *
+	 * @param int        $order_id
+	 * @param float|null $amount
+	 *
+	 * @return UpiTransaction
+	 *
+	 * @since 1.0.0
+	 */
+	public function process_capture( $order_id, $amount = null ) {
+		$order = wc_get_order( $order_id );
+
+		$transaction = new UpiTransaction();
+		$transaction->setParentTransactionId( $order->get_transaction_id() );
+		if ( ! is_null( $amount ) ) {
+			$transaction->setAmount( new Amount( $amount, $order->get_currency() ) );
+		}
+
+		return $transaction;
 	}
 
 	/**
@@ -212,25 +290,23 @@ class WC_Gateway_Wirecard_Ideal extends WC_Wirecard_Payment_Gateway {
 	 * @param float|null $amount
 	 * @param string     $reason
 	 *
-	 * @return bool|SepaTransaction|WP_Error
+	 * @return bool|UpiTransaction|WP_Error
 	 *
 	 * @since 1.1.0
 	 * @throws Exception
 	 */
 	public function process_refund( $order_id, $amount = null, $reason = '' ) {
-		$sepa_payment = new WC_Gateway_Wirecard_Sepa();
+		$this->transaction = new UpiTransaction();
 
-		return $sepa_payment->process_refund( $order_id, $amount, $reason );
+		return parent::process_refund( $order_id, $amount, '' );
 	}
 
 	/**
-	 * Create payment method configuration
-	 *
-	 * @param null $base_url
-	 * @param null $http_user
-	 * @param null $http_pass
+	 * Create payment method Configuration
 	 *
 	 * @return Config
+	 *
+	 * @since 1.1.0
 	 */
 	public function create_payment_config( $base_url = null, $http_user = null, $http_pass = null ) {
 		if ( is_null( $base_url ) ) {
@@ -240,62 +316,24 @@ class WC_Gateway_Wirecard_Ideal extends WC_Wirecard_Payment_Gateway {
 		}
 
 		$config         = parent::create_payment_config( $base_url, $http_user, $http_pass );
-		$payment_config = new PaymentMethodConfig( IdealTransaction::NAME, $this->get_option( 'merchant_account_id' ), $this->get_option( 'secret' ) );
+		$payment_config = new PaymentMethodConfig(
+			UpiTransaction::NAME,
+			$this->get_option( 'merchant_account_id' ),
+			$this->get_option( 'secret' )
+		);
+
 		$config->add( $payment_config );
 
 		return $config;
 	}
 
 	/**
-	 * Returns all supported banks from iDEAL
+	 * Submit a form with the data from the response
 	 *
-	 * @return array
 	 * @since 1.1.0
 	 */
-	public function get_ideal_bic() {
-		return array(
-			'banks' => array(
-				array(
-					'key'   => IdealBic::ABNANL2A,
-					'label' => 'ABN Amro Bank',
-				),
-				array(
-					'key'   => IdealBic::ASNBNL21,
-					'label' => 'ASN Bank',
-				),
-				array(
-					'key'   => IdealBic::BUNQNL2A,
-					'label' => 'bunq',
-				),
-				array(
-					'key'   => IdealBic::INGBNL2A,
-					'label' => 'ING',
-				),
-				array(
-					'key'   => IdealBic::KNABNL2H,
-					'label' => 'Knab',
-				),
-				array(
-					'key'   => IdealBic::RABONL2U,
-					'label' => 'Rabobank',
-				),
-				array(
-					'key'   => IdealBic::RGGINL21,
-					'label' => 'Regio Bank',
-				),
-				array(
-					'key'   => IdealBic::SNSBNL2A,
-					'label' => 'SNS Bank',
-				),
-				array(
-					'key'   => IdealBic::TRIONL2U,
-					'label' => 'Triodos Bank',
-				),
-				array(
-					'key'   => IdealBic::FVLBNL22,
-					'label' => 'Van Lanschot Bankiers',
-				),
-			),
-		);
+	public function callback() {
+		$callback = new Wirecard_Callback();
+		$callback->post_upi_form();
 	}
 }

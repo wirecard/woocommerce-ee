@@ -95,6 +95,7 @@ class Wirecard_Settings {
 			<img src="<?php echo plugins_url( 'woocommerce-wirecard-ee/assets/images/wirecard-logo.png' ); ?>">
 			<br/>
 			<br/>
+			<a class="button-primary" href="?page=wirecardsupport">Support</a>
 			<table class="wp-list-table widefat fixed striped posts">
 				<?php
 				$pages = $this->transaction_factory->get_rows( $start );
@@ -202,6 +203,96 @@ class Wirecard_Settings {
 			$this->transaction_factory->handle_refund( $_REQUEST['id'] );
 		} else {
 			$this->show_dashboard();
+		}
+	}
+
+	/**
+	 * Display the support form
+	 *
+	 * @since 1.1.0
+	 */
+	public function wirecard_payment_gateway_support() {
+		?>
+		<div class="wrap">
+			<hr class="wp-header-end">
+			<img src="<?php echo plugins_url( 'woocommerce-wirecard-ee/assets/images/wirecard-logo.png' ); ?>">
+			<br/>
+			<br/>
+			<form>
+				<input type="hidden" name="page" value="wirecardsendsupport" />
+				<table class="form-table">
+					<tr class="top">
+						<th class="titledesc">
+							<label for="email_to"><?php echo __( 'Your e-mail address', 'woocommerce-gateway-wirecard' ); ?>:</label>
+						</th>
+						<td class="forminp forminp-text">
+							<input id="email_to" type="email" name="email" style="width: 300px; max-width: 100%;"/>
+						</td>
+					</tr>
+					<tr class="top">
+						<th class="titledesc">
+							<label for="support_message"><?php echo __( 'Your message', 'woocommerce-gateway-wirecard' ); ?>:</label>
+						</th>
+						<td class="forminp forminp-text">
+							<textarea id="support_message" name="message" rows="12" style="width: 300px; max-width: 100%;"></textarea>
+						</td>
+					</tr>
+				</table>
+				<a class="button-primary" href="?page=wirecardpayment">Back</a>
+				<input type="submit" class="button-primary" value="<?php echo __( 'Submit', 'woocommerce-gateway-wirecard' ); ?>" />
+			</form>
+		</div>
+		<?php
+	}
+
+	/**
+	 * Send email to Wirecard support
+	 *
+	 * @since 1.1.0
+	 */
+	public function send_email_to_support() {
+		global $wp_version;
+		global $wpdb;
+
+		$plugin[] = array();
+		foreach ( get_plugins() as $module ) {
+			$plugin[ $module['Name'] ]['name']    = $module['Name'];
+			$plugin[ $module['Name'] ]['version'] = $module['Version'];
+		}
+
+		$info = array(
+			'wordpress_version'   => $wp_version,
+			'woocommerce_version' => WC()->version,
+			'php_version'         => phpversion(),
+			'plugin_name'         => WOOCOMMERCE_GATEWAY_WIRECARD_NAME,
+			'plugin_version'      => WOOCOMMERCE_GATEWAY_WIRECARD_VERSION,
+		);
+
+		$merchant_message = strip_tags( $_REQUEST['message'] );
+		$config           = array();
+		$payment_configs  = $wpdb->get_results( "SELECT option_value FROM wp_options WHERE option_name LIKE '%woocommerce_wirecard_ee%' " );
+		foreach ( $payment_configs as $payment_config ) {
+			$config[] = unserialize( $payment_config->option_value );
+		}
+
+		$email_content = print_r(
+			array(
+				'message' => $merchant_message,
+				'info'    => print_r( $info, true ),
+				'config'  => print_r( $config, true ),
+				'modules' => print_r( $plugin, true ),
+			), true
+		);
+
+		if ( $_REQUEST['email'] && wp_mail(
+			'shop-systems-support@wirecard.com',
+			'WooCommerce support request',
+			$email_content,
+			$_REQUEST['email']
+		) ) {
+			echo __( 'E-Mail sent successfully', 'woocommerce-gateway-wirecard' );
+		} else {
+			echo __( 'There was an error during e-mail delivery', 'woocommerce-gateway-wirecard' );
 		}
 	}
 }

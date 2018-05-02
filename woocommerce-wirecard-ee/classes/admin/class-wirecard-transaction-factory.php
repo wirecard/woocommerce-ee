@@ -95,14 +95,14 @@ class Wirecard_Transaction_Factory {
 			'parent_transaction_id' => array(
 				'title' => __( 'Parent transaction ID', 'woocommerce-gateway-wirecard' ),
 			),
+			'transaction_type'      => array(
+				'title' => __( 'Action', 'woocommerce-gateway-wirecard' ),
+			),
 			'payment_method'        => array(
 				'title' => __( 'Payment method', 'woocommerce-gateway-wirecard' ),
 			),
 			'transaction_state'     => array(
 				'title' => __( 'Transaction state', 'woocommerce-gateway-wirecard' ),
-			),
-			'transaction_type'      => array(
-				'title' => __( 'Action', 'woocommerce-gateway-wirecard' ),
 			),
 			'amount'                => array(
 				'title' => __( 'Amount', 'woocommerce-gateway-wirecard' ),
@@ -123,12 +123,13 @@ class Wirecard_Transaction_Factory {
 	 * @param SuccessResponse $response
 	 * @param string          $base_url
 	 * @param string          $transaction_state
+	 * @param string          $payment_method
 	 *
 	 * @return int
 	 *
 	 * @since 1.0.0
 	 */
-	public function create_transaction( $order, $response, $base_url, $transaction_state ) {
+	public function create_transaction( $order, $response, $base_url, $transaction_state, $payment_method ) {
 		global $wpdb;
 
 		$parent_transaction_id = '';
@@ -155,7 +156,7 @@ class Wirecard_Transaction_Factory {
 			$wpdb->update(
 				$this->table_name,
 				$this->set_transaction_parameters(
-					$response, $parent_transaction_id, $transaction_state, $order,
+					$response, $parent_transaction_id, $payment_method, $transaction_state, $order,
 					$transaction_link
 				),
 				array(
@@ -166,7 +167,7 @@ class Wirecard_Transaction_Factory {
 			$wpdb->insert(
 				$this->table_name,
 				$this->set_transaction_parameters(
-					$response, $parent_transaction_id, $transaction_state, $order,
+					$response, $parent_transaction_id, $payment_method, $transaction_state, $order,
 					$transaction_link
 				)
 			);
@@ -418,9 +419,11 @@ class Wirecard_Transaction_Factory {
 	 *
 	 * @param SuccessResponse $response
 	 * @param string          $parent_transaction_id
+	 * @param string          $payment_method
 	 * @param string          $transaction_state
 	 * @param WC_Order        $order
 	 * @param string          $transaction_link
+	 *
 	 * @return array
 	 *
 	 * @since 1.1.0
@@ -428,6 +431,7 @@ class Wirecard_Transaction_Factory {
 	private function set_transaction_parameters(
 		$response,
 		$parent_transaction_id,
+		$payment_method,
 		$transaction_state,
 		$order,
 		$transaction_link
@@ -435,7 +439,7 @@ class Wirecard_Transaction_Factory {
 		return array(
 			'transaction_id'        => $response->getTransactionId(),
 			'parent_transaction_id' => $parent_transaction_id,
-			'payment_method'        => $response->getPaymentMethod(),
+			'payment_method'        => $payment_method,
 			'transaction_state'     => $transaction_state,
 			'transaction_type'      => $response->getTransactionType(),
 			'amount'                => $order->get_total(),

@@ -169,6 +169,13 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 				'callback',
 			)
 		);
+		add_action(
+			'woocommerce_api_test_payment_method_config',
+			array(
+				$this,
+				'test_payment_config',
+			)
+		);
 	}
 
 	/**
@@ -235,11 +242,17 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 		$notification         = file_get_contents( 'php://input' );
 		$notification_handler = new Wirecard_Notification_Handler();
 		try {
-			/** @var Response $response */
+			/** @var SuccessResponse $response */
 			$response = $notification_handler->handle_notification( $payment_method, $notification );
 			if ( $response ) {
+				if ( 'masterpass' == $response->getPaymentMethod() && (
+						\Wirecard\PaymentSdk\Transaction\Transaction::TYPE_DEBIT == $response->getTransactionType() ||
+						\Wirecard\PaymentSdk\Transaction\Transaction::TYPE_AUTHORIZATION == $response->getTransactionType() ) ) {
+					return;
+				}
+
 				$this->save_response_data( $order, $response );
-				$this->update_payment_transaction( $order, $response, 'success' );
+				$this->update_payment_transaction( $order, $response, 'success', $payment_method );
 				$order = $this->update_order_state( $order, $response->getTransactionType() );
 			}
 		} catch ( Exception $exception ) {
@@ -387,7 +400,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 			return new WP_Error( 'error', __( 'Processing refund failed.', 'woocommerce-gateway-wirecard' ) );
 		}
 		if ( $response instanceof SuccessResponse ) {
-			$this->update_payment_transaction( $order, $response, 'awaiting' );
+			$this->update_payment_transaction( $order, $response, 'awaiting', $transaction::NAME );
 			$order->set_transaction_id( $response->getTransactionId() );
 
 			return '/admin.php?page=wirecardpayment&id=' . $response->getTransactionId();
@@ -437,15 +450,16 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 * @param WC_Order        $order
 	 * @param SuccessResponse $response
 	 * @param string          $transaction_state
+	 * @param string          $payment_method
 	 *
 	 * @since 1.0.0
 	 * @throws Exception
 	 */
-	public function update_payment_transaction( $order, $response, $transaction_state ) {
+	public function update_payment_transaction( $order, $response, $transaction_state, $payment_method ) {
 		$order->set_transaction_id( $response->getTransactionId() );
 		//create table entry
 		$transaction_factory = new Wirecard_Transaction_Factory();
-		$result              = $transaction_factory->create_transaction( $order, $response, $this->get_option( 'base_url' ), $transaction_state );
+		$result              = $transaction_factory->create_transaction( $order, $response, $this->get_option( 'base_url' ), $transaction_state, $payment_method );
 		if ( ! $result ) {
 			$logger = new WC_Logger();
 			$logger->debug( __METHOD__ . 'Transaction could not be saved in transaction table' );
@@ -476,6 +490,8 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 			case 'refund-debit':
 			case 'refund-purchase':
 			case 'credit':
+			case 'void-capture':
+			case 'void-purchase':
 				$state = 'refunded';
 				break;
 			case 'authorization':
@@ -577,7 +593,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 		}
 
 		if ( $this->get_option( 'send_additional' ) == 'yes' ) {
-			$this->transaction = $this->additional_helper->set_additional_information( $order, $this->transaction );
+			$this->transaction = $this->additional_helper->set_additional_information( $order, $this->transaction, $order->get_total() );
 		}
 	}
 
@@ -626,5 +642,21 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 			return true;
 		}
 		return false;
+	}
+
+	public function test_payment_config() {
+		$base_url  = $_POST['base_url'];
+		$http_user = $_POST['http_user'];
+		$http_pass = $_POST['http_pass'];
+
+		$test_config         = new Config( $base_url, $http_user, $http_pass );
+		$transaction_service = new TransactionService( $test_config, new Logger() );
+
+		if ( $transaction_service->checkCredentials() ) {
+			wp_send_json_success( __( 'The merchant configuration was successfully tested.', 'woocommerce-gateway-wirecard' ) );
+		} else {
+			wp_send_json_error( __( 'Test failed, please check your credentials.', 'woocommerce-gateway-wirecard' ) );
+		}
+		die();
 	}
 }
