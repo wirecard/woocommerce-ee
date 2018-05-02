@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wirecard Payment Processing Gateway\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-27 07:45+0000\n"
-"PO-Revision-Date: 2018-05-02 06:41+0000\n"
+"POT-Creation-Date: 2018-05-02 09:03+0000\n"
+"PO-Revision-Date: 2018-05-02 09:07+0000\n"
 "Last-Translator: admin <admin@admin.at>\n"
 "Language-Team: Deutsch\n"
 "Language: de_DE\n"
@@ -146,7 +146,7 @@ msgstr ""
 
 #: classes/admin/class-wirecard-transaction-factory.php:281
 msgid " payment"
-msgstr ""
+msgstr "Zahlungsmittel"
 
 #: classes/admin/class-wirecard-transaction-factory.php:299
 msgid "No Back-end operations available for this transaction"
@@ -162,7 +162,7 @@ msgstr ""
 
 #: classes/admin/class-wirecard-transaction-factory.php:307
 msgid "Wirecard Payment Gateway"
-msgstr ""
+msgstr "Wirecard Payment Gateway"
 
 #: classes/admin/class-wirecard-transaction-factory.php:311
 msgid "Response data:"
@@ -589,7 +589,7 @@ msgstr ""
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:212
 msgid "Enable Recurring Payment"
-msgstr "Wiederkehrende Kreditkartenzahlung aktivieren"
+msgstr "One-click-checkout aktivieren"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:308
 msgid "Use saved Credit Cards"
@@ -601,7 +601,7 @@ msgstr "Neue Kreditkarte"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:319
 msgid "Save for later use."
-msgstr "Speichern für wiederkehrende Zahlung"
+msgstr "Speichern für One-click-checkout"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:65
 msgid "Guaranteed Invoice transactions via Wirecard Payment Processing Gateway"
@@ -643,8 +643,8 @@ msgid ""
 "billing country equals one of these chosen countries. \n"
 "\t\t\t\tPredefined the following countries are allowed: AT, DE."
 msgstr ""
-"Garantierter Kauf auf Rechnung wird im Zahlungsprozess angezeigt, wenn "
-"Rechnungsland des Konsumenten mit den ausgewählten Ländern übereinstimmt."
+"Garantierter Kauf auf Rechnung wird nur angezeigt, wenn eines der gewählten "
+"Länder als Rechnungsadresse gewählt wurde."
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:182
 msgid "Allowed shipping countries"
@@ -656,8 +656,8 @@ msgid ""
 "shipping country equals one of these chosen countries. \n"
 "\t\t\t\tPredefined the following countries are allowed: AT, DE."
 msgstr ""
-"Garantierter Kauf auf Rechnung wird im Zahlungsprozess angezeigt, wenn "
-"Versandland des Konsumenten mit den ausgewählten Ländern übereinstimmt."
+"Garantierter Kauf auf Rechnung wird nur angezeigt, wenn eines der gewählten "
+"Länder als Lieferadresse gewählt wurde."
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:194
 msgid "Allowed currencies"
@@ -948,15 +948,15 @@ msgstr "Der Refund via Wirecard Payment Processing Gateway ist fehlgeschlagen."
 msgid "Update order status via Wirecard Payment Processing Gateway."
 msgstr "Aktualisiere Bestellstatus via Wirecard Payment Processing Gateway."
 
-#: classes/includes/class-wc-wirecard-payment-gateway.php:614
+#: classes/includes/class-wc-wirecard-payment-gateway.php:615
 msgid "No online refund possible at this time."
 msgstr "Zur Zeit ist kein Online-Refund möglich."
 
-#: classes/includes/class-wc-wirecard-payment-gateway.php:656
+#: classes/includes/class-wc-wirecard-payment-gateway.php:662
 msgid "The merchant configuration was successfully tested."
 msgstr "Die Konfigurationseinstellungen wurden erfolgreich getestet."
 
-#: classes/includes/class-wc-wirecard-payment-gateway.php:658
+#: classes/includes/class-wc-wirecard-payment-gateway.php:664
 msgid "Test failed, please check your credentials."
 msgstr ""
 "Der Konfigurationstest ist fehlgeschlagen. Bitte überprüfen Sie Ihre "
@@ -964,7 +964,7 @@ msgstr ""
 
 #. Name of the plugin
 msgid "Wirecard Payment Processing Gateway"
-msgstr ""
+msgstr "Wirecard Payment Processing Gateway"
 
 #. Description of the plugin
 msgid "Wirecard Payment Processing Gateway Plugin for WooCommerce"
@@ -976,7 +976,7 @@ msgstr ""
 
 #. Author of the plugin
 msgid "Wirecard"
-msgstr ""
+msgstr "Wirecard"
 
 #. Author URI of the plugin
 msgid "https://www.wirecard.com/"
