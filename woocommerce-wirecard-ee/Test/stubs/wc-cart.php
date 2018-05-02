@@ -29,69 +29,39 @@
  * Please do not use the plugin if you do not agree to these terms of use!
  */
 
-global $wpdb;
-$wpdb = new stdClass();
-$wpdb->prefix = 'prefix_';
+class WC_Cart {
+	public $cart_contents;
 
-global $woocommerce;
-$woocommerce = new stdClass();
-
-function __( $text, $domain = 'default' ) {
-	return $text;
-}
-
-function add_action( $tag, $function_to_add, $priority = 10, $accepted_args = 1) {
-	return;
-}
-
-function wc_get_order() {
-	return new WC_Order();
-}
-
-function add_query_arg( $arguments ) {
-	$url = 'my-base-url.com';
-	foreach ($arguments as $key => $value) {
-		$url .= '&' . $key . '=' . $value;
+	public function __construct() {
+		$this->cart_contents = array(
+			'1' => array(
+				'data'      => new WC_Product(),
+				'quantity' => 1,
+			),
+		);
 	}
-	return $url;
-}
 
-function site_url() {
-	return;
-}
+	public function get_cart() {
+		return $this->cart_contents;
+	}
 
-function is_ssl() {
-	return false;
-}
+	public function get_shipping_total() {
+		return 5;
+	}
 
-function wc_add_notice( $message, $type ) {
+	public function get_shipping_tax() {
+		return 1;
+	}
 
-}
+	public function get_quantity() {
+		return 1;
+	}
 
-function get_bloginfo( ) {
-	return 'name';
-}
+	public function get_cart_from_session() {
+		return $this->cart_contents;
+	}
 
-function get_woocommerce_currencies() {
-	return array();
-}
-
-function wc_get_price_including_tax( $product ) {
-	return 20.0;
-}
-
-function wc_get_price_decimals() {
-	return 2;
-}
-
-function wc_get_price_excluding_tax( $product ) {
-	return 10.0;
-}
-
-function get_woocommerce_currency() {
-	return 'EUR';
-}
-
-function WC() {
-	return new WC();
+	public function get_total() {
+		return 50;
+	}
 }

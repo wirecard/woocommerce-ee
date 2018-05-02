@@ -90,4 +90,18 @@ class WC_Order {
 	function get_billing_phone() {
 		return '123123123';
 	}
+
+	function get_items() {
+		return array(
+			'1' =>  new WC_Product(),
+		);
+	}
+
+	function get_shipping_total() {
+		return 20.0;
+	}
+
+	function get_shipping_tax() {
+		return 2;
+	}
 }

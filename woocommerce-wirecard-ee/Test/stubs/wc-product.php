@@ -29,69 +29,32 @@
  * Please do not use the plugin if you do not agree to these terms of use!
  */
 
-global $wpdb;
-$wpdb = new stdClass();
-$wpdb->prefix = 'prefix_';
-
-global $woocommerce;
-$woocommerce = new stdClass();
-
-function __( $text, $domain = 'default' ) {
-	return $text;
-}
-
-function add_action( $tag, $function_to_add, $priority = 10, $accepted_args = 1) {
-	return;
-}
-
-function wc_get_order() {
-	return new WC_Order();
-}
-
-function add_query_arg( $arguments ) {
-	$url = 'my-base-url.com';
-	foreach ($arguments as $key => $value) {
-		$url .= '&' . $key . '=' . $value;
+class WC_Product {
+	public function get_id() {
+		return 1;
 	}
-	return $url;
-}
 
-function site_url() {
-	return;
-}
+	public function get_short_description() {
+		return 'short description';
+	}
 
-function is_ssl() {
-	return false;
-}
+	public function is_taxable() {
+		return false;
+	}
 
-function wc_add_notice( $message, $type ) {
+	public function get_name() {
+		return 'nemo';
+	}
 
-}
+	public function get_quantity() {
+		return 1;
+	}
 
-function get_bloginfo( ) {
-	return 'name';
-}
+	public function is_downloadable() {
+		return false;
+	}
 
-function get_woocommerce_currencies() {
-	return array();
-}
-
-function wc_get_price_including_tax( $product ) {
-	return 20.0;
-}
-
-function wc_get_price_decimals() {
-	return 2;
-}
-
-function wc_get_price_excluding_tax( $product ) {
-	return 10.0;
-}
-
-function get_woocommerce_currency() {
-	return 'EUR';
-}
-
-function WC() {
-	return new WC();
+	public function is_virtual() {
+		return false;
+	}
 }

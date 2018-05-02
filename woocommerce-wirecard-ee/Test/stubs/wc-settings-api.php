@@ -33,8 +33,22 @@ class WC_Settings_API {
 
 	public function get_option( $key, $empty_value = null ) {
 		$data = array(
-			'ssl_max_limit'     => 10,
-			'three_d_min_limit' => 20,
+			'ssl_max_limit'      => 10,
+			'three_d_min_limit'  => 20,
+			'enabled'            => 'yes',
+			'allowed_currencies' => array(
+				'EUR', 'USD',
+			),
+			'min_amount'         => 20,
+			'max_amount'         => 3000,
+			'shipping_countries' => array(
+				'Austria',
+				'Germany',
+			),
+			'billing_countries'  => array(
+				'Austria',
+				'Germany',
+			),
 		);
 
 		if ( isset( $data[$key] ) ) {

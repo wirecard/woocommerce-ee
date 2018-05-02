@@ -231,7 +231,7 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 	 *
 	 * @param int $order_id
 	 *
-	 * @return array
+	 * @return array|false
 	 *
 	 * @since 1.1.0
 	 */
