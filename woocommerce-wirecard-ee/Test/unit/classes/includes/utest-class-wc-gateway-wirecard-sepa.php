@@ -29,18 +29,15 @@
  * Please do not use the plugin if you do not agree to these terms of use!
  */
 
-require_once __DIR__ . '/../../../../classes/includes/class-wc-gateway-wirecard-ideal.php';
+require_once __DIR__ . '/../../../../classes/includes/class-wc-gateway-wirecard-sepa.php';
 
-use Wirecard\PaymentSdk\Entity\IdealBic;
+class WC_Gateway_Wirecard_Sepa_Utest extends \PHPUnit_Framework_TestCase {
 
-class WC_Gateway_Wirecard_Ideal_Utest extends \PHPUnit_Framework_TestCase {
-
-	/** @var WC_Gateway_Wirecard_Ideal */
+	/** @var WC_Gateway_Wirecard_Sepa */
 	private $payment;
 
 	public function setUp() {
-		$this->payment = new WC_Gateway_Wirecard_Ideal();
-		$_POST['ideal_bank_bic'] = IdealBic::INGBNL2A;
+		$this->payment = new WC_Gateway_Wirecard_Sepa();
 	}
 
 	public function test_init_form_fields() {
@@ -48,16 +45,36 @@ class WC_Gateway_Wirecard_Ideal_Utest extends \PHPUnit_Framework_TestCase {
 		$this->assertTrue( is_array( $this->payment->form_fields ) );
 	}
 
-	public function test_get_ideal_bic() {
-		$this->assertTrue( is_array( $this->payment->get_ideal_bic() ) );
+	public function test_process_payment_fail() {
+		$this->assertFalse( $this->payment->process_payment( 12 ) );
 	}
 
 	public function test_process_payment() {
-		$this->assertEquals( true, is_array( $this->payment->process_payment( 12 ) ) );
+		$_POST['sepa_firstname'] = 'firstname';
+		$_POST['sepa_lastname']  = 'lastname';
+		$_POST['sepa_iban']      = 'iban';
+
+		$this->assertTrue( is_array( $this->payment->process_payment( 12 ) ) );
 	}
 
 	public function test_process_refund() {
 		$this->assertNotNull( $this->payment->process_refund( 12 ) );
+	}
+
+	public function test_process_cancel() {
+		$expected = new \Wirecard\PaymentSdk\Transaction\SepaTransaction();
+		$expected->setParentTransactionId( 'transaction_id' );
+		$expected->setAmount( new \Wirecard\PaymentSdk\Entity\Amount( 20, 'EUR' ) );
+
+		$this->assertEquals( $expected, $this->payment->process_cancel( 12, 20 ) );
+	}
+
+	public function test_process_capture() {
+		$expected = new \Wirecard\PaymentSdk\Transaction\SepaTransaction();
+		$expected->setParentTransactionId( 'transaction_id' );
+		$expected->setAmount( new \Wirecard\PaymentSdk\Entity\Amount( 20, 'EUR' ) );
+
+		$this->assertEquals( $expected, $this->payment->process_capture( 12, 20 ) );
 	}
 
 	public function test_payment_fields() {

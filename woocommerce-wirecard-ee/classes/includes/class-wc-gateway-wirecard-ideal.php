@@ -183,6 +183,7 @@ class WC_Gateway_Wirecard_Ideal extends WC_Wirecard_Payment_Gateway {
 		}
 		$html .= '</select>';
 		echo $html;
+		return true;
 	}
 
 	/**
