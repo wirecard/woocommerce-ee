@@ -3,9 +3,9 @@ msgstr ""
 "Project-Id-Version: Wirecard Payment Processing Gateway\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-04-27 07:45+0000\n"
-"PO-Revision-Date: 2018-04-27 07:47+0000\n"
+"PO-Revision-Date: 2018-05-02 06:41+0000\n"
 "Last-Translator: admin <admin@admin.at>\n"
-"Language-Team: German\n"
+"Language-Team: Deutsch\n"
 "Language: de_DE\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
@@ -905,19 +905,19 @@ msgstr "Wirecard Sofort."
 msgid ""
 "Unionpay International transactions via Wirecard Payment Processing Gateway"
 msgstr ""
-"Unionpay International Transaktionen via Wirecard Payment Processing Gateway"
+"UnionPay International Transaktionen via Wirecard Payment Processing Gateway"
 
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:97
 msgid "Activate payment method Unionpay International"
-msgstr "Zahlungsmittel Unionpay International aktivieren."
+msgstr "Zahlungsmittel UnionPay International aktivieren."
 
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:98
 msgid "Enable Wirecard Unionpay International"
-msgstr "Wirecard Unionpay International aktivieren"
+msgstr "Wirecard UnionPay International aktivieren"
 
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:105
 msgid "Wirecard Unionpay International"
-msgstr "Wirecard Unionpay International"
+msgstr "Wirecard UnionPay International"
 
 #: classes/includes/class-wc-wirecard-payment-gateway.php:198
 msgid "You have canceled the payment process."

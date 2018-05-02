@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Wirecard Payment Processing Gateway\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-04-18 11:27+0000\n"
-"PO-Revision-Date: 2018-04-19 07:50+0000\n"
+"PO-Revision-Date: 2018-05-02 06:28+0000\n"
 "Last-Translator: admin <admin@admin.at>\n"
 "Language-Team: English (United States)\n"
 "Language: en_US\n"
@@ -268,7 +268,7 @@ msgstr "Enable Wirecard Sofort."
 
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:97
 msgid "Enable Wirecard Unionpay International"
-msgstr "Enable Wirecard Unionpay International"
+msgstr "Enable Wirecard UnionPay International"
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:94
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:148
@@ -757,7 +757,7 @@ msgstr "Transaction state"
 msgid ""
 "Unionpay International transactions via Wirecard Payment Processing Gateway"
 msgstr ""
-"Unionpay International transactions via Wirecard Payment Processing Gateway"
+"UnionPay International transactions via Wirecard Payment Processing Gateway"
 
 #: classes/includes/class-wc-wirecard-payment-gateway.php:486
 msgid "Update order status via Wirecard Payment Processing Gateway."
@@ -813,7 +813,7 @@ msgstr "Wirecard Sofort."
 
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:104
 msgid "Wirecard Unionpay International"
-msgstr "Wirecard Unionpay International"
+msgstr "Wirecard UnionPay International"
 
 #: classes/handler/class-wirecard-callback.php:59
 msgid "You are being redirected. Please wait"
