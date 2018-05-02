@@ -323,6 +323,7 @@ HTML;
 		}
 
 		echo $html;
+		return true;
 	}
 
 	/**

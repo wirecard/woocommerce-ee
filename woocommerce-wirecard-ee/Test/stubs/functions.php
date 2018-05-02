@@ -29,6 +29,10 @@
  * Please do not use the plugin if you do not agree to these terms of use!
  */
 
+global $wpdb;
+$wpdb = new stdClass();
+$wpdb->prefix = 'prefix_';
+
 function __( $text, $domain = 'default' ) {
 	return $text;
 }

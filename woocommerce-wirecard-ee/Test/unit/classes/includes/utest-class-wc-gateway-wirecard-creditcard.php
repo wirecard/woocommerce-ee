@@ -70,4 +70,8 @@ class WC_Gateway_Wirecard_Creditcard_Utest extends \PHPUnit_Framework_TestCase {
 		$expected->setAmount( new \Wirecard\PaymentSdk\Entity\Amount( 50, 'EUR' ) );
 		$this->assertNotNull( $this->credit_card->process_refund( 12, 50 ) );
 	}
+
+	public function test_payment_fields() {
+		$this->assertTrue( $this->credit_card->payment_fields() );
+	}
 }
