@@ -31,77 +31,109 @@
 
 class WC_Order {
 
-	function get_id() {
+	public function get_id() {
 		return 12;
 	}
 
-	function get_total() {
+	public function get_total() {
 		return 20.56;
 	}
 
-	function get_currency() {
+	public function get_currency() {
 		return 'EUR';
 	}
 
-	function get_transaction_id() {
+	public function get_transaction_id() {
 		return 'transaction_id';
 	}
 
-	function is_paid() {
+	public function is_paid() {
 		return true;
 	}
 
-	function get_order_number() {
+	public function get_order_number() {
 		return 12;
 	}
 
-	function get_billing_country() {
-		return 'EUR';
+	public function get_billing_country() {
+		return 'AUT';
 	}
 
-	function get_billing_city() {
+	public function get_billing_city() {
 		return 'City';
 	}
 
-	function get_billing_address_1() {
-		return true;
+	public function get_billing_address_1() {
+		return 'street1';
 	}
 
-	function get_billing_address_2() {
+	public function get_billing_address_2() {
 		return false;
 	}
 
-	function get_billing_postcode() {
+	public function get_billing_postcode() {
 		return '1234';
 	}
 
-	function get_billing_email() {
+	public function get_billing_email() {
 		return 'test@email.com';
 	}
 
-	function get_billing_first_name() {
-		return 'name';
+	public function get_billing_first_name() {
+		return 'first-name';
 	}
 
-	function get_billing_last_name() {
-		return 'last';
+	public function get_billing_last_name() {
+		return 'last-name';
 	}
 
-	function get_billing_phone() {
+	public function get_billing_phone() {
 		return '123123123';
 	}
 
-	function get_items() {
+	public function get_items() {
 		return array(
 			'1' =>  new WC_Product(),
 		);
 	}
 
-	function get_shipping_total() {
+	public function get_shipping_total() {
 		return 20.0;
 	}
 
-	function get_shipping_tax() {
+	public function get_shipping_tax() {
 		return 2;
+	}
+
+	public function get_shipping_country() {
+		return 'AUT';
+	}
+
+	public function get_shipping_city() {
+		return 'City';
+	}
+
+	public function get_shipping_address_1() {
+		return 'street1';
+	}
+
+	public function get_shipping_postcode() {
+		return '1234';
+	}
+
+	public function get_shipping_first_name() {
+		return 'first-name';
+	}
+
+	public function get_shipping_last_name() {
+		return 'last-name';
+	}
+
+	public function get_customer_ip_address() {
+		return '123.123.123';
+	}
+
+	public function get_customer_id() {
+		return 1;
 	}
 }
