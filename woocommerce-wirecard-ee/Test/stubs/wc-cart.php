@@ -35,8 +35,9 @@ class WC_Cart {
 	public function __construct() {
 		$this->cart_contents = array(
 			'1' => array(
-				'data'      => new WC_Product(),
-				'quantity' => 1,
+				'data'       => new WC_Product(),
+				'quantity'   => 1,
+				'product_id' => 1,
 			),
 		);
 	}
