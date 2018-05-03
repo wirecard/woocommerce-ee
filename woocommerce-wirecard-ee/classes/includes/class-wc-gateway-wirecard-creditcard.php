@@ -242,11 +242,16 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 			);
 		}
 
+		$woocommerce_currency = $this->get_option( 'woocommerce_currency' );
+		if ( !strlen( $woocommerce_currency ) ) {
+			$woocommerce_currency = get_woocommerce_currency();
+		}
+
 		if ( $this->get_option( 'ssl_max_limit' ) !== '' ) {
 			$payment_config->addSslMaxLimit(
 				new Amount(
 					$this->get_option( 'ssl_max_limit' ),
-					$this->get_option( 'woocommerce_currency' )
+					$woocommerce_currency
 				)
 			);
 		}
@@ -255,7 +260,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 			$payment_config->addThreeDMinLimit(
 				new Amount(
 					$this->get_option( 'three_d_min_limit' ),
-					$this->get_option( 'woocommerce_currency' )
+					$woocommerce_currency
 				)
 			);
 		}
