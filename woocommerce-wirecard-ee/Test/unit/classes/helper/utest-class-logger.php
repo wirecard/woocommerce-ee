@@ -29,8 +29,23 @@
  * Please do not use the plugin if you do not agree to these terms of use!
  */
 
-class WC_Logger {
-	public function log() {
-		return;
+require_once __DIR__ . '/../../../../classes/helper/class-logger.php';
+
+class WC_Gateway_Wirecard_Logger_Utest extends \PHPUnit_Framework_TestCase {
+	private $logger;
+
+	public function setUp() {
+		$this->logger = new Logger();
+	}
+
+	public function test_logger_class() {
+		$this->logger->emergency( 'this is a test' );
+		$this->logger->alert( 'this is a test' );
+		$this->logger->critical( 'this is a test' );
+		$this->logger->error( 'this is a test' );
+		$this->logger->warning( 'this is a test' );
+		$this->logger->notice( 'this is a test' );
+		$this->logger->info( 'this is a test' );
+		$this->logger->debug( 'this is a test' );
 	}
 }
