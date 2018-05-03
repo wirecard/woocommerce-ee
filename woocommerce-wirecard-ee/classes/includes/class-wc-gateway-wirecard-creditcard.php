@@ -346,6 +346,14 @@ HTML;
 		$token                = $_POST['tokenId'];
 
 		$this->transaction = new CreditCardTransaction();
+
+		if(!array_diff_key(array_flip(['expiration_month', 'expiration_year']), $_POST)) {
+			$card = new \Wirecard\PaymentSdk\Entity\Card();
+			$card->setExpirationYear($_POST['expiration_year']);
+			$card->setExpirationMonth($_POST['expiration_month']);
+			$this->transaction->setCard($card);
+		}
+
 		parent::process_payment( $order_id );
 
 		$this->transaction->setTokenId( $token );
