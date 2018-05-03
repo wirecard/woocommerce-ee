@@ -136,8 +136,4 @@ class WC_Order {
 	public function get_customer_id() {
 		return 1;
 	}
-
-	public function get_product_id() {
-		return 1;
-	}
 }

@@ -57,4 +57,8 @@ class WC_Product {
 	public function is_virtual() {
 		return false;
 	}
+
+	public function get_product_id() {
+		return 1;
+	}
 }
