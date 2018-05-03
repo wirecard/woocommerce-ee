@@ -1,6 +1,6 @@
 === Wirecard WooCommerce Extension ===
-Contributors: wirecard
-Tags: ecommerce, payment, sales, checkout
+Contributors: Wirecard AG
+Tags: Wirecard, Credit Card, Alipay Cross-border, Guaranteed Invoice by Wirecard / Ratepay, iDEAL, Masterpass, PayPal, Payment in Advance, Payment on Invoice, SEPA, Sofort., UnionPay International, e-commerce, payment, checkout, payment-methods, One-click-checkout, WooCommerce, PSP, payment-service
 Requires at least: 4.9
 Tested up to: 4.9.5
 Requires PHP: 5.6
@@ -17,9 +17,10 @@ Wirecard WooCommerce Extension is a payment gateway including various payment me
 The fully documented installation guide can be found on [Github](https://github.com/wirecard/woocommerce-ee/wiki/Installation)
 
 == Screenshots ==
-1. Configure CreditCard
-2. Wirecard Payment methods
+1. Configure Wirecard CreditCard
+2. Wirecard payment methods
 3. Wirecard Payment Gateway Transactions
+4. Wirecard Transaction Detailview for Back-end Operations
 
 == Changelog ==
 - Add Guaranteed Invoice
