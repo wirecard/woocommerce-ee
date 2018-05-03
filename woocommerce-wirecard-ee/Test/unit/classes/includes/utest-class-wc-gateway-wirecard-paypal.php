@@ -90,4 +90,8 @@ class WC_Gateway_Wirecard_Paypal_Utest extends \PHPUnit_Framework_TestCase {
 	public function test_false_can_refund() {
 		$this->assertFalse( $this->payment->can_refund( 'authorization' ) );
 	}
+
+	public function test_is_available() {
+		$this->assertTrue( $this->payment->is_available() );
+	}
 }
