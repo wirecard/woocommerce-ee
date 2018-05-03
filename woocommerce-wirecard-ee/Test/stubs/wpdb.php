@@ -29,70 +29,44 @@
  * Please do not use the plugin if you do not agree to these terms of use!
  */
 
-require_once __DIR__ . '/wpdb.php';
+class WPDB {
+	public $prefix;
 
-global $wpdb;
-$wpdb = new WPDB();
+	public $insert_id;
 
-global $woocommerce;
-$woocommerce = new stdClass();
-
-function __( $text, $domain = 'default' ) {
-	return $text;
-}
-
-function add_action( $tag, $function_to_add, $priority = 10, $accepted_args = 1) {
-	return;
-}
-
-function wc_get_order() {
-	return new WC_Order();
-}
-
-function add_query_arg( $arguments ) {
-	$url = 'my-base-url.com';
-	foreach ($arguments as $key => $value) {
-		$url .= '&' . $key . '=' . $value;
+	public function __construct() {
+		$this->prefix = 'prefix_';
 	}
-	return $url;
-}
 
-function site_url() {
-	return;
-}
+	public function insert( $table_name, $data, $type ) {
+		$this->insert_id = 1;
+		return;
+	}
 
-function is_ssl() {
-	return false;
-}
+	public function prepare( $query, $id ) {
+		if ( $id == 1 ) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 
-function wc_add_notice( $message, $type ) {
+	public function get_results( $query ) {
+		if ( $query ) {
+			$card = new stdClass();
+			$card->token      = '123123123';
+			$card->masked_pan = '123*****123';
+			$card->vault_id   = '1';
 
-}
+			return array(
+				'1' => $card,
+			);
+		} else {
+			return array();
+		}
+	}
 
-function get_bloginfo( ) {
-	return 'name';
-}
-
-function get_woocommerce_currencies() {
-	return array();
-}
-
-function wc_get_price_including_tax( $product ) {
-	return 20.0;
-}
-
-function wc_get_price_decimals() {
-	return 2;
-}
-
-function wc_get_price_excluding_tax( $product ) {
-	return 10.0;
-}
-
-function get_woocommerce_currency() {
-	return 'EUR';
-}
-
-function WC() {
-	return new WC();
+	public function query( $query ) {
+		return 1;
+	}
 }

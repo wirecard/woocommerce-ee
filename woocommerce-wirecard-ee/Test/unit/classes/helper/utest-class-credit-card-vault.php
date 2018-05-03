@@ -29,70 +29,28 @@
  * Please do not use the plugin if you do not agree to these terms of use!
  */
 
-require_once __DIR__ . '/wpdb.php';
+require_once __DIR__ . '/../../../../classes/helper/class-credit-card-vault.php';
 
-global $wpdb;
-$wpdb = new WPDB();
+class WC_Gateway_Wirecard_Credit_Card_Vault_Utest extends \PHPUnit_Framework_TestCase {
+	private $credit_card_vault;
 
-global $woocommerce;
-$woocommerce = new stdClass();
-
-function __( $text, $domain = 'default' ) {
-	return $text;
-}
-
-function add_action( $tag, $function_to_add, $priority = 10, $accepted_args = 1) {
-	return;
-}
-
-function wc_get_order() {
-	return new WC_Order();
-}
-
-function add_query_arg( $arguments ) {
-	$url = 'my-base-url.com';
-	foreach ($arguments as $key => $value) {
-		$url .= '&' . $key . '=' . $value;
+	public function setUp() {
+		$this->credit_card_vault = new Credit_Card_Vault();
 	}
-	return $url;
-}
 
-function site_url() {
-	return;
-}
+	public function test_save_card() {
+		$this->assertNotNull( $this->credit_card_vault->save_card( 1, 12, '123*****123' ) );
+	}
 
-function is_ssl() {
-	return false;
-}
+	public function test_get_cards_for_user() {
+		$this->assertNotNull( $this->credit_card_vault->get_cards_for_user( 1 ) );
+	}
 
-function wc_add_notice( $message, $type ) {
+	public function test_failed_get_cards_for_user() {
+		$this->assertFalse( $this->credit_card_vault->get_cards_for_user( 2 ) );
+	}
 
-}
-
-function get_bloginfo( ) {
-	return 'name';
-}
-
-function get_woocommerce_currencies() {
-	return array();
-}
-
-function wc_get_price_including_tax( $product ) {
-	return 20.0;
-}
-
-function wc_get_price_decimals() {
-	return 2;
-}
-
-function wc_get_price_excluding_tax( $product ) {
-	return 10.0;
-}
-
-function get_woocommerce_currency() {
-	return 'EUR';
-}
-
-function WC() {
-	return new WC();
+	public function test_delete_credit_card() {
+		$this->assertEquals( 1, $this->credit_card_vault->delete_credit_card( 3 ) );
+	}
 }
