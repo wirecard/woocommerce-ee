@@ -125,6 +125,7 @@ class Wirecard_Transaction_Handler extends Wirecard_Handler {
 	 * @param stdClass $transaction_data
 	 *
 	 * @since 1.0.0
+	 * @throws Exception
 	 */
 	public function refund_transaction( $transaction_data ) {
 		/** @var WC_Wirecard_Payment_Gateway $payment */
