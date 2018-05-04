@@ -209,6 +209,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 			'cc_vault_enabled'            => array(
 				'title'   => __( 'Enable/Disable', 'woocommerce-gateway-wirecard' ),
 				'type'    => 'checkbox',
+				'description' => __( 'Credit Cards can be saved and used for later purpose without', 'woocommerce-gateway-wirecard' ),
 				'label'   => __( 'Enable Recurring Payment', 'woocommerce-gateway-wirecard' ),
 				'default' => 'no',
 			),
