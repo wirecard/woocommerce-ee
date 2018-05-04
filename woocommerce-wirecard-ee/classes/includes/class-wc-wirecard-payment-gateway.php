@@ -426,6 +426,14 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	public function create_payment_config( $base_url = null, $http_user = null, $http_pass = null ) {
 		$config = new Config( $base_url, $http_user, $http_pass );
 
+		$config->setShopInfo(
+			$this->get_shop_version()
+		);
+		$config->setPluginInfo(
+			'Wirecard_ElasticEngine',
+			WOOCOMMERCE_GATEWAY_WIRECARD_VERSION
+		);
+
 		return $config;
 	}
 
@@ -676,10 +684,10 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	private function get_shop_version() {
 		global $wp_version;
 
-		$shop         = 'WordPress';
-		$shop        .= 'V' . $wp_version;
-		$woocommerce  = '-WooCommerce';
-		$woocommerce .= 'V' . WC()->version;
+		$shop         = 'WordPress ';
+		$shop        .= 'v' . $wp_version;
+		$woocommerce  = ' WooCommerce ';
+		$woocommerce .= 'v' . WC()->version;
 
 		return $shop . $woocommerce;
 	}
@@ -697,7 +705,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 		$custom_fields->add( new CustomField( 'shopVersion', $this->get_shop_version() ) );
 		$custom_fields->add( new CustomField( 'phpVersion', phpversion() ) );
 		$custom_fields->add( new CustomField( 'multisite', is_multisite() ? 'multisite' : '' ) );
-		$custom_fields->add( new CustomField( 'pluginVersion', 'woocommerce-eeV' . WOOCOMMERCE_GATEWAY_WIRECARD_VERSION ) );
+		$custom_fields->add( new CustomField( 'pluginVersion', 'woocommerce-ee v' . WOOCOMMERCE_GATEWAY_WIRECARD_VERSION ) );
 
 		return $custom_fields;
 	}
