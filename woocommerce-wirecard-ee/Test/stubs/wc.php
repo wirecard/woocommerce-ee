@@ -32,7 +32,10 @@
 class WC {
 	public $session;
 
+	public $version;
+
 	public function __construct() {
 		$this->session = new WC_Session;
+		$this->version = '1.0.0';
 	}
 }
