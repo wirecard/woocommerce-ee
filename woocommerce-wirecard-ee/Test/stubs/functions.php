@@ -96,3 +96,7 @@ function get_woocommerce_currency() {
 function WC() {
 	return new WC();
 }
+
+function wp_json_encode() {
+	return 'json';
+}

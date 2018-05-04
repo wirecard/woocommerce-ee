@@ -34,17 +34,20 @@ class WPDB {
 
 	public $insert_id;
 
+	public $base_prefix;
+
 	public function __construct() {
-		$this->prefix = 'prefix_';
+		$this->prefix      = 'prefix_';
+		$this->base_prefix = 'base_prefix_';
 	}
 
-	public function insert( $table_name, $data, $type ) {
+	public function insert( $table_name, $data, $type = null ) {
 		$this->insert_id = 1;
 		return;
 	}
 
 	public function prepare( $query, $id ) {
-		if ( $id == 1 ) {
+		if ( $id == 1 || $id == '123') {
 			return true;
 		} else {
 			return false;
@@ -68,5 +71,18 @@ class WPDB {
 
 	public function query( $query ) {
 		return 1;
+	}
+
+	public function get_row( $id ) {
+		$transaction = new stdClass();
+		if ( $id ) {
+			return $transaction;
+		} else {
+			return;
+		}
+	}
+
+	public function update() {
+		return;
 	}
 }

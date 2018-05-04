@@ -17,6 +17,8 @@
                 <directory>woocommerce-wirecard-ee/assets</directory>
                 <directory>woocommerce-wirecard-ee/Test</directory>
                 <file>./woocommerce-wirecard-ee/classes/helper/sepa-template.php</file>
+                <file>./woocommerce-wirecard-ee/classes/admin/class-wirecard-settings.php</file>
+                <file>./woocommerce-wirecard-ee/classes/handler/class-wirecard-callback.php</file>
             </exclude>
         </whitelist>
     </filter>
