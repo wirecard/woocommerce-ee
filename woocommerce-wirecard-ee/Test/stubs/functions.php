@@ -100,3 +100,7 @@ function WC() {
 function wp_json_encode() {
 	return 'json';
 }
+
+function is_multisite() {
+	return false;
+}
