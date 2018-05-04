@@ -133,7 +133,6 @@ class WC_Gateway_Wirecard_Ideal extends WC_Wirecard_Payment_Gateway {
 				'type'        => 'text',
 				'description' => __( 'The Wirecard base URL. (e.g. https://api.wirecard.com)', 'woocommerce-gateway-wirecard' ),
 				'default'     => 'https://api-test.wirecard.com',
-				'desc_tip'    => true,
 			),
 			'http_user'           => array(
 				'title'       => __( 'HTTP User', 'woocommerce-gateway-wirecard' ),
