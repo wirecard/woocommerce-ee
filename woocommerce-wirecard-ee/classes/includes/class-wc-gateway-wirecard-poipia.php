@@ -101,7 +101,6 @@ class WC_Gateway_Wirecard_Poipia extends WC_Wirecard_Payment_Gateway {
 				'type'        => 'text',
 				'description' => __( 'This controls the title which the consumer sees during checkout.', 'woocommerce-gateway-wirecard' ),
 				'default'     => __( 'Wirecard Payment on Invoice / Payment in Advance', 'woocommerce-gateway-wirecard' ),
-				'desc_tip'    => true,
 			),
 			'merchant_account_id' => array(
 				'title'       => __( 'Merchant Account ID', 'woocommerce-gateway-wirecard' ),
@@ -268,5 +267,4 @@ class WC_Gateway_Wirecard_Poipia extends WC_Wirecard_Payment_Gateway {
 			echo $result;
 		}
 	}
-
 }

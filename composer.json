@@ -1,6 +1,6 @@
 {
   "name": "wirecard/woocommerce-ee",
-  "description": "WooCommerce plugin for Wirecard Payment Processing Gateway",
+  "description": "Wirecard WooCommerce Extension",
   "license": "GPL-3.0",
   "minimum-stability": "beta",
   "prefer-stable": true,

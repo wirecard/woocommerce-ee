@@ -96,6 +96,7 @@ class Wirecard_Settings {
 			<br/>
 			<br/>
 			<a class="button-primary" href="?page=wirecardsupport">Support</a>
+			<hr/>
 			<table class="wp-list-table widefat fixed striped posts">
 				<?php
 				$pages = $this->transaction_factory->get_rows( $start );

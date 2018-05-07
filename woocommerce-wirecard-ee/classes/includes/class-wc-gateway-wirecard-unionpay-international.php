@@ -201,6 +201,7 @@ class WC_Gateway_Wirecard_Unionpay_International extends WC_Wirecard_Payment_Gat
 HTML;
 
 		echo $html;
+		return true;
 	}
 
 	/**

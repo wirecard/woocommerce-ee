@@ -7,7 +7,7 @@
  *
  * They have been tested and approved for full functionality in the standard configuration
  * (status on delivery) of the corresponding shop system. They are under General Public
- * License Version 3 (GPLv3) and can be used, developed and passed on to third parties under
+ * License version 3 (GPLv3) and can be used, developed and passed on to third parties under
  * the same terms.
  *
  * However, Wirecard AG does not provide any guarantee or accept any liability for any errors
@@ -29,11 +29,28 @@
  * Please do not use the plugin if you do not agree to these terms of use!
  */
 
-require_once __DIR__ . '/wc-settings-api.php';
+require_once __DIR__ . '/../../../../classes/helper/class-credit-card-vault.php';
 
-class WC_Payment_Gateway extends WC_Settings_API {
+class WC_Gateway_Wirecard_Credit_Card_Vault_Utest extends \PHPUnit_Framework_TestCase {
+	private $credit_card_vault;
 
-	public function init_settings() {
-		return;
+	public function setUp() {
+		$this->credit_card_vault = new Credit_Card_Vault();
+	}
+
+	public function test_save_card() {
+		$this->assertNotNull( $this->credit_card_vault->save_card( 1, 12, '123*****123' ) );
+	}
+
+	public function test_get_cards_for_user() {
+		$this->assertNotNull( $this->credit_card_vault->get_cards_for_user( 1 ) );
+	}
+
+	public function test_failed_get_cards_for_user() {
+		$this->assertFalse( $this->credit_card_vault->get_cards_for_user( 2 ) );
+	}
+
+	public function test_delete_credit_card() {
+		$this->assertEquals( 1, $this->credit_card_vault->delete_credit_card( 3 ) );
 	}
 }

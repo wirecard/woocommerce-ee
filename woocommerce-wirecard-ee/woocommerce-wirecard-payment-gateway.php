@@ -1,12 +1,15 @@
 <?php
 /**
- * Plugin Name: Wirecard Payment Processing Gateway
+ * Plugin Name: Wirecard WooCommerce Extension
  * Plugin URI: https://github.com/wirecard/woocommerce-ee
- * Description: Wirecard Payment Processing Gateway Plugin for WooCommerce
+ * Description: Payment Gateway for WooCommerce
  * Version: 1.1.0
- * Author: Wirecard
+ * Author: Wirecard AG
  * Author URI: https://www.wirecard.com/
- * License: GPL3
+ * License: GPLv3
+ * License URI: https://www.gnu.org/licenses/gpl-3.0.html
+ * Text Domain: woocommerce-gateway-wirecard
+ * Domain Path: /languages
  *
  * Shop System Plugins - Terms of Use
  *
@@ -42,7 +45,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'WOOCOMMERCE_GATEWAY_WIRECARD_NAME', 'Wirecard Payment Processing Gateway' );
+define( 'WOOCOMMERCE_GATEWAY_WIRECARD_NAME', 'Wirecard WooCommerce Extension' );
 define( 'WOOCOMMERCE_GATEWAY_WIRECARD_VERSION', '1.1.0' );
 define( 'WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR', plugin_dir_path( __FILE__ ) );
 define( 'WOOCOMMERCE_GATEWAY_WIRECARD_URL', plugin_dir_url( __FILE__ ) );
@@ -63,7 +66,7 @@ add_action( 'plugins_loaded', 'init_wirecard_payment_gateway' );
 function init_wirecard_payment_gateway() {
 	if ( ! class_exists( 'WC_PAYMENT_GATEWAY' ) ) {
 		global $error;
-		$error = new WP_Error( 'woocommerce', 'To use Wirecard Payment Processing Gateway you need to install and activate the WooCommerce' );
+		$error = new WP_Error( 'woocommerce', 'To use Wirecard WooCommerce Extension you need to install and activate the WooCommerce' );
 		echo '<div class="error notice"><p>' . $error->get_error_message() . '</p></div>';
 		return;
 	}

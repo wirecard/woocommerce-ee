@@ -102,7 +102,6 @@ class WC_Gateway_Wirecard_Alipay_Crossborder extends WC_Wirecard_Payment_Gateway
 				'type'        => 'text',
 				'description' => __( 'This controls the title which the consumer sees during checkout.', 'woocommerce-gateway-wirecard' ),
 				'default'     => __( 'Wirecard Alipay Crossborder', 'woocommerce-gateway-wirecard' ),
-				'desc_tip'    => true,
 			),
 			'merchant_account_id' => array(
 				'title'       => __( 'Merchant Account ID', 'woocommerce-gateway-wirecard' ),
