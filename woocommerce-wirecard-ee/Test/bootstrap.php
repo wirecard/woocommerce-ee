@@ -29,10 +29,10 @@
  * Please do not use the plugin if you do not agree to these terms of use!
  */
 
-define('ABSPATH', true);
-define('WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR', __DIR__ . '/../');
-define('WOOCOMMERCE_GATEWAY_WIRECARD_VERSION', '1.0.0');
-define('WOOCOMMERCE_GATEWAY_WIRECARD_URL', __DIR__ . '/../');
+define( 'ABSPATH', true );
+define( 'WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR', __DIR__ . '/../' );
+define( 'WOOCOMMERCE_GATEWAY_WIRECARD_VERSION', '1.0.0' );
+define( 'WOOCOMMERCE_GATEWAY_WIRECARD_URL', __DIR__ . '/../' );
 
 require_once __DIR__ . '/../vendor/autoload.php';
 

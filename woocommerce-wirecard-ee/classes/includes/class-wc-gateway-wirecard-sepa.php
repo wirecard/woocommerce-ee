@@ -189,11 +189,11 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 				'title'       => __( 'Payment Action', 'woocommerce-gateway-wirecard' ),
 				'type'        => 'select',
 				'description' => __( 'Select between "Capture" to capture / invoice your order automatically or "Authorization" to manually capture / invoice.', 'woocommerce-gateway-wirecard' ),
-				'default'     => 'Capture',
+				'default'     => 'Purchase',
 				'label'       => __( 'Payment Action', 'woocommerce-gateway-wirecard' ),
 				'options'     => array(
 					'reserve' => 'Authorization',
-					'pay'     => 'Capture',
+					'pay'     => 'Purchase',
 				),
 			),
 			'descriptor'             => array(

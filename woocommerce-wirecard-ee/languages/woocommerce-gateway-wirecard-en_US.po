@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Wirecard WooCommerce Extension\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-05-04 07:10+0000\n"
-"PO-Revision-Date: 2018-05-04 07:11+0000\n"
+"PO-Revision-Date: 2018-05-07 07:19+0000\n"
 "Last-Translator: admin <admin@admin.at>\n"
 "Language-Team: English (United States)\n"
 "Language: en-US\n"
@@ -195,7 +195,7 @@ msgstr "Delete"
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:62
 msgid "Alipay Crossborder transactions via Wirecard Payment Processing Gateway"
 msgstr ""
-"Alipay Crossborder transactions via Wirecard Payment Processing Gateway"
+"Alipay Cross-border transactions via Wirecard Payment Processing Gateway"
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:94 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:153 
@@ -238,11 +238,11 @@ msgstr "Enable/Disable"
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:96
 msgid "Activate payment method Alipay Crossborder"
-msgstr "Activate payment method Alipay Crossborder"
+msgstr "Activate payment method Alipay Cross-border"
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:97
 msgid "Enable Wirecard Alipay Crossborder"
-msgstr "Enable Wirecard Alipay Crossborder"
+msgstr "Enable Wirecard Alipay Cross-border"
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:101 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:109 
@@ -272,7 +272,7 @@ msgstr "This controls the title which the consumer sees during checkout."
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:104
 msgid "Wirecard Alipay Crossborder"
-msgstr "Wirecard Alipay Crossborder"
+msgstr "Wirecard Alipay Cross-border"
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:107 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:115 
@@ -584,7 +584,7 @@ msgid ""
 "Select between \"Capture\" to capture / invoice your order automatically or "
 "\"Authorization\" to manually capture / invoice. "
 msgstr ""
-"Select between \"Capture\" to capture / invoice your order automatically or "
+"Select between \"Purchase\" to capture / invoice your order automatically or "
 "\"Authorization\" to manually capture / invoice. "
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:212
@@ -762,7 +762,7 @@ msgid ""
 "Select between \"Capture\" to capture / invoice your order automatically or "
 "\"Authorization\" to manually capture / invoice."
 msgstr ""
-"Select between \"Capture\" to capture / invoice your order automatically or "
+"Select between \"Purchase\" to capture / invoice your order automatically or "
 "\"Authorization\" to manually capture / invoice."
 
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:169

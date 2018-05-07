@@ -41,8 +41,8 @@ class WC_Gateway_Wirecard_Additional_Information_Utest extends \PHPUnit_Framewor
 
 	public function setUp() {
 		global $woocommerce;
-		$woocommerce->cart = new WC_Cart();
-		$woocommerce->customer = new WC_Customer();
+		$woocommerce->cart            = new WC_Cart();
+		$woocommerce->customer        = new WC_Customer();
 		$this->additional_information = new Additional_Information();
 		$this->transaction            = new \Wirecard\PaymentSdk\Transaction\CreditCardTransaction();
 		$this->order                  = new WC_Order();
@@ -72,7 +72,7 @@ class WC_Gateway_Wirecard_Additional_Information_Utest extends \PHPUnit_Framewor
 		$basket = new \Wirecard\PaymentSdk\Entity\Basket();
 		$item   = new \Wirecard\PaymentSdk\Entity\Item(
 			'nemo x1',
-			new \Wirecard\PaymentSdk\Entity\Amount( 20, 'EUR'),
+			new \Wirecard\PaymentSdk\Entity\Amount( 20, 'EUR' ),
 			1
 		);
 		$item->setDescription( 'short description' );

@@ -37,7 +37,8 @@ class WC_Settings_API {
 			'three_d_min_limit'  => 20,
 			'enabled'            => 'yes',
 			'allowed_currencies' => array(
-				'EUR', 'USD',
+				'EUR',
+				'USD',
 			),
 			'min_amount'         => 20,
 			'max_amount'         => 3000,
@@ -51,8 +52,8 @@ class WC_Settings_API {
 			),
 		);
 
-		if ( isset( $data[$key] ) ) {
-			return $data[$key];
+		if ( isset( $data[ $key ] ) ) {
+			return $data[ $key ];
 		} else {
 			return $key;
 		}

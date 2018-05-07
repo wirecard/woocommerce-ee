@@ -57,7 +57,7 @@ class WC_Gateway_Wirecard_Alipay_Crossborder extends WC_Wirecard_Payment_Gateway
 		$this->type               = 'alipay-xborder';
 		$this->id                 = 'wirecard_ee_alipay-xborder';
 		$this->icon               = WOOCOMMERCE_GATEWAY_WIRECARD_URL . 'assets/images/alipay-xborder.png';
-		$this->method_title       = __( 'Wirecard Alipay Crossborder', 'wooocommerce-gateway-wirecard' );
+		$this->method_title       = __( 'Wirecard Alipay Cross-border', 'wooocommerce-gateway-wirecard' );
 		$this->method_name        = __( 'Alipay Crossborder', 'wooocommerce-gateway-wirecard' );
 		$this->method_description = __( 'Alipay Crossborder transactions via Wirecard Payment Processing Gateway', 'woocommerce-gateway-wirecard' );
 

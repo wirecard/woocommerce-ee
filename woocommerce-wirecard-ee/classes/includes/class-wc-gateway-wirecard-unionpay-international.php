@@ -55,7 +55,7 @@ class WC_Gateway_Wirecard_Unionpay_International extends WC_Wirecard_Payment_Gat
 		$this->type               = 'unionpayinternational';
 		$this->id                 = 'wirecard_ee_unionpayinternational';
 		$this->icon               = WOOCOMMERCE_GATEWAY_WIRECARD_URL . 'assets/images/unionpayinternational.png';
-		$this->method_title       = __( 'Wirecard Unionpay International', 'wooocommerce-gateway-wirecard' );
+		$this->method_title       = __( 'Wirecard UnionPay International', 'wooocommerce-gateway-wirecard' );
 		$this->method_name        = __( 'Unionpay International', 'wooocommerce-gateway-wirecard' );
 		$this->method_description = __( 'Unionpay International transactions via Wirecard Payment Processing Gateway', 'woocommerce-gateway-wirecard' );
 		$this->has_fields         = true;
@@ -154,11 +154,11 @@ class WC_Gateway_Wirecard_Unionpay_International extends WC_Wirecard_Payment_Gat
 				'title'       => __( 'Payment Action', 'woocommerce-gateway-wirecard' ),
 				'type'        => 'select',
 				'description' => __( 'Select between "Capture" to capture / invoice your order automatically or "Authorization" to manually capture / invoice. ', 'woocommerce-gateway-wirecard' ),
-				'default'     => 'Capture',
+				'default'     => 'Purchase',
 				'label'       => __( 'Payment Action', 'woocommerce-gateway-wirecard' ),
 				'options'     => array(
 					'reserve' => 'Authorization',
-					'pay'     => 'Capture',
+					'pay'     => 'Purchase',
 				),
 			),
 			'descriptor'          => array(

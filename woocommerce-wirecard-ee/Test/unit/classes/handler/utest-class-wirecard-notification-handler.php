@@ -57,7 +57,7 @@ class WC_Gateway_Wirecard_Notification_Handler_Utest extends \PHPUnit_Framework_
 	 * @expectedException \Wirecard\PaymentSdk\Exception\MalformedResponseException
 	 */
 	public function test_malformed_response_exception_handle_notification() {
-		$invalid_payload = substr($this->payload, 0, 20);
+		$invalid_payload = substr( $this->payload, 0, 20 );
 		$this->notification_handler->handle_notification( 'paypal', $invalid_payload );
 	}
 }

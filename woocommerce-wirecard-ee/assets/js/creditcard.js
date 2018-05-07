@@ -180,19 +180,21 @@ $( document ).ready(
 					if ( token !== null ) {
 						return true;
 					} else {
-						getRequestData( function(data) {
-							WirecardPaymentPage.seamlessSubmitForm(
-								{
-									onSuccess: formSubmitSuccessHandler,
-									onError: logCallback,
-									requestData: {
-										merchant_account_id: data.merchant_account_id,
-										request_id: data.request_id
-									},
-									wrappingDivId: "wc_payment_method_wirecard_creditcard_form"
-								}
-							);
-						} );
+						getRequestData(
+							function(data) {
+									WirecardPaymentPage.seamlessSubmitForm(
+										{
+											onSuccess: formSubmitSuccessHandler,
+											onError: logCallback,
+											requestData: {
+												merchant_account_id: data.merchant_account_id,
+												request_id: data.request_id
+											},
+											wrappingDivId: "wc_payment_method_wirecard_creditcard_form"
+										}
+									);
+							}
+						);
 						return false;
 					}
 				}
