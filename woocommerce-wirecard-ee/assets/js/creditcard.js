@@ -126,7 +126,7 @@ $( document ).ready(
 		new_credit_card.hide();
 
 		getVaultData();
-		getRequestData();
+		getRequestData( renderForm );
 
 		$( "input[name=payment_method]" ).change(
 			function() {
@@ -180,13 +180,19 @@ $( document ).ready(
 					if ( token !== null ) {
 						return true;
 					} else {
-						WirecardPaymentPage.seamlessSubmitForm(
-							{
-								onSuccess: formSubmitSuccessHandler,
-								onError: logCallback,
-								wrappingDivId: "wc_payment_method_wirecard_creditcard_form"
-							}
-						);
+						getRequestData( function(data) {
+							WirecardPaymentPage.seamlessSubmitForm(
+								{
+									onSuccess: formSubmitSuccessHandler,
+									onError: logCallback,
+									requestData: {
+										merchant_account_id: data.merchant_account_id,
+										request_id: data.request_id
+									},
+									wrappingDivId: "wc_payment_method_wirecard_creditcard_form"
+								}
+							);
+						} );
 						return false;
 					}
 				}
@@ -209,7 +215,30 @@ $( document ).ready(
 		* @since 1.0.0
 		*/
 		function formSubmitSuccessHandler( response ) {
-			token = response.token_id;
+			token = null;
+			if ( response.hasOwnProperty( 'token_id' ) ) {
+				token = response.token_id;
+			} else if ( response.hasOwnProperty( 'card_token' ) && response.card_token.hasOwnProperty( 'token' )) {
+				token = response.card_token.token;
+				jQuery( '<input>' ).attr(
+					{
+						type: 'hidden',
+						name: 'expiration_month',
+						id: 'expiration_month',
+						value: response.card.expiration_month
+					}
+				).appendTo( checkout_form );
+
+				jQuery( '<input>' ).attr(
+					{
+						type: 'hidden',
+						name: 'expiration_year',
+						id: 'expiration_year',
+						value: response.card.expiration_year
+					}
+				).appendTo( checkout_form );
+			}
+
 			if ( $( "#wirecard-store-card" ).is( ":checked" ) && response.transaction_state == 'success' ) {
 				$.ajax(
 					{
@@ -240,7 +269,7 @@ $( document ).ready(
 		 *
 		 * @since 1.0.0
 		 */
-		function getRequestData() {
+		function getRequestData(callback) {
 			$( '.show-spinner' ).show();
 			$.ajax(
 				{
@@ -249,7 +278,7 @@ $( document ).ready(
 					data: { 'action' : 'get_credit_card_request_data' },
 					dataType: 'json',
 					success: function (data) {
-						renderForm( JSON.parse( data.data ) );
+						callback( JSON.parse( data.data ) );
 					},
 					error: function (data) {
 						console.log( data );
