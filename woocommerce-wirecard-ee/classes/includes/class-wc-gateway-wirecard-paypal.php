@@ -59,7 +59,7 @@ class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 		$this->id                 = 'wirecard_ee_paypal';
 		$this->icon               = WOOCOMMERCE_GATEWAY_WIRECARD_URL . 'assets/images/paypal.png';
 		$this->method_title       = __( 'Wirecard PayPal', 'wooocommerce-gateway-wirecard' );
-		$this->method_name        = __( 'Pay Pal', 'wooocommerce-gateway-wirecard' );
+		$this->method_name        = __( 'PayPal', 'wooocommerce-gateway-wirecard' );
 		$this->method_description = __( 'PayPal transactions via Wirecard Payment Processing Gateway', 'woocommerce-gateway-wirecard' );
 
 		$this->supports = array(
