@@ -47,7 +47,7 @@ class WPDB {
 	}
 
 	public function prepare( $query, $id ) {
-		if ( $id == 1 || $id == '123') {
+		if ( $id == 1 || $id == '123' ) {
 			return true;
 		} else {
 			return false;
@@ -56,7 +56,7 @@ class WPDB {
 
 	public function get_results( $query ) {
 		if ( $query ) {
-			$card = new stdClass();
+			$card             = new stdClass();
 			$card->token      = '123123123';
 			$card->masked_pan = '123*****123';
 			$card->vault_id   = '1';

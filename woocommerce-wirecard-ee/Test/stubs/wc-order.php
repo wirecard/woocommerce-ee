@@ -93,7 +93,7 @@ class WC_Order {
 
 	public function get_items() {
 		return array(
-			'1' =>  new WC_Product(),
+			'1' => new WC_Product(),
 		);
 	}
 

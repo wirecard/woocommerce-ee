@@ -41,7 +41,7 @@ function __( $text, $domain = 'default' ) {
 	return $text;
 }
 
-function add_action( $tag, $function_to_add, $priority = 10, $accepted_args = 1) {
+function add_action( $tag, $function_to_add, $priority = 10, $accepted_args = 1 ) {
 	return;
 }
 
@@ -51,7 +51,7 @@ function wc_get_order() {
 
 function add_query_arg( $arguments ) {
 	$url = 'my-base-url.com';
-	foreach ($arguments as $key => $value) {
+	foreach ( $arguments as $key => $value ) {
 		$url .= '&' . $key . '=' . $value;
 	}
 	return $url;
@@ -69,7 +69,7 @@ function wc_add_notice( $message, $type ) {
 
 }
 
-function get_bloginfo( ) {
+function get_bloginfo() {
 	return 'name';
 }
 

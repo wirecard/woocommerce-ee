@@ -39,7 +39,7 @@ class WC_Gateway_Wirecard_Ideal_Utest extends \PHPUnit_Framework_TestCase {
 	private $payment;
 
 	public function setUp() {
-		$this->payment = new WC_Gateway_Wirecard_Ideal();
+		$this->payment           = new WC_Gateway_Wirecard_Ideal();
 		$_POST['ideal_bank_bic'] = IdealBic::INGBNL2A;
 	}
 

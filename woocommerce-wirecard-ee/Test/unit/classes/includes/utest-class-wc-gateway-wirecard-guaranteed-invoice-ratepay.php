@@ -38,9 +38,9 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay_Utest extends \PHPUnit_Fram
 
 	public function setUp() {
 		global $woocommerce;
-		$woocommerce->cart = new WC_Cart();
+		$woocommerce->cart     = new WC_Cart();
 		$woocommerce->customer = new WC_Customer();
-		$this->payment = new WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay();
+		$this->payment         = new WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay();
 	}
 
 	public function test_init_form_fields() {
@@ -73,7 +73,7 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay_Utest extends \PHPUnit_Fram
 		$basket = new \Wirecard\PaymentSdk\Entity\Basket();
 		$item   = new \Wirecard\PaymentSdk\Entity\Item(
 			'nemo x1',
-			new \Wirecard\PaymentSdk\Entity\Amount( 20, 'EUR'),
+			new \Wirecard\PaymentSdk\Entity\Amount( 20, 'EUR' ),
 			1
 		);
 		$item->setDescription( 'short description' );
