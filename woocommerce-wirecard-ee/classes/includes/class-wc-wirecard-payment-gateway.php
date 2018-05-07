@@ -426,6 +426,12 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	public function create_payment_config( $base_url = null, $http_user = null, $http_pass = null ) {
 		$config = new Config( $base_url, $http_user, $http_pass );
 
+		$config->setShopInfo( 'WooCommerce', WC()->version );
+		$config->setPluginInfo(
+			'Wirecard_ElasticEngine',
+			WOOCOMMERCE_GATEWAY_WIRECARD_VERSION
+		);
+
 		return $config;
 	}
 
@@ -586,6 +592,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 
 		$custom_fields = new CustomFieldCollection();
 		$custom_fields->add( new CustomField( 'orderId', $order_id ) );
+		$custom_fields = $this->create_version_fields( $custom_fields );
 		$this->transaction->setCustomFields( $custom_fields );
 
 		if ( $this->get_option( 'descriptor' ) == 'yes' ) {
@@ -644,6 +651,11 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 		return false;
 	}
 
+	/**
+	 * Test payment configuration
+	 *
+	 * @since 1.1.0
+	 */
 	public function test_payment_config() {
 		$base_url  = $_POST['base_url'];
 		$http_user = $_POST['http_user'];
@@ -658,5 +670,41 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 			wp_send_json_error( __( 'Test failed, please check your credentials.', 'woocommerce-gateway-wirecard' ) );
 		}
 		die();
+	}
+
+	/**
+	 * Get current WordPress version and WooCommerce version
+	 *
+	 * @return string
+	 *
+	 * @since 1.1.0
+	 */
+	private function get_shop_version() {
+		global $wp_version;
+
+		$shop         = 'WordPress ';
+		$shop        .= 'v' . $wp_version;
+		$woocommerce  = ' WooCommerce ';
+		$woocommerce .= 'v' . WC()->version;
+
+		return $shop . $woocommerce;
+	}
+
+	/**
+	 * Create CustomFields including version number PHP/Shop/Plugin
+	 *
+	 * @param CustomFieldCollection $custom_fields
+	 *
+	 * @return mixed
+	 *
+	 * @since 1.1.0
+	 */
+	private function create_version_fields( $custom_fields ) {
+		$custom_fields->add( new CustomField( 'shopVersion', $this->get_shop_version() ) );
+		$custom_fields->add( new CustomField( 'phpVersion', phpversion() ) );
+		$custom_fields->add( new CustomField( 'multisite', is_multisite() ? 'multisite' : '' ) );
+		$custom_fields->add( new CustomField( 'pluginVersion', 'woocommerce-ee v' . WOOCOMMERCE_GATEWAY_WIRECARD_VERSION ) );
+
+		return $custom_fields;
 	}
 }

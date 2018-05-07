@@ -6,7 +6,7 @@
 >
     <testsuites>
         <testsuite name="unit-tests">
-            <directory prefix="test-" suffix=".php">woocommerce-wirecard-ee/Test</directory>
+            <directory prefix="utest-" suffix=".php">woocommerce-wirecard-ee/Test</directory>
         </testsuite>
     </testsuites>
     <filter>
@@ -14,6 +14,11 @@
             <directory suffix=".php">./woocommerce-wirecard-ee/*</directory>
             <exclude>
                 <directory>woocommerce-wirecard-ee/vendor</directory>
+                <directory>woocommerce-wirecard-ee/assets</directory>
+                <directory>woocommerce-wirecard-ee/Test</directory>
+                <file>./woocommerce-wirecard-ee/classes/helper/sepa-template.php</file>
+                <file>./woocommerce-wirecard-ee/classes/admin/class-wirecard-settings.php</file>
+                <file>./woocommerce-wirecard-ee/classes/handler/class-wirecard-callback.php</file>
             </exclude>
         </whitelist>
     </filter>

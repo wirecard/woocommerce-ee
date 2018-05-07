@@ -7,7 +7,7 @@
  *
  * They have been tested and approved for full functionality in the standard configuration
  * (status on delivery) of the corresponding shop system. They are under General Public
- * License Version 3 (GPLv3) and can be used, developed and passed on to third parties under
+ * License version 3 (GPLv3) and can be used, developed and passed on to third parties under
  * the same terms.
  *
  * However, Wirecard AG does not provide any guarantee or accept any liability for any errors
@@ -29,11 +29,36 @@
  * Please do not use the plugin if you do not agree to these terms of use!
  */
 
-require_once __DIR__ . '/wc-settings-api.php';
+class WC_Product {
+	public function get_id() {
+		return 1;
+	}
 
-class WC_Payment_Gateway extends WC_Settings_API {
+	public function get_short_description() {
+		return 'short description';
+	}
 
-	public function init_settings() {
-		return;
+	public function is_taxable() {
+		return false;
+	}
+
+	public function get_name() {
+		return 'nemo';
+	}
+
+	public function get_quantity() {
+		return 1;
+	}
+
+	public function is_downloadable() {
+		return false;
+	}
+
+	public function is_virtual() {
+		return false;
+	}
+
+	public function get_product_id() {
+		return 1;
 	}
 }

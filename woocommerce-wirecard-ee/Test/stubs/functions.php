@@ -7,7 +7,7 @@
  *
  * They have been tested and approved for full functionality in the standard configuration
  * (status on delivery) of the corresponding shop system. They are under General Public
- * License Version 3 (GPLv3) and can be used, developed and passed on to third parties under
+ * License version 3 (GPLv3) and can be used, developed and passed on to third parties under
  * the same terms.
  *
  * However, Wirecard AG does not provide any guarantee or accept any liability for any errors
@@ -29,11 +29,78 @@
  * Please do not use the plugin if you do not agree to these terms of use!
  */
 
-require_once __DIR__ . '/wc-settings-api.php';
+require_once __DIR__ . '/wpdb.php';
 
-class WC_Payment_Gateway extends WC_Settings_API {
+global $wpdb;
+$wpdb = new WPDB();
 
-	public function init_settings() {
-		return;
+global $woocommerce;
+$woocommerce = new stdClass();
+
+function __( $text, $domain = 'default' ) {
+	return $text;
+}
+
+function add_action( $tag, $function_to_add, $priority = 10, $accepted_args = 1) {
+	return;
+}
+
+function wc_get_order() {
+	return new WC_Order();
+}
+
+function add_query_arg( $arguments ) {
+	$url = 'my-base-url.com';
+	foreach ($arguments as $key => $value) {
+		$url .= '&' . $key . '=' . $value;
 	}
+	return $url;
+}
+
+function site_url() {
+	return;
+}
+
+function is_ssl() {
+	return false;
+}
+
+function wc_add_notice( $message, $type ) {
+
+}
+
+function get_bloginfo( ) {
+	return 'name';
+}
+
+function get_woocommerce_currencies() {
+	return array();
+}
+
+function wc_get_price_including_tax( $product ) {
+	return 20.0;
+}
+
+function wc_get_price_decimals() {
+	return 2;
+}
+
+function wc_get_price_excluding_tax( $product ) {
+	return 10.0;
+}
+
+function get_woocommerce_currency() {
+	return 'EUR';
+}
+
+function WC() {
+	return new WC();
+}
+
+function wp_json_encode() {
+	return 'json';
+}
+
+function is_multisite() {
+	return false;
 }

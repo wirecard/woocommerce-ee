@@ -7,7 +7,7 @@
  *
  * They have been tested and approved for full functionality in the standard configuration
  * (status on delivery) of the corresponding shop system. They are under General Public
- * License Version 3 (GPLv3) and can be used, developed and passed on to third parties under
+ * License version 3 (GPLv3) and can be used, developed and passed on to third parties under
  * the same terms.
  *
  * However, Wirecard AG does not provide any guarantee or accept any liability for any errors
@@ -29,11 +29,30 @@
  * Please do not use the plugin if you do not agree to these terms of use!
  */
 
-require_once __DIR__ . '/wc-settings-api.php';
+require_once __DIR__ . '/../../../../classes/handler/class-wirecard-response-handler.php';
 
-class WC_Payment_Gateway extends WC_Settings_API {
+use Wirecard\PaymentSdk\Exception\MalformedResponseException;
 
-	public function init_settings() {
-		return;
+class WC_Gateway_Wirecard_Response_Handler_Utest extends \PHPUnit_Framework_TestCase {
+	private $handler;
+
+	private $transaction_service;
+	public function setUp() {
+		$this->handler = new Wirecard_Response_Handler();
+		$this->transaction_service = $this->getMockBuilder( \Wirecard\PaymentSdk\TransactionService::class )
+			->setMethods( ['process'] )
+			->disableOriginalConstructor()
+			->getMock();
+	}
+
+	/**
+	 * @expectedException \Wirecard\PaymentSdk\Exception\MalformedResponseException
+	 */
+	public function test_handle_response() {
+		$request = array(
+			'payment-method' => 'paypal'
+		);
+
+		$this->handler->handle_response( $request );
 	}
 }

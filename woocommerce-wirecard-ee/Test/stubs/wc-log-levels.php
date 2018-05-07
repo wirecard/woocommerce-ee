@@ -7,7 +7,7 @@
  *
  * They have been tested and approved for full functionality in the standard configuration
  * (status on delivery) of the corresponding shop system. They are under General Public
- * License Version 3 (GPLv3) and can be used, developed and passed on to third parties under
+ * License version 3 (GPLv3) and can be used, developed and passed on to third parties under
  * the same terms.
  *
  * However, Wirecard AG does not provide any guarantee or accept any liability for any errors
@@ -29,11 +29,13 @@
  * Please do not use the plugin if you do not agree to these terms of use!
  */
 
-require_once __DIR__ . '/wc-settings-api.php';
-
-class WC_Payment_Gateway extends WC_Settings_API {
-
-	public function init_settings() {
-		return;
-	}
+class WC_Log_Levels {
+	const EMERGENCY = 'emergency';
+	const ALERT     = 'alert';
+	const CRITICAL  = 'critical';
+	const ERROR     = 'error';
+	const WARNING   = 'warning';
+	const NOTICE    = 'notice';
+	const INFO      = 'info';
+	const DEBUG     = 'debug';
 }

@@ -7,7 +7,7 @@
  *
  * They have been tested and approved for full functionality in the standard configuration
  * (status on delivery) of the corresponding shop system. They are under General Public
- * License Version 3 (GPLv3) and can be used, developed and passed on to third parties under
+ * License version 3 (GPLv3) and can be used, developed and passed on to third parties under
  * the same terms.
  *
  * However, Wirecard AG does not provide any guarantee or accept any liability for any errors
@@ -29,11 +29,32 @@
  * Please do not use the plugin if you do not agree to these terms of use!
  */
 
-require_once __DIR__ . '/wc-settings-api.php';
+class WC_Settings_API {
 
-class WC_Payment_Gateway extends WC_Settings_API {
+	public function get_option( $key, $empty_value = null ) {
+		$data = array(
+			'ssl_max_limit'      => 10,
+			'three_d_min_limit'  => 20,
+			'enabled'            => 'yes',
+			'allowed_currencies' => array(
+				'EUR', 'USD',
+			),
+			'min_amount'         => 20,
+			'max_amount'         => 3000,
+			'shipping_countries' => array(
+				'Austria',
+				'Germany',
+			),
+			'billing_countries'  => array(
+				'Austria',
+				'Germany',
+			),
+		);
 
-	public function init_settings() {
-		return;
+		if ( isset( $data[$key] ) ) {
+			return $data[$key];
+		} else {
+			return $key;
+		}
 	}
 }
