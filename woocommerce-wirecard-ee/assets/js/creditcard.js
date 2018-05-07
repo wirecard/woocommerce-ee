@@ -216,7 +216,7 @@ $( document ).ready(
 		*/
 		function formSubmitSuccessHandler( response ) {
 			token = null;
-			if( response.hasOwnProperty('token_id') ) {
+			if ( response.hasOwnProperty( 'token_id' ) ) {
 				token = response.token_id;
 			} else if ( response.hasOwnProperty( 'card_token' ) && response.card_token.hasOwnProperty( 'token' )) {
 				token = response.card_token.token;

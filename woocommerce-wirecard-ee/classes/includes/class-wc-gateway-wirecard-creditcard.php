@@ -244,7 +244,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 		}
 
 		$woocommerce_currency = $this->get_option( 'woocommerce_currency' );
-		if ( !strlen( $woocommerce_currency ) ) {
+		if ( ! strlen( $woocommerce_currency ) ) {
 			$woocommerce_currency = get_woocommerce_currency();
 		}
 
@@ -349,11 +349,11 @@ HTML;
 
 		$this->transaction = new CreditCardTransaction();
 
-		if(!array_diff_key(array_flip(['expiration_month', 'expiration_year']), $_POST)) {
+		if ( !array_diff_key( array_flip( ['expiration_month', 'expiration_year'] ), $_POST ) ) {
 			$card = new \Wirecard\PaymentSdk\Entity\Card();
-			$card->setExpirationYear($_POST['expiration_year']);
-			$card->setExpirationMonth($_POST['expiration_month']);
-			$this->transaction->setCard($card);
+			$card->setExpirationYear( $_POST['expiration_year'] );
+			$card->setExpirationMonth( $_POST['expiration_month'] );
+			$this->transaction->setCard( $card );
 		}
 
 		parent::process_payment( $order_id );
