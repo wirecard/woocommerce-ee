@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Wirecard WooCommerce Extension\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-05-04 06:26+0000\n"
-"PO-Revision-Date: 2018-05-04 06:27+0000\n"
+"PO-Revision-Date: 2018-05-07 07:18+0000\n"
 "Last-Translator: admin <admin@admin.at>\n"
 "Language-Team: German\n"
 "Language: de-DE\n"
@@ -198,7 +198,7 @@ msgstr "Löschen"
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:62
 msgid "Alipay Crossborder transactions via Wirecard Payment Processing Gateway"
 msgstr ""
-"Alipay Crossborder Transaktionen via Wirecard Payment Processing Gateway."
+"Alipay Cross-border Transaktionen via Wirecard Payment Processing Gateway."
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:94 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:153 
@@ -241,11 +241,11 @@ msgstr "Aktivieren/Deaktivieren"
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:96
 msgid "Activate payment method Alipay Crossborder"
-msgstr "Zahlungsmittel Alipay Crossborder aktivieren."
+msgstr "Zahlungsmittel Alipay Cross-border aktivieren."
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:97
 msgid "Enable Wirecard Alipay Crossborder"
-msgstr "Wirecard Alipay Crossborder aktivieren"
+msgstr "Wirecard Alipay Cross-border aktivieren"
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:101 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:109 
@@ -277,7 +277,7 @@ msgstr ""
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:104
 msgid "Wirecard Alipay Crossborder"
-msgstr "Wirecard Alipay Crossborder"
+msgstr "Wirecard Alipay Cross-border"
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:107 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:115 
@@ -587,7 +587,7 @@ msgid ""
 "Select between \"Capture\" to capture / invoice your order automatically or "
 "\"Authorization\" to manually capture / invoice. "
 msgstr ""
-"Wählen Sie zwischen \"Capture\" um automatisch eine Buchung durchzuführen "
+"Wählen Sie zwischen \"Purchase\" um automatisch eine Buchung durchzuführen "
 "oder \"Authorization\" um eine manuelle Buchung zu ermöglichen."
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:212
@@ -768,7 +768,7 @@ msgid ""
 "Select between \"Capture\" to capture / invoice your order automatically or "
 "\"Authorization\" to manually capture / invoice."
 msgstr ""
-"Wählen Sie zwischen \"Capture\" um automatisch eine Buchung durchzuführen "
+"Wählen Sie zwischen \"Purchase\" um automatisch eine Buchung durchzuführen "
 "oder \"Authorization\" um eine manuelle Buchung zu ermöglichen."
 
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:169
