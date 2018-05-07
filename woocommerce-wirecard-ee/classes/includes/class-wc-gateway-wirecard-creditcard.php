@@ -349,7 +349,7 @@ HTML;
 
 		$this->transaction = new CreditCardTransaction();
 
-		if ( !array_diff_key( array_flip( ['expiration_month', 'expiration_year'] ), $_POST ) ) {
+		if ( ! array_diff_key( array_flip( [ 'expiration_month', 'expiration_year' ] ), $_POST ) ) {
 			$card = new \Wirecard\PaymentSdk\Entity\Card();
 			$card->setExpirationYear( $_POST['expiration_year'] );
 			$card->setExpirationMonth( $_POST['expiration_month'] );
