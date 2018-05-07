@@ -134,7 +134,6 @@ class Wirecard_Settings {
 
 		if ( $start < $pages && $pages > 4 ) {
 			echo "<select onchange='goToWctPage(this.value)'>";
-			$start = $start - 10;
 			if ( $start < 1 ) {
 				$start = 1;
 			}
@@ -143,7 +142,7 @@ class Wirecard_Settings {
 			if ( $stop > $pages ) {
 				$stop = $pages;
 			}
-			for ( $i = $start; $i < $stop + 1; $i ++ ) {
+			for ( $i = 1; $i < $stop + 1; $i ++ ) {
 				$selected = ( $i == $start ) ? "selected='selected'" : '';
 				echo "<option value='$i' $selected>$i</option>";
 			}
