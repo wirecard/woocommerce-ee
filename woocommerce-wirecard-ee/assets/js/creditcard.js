@@ -120,9 +120,11 @@ function deleteCard( id ) {
 
 $( document ).ready(
 	function() {
-		$(document.body).on( 'checkout_error', function() {
-			getRequestData( renderForm, logCallback  );
-		});
+		$( document.body ).on(
+			'checkout_error', function() {
+				getRequestData( renderForm, logCallback );
+			}
+		);
 
 		checkout_form      = $( 'form.checkout' );
 		saved_credit_cards = $( '#wc_payment_method_wirecard_creditcard_vault' );
@@ -130,7 +132,7 @@ $( document ).ready(
 		new_credit_card.hide();
 
 		getVaultData();
-		getRequestData( renderForm, logCallback  );
+		getRequestData( renderForm, logCallback );
 
 		$( "input[name=payment_method]" ).change(
 			function() {
@@ -184,27 +186,29 @@ $( document ).ready(
 					if ( token !== null ) {
 						return true;
 					} else {
-						getRequestData(
-							function(data) {
-									WirecardPaymentPage.seamlessSubmitForm(
-										{
-											onSuccess: formSubmitSuccessHandler,
-											onError: logCallback,
-											requestData: {
-												merchant_account_id: data.merchant_account_id,
-												request_id: data.request_id
-											},
-											wrappingDivId: "wc_payment_method_wirecard_creditcard_form"
-										}
-									);
-							},
-							logCallback
-						);
+						getRequestData( submitForm, logCallback );
 						return false;
 					}
 				}
 			}
 		);
+
+		/**
+		 * Submit Payment page seamless form
+		 *
+		 * @param request_data
+		 * @since 1.1.0
+		 */
+		function submitForm( request_data ) {
+			WirecardPaymentPage.seamlessSubmitForm(
+				{
+					onSuccess: formSubmitSuccessHandler,
+					onError: logCallback,
+					requestData: request_data,
+					wrappingDivId: "wc_payment_method_wirecard_creditcard_form"
+				}
+			);
+		}
 
 		/**
 		* Display error massages
@@ -214,7 +218,7 @@ $( document ).ready(
 		function logCallback( response ) {
 			console.error( response );
 			processing = false;
-			token = null;
+			token      = null;
 		}
 
 		/**
@@ -228,7 +232,7 @@ $( document ).ready(
 			} else if ( response.hasOwnProperty( 'card_token' ) && response.card_token.hasOwnProperty( 'token' )) {
 				token = response.card_token.token;
 
-				for( var el in [ "expiration_month", "expiration_year" ] ) {
+				for ( var el in [ "expiration_month", "expiration_year" ] ) {
 					var element = $( "#" + el );
 					if ( element.length > 0 ) {
 						element.remove();
