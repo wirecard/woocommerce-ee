@@ -89,6 +89,9 @@ class Wirecard_Transaction_Factory {
 			'tx_id'                 => array(
 				'title' => __( 'Transaction', 'woocommerce-gateway-wirecard' ),
 			),
+			'order_id'              => array(
+				'title' => __( 'Order number', 'woocommerce-gateway-wirecard' ),
+			),
 			'transaction_id'        => array(
 				'title' => __( 'Transaction ID', 'woocommerce-gateway-wirecard' ),
 			),
@@ -109,9 +112,6 @@ class Wirecard_Transaction_Factory {
 			),
 			'currency'              => array(
 				'title' => __( 'Currency', 'woocommerce-gateway-wirecard' ),
-			),
-			'order_id'              => array(
-				'title' => __( 'Order number', 'woocommerce-gateway-wirecard' ),
 			),
 		);
 	}
@@ -304,7 +304,7 @@ class Wirecard_Transaction_Factory {
 									}
 									?>
 									<p class="add-items">
-										<a href="?page=wirecardpayment" class="button"><?php echo __( 'Wirecard Payment Gateway', 'woocommerce-gateway-wirecard' ); ?></a> <!---->
+										<a href="?page=wirecardpayment"><?php echo __( 'Wirecard Payment Gateway', 'woocommerce-gateway-wirecard' ); ?></a> <!---->
 									</p>
 								</div>
 								<hr>
