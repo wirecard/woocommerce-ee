@@ -120,18 +120,24 @@ function deleteCard( id ) {
 
 $( document ).ready(
 	function() {
+		$( document.body ).on(
+			'checkout_error', function() {
+				getRequestData( renderForm, logCallback );
+			}
+		);
+
 		checkout_form      = $( 'form.checkout' );
 		saved_credit_cards = $( '#wc_payment_method_wirecard_creditcard_vault' );
 		new_credit_card    = $( '#wc_payment_method_wirecard_new_credit_card' );
 		new_credit_card.hide();
 
 		getVaultData();
-		getRequestData( renderForm );
+		getRequestData( renderForm, logCallback );
 
 		$( "input[name=payment_method]" ).change(
 			function() {
 				if ( $( this ).val() === 'wirecard_ee_creditcard' ) {
-					getRequestData();
+					getRequestData( renderForm, logCallback );
 					getVaultData();
 					return false;
 				}
@@ -180,27 +186,29 @@ $( document ).ready(
 					if ( token !== null ) {
 						return true;
 					} else {
-						getRequestData(
-							function(data) {
-									WirecardPaymentPage.seamlessSubmitForm(
-										{
-											onSuccess: formSubmitSuccessHandler,
-											onError: logCallback,
-											requestData: {
-												merchant_account_id: data.merchant_account_id,
-												request_id: data.request_id
-											},
-											wrappingDivId: "wc_payment_method_wirecard_creditcard_form"
-										}
-									);
-							}
-						);
+						getRequestData( submitForm, logCallback );
 						return false;
 					}
 				}
-				processing = false;
 			}
 		);
+
+		/**
+		 * Submit Payment page seamless form
+		 *
+		 * @param request_data
+		 * @since 1.1.0
+		 */
+		function submitForm( request_data ) {
+			WirecardPaymentPage.seamlessSubmitForm(
+				{
+					onSuccess: formSubmitSuccessHandler,
+					onError: logCallback,
+					requestData: request_data,
+					wrappingDivId: "wc_payment_method_wirecard_creditcard_form"
+				}
+			);
+		}
 
 		/**
 		* Display error massages
@@ -209,6 +217,8 @@ $( document ).ready(
 		*/
 		function logCallback( response ) {
 			console.error( response );
+			processing = false;
+			token      = null;
 		}
 
 		/**
@@ -217,31 +227,29 @@ $( document ).ready(
 		* @since 1.0.0
 		*/
 		function formSubmitSuccessHandler( response ) {
-			token = null;
 			if ( response.hasOwnProperty( 'token_id' ) ) {
 				token = response.token_id;
 			} else if ( response.hasOwnProperty( 'card_token' ) && response.card_token.hasOwnProperty( 'token' )) {
 				token = response.card_token.token;
-				jQuery( '<input>' ).attr(
-					{
-						type: 'hidden',
-						name: 'expiration_month',
-						id: 'expiration_month',
-						value: response.card.expiration_month
-					}
-				).appendTo( checkout_form );
 
-				jQuery( '<input>' ).attr(
-					{
-						type: 'hidden',
-						name: 'expiration_year',
-						id: 'expiration_year',
-						value: response.card.expiration_year
+				for ( var el in [ "expiration_month", "expiration_year" ] ) {
+					var element = $( "#" + el );
+					if ( element.length > 0 ) {
+						element.remove();
+					} else {
+						jQuery( '<input>' ).attr(
+							{
+								type: 'hidden',
+								name: el,
+								id: '#' + el,
+								value: response.card[el]
+							}
+						).appendTo( checkout_form );
 					}
-				).appendTo( checkout_form );
+				}
 			}
 
-			if ( $( "#wirecard-store-card" ).is( ":checked" ) && response.transaction_state == 'success' ) {
+			if ( $( "#wirecard-store-card" ).is( ":checked" ) && response.transaction_state === 'success' ) {
 				$.ajax(
 					{
 						type: 'POST',
@@ -254,6 +262,11 @@ $( document ).ready(
 					}
 				);
 			}
+
+			if ( jQuery( "#tokenId" ).length > 0 ) {
+				jQuery( "#tokenId" ).remove();
+			}
+
 			jQuery( '<input>' ).attr(
 				{
 					type: 'hidden',
@@ -271,19 +284,22 @@ $( document ).ready(
 		 *
 		 * @since 1.0.0
 		 */
-		function getRequestData(callback) {
+		function getRequestData( success, error ) {
 			$( '.show-spinner' ).show();
 			$.ajax(
 				{
 					type: 'POST',
 					url: ajax_url,
+					cache: false,
 					data: { 'action' : 'get_credit_card_request_data' },
 					dataType: 'json',
 					success: function (data) {
-						callback( JSON.parse( data.data ) );
+						$( '.show-spinner' ).hide();
+						success( JSON.parse( data.data ) );
 					},
 					error: function (data) {
-						console.log( data );
+						$( '.show-spinner' ).hide();
+						error( data );
 					}
 				}
 			);
