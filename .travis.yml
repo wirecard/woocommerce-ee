@@ -37,8 +37,8 @@ install:
 
 script:
   - composer test-coverage
-  - $PHPCS_DIR/bin/phpcs -p --ignore=*/Test/*,*/vendor/* . --standard=WordPress-Core
   - sonar-scanner
+  - $PHPCS_DIR/bin/phpcs -p --ignore=*/Test/*,*/vendor/* . --standard=WordPress-Core
 
 after_script:
   - travis_retry composer upload-coverage
