@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Wirecard WooCommerce Extension\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-05-04 07:10+0000\n"
-"PO-Revision-Date: 2018-05-08 13:56+0000\n"
+"PO-Revision-Date: 2018-05-09 12:59+0000\n"
 "Last-Translator: admin <admin@admin.at>\n"
 "Language-Team: English (United States)\n"
 "Language: en-US\n"
@@ -139,7 +139,7 @@ msgstr "Order number"
 
 #: classes/admin/class-wirecard-transaction-factory.php:263
 msgid "An error occured. The requested transaction could not be found!"
-msgstr "An error has occured. The requested transaction could not be found."
+msgstr "An error has occured. Requested transaction could not be found."
 
 #: classes/admin/class-wirecard-transaction-factory.php:281
 msgid " payment"
@@ -298,7 +298,7 @@ msgstr "Merchant Account ID"
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:111 
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:110
 msgid "The unique identifier assigned for your Merchant Account."
-msgstr "The unique identifier assigned to your merchant account."
+msgstr "Unique identifier assigned to your merchant account."
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:113 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:121 
@@ -469,7 +469,7 @@ msgid ""
 "by the financial service provider"
 msgstr ""
 "Send text which is displayed on the bank statement issued to your consumer "
-"by the financial service provider"
+"by the financial service provider."
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:156 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:199 
@@ -538,7 +538,7 @@ msgstr "3-D Secure Merchant Account ID"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:129
 msgid "The unique identifier assigned for your 3D Merchant Account."
-msgstr "The unique identifier assigned to your 3-D Secure merchant account."
+msgstr "Unique identifier assigned to your 3-D Secure merchant account."
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:133
 msgid "3-D Secure Secret Key"
@@ -635,7 +635,7 @@ msgid ""
 "Billing/Shipping address are identical"
 msgstr ""
 "If activated, payment method Guaranteed Invoice will only be displayed if "
-"billing/shipping address are identical"
+"billing/shipping address are identical."
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:165
 msgid "Billing/Shipping address must be identical"
@@ -929,7 +929,7 @@ msgstr "Wirecard Sofort."
 msgid ""
 "Unionpay International transactions via Wirecard Payment Processing Gateway"
 msgstr ""
-"UnionPay International transactions via Wirecard Payment Processing Gateway"
+"UnionPay International transactions via Wirecard Payment Processing Gateway."
 
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:97
 msgid "Activate payment method Unionpay International"

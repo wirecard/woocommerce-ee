@@ -71,13 +71,14 @@ class WC_Gateway_Wirecard_Additional_Information_Utest extends \PHPUnit_Framewor
 
 		$basket = new \Wirecard\PaymentSdk\Entity\Basket();
 		$item   = new \Wirecard\PaymentSdk\Entity\Item(
-			'nemo x1',
+			'nemo',
 			new \Wirecard\PaymentSdk\Entity\Amount( 20, 'EUR' ),
 			1
 		);
 		$item->setDescription( 'short description' );
 		$item->setArticleNumber( '1' );
 		$item->setTaxRate( 0.0 );
+		$item->setTaxAmount( new \Wirecard\PaymentSdk\Entity\Amount( 10, 'EUR' ) );
 		$basket->add( $item );
 
 		$item = new \Wirecard\PaymentSdk\Entity\Item(
@@ -88,16 +89,6 @@ class WC_Gateway_Wirecard_Additional_Information_Utest extends \PHPUnit_Framewor
 		$item->setDescription( 'Shipping' );
 		$item->setArticleNumber( 'Shipping' );
 		$item->setTaxRate( 20 );
-		$basket->add( $item );
-
-		$item = new \Wirecard\PaymentSdk\Entity\Item(
-			'Rounding',
-			new \Wirecard\PaymentSdk\Entity\Amount( 24, 'EUR' ),
-			1
-		);
-		$item->setDescription( 'Rounding' );
-		$item->setArticleNumber( 'Rounding' );
-		$item->setTaxRate( 20.0 );
 		$basket->add( $item );
 		$basket->setVersion( $expected );
 

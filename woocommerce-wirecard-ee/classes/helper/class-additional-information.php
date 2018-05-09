@@ -76,7 +76,6 @@ class Additional_Information {
 		foreach ( $cart->get_cart() as $cart_item_key => $cart_item ) {
 			/** @var $product WC_Product */
 			$product = $cart_item['data'];
-			$sum    += number_format( wc_get_price_including_tax( $product ), wc_get_price_decimals() );
 			$basket  = $this->set_basket_item(
 				$basket,
 				$product,
@@ -87,17 +86,7 @@ class Additional_Information {
 		}
 
 		if ( $cart->get_shipping_total() > 0 ) {
-			$sum   += $cart->get_shipping_total() + $cart->get_shipping_tax();
 			$basket = $this->set_shipping_item( $basket, $cart->get_shipping_total(), $cart->get_shipping_tax() );
-		}
-
-		if ( ( $order_total - $sum ) > 0 ) {
-			$amount = new Amount( number_format( ( $order_total - $sum ), wc_get_price_decimals() ), get_woocommerce_currency() );
-			$item   = new Item( 'Rounding', $amount, 1 );
-			$item->setDescription( 'Rounding' );
-			$item->setArticleNumber( 'Rounding' );
-			$item->setTaxRate( 20.00 );
-			$basket->add( $item );
 		}
 
 		return $basket;
@@ -214,15 +203,16 @@ class Additional_Information {
 		$basket->setVersion( $transaction );
 		$sum = 0;
 		foreach ( $orderd_products as $item_id => $item ) {
-			$product = new WC_Product( $orderd_products[ $item_id ]->get_product_id() );
-			$sum    += number_format( wc_get_price_including_tax( $product ), wc_get_price_decimals() );
-			$basket  = $this->set_basket_item(
+			$product  = new WC_Product( $orderd_products[ $item_id ]->get_product_id() );
+			$item_sum = number_format( wc_get_price_including_tax( $product ), wc_get_price_decimals() );
+			$basket   = $this->set_basket_item(
 				$basket,
 				$product,
 				$orderd_products[ $item_id ]->get_quantity(),
 				wc_get_price_excluding_tax( $product ),
 				( wc_get_price_including_tax( $product ) - wc_get_price_excluding_tax( $product ) )
 			);
+			$sum     += $item_sum * ( $orderd_products[ $item_id ]->get_quantity() );
 		}
 
 		if ( $shipping_total > 0 ) {
@@ -265,10 +255,11 @@ class Additional_Information {
 			$tax_rate = number_format( $item_tax_rate * 100, wc_get_price_decimals() );
 		}
 
-		$item = new Item( $product->get_name() . ' x' . $quantity, $amount, 1 );
+		$item = new Item( $product->get_name(), $amount, $quantity );
 		$item->setDescription( $description );
 		$item->setArticleNumber( $article_nr );
 		$item->setTaxRate( floatval( number_format( $tax_rate, wc_get_price_decimals() ) ) );
+		$item->setTaxAmount( new Amount( wc_round_tax_total( $tax ), get_woocommerce_currency() ) );
 		$basket->add( $item );
 
 		return $basket;

@@ -89,6 +89,10 @@ function wc_get_price_excluding_tax( $product ) {
 	return 10.0;
 }
 
+function wc_round_tax_total( $amount ) {
+	return number_format( $amount, 2 );
+}
+
 function get_woocommerce_currency() {
 	return 'EUR';
 }
