@@ -75,8 +75,8 @@ class Additional_Information {
 		$sum = 0;
 		foreach ( $cart->get_cart() as $cart_item_key => $cart_item ) {
 			/** @var $product WC_Product */
-			$product  = $cart_item['data'];
-			$basket   = $this->set_basket_item(
+			$product = $cart_item['data'];
+			$basket  = $this->set_basket_item(
 				$basket,
 				$product,
 				$cart_item['quantity'],
