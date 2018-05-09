@@ -205,15 +205,16 @@ class Additional_Information {
 		$basket->setVersion( $transaction );
 		$sum = 0;
 		foreach ( $orderd_products as $item_id => $item ) {
-			$product = new WC_Product( $orderd_products[ $item_id ]->get_product_id() );
-			$sum    += number_format( wc_get_price_including_tax( $product ), wc_get_price_decimals() );
-			$basket  = $this->set_basket_item(
+			$product  = new WC_Product( $orderd_products[ $item_id ]->get_product_id() );
+			$item_sum = number_format( wc_get_price_including_tax( $product ), wc_get_price_decimals() );
+			$basket   = $this->set_basket_item(
 				$basket,
 				$product,
 				$orderd_products[ $item_id ]->get_quantity(),
 				wc_get_price_excluding_tax( $product ),
 				( wc_get_price_including_tax( $product ) - wc_get_price_excluding_tax( $product ) )
 			);
+			$sum     += $item_sum * $orderd_products[ $item_id ]->get_quantity();
 		}
 
 		if ( $shipping_total > 0 ) {
