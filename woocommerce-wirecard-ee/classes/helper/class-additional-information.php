@@ -91,15 +91,6 @@ class Additional_Information {
 			$basket = $this->set_shipping_item( $basket, $cart->get_shipping_total(), $cart->get_shipping_tax() );
 		}
 
-		if ( ( $order_total - $sum ) > 0 ) {
-			$amount = new Amount( number_format( ( $order_total - $sum ), wc_get_price_decimals() ), get_woocommerce_currency() );
-			$item   = new Item( 'Rounding', $amount, 1 );
-			$item->setDescription( 'Rounding' );
-			$item->setArticleNumber( 'Rounding' );
-			$item->setTaxRate( 20.00 );
-			$basket->add( $item );
-		}
-
 		return $basket;
 	}
 
@@ -265,7 +256,7 @@ class Additional_Information {
 			$tax_rate = number_format( $item_tax_rate * 100, wc_get_price_decimals() );
 		}
 
-		$item = new Item( $product->get_name() . ' x' . $quantity, $amount, 1 );
+		$item = new Item( $product->get_name(), $amount, $quantity );
 		$item->setDescription( $description );
 		$item->setArticleNumber( $article_nr );
 		$item->setTaxRate( floatval( number_format( $tax_rate, wc_get_price_decimals() ) ) );
