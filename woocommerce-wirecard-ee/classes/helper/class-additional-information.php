@@ -222,7 +222,7 @@ class Additional_Information {
 			$basket = $this->set_shipping_item( $basket, $shipping_total, $shipping_tax );
 		}
 
-		if ( ( $order_total - $sum ) > 0 ) {
+		if ( ( $order_total - $sum ) != 0 ) {
 			$amount = new Amount( number_format( ( $order_total - $sum ), wc_get_price_decimals() ), get_woocommerce_currency() );
 			$item   = new Item( 'Rounding', $amount, 1 );
 			$item->setDescription( 'Rounding' );
