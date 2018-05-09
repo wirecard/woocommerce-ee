@@ -212,7 +212,7 @@ class Additional_Information {
 				wc_get_price_excluding_tax( $product ),
 				( wc_get_price_including_tax( $product ) - wc_get_price_excluding_tax( $product ) )
 			);
-			$sum     += $item_sum * $orderd_products[ $item_id ]->get_quantity();
+			$sum     += $item_sum * ( $orderd_products[ $item_id ]->get_quantity() );
 		}
 
 		if ( $shipping_total > 0 ) {
@@ -220,7 +220,7 @@ class Additional_Information {
 			$basket = $this->set_shipping_item( $basket, $shipping_total, $shipping_tax );
 		}
 
-		if ( ( $order_total - $sum ) != 0 ) {
+		if ( ( $order_total - $sum ) < 0 ) {
 			$amount = new Amount( number_format( ( $order_total - $sum ), wc_get_price_decimals() ), get_woocommerce_currency() );
 			$item   = new Item( 'Rounding', $amount, 1 );
 			$item->setDescription( 'Rounding' );
