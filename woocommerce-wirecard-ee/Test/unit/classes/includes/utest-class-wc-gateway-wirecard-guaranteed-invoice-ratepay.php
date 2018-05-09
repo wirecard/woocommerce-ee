@@ -72,7 +72,7 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay_Utest extends \PHPUnit_Fram
 
 		$basket = new \Wirecard\PaymentSdk\Entity\Basket();
 		$item   = new \Wirecard\PaymentSdk\Entity\Item(
-			'nemo x1',
+			'nemo',
 			new \Wirecard\PaymentSdk\Entity\Amount( 20, 'EUR' ),
 			1
 		);
