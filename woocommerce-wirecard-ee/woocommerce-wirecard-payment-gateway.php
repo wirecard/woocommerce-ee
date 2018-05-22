@@ -298,11 +298,11 @@ function add_support_chat() {
  */
 function check_if_woo_installed() {
 	if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) )
-        || array_key_exists('woocommerce/woocommerce.php', get_site_option( 'active_sitewide_plugins') ) ) {
-        return;
+		|| array_key_exists('woocommerce/woocommerce.php', get_site_option( 'active_sitewide_plugins') ) ) {
+		return;
 	}
-    wp_die(
-        __( 'Sorry, but this plugin requires WooCommerce Plugin to be installed and active.', 'woocommerce-gateway-wirecard' ) .
-        '<br><a href="' . admin_url( 'plugins.php' ) . '">' . __( 'Go to Plugins', 'woocommerce-gateway-wirecard' ) . '</a>'
-    );
+	wp_die(
+		__( 'Sorry, but this plugin requires WooCommerce Plugin to be installed and active.', 'woocommerce-gateway-wirecard' ) .
+		'<br><a href="' . admin_url( 'plugins.php' ) . '">' . __( 'Go to Plugins', 'woocommerce-gateway-wirecard' ) . '</a>'
+	);
 }
