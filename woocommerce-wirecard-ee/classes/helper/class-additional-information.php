@@ -85,17 +85,14 @@ class Additional_Information {
 			);
 			$sum    += number_format( wc_get_price_including_tax( $product ), wc_get_price_decimals() ) * $cart_item['quantity'];
 		}
-
-		if ( $cart->get_shipping_total() > 0 ) {
-			$shipping = $cart->get_shipping_total();
-			$sum     += $shipping + $cart->get_shipping_tax();
-			if ( $cart->get_total( 'total' ) - $sum > 0 ) {
-				$shipping += number_format( ( $cart->get_total( 'total' ) - $sum ), wc_get_price_decimals() );
-			}
-			$basket   = $this->set_shipping_item( $basket, $shipping, $cart->get_shipping_tax() );
-		} else if ( $cart->get_total() + $sum > 0 ) {
-			$shipping = $cart->get_total() - $sum;
-			$basket   = $this->set_shipping_item( $basket, $shipping, $cart->get_shipping_tax() );
+		//Check if there is a rounding difference and if so add the difference to shipping
+		$shipping = $cart->get_shipping_total();
+		$sum     += $shipping + $cart->get_shipping_tax();
+		if ( $cart->get_total( 'total' ) - $sum > 0 ) {
+			$shipping += number_format( ( $cart->get_total( 'total' ) - $sum ), wc_get_price_decimals() );
+		}
+		if ( $shipping > 0 ) {
+			$basket = $this->set_shipping_item( $basket, $shipping, $cart->get_shipping_tax() );
 		}
 
 		return $basket;
@@ -132,7 +129,7 @@ class Additional_Information {
 		$transaction->setDescriptor( $this->create_descriptor( $order ) );
 		$transaction->setAccountHolder( $this->create_account_holder( $order, 'billing' ) );
 		$transaction->setShipping( $this->create_account_holder( $order, 'shipping' ) );
-		$transaction->setOrderNumber( $order->get_order_number() );
+		//$transaction->setOrderNumber( $order->get_order_number() );
 		$transaction->setBasket( $this->create_shopping_basket( $transaction, $total ) );
 		$transaction->setIpAddress( $order->get_customer_ip_address() );
 		$transaction->setConsumerId( $order->get_customer_id() );
@@ -223,16 +220,13 @@ class Additional_Information {
 			);
 			$sum     += $item_sum * ( $orderd_products[ $item_id ]->get_quantity() );
 		}
-
-		if ( $shipping_total > 0 ) {
-			$sum   += $shipping_total + $shipping_tax;
-			if ( ( $order_total - $sum ) > 0 ) {
-				$shipping_total += $order_total - $sum;
-			}
-			$basket = $this->set_shipping_item( $basket, $shipping_total, $shipping_tax );
-		} else if ( ( $order_total - $sum ) > 0 ) {
+		//Check if there is a rounding difference and if so add the difference to shipping
+		$sum += $shipping_total + $shipping_tax;
+		if ( ( $order_total - $sum ) > 0 ) {
 			$shipping_total += $order_total - $sum;
-			$basket          = $this->set_shipping_item( $basket, $shipping_total, $shipping_tax );
+		}
+		if ( $shipping_total > 0 ) {
+			$basket = $this->set_shipping_item( $basket, $shipping_total, $shipping_tax );
 		}
 
 		return $basket;
