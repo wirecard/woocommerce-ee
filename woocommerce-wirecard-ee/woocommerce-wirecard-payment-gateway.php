@@ -178,7 +178,7 @@ function install_wirecard_payment_gateway() {
 	}
 	$sql = "CREATE TABLE IF NOT EXISTS {$table_name} (
 		tx_id int(10) unsigned NOT NULL auto_increment,
-		transaction_id varchar(128) default NULL,
+		transaction_id varchar(128) default NULL UNIQUE,
 		parent_transaction_id VARCHAR(128) default NULL,
 		order_id int(10) NULL,
 		cart_id int(10) unsigned NOT NULL,
