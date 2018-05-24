@@ -333,7 +333,6 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 
 		$basket            = new Basket();
 		$this->transaction = new RatepayInvoiceTransaction();
-		parent::process_refund( $order_id, $amount, '' );
 
 		$this->transaction->setParentTransactionId( $order->get_transaction_id() );
 		$this->transaction->setAmount( new Amount( $amount, $order->get_currency() ) );
