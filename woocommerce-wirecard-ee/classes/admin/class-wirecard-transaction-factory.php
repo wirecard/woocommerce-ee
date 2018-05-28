@@ -131,24 +131,42 @@ class Wirecard_Transaction_Factory {
 	 */
 	public function create_transaction( $order, $response, $base_url, $transaction_state, $payment_method ) {
 		global $wpdb;
-
 		$requested_amount      = $response->getData()['requested-amount'];
 		$parent_transaction_id = '';
 		$parent_transaction    = $this->get_transaction( $response->getParentTransactionId() );
+		$transaction = $this->get_transaction( $response->getTransactionId() );
 
-		if ( $parent_transaction && ( $order->get_total() == $requested_amount ) ) {
-			$parent_transaction_id = $response->getParentTransactionId();
-			// update parent transaction to closed, no back-end ops possible anymore
+		if ( $transaction && ( 'awaiting' == $transaction->transaction_state ) ) {
 			$wpdb->update(
 				$this->table_name,
 				array(
-					'closed'            => '1',
-					'transaction_state' => 'closed',
+					'transaction_state' => $transaction_state,
 				),
 				array(
-					'transaction_id' => $parent_transaction_id,
+					'transaction_id' => $response->getTransactionId(),
 				)
 			);
+		}
+
+		//set parent_transaction_id only if there is an existing parent entry in database
+		if ( $parent_transaction ) {
+			$parent_transaction_id = $response->getParentTransactionId();
+			$action = $response->getTransactionType();
+			$rest_amount = $this->get_parent_rest_amount( $parent_transaction_id, $action );
+
+			if ( $rest_amount == $requested_amount ) {
+				// update parent transaction to closed, no back-end ops possible anymore
+				$wpdb->update(
+					$this->table_name,
+					array(
+						'closed'            => '1',
+						'transaction_state' => 'closed',
+					),
+					array(
+						'transaction_id' => $parent_transaction_id,
+					)
+				);
+			}
 		}
 		$transaction_link = $this->get_transaction_link( $base_url, $response );
 		$transaction      = $this->get_transaction( $response->getTransactionId() );
@@ -248,6 +266,29 @@ class Wirecard_Transaction_Factory {
 		}
 
 		return $transaction;
+	}
+
+	/**
+	 * Get rest amount of parent transaction
+	 *
+	 * @param string $parent_transaction_id
+	 * @param string $action
+	 *
+	 * @return float
+	 *
+	 * @since 1.1.2
+	 */
+	public function get_parent_rest_amount( $parent_transaction_id, $action ) {
+		global $wpdb;
+
+		$transaction_amounts = $wpdb->get_results( $wpdb->prepare( "SELECT amount FROM {$wpdb->prefix}wirecard_payment_gateway_tx WHERE parent_transaction_id = %s AND transaction_type = %s", $parent_transaction_id, $action ) );
+		$parent = $wpdb->get_row( $wpdb->prepare( "SELECT amount FROM {$wpdb->prefix}wirecard_payment_gateway_tx WHERE transaction_id = %s", $parent_transaction_id ) );
+		$rest = $parent->amount;
+
+		foreach ( $transaction_amounts as $amount ) {
+			$rest -= $amount;
+		}
+		return $rest;
 	}
 
 
