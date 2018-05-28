@@ -134,19 +134,6 @@ class Wirecard_Transaction_Factory {
 		$requested_amount      = $response->getData()['requested-amount'];
 		$parent_transaction_id = '';
 		$parent_transaction    = $this->get_transaction( $response->getParentTransactionId() );
-		$transaction = $this->get_transaction( $response->getTransactionId() );
-
-		if ( $transaction && ( 'awaiting' == $transaction->transaction_state ) ) {
-			$wpdb->update(
-				$this->table_name,
-				array(
-					'transaction_state' => $transaction_state,
-				),
-				array(
-					'transaction_id' => $response->getTransactionId(),
-				)
-			);
-		}
 
 		//set parent_transaction_id only if there is an existing parent entry in database
 		if ( $parent_transaction ) {
@@ -155,6 +142,7 @@ class Wirecard_Transaction_Factory {
 			$rest_amount = $this->get_parent_rest_amount( $parent_transaction_id, $action );
 
 			if ( $rest_amount == $requested_amount ) {
+				$order->set_transaction_id( $response->getTransactionId() );
 				// update parent transaction to closed, no back-end ops possible anymore
 				$wpdb->update(
 					$this->table_name,
@@ -167,11 +155,13 @@ class Wirecard_Transaction_Factory {
 					)
 				);
 			}
+		} else {
+			$order->set_transaction_id( $response->getTransactionId() );
 		}
 		$transaction_link = $this->get_transaction_link( $base_url, $response );
 		$transaction      = $this->get_transaction( $response->getTransactionId() );
 
-		if ( $transaction ) {
+		if ( $transaction && ( 'awaiting' == $transaction->transaction_state ) ) {
 			$wpdb->update(
 				$this->table_name,
 				$this->set_transaction_parameters(
@@ -182,7 +172,7 @@ class Wirecard_Transaction_Factory {
 					'transaction_id' => $response->getTransactionId(),
 				)
 			);
-		} else {
+		} elseif ( ! $transaction ) {
 			$wpdb->insert(
 				$this->table_name,
 				$this->set_transaction_parameters(

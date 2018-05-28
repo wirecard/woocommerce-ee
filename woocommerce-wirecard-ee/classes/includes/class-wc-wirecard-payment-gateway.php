@@ -462,9 +462,8 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 * @throws Exception
 	 */
 	public function update_payment_transaction( $order, $response, $transaction_state, $payment_method ) {
-		$order->set_transaction_id( $response->getTransactionId() );
-		//create table entry
 		$transaction_factory = new Wirecard_Transaction_Factory();
+		//create table entry
 		$result              = $transaction_factory->create_transaction( $order, $response, $this->get_option( 'base_url' ), $transaction_state, $payment_method );
 		if ( ! $result ) {
 			$logger = new WC_Logger();
