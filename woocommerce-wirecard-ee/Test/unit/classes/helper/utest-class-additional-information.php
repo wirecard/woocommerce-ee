@@ -45,7 +45,7 @@ class WC_Gateway_Wirecard_Additional_Information_Utest extends \PHPUnit_Framewor
 		$woocommerce->customer        = new WC_Customer();
 		$this->additional_information = new Additional_Information();
 		$this->transaction            = new \Wirecard\PaymentSdk\Transaction\CreditCardTransaction();
-		$this->order = $this->getMockBuilder( WC_Order::class )
+		$this->order                  = $this->getMockBuilder( WC_Order::class )
 			->disableOriginalConstructor()
 			->setMethods( [ 'get_total' ] )
 			->getMock();
@@ -98,7 +98,7 @@ class WC_Gateway_Wirecard_Additional_Information_Utest extends \PHPUnit_Framewor
 		$mocked_product->method( 'is_taxable' )->willReturn( 0 );
 		$mocked_product->method( 'get_name' )->willReturn( 'Testproduct' );
 
-		$mocked_cart = $this->getMockBuilder( WC_Cart::class )
+		$mocked_cart   = $this->getMockBuilder( WC_Cart::class )
 			->disableOriginalConstructor()
 			->setMethods( [ 'get_cart', 'get_shipping_total', 'get_total', 'get_shipping_tax' ] )
 			->getMock();

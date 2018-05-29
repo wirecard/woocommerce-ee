@@ -70,14 +70,14 @@ class WC_Gateway_Wirecard_Transaction_Factory_Utest extends \PHPUnit_Framework_T
 	public function test_update_create_transaction() {
 		global $wpdb;
 
-		$parent = new stdClass();
-		$parent->amount = 20;
+		$parent                    = new stdClass();
+		$parent->amount            = 20;
 		$parent->transaction_state = 'success';
 
-		$transaction = new stdClass();
-		$transaction->amount = 20;
+		$transaction                    = new stdClass();
+		$transaction->amount            = 20;
 		$transaction->transaction_state = 'awaiting';
-		$transactions = array( '1' => $transaction );
+		$transactions                   = array( '1' => $transaction );
 
 		$mocked_wpdb = $this->getMockBuilder( WPDB::class )
 			->setMethods( [ 'get_results', 'get_row' ] )
@@ -94,7 +94,7 @@ class WC_Gateway_Wirecard_Transaction_Factory_Utest extends \PHPUnit_Framework_T
 			->disableOriginalConstructor()
 			->setMethods( [ 'getParentTransactionId', 'getTransactionId', 'findElement', 'getData' ] )
 			->getMock();
-		$wpdb = $this->getMockBuilder( WPDB::class )
+		$wpdb     = $this->getMockBuilder( WPDB::class )
 			->disableOriginalConstructor()
 			->setMethods( [ 'get_row', 'get_results' ] )
 			->getMock();
