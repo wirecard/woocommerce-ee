@@ -59,10 +59,32 @@ class WC_Gateway_Wirecard_Transaction_Factory_Utest extends \PHPUnit_Framework_T
 		$this->response->method( 'getTransactionId' )->willReturn( '123' );
 		$this->response->method( 'getParentTransactionId' )->willReturn( '123' );
 		$this->response->method( 'findElement' )->with( 'merchant-account-id' )->willReturn( '1234' );
-		$this->response->method( 'getData' )->willReturn( 'response data' );
+
+		$response_data = array(
+			'requested-amount' => 20,
+		);
+		$this->response->method( 'getData' )->willReturn( $response_data );
 	}
 
 	public function test_update_create_transaction() {
+		global $wpdb;
+
+		$parent = new stdClass();
+		$parent->amount = 20;
+		$parent->transaction_state = 'success';
+
+		$transaction = new stdClass();
+		$transaction->amount = 20;
+		$transaction->transaction_state = 'awaiting';
+		$transactions = array( '1' => $transaction );
+
+		$mocked_wpdb = $this->getMockBuilder( WPDB::class )
+			->setMethods( [ 'get_results', 'get_row' ] )
+			->getMock();
+		$mocked_wpdb->method( 'get_row' )->willReturn( $parent );
+		$mocked_wpdb->method( 'get_results' )->willReturn( $transactions );
+		$wpdb = $mocked_wpdb;
+
 		$this->assertNull( $this->transaction_factory->create_transaction( $this->order, $this->response, 'www.my-url.com', 'closed', 'paypal' ) );
 	}
 
@@ -71,11 +93,18 @@ class WC_Gateway_Wirecard_Transaction_Factory_Utest extends \PHPUnit_Framework_T
 			->disableOriginalConstructor()
 			->setMethods( [ 'getParentTransactionId', 'getTransactionId', 'findElement', 'getData' ] )
 			->getMock();
+		$wpdb = $this->getMockBuilder( WPDB::class )
+			->disableOriginalConstructor()
+			->setMethods( [ 'get_row', 'get_results' ] )
+			->getMock();
 
 		$response->method( 'getParentTransactionId' )->willReturn( '1234' );
 		$response->method( 'getTransactionId' )->willReturn( '1234' );
 		$response->method( 'findElement' )->with( 'merchant-account-id' )->willReturn( '1234' );
-		$response->method( 'getData' )->willReturn( 'response data' );
+		$response_data = array(
+			'requested-amount' => 20,
+		);
+		$response->method( 'getData' )->willReturn( $response_data );
 		$this->assertNotNull( $this->transaction_factory->create_transaction( $this->order, $response, 'www.my-url.com', 'closed', 'paypal' ) );
 	}
 }
