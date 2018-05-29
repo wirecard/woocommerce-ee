@@ -50,7 +50,6 @@ class WC_Gateway_Wirecard_Transaction_Factory_Utest extends \PHPUnit_Framework_T
 		$this->order->method( 'get_total' )->willReturn( 20 );
 		$this->order->method( 'get_currency' )->willReturn( 'EUR' );
 		$this->order->method( 'get_id' )->willReturn( 1 );
-		$this->order->method( 'set_transaction_id' );
 
 		$this->response = $this->getMockBuilder( \Wirecard\PaymentSdk\Response\SuccessResponse::class )
 			->disableOriginalConstructor()
@@ -89,6 +88,37 @@ class WC_Gateway_Wirecard_Transaction_Factory_Utest extends \PHPUnit_Framework_T
 		$this->assertNull( $this->transaction_factory->create_transaction( $this->order, $this->response, 'www.my-url.com', 'closed', 'paypal' ) );
 	}
 
+	public function test_update_full_create_transaction() {
+		global $wpdb;
+
+		$parent                    = new stdClass();
+		$parent->amount            = 20;
+		$parent->transaction_state = 'success';
+
+		$mocked_wpdb = $this->getMockBuilder( WPDB::class )
+			->setMethods( [ 'get_results', 'get_row' ] )
+			->getMock();
+		$mocked_wpdb->method( 'get_row' )->willReturn( $parent );
+		$mocked_wpdb->method( 'get_results' )->willReturn( 0 );
+		$wpdb = $mocked_wpdb;
+
+		$update_response = $this->getMockBuilder( \Wirecard\PaymentSdk\Response\SuccessResponse::class )
+			->disableOriginalConstructor()
+			->setMethods( [ 'getParentTransactionId', 'getTransactionId', 'findElement', 'getData' ] )
+			->getMock();
+
+		$update_response->method( 'getTransactionId' )->willReturn( '124' );
+		$update_response->method( 'getParentTransactionId' )->willReturn( '123' );
+		$update_response->method( 'findElement' )->with( 'merchant-account-id' )->willReturn( '1234' );
+
+		$response_data = array(
+			'requested-amount' => 20,
+		);
+		$update_response->method( 'getData' )->willReturn( $response_data );
+
+		$this->assertNull( $this->transaction_factory->create_transaction( $this->order, $update_response, 'www.my-url.com', 'closed', 'paypal' ) );
+	}
+
 	public function test_insert_create_transaction() {
 		$response = $this->getMockBuilder( \Wirecard\PaymentSdk\Response\SuccessResponse::class )
 			->disableOriginalConstructor()
@@ -107,5 +137,50 @@ class WC_Gateway_Wirecard_Transaction_Factory_Utest extends \PHPUnit_Framework_T
 		);
 		$response->method( 'getData' )->willReturn( $response_data );
 		$this->assertNotNull( $this->transaction_factory->create_transaction( $this->order, $response, 'www.my-url.com', 'closed', 'paypal' ) );
+	}
+
+	public function test_handle_cancel_without_data() {
+		global $wpdb;
+
+		$mocked_wpdb = $this->getMockBuilder( WPDB::class )
+			->setMethods( [ 'get_results', 'get_row' ] )
+			->getMock();
+		$mocked_wpdb->method( 'get_row' )->willReturn( 0 );
+		$wpdb = $mocked_wpdb;
+
+		$actual = $this->transaction_factory->handle_cancel( '123' );
+		$expected = null;
+
+		$this->assertEquals( $expected, $actual );
+	}
+
+	public function test_handle_capture_without_data() {
+		global $wpdb;
+
+		$mocked_wpdb = $this->getMockBuilder( WPDB::class )
+			->setMethods( [ 'get_results', 'get_row' ] )
+			->getMock();
+		$mocked_wpdb->method( 'get_row' )->willReturn( 0 );
+		$wpdb = $mocked_wpdb;
+
+		$actual = $this->transaction_factory->handle_capture( '123' );
+		$expected = null;
+
+		$this->assertEquals( $expected, $actual );
+	}
+
+	public function test_handle_refund_without_data() {
+		global $wpdb;
+
+		$mocked_wpdb = $this->getMockBuilder( WPDB::class )
+			->setMethods( [ 'get_results', 'get_row' ] )
+			->getMock();
+		$mocked_wpdb->method( 'get_row' )->willReturn( 0 );
+		$wpdb = $mocked_wpdb;
+
+		$actual = $this->transaction_factory->handle_refund( '123' );
+		$expected = null;
+
+		$this->assertEquals( $expected, $actual );
 	}
 }
