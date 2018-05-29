@@ -9,10 +9,6 @@ cache:
 addons:
   sonarcloud:
     organization: "wirecard"
-    token:
-      secure: "Ukl5MBkQSHXjD8fz5R+gfvvTiN97fk0E/Zioy4lY7XOR5F0JCQQTxE+Tqi1c+H4KQFbn+/LbU0G0FdvzXTH8tr60/jFkmP1RFBL3XID4SJC/5TGGGt6mgxsZVlcSEqYZZFt7/Xz5mPQ2W/+S3alA7EglacZY5ihBfAF0TZ7SZ3Qd4BdTHUpFYV6fyiYwEwF5TFXJ/WDhLhL+oa2zHGEnlBlN1gWEYvpF9XuDSniKkGJiRMtpuyiC4DG0FHSKany5Z33uw8T9JIylnTJR9z9Y4RKhDhFBextUTq0fi8l84j9fhLfc1TIt/+61LE/83wBfKB9Y/EhxXnhxXaiARZQA9iqh8ENbVfqlaic0bqtTJT69fqJXsMbrrQyTO2Xkd6n7LFe69YzoCI1LtFWhK36V1wgqitfL2I4Qt4aYAXF3u2CzmOl5sccxeYy6EXO9lxWEi3VsWTq+T81kTvc7U3yC3Xqu41p9hbqGuXjG0gqIDnA8RhGHrq5/TACQyTKPb7Rci0J75fUjcJsvITf6ETerjdVdBqBTygCaERzdPuZnuJAPqXi43zN5jxyk4mJNk5GZF35ECbrNaw/0wN2wgpS0I4HSxMUka5QP1ZeTaUKGhA8r9c8iS4EM9hFHkyjfPibAq4ChaUCUwYjco/A7ozPpxgb3qqH0PLPNL4/Fq9P1QO4="
-    github_token:
-      secure: "Iy/Plz3V++TKSQbz/A0x7ZhETSfcvbXxT4zKQh51W8fjBUlKKrQmDA1rICIjnfFs0bNAe6M2yQxxHgJKUJPBsi9Nk/Ynuk/I5lLK1jLL6THioGB6oKUyRBytlcVLZ+0lNqmV/jRKYdwEPI+jNduCk5GSjubSGMIWGNDcqAUiTu+oy3Gu9FS/auEGxim7UaZYC+MM+7ir0zD6w/0nuCaxalAeLahFz0g3QlXc7FB88SxH//lxzKDZh3U6XKyIEXGG8IQiCYaJRUqr9unzHDVbjOvNT6HWZQ4jGSfnCZTnp4aPfOrk1Ir334/4Cuy4xCP4iiuiRFHoxw++uknh77slUwRtZbrUlwoCbvT0V/GOQaN2HSjrTOc5n1/M0XsPRumbZ+I/4EoCnZUwNiBpWtVhrzSpE84+0BBj67gmStzca1sZMkts+oHnr5S6qajVY5ePY4Sn3rI/JbUJP501zexRHgqKY26a+Hqz9TAnNJqRKfm6ez5pSlXUKk4eCl7slgYuY8I="
 
 php:
   - 7.1
@@ -21,7 +17,11 @@ php:
 
 env:
   global:
+  - secure: ${SONAR_TOKEN}
   - COMPOSER_ARGS="--no-interaction"
+  - github_token:
+      secure: "Iy/Plz3V++TKSQbz/A0x7ZhETSfcvbXxT4zKQh51W8fjBUlKKrQmDA1rICIjnfFs0bNAe6M2yQxxHgJKUJPBsi9Nk/Ynuk/I5lLK1jLL6THioGB6oKUyRBytlcVLZ+0lNqmV/jRKYdwEPI+jNduCk5GSjubSGMIWGNDcqAUiTu+oy3Gu9FS/auEGxim7UaZYC+MM+7ir0zD6w/0nuCaxalAeLahFz0g3QlXc7FB88SxH//lxzKDZh3U6XKyIEXGG8IQiCYaJRUqr9unzHDVbjOvNT6HWZQ4jGSfnCZTnp4aPfOrk1Ir334/4Cuy4xCP4iiuiRFHoxw++uknh77slUwRtZbrUlwoCbvT0V/GOQaN2HSjrTOc5n1/M0XsPRumbZ+I/4EoCnZUwNiBpWtVhrzSpE84+0BBj67gmStzca1sZMkts+oHnr5S6qajVY5ePY4Sn3rI/JbUJP501zexRHgqKY26a+Hqz9TAnNJqRKfm6ez5pSlXUKk4eCl7slgYuY8I="
+
 
 before_install:
   - export PHPCS_DIR=/tmp/phpcs
