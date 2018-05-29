@@ -45,10 +45,15 @@ class WC_Gateway_Wirecard_Additional_Information_Utest extends \PHPUnit_Framewor
 		$woocommerce->customer        = new WC_Customer();
 		$this->additional_information = new Additional_Information();
 		$this->transaction            = new \Wirecard\PaymentSdk\Transaction\CreditCardTransaction();
-		$this->order                  = new WC_Order();
+		$this->order = $this->getMockBuilder( WC_Order::class )
+			->disableOriginalConstructor()
+			->setMethods( [ 'get_total' ] )
+			->getMock();
 	}
 
 	public function test_set_additional_information() {
+		global $woocommerce;
+
 		$expected = new \Wirecard\PaymentSdk\Transaction\CreditCardTransaction();
 		$expected->setConsumerId( 1 );
 		$expected->setIpAddress( '123.123.123' );
@@ -71,28 +76,41 @@ class WC_Gateway_Wirecard_Additional_Information_Utest extends \PHPUnit_Framewor
 
 		$basket = new \Wirecard\PaymentSdk\Entity\Basket();
 		$item   = new \Wirecard\PaymentSdk\Entity\Item(
-			'nemo',
+			'Testproduct',
 			new \Wirecard\PaymentSdk\Entity\Amount( 20, 'EUR' ),
 			1
 		);
-		$item->setDescription( 'short description' );
+		$item->setDescription( 'Testdescription' );
 		$item->setArticleNumber( '1' );
 		$item->setTaxRate( 0.0 );
 		$item->setTaxAmount( new \Wirecard\PaymentSdk\Entity\Amount( 10, 'EUR' ) );
 		$basket->add( $item );
-
-		$item = new \Wirecard\PaymentSdk\Entity\Item(
-			'Shipping',
-			new \Wirecard\PaymentSdk\Entity\Amount( 6, 'EUR' ),
-			1
-		);
-		$item->setDescription( 'Shipping' );
-		$item->setArticleNumber( 'Shipping' );
-		$item->setTaxRate( 20 );
-		$basket->add( $item );
 		$basket->setVersion( $expected );
 
 		$expected->setBasket( $basket );
+
+		$mocked_product = $this->getMockBuilder( WC_Product::class )
+			->disableOriginalConstructor()
+			->setMethods( [ 'get_id', 'get_short_description', 'is_taxable', 'get_name', 'get_quantity', 'is_downloadable', 'is_virtual', 'get_product_id' ] )
+			->getMock();
+		$mocked_product->method( 'get_id' )->willReturn( '1' );
+		$mocked_product->method( 'get_short_description' )->willReturn( 'Testdescription' );
+		$mocked_product->method( 'is_taxable' )->willReturn( 0 );
+		$mocked_product->method( 'get_name' )->willReturn( 'Testproduct' );
+
+		$mocked_cart = $this->getMockBuilder( WC_Cart::class )
+			->disableOriginalConstructor()
+			->setMethods( [ 'get_cart', 'get_shipping_total', 'get_total', 'get_shipping_tax' ] )
+			->getMock();
+		$cart_contents = array(
+			'1' => array(
+				'data'       => $mocked_product,
+				'quantity'   => 1,
+				'product_id' => 1,
+			),
+		);
+		$mocked_cart->method( 'get_cart' )->willReturn( $cart_contents );
+		$woocommerce->cart = $mocked_cart;
 
 		$this->assertEquals(
 			$expected,
