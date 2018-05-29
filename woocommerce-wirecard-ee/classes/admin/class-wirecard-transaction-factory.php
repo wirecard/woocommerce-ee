@@ -275,8 +275,10 @@ class Wirecard_Transaction_Factory {
 		$parent       = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}wirecard_payment_gateway_tx WHERE transaction_id = %s", $parent_transaction_id ) );
 		$rest         = $parent->amount;
 
-		foreach ( $transactions as $transaction ) {
-			$rest -= $transaction->amount;
+		if ( ! empty( $transactions ) ) {
+			foreach ( $transactions as $transaction ) {
+				$rest -= $transaction->amount;
+			}
 		}
 		return $rest;
 	}
