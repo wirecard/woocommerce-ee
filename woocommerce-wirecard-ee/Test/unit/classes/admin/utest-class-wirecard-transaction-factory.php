@@ -44,12 +44,13 @@ class WC_Gateway_Wirecard_Transaction_Factory_Utest extends \PHPUnit_Framework_T
 
 		$this->order = $this->getMockBuilder( WC_Order::class )
 			->disableOriginalConstructor()
-			->setMethods( [ 'get_total', 'get_currency', 'get_id' ] )
+			->setMethods( [ 'get_total', 'get_currency', 'get_id', 'set_transaction_id' ] )
 			->getMock();
 
 		$this->order->method( 'get_total' )->willReturn( 20 );
 		$this->order->method( 'get_currency' )->willReturn( 'EUR' );
 		$this->order->method( 'get_id' )->willReturn( 1 );
+		$this->order->method( 'set_transaction_id' );
 
 		$this->response = $this->getMockBuilder( \Wirecard\PaymentSdk\Response\SuccessResponse::class )
 			->disableOriginalConstructor()
