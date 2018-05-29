@@ -66,11 +66,14 @@ class WC_Gateway_Wirecard_Additional_Information_Utest extends \PHPUnit_Framewor
 		$account_holder->setPhone( '123123123' );
 		$address = new \Wirecard\PaymentSdk\Entity\Address( 'AUT', 'City', 'street1' );
 		$address->setPostalCode( '1234' );
+		$address->setStreet2( 'street2' );
 		$account_holder->setAddress( $address );
 		$expected->setAccountHolder( $account_holder );
 		$shipping = new \Wirecard\PaymentSdk\Entity\AccountHolder();
 		$shipping->setLastName( 'last-name' );
 		$shipping->setFirstName( 'first-name' );
+		$address = new \Wirecard\PaymentSdk\Entity\Address( 'AUT', 'City', 'street1' );
+		$address->setPostalCode( '1234' );
 		$shipping->setAddress( $address );
 		$expected->setShipping( $shipping );
 

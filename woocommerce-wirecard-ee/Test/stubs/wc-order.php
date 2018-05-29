@@ -68,7 +68,7 @@ class WC_Order {
 	}
 
 	public function get_billing_address_2() {
-		return false;
+		return 'street2';
 	}
 
 	public function get_billing_postcode() {
