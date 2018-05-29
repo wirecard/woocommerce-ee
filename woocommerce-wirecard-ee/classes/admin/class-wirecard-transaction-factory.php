@@ -138,8 +138,8 @@ class Wirecard_Transaction_Factory {
 		//set parent_transaction_id only if there is an existing parent entry in database
 		if ( $parent_transaction ) {
 			$parent_transaction_id = $response->getParentTransactionId();
-			$action = $response->getTransactionType();
-			$rest_amount = $this->get_parent_rest_amount( $parent_transaction_id, $action );
+			$action                = $response->getTransactionType();
+			$rest_amount           = $this->get_parent_rest_amount( $parent_transaction_id, $action );
 
 			if ( $rest_amount == $requested_amount ) {
 				$order->set_transaction_id( $response->getTransactionId() );
@@ -272,8 +272,8 @@ class Wirecard_Transaction_Factory {
 		global $wpdb;
 
 		$transaction_amounts = $wpdb->get_results( $wpdb->prepare( "SELECT amount FROM {$wpdb->prefix}wirecard_payment_gateway_tx WHERE parent_transaction_id = %s AND transaction_type = %s", $parent_transaction_id, $action ) );
-		$parent = $wpdb->get_row( $wpdb->prepare( "SELECT amount FROM {$wpdb->prefix}wirecard_payment_gateway_tx WHERE transaction_id = %s", $parent_transaction_id ) );
-		$rest = $parent->amount;
+		$parent              = $wpdb->get_row( $wpdb->prepare( "SELECT amount FROM {$wpdb->prefix}wirecard_payment_gateway_tx WHERE transaction_id = %s", $parent_transaction_id ) );
+		$rest                = $parent->amount;
 
 		foreach ( $transaction_amounts as $amount ) {
 			$rest -= $amount;
