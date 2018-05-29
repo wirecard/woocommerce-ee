@@ -124,4 +124,24 @@ class WC_Gateway_Wirecard_Additional_Information_Utest extends \PHPUnit_Framewor
 			)
 		);
 	}
+
+	public function test_create_address_data() {
+		$order = $this->getMockBuilder( WC_Order::class )
+			->disableOriginalConstructor()
+			->setMethods( [ 'get_billing_country', 'get_billing_city', 'get_billing_address_1', 'get_billing_postcode', 'get_billing_address_2' ] )
+			->getMock();
+		$order->method( 'get_billing_country' )->willReturn( 'AUT' );
+		$order->method( 'get_billing_city' )->willReturn( 'City' );
+		$order->method( 'get_billing_address_1' )->willReturn( 'Street1' );
+		$order->method( 'get_billing_postcode' )->willReturn( '0000' );
+		$order->method( 'get_billing_address_2' )->willReturn( 'Street2' );
+
+		$expected = new \Wirecard\PaymentSdk\Entity\Address( 'AUT', 'City', 'Street1' );
+		$expected->setPostalCode( '0000' );
+		$expected->setStreet2( 'Street2' );
+
+		$actual = $this->additional_information->create_address_data( $order, 'BILLING' );
+
+		$this->assertEquals( $expected, $actual );
+	}
 }
