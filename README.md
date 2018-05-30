@@ -11,7 +11,7 @@
 
 ***
 ## General information 
-Before proceeding, we recommend to read [general information](https://github.com/wirecard/woocommerce-ee/wiki/Wirecard-Shop-Plugins-General-Information), as it provides information on Wirecard shop plugins functionality and features.
+Before proceeding, please read [general information](https://github.com/wirecard/woocommerce-ee/wiki/Wirecard-Shop-Plugins-General-Information), as it provides information on Wirecard shop plugins functionality and features.
 
 ***
 ## WooCommerce documentation - Wiki
