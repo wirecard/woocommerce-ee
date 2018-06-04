@@ -45,10 +45,15 @@ class WC_Gateway_Wirecard_Additional_Information_Utest extends \PHPUnit_Framewor
 		$woocommerce->customer        = new WC_Customer();
 		$this->additional_information = new Additional_Information();
 		$this->transaction            = new \Wirecard\PaymentSdk\Transaction\CreditCardTransaction();
-		$this->order                  = new WC_Order();
+		$this->order                  = $this->getMockBuilder( WC_Order::class )
+			->disableOriginalConstructor()
+			->setMethods( [ 'get_total' ] )
+			->getMock();
 	}
 
 	public function test_set_additional_information() {
+		global $woocommerce;
+
 		$expected = new \Wirecard\PaymentSdk\Transaction\CreditCardTransaction();
 		$expected->setConsumerId( 1 );
 		$expected->setIpAddress( '123.123.123' );
@@ -61,38 +66,54 @@ class WC_Gateway_Wirecard_Additional_Information_Utest extends \PHPUnit_Framewor
 		$account_holder->setPhone( '123123123' );
 		$address = new \Wirecard\PaymentSdk\Entity\Address( 'AUT', 'City', 'street1' );
 		$address->setPostalCode( '1234' );
+		$address->setStreet2( 'street2' );
 		$account_holder->setAddress( $address );
 		$expected->setAccountHolder( $account_holder );
 		$shipping = new \Wirecard\PaymentSdk\Entity\AccountHolder();
 		$shipping->setLastName( 'last-name' );
 		$shipping->setFirstName( 'first-name' );
+		$address = new \Wirecard\PaymentSdk\Entity\Address( 'AUT', 'City', 'street1' );
+		$address->setPostalCode( '1234' );
 		$shipping->setAddress( $address );
 		$expected->setShipping( $shipping );
 
 		$basket = new \Wirecard\PaymentSdk\Entity\Basket();
 		$item   = new \Wirecard\PaymentSdk\Entity\Item(
-			'nemo',
+			'Testproduct',
 			new \Wirecard\PaymentSdk\Entity\Amount( 20, 'EUR' ),
 			1
 		);
-		$item->setDescription( 'short description' );
+		$item->setDescription( 'Testdescription' );
 		$item->setArticleNumber( '1' );
 		$item->setTaxRate( 0.0 );
 		$item->setTaxAmount( new \Wirecard\PaymentSdk\Entity\Amount( 10, 'EUR' ) );
 		$basket->add( $item );
-
-		$item = new \Wirecard\PaymentSdk\Entity\Item(
-			'Shipping',
-			new \Wirecard\PaymentSdk\Entity\Amount( 6, 'EUR' ),
-			1
-		);
-		$item->setDescription( 'Shipping' );
-		$item->setArticleNumber( 'Shipping' );
-		$item->setTaxRate( 20 );
-		$basket->add( $item );
 		$basket->setVersion( $expected );
 
 		$expected->setBasket( $basket );
+
+		$mocked_product = $this->getMockBuilder( WC_Product::class )
+			->disableOriginalConstructor()
+			->setMethods( [ 'get_id', 'get_short_description', 'is_taxable', 'get_name', 'get_quantity', 'is_downloadable', 'is_virtual', 'get_product_id' ] )
+			->getMock();
+		$mocked_product->method( 'get_id' )->willReturn( '1' );
+		$mocked_product->method( 'get_short_description' )->willReturn( 'Testdescription' );
+		$mocked_product->method( 'is_taxable' )->willReturn( 0 );
+		$mocked_product->method( 'get_name' )->willReturn( 'Testproduct' );
+
+		$mocked_cart   = $this->getMockBuilder( WC_Cart::class )
+			->disableOriginalConstructor()
+			->setMethods( [ 'get_cart', 'get_shipping_total', 'get_total', 'get_shipping_tax' ] )
+			->getMock();
+		$cart_contents = array(
+			'1' => array(
+				'data'       => $mocked_product,
+				'quantity'   => 1,
+				'product_id' => 1,
+			),
+		);
+		$mocked_cart->method( 'get_cart' )->willReturn( $cart_contents );
+		$woocommerce->cart = $mocked_cart;
 
 		$this->assertEquals(
 			$expected,
@@ -102,5 +123,25 @@ class WC_Gateway_Wirecard_Additional_Information_Utest extends \PHPUnit_Framewor
 				50
 			)
 		);
+	}
+
+	public function test_create_address_data() {
+		$order = $this->getMockBuilder( WC_Order::class )
+			->disableOriginalConstructor()
+			->setMethods( [ 'get_billing_country', 'get_billing_city', 'get_billing_address_1', 'get_billing_postcode', 'get_billing_address_2' ] )
+			->getMock();
+		$order->method( 'get_billing_country' )->willReturn( 'AUT' );
+		$order->method( 'get_billing_city' )->willReturn( 'City' );
+		$order->method( 'get_billing_address_1' )->willReturn( 'Street1' );
+		$order->method( 'get_billing_postcode' )->willReturn( '0000' );
+		$order->method( 'get_billing_address_2' )->willReturn( 'Street2' );
+
+		$expected = new \Wirecard\PaymentSdk\Entity\Address( 'AUT', 'City', 'Street1' );
+		$expected->setPostalCode( '0000' );
+		$expected->setStreet2( 'Street2' );
+
+		$actual = $this->additional_information->create_address_data( $order, 'BILLING' );
+
+		$this->assertEquals( $expected, $actual );
 	}
 }

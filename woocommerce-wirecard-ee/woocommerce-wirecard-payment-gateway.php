@@ -178,7 +178,7 @@ function install_wirecard_payment_gateway() {
 	}
 	$sql = "CREATE TABLE IF NOT EXISTS {$table_name} (
 		tx_id int(10) unsigned NOT NULL auto_increment,
-		transaction_id varchar(128) default NULL,
+		transaction_id varchar(128) default NULL UNIQUE,
 		parent_transaction_id VARCHAR(128) default NULL,
 		order_id int(10) NULL,
 		cart_id int(10) unsigned NOT NULL,
@@ -297,10 +297,12 @@ function add_support_chat() {
  * @since 1.1.0
  */
 function check_if_woo_installed() {
-	if ( ! in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
-		wp_die(
-			__( 'Sorry, but this plugin requires WooCommerce Plugin to be installed and active.', 'woocommerce-gateway-wirecard' ) .
-			'<br><a href="' . admin_url( 'plugins.php' ) . '">' . __( 'Go to Plugins', 'woocommerce-gateway-wirecard' ) . '</a>'
-		);
+	if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) )
+		|| array_key_exists( 'woocommerce/woocommerce.php', get_site_option( 'active_sitewide_plugins' ) ) ) {
+		return;
 	}
+	wp_die(
+		__( 'Sorry, but this plugin requires WooCommerce Plugin to be installed and active.', 'woocommerce-gateway-wirecard' ) .
+		'<br><a href="' . admin_url( 'plugins.php' ) . '">' . __( 'Go to Plugins', 'woocommerce-gateway-wirecard' ) . '</a>'
+	);
 }

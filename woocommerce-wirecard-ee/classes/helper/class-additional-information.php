@@ -83,10 +83,16 @@ class Additional_Information {
 				wc_get_price_excluding_tax( $product ),
 				( wc_get_price_including_tax( $product ) - wc_get_price_excluding_tax( $product ) )
 			);
+			$sum    += number_format( wc_get_price_including_tax( $product ), wc_get_price_decimals() ) * $cart_item['quantity'];
 		}
-
-		if ( $cart->get_shipping_total() > 0 ) {
-			$basket = $this->set_shipping_item( $basket, $cart->get_shipping_total(), $cart->get_shipping_tax() );
+		//Check if there is a rounding difference and if so add the difference to shipping
+		$shipping = $cart->get_shipping_total();
+		$sum     += $shipping + $cart->get_shipping_tax();
+		if ( $cart->get_total( 'total' ) - $sum > 0 ) {
+			$shipping += number_format( ( $cart->get_total( 'total' ) - $sum ), wc_get_price_decimals() );
+		}
+		if ( $shipping > 0 ) {
+			$basket = $this->set_shipping_item( $basket, $shipping, $cart->get_shipping_tax() );
 		}
 
 		return $basket;
@@ -214,19 +220,13 @@ class Additional_Information {
 			);
 			$sum     += $item_sum * ( $orderd_products[ $item_id ]->get_quantity() );
 		}
-
-		if ( $shipping_total > 0 ) {
-			$sum   += $shipping_total + $shipping_tax;
-			$basket = $this->set_shipping_item( $basket, $shipping_total, $shipping_tax );
-		}
-
+		//Check if there is a rounding difference and if so add the difference to shipping
+		$sum += $shipping_total + $shipping_tax;
 		if ( ( $order_total - $sum ) > 0 ) {
-			$amount = new Amount( number_format( ( $order_total - $sum ), wc_get_price_decimals() ), get_woocommerce_currency() );
-			$item   = new Item( 'Rounding', $amount, 1 );
-			$item->setDescription( 'Rounding' );
-			$item->setArticleNumber( 'Rounding' );
-			$item->setTaxRate( 20.00 );
-			$basket->add( $item );
+			$shipping_total += $order_total - $sum;
+		}
+		if ( $shipping_total > 0 ) {
+			$basket = $this->set_shipping_item( $basket, $shipping_total, $shipping_tax );
 		}
 
 		return $basket;

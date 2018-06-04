@@ -253,7 +253,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 
 				$this->save_response_data( $order, $response );
 				$this->update_payment_transaction( $order, $response, 'success', $payment_method );
-				$order = $this->update_order_state( $order, $response->getTransactionType() );
+				$order = $this->update_order_state( $order, $response );
 			}
 		} catch ( Exception $exception ) {
 			if ( ! $order->is_paid() ) {
@@ -403,7 +403,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 			$this->update_payment_transaction( $order, $response, 'awaiting', $transaction::NAME );
 			$order->set_transaction_id( $response->getTransactionId() );
 
-			return '/admin.php?page=wirecardpayment&id=' . $response->getTransactionId();
+			return true;
 		}
 		if ( $response instanceof FailureResponse ) {
 			return new WP_Error( 'error', __( 'Refund via Wirecard Payment Processing Gateway failed.', 'woocommerce-gateway-wirecard' ) );
@@ -462,10 +462,9 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 * @throws Exception
 	 */
 	public function update_payment_transaction( $order, $response, $transaction_state, $payment_method ) {
-		$order->set_transaction_id( $response->getTransactionId() );
-		//create table entry
 		$transaction_factory = new Wirecard_Transaction_Factory();
-		$result              = $transaction_factory->create_transaction( $order, $response, $this->get_option( 'base_url' ), $transaction_state, $payment_method );
+		//create table entry
+		$result = $transaction_factory->create_transaction( $order, $response, $this->get_option( 'base_url' ), $transaction_state, $payment_method );
 		if ( ! $result ) {
 			$logger = new WC_Logger();
 			$logger->debug( __METHOD__ . 'Transaction could not be saved in transaction table' );
@@ -476,14 +475,15 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 * Update order with specific order state
 	 *
 	 * @param WC_Order $order
-	 * @param string   $transaction_type
+	 * @param SuccessResponse   $response
 	 *
 	 * @return WC_Order
 	 *
 	 * @since 1.0.0
 	 */
-	public function update_order_state( $order, $transaction_type ) {
-		switch ( $transaction_type ) {
+	public function update_order_state( $order, $response ) {
+		$transaction_amount = $response->getData()['requested-amount'];
+		switch ( $response->getTransactionType() ) {
 			case 'capture-authorization':
 			case 'debit':
 			case 'purchase':
@@ -498,7 +498,11 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 			case 'credit':
 			case 'void-capture':
 			case 'void-purchase':
-				$state = 'refunded';
+				if ( $order->get_total() > $transaction_amount ) {
+					$state = 'processing';
+				} else {
+					$state = 'refunded';
+				}
 				break;
 			case 'authorization':
 			default:

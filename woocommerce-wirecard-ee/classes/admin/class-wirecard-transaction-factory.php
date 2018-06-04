@@ -131,44 +131,53 @@ class Wirecard_Transaction_Factory {
 	 */
 	public function create_transaction( $order, $response, $base_url, $transaction_state, $payment_method ) {
 		global $wpdb;
-
+		$requested_amount      = $response->getData()['requested-amount'];
 		$parent_transaction_id = '';
 		$parent_transaction    = $this->get_transaction( $response->getParentTransactionId() );
 
+		//set parent_transaction_id only if there is an existing parent entry in database
 		if ( $parent_transaction ) {
 			$parent_transaction_id = $response->getParentTransactionId();
-			// update parent transaction to closed, no back-end ops possible anymore
-			$wpdb->update(
-				$this->table_name,
-				array(
-					'closed'            => '1',
-					'transaction_state' => 'closed',
-				),
-				array(
-					'transaction_id' => $parent_transaction_id,
-				)
-			);
+			$action                = $response->getTransactionType();
+			$rest_amount           = $this->get_parent_rest_amount( $parent_transaction_id, $action );
+
+			if ( $rest_amount == $requested_amount ) {
+				$order->set_transaction_id( $response->getTransactionId() );
+				// update parent transaction to closed, no back-end ops possible anymore
+				$wpdb->update(
+					$this->table_name,
+					array(
+						'closed'            => '1',
+						'transaction_state' => 'closed',
+					),
+					array(
+						'transaction_id' => $parent_transaction_id,
+					)
+				);
+			}
+		} else {
+			$order->set_transaction_id( $response->getTransactionId() );
 		}
 		$transaction_link = $this->get_transaction_link( $base_url, $response );
 		$transaction      = $this->get_transaction( $response->getTransactionId() );
 
-		if ( $transaction ) {
+		if ( $transaction && ( 'awaiting' == $transaction->transaction_state ) ) {
 			$wpdb->update(
 				$this->table_name,
 				$this->set_transaction_parameters(
 					$response, $parent_transaction_id, $payment_method, $transaction_state, $order,
-					$transaction_link
+					$transaction_link, $requested_amount
 				),
 				array(
 					'transaction_id' => $response->getTransactionId(),
 				)
 			);
-		} else {
+		} elseif ( ! $transaction ) {
 			$wpdb->insert(
 				$this->table_name,
 				$this->set_transaction_parameters(
 					$response, $parent_transaction_id, $payment_method, $transaction_state, $order,
-					$transaction_link
+					$transaction_link, $requested_amount
 				)
 			);
 		}
@@ -247,6 +256,31 @@ class Wirecard_Transaction_Factory {
 		}
 
 		return $transaction;
+	}
+
+	/**
+	 * Get rest amount of parent transaction
+	 *
+	 * @param string $parent_transaction_id
+	 * @param string $action
+	 *
+	 * @return float
+	 *
+	 * @since 1.1.2
+	 */
+	public function get_parent_rest_amount( $parent_transaction_id, $action ) {
+		global $wpdb;
+
+		$transactions = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}wirecard_payment_gateway_tx WHERE parent_transaction_id = %s AND transaction_type = %s", $parent_transaction_id, $action ) );
+		$parent       = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}wirecard_payment_gateway_tx WHERE transaction_id = %s", $parent_transaction_id ) );
+		$rest         = $parent->amount;
+
+		if ( ! empty( $transactions ) ) {
+			foreach ( $transactions as $transaction ) {
+				$rest -= $transaction->amount;
+			}
+		}
+		return $rest;
 	}
 
 
@@ -423,6 +457,7 @@ class Wirecard_Transaction_Factory {
 	 * @param string          $transaction_state
 	 * @param WC_Order        $order
 	 * @param string          $transaction_link
+	 * @param float           $amount
 	 *
 	 * @return array
 	 *
@@ -434,7 +469,8 @@ class Wirecard_Transaction_Factory {
 		$payment_method,
 		$transaction_state,
 		$order,
-		$transaction_link
+		$transaction_link,
+		$amount
 	) {
 		return array(
 			'transaction_id'        => $response->getTransactionId(),
@@ -442,7 +478,7 @@ class Wirecard_Transaction_Factory {
 			'payment_method'        => $payment_method,
 			'transaction_state'     => $transaction_state,
 			'transaction_type'      => $response->getTransactionType(),
-			'amount'                => $order->get_total(),
+			'amount'                => $amount,
 			'currency'              => $order->get_currency(),
 			'order_id'              => $order->get_id(),
 			'response'              => wp_json_encode( $response->getData() ),
