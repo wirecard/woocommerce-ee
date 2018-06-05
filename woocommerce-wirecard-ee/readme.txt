@@ -4,7 +4,7 @@ Tags: Wirecard, Credit Card, Alipay Cross-border, Guaranteed Invoice by Wirecard
 Requires at least: 4.9
 Tested up to: 4.9.5
 Requires PHP: 5.6
-Stable tag: 1.1.1
+Stable tag: 1.1.2
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -23,11 +23,7 @@ The fully documented installation guide can be found on [Github](https://github.
 4. Wirecard Transaction Detailview for Back-end Operations
 
 == Changelog ==
-- Add Guaranteed Invoice
-- Add iDEAL
-- Add Alipay Crossborder
-- Add Payment on Invoice / Payment in Advance
-- Add Sofort.
-- Add Masterpass
-- Add UnionPay International
-- Add One-click-checkout
+- Update order transaction only for full transaction
+- Add rest amount calculation
+- Refactor shipping amount
+- Update partial refund
