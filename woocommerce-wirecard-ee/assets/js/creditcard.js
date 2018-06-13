@@ -235,7 +235,7 @@ $( document ).ready(
 				var fields = [ "expiration_month", "expiration_year" ];
 
 				for ( var el in  fields ) {
-					el = fields[el];
+					el          = fields[el];
 					var element = $( "#" + el );
 					if ( element.length > 0 ) {
 						element.remove();
