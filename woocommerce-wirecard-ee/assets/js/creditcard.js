@@ -232,7 +232,10 @@ $( document ).ready(
 			} else if ( response.hasOwnProperty( 'card_token' ) && response.card_token.hasOwnProperty( 'token' )) {
 				token = response.card_token.token;
 
-				for ( var el in [ "expiration_month", "expiration_year" ] ) {
+				var fields = [ "expiration_month", "expiration_year" ];
+
+				for ( var el in  fields ) {
+					el          = fields[el];
 					var element = $( "#" + el );
 					if ( element.length > 0 ) {
 						element.remove();
