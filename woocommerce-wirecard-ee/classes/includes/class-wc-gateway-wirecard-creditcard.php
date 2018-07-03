@@ -30,7 +30,7 @@
  */
 
 require_once __DIR__ . '/class-wc-wirecard-payment-gateway.php';
-require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/helper/class-credit-card-vault.php' );
+require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/helper/class-credit-card-vault.php' );
 
 use Wirecard\PaymentSdk\Config\Config;
 use Wirecard\PaymentSdk\Config\CreditCardConfig;
@@ -57,7 +57,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	public function __construct() {
 		$this->type               = 'creditcard';
 		$this->id                 = 'wirecard_ee_creditcard';
-		$this->icon               = WOOCOMMERCE_GATEWAY_WIRECARD_URL . 'assets/images/creditcard.png';
+		$this->icon               = WIRECARD_EXTENSION_URL . 'assets/images/creditcard.png';
 		$this->method_title       = __( 'Wirecard Credit Card', 'wooocommerce-gateway-wirecard' );
 		$this->method_name        = __( 'Credit Card', 'wooocommerce-gateway-wirecard' );
 		$this->method_description = __( 'Credit Card transactions via Wirecard Payment Processing Gateway', 'wirecard-woocommerce-extension' );
@@ -278,7 +278,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	 */
 	public function payment_fields() {
 		$base_url         = $this->get_option( 'base_url' );
-		$gateway_url      = WOOCOMMERCE_GATEWAY_WIRECARD_URL;
+		$gateway_url      = WIRECARD_EXTENSION_URL;
 		$page_url         = add_query_arg(
 			[ 'wc-api' => 'get_credit_card_request_data' ],
 			site_url( '/', is_ssl() ? 'https' : 'http' )

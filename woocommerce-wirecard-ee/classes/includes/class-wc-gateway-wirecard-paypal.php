@@ -33,7 +33,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/includes/class-wc-wirecard-payment-gateway.php' );
+require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-wirecard-payment-gateway.php' );
 
 use Wirecard\PaymentSdk\Config\Config;
 use Wirecard\PaymentSdk\Config\PaymentMethodConfig;
@@ -57,7 +57,7 @@ class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 	public function __construct() {
 		$this->type               = 'paypal';
 		$this->id                 = 'wirecard_ee_paypal';
-		$this->icon               = WOOCOMMERCE_GATEWAY_WIRECARD_URL . 'assets/images/paypal.png';
+		$this->icon               = WIRECARD_EXTENSION_URL . 'assets/images/paypal.png';
 		$this->method_title       = __( 'Wirecard PayPal', 'wooocommerce-gateway-wirecard' );
 		$this->method_name        = __( 'PayPal', 'wooocommerce-gateway-wirecard' );
 		$this->method_description = __( 'PayPal transactions via Wirecard Payment Processing Gateway', 'woocommerce-gateway-wirecard' );

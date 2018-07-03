@@ -54,7 +54,7 @@ class WC_Gateway_Wirecard_Unionpay_International extends WC_Wirecard_Payment_Gat
 	public function __construct() {
 		$this->type               = 'unionpayinternational';
 		$this->id                 = 'wirecard_ee_unionpayinternational';
-		$this->icon               = WOOCOMMERCE_GATEWAY_WIRECARD_URL . 'assets/images/unionpayinternational.png';
+		$this->icon               = WIRECARD_EXTENSION_URL . 'assets/images/unionpayinternational.png';
 		$this->method_title       = __( 'Wirecard UnionPay International', 'wooocommerce-gateway-wirecard' );
 		$this->method_name        = __( 'Unionpay International', 'wooocommerce-gateway-wirecard' );
 		$this->method_description = __( 'Unionpay International transactions via Wirecard Payment Processing Gateway', 'woocommerce-gateway-wirecard' );
@@ -185,7 +185,7 @@ class WC_Gateway_Wirecard_Unionpay_International extends WC_Wirecard_Payment_Gat
 	 */
 	public function payment_fields() {
 		$base_url    = $this->get_option( 'base_url' );
-		$gateway_url = WOOCOMMERCE_GATEWAY_WIRECARD_URL;
+		$gateway_url = WIRECARD_EXTENSION_URL;
 		$page_url    = add_query_arg(
 			[ 'wc-api' => 'get_upi_request_data' ],
 			site_url( '/', is_ssl() ? 'https' : 'http' )
