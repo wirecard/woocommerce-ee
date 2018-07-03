@@ -54,16 +54,16 @@ load_plugin_textdomain(
 	'wirecard-woocommerce-extension', false, dirname( plugin_basename( __FILE__ ) ) . '/languages'
 );
 
-register_activation_hook( __FILE__, 'install_wirecard_payment_gateway' );
+register_activation_hook( __FILE__, 'wirecard_install_payment_gateway' );
 
-add_action( 'plugins_loaded', 'init_wirecard_payment_gateway' );
+add_action( 'plugins_loaded', 'wirecard_init_payment_gateway' );
 
 /**
  * Initialize payment gateway
  *
  * @since 1.0.0
  */
-function init_wirecard_payment_gateway() {
+function wirecard_init_payment_gateway() {
 	if ( ! class_exists( 'WC_PAYMENT_GATEWAY' ) ) {
 		global $error;
 		$error = new WP_Error( 'woocommerce', 'To use Wirecard WooCommerce Extension you need to install and activate the WooCommerce' );
@@ -84,9 +84,9 @@ function init_wirecard_payment_gateway() {
 	require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-masterpass.php' );
 	require_once( WIRECARD_EXTENSION_BASEDIR . 'vendor/autoload.php' );
 
-	add_filter( 'woocommerce_payment_gateways', 'add_wirecard_payment_gateway', 0 );
+	add_filter( 'woocommerce_payment_gateways', 'wirecard_add_payment_gateway', 0 );
 	add_filter( 'wc_order_statuses', 'wirecard_wc_order_statuses' );
-	add_action( 'woocommerce_settings_checkout', 'add_support_chat', 0 );
+	add_action( 'woocommerce_settings_checkout', 'wirecard_add_support_chat', 0 );
 	add_action( 'admin_menu', 'wirecard_gateway_options_page' );
 
 	register_post_status(
@@ -112,8 +112,8 @@ function init_wirecard_payment_gateway() {
  *
  * @since 1.0.0
  */
-function add_wirecard_payment_gateway( $methods ) {
-	foreach ( get_payments() as $key => $payment_method ) {
+function wirecard_add_payment_gateway( $methods ) {
+	foreach ( wirecard_get_payments() as $key => $payment_method ) {
 		if ( is_checkout() && $payment_method->is_available() ) {
 			$methods[] = $key;
 		} else {
@@ -131,7 +131,7 @@ function add_wirecard_payment_gateway( $methods ) {
  *
  * @since 1.1.0
  */
-function get_payments() {
+function wirecard_get_payments() {
 	return array(
 		'WC_Gateway_Wirecard_Creditcard'                 => new WC_Gateway_Wirecard_Creditcard(),
 		'WC_Gateway_Wirecard_Alipay_Crossborder'         => new WC_Gateway_Wirecard_Alipay_Crossborder(),
@@ -166,8 +166,8 @@ function wirecard_wc_order_statuses( $order_statuses ) {
  *
  * @since 1.0.0
  */
-function install_wirecard_payment_gateway() {
-	check_if_woo_installed();
+function wirecard_install_payment_gateway() {
+	wirecard_check_if_woo_installed();
 	global $wpdb;
 
 	$table_name       = $wpdb->base_prefix . 'wirecard_payment_gateway_tx';
@@ -273,7 +273,7 @@ function wirecard_gateway_options_page() {
  *
  * @since 1.1.0
  */
-function add_support_chat() {
+function wirecard_add_support_chat() {
 	$admin_url = add_query_arg(
 		[ 'wc-api' => 'test_payment_method_config' ],
 		site_url( '/', is_ssl() ? 'https' : 'http' )
@@ -296,7 +296,7 @@ function add_support_chat() {
  *
  * @since 1.1.0
  */
-function check_if_woo_installed() {
+function wirecard_check_if_woo_installed() {
 	if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) )
 		|| array_key_exists( 'woocommerce/woocommerce.php', get_site_option( 'active_sitewide_plugins' ) ) ) {
 		return;
