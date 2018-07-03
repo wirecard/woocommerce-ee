@@ -33,7 +33,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/includes/class-wc-wirecard-payment-gateway.php' );
+require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-wirecard-payment-gateway.php' );
 
 use Wirecard\PaymentSdk\Config\Config;
 use Wirecard\PaymentSdk\Config\PaymentMethodConfig;
@@ -59,7 +59,7 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 	public function __construct() {
 		$this->type               = 'ratepay-invoice';
 		$this->id                 = 'wirecard_ee_invoice';
-		$this->icon               = WOOCOMMERCE_GATEWAY_WIRECARD_URL . 'assets/images/invoice.png';
+		$this->icon               = WIRECARD_EXTENSION_URL . 'assets/images/invoice.png';
 		$this->method_title       = __( 'Wirecard Guaranteed Invoice', 'wooocommerce-gateway-wirecard' );
 		$this->method_name        = __( 'Guaranteed Invoice', 'wooocommerce-gateway-wirecard' );
 		$this->method_description = __( 'Guaranteed Invoice transactions via Wirecard Payment Processing Gateway', 'woocommerce-gateway-wirecard' );

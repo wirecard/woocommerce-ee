@@ -33,7 +33,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/includes/class-wc-wirecard-payment-gateway.php' );
+require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-wirecard-payment-gateway.php' );
 
 use Wirecard\PaymentSdk\Config\Config;
 use Wirecard\PaymentSdk\Config\SepaConfig;
@@ -54,7 +54,7 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 	public function __construct() {
 		$this->type               = 'sepa';
 		$this->id                 = 'wirecard_ee_sepa';
-		$this->icon               = WOOCOMMERCE_GATEWAY_WIRECARD_URL . 'assets/images/sepa.png';
+		$this->icon               = WIRECARD_EXTENSION_URL . 'assets/images/sepa.png';
 		$this->method_title       = __( 'Wirecard SEPA', 'wooocommerce-gateway-wirecard' );
 		$this->method_name        = __( 'SEPA', 'wooocommerce-gateway-wirecard' );
 		$this->method_description = __( 'SEPA transactions via Wirecard Payment Processing Gateway', 'woocommerce-gateway-wirecard' );
@@ -235,7 +235,7 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 			<div id="dialog" title="SEPA"></div>
 			<link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css" type="text/css" rel="stylesheet" />
 			<script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
-			<script type="application/javascript" src="' . WOOCOMMERCE_GATEWAY_WIRECARD_URL . '/assets/js/sepa.js"></script>
+			<script type="application/javascript" src="' . WIRECARD_EXTENSION_URL . '/assets/js/sepa.js"></script>
 			<script>var sepa_url = "' . $page_url . '"</script>
 			<p class="form-row form-row-wide validate-required">
 				<label for="sepa_firstname">' . __( 'First name', 'wooocommerce-gateway-wirecard' ) . '</label>
@@ -340,7 +340,7 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 		$additional_text     = $this->get_option( 'sepa_mandate_textextra' );
 
 		$html = '';
-		require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/helper/sepa-template.php' );
+		require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/helper/sepa-template.php' );
 
 		wp_send_json_success( $html );
 	}

@@ -29,7 +29,7 @@
  * Please do not use the plugin if you do not agree to these terms of use!
  */
 
-require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'vendor/autoload.php' );
+require_once( WIRECARD_EXTENSION_BASEDIR . 'vendor/autoload.php' );
 
 use Psr\Log\LoggerInterface;
 

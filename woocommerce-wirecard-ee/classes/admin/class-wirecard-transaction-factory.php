@@ -33,7 +33,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/handler/class-wirecard-transaction-handler.php' );
+require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/handler/class-wirecard-transaction-handler.php' );
 
 
 use Wirecard\PaymentSdk\Response\SuccessResponse;
@@ -87,31 +87,31 @@ class Wirecard_Transaction_Factory {
 		$this->table_name          = $wpdb->base_prefix . 'wirecard_payment_gateway_tx';
 		$this->fields_list         = array(
 			'tx_id'                 => array(
-				'title' => __( 'Transaction', 'woocommerce-gateway-wirecard' ),
+				'title' => __( 'Transaction', 'wirecard-woocommerce-extension' ),
 			),
 			'order_id'              => array(
-				'title' => __( 'Order number', 'woocommerce-gateway-wirecard' ),
+				'title' => __( 'Order number', 'wirecard-woocommerce-extension' ),
 			),
 			'transaction_id'        => array(
-				'title' => __( 'Transaction ID', 'woocommerce-gateway-wirecard' ),
+				'title' => __( 'Transaction ID', 'wirecard-woocommerce-extension' ),
 			),
 			'parent_transaction_id' => array(
-				'title' => __( 'Parent transaction ID', 'woocommerce-gateway-wirecard' ),
+				'title' => __( 'Parent transaction ID', 'wirecard-woocommerce-extension' ),
 			),
 			'transaction_type'      => array(
-				'title' => __( 'Action', 'woocommerce-gateway-wirecard' ),
+				'title' => __( 'Action', 'wirecard-woocommerce-extension' ),
 			),
 			'payment_method'        => array(
-				'title' => __( 'Payment method', 'woocommerce-gateway-wirecard' ),
+				'title' => __( 'Payment method', 'wirecard-woocommerce-extension' ),
 			),
 			'transaction_state'     => array(
-				'title' => __( 'Transaction state', 'woocommerce-gateway-wirecard' ),
+				'title' => __( 'Transaction state', 'wirecard-woocommerce-extension' ),
 			),
 			'amount'                => array(
-				'title' => __( 'Amount', 'woocommerce-gateway-wirecard' ),
+				'title' => __( 'Amount', 'wirecard-woocommerce-extension' ),
 			),
 			'currency'              => array(
-				'title' => __( 'Currency', 'woocommerce-gateway-wirecard' ),
+				'title' => __( 'Currency', 'wirecard-woocommerce-extension' ),
 			),
 		);
 	}
@@ -294,7 +294,7 @@ class Wirecard_Transaction_Factory {
 	public function show_transaction( $transaction_id ) {
 		$transaction = $this->get_transaction( $transaction_id );
 		if ( ! $transaction ) {
-			echo __( 'An error occured. The requested transaction could not be found!', 'woocommerce-gateway-wirecard' );
+			echo __( 'An error occured. The requested transaction could not be found!', 'wirecard-woocommerce-extension' );
 
 			return;
 		}
@@ -310,9 +310,9 @@ class Wirecard_Transaction_Factory {
 					<div class="inside">
 						<div class="panel-wrap woocommerce">
 							<div class="panel woocommerce-order-data">
-								<h2 class="woocommerce-order-data__heading"><?php echo __( 'Transaction', 'woocommerce-gateway-wirecard' ) . $transaction_id; ?></h2>
+								<h2 class="woocommerce-order-data__heading"><?php echo __( 'Transaction', 'wirecard-woocommerce-extension' ) . $transaction_id; ?></h2>
 								<h3>
-									<?php echo $payment->method_name . __( ' payment', 'woocommerce-gateway-wirecard' ); ?>
+									<?php echo $payment->method_name . __( ' payment', 'wirecard-woocommerce-extension' ); ?>
 								</h3>
 								<div><?php echo $transaction->transaction_link; ?></div>
 								<br>
@@ -321,20 +321,20 @@ class Wirecard_Transaction_Factory {
 								<div class="wc-order-data-row">
 									<?php
 									if ( $payment->can_cancel( $transaction->transaction_type ) && ! $transaction->closed && 'awaiting' != $transaction->transaction_state ) {
-										echo "<a href='?page=cancelpayment&id={$transaction_id}' class='button'>" . __( 'Cancel transaction', 'woocommerce-gateway-wirecard' ) . '</a> ';
+										echo "<a href='?page=cancelpayment&id={$transaction_id}' class='button'>" . __( 'Cancel transaction', 'wirecard-woocommerce-extension' ) . '</a> ';
 									}
 									if ( $payment->can_capture( $transaction->transaction_type ) && ! $transaction->closed && 'awaiting' != $transaction->transaction_state ) {
-										echo "<a href='?page=capturepayment&id={$transaction_id}' class='button'>" . __( 'Capture transaction', 'woocommerce-gateway-wirecard' ) . '</a> ';
+										echo "<a href='?page=capturepayment&id={$transaction_id}' class='button'>" . __( 'Capture transaction', 'wirecard-woocommerce-extension' ) . '</a> ';
 									}
 									if ( $payment->can_refund( $transaction->transaction_type ) && ! $transaction->closed && 'awaiting' != $transaction->transaction_state ) {
-										echo "<a href='?page=refundpayment&id={$transaction_id}' class='button'>" . __( 'Refund transaction', 'woocommerce-gateway-wirecard' ) . '</a> ';
+										echo "<a href='?page=refundpayment&id={$transaction_id}' class='button'>" . __( 'Refund transaction', 'wirecard-woocommerce-extension' ) . '</a> ';
 									}
 									if ( $transaction->closed ) {
-										echo "<p class='add-items'>" . __( 'No Back-end operations available for this transaction', 'woocommerce-gateway-wirecard' ) . '</p>';
+										echo "<p class='add-items'>" . __( 'No Back-end operations available for this transaction', 'wirecard-woocommerce-extension' ) . '</p>';
 									}
 									if ( 'awaiting' == $transaction->transaction_state ) {
 										echo "<p class='add-items'>"
-											. __( 'No Back-end operations available for this transaction, the transaction is not confirmed yet.', 'woocommerce-gateway-wirecard' ) . '</p>';
+											. __( 'No Back-end operations available for this transaction, the transaction is not confirmed yet.', 'wirecard-woocommerce-extension' ) . '</p>';
 									}
 									?>
 									<p class="add-items">

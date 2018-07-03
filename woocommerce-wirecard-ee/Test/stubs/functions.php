@@ -108,3 +108,7 @@ function wp_json_encode() {
 function is_multisite() {
 	return false;
 }
+
+function wp_unslash( $string ) {
+	return $string;
+}
