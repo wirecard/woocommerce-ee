@@ -8,7 +8,7 @@
  * Author URI: https://www.wirecard.com/
  * License: GPLv3
  * License URI: https://www.gnu.org/licenses/gpl-3.0.html
- * Text Domain: woocommerce-gateway-wirecard
+ * Text Domain: wirecard-woocommerce-extension
  * Domain Path: /languages
  *
  * Shop System Plugins - Terms of Use
@@ -51,7 +51,7 @@ define( 'WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR', plugin_dir_path( __FILE__ ) );
 define( 'WOOCOMMERCE_GATEWAY_WIRECARD_URL', plugin_dir_url( __FILE__ ) );
 
 load_plugin_textdomain(
-	'woocommerce-gateway-wirecard', false, dirname( plugin_basename( __FILE__ ) ) . '/languages'
+	'wirecard-woocommerce-extension', false, dirname( plugin_basename( __FILE__ ) ) . '/languages'
 );
 
 register_activation_hook( __FILE__, 'install_wirecard_payment_gateway' );
@@ -92,13 +92,13 @@ function init_wirecard_payment_gateway() {
 	register_post_status(
 		'wc-authorization',
 		array(
-			'label'                     => _x( 'Authorized', 'Order status', 'woocommerce-gateway-wirecard' ),
+			'label'                     => _x( 'Authorized', 'Order status', 'wirecard-woocommerce-extension' ),
 			'public'                    => true,
 			'exclude_from_search'       => false,
 			'show_in_admin_all_list'    => true,
 			'show_in_admin_status_list' => true,
 			// translators:
-			'label_count'               => _n_noop( 'Authorized <span class="count">(%s)</span>', 'Authorized<span class="count">(%s)</span>', 'woocommerce-gateway-wirecard' ),
+			'label_count'               => _n_noop( 'Authorized <span class="count">(%s)</span>', 'Authorized<span class="count">(%s)</span>', 'wirecard-woocommerce-extension' ),
 		)
 	);
 }
@@ -156,7 +156,7 @@ function get_payments() {
  * @since 1.0.0
  */
 function wirecard_wc_order_statuses( $order_statuses ) {
-	$order_statuses['wc-authorization'] = _x( 'Authorized', 'Order status', 'woocommerce-gateway-wirecard' );
+	$order_statuses['wc-authorization'] = _x( 'Authorized', 'Order status', 'wirecard-woocommerce-extension' );
 
 	return $order_statuses;
 }
@@ -228,24 +228,24 @@ function wirecard_gateway_options_page() {
 	);
 	add_submenu_page(
 		null,
-		__( 'Cancel transaction', 'woocommerce-gateway-wirecard' ),
-		__( 'Cancel transaction', 'woocommerce-gateway-wirecard' ),
+		__( 'Cancel transaction', 'wirecard-woocommerce-extension' ),
+		__( 'Cancel transaction', 'wirecard-woocommerce-extension' ),
 		'manage_options',
 		'cancelpayment',
 		array( $admin, 'cancel_transaction' )
 	);
 	add_submenu_page(
 		null,
-		__( 'Capture transaction', 'woocommerce-gateway-wirecard' ),
-		__( 'Capture transaction', 'woocommerce-gateway-wirecard' ),
+		__( 'Capture transaction', 'wirecard-woocommerce-extension' ),
+		__( 'Capture transaction', 'wirecard-woocommerce-extension' ),
 		'manage_options',
 		'capturepayment',
 		array( $admin, 'capture_transaction' )
 	);
 	add_submenu_page(
 		null,
-		__( 'Refund transaction', 'woocommerce-gateway-wirecard' ),
-		__( 'Refund transaction', 'woocommerce-gateway-wirecard' ),
+		__( 'Refund transaction', 'wirecard-woocommerce-extension' ),
+		__( 'Refund transaction', 'wirecard-woocommerce-extension' ),
 		'manage_options',
 		'refundpayment',
 		array( $admin, 'refund_transaction' )
@@ -286,7 +286,7 @@ function add_support_chat() {
         </script>
 	    <script>
 	        var admin_url = "' . $admin_url . '";
-	        var test_credentials_button = "' . __( 'Test', 'woocommerce-gateway-wirecard' ) . '";
+	        var test_credentials_button = "' . __( 'Test', 'wirecard-woocommerce-extension' ) . '";
 	    </script>
 	    <script type="application/javascript" src="' . WOOCOMMERCE_GATEWAY_WIRECARD_URL . 'assets\js\admin.js"></script>';
 }
@@ -302,7 +302,7 @@ function check_if_woo_installed() {
 		return;
 	}
 	wp_die(
-		__( 'Sorry, but this plugin requires WooCommerce Plugin to be installed and active.', 'woocommerce-gateway-wirecard' ) .
-		'<br><a href="' . admin_url( 'plugins.php' ) . '">' . __( 'Go to Plugins', 'woocommerce-gateway-wirecard' ) . '</a>'
+		__( 'Sorry, but this plugin requires WooCommerce Plugin to be installed and active.', 'wirecard-woocommerce-extension' ) .
+		'<br><a href="' . admin_url( 'plugins.php' ) . '">' . __( 'Go to Plugins', 'wirecard-woocommerce-extension' ) . '</a>'
 	);
 }
