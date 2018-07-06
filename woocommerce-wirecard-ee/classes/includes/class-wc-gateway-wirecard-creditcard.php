@@ -317,7 +317,7 @@ HTML;
             <div id="wc_payment_method_wirecard_new_credit_card">';
 		}
 
-		$html .= '<div class="show-spinner"><div class="spinner"></div></div><div id="wc_payment_method_wirecard_creditcard_form"></div>';
+		$html .= '<div class="show-spinner"><div class="spinner" style="background: url(\''. admin_url() . 'images/loading.gif\') no-repeat;"></div></div><div id="wc_payment_method_wirecard_creditcard_form"></div>';
 
 		if ( $this->get_option( 'cc_vault_enabled' ) == 'yes' ) {
 			$html .= '<div class="save-later"><label for="wirecard-store-card">
