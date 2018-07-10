@@ -62,7 +62,7 @@ function getVaultData() {
 	$.ajax(
 		{
 			type: 'GET',
-			url: vault_get_url,
+			url: php_vars.vault_get_url,
 			data: { 'action' : 'get_cc_from_vault' },
 			dataType: 'json',
 			success: function ( data ) {
@@ -105,7 +105,7 @@ function deleteCard( id ) {
 	$.ajax(
 		{
 			type: 'POST',
-			url: vault_delete_url,
+			url: php_vars.vault_delete_url,
 			data: { 'action' : 'remove_cc_from_vault', 'vault_id': id },
 			dataType: 'json',
 			success: function () {
@@ -256,7 +256,7 @@ $( document ).ready(
 				$.ajax(
 					{
 						type: 'POST',
-						url: vault_url,
+						url: php_vars.vault_url,
 						data: { 'action' : 'save_cc_to_vault', 'token' : response.token_id, 'mask_pan' : response.masked_account_number },
 						dataType: 'json',
 						error: function (data) {
@@ -292,7 +292,7 @@ $( document ).ready(
 			$.ajax(
 				{
 					type: 'POST',
-					url: ajax_url,
+					url: php_vars.ajax_url,
 					cache: false,
 					data: { 'action' : 'get_credit_card_request_data' },
 					dataType: 'json',
