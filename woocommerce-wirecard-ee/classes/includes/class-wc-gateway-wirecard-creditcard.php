@@ -271,7 +271,6 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 
 		return $config;
 	}
-
 	/**
 	 * Load basic scripts
 	 */
@@ -280,11 +279,10 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 		$gateway_url = WIRECARD_EXTENSION_URL;
 
 		//wp_register_style( 'basic_style', $gateway_url . '/assets/styles/frontend.css', array(), null, false );
-		wp_register_script( 'page_loader', $base_url . '/engine/hpp/paymentPageLoader.js', array(), null, false );
 		wp_register_style( 'jquery_ui_style', 'https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css', array(), null, false );
-		wp_register_script( 'credit_card_js', $gateway_url . 'assets/js/creditcard.js', array(), null, false );
-
 		wp_register_script( 'jquery_ui', 'https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js', array(), null, false );
+		wp_register_script( 'page_loader', $base_url . '/engine/hpp/paymentPageLoader.js', array(), null, true );
+		wp_register_script( 'credit_card_js', $gateway_url . 'assets/js/creditcard.js', array( 'jquery', 'page_loader' ), null, true );
 	}
 
 	/**
@@ -318,11 +316,11 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 		);
 
 		//wp_enqueue_style( 'basic_style' );
-		wp_enqueue_script( 'page_loader' );
+		wp_enqueue_script( 'jquery_ui' );
 		wp_enqueue_style( 'jquery_ui_style' );
+		wp_enqueue_script( 'page_loader' );
 		wp_enqueue_script( 'credit_card_js' );
 		wp_localize_script( 'credit_card_js', 'php_vars', $args );
-		wp_enqueue_script( 'jquery_ui' );
 
 		$gateway_url      = WIRECARD_EXTENSION_URL;
 
