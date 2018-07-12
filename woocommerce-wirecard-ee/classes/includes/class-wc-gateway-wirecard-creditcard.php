@@ -313,7 +313,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 			'ajax_url'         => $page_url,
 			'vault_url'        => $vault_save_url,
 			'vault_get_url'    => $vault_get_url,
-			'vault_delete_url' => $vault_delete_url
+			'vault_delete_url' => $vault_delete_url,
 		);
 
 		//wp_enqueue_style( 'basic_style' );
@@ -323,7 +323,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 		wp_enqueue_script( 'credit_card_js' );
 		wp_localize_script( 'credit_card_js', 'php_vars', $args );
 
-		$gateway_url      = WIRECARD_EXTENSION_URL;
+		$gateway_url = WIRECARD_EXTENSION_URL;
 
 		$html = <<<HTML
 			<link href='$gateway_url/assets/styles/frontend.css' type="text/css" rel="stylesheet" />
@@ -336,7 +336,7 @@ HTML;
             <div id="wc_payment_method_wirecard_new_credit_card">';
 		}
 
-		$html .= '<div class="show-spinner"><div class="spinner" style="background: url(\''. admin_url() . 'images/loading.gif\') no-repeat;"></div></div><div id="wc_payment_method_wirecard_creditcard_form"></div>';
+		$html .= '<div class="show-spinner"><div class="spinner" style="background: url(\'' . admin_url() . 'images/loading.gif\') no-repeat;"></div></div><div id="wc_payment_method_wirecard_creditcard_form"></div>';
 
 		if ( $this->get_option( 'cc_vault_enabled' ) == 'yes' ) {
 			$html .= '<div class="save-later"><label for="wirecard-store-card">
