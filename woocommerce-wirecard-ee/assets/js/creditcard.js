@@ -141,7 +141,6 @@ jQuery( document ).ajaxComplete( function() {
         jQuery( "input[name='payment_method']" ).on(
             'change', function () {
                 if (jQuery(this).val() === 'wirecard_ee_creditcard') {
-                    console.log('credit card');
                     getRequestData(renderForm, logCallback);
                     getVaultData();
                     return false;
