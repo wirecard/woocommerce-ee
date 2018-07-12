@@ -424,7 +424,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 * @since 1.0.0
 	 */
 	public function create_payment_config( $base_url = null, $http_user = null, $http_pass = null ) {
-		$config = new Config( wp_unslash( $base_url ), wp_unslash( $http_user ), wp_unslash( $http_pass ) );
+		$config = new Config( $base_url, $http_user, $http_pass );
 
 		$config->setShopInfo( 'WooCommerce', WC()->version );
 		$config->setPluginInfo(
