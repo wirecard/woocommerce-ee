@@ -32,8 +32,13 @@ var popup         = $( '#dialog' );
 var checkout_form = $( 'form.checkout' );
 var sepa_check    = false;
 
-$( document ).ready(
-	function() {
+jQuery( document ).ajaxComplete( function() {
+	jQuery(document).off().on(
+		'checkout_error', 'body', function () {
+            $( 'body' ).css( 'overflow', 'auto' );
+            popup.dialog('close');
+		}
+	);
 			/**
 	 * Create popup window
 	 */
@@ -100,7 +105,7 @@ $( document ).ready(
 			$.ajax(
 				{
 					type: 'GET',
-					url: sepa_url,
+					url: sepa_var.ajax_url,
 					data: { 'action' : 'get_sepa_mandate' },
 					dataType: 'json',
 					success: function ( response ) {

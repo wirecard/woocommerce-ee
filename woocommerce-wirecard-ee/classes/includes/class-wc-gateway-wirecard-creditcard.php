@@ -271,6 +271,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 
 		return $config;
 	}
+
 	/**
 	 * Load basic scripts
 	 */

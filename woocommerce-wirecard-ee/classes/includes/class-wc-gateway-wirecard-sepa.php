@@ -80,6 +80,7 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 
 		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
 		add_action( 'woocommerce_api_get_sepa_mandate', array( $this, 'sepa_mandate' ) );
+		add_action( 'wp_enqueue_scripts', array( $this, 'payment_scripts' ), 999 );
 
 		parent::add_payment_gateway_actions();
 	}
@@ -221,6 +222,17 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 	}
 
 	/**
+	 * Load basic scripts
+	 */
+	public function payment_scripts() {
+		$gateway_url = WIRECARD_EXTENSION_URL;
+
+		wp_register_style( 'jquery_ui_style', 'https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css', array(), null, false );
+		wp_register_script( 'jquery_ui', 'https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js', array(), null, false );
+		wp_register_script( 'sepa_js', $gateway_url . 'assets/js/sepa.js', array( 'jquery' ), null, true );
+	}
+
+	/**
 	 * Add payment fields to payment method
 	 *
 	 * @since 1.0.0
@@ -231,11 +243,15 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 			site_url( '/', is_ssl() ? 'https' : 'http' )
 		);
 
+		$args = array(
+			'ajax_url' => $page_url,
+		);
+
+		wp_enqueue_script( 'sepa_js' );
+		wp_localize_script( 'sepa_js', 'sepa_var', $args );
+
 		$html = '
 			<div id="dialog" title="SEPA"></div>
-			<link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css" type="text/css" rel="stylesheet" />
-			<script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
-			<script type="application/javascript" src="' . WIRECARD_EXTENSION_URL . '/assets/js/sepa.js"></script>
 			<script>var sepa_url = "' . $page_url . '"</script>
 			<p class="form-row form-row-wide validate-required">
 				<label for="sepa_firstname">' . __( 'First name', 'wooocommerce-gateway-wirecard' ) . '</label>

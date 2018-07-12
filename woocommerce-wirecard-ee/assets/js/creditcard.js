@@ -118,7 +118,7 @@ function addVaultData( data, saved_credit_cards ) {
 }
 
 jQuery( document ).ajaxComplete( function() {
-	if ( false == processing ) {
+	if ( false === processing ) {
         var saved_credit_cards = jQuery('#wc_payment_method_wirecard_creditcard_vault');
         var checkout_form = jQuery('form.checkout');
         var new_credit_card    = $( '#wc_payment_method_wirecard_new_credit_card' );
@@ -138,9 +138,10 @@ jQuery( document ).ajaxComplete( function() {
             }
         );
 
-        jQuery(document).on(
-            'change', 'input[name=payment_method]', function () {
+        jQuery( "input[name='payment_method']" ).on(
+            'change', function () {
                 if (jQuery(this).val() === 'wirecard_ee_creditcard') {
+                    console.log('credit card');
                     getRequestData(renderForm, logCallback);
                     getVaultData();
                     return false;
