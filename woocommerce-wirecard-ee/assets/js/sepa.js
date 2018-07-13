@@ -40,23 +40,23 @@ jQuery( document ).ajaxComplete(
 					popup.dialog( 'close' );
 				}
 			);
-			   /**
-		* Create popup window
-		*/
+			/**
+			* Create popup window
+			*/
 			popup.dialog(
 				{
 					autoOpen :false,
 					modal: true,
 					show: "blind",
 					hide: "blind"
-				   }
+				}
 			);
 
-			   /**
-		* Submit the seamless form before order is placed
-		*
-		* @since 1.0.0
-		*/
+			/**
+			* Submit the seamless form before order is placed
+			*
+			* @since 1.0.0
+			*/
 			checkout_form.on(
 				'checkout_place_order', function() {
 					if ( $( '#payment_method_wirecard_ee_sepa' ).is( ':checked' )) {
@@ -82,7 +82,7 @@ jQuery( document ).ajaxComplete(
 				}
 			);
 
-			   /**
+		/**
 		* Validate if inputs are set
 		*/
 		function validate_inputs() {
@@ -96,7 +96,7 @@ jQuery( document ).ajaxComplete(
 					}
 				}
 			);
-				 return validation;
+			return validation;
 		}
 
 			/**
@@ -115,7 +115,7 @@ jQuery( document ).ajaxComplete(
 					error: function ( response ) {
 						console.log( response );
 					}
-					 }
+				}
 			);
 		}
 
@@ -126,12 +126,12 @@ jQuery( document ).ajaxComplete(
 	 * @returns {boolean}
 	 */
 		function openPopup( content ) {
-			  popup.html( content );
-			  popup.find( '.first_last_name' ).text( $( '#sepa_firstname' ).val() + ' ' + $( '#sepa_lastname' ).val() );
-			  popup.find( '.bank_iban' ).text( $( '#sepa_iban' ).val() );
-			  popup.find( '.bank_bic' ).text( $( '#sepa_bic' ).val() );
-			  var screen_height    = window.screen.height;
-			  var adjust_to_screen = screen_height * 0.8;
+			popup.html( content );
+			popup.find( '.first_last_name' ).text( $( '#sepa_firstname' ).val() + ' ' + $( '#sepa_lastname' ).val() );
+			popup.find( '.bank_iban' ).text( $( '#sepa_iban' ).val() );
+			popup.find( '.bank_bic' ).text( $( '#sepa_bic' ).val() );
+			var screen_height    = window.screen.height;
+			var adjust_to_screen = screen_height * 0.8;
 
 			if ( screen_height > 1000 ) {
 				adjust_to_screen = 800;
@@ -143,16 +143,16 @@ jQuery( document ).ajaxComplete(
 						width: 'auto'
 					}
 				);
-			  popup.dialog( 'open' );
-			  $( 'body' ).css( 'overflow', 'hidden' );
+			popup.dialog( 'open' );
+			$( 'body' ).css( 'overflow', 'hidden' );
 
-			  var button = document.getElementById( 'sepa-button' );
-			  button.addEventListener( 'click', process_order, false );
+			var button = document.getElementById( 'sepa-button' );
+			button.addEventListener( 'click', process_order, false );
 
-			  var check_box = document.getElementById( 'sepa-check' );
-			  check_box.addEventListener( 'change', check_change, false );
+			var check_box = document.getElementById( 'sepa-check' );
+			check_box.addEventListener( 'change', check_change, false );
 
-			  return false;
+			return false;
 		}
 
 		function process_order() {
@@ -160,8 +160,8 @@ jQuery( document ).ajaxComplete(
 				sepa_check = true;
 				checkout_form.submit();
 			} else {
-				  popup.dialog( 'close' );
-				  $( 'body' ).css( 'overflow', 'auto' );
+				popup.dialog( 'close' );
+				$( 'body' ).css( 'overflow', 'auto' );
 			}
 		}
 

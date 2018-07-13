@@ -120,10 +120,10 @@ function addVaultData( data, saved_credit_cards ) {
 jQuery( document ).ajaxComplete(
 	function() {
 		if ( false === processing ) {
-			  var saved_credit_cards = jQuery( '#wc_payment_method_wirecard_creditcard_vault' );
-			  var checkout_form      = jQuery( 'form.checkout' );
-			  var new_credit_card    = jQuery( '#wc_payment_method_wirecard_new_credit_card' );
-			  new_credit_card.hide();
+			var saved_credit_cards = jQuery( '#wc_payment_method_wirecard_creditcard_vault' );
+			var checkout_form      = jQuery( 'form.checkout' );
+			var new_credit_card    = jQuery( '#wc_payment_method_wirecard_new_credit_card' );
+			new_credit_card.hide();
 
 			if (jQuery( '.cards' ).html() == '') {
 				getVaultData( saved_credit_cards );
@@ -161,7 +161,7 @@ jQuery( document ).ajaxComplete(
 						wrappingDivId: "wc_payment_method_wirecard_creditcard_form",
 						onSuccess: resizeIframe,
 						onError: logCallback
-					   }
+					}
 				);
 			}
 
@@ -244,7 +244,7 @@ jQuery( document ).ajaxComplete(
 					{
 						onSuccess: formSubmitSuccessHandler,
 						onError: logCallback
-					   }
+					}
 				);
 			}
 
@@ -254,17 +254,17 @@ jQuery( document ).ajaxComplete(
 				 * @since 1.0.0
 				 */
 			function formSubmitSuccessHandler(response) {
-				if (response.hasOwnProperty( 'token_id' )) {
-					   token = response.token_id;
-				} else if (response.hasOwnProperty( 'card_token' ) && response.card_token.hasOwnProperty( 'token' )) {
-					 token = response.card_token.token;
+				if ( response.hasOwnProperty( 'token_id' ) ) {
+					token = response.token_id;
+				} else if ( response.hasOwnProperty( 'card_token' ) && response.card_token.hasOwnProperty( 'token' )) {
+					token = response.card_token.token;
 
-					 var fields = ["expiration_month", "expiration_year"];
+					var fields = ["expiration_month", "expiration_year"];
 
-					for (var el in  fields) {
-						  el          = fields[el];
-						  var element = jQuery( "#" + el );
-						if (element.length > 0) {
+					for ( var el in  fields ) {
+						el          = fields[el];
+						var element = jQuery( "#" + el );
+						if ( element.length > 0 ) {
 							element.remove();
 						} else {
 							jQuery( '<input>' ).attr(
@@ -273,7 +273,7 @@ jQuery( document ).ajaxComplete(
 									name: el,
 									id: '#' + el,
 									value: response.card[el]
-									 }
+									}
 							).appendTo( checkout_form );
 						}
 					}
@@ -293,12 +293,12 @@ jQuery( document ).ajaxComplete(
 							error: function (data) {
 								console.log( data );
 							}
-						 }
+						}
 					);
 				}
 
 				if (jQuery( "#tokenId" ).length > 0) {
-					 jQuery( "#tokenId" ).remove();
+					jQuery( "#tokenId" ).remove();
 				}
 
 					jQuery( '<input>' ).attr(
