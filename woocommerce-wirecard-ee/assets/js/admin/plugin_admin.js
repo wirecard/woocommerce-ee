@@ -29,10 +29,8 @@
  */
 
 $ = jQuery;
-console.log('im loaded');
 $( document ).ready(
 	function () {
-		console.log('im reday');
 			var button = $( '.wc_wirecard_test_credentials_button' );
 
 			button.removeClass( 'regular-input' ).val( admin_vars.test_credentials_button );

@@ -200,7 +200,7 @@ class WC_Gateway_Wirecard_Unionpay_International extends WC_Wirecard_Payment_Gat
 	 * @since 1.1.0
 	 */
 	public function payment_fields() {
-		$page_url    = add_query_arg(
+		$page_url = add_query_arg(
 			[ 'wc-api' => 'get_upi_request_data' ],
 			site_url( '/', is_ssl() ? 'https' : 'http' )
 		);

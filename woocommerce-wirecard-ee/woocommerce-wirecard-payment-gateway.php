@@ -291,8 +291,8 @@ function wirecard_add_support_chat() {
 	);
 
 	$args = array(
-		'admin_url' => $admin_url,
-		'test_credentials_button' => __( 'Test', 'wirecard-woocommerce-extension' )
+		'admin_url'               => $admin_url,
+		'test_credentials_button' => __( 'Test', 'wirecard-woocommerce-extension' ),
 	);
 
 	wp_enqueue_script( 'live_chat' );
