@@ -86,6 +86,7 @@ function wirecard_init_payment_gateway() {
 
 	add_filter( 'woocommerce_payment_gateways', 'wirecard_add_payment_gateway', 0 );
 	add_filter( 'wc_order_statuses', 'wirecard_wc_order_statuses' );
+	add_action( 'admin_enqueue_scripts', 'backend_scripts', 999 );
 	add_action( 'woocommerce_settings_checkout', 'wirecard_add_support_chat', 0 );
 	add_action( 'admin_menu', 'wirecard_gateway_options_page' );
 
@@ -269,6 +270,16 @@ function wirecard_gateway_options_page() {
 }
 
 /**
+ * Load basic scripts
+ *
+ * @since 1.1.5
+ */
+function backend_scripts() {
+	wp_register_script( 'live_chat', 'http://www.provusgroup.com/livezilla/script.php?id=936f87cd4ce16e1e60bea40b45b0596a', array(), null, true );
+	wp_register_script( 'plugin_admin_script', WIRECARD_EXTENSION_URL . 'assets/js/admin/plugin_admin.js', array(), null, false );
+}
+
+/**
  * Add support chat script
  *
  * @since 1.1.0
@@ -278,17 +289,15 @@ function wirecard_add_support_chat() {
 		[ 'wc-api' => 'test_payment_method_config' ],
 		site_url( '/', is_ssl() ? 'https' : 'http' )
 	);
-	echo '
-		<script
-            type="text/javascript"
-			id="936f87cd4ce16e1e60bea40b45b0596a"
-		    src="http://www.provusgroup.com/livezilla/script.php?id=936f87cd4ce16e1e60bea40b45b0596a">
-        </script>
-	    <script>
-	        var admin_url = "' . $admin_url . '";
-	        var test_credentials_button = "' . __( 'Test', 'wirecard-woocommerce-extension' ) . '";
-	    </script>
-	    <script type="application/javascript" src="' . WIRECARD_EXTENSION_URL . 'assets\js\admin.js"></script>';
+
+	$args = array(
+		'admin_url' => $admin_url,
+		'test_credentials_button' => __( 'Test', 'wirecard-woocommerce-extension' )
+	);
+
+	wp_enqueue_script( 'live_chat' );
+	wp_enqueue_script( 'plugin_admin_script' );
+	wp_localize_script( 'plugin_admin_script', 'admin_vars', $args );
 }
 
 /**

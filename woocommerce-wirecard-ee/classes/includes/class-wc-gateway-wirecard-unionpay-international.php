@@ -181,12 +181,13 @@ class WC_Gateway_Wirecard_Unionpay_International extends WC_Wirecard_Payment_Gat
 
 	/**
 	 * Load basic scripts
+	 *
+	 * @since 1.1.5
 	 */
 	public function payment_scripts() {
 		$base_url    = $this->get_option( 'base_url' );
 		$gateway_url = WIRECARD_EXTENSION_URL;
 
-		//wp_register_style( 'basic_style', $gateway_url . '/assets/styles/frontend.css', array(), null, false );
 		wp_register_style( 'jquery_ui_style', 'https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css', array(), null, false );
 		wp_register_script( 'jquery_ui', 'https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js', array(), null, false );
 		wp_register_script( 'page_loader', $base_url . '/engine/hpp/paymentPageLoader.js', array(), null, true );
@@ -199,8 +200,6 @@ class WC_Gateway_Wirecard_Unionpay_International extends WC_Wirecard_Payment_Gat
 	 * @since 1.1.0
 	 */
 	public function payment_fields() {
-		$base_url    = $this->get_option( 'base_url' );
-		$gateway_url = WIRECARD_EXTENSION_URL;
 		$page_url    = add_query_arg(
 			[ 'wc-api' => 'get_upi_request_data' ],
 			site_url( '/', is_ssl() ? 'https' : 'http' )

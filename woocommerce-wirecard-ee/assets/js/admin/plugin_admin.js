@@ -29,11 +29,13 @@
  */
 
 $ = jQuery;
+console.log('im loaded');
 $( document ).ready(
 	function () {
+		console.log('im reday');
 			var button = $( '.wc_wirecard_test_credentials_button' );
 
-			button.removeClass( 'regular-input' ).val( test_credentials_button );
+			button.removeClass( 'regular-input' ).val( admin_vars.test_credentials_button );
 			button.on(
 				'click', function () {
 					var base_id = $( this ).attr( 'id' ).replace( '_test_button', '' );
@@ -45,7 +47,7 @@ $( document ).ready(
 					$.ajax(
 						{
 							type: 'POST',
-							url: admin_url,
+							url: admin_vars.admin_url,
 							data: { 'action' : 'test_payment_method_config', 'base_url' : base_url, 'http_user' : http_user, 'http_pass' : http_pass },
 							dataType: 'json',
 							success: function (data) {

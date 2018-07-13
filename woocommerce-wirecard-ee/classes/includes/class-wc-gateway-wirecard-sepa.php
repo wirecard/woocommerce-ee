@@ -223,6 +223,8 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 
 	/**
 	 * Load basic scripts
+	 *
+	 * @since 1.1.5
 	 */
 	public function payment_scripts() {
 		$gateway_url = WIRECARD_EXTENSION_URL;
@@ -252,7 +254,6 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 
 		$html = '
 			<div id="dialog" title="SEPA"></div>
-			<script>var sepa_url = "' . $page_url . '"</script>
 			<p class="form-row form-row-wide validate-required">
 				<label for="sepa_firstname">' . __( 'First name', 'wooocommerce-gateway-wirecard' ) . '</label>
 				<input id="sepa_firstname" class="input-text wc-sepa-input" type="text" name="sepa_firstname">
