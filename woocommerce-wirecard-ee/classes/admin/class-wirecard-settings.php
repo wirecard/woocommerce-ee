@@ -272,7 +272,12 @@ class Wirecard_Settings {
 		$config           = array();
 		$payment_configs  = $wpdb->get_results( "SELECT option_value FROM wp_options WHERE option_name LIKE '%woocommerce_wirecard_ee%' " );
 		foreach ( $payment_configs as $payment_config ) {
-			$config[] = unserialize( $payment_config->option_value );
+			$temp = unserialize( $payment_config->option_value );
+			unset(
+				$temp['three_d_secret'],
+				$temp['secret']
+			);
+			$config[] = $temp;
 		}
 
 		$email_content = print_r(
