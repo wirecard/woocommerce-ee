@@ -87,6 +87,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 		add_action( 'woocommerce_api_save_cc_to_vault', array( $this, 'save_to_vault' ) );
 		add_action( 'woocommerce_api_get_cc_from_vault', array( $this, 'get_cc_from_vault' ) );
 		add_action( 'woocommerce_api_remove_cc_from_vault', array( $this, 'remove_cc_from_vault' ) );
+		add_action( 'wp_enqueue_scripts', array( $this, 'payment_scripts' ), 999 );
 
 		parent::add_payment_gateway_actions();
 	}
@@ -272,13 +273,27 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	}
 
 	/**
+	 * Load basic scripts
+	 *
+	 * @since 1.1.5
+	 */
+	public function payment_scripts() {
+		$base_url    = $this->get_option( 'base_url' );
+		$gateway_url = WIRECARD_EXTENSION_URL;
+
+		wp_register_style( 'basic_style', $gateway_url . '/assets/styles/frontend.css', array(), null, false );
+		wp_register_style( 'jquery_ui_style', 'https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css', array(), null, false );
+		wp_register_script( 'jquery_ui', 'https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js', array(), null, false );
+		wp_register_script( 'page_loader', $base_url . '/engine/hpp/paymentPageLoader.js', array(), null, true );
+		wp_register_script( 'credit_card_js', $gateway_url . 'assets/js/creditcard.js', array( 'jquery', 'page_loader' ), null, true );
+	}
+
+	/**
 	 * Add payment fields to payment method
 	 *
 	 * @since 1.0.0
 	 */
 	public function payment_fields() {
-		$base_url         = $this->get_option( 'base_url' );
-		$gateway_url      = WIRECARD_EXTENSION_URL;
 		$page_url         = add_query_arg(
 			[ 'wc-api' => 'get_credit_card_request_data' ],
 			site_url( '/', is_ssl() ? 'https' : 'http' )
@@ -296,20 +311,21 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 			site_url( '/', is_ssl() ? 'https' : 'http' )
 		);
 
-		$html = <<<HTML
-			<script src='$base_url/engine/hpp/paymentPageLoader.js' type='text/javascript'></script>
-			<link href='$gateway_url/assets/styles/frontend.css' type="text/css" rel="stylesheet" />
-            <link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css" type="text/css" rel="stylesheet" />
-			<script type='application/javascript' src='$gateway_url/assets/js/creditcard.js'></script>
-			<script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
-            <script>
-                var ajax_url  = "$page_url";
-                var vault_url = "$vault_save_url";
-                var vault_get_url = "$vault_get_url";
-                var vault_delete_url = "$vault_delete_url";
-            </script>
-            
-HTML;
+		$args = array(
+			'ajax_url'         => $page_url,
+			'vault_url'        => $vault_save_url,
+			'vault_get_url'    => $vault_get_url,
+			'vault_delete_url' => $vault_delete_url,
+		);
+
+		wp_enqueue_style( 'basic_style' );
+		wp_enqueue_script( 'jquery_ui' );
+		wp_enqueue_style( 'jquery_ui_style' );
+		wp_enqueue_script( 'page_loader' );
+		wp_enqueue_script( 'credit_card_js' );
+		wp_localize_script( 'credit_card_js', 'php_vars', $args );
+
+		$html = '';
 		if ( $this->get_option( 'cc_vault_enabled' ) == 'yes' && $this->has_cc_in_vault() ) {
 			$html .= '<div id="open-vault-popup"><span class="dashicons dashicons-arrow-up"></span>' . __( 'Use saved Credit Cards', 'wirecard-woocommerce-extension' ) . '</div>
             <div id="wc_payment_method_wirecard_creditcard_vault"><div class="show-spinner"><div class="spinner"></div></div><div class="cards"></div></div><br>
@@ -317,7 +333,7 @@ HTML;
             <div id="wc_payment_method_wirecard_new_credit_card">';
 		}
 
-		$html .= '<div class="show-spinner"><div class="spinner"></div></div><div id="wc_payment_method_wirecard_creditcard_form"></div>';
+		$html .= '<div class="show-spinner"><div class="spinner" style="background: url(\'' . admin_url() . 'images/loading.gif\') no-repeat;"></div></div><div id="wc_payment_method_wirecard_creditcard_form"></div>';
 
 		if ( $this->get_option( 'cc_vault_enabled' ) == 'yes' ) {
 			$html .= '<div class="save-later"><label for="wirecard-store-card">
