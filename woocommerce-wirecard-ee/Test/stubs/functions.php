@@ -128,3 +128,7 @@ function admin_url() {
 function wp_localize_script( $name, $var_name, $var ) {
 	return;
 }
+
+function sanitize_text_field( $string ) {
+	return $string;
+}
