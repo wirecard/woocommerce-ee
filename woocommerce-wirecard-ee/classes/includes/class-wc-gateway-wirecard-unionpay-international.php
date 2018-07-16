@@ -248,7 +248,7 @@ HTML;
 		$order = wc_get_order( $order_id );
 
 		$this->payment_action = $this->get_option( 'payment_action' );
-		$token                = $_POST['tokenId'];
+		$token                = sanitize_text_field( $_POST['tokenId'] );
 
 		$this->transaction = new UpiTransaction();
 		parent::process_payment( $order_id );

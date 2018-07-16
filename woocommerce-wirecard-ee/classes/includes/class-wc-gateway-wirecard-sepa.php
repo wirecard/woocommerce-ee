@@ -299,16 +299,16 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 		$this->payment_action = $this->get_option( 'payment_action' );
 
 		$account_holder = new AccountHolder();
-		$account_holder->setFirstName( $_POST['sepa_lastname'] );
-		$account_holder->setLastName( $_POST['sepa_firstname'] );
+		$account_holder->setFirstName( sanitize_text_field( $_POST['sepa_lastname'] ) );
+		$account_holder->setLastName( sanitize_text_field( $_POST['sepa_firstname'] ) );
 
 		$this->transaction = new SepaTransaction();
 		parent::process_payment( $order_id );
 		$this->transaction->setAccountHolder( $account_holder );
-		$this->transaction->setIban( $_POST['sepa_iban'] );
+		$this->transaction->setIban( sanitize_text_field( $_POST['sepa_iban'] ) );
 
 		if ( $this->get_option( 'enable_bic' ) == 'yes' ) {
-			$this->transaction->setBic( $_POST['sepa_bic'] );
+			$this->transaction->setBic( sanitize_text_field( $_POST['sepa_bic'] ) );
 		}
 
 		$mandate = new Mandate( $this->generate_mandate_id( $order_id ) );

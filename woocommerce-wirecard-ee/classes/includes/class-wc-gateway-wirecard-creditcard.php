@@ -326,21 +326,25 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 		wp_localize_script( 'credit_card_js', 'php_vars', $args );
 
 		$html = '';
-		if ( $this->get_option( 'cc_vault_enabled' ) == 'yes' && $this->has_cc_in_vault() ) {
-			$html .= '<div id="open-vault-popup"><span class="dashicons dashicons-arrow-up"></span>' . __( 'Use saved Credit Cards', 'wirecard-woocommerce-extension' ) . '</div>
+		if ( is_user_logged_in() ) {
+			if ( $this->get_option( 'cc_vault_enabled' ) == 'yes' && $this->has_cc_in_vault() ) {
+				$html .= '<div id="open-vault-popup"><span class="dashicons dashicons-arrow-up"></span>' . __( 'Use saved Credit Cards', 'wirecard-woocommerce-extension' ) . '</div>
             <div id="wc_payment_method_wirecard_creditcard_vault"><div class="show-spinner"><div class="spinner"></div></div><div class="cards"></div></div><br>
             <div id="open-new-card"><span class="dashicons dashicons-arrow-down"></span>' . __( 'Use new Credit Card', 'wirecard-woocommerce-extension' ) . '</div>
             <div id="wc_payment_method_wirecard_new_credit_card">';
+			}
 		}
 
 		$html .= '<div class="show-spinner"><div class="spinner" style="background: url(\'' . admin_url() . 'images/loading.gif\') no-repeat;"></div></div><div id="wc_payment_method_wirecard_creditcard_form"></div>';
 
-		if ( $this->get_option( 'cc_vault_enabled' ) == 'yes' ) {
-			$html .= '<div class="save-later"><label for="wirecard-store-card">
+		if ( is_user_logged_in() ) {
+			if ( $this->get_option( 'cc_vault_enabled' ) == 'yes' ) {
+				$html .= '<div class="save-later"><label for="wirecard-store-card">
 			<input type="checkbox" id="wirecard-store-card" /> ' .
-				__( 'Save for later use.', 'wirecard-woocommerce-extension' ) . '</label></div>';
-			if ( $this->has_cc_in_vault() ) {
-				$html .= '</div>';
+					__( 'Save for later use.', 'wirecard-woocommerce-extension' ) . '</label></div>';
+				if ( $this->has_cc_in_vault() ) {
+					$html .= '</div>';
+				}
 			}
 		}
 
@@ -361,14 +365,14 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 		$order = wc_get_order( $order_id );
 
 		$this->payment_action = $this->get_option( 'payment_action' );
-		$token                = $_POST['tokenId'];
+		$token                = sanitize_text_field( $_POST['tokenId'] );
 
 		$this->transaction = new CreditCardTransaction();
 
 		if ( ! array_diff_key( array_flip( [ 'expiration_month', 'expiration_year' ] ), $_POST ) ) {
 			$card = new \Wirecard\PaymentSdk\Entity\Card();
-			$card->setExpirationYear( $_POST['expiration_year'] );
-			$card->setExpirationMonth( $_POST['expiration_month'] );
+			$card->setExpirationYear( sanitize_text_field( $_POST['expiration_year'] ) );
+			$card->setExpirationMonth( sanitize_text_field( $_POST['expiration_month'] ) );
 			$this->transaction->setCard( $card );
 		}
 
@@ -460,8 +464,8 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	 * @since 1.1.0
 	 */
 	public function save_to_vault() {
-		$token    = $_POST['token'];
-		$mask_pan = $_POST['mask_pan'];
+		$token    = sanitize_text_field( $_POST['token'] );
+		$mask_pan = sanitize_text_field( $_POST['mask_pan'] );
 		/** @var WP_User $user */
 		$user = wp_get_current_user();
 

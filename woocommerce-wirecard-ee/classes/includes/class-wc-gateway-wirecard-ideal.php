@@ -200,7 +200,7 @@ class WC_Gateway_Wirecard_Ideal extends WC_Wirecard_Payment_Gateway {
 
 		$this->transaction = new IdealTransaction();
 		parent::process_payment( $order_id );
-		$this->transaction->setBic( $_POST['ideal_bank_bic'] );
+		$this->transaction->setBic( sanitize_text_field( $_POST['ideal_bank_bic'] ) );
 
 		return $this->execute_transaction( $this->transaction, $this->config, $this->payment_action, $order );
 	}
