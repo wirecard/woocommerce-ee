@@ -203,7 +203,7 @@ function wirecard_install_payment_gateway() {
 	$sql2 = "CREATE TABLE IF NOT EXISTS {$vault_table_name} (
  		vault_id int(10) unsigned NOT NULL auto_increment,
  		user_id int(10) NOT NULL,
- 		token varchar(20) NOT NULL UNIQUE,
+ 		token varchar(20) NOT NULL,
  		masked_pan varchar(30) NOT NULL,
  		PRIMARY KEY (vault_id)
  		)$collate;";
