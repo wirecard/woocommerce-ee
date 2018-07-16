@@ -67,4 +67,6 @@ Our general Terms of Use can be found on [Github](https://github.com/wirecard/wo
 4. Wirecard Transaction Detailview for Back-end Operations
 
 == Changelog ==
-- Update javascript and css usage
+- Update vault table entries
+- Enable vault only for logged in user
+- Sanitize post fields
