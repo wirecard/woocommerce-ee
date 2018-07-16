@@ -132,3 +132,7 @@ function wp_localize_script( $name, $var_name, $var ) {
 function sanitize_text_field( $string ) {
 	return $string;
 }
+
+function is_user_logged_in() {
+	return true;
+}
