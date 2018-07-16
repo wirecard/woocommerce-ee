@@ -74,7 +74,7 @@ class Credit_Card_Vault {
 		global $wpdb;
 
 		$cards = $this->get_cards_from_db( $user_id );
-		if ( !empty( $cards ) ) {
+		if ( ! empty( $cards ) ) {
 			foreach ( $cards as $card ) {
 				if ( $card->token == $token ) {
 					return;
