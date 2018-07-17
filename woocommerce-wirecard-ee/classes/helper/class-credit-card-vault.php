@@ -72,10 +72,19 @@ class Credit_Card_Vault {
 	 */
 	public function save_card( $user_id, $token, $pan ) {
 		global $wpdb;
+
+		$cards = $this->get_cards_from_db( $user_id );
+		if ( ! empty( $cards ) ) {
+			foreach ( $cards as $card ) {
+				if ( $card->token == $token ) {
+					return;
+				}
+			}
+		}
 		$wpdb->insert(
 			$this->table_name,
 			array(
-				'user_id'    => $user_id,
+				'user_id'    => intval( $user_id ),
 				'token'      => $token,
 				'masked_pan' => $pan,
 			),

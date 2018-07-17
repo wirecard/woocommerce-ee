@@ -249,7 +249,7 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 			$this->additional_helper->create_account_holder(
 				$order,
 				'billing',
-				new \DateTime( $_POST['invoice_date_of_birth'] )
+				new \DateTime( sanitize_text_field( $_POST['invoice_date_of_birth'] ) )
 			)
 		);
 
