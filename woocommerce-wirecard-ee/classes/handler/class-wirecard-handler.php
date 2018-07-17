@@ -33,7 +33,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/helper/class-logger.php' );
+require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/helper/class-logger.php' );
 
 /**
  * Class Wirecard_Handler

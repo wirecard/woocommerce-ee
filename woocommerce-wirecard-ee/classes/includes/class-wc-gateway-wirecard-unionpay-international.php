@@ -54,7 +54,7 @@ class WC_Gateway_Wirecard_Unionpay_International extends WC_Wirecard_Payment_Gat
 	public function __construct() {
 		$this->type               = 'unionpayinternational';
 		$this->id                 = 'wirecard_ee_unionpayinternational';
-		$this->icon               = WOOCOMMERCE_GATEWAY_WIRECARD_URL . 'assets/images/unionpayinternational.png';
+		$this->icon               = WIRECARD_EXTENSION_URL . 'assets/images/unionpayinternational.png';
 		$this->method_title       = __( 'Wirecard UnionPay International', 'wooocommerce-gateway-wirecard' );
 		$this->method_name        = __( 'Unionpay International', 'wooocommerce-gateway-wirecard' );
 		$this->method_description = __( 'Unionpay International transactions via Wirecard Payment Processing Gateway', 'woocommerce-gateway-wirecard' );
@@ -80,6 +80,7 @@ class WC_Gateway_Wirecard_Unionpay_International extends WC_Wirecard_Payment_Gat
 
 		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
 		add_action( 'woocommerce_api_get_upi_request_data', array( $this, 'get_request_data_upi' ) );
+		add_action( 'wp_enqueue_scripts', array( $this, 'payment_scripts' ), 999 );
 
 		parent::add_payment_gateway_actions();
 	}
@@ -179,24 +180,42 @@ class WC_Gateway_Wirecard_Unionpay_International extends WC_Wirecard_Payment_Gat
 	}
 
 	/**
+	 * Load basic scripts
+	 *
+	 * @since 1.1.5
+	 */
+	public function payment_scripts() {
+		$base_url    = $this->get_option( 'base_url' );
+		$gateway_url = WIRECARD_EXTENSION_URL;
+
+		wp_register_style( 'jquery_ui_style', 'https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css', array(), null, false );
+		wp_register_script( 'jquery_ui', 'https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js', array(), null, false );
+		wp_register_script( 'page_loader', $base_url . '/engine/hpp/paymentPageLoader.js', array(), null, true );
+		wp_register_script( 'upi_js', $gateway_url . 'assets/js/unionpayinternational.js', array( 'jquery', 'page_loader' ), null, true );
+	}
+
+	/**
 	 * Add payment fields to payment method
 	 *
 	 * @since 1.1.0
 	 */
 	public function payment_fields() {
-		$base_url    = $this->get_option( 'base_url' );
-		$gateway_url = WOOCOMMERCE_GATEWAY_WIRECARD_URL;
-		$page_url    = add_query_arg(
+		$page_url = add_query_arg(
 			[ 'wc-api' => 'get_upi_request_data' ],
 			site_url( '/', is_ssl() ? 'https' : 'http' )
 		);
 
+		$args = array(
+			'ajax_url' => $page_url,
+		);
+
+		wp_enqueue_script( 'jquery_ui' );
+		wp_enqueue_style( 'jquery_ui_style' );
+		wp_enqueue_script( 'page_loader' );
+		wp_enqueue_script( 'upi_js' );
+		wp_localize_script( 'upi_js', 'upi_vars', $args );
+
 		$html = <<<HTML
-			<script src='$base_url/engine/hpp/paymentPageLoader.js' type='text/javascript'></script>
-            <script type='application/javascript' src='$gateway_url/assets/js/unionpayinternational.js'></script>
-            <script>
-                var ajax_url_upi = "$page_url";
-            </script>
             <div id='wc_payment_method_wirecard_unionpayinternational_form'></div>
 HTML;
 

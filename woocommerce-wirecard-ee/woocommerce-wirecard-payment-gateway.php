@@ -3,12 +3,12 @@
  * Plugin Name: Wirecard WooCommerce Extension
  * Plugin URI: https://github.com/wirecard/woocommerce-ee
  * Description: Payment Gateway for WooCommerce
- * Version: 1.1.3
+ * Version: 1.1.5
  * Author: Wirecard AG
  * Author URI: https://www.wirecard.com/
  * License: GPLv3
  * License URI: https://www.gnu.org/licenses/gpl-3.0.html
- * Text Domain: woocommerce-gateway-wirecard
+ * Text Domain: wirecard-woocommerce-extension
  * Domain Path: /languages
  *
  * Shop System Plugins - Terms of Use
@@ -45,25 +45,25 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'WOOCOMMERCE_GATEWAY_WIRECARD_NAME', 'Wirecard WooCommerce Extension' );
-define( 'WOOCOMMERCE_GATEWAY_WIRECARD_VERSION', '1.1.3' );
-define( 'WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR', plugin_dir_path( __FILE__ ) );
-define( 'WOOCOMMERCE_GATEWAY_WIRECARD_URL', plugin_dir_url( __FILE__ ) );
+define( 'WIRECARD_EXTENSION_NAME', 'Wirecard WooCommerce Extension' );
+define( 'WIRECARD_EXTENSION_VERSION', '1.1.5' );
+define( 'WIRECARD_EXTENSION_BASEDIR', plugin_dir_path( __FILE__ ) );
+define( 'WIRECARD_EXTENSION_URL', plugin_dir_url( __FILE__ ) );
 
 load_plugin_textdomain(
-	'woocommerce-gateway-wirecard', false, dirname( plugin_basename( __FILE__ ) ) . '/languages'
+	'wirecard-woocommerce-extension', false, dirname( plugin_basename( __FILE__ ) ) . '/languages'
 );
 
-register_activation_hook( __FILE__, 'install_wirecard_payment_gateway' );
+register_activation_hook( __FILE__, 'wirecard_install_payment_gateway' );
 
-add_action( 'plugins_loaded', 'init_wirecard_payment_gateway' );
+add_action( 'plugins_loaded', 'wirecard_init_payment_gateway' );
 
 /**
  * Initialize payment gateway
  *
  * @since 1.0.0
  */
-function init_wirecard_payment_gateway() {
+function wirecard_init_payment_gateway() {
 	if ( ! class_exists( 'WC_PAYMENT_GATEWAY' ) ) {
 		global $error;
 		$error = new WP_Error( 'woocommerce', 'To use Wirecard WooCommerce Extension you need to install and activate the WooCommerce' );
@@ -71,34 +71,35 @@ function init_wirecard_payment_gateway() {
 		return;
 	}
 
-	require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/includes/class-wc-wirecard-payment-gateway.php' );
-	require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-paypal.php' );
-	require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-sepa.php' );
-	require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-creditcard.php' );
-	require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-ideal.php' );
-	require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-sofort.php' );
-	require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-poipia.php' );
-	require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php' );
-	require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php' );
-	require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-unionpay-international.php' );
-	require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-masterpass.php' );
-	require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'vendor/autoload.php' );
+	require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-wirecard-payment-gateway.php' );
+	require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-paypal.php' );
+	require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-sepa.php' );
+	require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-creditcard.php' );
+	require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-ideal.php' );
+	require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-sofort.php' );
+	require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-poipia.php' );
+	require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php' );
+	require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php' );
+	require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-unionpay-international.php' );
+	require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-masterpass.php' );
+	require_once( WIRECARD_EXTENSION_BASEDIR . 'vendor/autoload.php' );
 
-	add_filter( 'woocommerce_payment_gateways', 'add_wirecard_payment_gateway', 0 );
+	add_filter( 'woocommerce_payment_gateways', 'wirecard_add_payment_gateway', 0 );
 	add_filter( 'wc_order_statuses', 'wirecard_wc_order_statuses' );
-	add_action( 'woocommerce_settings_checkout', 'add_support_chat', 0 );
+	add_action( 'admin_enqueue_scripts', 'backend_scripts', 999 );
+	add_action( 'woocommerce_settings_checkout', 'wirecard_add_support_chat', 0 );
 	add_action( 'admin_menu', 'wirecard_gateway_options_page' );
 
 	register_post_status(
 		'wc-authorization',
 		array(
-			'label'                     => _x( 'Authorized', 'Order status', 'woocommerce-gateway-wirecard' ),
+			'label'                     => _x( 'Authorized', 'Order status', 'wirecard-woocommerce-extension' ),
 			'public'                    => true,
 			'exclude_from_search'       => false,
 			'show_in_admin_all_list'    => true,
 			'show_in_admin_status_list' => true,
 			// translators:
-			'label_count'               => _n_noop( 'Authorized <span class="count">(%s)</span>', 'Authorized<span class="count">(%s)</span>', 'woocommerce-gateway-wirecard' ),
+			'label_count'               => _n_noop( 'Authorized <span class="count">(%s)</span>', 'Authorized<span class="count">(%s)</span>', 'wirecard-woocommerce-extension' ),
 		)
 	);
 }
@@ -112,8 +113,8 @@ function init_wirecard_payment_gateway() {
  *
  * @since 1.0.0
  */
-function add_wirecard_payment_gateway( $methods ) {
-	foreach ( get_payments() as $key => $payment_method ) {
+function wirecard_add_payment_gateway( $methods ) {
+	foreach ( wirecard_get_payments() as $key => $payment_method ) {
 		if ( is_checkout() && $payment_method->is_available() ) {
 			$methods[] = $key;
 		} else {
@@ -131,7 +132,7 @@ function add_wirecard_payment_gateway( $methods ) {
  *
  * @since 1.1.0
  */
-function get_payments() {
+function wirecard_get_payments() {
 	return array(
 		'WC_Gateway_Wirecard_Creditcard'                 => new WC_Gateway_Wirecard_Creditcard(),
 		'WC_Gateway_Wirecard_Alipay_Crossborder'         => new WC_Gateway_Wirecard_Alipay_Crossborder(),
@@ -156,7 +157,7 @@ function get_payments() {
  * @since 1.0.0
  */
 function wirecard_wc_order_statuses( $order_statuses ) {
-	$order_statuses['wc-authorization'] = _x( 'Authorized', 'Order status', 'woocommerce-gateway-wirecard' );
+	$order_statuses['wc-authorization'] = _x( 'Authorized', 'Order status', 'wirecard-woocommerce-extension' );
 
 	return $order_statuses;
 }
@@ -166,8 +167,8 @@ function wirecard_wc_order_statuses( $order_statuses ) {
  *
  * @since 1.0.0
  */
-function install_wirecard_payment_gateway() {
-	check_if_woo_installed();
+function wirecard_install_payment_gateway() {
+	wirecard_check_if_woo_installed();
 	global $wpdb;
 
 	$table_name       = $wpdb->base_prefix . 'wirecard_payment_gateway_tx';
@@ -215,7 +216,7 @@ function install_wirecard_payment_gateway() {
  * @since 1.0.0
  */
 function wirecard_gateway_options_page() {
-	require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/admin/class-wirecard-settings.php' );
+	require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/admin/class-wirecard-settings.php' );
 
 	$admin = new Wirecard_Settings();
 	add_submenu_page(
@@ -228,24 +229,24 @@ function wirecard_gateway_options_page() {
 	);
 	add_submenu_page(
 		null,
-		__( 'Cancel transaction', 'woocommerce-gateway-wirecard' ),
-		__( 'Cancel transaction', 'woocommerce-gateway-wirecard' ),
+		__( 'Cancel transaction', 'wirecard-woocommerce-extension' ),
+		__( 'Cancel transaction', 'wirecard-woocommerce-extension' ),
 		'manage_options',
 		'cancelpayment',
 		array( $admin, 'cancel_transaction' )
 	);
 	add_submenu_page(
 		null,
-		__( 'Capture transaction', 'woocommerce-gateway-wirecard' ),
-		__( 'Capture transaction', 'woocommerce-gateway-wirecard' ),
+		__( 'Capture transaction', 'wirecard-woocommerce-extension' ),
+		__( 'Capture transaction', 'wirecard-woocommerce-extension' ),
 		'manage_options',
 		'capturepayment',
 		array( $admin, 'capture_transaction' )
 	);
 	add_submenu_page(
 		null,
-		__( 'Refund transaction', 'woocommerce-gateway-wirecard' ),
-		__( 'Refund transaction', 'woocommerce-gateway-wirecard' ),
+		__( 'Refund transaction', 'wirecard-woocommerce-extension' ),
+		__( 'Refund transaction', 'wirecard-woocommerce-extension' ),
 		'manage_options',
 		'refundpayment',
 		array( $admin, 'refund_transaction' )
@@ -269,26 +270,34 @@ function wirecard_gateway_options_page() {
 }
 
 /**
+ * Load basic scripts
+ *
+ * @since 1.1.5
+ */
+function backend_scripts() {
+	wp_register_script( 'live_chat', 'http://www.provusgroup.com/livezilla/script.php?id=936f87cd4ce16e1e60bea40b45b0596a', array(), null, true );
+	wp_register_script( 'plugin_admin_script', WIRECARD_EXTENSION_URL . 'assets/js/admin/plugin_admin.js', array(), null, false );
+}
+
+/**
  * Add support chat script
  *
  * @since 1.1.0
  */
-function add_support_chat() {
+function wirecard_add_support_chat() {
 	$admin_url = add_query_arg(
 		[ 'wc-api' => 'test_payment_method_config' ],
 		site_url( '/', is_ssl() ? 'https' : 'http' )
 	);
-	echo '
-		<script
-            type="text/javascript"
-			id="936f87cd4ce16e1e60bea40b45b0596a"
-		    src="http://www.provusgroup.com/livezilla/script.php?id=936f87cd4ce16e1e60bea40b45b0596a">
-        </script>
-	    <script>
-	        var admin_url = "' . $admin_url . '";
-	        var test_credentials_button = "' . __( 'Test', 'woocommerce-gateway-wirecard' ) . '";
-	    </script>
-	    <script type="application/javascript" src="' . WOOCOMMERCE_GATEWAY_WIRECARD_URL . 'assets\js\admin.js"></script>';
+
+	$args = array(
+		'admin_url'               => $admin_url,
+		'test_credentials_button' => __( 'Test', 'wirecard-woocommerce-extension' ),
+	);
+
+	wp_enqueue_script( 'live_chat' );
+	wp_enqueue_script( 'plugin_admin_script' );
+	wp_localize_script( 'plugin_admin_script', 'admin_vars', $args );
 }
 
 /**
@@ -296,13 +305,13 @@ function add_support_chat() {
  *
  * @since 1.1.0
  */
-function check_if_woo_installed() {
+function wirecard_check_if_woo_installed() {
 	if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) )
 		|| array_key_exists( 'woocommerce/woocommerce.php', get_site_option( 'active_sitewide_plugins' ) ) ) {
 		return;
 	}
 	wp_die(
-		__( 'Sorry, but this plugin requires WooCommerce Plugin to be installed and active.', 'woocommerce-gateway-wirecard' ) .
-		'<br><a href="' . admin_url( 'plugins.php' ) . '">' . __( 'Go to Plugins', 'woocommerce-gateway-wirecard' ) . '</a>'
+		__( 'Sorry, but this plugin requires WooCommerce Plugin to be installed and active.', 'wirecard-woocommerce-extension' ) .
+		'<br><a href="' . admin_url( 'plugins.php' ) . '">' . __( 'Go to Plugins', 'wirecard-woocommerce-extension' ) . '</a>'
 	);
 }

@@ -33,7 +33,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/admin/class-wirecard-transaction-factory.php' );
+require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/admin/class-wirecard-transaction-factory.php' );
 
 /**
  * Class Wirecard_Settings
@@ -264,15 +264,20 @@ class Wirecard_Settings {
 			'wordpress_version'   => $wp_version,
 			'woocommerce_version' => WC()->version,
 			'php_version'         => phpversion(),
-			'plugin_name'         => WOOCOMMERCE_GATEWAY_WIRECARD_NAME,
-			'plugin_version'      => WOOCOMMERCE_GATEWAY_WIRECARD_VERSION,
+			'plugin_name'         => WIRECARD_EXTENSION_NAME,
+			'plugin_version'      => WIRECARD_EXTENSION_VERSION,
 		);
 
 		$merchant_message = strip_tags( $_REQUEST['message'] );
 		$config           = array();
 		$payment_configs  = $wpdb->get_results( "SELECT option_value FROM wp_options WHERE option_name LIKE '%woocommerce_wirecard_ee%' " );
 		foreach ( $payment_configs as $payment_config ) {
-			$config[] = unserialize( $payment_config->option_value );
+			$temp = unserialize( $payment_config->option_value );
+			unset(
+				$temp['three_d_secret'],
+				$temp['secret']
+			);
+			$config[] = $temp;
 		}
 
 		$email_content = print_r(

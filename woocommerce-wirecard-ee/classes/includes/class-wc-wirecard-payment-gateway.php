@@ -33,12 +33,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/handler/class-wirecard-response-handler.php' );
-require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/handler/class-wirecard-notification-handler.php' );
-require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/handler/class-wirecard-callback.php' );
-require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/admin/class-wirecard-transaction-factory.php' );
-require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/helper/class-logger.php' );
-require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/helper/class-additional-information.php' );
+require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/handler/class-wirecard-response-handler.php' );
+require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/handler/class-wirecard-notification-handler.php' );
+require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/handler/class-wirecard-callback.php' );
+require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/admin/class-wirecard-transaction-factory.php' );
+require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/helper/class-logger.php' );
+require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/helper/class-additional-information.php' );
 
 use Wirecard\PaymentSdk\Config\Config;
 use Wirecard\PaymentSdk\Entity\Amount;
@@ -429,7 +429,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 		$config->setShopInfo( 'WooCommerce', WC()->version );
 		$config->setPluginInfo(
 			'Wirecard_ElasticEngine',
-			WOOCOMMERCE_GATEWAY_WIRECARD_VERSION
+			WIRECARD_EXTENSION_VERSION
 		);
 
 		return $config;
@@ -665,7 +665,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 		$http_user = $_POST['http_user'];
 		$http_pass = $_POST['http_pass'];
 
-		$test_config         = new Config( $base_url, $http_user, $http_pass );
+		$test_config         = new Config( wp_unslash( $base_url ), wp_unslash( $http_user ), wp_unslash( $http_pass ) );
 		$transaction_service = new TransactionService( $test_config, new Logger() );
 
 		if ( $transaction_service->checkCredentials() ) {
@@ -707,7 +707,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 		$custom_fields->add( new CustomField( 'shopVersion', $this->get_shop_version() ) );
 		$custom_fields->add( new CustomField( 'phpVersion', phpversion() ) );
 		$custom_fields->add( new CustomField( 'multisite', is_multisite() ? 'multisite' : '' ) );
-		$custom_fields->add( new CustomField( 'pluginVersion', 'woocommerce-ee v' . WOOCOMMERCE_GATEWAY_WIRECARD_VERSION ) );
+		$custom_fields->add( new CustomField( 'pluginVersion', 'woocommerce-ee v' . WIRECARD_EXTENSION_VERSION ) );
 
 		return $custom_fields;
 	}

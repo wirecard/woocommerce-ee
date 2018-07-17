@@ -108,3 +108,23 @@ function wp_json_encode() {
 function is_multisite() {
 	return false;
 }
+
+function wp_unslash( $string ) {
+	return $string;
+}
+
+function wp_enqueue_script( $string ) {
+	return;
+}
+
+function wp_enqueue_style( $string ) {
+	return;
+}
+
+function admin_url() {
+	return;
+}
+
+function wp_localize_script( $name, $var_name, $var ) {
+	return;
+}

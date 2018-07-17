@@ -32,11 +32,17 @@ var popup         = $( '#dialog' );
 var checkout_form = $( 'form.checkout' );
 var sepa_check    = false;
 
-$( document ).ready(
+jQuery( document ).ajaxComplete(
 	function() {
+			jQuery( document ).off().on(
+				'checkout_error', 'body', function () {
+					$( 'body' ).css( 'overflow', 'auto' );
+					popup.dialog( 'close' );
+				}
+			);
 			/**
-	 * Create popup window
-	 */
+			* Create popup window
+			*/
 			popup.dialog(
 				{
 					autoOpen :false,
@@ -47,10 +53,10 @@ $( document ).ready(
 			);
 
 			/**
-	 * Submit the seamless form before order is placed
-	 *
-	 * @since 1.0.0
-	 */
+			* Submit the seamless form before order is placed
+			*
+			* @since 1.0.0
+			*/
 			checkout_form.on(
 				'checkout_place_order', function() {
 					if ( $( '#payment_method_wirecard_ee_sepa' ).is( ':checked' )) {
@@ -76,9 +82,9 @@ $( document ).ready(
 				}
 			);
 
-			/**
-	 * Validate if inputs are set
-	 */
+		/**
+		* Validate if inputs are set
+		*/
 		function validate_inputs() {
 			var validation = true;
 			$( '.wc-sepa-input' ).each(
@@ -100,7 +106,7 @@ $( document ).ready(
 			$.ajax(
 				{
 					type: 'GET',
-					url: sepa_url,
+					url: sepa_var.ajax_url,
 					data: { 'action' : 'get_sepa_mandate' },
 					dataType: 'json',
 					success: function ( response ) {
@@ -109,7 +115,7 @@ $( document ).ready(
 					error: function ( response ) {
 						console.log( response );
 					}
-					}
+				}
 			);
 		}
 
@@ -131,12 +137,12 @@ $( document ).ready(
 				adjust_to_screen = 800;
 			}
 
-			popup.dialog(
-				{
-					height: adjust_to_screen,
-					width: 'auto'
+				popup.dialog(
+					{
+						height: adjust_to_screen,
+						width: 'auto'
 					}
-			);
+				);
 			popup.dialog( 'open' );
 			$( 'body' ).css( 'overflow', 'hidden' );
 

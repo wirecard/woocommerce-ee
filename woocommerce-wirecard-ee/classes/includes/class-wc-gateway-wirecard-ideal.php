@@ -33,8 +33,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/includes/class-wc-wirecard-payment-gateway.php' );
-require_once( WOOCOMMERCE_GATEWAY_WIRECARD_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-sepa.php' );
+require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-wirecard-payment-gateway.php' );
+require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-sepa.php' );
 
 use Wirecard\PaymentSdk\Config\Config;
 use Wirecard\PaymentSdk\Config\PaymentMethodConfig;
@@ -59,7 +59,7 @@ class WC_Gateway_Wirecard_Ideal extends WC_Wirecard_Payment_Gateway {
 	public function __construct() {
 		$this->type               = 'ideal';
 		$this->id                 = 'wirecard_ee_ideal';
-		$this->icon               = WOOCOMMERCE_GATEWAY_WIRECARD_URL . 'assets/images/ideal.png';
+		$this->icon               = WIRECARD_EXTENSION_URL . 'assets/images/ideal.png';
 		$this->method_title       = __( 'Wirecard iDEAL', 'wooocommerce-gateway-wirecard' );
 		$this->method_name        = __( 'iDEAL', 'wooocommerce-gateway-wirecard' );
 		$this->method_description = __( 'iDEAL transactions via Wirecard Payment Processing Gateway', 'woocommerce-gateway-wirecard' );

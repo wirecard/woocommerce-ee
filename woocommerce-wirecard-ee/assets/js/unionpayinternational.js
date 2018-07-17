@@ -32,7 +32,7 @@ var checkout_form = jQuery( 'form.checkout' );
 var processing    = false;
 $                 = jQuery;
 
-$( document ).ready(
+jQuery( document ).ajaxComplete(
 	function() {
 		if ( $( "#wc_payment_method_wirecard_unionpayinternational_form" ).is( ":visible" ) ) {
 			getUpiRequestData();
@@ -110,7 +110,7 @@ $( document ).ready(
 			$.ajax(
 				{
 					type: 'POST',
-					url: ajax_url_upi,
+					url: upi_vars.ajax_url,
 					data: { 'action' : 'get_upi_request_data' },
 					dataType: 'json',
 					success: function (data) {
