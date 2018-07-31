@@ -20,15 +20,16 @@
     "johnpbloch/wordpress": ">=4.9.1",
     "wp-coding-standards/wpcs": ">=0.14.0",
     "wpackagist-plugin/woocommerce": ">=3.2.4",
-    "composer/installers": "^1.0"
+    "composer/installers": "^1.0",
+    "codacy/coverage": "1.4.2"
   },
   "type": "wordpress-plugin",
   "scripts": {
-    "upload-coverage": "coveralls -v",
+    "upload-coverage": "codacycoverage clover build/coverage/xml",
     "cs-check": "phpcs --standard=./phpcs.xml .",
     "cs-fix": "phpcbf --standard=./phpcs.xml .",
     "test": "phpunit --colors=always",
-    "test-coverage": "phpunit --colors=always --coverage-clover clover.xml"
+    "test-coverage": "phpunit --colors=always --coverage-clover build/coverage/xml"
   },
   "config": {
     "vendor-dir":"woocommerce-wirecard-ee/vendor"
