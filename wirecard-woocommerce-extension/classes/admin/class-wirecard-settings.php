@@ -116,8 +116,8 @@ class Wirecard_Settings {
 	 * @since 1.0.0
 	 */
 	public function add_pagination( $start = 1, $pages ) {
-		$back = __( '< Back', 'woocommerce-gateway-wirecard' );
-		$next = __( 'Next >', 'woocommerce-gateway-wirecard' );
+		$back = __( '< Back', 'wirecard-woocommerce-extension' );
+		$next = __( 'Next >', 'wirecard-woocommerce-extension' );
 		if ( $start > 1 ) {
 			$prev_page = $start - 1;
 			echo "<a class='button-primary' href='?page=wirecardpayment&transaction_start=$prev_page'>$back</a>";
@@ -223,7 +223,7 @@ class Wirecard_Settings {
 				<table class="form-table">
 					<tr class="top">
 						<th class="titledesc">
-							<label for="email_to"><?php echo __( 'Your e-mail address', 'woocommerce-gateway-wirecard' ); ?>:</label>
+							<label for="email_to"><?php echo __( 'Your e-mail address', 'wirecard-woocommerce-extension' ); ?>:</label>
 						</th>
 						<td class="forminp forminp-text">
 							<input id="email_to" type="email" name="email" style="width: 300px; max-width: 100%;"/>
@@ -231,7 +231,7 @@ class Wirecard_Settings {
 					</tr>
 					<tr class="top">
 						<th class="titledesc">
-							<label for="support_message"><?php echo __( 'Your message', 'woocommerce-gateway-wirecard' ); ?>:</label>
+							<label for="support_message"><?php echo __( 'Your message', 'wirecard-woocommerce-extension' ); ?>:</label>
 						</th>
 						<td class="forminp forminp-text">
 							<textarea id="support_message" name="message" rows="12" style="width: 300px; max-width: 100%;"></textarea>
@@ -239,7 +239,7 @@ class Wirecard_Settings {
 					</tr>
 				</table>
 				<a class="button-primary" href="?page=wirecardpayment">Back</a>
-				<input type="submit" class="button-primary" value="<?php echo __( 'Submit', 'woocommerce-gateway-wirecard' ); ?>" />
+				<input type="submit" class="button-primary" value="<?php echo __( 'Submit', 'wirecard-woocommerce-extension' ); ?>" />
 			</form>
 		</div>
 		<?php
@@ -295,9 +295,9 @@ class Wirecard_Settings {
 			$email_content,
 			$_REQUEST['email']
 		) ) {
-			echo __( 'E-Mail sent successfully', 'woocommerce-gateway-wirecard' );
+			echo __( 'E-Mail sent successfully', 'wirecard-woocommerce-extension' );
 		} else {
-			echo __( 'There was an error during e-mail delivery', 'woocommerce-gateway-wirecard' );
+			echo __( 'There was an error during e-mail delivery', 'wirecard-woocommerce-extension' );
 		}
 	}
 }

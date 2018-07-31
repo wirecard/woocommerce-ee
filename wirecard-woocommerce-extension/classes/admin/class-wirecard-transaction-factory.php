@@ -338,16 +338,16 @@ class Wirecard_Transaction_Factory {
 									}
 									?>
 									<p class="add-items">
-										<a href="?page=wirecardpayment"><?php echo __( 'Wirecard Payment Gateway', 'woocommerce-gateway-wirecard' ); ?></a> <!---->
+										<a href="?page=wirecardpayment"><?php echo __( 'Wirecard Payment Gateway', 'wirecard-woocommerce-extension' ); ?></a> <!---->
 									</p>
 								</div>
 								<hr>
-								<h3><?php echo __( 'Response data:', 'woocommerce-gateway-wirecard' ); ?></h3>
+								<h3><?php echo __( 'Response data:', 'wirecard-woocommerce-extension' ); ?></h3>
 								<div class="order_data_column_container">
 									<table>
 										<tr>
 											<td>
-												<b><?php echo __( 'Total', 'woocommerce-gateway-wirecard' ); ?></b>
+												<b><?php echo __( 'Total', 'wirecard-woocommerce-extension' ); ?></b>
 											</td>
 											<td>
 												<b><?php echo $transaction->amount . ' ' . $transaction->currency; ?></b>
@@ -382,7 +382,7 @@ class Wirecard_Transaction_Factory {
 		/** @var stdClass $transaction */
 		$transaction = $this->get_transaction( $transaction_id );
 		if ( ! $transaction ) {
-			echo __( 'No transaction found', 'woocommerce-gateway-wirecard' );
+			echo __( 'No transaction found', 'wirecard-woocommerce-extension' );
 
 			return;
 		}
@@ -400,7 +400,7 @@ class Wirecard_Transaction_Factory {
 		/** @var stdClass $transaction */
 		$transaction = $this->get_transaction( $transaction_id );
 		if ( ! $transaction ) {
-			echo __( 'No transaction found', 'woocommerce-gateway-wirecard' );
+			echo __( 'No transaction found', 'wirecard-woocommerce-extension' );
 
 			return;
 		}
@@ -418,7 +418,7 @@ class Wirecard_Transaction_Factory {
 		/** @var stdClass $transaction */
 		$transaction = $this->get_transaction( $transaction_id );
 		if ( ! $transaction ) {
-			echo __( 'No transaction found', 'woocommerce-gateway-wirecard' );
+			echo __( 'No transaction found', 'wirecard-woocommerce-extension' );
 
 			return;
 		}
