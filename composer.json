@@ -32,12 +32,12 @@
     "test-coverage": "phpunit --colors=always --coverage-clover build/coverage/xml"
   },
   "config": {
-    "vendor-dir":"woocommerce-wirecard-ee/vendor"
+    "vendor-dir":"wirecard-woocommerce-extension/vendor"
   },
   "extra": {
-    "wordpress-install-dir": "woocommerce-wirecard-ee/vendor/wordpress",
+    "wordpress-install-dir": "wirecard-woocommerce-extension/vendor/wordpress",
     "installer-paths": {
-      "woocommerce-wirecard-ee/vendor/woocommerce": ["type:wordpress-plugin"]
+      "wirecard-woocommerce-extension/vendor/woocommerce": ["type:wordpress-plugin"]
     }
   }
 }
