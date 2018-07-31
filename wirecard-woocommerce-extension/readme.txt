@@ -4,7 +4,7 @@ Tags: Wirecard, Credit Card, Alipay Cross-border, Guaranteed Invoice by Wirecard
 Requires at least: 4.9
 Tested up to: 4.9.5
 Requires PHP: 5.6
-Stable tag: 1.1.6
+Stable tag: 1.1.7
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -67,6 +67,9 @@ Our general Terms of Use can be found on [Github](https://github.com/wirecard/wo
 4. Wirecard Transaction Detailview for Back-end Operations
 
 == Changelog ==
-- Update vault table entries
-- Enable vault only for logged in user
-- Sanitize post fields
+- Add indonesian language package
+- Add japanese language package
+- Add korean language package
+- Add chinese (china,taiwan) language package
+- Update language slugs
+- Add codacy qualtiy checks
