@@ -60,7 +60,7 @@ class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 		$this->icon               = WIRECARD_EXTENSION_URL . 'assets/images/paypal.png';
 		$this->method_title       = __( 'Wirecard PayPal', 'wooocommerce-gateway-wirecard' );
 		$this->method_name        = __( 'PayPal', 'wooocommerce-gateway-wirecard' );
-		$this->method_description = __( 'PayPal transactions via Wirecard Payment Processing Gateway', 'woocommerce-gateway-wirecard' );
+		$this->method_description = __( 'PayPal transactions via Wirecard Payment Processing Gateway', 'wirecard-woocommerce-extension' );
 
 		$this->supports = array(
 			'products',
@@ -93,94 +93,94 @@ class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 	public function init_form_fields() {
 		$this->form_fields = array(
 			'enabled'             => array(
-				'title'       => __( 'Enable/Disable', 'woocommerce-gateway-wirecard' ),
+				'title'       => __( 'Enable/Disable', 'wirecard-woocommerce-extension' ),
 				'type'        => 'checkbox',
-				'description' => __( 'Activate payment method PayPal', 'woocommerce-gateway-wirecard' ),
-				'label'       => __( 'Enable Wirecard PayPal', 'woocommerce-gateway-wirecard' ),
+				'description' => __( 'Activate payment method PayPal', 'wirecard-woocommerce-extension' ),
+				'label'       => __( 'Enable Wirecard PayPal', 'wirecard-woocommerce-extension' ),
 				'default'     => 'no',
 			),
 			'title'               => array(
-				'title'       => __( 'Title', 'woocommerce-gateway-wirecard' ),
+				'title'       => __( 'Title', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
-				'description' => __( 'This controls the title which the consumer sees during checkout.', 'woocommerce-gateway-wirecard' ),
-				'default'     => __( 'Wirecard PayPal', 'woocommerce-gateway-wirecard' ),
+				'description' => __( 'This controls the title which the consumer sees during checkout.', 'wirecard-woocommerce-extension' ),
+				'default'     => __( 'Wirecard PayPal', 'wirecard-woocommerce-extension' ),
 			),
 			'merchant_account_id' => array(
-				'title'       => __( 'Merchant Account ID', 'woocommerce-gateway-wirecard' ),
+				'title'       => __( 'Merchant Account ID', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
-				'description' => __( 'The unique identifier assigned for your Merchant Account.', 'woocommerce-gateway-wirecard' ),
+				'description' => __( 'The unique identifier assigned for your Merchant Account.', 'wirecard-woocommerce-extension' ),
 				'default'     => '2a0e9351-24ed-4110-9a1b-fd0fee6bec26',
 			),
 			'secret'              => array(
-				'title'       => __( 'Secret Key', 'woocommerce-gateway-wirecard' ),
+				'title'       => __( 'Secret Key', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
-				'description' => __( 'Secret key is mandatory to calculate the Digital Signature for the payment.', 'woocommerce-gateway-wirecard' ),
+				'description' => __( 'Secret key is mandatory to calculate the Digital Signature for the payment.', 'wirecard-woocommerce-extension' ),
 				'default'     => 'dbc5a498-9a66-43b9-bf1d-a618dd399684',
 			),
 			'credentials'         => array(
-				'title'       => __( 'Credentials', 'woocommerce-gateway-wirecard' ),
+				'title'       => __( 'Credentials', 'wirecard-woocommerce-extension' ),
 				'type'        => 'title',
-				'description' => __( 'Enter your Wirecard credentials.', 'woocommerce-gateway-wirecard' ),
+				'description' => __( 'Enter your Wirecard credentials.', 'wirecard-woocommerce-extension' ),
 			),
 			'base_url'            => array(
-				'title'       => __( 'Base URL', 'woocommerce-gateway-wirecard' ),
+				'title'       => __( 'Base URL', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
-				'description' => __( 'The Wirecard base URL. (e.g. https://api.wirecard.com)', 'woocommerce-gateway-wirecard' ),
+				'description' => __( 'The Wirecard base URL. (e.g. https://api.wirecard.com)', 'wirecard-woocommerce-extension' ),
 				'default'     => 'https://api-test.wirecard.com',
 			),
 			'http_user'           => array(
-				'title'       => __( 'HTTP User', 'woocommerce-gateway-wirecard' ),
+				'title'       => __( 'HTTP User', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
-				'description' => __( 'The http user provided in your Wirecard contract', 'woocommerce-gateway-wirecard' ),
+				'description' => __( 'The http user provided in your Wirecard contract', 'wirecard-woocommerce-extension' ),
 				'default'     => '70000-APITEST-AP',
 			),
 			'http_pass'           => array(
-				'title'       => __( 'HTTP Password', 'woocommerce-gateway-wirecard' ),
+				'title'       => __( 'HTTP Password', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
-				'description' => __( 'The http password provided in your Wirecard contract', 'woocommerce-gateway-wirecard' ),
+				'description' => __( 'The http password provided in your Wirecard contract', 'wirecard-woocommerce-extension' ),
 				'default'     => 'qD2wzQ_hrc!8',
 			),
 			'advanced'            => array(
-				'title'       => __( 'Advanced Options', 'woocommerce-gateway-wirecard' ),
+				'title'       => __( 'Advanced Options', 'wirecard-woocommerce-extension' ),
 				'type'        => 'title',
 				'description' => '',
 			),
 			'test_button'         => array(
-				'title'   => __( 'Test configuration', 'woocommerce-gateway-wirecard' ),
+				'title'   => __( 'Test configuration', 'wirecard-woocommerce-extension' ),
 				'type'    => 'button',
 				'class'   => 'wc_wirecard_test_credentials_button button-primary',
-				'default' => __( 'Test', 'woocommerce-gateway-wirecard' ),
+				'default' => __( 'Test', 'wirecard-woocommerce-extension' ),
 			),
 			'payment_action'      => array(
-				'title'       => __( 'Payment Action', 'woocommerce-gateway-wirecard' ),
+				'title'       => __( 'Payment Action', 'wirecard-woocommerce-extension' ),
 				'type'        => 'select',
-				'description' => __( 'Select between "Capture" to capture / invoice your order automatically or "Authorization" to manually capture / invoice.', 'woocommerce-gateway-wirecard' ),
+				'description' => __( 'Select between "Capture" to capture / invoice your order automatically or "Authorization" to manually capture / invoice.', 'wirecard-woocommerce-extension' ),
 				'default'     => 'Purchase',
-				'label'       => __( 'Payment Action', 'woocommerce-gateway-wirecard' ),
+				'label'       => __( 'Payment Action', 'wirecard-woocommerce-extension' ),
 				'options'     => array(
 					'reserve' => 'Authorization',
 					'pay'     => 'Purchase',
 				),
 			),
 			'shopping_basket'     => array(
-				'title'       => __( 'Enable/Disable', 'woocommerce-gateway-wirecard' ),
+				'title'       => __( 'Enable/Disable', 'wirecard-woocommerce-extension' ),
 				'type'        => 'checkbox',
 				'description' => __( 'For the purpose of confirmation, PayPal payment supports shopping basket display during checkout. To enable this feature, activate Shopping Basket.', 'woocommerce-gatewa-wirecard' ),
-				'label'       => __( 'Shopping Basket', 'woocommerce-gateway-wirecard' ),
+				'label'       => __( 'Shopping Basket', 'wirecard-woocommerce-extension' ),
 				'default'     => 'no',
 			),
 			'descriptor'          => array(
-				'title'       => __( 'Enable/Disable', 'woocommerce-gateway-wirecard' ),
+				'title'       => __( 'Enable/Disable', 'wirecard-woocommerce-extension' ),
 				'type'        => 'checkbox',
-				'description' => __( 'Send text which is displayed on the bank statement issued to your consumer by the financial service provider', 'woocommerce-gateway-wirecard' ),
-				'label'       => __( 'Descriptor', 'woocommerce-gateway-wirecard' ),
+				'description' => __( 'Send text which is displayed on the bank statement issued to your consumer by the financial service provider', 'wirecard-woocommerce-extension' ),
+				'label'       => __( 'Descriptor', 'wirecard-woocommerce-extension' ),
 				'default'     => 'no',
 			),
 			'send_additional'     => array(
-				'title'       => __( 'Enable/Disable', 'woocommerce-gateway-wirecard' ),
+				'title'       => __( 'Enable/Disable', 'wirecard-woocommerce-extension' ),
 				'type'        => 'checkbox',
-				'description' => __( 'Additional data will be sent for the purpose of fraud protection. This additional data includes billing / shipping address, shopping basket and descriptor.', 'woocommerce-gateway-wirecard' ),
-				'label'       => __( 'Send additional information', 'woocommerce-gateway-wirecard' ),
+				'description' => __( 'Additional data will be sent for the purpose of fraud protection. This additional data includes billing / shipping address, shopping basket and descriptor.', 'wirecard-woocommerce-extension' ),
+				'label'       => __( 'Send additional information', 'wirecard-woocommerce-extension' ),
 				'default'     => 'yes',
 			),
 		);

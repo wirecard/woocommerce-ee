@@ -50,7 +50,7 @@ class Wirecard_Callback {
 		$html .= '
 			<link rel="stylesheet" href="' . plugins_url( 'woocommerce-wirecard-ee/assets/styles/loader.css' ) . '">
 			<div class="loader" style="display: flex; justify-content: center; font-size: 20px;"></div><div style="text-align: center;margin-bottom: 50px;">' .
-			__( 'You are being redirected. Please wait', 'woocommerce-gateway-wirecard' ) . '
+			__( 'You are being redirected. Please wait', 'wirecard-woocommerce-extension' ) . '
 			</div>';
 		$html .= '<form id="credit_card_form" method="' . $data['method'] . '" action="' . $data['url'] . '">';
 		foreach ( $data['form_fields'] as $key => $value ) {
@@ -77,7 +77,7 @@ class Wirecard_Callback {
 		$html .= '
 			<link rel="stylesheet" href="' . plugins_url( 'woocommerce-wirecard-ee/assets/styles/loader.css' ) . '">
 			<div class="loader" style="display: flex; justify-content: center; font-size: 20px;"></div><div style="text-align: center;margin-bottom: 50px;">' .
-			__( 'You are being redirected. Please wait', 'woocommerce-gateway-wirecard' ) . '
+			__( 'You are being redirected. Please wait', 'wirecard-woocommerce-extension' ) . '
 			</div>';
 		$html .= '<form id="unionpayinternational_form" method="' . $data['method'] . '" action="' . $data['url'] . '">';
 		foreach ( $data['form_fields'] as $key => $value ) {

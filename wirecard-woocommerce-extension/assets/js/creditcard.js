@@ -124,6 +124,7 @@ jQuery( document ).ajaxComplete(
 			var checkout_form      = jQuery( 'form.checkout' );
 			var new_credit_card    = jQuery( '#wc_payment_method_wirecard_new_credit_card' );
 			new_credit_card.hide();
+			loadWirecardEEScripts();
 
 			if (jQuery( '.cards' ).html() == '') {
 				getVaultData( saved_credit_cards );
@@ -133,27 +134,35 @@ jQuery( document ).ajaxComplete(
 				getRequestData( renderForm, logCallback );
 			}
 
-				jQuery( document ).off().on(
-					'checkout_error', 'body', function () {
-						getRequestData( renderForm, logCallback );
-					}
-				);
+			jQuery( document ).off().on(
+				'checkout_error', 'body', function () {
+					getRequestData( renderForm, logCallback );
+				}
+			);
 
-				jQuery( "input[name='payment_method']" ).on(
-					'change', function () {
-						if (jQuery( this ).val() === 'wirecard_ee_creditcard') {
-							getRequestData( renderForm, logCallback );
-							getVaultData();
-							return false;
-						}
-					}
-				);
+			jQuery( "input[name='payment_method']" ).on('change', function () {
+				if (jQuery( this ).val() === 'wirecard_ee_creditcard') {
+					loadCreditCardData();
+					loadWirecardEEScripts();
+				}
+			});
 
-				/**
-				 * Render the credit card form
-				 *
-				 * @since 1.0.0
-				 */
+			jQuery( document.body ).on( 'updated_checkout', function () {
+				loadCreditCardData();
+				new_credit_card.hide();
+				loadWirecardEEScripts();
+			});
+
+			function loadCreditCardData() {
+				getRequestData( renderForm, logCallback );
+				getVaultData();
+				return false;
+			}
+			/**
+			 * Render the credit card form
+			 *
+			 * @since 1.0.0
+			 */
 			function renderForm(request_data) {
 				WirecardPaymentPage.seamlessRenderForm(
 					{
@@ -165,33 +174,33 @@ jQuery( document ).ajaxComplete(
 				);
 			}
 
-				/**
-				 * Resize the credit card form when loaded
-				 *
-				 * @since 1.0.0
-				 */
+			/**
+			 * Resize the credit card form when loaded
+			 *
+			 * @since 1.0.0
+			 */
 			function resizeIframe() {
 				jQuery( '.show-spinner' ).hide();
 				jQuery( '.save-later' ).show();
 				jQuery( "#wc_payment_method_wirecard_creditcard_form > iframe" ).height( 550 );
 			}
 
-				/**
-				 * Display error massages
-				 *
-				 * @since 1.0.0
-				 */
+			/**
+			 * Display error massages
+			 *
+			 * @since 1.0.0
+			 */
 			function logCallback(response) {
 				console.error( response );
 				processing = false;
 				token      = null;
 			}
 
-				/**
-				 * Get data rquired to render the form
-				 *
-				 * @since 1.0.0
-				 */
+			/**
+			 * Get data rquired to render the form
+			 *
+			 * @since 1.0.0
+			 */
 			function getRequestData(success, error) {
 				jQuery( '#wc_payment_method_wirecard_creditcard_form' ).empty();
 				jQuery( '.show-spinner' ).show();
@@ -210,35 +219,35 @@ jQuery( document ).ajaxComplete(
 							jQuery( '.show-spinner' ).hide();
 							error( data );
 						}
-						}
+					}
 				);
 			}
 
-				/**
-				 * Submit the seamless form before order is placed
-				 *
-				 * @since 1.0.0
-				 */
-				jQuery( 'form.checkout' ).on(
-					'checkout_place_order', function () {
-						if (jQuery( '#payment_method_wirecard_ee_creditcard' )[0].checked === true && processing === false) {
-							processing = true;
-							if (token !== null) {
-								return true;
-							} else {
-								submitForm();
-								return false;
-							}
+			/**
+			 * Submit the seamless form before order is placed
+			 *
+			 * @since 1.0.0
+			 */
+			jQuery( 'form.checkout' ).on(
+				'checkout_place_order', function () {
+					if (jQuery( '#payment_method_wirecard_ee_creditcard' )[0].checked === true && processing === false) {
+						processing = true;
+						if (token !== null) {
+							return true;
+						} else {
+							submitForm();
+							return false;
 						}
 					}
-				);
+				}
+			);
 
-				/**
-				 * Submit Payment page seamless form
-				 *
-				 * @param request_data
-				 * @since 1.1.0
-				 */
+			/**
+			 * Submit Payment page seamless form
+			 *
+			 * @param request_data
+			 * @since 1.1.0
+			 */
 			function submitForm() {
 				WirecardPaymentPage.seamlessSubmitForm(
 					{
@@ -248,11 +257,11 @@ jQuery( document ).ajaxComplete(
 				);
 			}
 
-				/**
-				 * Add the tokenId to the submited form
-				 *
-				 * @since 1.0.0
-				 */
+			/**
+			 * Add the tokenId to the submited form
+			 *
+			 * @since 1.0.0
+			 */
 			function formSubmitSuccessHandler(response) {
 				if ( response.hasOwnProperty( 'token_id' ) ) {
 					token = response.token_id;
@@ -273,7 +282,7 @@ jQuery( document ).ajaxComplete(
 									name: el,
 									id: '#' + el,
 									value: response.card[el]
-									}
+								}
 							).appendTo( checkout_form );
 						}
 					}
@@ -301,47 +310,49 @@ jQuery( document ).ajaxComplete(
 					jQuery( "#tokenId" ).remove();
 				}
 
-					jQuery( '<input>' ).attr(
-						{
-							type: 'hidden',
-							name: 'tokenId',
-							id: 'tokenId',
-							value: token
-						}
-					).appendTo( checkout_form );
+				jQuery( '<input>' ).attr(
+					{
+						type: 'hidden',
+						name: 'tokenId',
+						id: 'tokenId',
+						value: token
+					}
+				).appendTo( checkout_form );
 
 				checkout_form.submit();
 			}
-
-				/**
-				 * Click on stored credit card
-				 *
-				 * @since 1.1.0
-				 */
-				jQuery( '#open-vault-popup' ).off().on(
-					'click', function () {
-						saved_credit_cards.slideToggle();
-						new_credit_card.slideUp();
-						jQuery( 'span', '#open-new-card' ).removeClass( 'dashicons-arrow-up' ).addClass( 'dashicons-arrow-down' );
-						jQuery( 'span', jQuery( this ) ).toggleClass( 'dashicons-arrow-down' ).toggleClass( 'dashicons-arrow-up' );
-					}
-				);
-
-				/**
-				 * Click on new credit card
-				 *
-				 * @since 1.1.0
-				 */
-				jQuery( '#open-new-card' ).off().on(
-					'click', function () {
-						token = null;
-						new_credit_card.slideToggle();
-						saved_credit_cards.slideUp();
-						jQuery( 'input', saved_credit_cards ).prop( 'checked', false );
-						jQuery( 'span', '#open-vault-popup' ).removeClass( 'dashicons-arrow-up' ).addClass( 'dashicons-arrow-down' );
-						jQuery( 'span', jQuery( this ) ).toggleClass( 'dashicons-arrow-down' ).toggleClass( 'dashicons-arrow-up' );
-					}
-				);
 		}
 	}
 );
+
+function loadWirecardEEScripts() {
+	/**
+	 * Click on stored credit card
+	 *
+	 * @since 1.1.0
+	 */
+	jQuery( '#open-vault-popup' ).on(
+		'click', function () {
+			jQuery( '#wc_payment_method_wirecard_creditcard_vault' ).slideToggle();
+			jQuery( '#wc_payment_method_wirecard_new_credit_card' ).slideUp();
+			jQuery( 'span', '#open-new-card' ).removeClass( 'dashicons-arrow-up' ).addClass( 'dashicons-arrow-down' );
+			jQuery( 'span', jQuery( this ) ).toggleClass( 'dashicons-arrow-down' ).toggleClass( 'dashicons-arrow-up' );
+		}
+	);
+
+	/**
+	 * Click on new credit card
+	 *
+	 * @since 1.1.0
+	 */
+	jQuery( '#open-new-card' ).on(
+		'click', function () {
+			token = null;
+			jQuery( '#wc_payment_method_wirecard_new_credit_card' ).slideToggle();
+			jQuery( '#wc_payment_method_wirecard_creditcard_vault' ).slideUp();
+			jQuery( 'input', saved_credit_cards ).prop( 'checked', false );
+			jQuery( 'span', '#open-vault-popup' ).removeClass( 'dashicons-arrow-up' ).addClass( 'dashicons-arrow-down' );
+			jQuery( 'span', jQuery( this ) ).toggleClass( 'dashicons-arrow-down' ).toggleClass( 'dashicons-arrow-up' );
+		}
+	);
+}
