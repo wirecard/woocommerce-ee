@@ -2,7 +2,7 @@
 Contributors: Wirecard AG
 Tags: Wirecard, Credit Card, Alipay Cross-border, Guaranteed Invoice by Wirecard / Ratepay, iDEAL, Masterpass, PayPal, Payment in Advance, Payment on Invoice, SEPA, Sofort., UnionPay International, e-commerce, payment, checkout, payment-methods, One-click-checkout, WooCommerce, PSP, payment-service
 Requires at least: 4.9
-Tested up to: 4.9.5
+Tested up to: 4.9.7
 Requires PHP: 5.6
 Stable tag: 1.1.7
 License: GPLv3
