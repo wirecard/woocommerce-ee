@@ -42,7 +42,7 @@ function setToken() {
 		{
 			type: 'hidden',
 			name: 'tokenId',
-			id: 'tokenId',
+			id: "tokenId",
 			value: token
 		}
 	).appendTo( jQuery( 'form.checkout' ) );
@@ -60,7 +60,7 @@ function getVaultData(saved_credit_cards) {
 		{
 			type: 'GET',
 			url: php_vars.vault_get_url,
-			data: { 'action' : 'get_cc_from_vault' },
+			data: { 'action' : "get_cc_from_vault" },
 			dataType: 'json',
 			success: function ( data ) {
 				if ( false != data.data) {
@@ -78,7 +78,7 @@ function getVaultData(saved_credit_cards) {
 	);
 }
 
-	function loadWirecardEEScripts() {
+function loadWirecardEEScripts() {
 	/**
 	 * Click on stored credit card
 	 *
@@ -90,8 +90,7 @@ function getVaultData(saved_credit_cards) {
 			jQuery( '#wc_payment_method_wirecard_new_credit_card' ).slideUp();
 			jQuery( 'span', '#open-new-card' ).removeClass( 'dashicons-arrow-up' ).addClass( 'dashicons-arrow-down' );
 			jQuery( 'span', jQuery( this ) ).toggleClass( 'dashicons-arrow-down' ).toggleClass( 'dashicons-arrow-up' );
-		}
-	);
+	});
 
 	/**
 	 * Click on new credit card
@@ -106,9 +105,8 @@ function getVaultData(saved_credit_cards) {
 			jQuery( 'input', saved_credit_cards ).prop( 'checked', false );
 			jQuery( 'span', '#open-vault-popup' ).removeClass( 'dashicons-arrow-up' ).addClass( 'dashicons-arrow-down' );
 			jQuery( 'span', jQuery( this ) ).toggleClass( 'dashicons-arrow-down' ).toggleClass( 'dashicons-arrow-up' );
-		}
-	);
-	}
+	});
+}
 
 /**
  * Delete cc from Vault
@@ -217,7 +215,6 @@ jQuery( document ).ajaxComplete(
 				new_credit_card.hide();
 				loadWirecardEEScripts();
 			});
-
 
 			/**
 			 * Render the credit card form

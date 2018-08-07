@@ -38,7 +38,7 @@ $                 = jQuery;
  * @since 1.1.0
  */
 function logCallback( response ) {
-    console.error( response );
+	console.error( response );
 }
 
 /**
@@ -47,14 +47,14 @@ function logCallback( response ) {
  * @since 1.1.0
  */
 function renderUpiForm( request_data ) {
-    WirecardPaymentPage.seamlessRenderForm(
-        {
-            requestData: request_data,
-            wrappingDivId: "wc_payment_method_wirecard_unionpayinternational_form",
-            onSuccess: resizeUpiIframe,
-            onError: logCallback
-        }
-    );
+	WirecardPaymentPage.seamlessRenderForm(
+		{
+			requestData: request_data,
+			wrappingDivId: "wc_payment_method_wirecard_unionpayinternational_form",
+			onSuccess: resizeUpiIframe,
+			onError: logCallback
+		}
+	);
 }
 
 /**
@@ -63,20 +63,20 @@ function renderUpiForm( request_data ) {
  * @since 1.1.0
  */
 function getUpiRequestData() {
-    $.ajax(
-        {
-            type: 'POST',
-            url: upi_vars.ajax_url,
-            data: { 'action' : 'get_upi_request_data' },
-            dataType: 'json',
-            success: function (data) {
-                renderUpiForm( JSON.parse( data.data ) );
-            },
-            error: function (data) {
-                console.log( data );
-            }
-        }
-    );
+	$.ajax(
+		{
+			type: 'POST',
+			url: upi_vars.ajax_url,
+			data: { 'action' : 'get_upi_request_data' },
+			dataType: 'json',
+			success: function (data) {
+				renderUpiForm( JSON.parse( data.data ) );
+			},
+			error: function (data) {
+				console.log( data );
+			}
+		}
+	);
 }
 
 /**
@@ -104,7 +104,7 @@ function formSubmitUpiSuccessHandler( response ) {
  * @since 1.1.0
  */
 function resizeUpiIframe() {
-    $( "#wc_payment_method_wirecard_unionpayinternational_form > iframe" ).height( 550 );
+	$( "#wc_payment_method_wirecard_unionpayinternational_form > iframe" ).height( 550 );
 }
 
 jQuery( document ).ajaxComplete(
