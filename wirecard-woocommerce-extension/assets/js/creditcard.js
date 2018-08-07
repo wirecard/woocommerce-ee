@@ -49,34 +49,6 @@ function setToken() {
 }
 
 /**
- * Delete cc from Vault
- *
- * @param int id
- * @since 1.1.0
- */
-function deleteCard( id ) {
-	var saved_credit_cards = jQuery( '#wc_payment_method_wirecard_creditcard_vault' );
-
-	token = null;
-	jQuery( '.show-spinner', saved_credit_cards ).show();
-	jQuery( '.cards', saved_credit_cards ).empty();
-	jQuery.ajax(
-		{
-			type: 'POST',
-			url: php_vars.vault_delete_url,
-			data: { 'action' : 'remove_cc_from_vault', 'vault_id': id },
-			dataType: 'json',
-			success: function () {
-				getVaultData( saved_credit_cards );
-			},
-			error: function (data) {
-				console.log( data );
-			}
-		}
-	);
-}
-
-/**
  * Get stored cc from Vault
  *
  * @since 1.1.0
@@ -106,6 +78,66 @@ function getVaultData(saved_credit_cards) {
 	);
 }
 
+	function loadWirecardEEScripts() {
+	/**
+	 * Click on stored credit card
+	 *
+	 * @since 1.1.0
+	 */
+	jQuery( '#open-vault-popup' ).on(
+		'click', function () {
+			jQuery( '#wc_payment_method_wirecard_creditcard_vault' ).slideToggle();
+			jQuery( '#wc_payment_method_wirecard_new_credit_card' ).slideUp();
+			jQuery( 'span', '#open-new-card' ).removeClass( 'dashicons-arrow-up' ).addClass( 'dashicons-arrow-down' );
+			jQuery( 'span', jQuery( this ) ).toggleClass( 'dashicons-arrow-down' ).toggleClass( 'dashicons-arrow-up' );
+		}
+	);
+
+	/**
+	 * Click on new credit card
+	 *
+	 * @since 1.1.0
+	 */
+	jQuery( '#open-new-card' ).on(
+		'click', function () {
+			token = null;
+			jQuery( '#wc_payment_method_wirecard_new_credit_card' ).slideToggle();
+			jQuery( '#wc_payment_method_wirecard_creditcard_vault' ).slideUp();
+			jQuery( 'input', saved_credit_cards ).prop( 'checked', false );
+			jQuery( 'span', '#open-vault-popup' ).removeClass( 'dashicons-arrow-up' ).addClass( 'dashicons-arrow-down' );
+			jQuery( 'span', jQuery( this ) ).toggleClass( 'dashicons-arrow-down' ).toggleClass( 'dashicons-arrow-up' );
+		}
+	);
+	}
+
+/**
+ * Delete cc from Vault
+ *
+ * @param int id
+ * @since 1.1.0
+ */
+function deleteCard( id ) {
+	var saved_credit_cards = jQuery( '#wc_payment_method_wirecard_creditcard_vault' );
+
+	token = null;
+	jQuery( '.show-spinner', saved_credit_cards ).show();
+	jQuery( '.cards', saved_credit_cards ).empty();
+	jQuery.ajax(
+		{
+			type: 'POST',
+			url: php_vars.vault_delete_url,
+			data: { 'action' : 'remove_cc_from_vault', 'vault_id': id },
+			dataType: 'json',
+			success: function () {
+				getVaultData( saved_credit_cards );
+			},
+			error: function (data) {
+				console.log( data );
+			}
+		}
+	);
+}
+
 /**
  * Append cc to frontend
  *
@@ -126,6 +158,33 @@ jQuery( document ).ajaxComplete(
 			new_credit_card.hide();
 			loadWirecardEEScripts();
 
+			/**
+			 * Get data rquired to render the form
+			 *
+			 * @since 1.0.0
+			 */
+			function getRequestData(success, error) {
+				jQuery( '#wc_payment_method_wirecard_creditcard_form' ).empty();
+				jQuery( '.show-spinner' ).show();
+				jQuery.ajax(
+					{
+						type: 'POST',
+						url: php_vars.ajax_url,
+						cache: false,
+						data: {'action': 'get_credit_card_request_data'},
+						dataType: 'json',
+						success: function (data) {
+							jQuery( '.show-spinner' ).hide();
+							success( JSON.parse( data.data ) );
+						},
+						error: function (data) {
+							jQuery( '.show-spinner' ).hide();
+							error( data );
+						}
+					}
+				);
+			}
+
 			if (jQuery( '.cards' ).html() == '') {
 				getVaultData( saved_credit_cards );
 			}
@@ -140,6 +199,12 @@ jQuery( document ).ajaxComplete(
 				}
 			);
 
+			function loadCreditCardData() {
+				getRequestData( renderForm, logCallback );
+				getVaultData();
+				return false;
+			}
+
 			jQuery( "input[name='payment_method']" ).on('change', function () {
 				if (jQuery( this ).val() === 'wirecard_ee_creditcard') {
 					loadCreditCardData();
@@ -153,11 +218,7 @@ jQuery( document ).ajaxComplete(
 				loadWirecardEEScripts();
 			});
 
-			function loadCreditCardData() {
-				getRequestData( renderForm, logCallback );
-				getVaultData();
-				return false;
-			}
+
 			/**
 			 * Render the credit card form
 			 *
@@ -194,33 +255,6 @@ jQuery( document ).ajaxComplete(
 				console.error( response );
 				processing = false;
 				token      = null;
-			}
-
-			/**
-			 * Get data rquired to render the form
-			 *
-			 * @since 1.0.0
-			 */
-			function getRequestData(success, error) {
-				jQuery( '#wc_payment_method_wirecard_creditcard_form' ).empty();
-				jQuery( '.show-spinner' ).show();
-				jQuery.ajax(
-					{
-						type: 'POST',
-						url: php_vars.ajax_url,
-						cache: false,
-						data: {'action': 'get_credit_card_request_data'},
-						dataType: 'json',
-						success: function (data) {
-							jQuery( '.show-spinner' ).hide();
-							success( JSON.parse( data.data ) );
-						},
-						error: function (data) {
-							jQuery( '.show-spinner' ).hide();
-							error( data );
-						}
-					}
-				);
 			}
 
 			/**
@@ -324,35 +358,3 @@ jQuery( document ).ajaxComplete(
 		}
 	}
 );
-
-function loadWirecardEEScripts() {
-	/**
-	 * Click on stored credit card
-	 *
-	 * @since 1.1.0
-	 */
-	jQuery( '#open-vault-popup' ).on(
-		'click', function () {
-			jQuery( '#wc_payment_method_wirecard_creditcard_vault' ).slideToggle();
-			jQuery( '#wc_payment_method_wirecard_new_credit_card' ).slideUp();
-			jQuery( 'span', '#open-new-card' ).removeClass( 'dashicons-arrow-up' ).addClass( 'dashicons-arrow-down' );
-			jQuery( 'span', jQuery( this ) ).toggleClass( 'dashicons-arrow-down' ).toggleClass( 'dashicons-arrow-up' );
-		}
-	);
-
-	/**
-	 * Click on new credit card
-	 *
-	 * @since 1.1.0
-	 */
-	jQuery( '#open-new-card' ).on(
-		'click', function () {
-			token = null;
-			jQuery( '#wc_payment_method_wirecard_new_credit_card' ).slideToggle();
-			jQuery( '#wc_payment_method_wirecard_creditcard_vault' ).slideUp();
-			jQuery( 'input', saved_credit_cards ).prop( 'checked', false );
-			jQuery( 'span', '#open-vault-popup' ).removeClass( 'dashicons-arrow-up' ).addClass( 'dashicons-arrow-down' );
-			jQuery( 'span', jQuery( this ) ).toggleClass( 'dashicons-arrow-down' ).toggleClass( 'dashicons-arrow-up' );
-		}
-	);
-}
