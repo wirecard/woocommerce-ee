@@ -90,7 +90,8 @@ function loadWirecardEEScripts() {
 			jQuery( '#wc_payment_method_wirecard_new_credit_card' ).slideUp();
 			jQuery( 'span', '#open-new-card' ).removeClass( 'dashicons-arrow-up' ).addClass( 'dashicons-arrow-down' );
 			jQuery( 'span', jQuery( this ) ).toggleClass( 'dashicons-arrow-down' ).toggleClass( 'dashicons-arrow-up' );
-	});
+		}
+	);
 
 	/**
 	 * Click on new credit card
@@ -105,7 +106,8 @@ function loadWirecardEEScripts() {
 			jQuery( 'input', saved_credit_cards ).prop( 'checked', false );
 			jQuery( 'span', '#open-vault-popup' ).removeClass( 'dashicons-arrow-up' ).addClass( 'dashicons-arrow-down' );
 			jQuery( 'span', jQuery( this ) ).toggleClass( 'dashicons-arrow-down' ).toggleClass( 'dashicons-arrow-up' );
-	});
+		}
+	);
 }
 
 /**
