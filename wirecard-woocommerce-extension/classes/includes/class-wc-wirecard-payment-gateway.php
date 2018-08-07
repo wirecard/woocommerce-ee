@@ -189,7 +189,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 		$redirect_url = $this->get_return_url();
 		if ( ! array_key_exists( 'order-id', $_REQUEST ) ) {
 			header( 'Location:' . $redirect_url );
-			die();
+			wp_die();
 		}
 		$order_id = $_REQUEST['order-id'];
 		$order    = new WC_Order( $order_id );
@@ -197,7 +197,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 		if ( 'cancel' == $_REQUEST['payment-state'] ) {
 			wc_add_notice( __( 'You have canceled the payment process.', 'wirecard-woocommerce-extension' ), 'notice' );
 			header( 'Location:' . $order->get_cancel_endpoint() );
-			die();
+			wp_die();
 		}
 
 		$response_handler = new Wirecard_Response_Handler();
@@ -206,7 +206,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 		} catch ( Exception $exception ) {
 			wc_add_notice( __( 'An error occurred during the payment process. Please try again.', 'wirecard-woocommerce-extension' ), 'error' );
 			header( 'Location:' . $order->get_cancel_endpoint() );
-			die();
+			wp_die();
 		}
 
 		if ( ! $status ) {
@@ -224,7 +224,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 			$redirect_url = $this->get_return_url( $order );
 		}
 		header( 'Location: ' . $redirect_url );
-		die();
+		wp_die();
 	}
 
 	/**
@@ -260,9 +260,9 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 				$logger = new Logger();
 				$logger->debug( __METHOD__ . $exception->getMessage() );
 			}
-			die();
+			wp_die();
 		}
-		die();
+		wp_die();
 	}
 
 	/**
@@ -673,7 +673,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 		} else {
 			wp_send_json_error( __( 'Test failed, please check your credentials.', 'wirecard-woocommerce-extension' ) );
 		}
-		die();
+		wp_die();
 	}
 
 	/**
