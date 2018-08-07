@@ -49,6 +49,17 @@ function setToken() {
 }
 
 /**
+ * Append cc to frontend
+ *
+ * @param array data
+ * @since 1.1.0
+ */
+function addVaultData( data, saved_credit_cards ) {
+    jQuery( '.cards', saved_credit_cards ).html( data );
+    jQuery( '.show-spinner', saved_credit_cards ).hide();
+}
+
+/**
  * Get stored cc from Vault
  *
  * @since 1.1.0
@@ -139,14 +150,30 @@ function deleteCard( id ) {
 }
 
 /**
- * Append cc to frontend
+ * Get data rquired to render the form
  *
- * @param array data
- * @since 1.1.0
+ * @since 1.0.0
  */
-function addVaultData( data, saved_credit_cards ) {
-	jQuery( '.cards', saved_credit_cards ).html( data );
-	jQuery( '.show-spinner', saved_credit_cards ).hide();
+function getRequestData(success, error) {
+    jQuery( '#wc_payment_method_wirecard_creditcard_form' ).empty();
+    jQuery( '.show-spinner' ).show();
+    jQuery.ajax(
+        {
+            type: 'POST',
+            url: php_vars.ajax_url,
+            cache: false,
+            data: {'action': 'get_credit_card_request_data'},
+            dataType: 'json',
+            success: function (data) {
+                jQuery( '.show-spinner' ).hide();
+                success( JSON.parse( data.data ) );
+            },
+            error: function (data) {
+                jQuery( '.show-spinner' ).hide();
+                error( data );
+            }
+        }
+    );
 }
 
 jQuery( document ).ajaxComplete(
@@ -157,33 +184,6 @@ jQuery( document ).ajaxComplete(
 			var new_credit_card    = jQuery( '#wc_payment_method_wirecard_new_credit_card' );
 			new_credit_card.hide();
 			loadWirecardEEScripts();
-
-			/**
-			 * Get data rquired to render the form
-			 *
-			 * @since 1.0.0
-			 */
-			function getRequestData(success, error) {
-				jQuery( '#wc_payment_method_wirecard_creditcard_form' ).empty();
-				jQuery( '.show-spinner' ).show();
-				jQuery.ajax(
-					{
-						type: 'POST',
-						url: php_vars.ajax_url,
-						cache: false,
-						data: {'action': 'get_credit_card_request_data'},
-						dataType: 'json',
-						success: function (data) {
-							jQuery( '.show-spinner' ).hide();
-							success( JSON.parse( data.data ) );
-						},
-						error: function (data) {
-							jQuery( '.show-spinner' ).hide();
-							error( data );
-						}
-					}
-				);
-			}
 
 			if (jQuery( '.cards' ).html() == '') {
 				getVaultData( saved_credit_cards );

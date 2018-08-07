@@ -42,6 +42,15 @@ function logCallback( response ) {
 }
 
 /**
+ * Resize the unionpayinternational form when loaded
+ *
+ * @since 1.1.0
+ */
+function resizeUpiIframe() {
+    $( "#wc_payment_method_wirecard_unionpayinternational_form > iframe" ).height( 550 );
+}
+
+/**
  * Render the unionpayinternational form
  *
  * @since 1.1.0
@@ -96,15 +105,6 @@ function formSubmitUpiSuccessHandler( response ) {
 	).appendTo( checkout_form );
 
 	checkout_form.submit();
-}
-
-/**
- * Resize the unionpayinternational form when loaded
- *
- * @since 1.1.0
- */
-function resizeUpiIframe() {
-	$( "#wc_payment_method_wirecard_unionpayinternational_form > iframe" ).height( 550 );
 }
 
 jQuery( document ).ajaxComplete(
