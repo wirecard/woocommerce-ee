@@ -150,6 +150,44 @@ function deleteCard( id ) {
 }
 
 /**
+ * Resize the credit card form when loaded
+ *
+ * @since 1.0.0
+ */
+function resizeIframe() {
+    jQuery( '.show-spinner' ).hide();
+    jQuery( '.save-later' ).show();
+    jQuery( "#wc_payment_method_wirecard_creditcard_form > iframe" ).height( 550 );
+}
+
+/**
+ * Display error massages
+ *
+ * @since 1.0.0
+ */
+function logCallback(response) {
+    console.error( response );
+    processing = false;
+    token      = null;
+}
+
+/**
+ * Render the credit card form
+ *
+ * @since 1.0.0
+ */
+function renderForm(request_data) {
+    WirecardPaymentPage.seamlessRenderForm(
+        {
+            requestData: request_data,
+            wrappingDivId: "wc_payment_method_wirecard_creditcard_form",
+            onSuccess: resizeIframe,
+            onError: logCallback
+        }
+    );
+}
+
+/**
  * Get data rquired to render the form
  *
  * @since 1.0.0
@@ -217,44 +255,6 @@ jQuery( document ).ajaxComplete(
 				new_credit_card.hide();
 				loadWirecardEEScripts();
 			});
-
-			/**
-			 * Render the credit card form
-			 *
-			 * @since 1.0.0
-			 */
-			function renderForm(request_data) {
-				WirecardPaymentPage.seamlessRenderForm(
-					{
-						requestData: request_data,
-						wrappingDivId: "wc_payment_method_wirecard_creditcard_form",
-						onSuccess: resizeIframe,
-						onError: logCallback
-					}
-				);
-			}
-
-			/**
-			 * Resize the credit card form when loaded
-			 *
-			 * @since 1.0.0
-			 */
-			function resizeIframe() {
-				jQuery( '.show-spinner' ).hide();
-				jQuery( '.save-later' ).show();
-				jQuery( "#wc_payment_method_wirecard_creditcard_form > iframe" ).height( 550 );
-			}
-
-			/**
-			 * Display error massages
-			 *
-			 * @since 1.0.0
-			 */
-			function logCallback(response) {
-				console.error( response );
-				processing = false;
-				token      = null;
-			}
 
 			/**
 			 * Submit the seamless form before order is placed

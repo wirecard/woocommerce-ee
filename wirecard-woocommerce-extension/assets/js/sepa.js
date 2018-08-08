@@ -50,6 +50,24 @@ function validate_inputs() {
 	return validation;
 }
 
+function process_order() {
+    if ( document.getElementById( 'sepa-check' ).checked ) {
+        sepa_check = true;
+        checkout_form.submit();
+    } else {
+        popup.dialog( 'close' );
+        $( 'body' ).css( 'overflow', 'auto' );
+    }
+}
+
+function check_change() {
+    if ( document.getElementById( 'sepa-check' ).checked ) {
+        $( '#sepa-button' ).text( 'Process' );
+    } else {
+        $( '#sepa-button' ).text( 'Cancel' );
+    }
+}
+
 /**
  * Process data and open popup
  *
@@ -104,25 +122,6 @@ function get_sepa_mandate_data() {
 			}
 		}
 	);
-}
-
-
-function process_order() {
-	if ( document.getElementById( 'sepa-check' ).checked ) {
-		sepa_check = true;
-		checkout_form.submit();
-	} else {
-		popup.dialog( 'close' );
-		$( 'body' ).css( 'overflow', 'auto' );
-	}
-}
-
-function check_change() {
-	if ( document.getElementById( 'sepa-check' ).checked ) {
-		$( '#sepa-button' ).text( 'Process' );
-	} else {
-		$( '#sepa-button' ).text( 'Cancel' );
-	}
 }
 
 jQuery( document ).ajaxComplete(
