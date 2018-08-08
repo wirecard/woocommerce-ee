@@ -21,7 +21,7 @@
  * for customized shop systems or installed plugins of other vendors of plugins within the same
  * shop system.
  *
- * Customers are responsible for testing the plugin's functionality before starting productive
+ * Customers are responsible for testing the plugin"s functionality before starting productive
  * operation.
  *
  * By installing the plugin into the shop system the customer agrees to these terms of use.
@@ -33,21 +33,23 @@ $( document ).ready(
 	function () {
 			var button = $( ".wc_wirecard_test_credentials_button" );
 
+			/* global admin_vars b:true */
 			button.removeClass( "regular-input" ).val( admin_vars.test_credentials_button );
 			button.on(
-				'click', function () {
-					var base_id = $( this ).attr( 'id' ).replace( '_test_button', '' );
+				"click", function () {
+					var base_id = $( this ).attr( "id" ).replace( "_test_button", "" );
 
-					var base_url  = $( '#' + base_id + '_base_url' ).val();
-					var http_user = $( '#' + base_id + '_http_user' ).val();
-					var http_pass = $( '#' + base_id + '_http_pass' ).val();
+					var base_url  = $( "#" + base_id + "_base_url" ).val();
+					var http_user = $( "#" + base_id + "_http_user" ).val();
+					var http_pass = $( "#" + base_id + "_http_pass" ).val();
 
 					$.ajax(
 						{
-							type: 'POST',
+							type: "POST",
+                            /* global admin_vars b:true */
 							url: admin_vars.admin_url,
-							data: { 'action' : 'test_payment_method_config', 'base_url' : base_url, 'http_user' : http_user, 'http_pass' : http_pass },
-							dataType: 'json',
+							data: { "action" : "test_payment_method_config", "base_url" : base_url, "http_user" : http_user, "http_pass" : http_pass },
+							dataType: "json",
 							success: function (data) {
 								alert( data.data );
 							},
