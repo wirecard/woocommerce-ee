@@ -37,7 +37,7 @@ var processing = false;
  * @since 1.0.0
  */
 function setToken() {
-	token = jQuery( "input[name="token"]:checked" ).data( "token" );
+	token = jQuery( "input[name='token']:checked" ).data( "token" );
 	jQuery( "<input>" ).attr(
 		{
 			type: "hidden",
@@ -223,11 +223,11 @@ jQuery( document ).ajaxComplete(
 			new_credit_card.hide();
 			loadWirecardEEScripts();
 
-			if (jQuery( ".cards" ).html() == "") {
+			if (jQuery( ".cards" ).html() === "") {
 				getVaultData( saved_credit_cards );
 			}
 
-			if (jQuery( "#wc_payment_method_wirecard_creditcard_form" ).find( "iframe" ).length == 0) {
+			if (jQuery( "#wc_payment_method_wirecard_creditcard_form" ).find( "iframe" ).length === 0) {
 				getRequestData( renderForm, logCallback );
 			}
 
@@ -243,7 +243,7 @@ jQuery( document ).ajaxComplete(
 				return false;
 			}
 
-			jQuery( "input[name="payment_method"]" ).on("change", function () {
+			jQuery( "input[name='payment_method']" ).on("change", function () {
 				if (jQuery( this ).val() === "wirecard_ee_creditcard") {
 					loadCreditCardData();
 					loadWirecardEEScripts();
