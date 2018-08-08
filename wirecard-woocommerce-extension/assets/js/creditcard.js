@@ -21,7 +21,7 @@
  * for customized shop systems or installed plugins of other vendors of plugins within the same
  * shop system.
  *
- * Customers are responsible for testing the plugin's functionality before starting productive
+ * Customers are responsible for testing the plugin"s functionality before starting productive
  * operation.
  *
  * By installing the plugin into the shop system the customer agrees to these terms of use.
@@ -37,15 +37,15 @@ var processing = false;
  * @since 1.0.0
  */
 function setToken() {
-	token = jQuery( "input[name='token']:checked" ).data( 'token' );
-	jQuery( '<input>' ).attr(
+	token = jQuery( "input[name="token"]:checked" ).data( "token" );
+	jQuery( "<input>" ).attr(
 		{
-			type: 'hidden',
-			name: 'tokenId',
+			type: "hidden",
+			name: "tokenId",
 			id: "tokenId",
 			value: token
 		}
-	).appendTo( jQuery( 'form.checkout' ) );
+	).appendTo( jQuery( "form.checkout" ) );
 }
 
 /**
@@ -55,8 +55,8 @@ function setToken() {
  * @since 1.1.0
  */
 function addVaultData( data, saved_credit_cards ) {
-	jQuery( '.cards', saved_credit_cards ).html( data );
-	jQuery( '.show-spinner', saved_credit_cards ).hide();
+	jQuery( ".cards", saved_credit_cards ).html( data );
+	jQuery( ".show-spinner", saved_credit_cards ).hide();
 }
 
 /**
@@ -65,21 +65,21 @@ function addVaultData( data, saved_credit_cards ) {
  * @since 1.1.0
  */
 function getVaultData(saved_credit_cards) {
-	var new_credit_card = jQuery( '#wc_payment_method_wirecard_new_credit_card' );
-	jQuery( '.show-spinner', saved_credit_cards ).show();
+	var new_credit_card = jQuery( "#wc_payment_method_wirecard_new_credit_card" );
+	jQuery( ".show-spinner", saved_credit_cards ).show();
 	jQuery.ajax(
 		{
-			type: 'GET',
+			type: "GET",
 			url: php_vars.vault_get_url,
-			data: { 'action' : "get_cc_from_vault" },
-			dataType: 'json',
+			data: { "action" : "get_cc_from_vault" },
+			dataType: "json",
 			success: function ( data ) {
-				if ( false != data.data) {
+				if ( false !== data.data) {
 					addVaultData( data.data, saved_credit_cards );
 				} else {
-					jQuery( '.cards', saved_credit_cards ).empty();
-					jQuery( '.show-spinner', saved_credit_cards ).hide();
-					new_credit_card.trigger( 'click' );
+					jQuery( ".cards", saved_credit_cards ).empty();
+					jQuery( ".show-spinner", saved_credit_cards ).hide();
+					new_credit_card.trigger( "click" );
 				}
 			},
 			error: function (data) {
@@ -95,12 +95,12 @@ function loadWirecardEEScripts() {
 	 *
 	 * @since 1.1.0
 	 */
-	jQuery( '#open-vault-popup' ).on(
-		'click', function () {
-			jQuery( '#wc_payment_method_wirecard_creditcard_vault' ).slideToggle();
-			jQuery( '#wc_payment_method_wirecard_new_credit_card' ).slideUp();
-			jQuery( 'span', '#open-new-card' ).removeClass( 'dashicons-arrow-up' ).addClass( 'dashicons-arrow-down' );
-			jQuery( 'span', jQuery( this ) ).toggleClass( 'dashicons-arrow-down' ).toggleClass( 'dashicons-arrow-up' );
+	jQuery( "#open-vault-popup" ).on(
+		"click", function () {
+			jQuery( "#wc_payment_method_wirecard_creditcard_vault" ).slideToggle();
+			jQuery( "#wc_payment_method_wirecard_new_credit_card" ).slideUp();
+			jQuery( "span", "#open-new-card" ).removeClass( "dashicons-arrow-up" ).addClass( "dashicons-arrow-down" );
+			jQuery( "span", jQuery( this ) ).toggleClass( "dashicons-arrow-down" ).toggleClass( "dashicons-arrow-up" );
 		}
 	);
 
@@ -109,14 +109,14 @@ function loadWirecardEEScripts() {
 	 *
 	 * @since 1.1.0
 	 */
-	jQuery( '#open-new-card' ).on(
-		'click', function () {
+	jQuery( "#open-new-card" ).on(
+		"click", function () {
 			token = null;
-			jQuery( '#wc_payment_method_wirecard_new_credit_card' ).slideToggle();
-			jQuery( '#wc_payment_method_wirecard_creditcard_vault' ).slideUp();
-			jQuery( 'input', saved_credit_cards ).prop( 'checked', false );
-			jQuery( 'span', '#open-vault-popup' ).removeClass( 'dashicons-arrow-up' ).addClass( 'dashicons-arrow-down' );
-			jQuery( 'span', jQuery( this ) ).toggleClass( 'dashicons-arrow-down' ).toggleClass( 'dashicons-arrow-up' );
+			jQuery( "#wc_payment_method_wirecard_new_credit_card" ).slideToggle();
+			jQuery( "#wc_payment_method_wirecard_creditcard_vault" ).slideUp();
+			jQuery( "input", saved_credit_cards ).prop( "checked", false );
+			jQuery( "span", "#open-vault-popup" ).removeClass( "dashicons-arrow-up" ).addClass( "dashicons-arrow-down" );
+			jQuery( "span", jQuery( this ) ).toggleClass( "dashicons-arrow-down" ).toggleClass( "dashicons-arrow-up" );
 		}
 	);
 }
@@ -128,17 +128,17 @@ function loadWirecardEEScripts() {
  * @since 1.1.0
  */
 function deleteCard( id ) {
-	var saved_credit_cards = jQuery( '#wc_payment_method_wirecard_creditcard_vault' );
+	var saved_credit_cards = jQuery( "#wc_payment_method_wirecard_creditcard_vault" );
 
 	token = null;
-	jQuery( '.show-spinner', saved_credit_cards ).show();
-	jQuery( '.cards', saved_credit_cards ).empty();
+	jQuery( ".show-spinner", saved_credit_cards ).show();
+	jQuery( ".cards", saved_credit_cards ).empty();
 	jQuery.ajax(
 		{
-			type: 'POST',
+			type: "POST",
 			url: php_vars.vault_delete_url,
-			data: { 'action' : 'remove_cc_from_vault', 'vault_id': id },
-			dataType: 'json',
+			data: { "action" : "remove_cc_from_vault", "vault_id": id },
+			dataType: "json",
 			success: function () {
 				getVaultData( saved_credit_cards );
 			},
@@ -155,8 +155,8 @@ function deleteCard( id ) {
  * @since 1.0.0
  */
 function resizeIframe() {
-	jQuery( '.show-spinner' ).hide();
-	jQuery( '.save-later' ).show();
+	jQuery( ".show-spinner" ).hide();
+	jQuery( ".save-later" ).show();
 	jQuery( "#wc_payment_method_wirecard_creditcard_form > iframe" ).height( 550 );
 }
 
@@ -193,21 +193,21 @@ function renderForm(request_data) {
  * @since 1.0.0
  */
 function getRequestData(success, error) {
-	jQuery( '#wc_payment_method_wirecard_creditcard_form' ).empty();
-	jQuery( '.show-spinner' ).show();
+	jQuery( "#wc_payment_method_wirecard_creditcard_form" ).empty();
+	jQuery( ".show-spinner" ).show();
 	jQuery.ajax(
 		{
-			type: 'POST',
+			type: "POST",
 			url: php_vars.ajax_url,
 			cache: false,
-			data: {'action': 'get_credit_card_request_data'},
-			dataType: 'json',
+			data: {"action": "get_credit_card_request_data"},
+			dataType: "json",
 			success: function (data) {
-				jQuery( '.show-spinner' ).hide();
+				jQuery( ".show-spinner" ).hide();
 				success( JSON.parse( data.data ) );
 			},
 			error: function (data) {
-				jQuery( '.show-spinner' ).hide();
+				jQuery( ".show-spinner" ).hide();
 				error( data );
 			}
 		}
@@ -217,22 +217,22 @@ function getRequestData(success, error) {
 jQuery( document ).ajaxComplete(
 	function() {
 		if ( false === processing ) {
-			var saved_credit_cards = jQuery( '#wc_payment_method_wirecard_creditcard_vault' );
-			var checkout_form      = jQuery( 'form.checkout' );
-			var new_credit_card    = jQuery( '#wc_payment_method_wirecard_new_credit_card' );
+			var saved_credit_cards = jQuery( "#wc_payment_method_wirecard_creditcard_vault" );
+			var checkout_form      = jQuery( "form.checkout" );
+			var new_credit_card    = jQuery( "#wc_payment_method_wirecard_new_credit_card" );
 			new_credit_card.hide();
 			loadWirecardEEScripts();
 
-			if (jQuery( '.cards' ).html() == '') {
+			if (jQuery( ".cards" ).html() == "") {
 				getVaultData( saved_credit_cards );
 			}
 
-			if (jQuery( '#wc_payment_method_wirecard_creditcard_form' ).find( 'iframe' ).length == 0) {
+			if (jQuery( "#wc_payment_method_wirecard_creditcard_form" ).find( "iframe" ).length == 0) {
 				getRequestData( renderForm, logCallback );
 			}
 
 			jQuery( document ).off().on(
-				'checkout_error', 'body', function () {
+				"checkout_error", "body", function () {
 					getRequestData( renderForm, logCallback );
 				}
 			);
@@ -243,14 +243,14 @@ jQuery( document ).ajaxComplete(
 				return false;
 			}
 
-			jQuery( "input[name='payment_method']" ).on('change', function () {
-				if (jQuery( this ).val() === 'wirecard_ee_creditcard') {
+			jQuery( "input[name="payment_method"]" ).on("change", function () {
+				if (jQuery( this ).val() === "wirecard_ee_creditcard") {
 					loadCreditCardData();
 					loadWirecardEEScripts();
 				}
 			});
 
-			jQuery( document.body ).on( 'updated_checkout', function () {
+			jQuery( document.body ).on( "updated_checkout", function () {
 				loadCreditCardData();
 				new_credit_card.hide();
 				loadWirecardEEScripts();
@@ -261,9 +261,9 @@ jQuery( document ).ajaxComplete(
 			 *
 			 * @since 1.0.0
 			 */
-			jQuery( 'form.checkout' ).on(
-				'checkout_place_order', function () {
-					if (jQuery( '#payment_method_wirecard_ee_creditcard' )[0].checked === true && processing === false) {
+			jQuery( "form.checkout" ).on(
+				"checkout_place_order", function () {
+					if (jQuery( "#payment_method_wirecard_ee_creditcard" )[0].checked === true && processing === false) {
 						processing = true;
 						if (token !== null) {
 							return true;
@@ -296,9 +296,9 @@ jQuery( document ).ajaxComplete(
 			 * @since 1.0.0
 			 */
 			function formSubmitSuccessHandler(response) {
-				if ( response.hasOwnProperty( 'token_id' ) ) {
+				if ( response.hasOwnProperty( "token_id" ) ) {
 					token = response.token_id;
-				} else if ( response.hasOwnProperty( 'card_token' ) && response.card_token.hasOwnProperty( 'token' )) {
+				} else if ( response.hasOwnProperty( "card_token" ) && response.card_token.hasOwnProperty( "token" )) {
 					token = response.card_token.token;
 
 					var fields = ["expiration_month", "expiration_year"];
@@ -309,11 +309,11 @@ jQuery( document ).ajaxComplete(
 						if ( element.length > 0 ) {
 							element.remove();
 						} else {
-							jQuery( '<input>' ).attr(
+							jQuery( "<input>" ).attr(
 								{
-									type: 'hidden',
+									type: "hidden",
 									name: el,
-									id: '#' + el,
+									id: "#" + el,
 									value: response.card[el]
 								}
 							).appendTo( checkout_form );
@@ -321,17 +321,17 @@ jQuery( document ).ajaxComplete(
 					}
 				}
 
-				if (jQuery( "#wirecard-store-card" ).is( ":checked" ) && response.transaction_state === 'success') {
+				if (jQuery( "#wirecard-store-card" ).is( ":checked" ) && response.transaction_state === "success") {
 					jQuery.ajax(
 						{
-							type: 'POST',
+							type: "POST",
 							url: php_vars.vault_url,
 							data: {
-								'action': 'save_cc_to_vault',
-								'token': response.token_id,
-								'mask_pan': response.masked_account_number
+								"action": "save_cc_to_vault",
+								"token": response.token_id,
+								"mask_pan": response.masked_account_number
 							},
-							dataType: 'json',
+							dataType: "json",
 							error: function (data) {
 								console.log( data );
 							}
@@ -343,11 +343,11 @@ jQuery( document ).ajaxComplete(
 					jQuery( "#tokenId" ).remove();
 				}
 
-				jQuery( '<input>' ).attr(
+				jQuery( "<input>" ).attr(
 					{
-						type: 'hidden',
-						name: 'tokenId',
-						id: 'tokenId',
+						type: "hidden",
+						name: "tokenId",
+						id: "tokenId",
 						value: token
 					}
 				).appendTo( checkout_form );
