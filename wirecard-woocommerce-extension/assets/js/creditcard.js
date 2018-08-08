@@ -55,8 +55,8 @@ function setToken() {
  * @since 1.1.0
  */
 function addVaultData( data, saved_credit_cards ) {
-    jQuery( '.cards', saved_credit_cards ).html( data );
-    jQuery( '.show-spinner', saved_credit_cards ).hide();
+	jQuery( '.cards', saved_credit_cards ).html( data );
+	jQuery( '.show-spinner', saved_credit_cards ).hide();
 }
 
 /**
@@ -155,9 +155,9 @@ function deleteCard( id ) {
  * @since 1.0.0
  */
 function resizeIframe() {
-    jQuery( '.show-spinner' ).hide();
-    jQuery( '.save-later' ).show();
-    jQuery( "#wc_payment_method_wirecard_creditcard_form > iframe" ).height( 550 );
+	jQuery( '.show-spinner' ).hide();
+	jQuery( '.save-later' ).show();
+	jQuery( "#wc_payment_method_wirecard_creditcard_form > iframe" ).height( 550 );
 }
 
 /**
@@ -166,9 +166,9 @@ function resizeIframe() {
  * @since 1.0.0
  */
 function logCallback(response) {
-    console.error( response );
-    processing = false;
-    token      = null;
+	console.error( response );
+	processing = false;
+	token      = null;
 }
 
 /**
@@ -177,14 +177,14 @@ function logCallback(response) {
  * @since 1.0.0
  */
 function renderForm(request_data) {
-    WirecardPaymentPage.seamlessRenderForm(
-        {
-            requestData: request_data,
-            wrappingDivId: "wc_payment_method_wirecard_creditcard_form",
-            onSuccess: resizeIframe,
-            onError: logCallback
-        }
-    );
+	WirecardPaymentPage.seamlessRenderForm(
+		{
+			requestData: request_data,
+			wrappingDivId: "wc_payment_method_wirecard_creditcard_form",
+			onSuccess: resizeIframe,
+			onError: logCallback
+		}
+	);
 }
 
 /**
@@ -193,25 +193,25 @@ function renderForm(request_data) {
  * @since 1.0.0
  */
 function getRequestData(success, error) {
-    jQuery( '#wc_payment_method_wirecard_creditcard_form' ).empty();
-    jQuery( '.show-spinner' ).show();
-    jQuery.ajax(
-        {
-            type: 'POST',
-            url: php_vars.ajax_url,
-            cache: false,
-            data: {'action': 'get_credit_card_request_data'},
-            dataType: 'json',
-            success: function (data) {
-                jQuery( '.show-spinner' ).hide();
-                success( JSON.parse( data.data ) );
-            },
-            error: function (data) {
-                jQuery( '.show-spinner' ).hide();
-                error( data );
-            }
-        }
-    );
+	jQuery( '#wc_payment_method_wirecard_creditcard_form' ).empty();
+	jQuery( '.show-spinner' ).show();
+	jQuery.ajax(
+		{
+			type: 'POST',
+			url: php_vars.ajax_url,
+			cache: false,
+			data: {'action': 'get_credit_card_request_data'},
+			dataType: 'json',
+			success: function (data) {
+				jQuery( '.show-spinner' ).hide();
+				success( JSON.parse( data.data ) );
+			},
+			error: function (data) {
+				jQuery( '.show-spinner' ).hide();
+				error( data );
+			}
+		}
+	);
 }
 
 jQuery( document ).ajaxComplete(

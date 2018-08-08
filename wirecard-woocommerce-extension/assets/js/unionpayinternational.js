@@ -47,7 +47,7 @@ function logCallback( response ) {
  * @since 1.1.0
  */
 function resizeUpiIframe() {
-    $( "#wc_payment_method_wirecard_unionpayinternational_form > iframe" ).height( 550 );
+	$( "#wc_payment_method_wirecard_unionpayinternational_form > iframe" ).height( 550 );
 }
 
 /**
