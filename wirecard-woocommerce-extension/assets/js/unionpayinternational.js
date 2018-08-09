@@ -21,14 +21,14 @@
  * for customized shop systems or installed plugins of other vendors of plugins within the same
  * shop system.
  *
- * Customers are responsible for testing the plugin's functionality before starting productive
+ * Customers are responsible for testing the plugin"s functionality before starting productive
  * operation.
  *
  * By installing the plugin into the shop system the customer agrees to these terms of use.
  * Please do not use the plugin if you do not agree to these terms of use!
  */
 var token         = null;
-var checkout_form = jQuery( 'form.checkout' );
+var checkout_form = jQuery( "form.checkout" );
 var processing    = false;
 $                 = jQuery;
 
@@ -56,6 +56,7 @@ function resizeUpiIframe() {
  * @since 1.1.0
  */
 function renderUpiForm( request_data ) {
+	/* global WirecardPaymentPage b:true */
 	WirecardPaymentPage.seamlessRenderForm(
 		{
 			requestData: request_data,
@@ -74,10 +75,11 @@ function renderUpiForm( request_data ) {
 function getUpiRequestData() {
 	$.ajax(
 		{
-			type: 'POST',
+			type: "POST",
+			/* global upi_vars b:true */
 			url: upi_vars.ajax_url,
-			data: { 'action' : 'get_upi_request_data' },
-			dataType: 'json',
+			data: { "action" : "get_upi_request_data" },
+			dataType: "json",
 			success: function (data) {
 				renderUpiForm( JSON.parse( data.data ) );
 			},
@@ -95,11 +97,11 @@ function getUpiRequestData() {
  */
 function formSubmitUpiSuccessHandler( response ) {
 	token = response.token_id;
-	jQuery( '<input>' ).attr(
+	jQuery( "<input>" ).attr(
 		{
-			type: 'hidden',
-			name: 'tokenId',
-			id: 'tokenId',
+			type: "hidden",
+			name: "tokenId",
+			id: "tokenId",
 			value: token
 		}
 	).appendTo( checkout_form );
@@ -115,7 +117,7 @@ jQuery( document ).ajaxComplete(
 
 		$( "input[name=payment_method]" ).change(
 			function() {
-				if ( $( this ).val() === 'wirecard_ee_unionpayinternational' ) {
+				if ( $( this ).val() === "wirecard_ee_unionpayinternational" ) {
 					getUpiRequestData();
 					return false;
 				}
@@ -128,12 +130,13 @@ jQuery( document ).ajaxComplete(
 	 * @since 1.1.0
 	 */
 		checkout_form.on(
-			'checkout_place_order', function() {
-				if ( $( '#payment_method_wirecard_ee_unionpayinternational' )[0].checked === true && processing === false ) {
+			"checkout_place_order", function() {
+				if ( $( "#payment_method_wirecard_ee_unionpayinternational" )[0].checked === true && processing === false ) {
 					processing = true;
-					if ( token !== null ) {
+					if ( null !== token ) {
 						return true;
 					} else {
+						/* global WirecardPaymentPage b:true */
 						WirecardPaymentPage.seamlessSubmitForm(
 							{
 								onSuccess: formSubmitUpiSuccessHandler,
