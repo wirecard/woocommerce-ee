@@ -77,7 +77,7 @@ class Wirecard_Transaction_Handler extends Wirecard_Handler {
 			$order->set_transaction_id( $response->getTransactionId() );
 			$redirect_url = '/admin.php?page=wirecardpayment&id=' . $response->getTransactionId();
 			wp_redirect( admin_url( $redirect_url ), 301 );
-			die();
+			wp_die();
 		}
 		if ( $response instanceof FailureResponse ) {
 			echo __( 'An error occured. The transaction could not be cancelled!', 'woocommercer-gateway-wirecard' );
