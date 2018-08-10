@@ -30,6 +30,9 @@
 
 var token      = null;
 var processing = false;
+var saved_credit_cards = jQuery( "#wc_payment_method_wirecard_creditcard_vault" );
+var checkout_form      = jQuery( "form.checkout" );
+var new_credit_card    = jQuery( "#wc_payment_method_wirecard_new_credit_card" );
 
 /**
  * Add token to submit form
@@ -217,9 +220,9 @@ function getRequestData(success, error) {
 jQuery( document ).ajaxComplete(
 	function() {
 		if ( false === processing ) {
-			var saved_credit_cards = jQuery( "#wc_payment_method_wirecard_creditcard_vault" );
-			var checkout_form      = jQuery( "form.checkout" );
-			var new_credit_card    = jQuery( "#wc_payment_method_wirecard_new_credit_card" );
+			saved_credit_cards = jQuery( "#wc_payment_method_wirecard_creditcard_vault" );
+			checkout_form      = jQuery( "form.checkout" );
+			new_credit_card    = jQuery( "#wc_payment_method_wirecard_new_credit_card" );
 			new_credit_card.hide();
 			loadWirecardEEScripts();
 
@@ -265,7 +268,7 @@ jQuery( document ).ajaxComplete(
 				"checkout_place_order", function () {
 					if (jQuery( "#payment_method_wirecard_ee_creditcard" )[0].checked === true && processing === false) {
 						processing = true;
-						if (token !== null) {
+						if ( token ) {
 							return true;
 						} else {
 							submitForm();

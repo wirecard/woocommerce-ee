@@ -92,7 +92,7 @@ class Wirecard_Settings {
 		?>
 		<div class="wrap">
 			<hr class="wp-header-end">
-			<img src="<?php echo esc_html( plugins_url( 'woocommerce-wirecard-ee/assets/images/wirecard-logo.png' ) ); ?>">
+			<img src="<?php echo esc_html( plugins_url( 'wirecard-woocommerce-extension/assets/images/wirecard-logo.png' ) ); ?>">
 			<br/>
 			<br/>
 			<a class="button-primary" href="?page=wirecardsupport">Support</a>
@@ -215,7 +215,7 @@ class Wirecard_Settings {
 		?>
 		<div class="wrap">
 			<hr class="wp-header-end">
-			<img src="<?php echo plugins_url( 'woocommerce-wirecard-ee/assets/images/wirecard-logo.png' ); ?>">
+			<img src="<?php echo plugins_url( 'wirecard-woocommerce-extension/assets/images/wirecard-logo.png' ); ?>">
 			<br/>
 			<br/>
 			<form>

@@ -224,7 +224,6 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 			$redirect_url = $this->get_return_url( $order );
 		}
 		header( 'Location: ' . $redirect_url );
-		wp_die();
 	}
 
 	/**
@@ -276,7 +275,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 * @since 1.0.0
 	 */
 	public function create_redirect_url( $order, $payment_state, $payment_method ) {
-		$return_url = add_query_arg(
+		return add_query_arg(
 			array(
 				'wc-api'         => 'WC_Wirecard_Payment_Gateway_Redirect',
 				'order-id'       => $order->get_id(),
@@ -285,8 +284,6 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 			),
 			site_url( '/', is_ssl() ? 'https' : 'http' )
 		);
-
-		return $return_url;
 	}
 
 	/**
