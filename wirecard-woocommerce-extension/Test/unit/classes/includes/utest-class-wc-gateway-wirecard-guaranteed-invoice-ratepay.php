@@ -50,11 +50,13 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay_Utest extends \PHPUnit_Fram
 
 	public function test_process_payment_invalid_date_of_birth() {
 		$_POST['invoice_date_of_birth'] = '12.12.2021';
+		$_POST['ratepay_nonce'] = 'test';
 		$this->assertFalse( is_array( $this->payment->process_payment( 12 ) ) );
 	}
 
 	public function test_process_payment() {
 		$_POST['invoice_date_of_birth'] = '12.12.1990';
+		$_POST['ratepay_nonce'] = 'test';
 		$this->assertTrue( is_array( $this->payment->process_payment( 12 ) ) );
 	}
 

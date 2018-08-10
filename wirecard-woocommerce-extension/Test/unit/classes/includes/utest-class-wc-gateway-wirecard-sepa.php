@@ -46,6 +46,7 @@ class WC_Gateway_Wirecard_Sepa_Utest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function test_process_payment_fail() {
+		$_POST['sepa_nonce'] = 'test';
 		$this->assertFalse( $this->payment->process_payment( 12 ) );
 	}
 
@@ -53,6 +54,7 @@ class WC_Gateway_Wirecard_Sepa_Utest extends \PHPUnit_Framework_TestCase {
 		$_POST['sepa_firstname'] = 'firstname';
 		$_POST['sepa_lastname']  = 'lastname';
 		$_POST['sepa_iban']      = 'iban';
+		$_POST['sepa_nonce'] = 'test';
 
 		$this->assertTrue( is_array( $this->payment->process_payment( 12 ) ) );
 	}

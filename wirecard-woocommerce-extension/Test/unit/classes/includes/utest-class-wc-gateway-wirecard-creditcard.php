@@ -39,6 +39,7 @@ class WC_Gateway_Wirecard_Creditcard_Utest extends \PHPUnit_Framework_TestCase {
 	public function setUp() {
 		$this->credit_card = new WC_Gateway_Wirecard_Creditcard();
 		$_POST['tokenId']  = 'test';
+		$_POST['cc_nonce']  = 'test';
 	}
 
 	public function test_init_form_fields() {
