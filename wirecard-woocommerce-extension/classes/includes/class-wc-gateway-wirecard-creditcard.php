@@ -327,7 +327,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	 * @since 1.1.8
 	 */
 	public function load_cc_template() {
-		$html = '';
+		$html = '<input type="hidden" name="cc_nonce" value="' . wp_create_nonce() . '" />';
 		if ( is_user_logged_in() ) {
 			if ( $this->get_option( 'cc_vault_enabled' ) == 'yes' && $this->has_cc_in_vault() ) {
 				$html .= '<div id="open-vault-popup"><span class="dashicons dashicons-arrow-up"></span>' . __( 'Use saved Credit Cards', 'wirecard-woocommerce-extension' ) . '</div>
@@ -379,26 +379,28 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	 * @since 1.0.0
 	 */
 	public function process_payment( $order_id ) {
-		$order = wc_get_order( $order_id );
+		if ( wp_verify_nonce( $_POST['cc_nonce'] ) ) {
+			$order = wc_get_order( $order_id );
 
-		$this->payment_action = $this->get_option( 'payment_action' );
-		$token                = sanitize_text_field( $_POST['tokenId'] );
+			$this->payment_action = $this->get_option( 'payment_action' );
+			$token                = sanitize_text_field( $_POST['tokenId'] );
 
-		$this->transaction = new CreditCardTransaction();
+			$this->transaction = new CreditCardTransaction();
 
-		if ( ! array_diff_key( array_flip( [ 'expiration_month', 'expiration_year' ] ), $_POST ) ) {
-			$card = new \Wirecard\PaymentSdk\Entity\Card();
-			$card->setExpirationYear( sanitize_text_field( $_POST['expiration_year'] ) );
-			$card->setExpirationMonth( sanitize_text_field( $_POST['expiration_month'] ) );
-			$this->transaction->setCard( $card );
+			if ( ! array_diff_key( array_flip( [ 'expiration_month', 'expiration_year' ] ), $_POST ) ) {
+				$card = new \Wirecard\PaymentSdk\Entity\Card();
+				$card->setExpirationYear( sanitize_text_field( $_POST['expiration_year'] ) );
+				$card->setExpirationMonth( sanitize_text_field( $_POST['expiration_month'] ) );
+				$this->transaction->setCard( $card );
+			}
+
+			parent::process_payment( $order_id );
+
+			$this->transaction->setTokenId( $token );
+			$this->transaction->setTermUrl( $this->create_redirect_url( $order, 'success', $this->type ) );
+
+			return $this->execute_transaction( $this->transaction, $this->config, $this->payment_action, $order );
 		}
-
-		parent::process_payment( $order_id );
-
-		$this->transaction->setTokenId( $token );
-		$this->transaction->setTermUrl( $this->create_redirect_url( $order, 'success', $this->type ) );
-
-		return $this->execute_transaction( $this->transaction, $this->config, $this->payment_action, $order );
 	}
 
 	/**
