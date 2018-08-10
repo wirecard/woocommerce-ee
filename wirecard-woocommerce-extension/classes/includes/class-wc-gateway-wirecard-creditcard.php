@@ -410,7 +410,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 		$config              = $this->create_payment_config();
 		$transaction_service = new TransactionService( $config );
 		wp_send_json_success( $transaction_service->getDataForCreditCardUi() );
-		die();
+		wp_die();
 	}
 
 	/**
@@ -488,10 +488,10 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 
 		if ( $this->vault->save_card( $user->ID, $token, $mask_pan ) ) {
 			wp_send_json_success();
-		} else {
-			wp_send_json_error();
+			wp_die();
 		}
-		die();
+		wp_send_json_error();
+		wp_die();
 	}
 
 	/**
@@ -508,7 +508,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 		$user = wp_get_current_user();
 
 		wp_send_json_success( $this->vault->get_cards_for_user( $user->ID ) );
-		die();
+		wp_die();
 	}
 
 	/**
@@ -517,14 +517,14 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	 * @since 1.1.0
 	 */
 	public function remove_cc_from_vault() {
-		$vault_id = $_POST['vault_id'];
+		$vault_id = sanitize_text_field( $_POST['vault_id'] );
 
 		if ( isset( $vault_id ) && $this->vault->delete_credit_card( $vault_id ) > 0 ) {
 			wp_send_json_success();
-		} else {
-			wp_send_json_error();
+			wp_die();
 		}
-		die();
+		wp_send_json_error();
+		wp_die();
 	}
 
 	/**
