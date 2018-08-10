@@ -133,7 +133,7 @@ jQuery( document ).ajaxComplete(
 			"checkout_place_order", function() {
 				if ( $( "#payment_method_wirecard_ee_unionpayinternational" )[0].checked === true && processing === false ) {
 					processing = true;
-					if ( null !== token ) {
+					if ( token ) {
 						return true;
 					} else {
 						/* global WirecardPaymentPage b:true */
