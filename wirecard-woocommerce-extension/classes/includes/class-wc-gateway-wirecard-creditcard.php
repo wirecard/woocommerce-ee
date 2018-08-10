@@ -288,12 +288,13 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 		wp_register_script( 'credit_card_js', $gateway_url . 'assets/js/creditcard.js', array( 'jquery', 'page_loader' ), null, true );
 	}
 
+
 	/**
-	 * Add payment fields to payment method
-	 *
-	 * @since 1.0.0
+	 * Load variables for credit card javascript
+	 * @return array
+	 * @since 1.1.8
 	 */
-	public function payment_fields() {
+	public function load_variables() {
 		$page_url         = add_query_arg(
 			[ 'wc-api' => 'get_credit_card_request_data' ],
 			site_url( '/', is_ssl() ? 'https' : 'http' )
@@ -311,20 +312,21 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 			site_url( '/', is_ssl() ? 'https' : 'http' )
 		);
 
-		$args = array(
+		return array(
 			'ajax_url'         => $page_url,
 			'vault_url'        => $vault_save_url,
 			'vault_get_url'    => $vault_get_url,
 			'vault_delete_url' => $vault_delete_url,
 		);
+	}
 
-		wp_enqueue_style( 'basic_style' );
-		wp_enqueue_script( 'jquery_ui' );
-		wp_enqueue_style( 'jquery_ui_style' );
-		wp_enqueue_script( 'page_loader' );
-		wp_enqueue_script( 'credit_card_js' );
-		wp_localize_script( 'credit_card_js', 'php_vars', $args );
-
+	/**
+	 * Load html for the template
+	 *
+	 * @return string
+	 * @since 1.1.8
+	 */
+	public function load_cc_template() {
 		$html = '';
 		if ( is_user_logged_in() ) {
 			if ( $this->get_option( 'cc_vault_enabled' ) == 'yes' && $this->has_cc_in_vault() ) {
@@ -348,7 +350,22 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 			}
 		}
 
-		echo $html;
+		return $html;
+	}
+	/**
+	 * Add payment fields to payment method
+	 *
+	 * @since 1.0.0
+	 */
+	public function payment_fields() {
+		wp_enqueue_style( 'basic_style' );
+		wp_enqueue_script( 'jquery_ui' );
+		wp_enqueue_style( 'jquery_ui_style' );
+		wp_enqueue_script( 'page_loader' );
+		wp_enqueue_script( 'credit_card_js' );
+		wp_localize_script( 'credit_card_js', 'php_vars', $this->load_variables() );
+
+		echo $this->load_cc_template();
 		return true;
 	}
 
