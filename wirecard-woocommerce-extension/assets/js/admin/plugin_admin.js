@@ -48,7 +48,7 @@ $( document ).ready(
 							type: "POST",
 							/* global admin_vars b:true */
 							url: admin_vars.admin_url,
-							data: { "action" : "test_payment_method_config", "base_url" : base_url, "http_user" : http_user, "http_pass" : http_pass },
+							data: { "action" : "test_payment_method_config", "base_url" : base_url, "http_user" : http_user, "http_pass" : http_pass, "admin_nonce" : admin_vars.admin_nonce },
 							dataType: "json",
 							success: function (data) {
 								alert( data.data );
