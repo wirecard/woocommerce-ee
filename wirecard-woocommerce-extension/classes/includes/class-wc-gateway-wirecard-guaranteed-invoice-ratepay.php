@@ -235,30 +235,32 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 	 * @since 1.1.0
 	 */
 	public function process_payment( $order_id ) {
-		$order = wc_get_order( $order_id );
+		$order = wc_get_order($order_id);
 
-		if ( ! $this->validate_date_of_birth( $_POST['invoice_date_of_birth'] ) ) {
+		if ( ! wp_verify_nonce( $_POST['ratepay_nonce'] ) &&
+			! $this->validate_date_of_birth($_POST['invoice_date_of_birth']) ) {
 			return false;
 		}
 		$this->transaction = new RatepayInvoiceTransaction();
-		parent::process_payment( $order_id );
+		parent::process_payment($order_id);
 
-		$this->transaction->setOrderNumber( $order_id );
-		$this->transaction->setBasket( $this->additional_helper->create_shopping_basket( $this->transaction, $order->get_total() ) );
+		$this->transaction->setOrderNumber($order_id);
+		$this->transaction->setBasket($this->additional_helper->create_shopping_basket($this->transaction,
+			$order->get_total()));
 		$this->transaction->setAccountHolder(
 			$this->additional_helper->create_account_holder(
 				$order,
 				'billing',
-				new \DateTime( sanitize_text_field( $_POST['invoice_date_of_birth'] ) )
+				new \DateTime(sanitize_text_field($_POST['invoice_date_of_birth']))
 			)
 		);
 
-		$ident  = WC()->session->get( 'ratepay_device_ident' );
+		$ident = WC()->session->get('ratepay_device_ident');
 		$device = new \Wirecard\PaymentSdk\Entity\Device();
-		$device->setFingerprint( $ident );
-		$this->transaction->setDevice( $device );
+		$device->setFingerprint($ident);
+		$this->transaction->setDevice($device);
 
-		return $this->execute_transaction( $this->transaction, $this->config, $this->payment_action, $order );
+		return $this->execute_transaction($this->transaction, $this->config, $this->payment_action, $order);
 	}
 
 	/**
@@ -410,7 +412,8 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 		$html .= '<p class="form-row form-row-wide validate-required">
 		<label for="invoice_dateofbirth" class="">' . __( 'Date of birth', 'wirecard-woocommerce-extension' ) . '
 		<abbr class="required" title="required">*</abbr></label>
-		<input class="input-text " name="invoice_date_of_birth" id="invoice_date_of_birth" placeholder="" type="date">
+		<input class="input-text " name="invoice_date_of_birth" id="invoice_date_of_birth" placeholder="" type="date" />
+		<input type="hidden" name="ratepay_nonce" value="' . wp_create_nonce() . '" />
 		</p>';
 
 		echo $html;
