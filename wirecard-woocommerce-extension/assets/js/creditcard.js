@@ -307,19 +307,24 @@ jQuery( document ).ajaxComplete(
 					var fields = ["expiration_month", "expiration_year"];
 
 					for ( var el in  fields ) {
+						if ( ! fields.hasOwnProperty( el ) ) {
+							break;
+						}
 						el          = fields[el];
 						var element = jQuery( "#" + el );
 						if ( element.length > 0 ) {
 							element.remove();
 						} else {
-							jQuery( "<input>" ).attr(
-								{
-									type: "hidden",
-									name: el,
-									id: "#" + el,
-									value: response.card[el]
-								}
-							).appendTo( checkout_form );
+							if ( response.card.hasOwnProperty( el ) ) {
+								jQuery("<input>").attr(
+									{
+										type: "hidden",
+										name: el,
+										id: "#" + el,
+										value: response.card[el]
+									}
+								).appendTo(checkout_form);
+							}
 						}
 					}
 				}
