@@ -237,7 +237,7 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 	public function process_payment( $order_id ) {
 		$order = wc_get_order( $order_id );
 
-		if ( ! wp_verify_nonce( $_POST['ratepay_nonce'] ) &&
+		if ( ! wp_verify_nonce( $_POST['ratepay_nonce'] ) ||
 			! $this->validate_date_of_birth( $_POST['invoice_date_of_birth'] ) ) {
 			return false;
 		}
