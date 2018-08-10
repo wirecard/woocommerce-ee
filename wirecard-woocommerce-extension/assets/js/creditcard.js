@@ -316,14 +316,14 @@ jQuery( document ).ajaxComplete(
 							element.remove();
 						} else {
 							if ( response.card.hasOwnProperty( el ) ) {
-								jQuery("<input>").attr(
+								jQuery( "<input>" ).attr(
 									{
 										type: "hidden",
 										name: el,
 										id: "#" + el,
 										value: response.card[el]
 									}
-								).appendTo(checkout_form);
+								).appendTo( checkout_form );
 							}
 						}
 					}
