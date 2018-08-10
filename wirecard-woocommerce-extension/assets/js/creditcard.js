@@ -28,8 +28,8 @@
  * Please do not use the plugin if you do not agree to these terms of use!
  */
 
-var token      = null;
-var processing = false;
+var token              = null;
+var processing         = false;
 var saved_credit_cards = jQuery( "#wc_payment_method_wirecard_creditcard_vault" );
 var checkout_form      = jQuery( "form.checkout" );
 var new_credit_card    = jQuery( "#wc_payment_method_wirecard_new_credit_card" );
