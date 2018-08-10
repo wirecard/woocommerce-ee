@@ -254,7 +254,7 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 			)
 		);
 
-		$ident = WC()->session->get( 'ratepay_device_ident' );
+		$ident  = WC()->session->get( 'ratepay_device_ident' );
 		$device = new \Wirecard\PaymentSdk\Entity\Device();
 		$device->setFingerprint( $ident );
 		$this->transaction->setDevice( $device );

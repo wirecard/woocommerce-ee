@@ -136,3 +136,7 @@ function sanitize_text_field( $string ) {
 function is_user_logged_in() {
 	return true;
 }
+
+function wp_verify_nonce() {
+	return true;
+}
