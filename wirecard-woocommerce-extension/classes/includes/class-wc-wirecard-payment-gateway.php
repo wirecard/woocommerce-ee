@@ -601,7 +601,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 		}
 
 		if ( $this->get_option( 'send_additional' ) == 'yes' ) {
-			$this->transaction = $this->additional_helper->set_additional_information( $order, $this->transaction, $order->get_total() );
+			$this->transaction = $this->additional_helper->set_additional_information( $order, $this->transaction );
 		}
 	}
 

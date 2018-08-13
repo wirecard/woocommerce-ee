@@ -245,7 +245,7 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 		parent::process_payment( $order_id );
 
 		$this->transaction->setOrderNumber( $order_id );
-		$this->transaction->setBasket( $this->additional_helper->create_shopping_basket( $this->transaction, $order->get_total() ) );
+		$this->transaction->setBasket( $this->additional_helper->create_shopping_basket( $this->transaction ) );
 		$this->transaction->setAccountHolder(
 			$this->additional_helper->create_account_holder(
 				$order,
