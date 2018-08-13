@@ -21,7 +21,7 @@
  * for customized shop systems or installed plugins of other vendors of plugins within the same
  * shop system.
  *
- * Customers are responsible for testing the plugin's functionality before starting productive
+ * Customers are responsible for testing the plugin"s functionality before starting productive
  * operation.
  *
  * By installing the plugin into the shop system the customer agrees to these terms of use.
@@ -29,8 +29,8 @@
  */
 
 $                 = jQuery;
-var popup         = $( '#dialog' );
-var checkout_form = $( 'form.checkout' );
+var popup         = $( "#dialog" );
+var checkout_form = $( "form.checkout" );
 var sepa_check    = false;
 
 /**
@@ -38,7 +38,7 @@ var sepa_check    = false;
  */
 function validate_inputs() {
 	var validation = true;
-	$( '.wc-sepa-input' ).each(
+	$( ".wc-sepa-input" ).each(
 		function () {
 			if ( ! $( this ).val() ) {
 				$( this ) .focus();
@@ -51,20 +51,20 @@ function validate_inputs() {
 }
 
 function process_order() {
-	if ( document.getElementById( 'sepa-check' ).checked ) {
+	if ( document.getElementById( "sepa-check" ).checked ) {
 		sepa_check = true;
 		checkout_form.submit();
 	} else {
-		popup.dialog( 'close' );
-		$( 'body' ).css( 'overflow', 'auto' );
+		popup.dialog( "close" );
+		$( "body" ).css( "overflow", "auto" );
 	}
 }
 
 function check_change() {
-	if ( document.getElementById( 'sepa-check' ).checked ) {
-		$( '#sepa-button' ).text( 'Process' );
+	if ( document.getElementById( "sepa-check" ).checked ) {
+		$( "#sepa-button" ).text( "Process" );
 	} else {
-		$( '#sepa-button' ).text( 'Cancel' );
+		$( "#sepa-button" ).text( "Cancel" );
 	}
 }
 
@@ -76,9 +76,9 @@ function check_change() {
  */
 function openPopup( content ) {
 	popup.html( content );
-	popup.find( '.first_last_name' ).text( $( '#sepa_firstname' ).val() + ' ' + $( '#sepa_lastname' ).val() );
-	popup.find( '.bank_iban' ).text( $( '#sepa_iban' ).val() );
-	popup.find( '.bank_bic' ).text( $( '#sepa_bic' ).val() );
+	popup.find( ".first_last_name" ).text( $( "#sepa_firstname" ).val() + " " + $( "#sepa_lastname" ).val() );
+	popup.find( ".bank_iban" ).text( $( "#sepa_iban" ).val() );
+	popup.find( ".bank_bic" ).text( $( "#sepa_bic" ).val() );
 	var screen_height    = window.screen.height;
 	var adjust_to_screen = screen_height * 0.8;
 
@@ -89,17 +89,17 @@ function openPopup( content ) {
 	popup.dialog(
 		{
 			height: adjust_to_screen,
-			width: 'auto'
+			width: "auto"
 		}
 	);
-	popup.dialog( 'open' );
-	$( 'body' ).css( 'overflow', 'hidden' );
+	popup.dialog( "open" );
+	$( "body" ).css( "overflow", "hidden" );
 
-	var button = document.getElementById( 'sepa-button' );
-	button.addEventListener( 'click', process_order, false );
+	var button = document.getElementById( "sepa-button" );
+	button.addEventListener( "click", process_order, false );
 
-	var check_box = document.getElementById( 'sepa-check' );
-	check_box.addEventListener( 'change', check_change, false );
+	var check_box = document.getElementById( "sepa-check" );
+	check_box.addEventListener( "change", check_change, false );
 
 	return false;
 }
@@ -110,10 +110,10 @@ function openPopup( content ) {
 function get_sepa_mandate_data() {
 	$.ajax(
 		{
-			type: 'GET',
+			type: "GET",
 			url: sepa_var.ajax_url,
-			data: { 'action' : 'get_sepa_mandate' },
-			dataType: 'json',
+			data: { "action" : "get_sepa_mandate" },
+			dataType: "json",
 			success: function ( response ) {
 				openPopup( response.data );
 			},
@@ -127,9 +127,9 @@ function get_sepa_mandate_data() {
 jQuery( document ).ajaxComplete(
 	function() {
 			jQuery( document ).off().on(
-				'checkout_error', 'body', function () {
-					$( 'body' ).css( 'overflow', 'auto' );
-					popup.dialog( 'close' );
+				"checkout_error", "body", function () {
+					$( "body" ).css( "overflow", "auto" );
+					popup.dialog( "close" );
 				}
 			);
 			/**
@@ -150,8 +150,8 @@ jQuery( document ).ajaxComplete(
 			* @since 1.0.0
 			*/
 			checkout_form.on(
-				'checkout_place_order', function() {
-					if ( $( '#payment_method_wirecard_ee_sepa' ).is( ':checked' )) {
+				"checkout_place_order", function() {
+					if ( $( "#payment_method_wirecard_ee_sepa" ).is( ":checked" )) {
 						if (window.sepaplaceorderchecked) {
 							window.sepaplaceorderchecked = false;
 							return;
@@ -166,8 +166,8 @@ jQuery( document ).ajaxComplete(
 							return false;
 						} else {
 							sepa_check = false;
-							popup.dialog( 'close' );
-							$( 'body' ).css( 'overflow', 'auto' );
+							popup.dialog( "close" );
+							$( "body" ).css( "overflow", "auto" );
 							return true;
 						}
 					}
