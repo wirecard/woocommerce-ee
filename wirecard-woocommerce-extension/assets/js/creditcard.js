@@ -298,39 +298,39 @@ jQuery( document ).ajaxComplete(
 					}
 				}
 
-			/**
-			 * Submit Payment page seamless form
-			 *
-			 * @param request_data
-			 * @since 1.1.0
-			 */
-			function submitForm() {
-				WirecardPaymentPage.seamlessSubmitForm(
-					{
-						onSuccess: formSubmitSuccessHandler,
-						onError: logCallback
-					}
-				);
-			}
+				/**
+				 * Submit Payment page seamless form
+				 *
+				 * @param request_data
+				 * @since 1.1.0
+				 */
+				function submitForm() {
+					WirecardPaymentPage.seamlessSubmitForm(
+						{
+							onSuccess: formSubmitSuccessHandler,
+							onError: logCallback
+						}
+					);
+				}
 
-			/**
-			 * Submit the seamless form before order is placed
-			 *
-			 * @since 1.0.0
-			 */
-			jQuery( "form.checkout" ).on(
-				"checkout_place_order", function () {
-					if (jQuery( "#payment_method_wirecard_ee_creditcard" )[0].checked === true && processing === false) {
-						processing = true;
-						if ( token ) {
-							return true;
-						} else {
-							submitForm();
-							return false;
+				/**
+				 * Submit the seamless form before order is placed
+				 *
+				 * @since 1.0.0
+				 */
+				jQuery( "form.checkout" ).on(
+					"checkout_place_order", function () {
+						if (jQuery( "#payment_method_wirecard_ee_creditcard" )[0].checked === true && processing === false) {
+							processing = true;
+							if ( token ) {
+								return true;
+							} else {
+								submitForm();
+								return false;
+							}
 						}
 					}
-				}
-			);
+				);
 
 				if (jQuery( "#wirecard-store-card" ).is( ":checked" ) && response.transaction_state === "success") {
 					jQuery.ajax(
