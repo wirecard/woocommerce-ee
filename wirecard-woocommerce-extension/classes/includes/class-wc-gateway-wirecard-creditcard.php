@@ -231,11 +231,15 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 			$http_pass = $this->get_option( 'http_pass' );
 		}
 
-		$config         = parent::create_payment_config( $base_url, $http_user, $http_pass );
-		$payment_config = new CreditCardConfig(
-			$this->get_option( 'merchant_account_id' ),
-			$this->get_option( 'secret' )
-		);
+		$config              = parent::create_payment_config( $base_url, $http_user, $http_pass );
+		$merchant_account_id = $this->get_option( 'merchant_account_id' );
+		$secret              = $this->get_option( 'secret' );
+
+		if ( $merchant_account_id === '' ) {
+			$merchant_account_id = $this->get_option( 'three_d_merchant_account_id' );
+			$secret              = $this->get_option( 'three_d_secret' );
+		}
+		$payment_config = new CreditCardConfig( $merchant_account_id, $secret );
 
 		if ( $this->get_option( 'three_d_merchant_account_id' ) !== '' ) {
 			$payment_config->setThreeDCredentials(
