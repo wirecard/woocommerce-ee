@@ -235,7 +235,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 		$merchant_account_id = $this->get_option( 'merchant_account_id' );
 		$secret              = $this->get_option( 'secret' );
 
-		if ( $merchant_account_id === '' ) {
+		if ( '' === $merchant_account_id ) {
 			$merchant_account_id = $this->get_option( 'three_d_merchant_account_id' );
 			$secret              = $this->get_option( 'three_d_secret' );
 		}
