@@ -21,7 +21,7 @@
  * for customized shop systems or installed plugins of other vendors of plugins within the same
  * shop system.
  *
- * Customers are responsible for testing the plugin"s functionality before starting productive
+ * Customers are responsible for testing the plugin's functionality before starting productive
  * operation.
  *
  * By installing the plugin into the shop system the customer agrees to these terms of use.
@@ -84,7 +84,7 @@ function getUpiRequestData() {
 				renderUpiForm( JSON.parse( data.data ) );
 			},
 			error: function (data) {
-				console.log( data );
+                logCallback( data );
 			}
 		}
 	);

@@ -21,7 +21,7 @@
  * for customized shop systems or installed plugins of other vendors of plugins within the same
  * shop system.
  *
- * Customers are responsible for testing the plugin"s functionality before starting productive
+ * Customers are responsible for testing the plugin's functionality before starting productive
  * operation.
  *
  * By installing the plugin into the shop system the customer agrees to these terms of use.
@@ -60,6 +60,7 @@ function setToken() {
 function addVaultData( data, saved_credit_cards ) {
 	jQuery( ".cards", saved_credit_cards ).html( data );
 	jQuery( ".show-spinner", saved_credit_cards ).hide();
+    jQuery( "#wc_payment_method_wirecard_creditcard_vault" ).slideDown();
 }
 
 /**
