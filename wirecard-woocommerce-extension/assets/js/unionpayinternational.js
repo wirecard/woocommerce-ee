@@ -84,7 +84,7 @@ function getUpiRequestData() {
 				renderUpiForm( JSON.parse( data.data ) );
 			},
 			error: function (data) {
-                logCallback( data );
+				logCallback( data );
 			}
 		}
 	);

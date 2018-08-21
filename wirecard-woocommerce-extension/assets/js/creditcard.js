@@ -60,7 +60,7 @@ function setToken() {
 function addVaultData( data, saved_credit_cards ) {
 	jQuery( ".cards", saved_credit_cards ).html( data );
 	jQuery( ".show-spinner", saved_credit_cards ).hide();
-    jQuery( "#wc_payment_method_wirecard_creditcard_vault" ).slideDown();
+	jQuery( "#wc_payment_method_wirecard_creditcard_vault" ).slideDown();
 }
 
 /**
