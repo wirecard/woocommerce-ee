@@ -246,9 +246,9 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 		);
 
 		$args = array(
-			'ajax_url' => $page_url,
+			'ajax_url'          => $page_url,
 			'sepa_process_text' => __( 'Process', 'wirecard-woocommerce-extension' ),
-			'sepa_cancel_text' => __( 'Cancel', 'wirecard-woocommerce-extension' ),
+			'sepa_cancel_text'  => __( 'Cancel', 'wirecard-woocommerce-extension' ),
 		);
 
 		wp_enqueue_script( 'sepa_js' );
