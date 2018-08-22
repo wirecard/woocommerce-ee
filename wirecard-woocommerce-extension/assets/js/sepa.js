@@ -62,9 +62,9 @@ function process_order() {
 
 function check_change() {
 	if ( document.getElementById( "sepa-check" ).checked ) {
-		$( "#sepa-button" ).text( "Process" );
+		$( "#sepa-button" ).text( sepa_var.sepa_process_text );
 	} else {
-		$( "#sepa-button" ).text( "Cancel" );
+		$( "#sepa-button" ).text( sepa_var.sepa_cancel_text );
 	}
 }
 
