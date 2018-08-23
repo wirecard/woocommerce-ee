@@ -232,10 +232,14 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 		}
 
 		$config         = parent::create_payment_config( $base_url, $http_user, $http_pass );
-		$payment_config = new CreditCardConfig(
-			$this->get_option( 'merchant_account_id' ),
-			$this->get_option( 'secret' )
-		);
+		$payment_config = new CreditCardConfig();
+
+		if ( $this->get_option( 'merchant_account_id' ) ) {
+			$payment_config->setSSLCredentials(
+				$this->get_option( 'merchant_account_id' ),
+				$this->get_option( 'secret' )
+			);
+		}
 
 		if ( $this->get_option( 'three_d_merchant_account_id' ) !== '' ) {
 			$payment_config->setThreeDCredentials(
@@ -380,6 +384,10 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 
 		$this->transaction->setTokenId( $token );
 		$this->transaction->setTermUrl( $this->create_redirect_url( $order, 'success', $this->type ) );
+
+		if ( $this->get_option( 'merchant_account_id' ) === '' ) {
+			$this->transaction->setThreeD( true );
+		}
 
 		return $this->execute_transaction( $this->transaction, $this->config, $this->payment_action, $order );
 	}
