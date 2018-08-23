@@ -57,13 +57,12 @@ class Additional_Information {
 	 * Create basket items and shipping item
 	 *
 	 * @param Transaction $transaction
-	 * @param float $order_total
 	 *
 	 * @return Basket
 	 *
 	 * @since 1.0.0
 	 */
-	public function create_shopping_basket( $transaction, $order_total = 0.0 ) {
+	public function create_shopping_basket( $transaction ) {
 		global $woocommerce;
 
 		/** @var $cart WC_Cart */
@@ -125,12 +124,12 @@ class Additional_Information {
 	 *
 	 * @since 1.0.0
 	 */
-	public function set_additional_information( $order, $transaction, $total ) {
+	public function set_additional_information( $order, $transaction ) {
 		$transaction->setDescriptor( $this->create_descriptor( $order ) );
 		$transaction->setAccountHolder( $this->create_account_holder( $order, 'billing' ) );
 		$transaction->setShipping( $this->create_account_holder( $order, 'shipping' ) );
 		$transaction->setOrderNumber( $order->get_order_number() );
-		$transaction->setBasket( $this->create_shopping_basket( $transaction, $total ) );
+		$transaction->setBasket( $this->create_shopping_basket( $transaction ) );
 		$transaction->setIpAddress( $order->get_customer_ip_address() );
 		$transaction->setConsumerId( $order->get_customer_id() );
 

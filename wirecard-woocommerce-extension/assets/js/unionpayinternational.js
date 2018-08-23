@@ -28,9 +28,86 @@
  * Please do not use the plugin if you do not agree to these terms of use!
  */
 var token         = null;
-var checkout_form = jQuery( 'form.checkout' );
+var checkout_form = jQuery( "form.checkout" );
 var processing    = false;
 $                 = jQuery;
+
+/**
+ * Display error massages
+ *
+ * @since 1.1.0
+ */
+function logCallback( response ) {
+	console.error( response );
+}
+
+/**
+ * Resize the unionpayinternational form when loaded
+ *
+ * @since 1.1.0
+ */
+function resizeUpiIframe() {
+	$( "#wc_payment_method_wirecard_unionpayinternational_form > iframe" ).height( 550 );
+}
+
+/**
+ * Render the unionpayinternational form
+ *
+ * @since 1.1.0
+ */
+function renderUpiForm( request_data ) {
+	/* global WirecardPaymentPage b:true */
+	WirecardPaymentPage.seamlessRenderForm(
+		{
+			requestData: request_data,
+			wrappingDivId: "wc_payment_method_wirecard_unionpayinternational_form",
+			onSuccess: resizeUpiIframe,
+			onError: logCallback
+		}
+	);
+}
+
+/**
+ * Get data required to render the form
+ *
+ * @since 1.1.0
+ */
+function getUpiRequestData() {
+	$.ajax(
+		{
+			type: "POST",
+			/* global upi_vars b:true */
+			url: upi_vars.ajax_url,
+			data: { "action" : "get_upi_request_data" },
+			dataType: "json",
+			success: function (data) {
+				renderUpiForm( JSON.parse( data.data ) );
+			},
+			error: function (data) {
+				logCallback( data );
+			}
+		}
+	);
+}
+
+/**
+ * Add the tokenId to the submited form
+ *
+ * @since 1.1.0
+ */
+function formSubmitUpiSuccessHandler( response ) {
+	token = response.token_id;
+	jQuery( "<input>" ).attr(
+		{
+			type: "hidden",
+			name: "tokenId",
+			id: "tokenId",
+			value: token
+		}
+	).appendTo( checkout_form );
+
+	checkout_form.submit();
+}
 
 jQuery( document ).ajaxComplete(
 	function() {
@@ -40,7 +117,7 @@ jQuery( document ).ajaxComplete(
 
 		$( "input[name=payment_method]" ).change(
 			function() {
-				if ( $( this ).val() === 'wirecard_ee_unionpayinternational' ) {
+				if ( $( this ).val() === "wirecard_ee_unionpayinternational" ) {
 					getUpiRequestData();
 					return false;
 				}
@@ -53,12 +130,13 @@ jQuery( document ).ajaxComplete(
 	 * @since 1.1.0
 	 */
 		checkout_form.on(
-			'checkout_place_order', function() {
-				if ( $( '#payment_method_wirecard_ee_unionpayinternational' )[0].checked === true && processing === false ) {
+			"checkout_place_order", function() {
+				if ( $( "#payment_method_wirecard_ee_unionpayinternational" )[0].checked === true && processing === false ) {
 					processing = true;
-					if ( token !== null ) {
+					if ( token ) {
 						return true;
 					} else {
+						/* global WirecardPaymentPage b:true */
 						WirecardPaymentPage.seamlessSubmitForm(
 							{
 								onSuccess: formSubmitUpiSuccessHandler,
@@ -72,80 +150,5 @@ jQuery( document ).ajaxComplete(
 				processing = false;
 			}
 		);
-
-		/**
-	 * Display error massages
-	 *
-	 * @since 1.1.0
-	 */
-		function logCallback( response ) {
-			console.error( response );
-		}
-
-		/**
-	 * Add the tokenId to the submited form
-	 *
-	 * @since 1.1.0
-	 */
-		function formSubmitUpiSuccessHandler( response ) {
-			token = response.token_id;
-			jQuery( '<input>' ).attr(
-				{
-					type: 'hidden',
-					name: 'tokenId',
-					id: 'tokenId',
-					value: token
-				}
-			).appendTo( checkout_form );
-
-			checkout_form.submit();
-		}
-
-		/**
-	 * Get data required to render the form
-	 *
-	 * @since 1.1.0
-	 */
-		function getUpiRequestData() {
-			$.ajax(
-				{
-					type: 'POST',
-					url: upi_vars.ajax_url,
-					data: { 'action' : 'get_upi_request_data' },
-					dataType: 'json',
-					success: function (data) {
-						renderUpiForm( JSON.parse( data.data ) );
-					},
-					error: function (data) {
-						console.log( data );
-					}
-				}
-			);
-		}
-
-		/**
-	 * Render the unionpayinternational form
-	 *
-	 * @since 1.1.0
-	 */
-		function renderUpiForm( request_data ) {
-			WirecardPaymentPage.seamlessRenderForm(
-				{
-					requestData: request_data,
-					wrappingDivId: "wc_payment_method_wirecard_unionpayinternational_form",
-					onSuccess: resizeUpiIframe,
-					onError: logCallback
-				}
-			);
-		}
-
-		/**
-	 * Resize the unionpayinternational form when loaded
-	 *
-	 * @since 1.1.0
-	 */
-		function resizeUpiIframe() {
-			$( "#wc_payment_method_wirecard_unionpayinternational_form > iframe" ).height( 550 );
-		}
 	}
 );

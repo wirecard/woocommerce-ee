@@ -246,7 +246,9 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 		);
 
 		$args = array(
-			'ajax_url' => $page_url,
+			'ajax_url'          => $page_url,
+			'sepa_process_text' => __( 'Process', 'wirecard-woocommerce-extension' ),
+			'sepa_cancel_text'  => __( 'Cancel', 'wirecard-woocommerce-extension' ),
 		);
 
 		wp_enqueue_script( 'sepa_js' );
@@ -254,6 +256,7 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 
 		$html = '
 			<div id="dialog" title="SEPA"></div>
+			<input type="hidden" name="sepa_nonce" value="' . wp_create_nonce() . '" />
 			<p class="form-row form-row-wide validate-required">
 				<label for="sepa_firstname">' . __( 'First name', 'wooocommerce-gateway-wirecard' ) . '</label>
 				<input id="sepa_firstname" class="input-text wc-sepa-input" type="text" name="sepa_firstname">
@@ -290,7 +293,7 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 	 */
 	public function process_payment( $order_id ) {
 		$order = wc_get_order( $order_id );
-		if ( ! isset( $_POST['sepa_firstname'] ) || ! isset( $_POST['sepa_lastname'] ) || ! isset( $_POST['sepa_iban'] )
+		if ( ! wp_verify_nonce( $_POST['sepa_nonce'] ) || ! isset( $_POST['sepa_firstname'] ) || ! isset( $_POST['sepa_lastname'] ) || ! isset( $_POST['sepa_iban'] )
 			|| ( $this->get_option( 'enable_bic' ) == 'yes' && ! $_POST['sepa_bic'] ) ) {
 			wc_add_notice( __( 'Please fill in the SEPA fields and try again.', 'wirecard-woocommerce-extension' ), 'error' );
 

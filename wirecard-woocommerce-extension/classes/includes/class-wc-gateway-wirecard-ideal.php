@@ -176,7 +176,7 @@ class WC_Gateway_Wirecard_Ideal extends WC_Wirecard_Payment_Gateway {
 	 * @since 1.1.0
 	 */
 	public function payment_fields() {
-		$html = '<select name="ideal_bank_bic">';
+		$html = '<input type="hidden" name="ideal_nonce" value="' . wp_create_nonce() . '" /><select name="ideal_bank_bic">';
 		foreach ( $this->get_ideal_bic()['banks'] as $bank ) {
 			$html .= '<option value="' . $bank['key'] . '">' . $bank['label'] . '</option>';
 		}
@@ -195,6 +195,9 @@ class WC_Gateway_Wirecard_Ideal extends WC_Wirecard_Payment_Gateway {
 	 * @since 1.1.0
 	 */
 	public function process_payment( $order_id ) {
+		if ( ! wp_verify_nonce( $_POST['ideal_nonce'] ) ) {
+			return false;
+		}
 		/** @var WC_Order $order */
 		$order = wc_get_order( $order_id );
 

@@ -276,7 +276,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 * @since 1.0.0
 	 */
 	public function create_redirect_url( $order, $payment_state, $payment_method ) {
-		$return_url = add_query_arg(
+		return add_query_arg(
 			array(
 				'wc-api'         => 'WC_Wirecard_Payment_Gateway_Redirect',
 				'order-id'       => $order->get_id(),
@@ -285,8 +285,6 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 			),
 			site_url( '/', is_ssl() ? 'https' : 'http' )
 		);
-
-		return $return_url;
 	}
 
 	/**
@@ -604,7 +602,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 		}
 
 		if ( $this->get_option( 'send_additional' ) == 'yes' ) {
-			$this->transaction = $this->additional_helper->set_additional_information( $order, $this->transaction, $order->get_total() );
+			$this->transaction = $this->additional_helper->set_additional_information( $order, $this->transaction );
 		}
 	}
 
@@ -661,17 +659,19 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 * @since 1.1.0
 	 */
 	public function test_payment_config() {
-		$base_url  = $_POST['base_url'];
-		$http_user = $_POST['http_user'];
-		$http_pass = $_POST['http_pass'];
+		if ( wp_verify_nonce( $_POST['admin_nonce'] ) ) {
+			$base_url  = $_POST['base_url'];
+			$http_user = $_POST['http_user'];
+			$http_pass = $_POST['http_pass'];
 
-		$test_config         = new Config( wp_unslash( $base_url ), wp_unslash( $http_user ), wp_unslash( $http_pass ) );
-		$transaction_service = new TransactionService( $test_config, new Logger() );
+			$test_config         = new Config( wp_unslash( $base_url ), wp_unslash( $http_user ), wp_unslash( $http_pass ) );
+			$transaction_service = new TransactionService( $test_config, new Logger() );
 
-		if ( $transaction_service->checkCredentials() ) {
-			wp_send_json_success( __( 'The merchant configuration was successfully tested.', 'wirecard-woocommerce-extension' ) );
-		} else {
-			wp_send_json_error( __( 'Test failed, please check your credentials.', 'wirecard-woocommerce-extension' ) );
+			if ( $transaction_service->checkCredentials() ) {
+				wp_send_json_success( __( 'The merchant configuration was successfully tested.', 'wirecard-woocommerce-extension' ) );
+			} else {
+				wp_send_json_error( __( 'Test failed, please check your credentials.', 'wirecard-woocommerce-extension' ) );
+			}
 		}
 		die();
 	}

@@ -232,7 +232,7 @@ HTML;
 		$config              = $this->create_payment_config();
 		$transaction_service = new TransactionService( $config );
 		wp_send_json_success( $transaction_service->getDataForUpiUi() );
-		die();
+		wp_die();
 	}
 
 	/**

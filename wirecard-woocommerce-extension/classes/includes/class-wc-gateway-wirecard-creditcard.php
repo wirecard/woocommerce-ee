@@ -231,15 +231,15 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 			$http_pass = $this->get_option( 'http_pass' );
 		}
 
-		$config         = parent::create_payment_config( $base_url, $http_user, $http_pass );
-		$payment_config = new CreditCardConfig();
+		$config              = parent::create_payment_config( $base_url, $http_user, $http_pass );
+		$merchant_account_id = $this->get_option( 'merchant_account_id' );
+		$secret              = $this->get_option( 'secret' );
 
-		if ( $this->get_option( 'merchant_account_id' ) ) {
-			$payment_config->setSSLCredentials(
-				$this->get_option( 'merchant_account_id' ),
-				$this->get_option( 'secret' )
-			);
+		if ( '' === $merchant_account_id ) {
+			$merchant_account_id = $this->get_option( 'three_d_merchant_account_id' );
+			$secret              = $this->get_option( 'three_d_secret' );
 		}
+		$payment_config = new CreditCardConfig( $merchant_account_id, $secret );
 
 		if ( $this->get_option( 'three_d_merchant_account_id' ) !== '' ) {
 			$payment_config->setThreeDCredentials(
@@ -293,11 +293,11 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	}
 
 	/**
-	 * Add payment fields to payment method
-	 *
-	 * @since 1.0.0
+	 * Load variables for credit card javascript
+	 * @return array
+	 * @since 1.1.8
 	 */
-	public function payment_fields() {
+	public function load_variables() {
 		$page_url         = add_query_arg(
 			[ 'wc-api' => 'get_credit_card_request_data' ],
 			site_url( '/', is_ssl() ? 'https' : 'http' )
@@ -315,21 +315,22 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 			site_url( '/', is_ssl() ? 'https' : 'http' )
 		);
 
-		$args = array(
+		return array(
 			'ajax_url'         => $page_url,
 			'vault_url'        => $vault_save_url,
 			'vault_get_url'    => $vault_get_url,
 			'vault_delete_url' => $vault_delete_url,
 		);
+	}
 
-		wp_enqueue_style( 'basic_style' );
-		wp_enqueue_script( 'jquery_ui' );
-		wp_enqueue_style( 'jquery_ui_style' );
-		wp_enqueue_script( 'page_loader' );
-		wp_enqueue_script( 'credit_card_js' );
-		wp_localize_script( 'credit_card_js', 'php_vars', $args );
-
-		$html = '';
+	/**
+	 * Load html for the template
+	 *
+	 * @return string
+	 * @since 1.1.8
+	 */
+	public function load_cc_template() {
+		$html = '<input type="hidden" name="cc_nonce" value="' . wp_create_nonce() . '" />';
 		if ( is_user_logged_in() ) {
 			if ( $this->get_option( 'cc_vault_enabled' ) == 'yes' && $this->has_cc_in_vault() ) {
 				$html .= '<div id="open-vault-popup"><span class="dashicons dashicons-arrow-up"></span>' . __( 'Use saved Credit Cards', 'wirecard-woocommerce-extension' ) . '</div>
@@ -352,7 +353,22 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 			}
 		}
 
-		echo $html;
+		return $html;
+	}
+	/**
+	 * Add payment fields to payment method
+	 *
+	 * @since 1.0.0
+	 */
+	public function payment_fields() {
+		wp_enqueue_style( 'basic_style' );
+		wp_enqueue_script( 'jquery_ui' );
+		wp_enqueue_style( 'jquery_ui_style' );
+		wp_enqueue_script( 'page_loader' );
+		wp_enqueue_script( 'credit_card_js' );
+		wp_localize_script( 'credit_card_js', 'php_vars', $this->load_variables() );
+
+		echo $this->load_cc_template();
 		return true;
 	}
 
@@ -366,30 +382,31 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	 * @since 1.0.0
 	 */
 	public function process_payment( $order_id ) {
-		$order = wc_get_order( $order_id );
+		if ( wp_verify_nonce( $_POST['cc_nonce'] ) ) {
+			$order = wc_get_order( $order_id );
 
-		$this->payment_action = $this->get_option( 'payment_action' );
-		$token                = sanitize_text_field( $_POST['tokenId'] );
+			$this->payment_action = $this->get_option( 'payment_action' );
+			$token                = sanitize_text_field( $_POST['tokenId'] );
 
-		$this->transaction = new CreditCardTransaction();
+			$this->transaction = new CreditCardTransaction();
 
-		if ( ! array_diff_key( array_flip( [ 'expiration_month', 'expiration_year' ] ), $_POST ) ) {
-			$card = new \Wirecard\PaymentSdk\Entity\Card();
-			$card->setExpirationYear( sanitize_text_field( $_POST['expiration_year'] ) );
-			$card->setExpirationMonth( sanitize_text_field( $_POST['expiration_month'] ) );
-			$this->transaction->setCard( $card );
+			if ( ! array_diff_key( array_flip( [ 'expiration_month', 'expiration_year' ] ), $_POST ) ) {
+				$card = new \Wirecard\PaymentSdk\Entity\Card();
+				$card->setExpirationYear( sanitize_text_field( $_POST['expiration_year'] ) );
+				$card->setExpirationMonth( sanitize_text_field( $_POST['expiration_month'] ) );
+				$this->transaction->setCard( $card );
+			}
+
+			parent::process_payment( $order_id );
+
+			$this->transaction->setTokenId( $token );
+			$this->transaction->setTermUrl( $this->create_redirect_url( $order, 'success', $this->type ) );
+			if ( $this->get_option( 'merchant_account_id' ) === '' ) {
+				$this->transaction->setThreeD( true );
+			}
+
+			return $this->execute_transaction( $this->transaction, $this->config, $this->payment_action, $order );
 		}
-
-		parent::process_payment( $order_id );
-
-		$this->transaction->setTokenId( $token );
-		$this->transaction->setTermUrl( $this->create_redirect_url( $order, 'success', $this->type ) );
-
-		if ( $this->get_option( 'merchant_account_id' ) === '' ) {
-			$this->transaction->setThreeD( true );
-		}
-
-		return $this->execute_transaction( $this->transaction, $this->config, $this->payment_action, $order );
 	}
 
 	/**
@@ -401,7 +418,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 		$config              = $this->create_payment_config();
 		$transaction_service = new TransactionService( $config );
 		wp_send_json_success( $transaction_service->getDataForCreditCardUi() );
-		die();
+		wp_die();
 	}
 
 	/**
@@ -479,10 +496,10 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 
 		if ( $this->vault->save_card( $user->ID, $token, $mask_pan ) ) {
 			wp_send_json_success();
-		} else {
-			wp_send_json_error();
+			wp_die();
 		}
-		die();
+		wp_send_json_error();
+		wp_die();
 	}
 
 	/**
@@ -499,7 +516,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 		$user = wp_get_current_user();
 
 		wp_send_json_success( $this->vault->get_cards_for_user( $user->ID ) );
-		die();
+		wp_die();
 	}
 
 	/**
@@ -508,14 +525,14 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	 * @since 1.1.0
 	 */
 	public function remove_cc_from_vault() {
-		$vault_id = $_POST['vault_id'];
+		$vault_id = sanitize_text_field( $_POST['vault_id'] );
 
 		if ( isset( $vault_id ) && $this->vault->delete_credit_card( $vault_id ) > 0 ) {
 			wp_send_json_success();
-		} else {
-			wp_send_json_error();
+			wp_die();
 		}
-		die();
+		wp_send_json_error();
+		wp_die();
 	}
 
 	/**

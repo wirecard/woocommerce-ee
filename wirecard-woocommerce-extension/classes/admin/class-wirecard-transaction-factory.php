@@ -303,7 +303,7 @@ class Wirecard_Transaction_Factory {
 
 		$response_data = json_decode( $transaction->response );
 		?>
-		<link rel='stylesheet' href='<?php echo plugins_url( 'woocommerce-wirecard-ee/assets/styles/admin.css' ); ?>'>
+		<link rel='stylesheet' href='<?php echo plugins_url( 'wirecard-woocommerce-extension/assets/styles/admin.css' ); ?>'>
 		<div class="wrap">
 			<div class="postbox-container">
 				<div class="postbox">

@@ -31,23 +31,25 @@
 $ = jQuery;
 $( document ).ready(
 	function () {
-			var button = $( '.wc_wirecard_test_credentials_button' );
+			var button = $( ".wc_wirecard_test_credentials_button" );
 
-			button.removeClass( 'regular-input' ).val( admin_vars.test_credentials_button );
+			/* global admin_vars b:true */
+			button.removeClass( "regular-input" ).val( admin_vars.test_credentials_button );
 			button.on(
-				'click', function () {
-					var base_id = $( this ).attr( 'id' ).replace( '_test_button', '' );
+				"click", function () {
+					var base_id = $( this ).attr( "id" ).replace( "_test_button", "" );
 
-					var base_url  = $( '#' + base_id + '_base_url' ).val();
-					var http_user = $( '#' + base_id + '_http_user' ).val();
-					var http_pass = $( '#' + base_id + '_http_pass' ).val();
+					var base_url  = $( "#" + base_id + "_base_url" ).val();
+					var http_user = $( "#" + base_id + "_http_user" ).val();
+					var http_pass = $( "#" + base_id + "_http_pass" ).val();
 
 					$.ajax(
 						{
-							type: 'POST',
+							type: "POST",
+							/* global admin_vars b:true */
 							url: admin_vars.admin_url,
-							data: { 'action' : 'test_payment_method_config', 'base_url' : base_url, 'http_user' : http_user, 'http_pass' : http_pass },
-							dataType: 'json',
+							data: { "action" : "test_payment_method_config", "base_url" : base_url, "http_user" : http_user, "http_pass" : http_pass, "admin_nonce" : admin_vars.admin_nonce },
+							dataType: "json",
 							success: function (data) {
 								alert( data.data );
 							},
