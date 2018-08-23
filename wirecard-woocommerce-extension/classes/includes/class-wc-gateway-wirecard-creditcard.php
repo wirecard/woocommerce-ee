@@ -292,7 +292,6 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 		wp_register_script( 'credit_card_js', $gateway_url . 'assets/js/creditcard.js', array( 'jquery', 'page_loader' ), null, true );
 	}
 
-
 	/**
 	 * Load variables for credit card javascript
 	 * @return array
@@ -383,27 +382,30 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	 * @since 1.0.0
 	 */
 	public function process_payment( $order_id ) {
-		if ( wp_verify_nonce( $_POST['cc_nonce'] ) ) {
-			$order = wc_get_order( $order_id );
+		if (wp_verify_nonce($_POST['cc_nonce'])) {
+			$order = wc_get_order($order_id);
 
-			$this->payment_action = $this->get_option( 'payment_action' );
-			$token                = sanitize_text_field( $_POST['tokenId'] );
+			$this->payment_action = $this->get_option('payment_action');
+			$token = sanitize_text_field($_POST['tokenId']);
 
 			$this->transaction = new CreditCardTransaction();
 
-			if ( ! array_diff_key( array_flip( [ 'expiration_month', 'expiration_year' ] ), $_POST ) ) {
+			if (!array_diff_key(array_flip(['expiration_month', 'expiration_year']), $_POST)) {
 				$card = new \Wirecard\PaymentSdk\Entity\Card();
-				$card->setExpirationYear( sanitize_text_field( $_POST['expiration_year'] ) );
-				$card->setExpirationMonth( sanitize_text_field( $_POST['expiration_month'] ) );
-				$this->transaction->setCard( $card );
+				$card->setExpirationYear(sanitize_text_field($_POST['expiration_year']));
+				$card->setExpirationMonth(sanitize_text_field($_POST['expiration_month']));
+				$this->transaction->setCard($card);
 			}
 
-			parent::process_payment( $order_id );
+			parent::process_payment($order_id);
 
-			$this->transaction->setTokenId( $token );
-			$this->transaction->setTermUrl( $this->create_redirect_url( $order, 'success', $this->type ) );
+			$this->transaction->setTokenId($token);
+			$this->transaction->setTermUrl($this->create_redirect_url($order, 'success', $this->type));
+			if ($this->get_option('merchant_account_id') === '') {
+				$this->transaction->setThreeD(true);
+			}
 
-			return $this->execute_transaction( $this->transaction, $this->config, $this->payment_action, $order );
+			return $this->execute_transaction($this->transaction, $this->config, $this->payment_action, $order);
 		}
 	}
 
