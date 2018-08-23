@@ -354,18 +354,22 @@ jQuery( document ).ajaxComplete(
 				return false;
 			}
 
-			jQuery( "input[name='payment_method']" ).on("change", function () {
-				if (jQuery( this ).val() === "wirecard_ee_creditcard") {
+			jQuery( "input[name='payment_method']" ).on(
+				"change", function () {
+					if (jQuery( this ).val() === "wirecard_ee_creditcard") {
+						loadCreditCardData();
+						loadWirecardEEScripts();
+					}
+				}
+			);
+
+			jQuery( document.body ).on(
+				"updated_checkout", function () {
 					loadCreditCardData();
+					new_credit_card.hide();
 					loadWirecardEEScripts();
 				}
-			});
-
-			jQuery( document.body ).on( "updated_checkout", function () {
-				loadCreditCardData();
-				new_credit_card.hide();
-				loadWirecardEEScripts();
-			});
+			);
 		}
 	}
 );
