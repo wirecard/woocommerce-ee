@@ -62,8 +62,10 @@ function process_order() {
 
 function check_change() {
 	if ( document.getElementById( "sepa-check" ).checked ) {
+		/* global sepa_var b:true */
 		$( "#sepa-button" ).text( sepa_var.sepa_process_text );
 	} else {
+		/* global sepa_var b:true */
 		$( "#sepa-button" ).text( sepa_var.sepa_cancel_text );
 	}
 }
