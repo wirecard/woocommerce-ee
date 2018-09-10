@@ -417,7 +417,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	public function get_request_data_credit_card() {
 		$config              = $this->create_payment_config();
 		$transaction_service = new TransactionService( $config );
-		wp_send_json_success( $transaction_service->getDataForCreditCardUi() );
+		wp_send_json_success( $transaction_service->getDataForCreditCardUi( 'en', new Amount( 0, get_woocommerce_currency() ) ) );
 		wp_die();
 	}
 
