@@ -116,13 +116,13 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 				'title'       => __( 'Merchant Account ID', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
 				'description' => __( 'The unique identifier assigned for your Merchant Account.', 'wirecard-woocommerce-extension' ),
-				'default'     => 'fa02d1d4-f518-4e22-b42b-2abab5867a84',
+				'default'     => '7d7edecb-b008-4f05-9103-308c81cf2ea2',
 			),
 			'secret'                => array(
 				'title'       => __( 'Secret Key', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
 				'description' => __( 'Secret key is mandatory to calculate the Digital Signature for the payment.', 'wirecard-woocommerce-extension' ),
-				'default'     => 'dbc5a498-9a66-43b9-bf1d-a618dd399684',
+				'default'     => '555d998b-15db-46a9-8f1f-d9bc3ec66b19',
 			),
 			'credentials'           => array(
 				'title'       => __( 'Credentials', 'wirecard-woocommerce-extension' ),
@@ -139,13 +139,13 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 				'title'       => __( 'HTTP User', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
 				'description' => __( 'The http user provided in your Wirecard contract', 'wirecard-woocommerce-extension' ),
-				'default'     => '70000-APITEST-AP',
+				'default'     => '16390-testing',
 			),
 			'http_pass'             => array(
 				'title'       => __( 'HTTP Password', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
 				'description' => __( 'The http password provided in your Wirecard contract', 'wirecard-woocommerce-extension' ),
-				'default'     => 'qD2wzQ_hrc!8',
+				'default'     => '3!3013=D3fD8X7',
 			),
 			'test_button'           => array(
 				'title'   => __( 'Test configuration', 'wirecard-woocommerce-extension' ),
