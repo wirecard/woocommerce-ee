@@ -286,7 +286,8 @@ class Wirecard_Settings {
 				'info'    => print_r( $info, true ),
 				'config'  => print_r( $config, true ),
 				'modules' => print_r( $plugin, true ),
-			), true
+			),
+			true
 		);
 
 		if ( $_REQUEST['email'] && wp_mail(

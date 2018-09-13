@@ -2,9 +2,9 @@
 Contributors: Wirecard AG
 Tags: Wirecard, Credit Card, Alipay Cross-border, Guaranteed Invoice by Wirecard / Ratepay, iDEAL, Masterpass, PayPal, Payment in Advance, Payment on Invoice, SEPA, Sofort., UnionPay International, e-commerce, payment, checkout, payment-methods, One-click-checkout, WooCommerce, PSP, payment-service
 Requires at least: 4.9
-Tested up to: 4.9.7
+Tested up to: 4.9.8
 Requires PHP: 5.6
-Stable tag: 1.1.8
+Stable tag: 1.1.9
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -67,9 +67,5 @@ Our general Terms of Use can be found on [Github](https://github.com/wirecard/wo
 4. Wirecard Transaction Detailview for Back-end Operations
 
 == Changelog ==
-- Add indonesian language package
-- Add japanese language package
-- Add korean language package
-- Add chinese (china,taiwan) language package
-- Update language slugs
-- Add codacy qualtiy checks
+- Dynamic loading of credit card form language
+- WooCommerce 3.4.5 Compatibility

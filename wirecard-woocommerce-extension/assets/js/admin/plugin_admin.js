@@ -36,7 +36,8 @@ $( document ).ready(
 			/* global admin_vars b:true */
 			button.removeClass( "regular-input" ).val( admin_vars.test_credentials_button );
 			button.on(
-				"click", function () {
+				"click",
+				function () {
 					var base_id = $( this ).attr( "id" ).replace( "_test_button", "" );
 
 					var base_url  = $( "#" + base_id + "_base_url" ).val();
