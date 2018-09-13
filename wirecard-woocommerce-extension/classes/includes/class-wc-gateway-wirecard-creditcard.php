@@ -423,7 +423,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 			if ( key_exists( substr( get_locale(), 0, 2 ), $supported_lang ) ) {
 				$lang = substr( get_locale(), 0, 2 );
 			}
-		} catch (Exception $e) {
+		} catch ( Exception $e ) {
 			wp_send_json_error( $e->getMessage() );
 		}
 		wp_send_json_success( $transaction_service->getDataForCreditCardUi( $lang, new Amount( 0, get_woocommerce_currency() ) ) );
