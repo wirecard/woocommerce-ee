@@ -129,7 +129,9 @@ function get_sepa_mandate_data() {
 jQuery( document ).ajaxComplete(
 	function() {
 			jQuery( document ).off().on(
-				"checkout_error", "body", function () {
+				"checkout_error",
+				"body",
+				function () {
 					$( "body" ).css( "overflow", "auto" );
 					popup.dialog( "close" );
 				}
@@ -152,7 +154,8 @@ jQuery( document ).ajaxComplete(
 			* @since 1.0.0
 			*/
 			checkout_form.on(
-				"checkout_place_order", function() {
+				"checkout_place_order",
+				function() {
 					if ( $( "#payment_method_wirecard_ee_sepa" ).is( ":checked" )) {
 						if (window.sepaplaceorderchecked) {
 							window.sepaplaceorderchecked = false;

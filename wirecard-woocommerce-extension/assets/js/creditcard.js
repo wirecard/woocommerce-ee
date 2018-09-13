@@ -101,7 +101,8 @@ function loadWirecardEEScripts() {
 	 * @since 1.1.0
 	 */
 	jQuery( "#open-vault-popup" ).unbind( 'click' ).on(
-		"click", function () {
+		"click",
+		function () {
 			jQuery( "#wc_payment_method_wirecard_creditcard_vault" ).slideToggle();
 			jQuery( "#wc_payment_method_wirecard_new_credit_card" ).slideUp();
 			jQuery( "span", "#open-new-card" ).removeClass( "dashicons-arrow-up" ).addClass( "dashicons-arrow-down" );
@@ -115,7 +116,8 @@ function loadWirecardEEScripts() {
 	 * @since 1.1.0
 	 */
 	jQuery( "#open-new-card" ).unbind( 'click' ).on(
-		"click", function () {
+		"click",
+		function () {
 			token = null;
 			jQuery( "#wc_payment_method_wirecard_new_credit_card" ).slideToggle();
 			jQuery( "#wc_payment_method_wirecard_creditcard_vault" ).slideUp();
@@ -314,7 +316,8 @@ jQuery( document ).ajaxComplete(
 		 * @since 1.0.0
 		 */
 		jQuery( "form.checkout" ).on(
-			"checkout_place_order", function () {
+			"checkout_place_order",
+			function () {
 				if (jQuery( "#payment_method_wirecard_ee_creditcard" )[0].checked === true && processing === false) {
 					processing = true;
 					if ( token ) {
@@ -343,7 +346,9 @@ jQuery( document ).ajaxComplete(
 			}
 
 			jQuery( document ).off().on(
-				"checkout_error", "body", function () {
+				"checkout_error",
+				"body",
+				function () {
 					getRequestData( renderForm, logCallback );
 				}
 			);
@@ -355,7 +360,8 @@ jQuery( document ).ajaxComplete(
 			}
 
 			jQuery( "input[name='payment_method']" ).on(
-				"change", function () {
+				"change",
+				function () {
 					if (jQuery( this ).val() === "wirecard_ee_creditcard") {
 						loadCreditCardData();
 						loadWirecardEEScripts();
@@ -364,7 +370,8 @@ jQuery( document ).ajaxComplete(
 			);
 
 			jQuery( document.body ).on(
-				"updated_checkout", function () {
+				"updated_checkout",
+				function () {
 					loadCreditCardData();
 					new_credit_card.hide();
 					loadWirecardEEScripts();

@@ -130,7 +130,8 @@ jQuery( document ).ajaxComplete(
 	 * @since 1.1.0
 	 */
 		checkout_form.on(
-			"checkout_place_order", function() {
+			"checkout_place_order",
+			function() {
 				if ( $( "#payment_method_wirecard_ee_unionpayinternational" )[0].checked === true && processing === false ) {
 					processing = true;
 					if ( token ) {

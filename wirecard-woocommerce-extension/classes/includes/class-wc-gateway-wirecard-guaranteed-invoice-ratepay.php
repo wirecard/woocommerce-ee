@@ -170,7 +170,8 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 				'type'           => 'multiselect',
 				'description'    => __(
 					'Payment method Guaranteed Invoice will only be displayed if consumers billing country equals one of these chosen countries. 
-				Predefined the following countries are allowed: AT, DE.', 'wirecard-woocommerce-extension'
+				Predefined the following countries are allowed: AT, DE.',
+					'wirecard-woocommerce-extension'
 				),
 				'options'        => $countries,
 				'default'        => array( 'AT', 'DE' ),
@@ -182,7 +183,8 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 				'type'           => 'multiselect',
 				'description'    => __(
 					'Payment method Guaranteed Invoice will only be displayed if consumers shipping country equals one of these chosen countries. 
-				Predefined the following countries are allowed: AT, DE.', 'wirecard-woocommerce-extension'
+				Predefined the following countries are allowed: AT, DE.',
+					'wirecard-woocommerce-extension'
 				),
 				'options'        => $countries,
 				'default'        => array( 'AT', 'DE' ),

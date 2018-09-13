@@ -51,7 +51,9 @@ define( 'WIRECARD_EXTENSION_BASEDIR', plugin_dir_path( __FILE__ ) );
 define( 'WIRECARD_EXTENSION_URL', plugin_dir_url( __FILE__ ) );
 
 load_plugin_textdomain(
-	'wirecard-woocommerce-extension', false, dirname( plugin_basename( __FILE__ ) ) . '/languages'
+	'wirecard-woocommerce-extension',
+	false,
+	dirname( plugin_basename( __FILE__ ) ) . '/languages'
 );
 
 register_activation_hook( __FILE__, 'wirecard_install_payment_gateway' );
