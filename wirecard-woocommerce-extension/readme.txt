@@ -67,9 +67,5 @@ Our general Terms of Use can be found on [Github](https://github.com/wirecard/wo
 4. Wirecard Transaction Detailview for Back-end Operations
 
 == Changelog ==
-- Add indonesian language package
-- Add japanese language package
-- Add korean language package
-- Add chinese (china,taiwan) language package
-- Update language slugs
-- Add codacy qualtiy checks
+- Dynamic loading of credit card form language
+- WooCommerce 3.4.5 Compatibility
