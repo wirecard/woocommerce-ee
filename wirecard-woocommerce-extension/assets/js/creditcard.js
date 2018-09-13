@@ -100,7 +100,7 @@ function loadWirecardEEScripts() {
 	 *
 	 * @since 1.1.0
 	 */
-	jQuery( "#open-vault-popup" ).unbind( 'click' ).on(
+	jQuery( "#open-vault-popup" ).unbind( "click" ).on(
 		"click",
 		function () {
 			jQuery( "#wc_payment_method_wirecard_creditcard_vault" ).slideToggle();
@@ -115,7 +115,7 @@ function loadWirecardEEScripts() {
 	 *
 	 * @since 1.1.0
 	 */
-	jQuery( "#open-new-card" ).unbind( 'click' ).on(
+	jQuery( "#open-new-card" ).unbind( "click" ).on(
 		"click",
 		function () {
 			token = null;

@@ -37,9 +37,6 @@ use Wirecard\PaymentSdk\Config\CreditCardConfig;
 use Wirecard\PaymentSdk\Entity\Amount;
 use Wirecard\PaymentSdk\Transaction\CreditCardTransaction;
 use Wirecard\PaymentSdk\TransactionService;
-use GuzzleHttp\Client as GuzzleClient;
-use Http\Adapter\Guzzle6\Client as GuzzleAdapter;
-use GuzzleHttp\Psr7\Request;
 
 /**
  * Class WC_Gateway_Wirecard_CreditCard
@@ -420,13 +417,14 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	public function get_request_data_credit_card() {
 		$config              = $this->create_payment_config();
 		$transaction_service = new TransactionService( $config );
-		$guzzle              = new GuzzleClient( [ 'timeout' => 10 ] );
-		$adapter             = new GuzzleAdapter( $guzzle );
-		$response            = $adapter->sendRequest( new Request( 'GET', 'https://api-test.wirecard.com/engine/includes/i18n/languages/hpplanguages.json' ) );
-		$supported_lang      = json_decode( $response->getBody()->getContents() );
 		$lang                = 'en';
-		if ( key_exists( substr( get_locale(), 0, 2 ), $supported_lang ) ) {
-			$lang = substr( get_locale(), 0, 2 );
+		try {
+			$supported_lang = json_decode( file_get_contents( 'https://api-test.wirecard.com/engine/includes/i18n/languages/hpplanguages.json' ) );
+			if ( key_exists( substr( get_locale(), 0, 2 ), $supported_lang ) ) {
+				$lang = substr( get_locale(), 0, 2 );
+			}
+		} catch (Exception $e) {
+			wp_send_json_error( $e->getMessage() );
 		}
 		wp_send_json_success( $transaction_service->getDataForCreditCardUi( $lang, new Amount( 0, get_woocommerce_currency() ) ) );
 		wp_die();
