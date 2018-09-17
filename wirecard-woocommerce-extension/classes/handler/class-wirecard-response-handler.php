@@ -57,7 +57,7 @@ class Wirecard_Response_Handler extends Wirecard_Handler {
 	 * @throws \InvalidArgumentException
 	 * @throws MalformedResponseException
 	 *
-	 * @return bool
+	 * @return bool|Response|array
 	 *
 	 * @since 1.0.0
 	 */
@@ -65,7 +65,6 @@ class Wirecard_Response_Handler extends Wirecard_Handler {
 		/** @var WC_Wirecard_Payment_Gateway $payment */
 		$payment = $this->get_payment_method( $request['payment-method'] );
 		$config  = $payment->create_payment_config();
-
 		try {
 			$transaction_service = new TransactionService( $config, $this->logger );
 			/** @var Response $result */
@@ -81,7 +80,7 @@ class Wirecard_Response_Handler extends Wirecard_Handler {
 					);
 					return $data;
 				}
-				return true;
+				return $result;
 			}
 		} catch ( \InvalidArgumentException $exception ) {
 			$this->logger->error( __METHOD__ . ':' . 'Invalid argument set: ' . $exception->getMessage() );

@@ -46,7 +46,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 define( 'WIRECARD_EXTENSION_NAME', 'Wirecard WooCommerce Extension' );
-define( 'WIRECARD_EXTENSION_VERSION', '1.1.9' );
+define( 'WIRECARD_EXTENSION_VERSION', '1.2.0' );
 define( 'WIRECARD_EXTENSION_BASEDIR', plugin_dir_path( __FILE__ ) );
 define( 'WIRECARD_EXTENSION_URL', plugin_dir_url( __FILE__ ) );
 
@@ -75,7 +75,8 @@ function wirecard_init_payment_gateway() {
 
 	require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-wirecard-payment-gateway.php' );
 	require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-paypal.php' );
-	require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-sepa.php' );
+	require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-sepadirectdebit.php' );
+    require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-sepacredit.php' );
 	require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-creditcard.php' );
 	require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-ideal.php' );
 	require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-sofort.php' );
@@ -143,7 +144,8 @@ function wirecard_get_payments() {
 		'WC_Gateway_Wirecard_Masterpass'                 => new WC_Gateway_Wirecard_Masterpass(),
 		'WC_Gateway_Wirecard_Poipia'                     => new WC_Gateway_Wirecard_Poipia(),
 		'WC_Gateway_Wirecard_Paypal'                     => new WC_Gateway_Wirecard_Paypal(),
-		'WC_Gateway_Wirecard_Sepa'                       => new WC_Gateway_Wirecard_Sepa(),
+        'WC_Gateway_Wirecard_Sepa_Credit_Transfer'       => new WC_Gateway_Wirecard_Sepa_Credit_Transfer(),
+		'WC_Gateway_Wirecard_Sepa_Direct_Debit'          => new WC_Gateway_Wirecard_Sepa_Direct_Debit(),
 		'WC_Gateway_Wirecard_Sofort'                     => new WC_Gateway_Wirecard_Sofort(),
 		'WC_Gateway_Wirecard_Unionpay_International'     => new WC_Gateway_Wirecard_Unionpay_International(),
 	);

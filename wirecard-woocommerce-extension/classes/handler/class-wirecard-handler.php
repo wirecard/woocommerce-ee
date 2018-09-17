@@ -71,8 +71,8 @@ class Wirecard_Handler {
 		$this->payment_methods = array(
 			'paypal'                => new WC_Gateway_Wirecard_Paypal(),
 			'creditcard'            => new WC_Gateway_Wirecard_Creditcard(),
-			'sepa'                  => new WC_Gateway_Wirecard_Sepa(),
-			'sepacredit'            => new WC_Gateway_Wirecard_Sepa(),
+			'sepadirectdebit'       => new WC_Gateway_Wirecard_Sepa_Direct_Debit(),
+			'sepacredit'            => new WC_Gateway_Wirecard_Sepa_Credit_Transfer(),
 			'ideal'                 => new WC_Gateway_Wirecard_Ideal(),
 			'sofortbanking'         => new WC_Gateway_Wirecard_Sofort(),
 			'wiretransfer'          => new WC_Gateway_Wirecard_Poipia(),
@@ -81,7 +81,9 @@ class Wirecard_Handler {
 			'unionpayinternational' => new WC_Gateway_Wirecard_Unionpay_International(),
 			'masterpass'            => new WC_Gateway_Wirecard_Masterpass(),
 		);
+
 		$this->logger          = new Logger();
+
 	}
 
 	/**

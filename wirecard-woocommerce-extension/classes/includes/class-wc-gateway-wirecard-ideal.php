@@ -34,12 +34,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-wirecard-payment-gateway.php' );
-require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-sepa.php' );
+require_once(WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-sepacredit.php');
 
 use Wirecard\PaymentSdk\Config\Config;
 use Wirecard\PaymentSdk\Config\PaymentMethodConfig;
 use Wirecard\PaymentSdk\Transaction\IdealTransaction;
-use Wirecard\PaymentSdk\Transaction\SepaTransaction;
+use Wirecard\PaymentSdk\Transaction\SepaCreditTransferTransaction;
 use Wirecard\PaymentSdk\Entity\IdealBic;
 
 /**
@@ -111,7 +111,7 @@ class WC_Gateway_Wirecard_Ideal extends WC_Wirecard_Payment_Gateway {
 				'title'       => __( 'Merchant Account ID', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
 				'description' => __( 'The unique identifier assigned for your Merchant Account.', 'wirecard-woocommerce-extension' ),
-				'default'     => 'b4ca14c0-bb9a-434d-8ce3-65fbff2c2267',
+				'default'     => '4aeccf39-0d47-47f6-a399-c05c1f2fc819',
 			),
 			'secret'              => array(
 				'title'       => __( 'Secret Key', 'wirecard-woocommerce-extension' ),
@@ -134,13 +134,13 @@ class WC_Gateway_Wirecard_Ideal extends WC_Wirecard_Payment_Gateway {
 				'title'       => __( 'HTTP User', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
 				'description' => __( 'The http user provided in your Wirecard contract', 'wirecard-woocommerce-extension' ),
-				'default'     => '70000-APITEST-AP',
+				'default'     => '16390-testing',
 			),
 			'http_pass'           => array(
 				'title'       => __( 'HTTP Password', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
 				'description' => __( 'The http password provided in your Wirecard contract', 'wirecard-woocommerce-extension' ),
-				'default'     => 'qD2wzQ_hrc!8',
+				'default'     => '3!3013=D3fD8X7',
 			),
 			'test_button'         => array(
 				'title'   => __( 'Test configuration', 'wirecard-woocommerce-extension' ),
@@ -215,13 +215,13 @@ class WC_Gateway_Wirecard_Ideal extends WC_Wirecard_Payment_Gateway {
 	 * @param float|null $amount
 	 * @param string     $reason
 	 *
-	 * @return bool|SepaTransaction|WP_Error
+	 * @return bool|SepaCreditTransferTransaction|WP_Error
 	 *
 	 * @since 1.1.0
 	 * @throws Exception
 	 */
 	public function process_refund( $order_id, $amount = null, $reason = '' ) {
-		$sepa_payment = new WC_Gateway_Wirecard_Sepa();
+		$sepa_payment = new WC_Gateway_Wirecard_Sepa_Credit_Transfer();
 
 		return $sepa_payment->process_refund( $order_id, $amount, $reason );
 	}

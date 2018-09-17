@@ -40,24 +40,25 @@ use Wirecard\PaymentSdk\Config\SepaConfig;
 use Wirecard\PaymentSdk\Entity\AccountHolder;
 use Wirecard\PaymentSdk\Entity\Amount;
 use Wirecard\PaymentSdk\Entity\Mandate;
-use Wirecard\PaymentSdk\Transaction\SepaTransaction;
+use Wirecard\PaymentSdk\Transaction\SepaDirectDebitTransaction;
+use Wirecard\PaymentSdk\Transaction\SepaCreditTransferTransaction;
 
 /**
- * Class WC_Gateway_Wirecard_Sepa
+ * Class WC_Gateway_Wirecard_Sepa_Direct_Debit
  *
  * @extends WC_Wirecard_Payment_Gateway
  *
  * @since   1.0.0
  */
-class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
+class WC_Gateway_Wirecard_Sepa_Direct_Debit extends WC_Wirecard_Payment_Gateway {
 
 	public function __construct() {
-		$this->type               = 'sepa';
-		$this->id                 = 'wirecard_ee_sepa';
+		$this->type               = 'sepadirectdebit';
+		$this->id                 = 'wirecard_ee_sepadirectdebit';
 		$this->icon               = WIRECARD_EXTENSION_URL . 'assets/images/sepa.png';
-		$this->method_title       = __( 'Wirecard SEPA', 'wooocommerce-gateway-wirecard' );
-		$this->method_name        = __( 'SEPA', 'wooocommerce-gateway-wirecard' );
-		$this->method_description = __( 'SEPA transactions via Wirecard Payment Processing Gateway', 'wirecard-woocommerce-extension' );
+		$this->method_title       = __( 'Wirecard SEPA Direct Debit', 'wooocommerce-gateway-wirecard' );
+		$this->method_name        = __( 'SEPA Direct Debit', 'wooocommerce-gateway-wirecard' );
+		$this->method_description = __( 'SEPA Direct Debit transactions via Wirecard Payment Processing Gateway', 'wirecard-woocommerce-extension' );
 		$this->has_fields         = true;
 
 		$this->supports = array(
@@ -96,7 +97,7 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 				'title'       => __( 'Enable/Disable', 'wirecard-woocommerce-extension' ),
 				'type'        => 'checkbox',
 				'description' => __( 'Activate payment method SEPA Direct Debit', 'wirecard-woocommerce-extension' ),
-				'label'       => __( 'Enable Wirecard SEPA', 'wirecard-woocommerce-extension' ),
+				'label'       => __( 'Enable Wirecard SEPA Direct Debit', 'wirecard-woocommerce-extension' ),
 				'default'     => 'no',
 			),
 			'title'                  => array(
@@ -106,19 +107,19 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 					'This controls the title which the consumer sees during checkout.',
 					'wirecard-woocommerce-extension'
 				),
-				'default'     => __( 'Wirecard SEPA', 'wirecard-woocommerce-extension' ),
+				'default'     => __( 'Wirecard SEPA Direct Debit', 'wirecard-woocommerce-extension' ),
 			),
 			'merchant_account_id'    => array(
 				'title'       => __( 'Merchant Account ID', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
 				'description' => __( 'The unique identifier assigned for your Merchant Account.', 'wirecard-woocommerce-extension' ),
-				'default'     => '4c901196-eff7-411e-82a3-5ef6b6860d64',
+				'default'     => '933ad170-88f0-4c3d-a862-cff315ecfbc0',
 			),
 			'secret'                 => array(
 				'title'       => __( 'Secret Key', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
 				'description' => __( 'Secret key is mandatory to calculate the Digital Signature for the payment.', 'wirecard-woocommerce-extension' ),
-				'default'     => 'ecdf5990-0372-47cd-a55d-037dccfe9d25',
+				'default'     => '5caf2ed9-5f79-4e65-98cb-0b70d6f569aa',
 			),
 			'credentials'            => array(
 				'title'       => __( 'Credentials', 'wirecard-woocommerce-extension' ),
@@ -138,13 +139,13 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 				'title'       => __( 'HTTP User', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
 				'description' => __( 'The http user provided in your Wirecard contract', 'wirecard-woocommerce-extension' ),
-				'default'     => '70000-APITEST-AP',
+				'default'     => '16390-testing',
 			),
 			'http_pass'              => array(
 				'title'       => __( 'HTTP Password', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
 				'description' => __( 'The http password provided in your Wirecard contract', 'wirecard-woocommerce-extension' ),
-				'default'     => 'qD2wzQ_hrc!8',
+				'default'     => '3!3013=D3fD8X7',
 			),
 			'test_button'            => array(
 				'title'   => __( 'Test configuration', 'wirecard-woocommerce-extension' ),
@@ -251,6 +252,8 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 			'sepa_cancel_text'  => __( 'Cancel', 'wirecard-woocommerce-extension' ),
 		);
 
+		wp_enqueue_style( 'jquery_ui' );
+		wp_enqueue_script( 'jquery_ui' );
 		wp_enqueue_script( 'sepa_js' );
 		wp_localize_script( 'sepa_js', 'sepa_var', $args );
 
@@ -299,13 +302,13 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 
 			return false;
 		}
-		$this->payment_action = $this->get_option( 'payment_action' );
+		$this->payment_action = $this->get_option( 'payment_action' ) == 'Purchase' ? 'pay' : 'reserve';
 
 		$account_holder = new AccountHolder();
 		$account_holder->setFirstName( sanitize_text_field( $_POST['sepa_lastname'] ) );
 		$account_holder->setLastName( sanitize_text_field( $_POST['sepa_firstname'] ) );
 
-		$this->transaction = new SepaTransaction();
+		$this->transaction = new SepaDirectDebitTransaction();
 		parent::process_payment( $order_id );
 		$this->transaction->setAccountHolder( $account_holder );
 		$this->transaction->setIban( sanitize_text_field( $_POST['sepa_iban'] ) );
@@ -337,7 +340,7 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 		}
 
 		$config         = parent::create_payment_config( $base_url, $http_user, $http_pass );
-		$payment_config = new SepaConfig( $this->get_option( 'merchant_account_id' ), $this->get_option( 'secret' ) );
+		$payment_config = new SepaConfig(SepaDirectDebitTransaction::NAME, $this->get_option( 'merchant_account_id' ), $this->get_option( 'secret' ) );
 		$payment_config->setCreditorId( $this->get_option( 'creditor_id' ) );
 		$config->add( $payment_config );
 
@@ -371,14 +374,14 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 	 * @param int        $order_id
 	 * @param float|null $amount
 	 *
-	 * @return SepaTransaction
+	 * @return SepaDirectDebitTransaction
 	 *
 	 * @since 1.0.0
 	 */
 	public function process_cancel( $order_id, $amount = null ) {
 		$order = wc_get_order( $order_id );
 
-		$transaction = new SepaTransaction();
+		$transaction = new SepaDirectDebitTransaction();
 		$transaction->setParentTransactionId( $order->get_transaction_id() );
 		if ( ! is_null( $amount ) ) {
 			$transaction->setAmount( new Amount( $amount, $order->get_currency() ) );
@@ -393,14 +396,14 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 	 * @param int        $order_id
 	 * @param float|null $amount
 	 *
-	 * @return SepaTransaction
+	 * @return SepaDirectDebitTransaction
 	 *
 	 * @since 1.0.0
 	 */
 	public function process_capture( $order_id, $amount = null ) {
 		$order = wc_get_order( $order_id );
 
-		$transaction = new SepaTransaction();
+		$transaction = new SepaDirectDebitTransaction();
 		$transaction->setParentTransactionId( $order->get_transaction_id() );
 		if ( ! is_null( $amount ) ) {
 			$transaction->setAmount( new Amount( $amount, $order->get_currency() ) );
@@ -416,14 +419,14 @@ class WC_Gateway_Wirecard_Sepa extends WC_Wirecard_Payment_Gateway {
 	 * @param float|null $amount
 	 * @param string     $reason
 	 *
-	 * @return bool|SepaTransaction|WP_Error
+	 * @return bool|SepaCreditTransferTransaction|WP_Error
 	 *
 	 * @since 1.0.0
 	 * @throws Exception
 	 */
 	public function process_refund( $order_id, $amount = null, $reason = '' ) {
-		$this->transaction = new SepaTransaction();
+        $sepa_payment = new WC_Gateway_Wirecard_Sepa_Credit_Transfer();
 
-		return parent::process_refund( $order_id, $amount, '' );
+        return $sepa_payment->process_refund( $order_id, $amount, $reason );
 	}
 }

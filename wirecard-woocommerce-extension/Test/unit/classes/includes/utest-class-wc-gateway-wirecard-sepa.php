@@ -29,15 +29,15 @@
  * Please do not use the plugin if you do not agree to these terms of use!
  */
 
-require_once __DIR__ . '/../../../../classes/includes/class-wc-gateway-wirecard-sepa.php';
+require_once __DIR__ . '/../../../../classes/includes/class-wc-gateway-wirecard-sepadirectdebit.php';
 
 class WC_Gateway_Wirecard_Sepa_Utest extends \PHPUnit_Framework_TestCase {
 
-	/** @var WC_Gateway_Wirecard_Sepa */
+	/** @var WC_Gateway_Wirecard_Sepa_Direct_Debit */
 	private $payment;
 
 	public function setUp() {
-		$this->payment = new WC_Gateway_Wirecard_Sepa();
+		$this->payment = new WC_Gateway_Wirecard_Sepa_Direct_Debit();
 	}
 
 	public function test_init_form_fields() {
@@ -64,7 +64,7 @@ class WC_Gateway_Wirecard_Sepa_Utest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function test_process_cancel() {
-		$expected = new \Wirecard\PaymentSdk\Transaction\SepaTransaction();
+		$expected = new \Wirecard\PaymentSdk\Transaction\SepaDirectDebitTransaction();
 		$expected->setParentTransactionId( 'transaction_id' );
 		$expected->setAmount( new \Wirecard\PaymentSdk\Entity\Amount( 20, 'EUR' ) );
 
@@ -72,7 +72,7 @@ class WC_Gateway_Wirecard_Sepa_Utest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function test_process_capture() {
-		$expected = new \Wirecard\PaymentSdk\Transaction\SepaTransaction();
+		$expected = new \Wirecard\PaymentSdk\Transaction\SepaDirectDebitTransaction();
 		$expected->setParentTransactionId( 'transaction_id' );
 		$expected->setAmount( new \Wirecard\PaymentSdk\Entity\Amount( 20, 'EUR' ) );
 

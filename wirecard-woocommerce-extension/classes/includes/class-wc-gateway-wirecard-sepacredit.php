@@ -34,43 +34,35 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-wirecard-payment-gateway.php' );
-require_once(WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-sepadirectdebit.php');
 
 use Wirecard\PaymentSdk\Config\Config;
-use Wirecard\PaymentSdk\Config\PaymentMethodConfig;
-use Wirecard\PaymentSdk\Transaction\SofortTransaction;
+use Wirecard\PaymentSdk\Config\SepaConfig;
 use Wirecard\PaymentSdk\Transaction\SepaCreditTransferTransaction;
 
 /**
- * Class WC_Gateway_Wirecard_Sofort
+ * Class WC_Gateway_Wirecard_SepaCredit_Transfer
  *
  * @extends WC_Wirecard_Payment_Gateway
  *
- * @since   1.1.0
+ * @since   1.0.0
  */
-class WC_Gateway_Wirecard_Sofort extends WC_Wirecard_Payment_Gateway {
+class WC_Gateway_Wirecard_Sepa_Credit_Transfer extends WC_Wirecard_Payment_Gateway {
 
-	/**
-	 * WC_Gateway_Wirecard_Sofort constructor.
-	 *
-	 * @since 1.1.0
-	 */
 	public function __construct() {
-		$this->type               = 'sofortbanking';
-		$this->id                 = 'wirecard_ee_sofortbanking';
-		$this->icon               = WIRECARD_EXTENSION_URL . 'assets/images/sofortbanking.png';
-		$this->method_title       = __( 'Wirecard Sofort.', 'wooocommerce-gateway-wirecard' );
-		$this->method_name        = __( 'Sofort.', 'wooocommerce-gateway-wirecard' );
-		$this->method_description = __( 'Sofort. transactions via Wirecard Payment Processing Gateway', 'wirecard-woocommerce-extension' );
+		$this->type               = 'sepacredit';
+		$this->id                 = 'wirecard_ee_sepacredit';
+		$this->icon               = WIRECARD_EXTENSION_URL . 'assets/images/sepa.png';
+		$this->method_title       = __( 'Wirecard SEPA Credit Transfer', 'wooocommerce-gateway-wirecard' );
+		$this->method_name        = __( 'SEPA Credit Transfer', 'wooocommerce-gateway-wirecard' );
+		$this->method_description = __( 'SEPA Credit Transfer transactions via Wirecard Payment Processing Gateway', 'wirecard-woocommerce-extension' );
 
 		$this->supports = array(
 			'products',
 			'refunds',
 		);
 
-		$this->refund         = array( 'debit' );
-		$this->payment_action = 'pay';
-		$this->refund_action  = 'credit';
+		$this->refund        = array( 'debit' );
+		$this->refund_action = 'credit';
 
 		$this->init_form_fields();
 		$this->init_settings();
@@ -88,97 +80,94 @@ class WC_Gateway_Wirecard_Sofort extends WC_Wirecard_Payment_Gateway {
 	/**
 	 * Load form fields for configuration
 	 *
-	 * @since 1.1.0
+	 * @since 1.0.0
 	 */
 	public function init_form_fields() {
 		$this->form_fields = array(
-			'enabled'             => array(
+			'enabled'                => array(
 				'title'       => __( 'Enable/Disable', 'wirecard-woocommerce-extension' ),
 				'type'        => 'checkbox',
-				'description' => __( 'Activate payment method Sofort.', 'wirecard-woocommerce-extension' ),
-				'label'       => __( 'Enable Wirecard Sofort.', 'wirecard-woocommerce-extension' ),
+				'description' => __( 'Activate payment method SEPA Credit Transfer', 'wirecard-woocommerce-extension' ),
+				'label'       => __( 'Enable Wirecard SEPA Credit Transfer', 'wirecard-woocommerce-extension' ),
 				'default'     => 'no',
 			),
-			'title'               => array(
+			'title'                  => array(
 				'title'       => __( 'Title', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
-				'description' => __( 'This controls the title which the consumer sees during checkout.', 'wirecard-woocommerce-extension' ),
-				'default'     => __( 'Wirecard Sofort.', 'wirecard-woocommerce-extension' ),
+				'description' => __(
+					'This controls the title which the consumer sees during checkout.',
+					'wirecard-woocommerce-extension'
+				),
+				'default'     => __( 'Wirecard SEPA Credit Transfer', 'wirecard-woocommerce-extension' ),
 			),
-			'merchant_account_id' => array(
+			'merchant_account_id'    => array(
 				'title'       => __( 'Merchant Account ID', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
 				'description' => __( 'The unique identifier assigned for your Merchant Account.', 'wirecard-woocommerce-extension' ),
-				'default'     => '6c0e7efd-ee58-40f7-9bbd-5e7337a052cd',
+				'default'     => '59a01668-693b-49f0-8a1f-f3c1ba025d45',
 			),
-			'secret'              => array(
+			'secret'                 => array(
 				'title'       => __( 'Secret Key', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
 				'description' => __( 'Secret key is mandatory to calculate the Digital Signature for the payment.', 'wirecard-woocommerce-extension' ),
-				'default'     => 'dbc5a498-9a66-43b9-bf1d-a618dd399684',
+				'default'     => 'ecdf5990-0372-47cd-a55d-037dccfe9d25',
 			),
-			'credentials'         => array(
+			'credentials'            => array(
 				'title'       => __( 'Credentials', 'wirecard-woocommerce-extension' ),
 				'type'        => 'title',
-				'description' => __( 'Enter your Wirecard credentials.', 'wirecard-woocommerce-extension' ),
+				'description' => __(
+					'Enter your Wirecard credentials.',
+					'wirecard-woocommerce-extension'
+				),
 			),
-			'base_url'            => array(
+			'base_url'               => array(
 				'title'       => __( 'Base URL', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
 				'description' => __( 'The Wirecard base URL. (e.g. https://api.wirecard.com)', 'wirecard-woocommerce-extension' ),
 				'default'     => 'https://api-test.wirecard.com',
 			),
-			'http_user'           => array(
+			'http_user'              => array(
 				'title'       => __( 'HTTP User', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
 				'description' => __( 'The http user provided in your Wirecard contract', 'wirecard-woocommerce-extension' ),
 				'default'     => '16390-testing',
 			),
-			'http_pass'           => array(
+			'http_pass'              => array(
 				'title'       => __( 'HTTP Password', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
 				'description' => __( 'The http password provided in your Wirecard contract', 'wirecard-woocommerce-extension' ),
 				'default'     => '3!3013=D3fD8X7',
 			),
-			'test_button'         => array(
+			'test_button'            => array(
 				'title'   => __( 'Test configuration', 'wirecard-woocommerce-extension' ),
 				'type'    => 'button',
 				'class'   => 'wc_wirecard_test_credentials_button button-primary',
 				'default' => __( 'Test', 'wirecard-woocommerce-extension' ),
 			),
-			'advanced'            => array(
-				'title'       => __( 'Advanced Options', 'wirecard-woocommerce-extension' ),
-				'type'        => 'title',
-				'description' => '',
-			),
-			'send_additional'     => array(
-				'title'       => __( 'Enable/Disable', 'wirecard-woocommerce-extension' ),
-				'type'        => 'checkbox',
-
-				'description' => __( 'Additional data will be sent for the purpose of fraud protection. This additional data includes billing / shipping address, shopping basket and descriptor.', 'wirecard-woocommerce-extension' ),
-				'label'       => __( 'Send additional information', 'wirecard-woocommerce-extension' ),
-				'default'     => 'yes',
-			),
 		);
 	}
 
 	/**
-	 * Process payment gateway transactions
+	 * Create payment method configuration
 	 *
-	 * @param int $order_id
+	 * @param null $base_url
+	 * @param null $http_user
+	 * @param null $http_pass
 	 *
-	 * @return array
-	 *
-	 * @since 1.1.0
+	 * @return Config
 	 */
-	public function process_payment( $order_id ) {
-		$order = wc_get_order( $order_id );
+	public function create_payment_config( $base_url = null, $http_user = null, $http_pass = null ) {
+		if ( is_null( $base_url ) ) {
+			$base_url  = $this->get_option( 'base_url' );
+			$http_user = $this->get_option( 'http_user' );
+			$http_pass = $this->get_option( 'http_pass' );
+		}
 
-		$this->transaction = new SofortTransaction();
-		parent::process_payment( $order_id );
-		$this->transaction->setDescriptor( $this->additional_helper->create_descriptor( $order ) );
+		$config         = parent::create_payment_config( $base_url, $http_user, $http_pass );
+		$payment_config = new SepaConfig(SepaCreditTransferTransaction::NAME, $this->get_option( 'merchant_account_id' ), $this->get_option( 'secret' ) );
+		$config->add( $payment_config );
 
-		return $this->execute_transaction( $this->transaction, $this->config, $this->payment_action, $order );
+		return $config;
 	}
 
 	/**
@@ -190,35 +179,21 @@ class WC_Gateway_Wirecard_Sofort extends WC_Wirecard_Payment_Gateway {
 	 *
 	 * @return bool|SepaCreditTransferTransaction|WP_Error
 	 *
-	 * @since 1.1.0
+	 * @since 1.0.0
 	 * @throws Exception
 	 */
 	public function process_refund( $order_id, $amount = null, $reason = '' ) {
-		$sepa_payment = new WC_Gateway_Wirecard_Sepa_Credit_Transfer();
+		$this->transaction = new SepaCreditTransferTransaction();
 
-		return $sepa_payment->process_refund( $order_id, $amount, $reason );
+		return parent::process_refund( $order_id, $amount, '' );
 	}
 
-	/**
-	 * Create payment method configuration
-	 *
-	 * @param null $base_url
-	 * @param null $http_user
-	 * @param null $http_pass
-	 * @since 1.1.0
-	 * @return Config
-	 */
-	public function create_payment_config( $base_url = null, $http_user = null, $http_pass = null ) {
-		if ( is_null( $base_url ) ) {
-			$base_url  = $this->get_option( 'base_url' );
-			$http_user = $this->get_option( 'http_user' );
-			$http_pass = $this->get_option( 'http_pass' );
-		}
+	public function is_available()
+    {
+        if ( is_checkout() ) {
+            return false;
+        }
 
-		$config         = parent::create_payment_config( $base_url, $http_user, $http_pass );
-		$payment_config = new PaymentMethodConfig( SofortTransaction::NAME, $this->get_option( 'merchant_account_id' ), $this->get_option( 'secret' ) );
-		$config->add( $payment_config );
-
-		return $config;
-	}
+        return parent::is_available();
+    }
 }

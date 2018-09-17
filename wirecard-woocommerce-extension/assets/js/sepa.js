@@ -28,6 +28,8 @@
  * Please do not use the plugin if you do not agree to these terms of use!
  */
 
+console.log("Testing SEPA");
+
 $                 = jQuery;
 var popup         = $( "#dialog" );
 var checkout_form = $( "form.checkout" );
@@ -139,6 +141,8 @@ jQuery( document ).ajaxComplete(
 			/**
 			* Create popup window
 			*/
+
+            console.log("Trying to show popup!");
 			popup.dialog(
 				{
 					autoOpen :false,
@@ -156,7 +160,7 @@ jQuery( document ).ajaxComplete(
 			checkout_form.on(
 				"checkout_place_order",
 				function() {
-					if ( $( "#payment_method_wirecard_ee_sepa" ).is( ":checked" )) {
+					if ( $( "#payment_method_wirecard_ee_sepadirectdebit" ).is( ":checked" )) {
 						if (window.sepaplaceorderchecked) {
 							window.sepaplaceorderchecked = false;
 							return;
@@ -164,12 +168,14 @@ jQuery( document ).ajaxComplete(
 							window.sepaplaceorderchecked = true;
 						}
 						if ( ! sepa_check ) {
+							console.log("Getting mandate data");
 							if (validate_inputs() === false) {
 								return false;
 							}
 							get_sepa_mandate_data();
 							return false;
 						} else {
+                            console.log("NOOOPE");
 							sepa_check = false;
 							popup.dialog( "close" );
 							$( "body" ).css( "overflow", "auto" );
