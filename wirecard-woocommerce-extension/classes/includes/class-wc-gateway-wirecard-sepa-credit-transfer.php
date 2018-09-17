@@ -48,11 +48,11 @@ use Wirecard\PaymentSdk\Transaction\SepaCreditTransferTransaction;
  */
 class WC_Gateway_Wirecard_Sepa_Credit_Transfer extends WC_Wirecard_Payment_Gateway {
 
-    /**
-     * WC_Gateway_Wirecard_Sepa_Credit_Transfer constructor.
-     *
-     * @since 1.2.0
-     */
+	/**
+	 * WC_Gateway_Wirecard_Sepa_Credit_Transfer constructor.
+	 *
+	 * @since 1.2.0
+	 */
 	public function __construct() {
 		$this->type               = 'sepacredit';
 		$this->id                 = 'wirecard_ee_sepacredit';
@@ -159,7 +159,7 @@ class WC_Gateway_Wirecard_Sepa_Credit_Transfer extends WC_Wirecard_Payment_Gatew
 	 * @param null $http_user
 	 * @param null $http_pass
 	 *
-     * @since 1.2.0
+	 * @since 1.2.0
 	 * @return Config
 	 */
 	public function create_payment_config( $base_url = null, $http_user = null, $http_pass = null ) {
