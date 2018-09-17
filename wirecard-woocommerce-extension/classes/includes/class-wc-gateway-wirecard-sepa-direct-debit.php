@@ -340,7 +340,7 @@ class WC_Gateway_Wirecard_Sepa_Direct_Debit extends WC_Wirecard_Payment_Gateway 
 		}
 
 		$config         = parent::create_payment_config( $base_url, $http_user, $http_pass );
-		$payment_config = new SepaConfig(SepaDirectDebitTransaction::NAME, $this->get_option( 'merchant_account_id' ), $this->get_option( 'secret' ) );
+		$payment_config = new SepaConfig( SepaDirectDebitTransaction::NAME, $this->get_option( 'merchant_account_id' ), $this->get_option( 'secret' ) );
 		$payment_config->setCreditorId( $this->get_option( 'creditor_id' ) );
 		$config->add( $payment_config );
 
@@ -425,8 +425,8 @@ class WC_Gateway_Wirecard_Sepa_Direct_Debit extends WC_Wirecard_Payment_Gateway 
 	 * @throws Exception
 	 */
 	public function process_refund( $order_id, $amount = null, $reason = '' ) {
-        $sepa_payment = new WC_Gateway_Wirecard_Sepa_Credit_Transfer();
+		$sepa_payment = new WC_Gateway_Wirecard_Sepa_Credit_Transfer();
 
-        return $sepa_payment->process_refund( $order_id, $amount, $reason );
+		return $sepa_payment->process_refund( $order_id, $amount, $reason );
 	}
 }

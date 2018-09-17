@@ -29,7 +29,7 @@
  * Please do not use the plugin if you do not agree to these terms of use!
  */
 
-require_once __DIR__ . '/../../../../classes/includes/class-wc-gateway-wirecard-sepadirectdebit.php';
+require_once __DIR__ . '/../../../../classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php';
 
 class WC_Gateway_Wirecard_Sepa_Utest extends \PHPUnit_Framework_TestCase {
 
@@ -54,7 +54,7 @@ class WC_Gateway_Wirecard_Sepa_Utest extends \PHPUnit_Framework_TestCase {
 		$_POST['sepa_firstname'] = 'firstname';
 		$_POST['sepa_lastname']  = 'lastname';
 		$_POST['sepa_iban']      = 'iban';
-		$_POST['sepa_nonce'] = 'test';
+		$_POST['sepa_nonce']     = 'test';
 
 		$this->assertTrue( is_array( $this->payment->process_payment( 12 ) ) );
 	}

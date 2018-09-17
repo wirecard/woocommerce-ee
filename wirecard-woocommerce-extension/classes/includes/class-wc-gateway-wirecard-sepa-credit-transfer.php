@@ -84,14 +84,14 @@ class WC_Gateway_Wirecard_Sepa_Credit_Transfer extends WC_Wirecard_Payment_Gatew
 	 */
 	public function init_form_fields() {
 		$this->form_fields = array(
-			'enabled'                => array(
+			'enabled'             => array(
 				'title'       => __( 'Enable/Disable', 'wirecard-woocommerce-extension' ),
 				'type'        => 'checkbox',
 				'description' => __( 'Activate payment method SEPA Credit Transfer', 'wirecard-woocommerce-extension' ),
 				'label'       => __( 'Enable Wirecard SEPA Credit Transfer', 'wirecard-woocommerce-extension' ),
 				'default'     => 'no',
 			),
-			'title'                  => array(
+			'title'               => array(
 				'title'       => __( 'Title', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
 				'description' => __(
@@ -100,19 +100,19 @@ class WC_Gateway_Wirecard_Sepa_Credit_Transfer extends WC_Wirecard_Payment_Gatew
 				),
 				'default'     => __( 'Wirecard SEPA Credit Transfer', 'wirecard-woocommerce-extension' ),
 			),
-			'merchant_account_id'    => array(
+			'merchant_account_id' => array(
 				'title'       => __( 'Merchant Account ID', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
 				'description' => __( 'The unique identifier assigned for your Merchant Account.', 'wirecard-woocommerce-extension' ),
 				'default'     => '59a01668-693b-49f0-8a1f-f3c1ba025d45',
 			),
-			'secret'                 => array(
+			'secret'              => array(
 				'title'       => __( 'Secret Key', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
 				'description' => __( 'Secret key is mandatory to calculate the Digital Signature for the payment.', 'wirecard-woocommerce-extension' ),
 				'default'     => 'ecdf5990-0372-47cd-a55d-037dccfe9d25',
 			),
-			'credentials'            => array(
+			'credentials'         => array(
 				'title'       => __( 'Credentials', 'wirecard-woocommerce-extension' ),
 				'type'        => 'title',
 				'description' => __(
@@ -120,25 +120,25 @@ class WC_Gateway_Wirecard_Sepa_Credit_Transfer extends WC_Wirecard_Payment_Gatew
 					'wirecard-woocommerce-extension'
 				),
 			),
-			'base_url'               => array(
+			'base_url'            => array(
 				'title'       => __( 'Base URL', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
 				'description' => __( 'The Wirecard base URL. (e.g. https://api.wirecard.com)', 'wirecard-woocommerce-extension' ),
 				'default'     => 'https://api-test.wirecard.com',
 			),
-			'http_user'              => array(
+			'http_user'           => array(
 				'title'       => __( 'HTTP User', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
 				'description' => __( 'The http user provided in your Wirecard contract', 'wirecard-woocommerce-extension' ),
 				'default'     => '16390-testing',
 			),
-			'http_pass'              => array(
+			'http_pass'           => array(
 				'title'       => __( 'HTTP Password', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
 				'description' => __( 'The http password provided in your Wirecard contract', 'wirecard-woocommerce-extension' ),
 				'default'     => '3!3013=D3fD8X7',
 			),
-			'test_button'            => array(
+			'test_button'         => array(
 				'title'   => __( 'Test configuration', 'wirecard-woocommerce-extension' ),
 				'type'    => 'button',
 				'class'   => 'wc_wirecard_test_credentials_button button-primary',
@@ -164,7 +164,7 @@ class WC_Gateway_Wirecard_Sepa_Credit_Transfer extends WC_Wirecard_Payment_Gatew
 		}
 
 		$config         = parent::create_payment_config( $base_url, $http_user, $http_pass );
-		$payment_config = new SepaConfig(SepaCreditTransferTransaction::NAME, $this->get_option( 'merchant_account_id' ), $this->get_option( 'secret' ) );
+		$payment_config = new SepaConfig( SepaCreditTransferTransaction::NAME, $this->get_option( 'merchant_account_id' ), $this->get_option( 'secret' ) );
 		$config->add( $payment_config );
 
 		return $config;
@@ -188,12 +188,11 @@ class WC_Gateway_Wirecard_Sepa_Credit_Transfer extends WC_Wirecard_Payment_Gatew
 		return parent::process_refund( $order_id, $amount, '' );
 	}
 
-	public function is_available()
-    {
-        if ( is_checkout() ) {
-            return false;
-        }
+	public function is_available() {
+		if ( is_checkout() ) {
+			return false;
+		}
 
-        return parent::is_available();
-    }
+		return parent::is_available();
+	}
 }

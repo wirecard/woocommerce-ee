@@ -82,7 +82,7 @@ class Wirecard_Handler {
 			'masterpass'            => new WC_Gateway_Wirecard_Masterpass(),
 		);
 
-		$this->logger          = new Logger();
+		$this->logger = new Logger();
 
 	}
 
