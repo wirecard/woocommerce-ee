@@ -181,11 +181,21 @@ class Additional_Information {
 		if ( self::SHIPPING == $type ) {
 			$address = new Address( $order->get_shipping_country(), $order->get_shipping_city(), $order->get_shipping_address_1() );
 			$address->setPostalCode( $order->get_shipping_postcode() );
+			if ( strlen( $order->get_shipping_state() ) ) {
+				$address->setState(
+					$this->map_state_to_iso_code( $order->get_shipping_country(), $order->get_shipping_state() )
+				);
+			}
 		} else {
 			$address = new Address( $order->get_billing_country(), $order->get_billing_city(), $order->get_billing_address_1() );
 			$address->setPostalCode( $order->get_billing_postcode() );
 			if ( strlen( $order->get_billing_address_2() ) ) {
 				$address->setStreet2( $order->get_billing_address_2() );
+			}
+			if ( strlen( $order->get_billing_state() ) ) {
+				$address->setState(
+					$this->map_state_to_iso_code( $order->get_billing_country(), $order->get_billing_state() )
+				);
 			}
 		}
 
@@ -284,5 +294,24 @@ class Additional_Information {
 		$basket->add( $item );
 
 		return $basket;
+	}
+
+	/**
+	 * Maps WooCommerce state codes to ISO where necessary.
+	 *
+	 * @param $country
+	 * @param $state
+	 * @return string
+	 * @since 1.2.0
+	 */
+	public function map_state_to_iso_code( $country, $state ) {
+		$mapping = file_get_contents( WIRECARD_EXTENSION_BASEDIR . '/assets/stateMapping.json' );
+		$mapping = json_decode( $mapping, true );
+
+		if ( array_key_exists( $country, $mapping ) && array_key_exists( $state, $mapping[ $country ] ) ) {
+			return $mapping[ $country ][ $state ];
+		}
+
+		return $state;
 	}
 }

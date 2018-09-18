@@ -64,16 +64,18 @@ class WC_Gateway_Wirecard_Additional_Information_Utest extends \PHPUnit_Framewor
 		$account_holder->setFirstName( 'first-name' );
 		$account_holder->setEmail( 'test@email.com' );
 		$account_holder->setPhone( '123123123' );
-		$address = new \Wirecard\PaymentSdk\Entity\Address( 'AUT', 'City', 'street1' );
+		$address = new \Wirecard\PaymentSdk\Entity\Address( 'AT', 'City', 'street1' );
 		$address->setPostalCode( '1234' );
 		$address->setStreet2( 'street2' );
+		$address->setState( 'OR' );
 		$account_holder->setAddress( $address );
 		$expected->setAccountHolder( $account_holder );
 		$shipping = new \Wirecard\PaymentSdk\Entity\AccountHolder();
 		$shipping->setLastName( 'last-name' );
 		$shipping->setFirstName( 'first-name' );
-		$address = new \Wirecard\PaymentSdk\Entity\Address( 'AUT', 'City', 'street1' );
+		$address = new \Wirecard\PaymentSdk\Entity\Address( 'AT', 'City', 'street1' );
 		$address->setPostalCode( '1234' );
+        $address->setState( 'OR' );
 		$shipping->setAddress( $address );
 		$expected->setShipping( $shipping );
 
@@ -128,17 +130,19 @@ class WC_Gateway_Wirecard_Additional_Information_Utest extends \PHPUnit_Framewor
 	public function test_create_address_data() {
 		$order = $this->getMockBuilder( WC_Order::class )
 			->disableOriginalConstructor()
-			->setMethods( [ 'get_billing_country', 'get_billing_city', 'get_billing_address_1', 'get_billing_postcode', 'get_billing_address_2' ] )
+			->setMethods( [ 'get_billing_country', 'get_billing_city', 'get_billing_address_1', 'get_billing_postcode', 'get_billing_address_2', 'get_billing_state' ] )
 			->getMock();
-		$order->method( 'get_billing_country' )->willReturn( 'AUT' );
+		$order->method( 'get_billing_country' )->willReturn( 'AT' );
+		$order->method( 'get_billing_state' )->willReturn( 'OR' );
 		$order->method( 'get_billing_city' )->willReturn( 'City' );
 		$order->method( 'get_billing_address_1' )->willReturn( 'Street1' );
 		$order->method( 'get_billing_postcode' )->willReturn( '0000' );
 		$order->method( 'get_billing_address_2' )->willReturn( 'Street2' );
 
-		$expected = new \Wirecard\PaymentSdk\Entity\Address( 'AUT', 'City', 'Street1' );
+		$expected = new \Wirecard\PaymentSdk\Entity\Address( 'AT', 'City', 'Street1' );
 		$expected->setPostalCode( '0000' );
 		$expected->setStreet2( 'Street2' );
+		$expected->setState( 'OR' );
 
 		$actual = $this->additional_information->create_address_data( $order, 'BILLING' );
 
