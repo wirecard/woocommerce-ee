@@ -203,10 +203,10 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 
 		$response_handler = new Wirecard_Response_Handler();
 		try {
-            $transaction_factory = new Wirecard_Transaction_Factory();
-			$response = $response_handler->handle_response( $_REQUEST );
+			$transaction_factory = new Wirecard_Transaction_Factory();
+			$response            = $response_handler->handle_response( $_REQUEST );
 
-			if ( ! $response || $transaction_factory->get_transaction( $response->getTransactionId() )) {
+			if ( ! $response || $transaction_factory->get_transaction( $response->getTransactionId() ) ) {
 				wc_add_notice( __( 'An error occurred during the payment process. Please try again.', 'wirecard-woocommerce-extension' ), 'error' );
 				$redirect_url = $order->get_cancel_endpoint();
 			} else {
