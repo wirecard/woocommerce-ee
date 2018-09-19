@@ -590,7 +590,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 		);
 
 		$this->config = $this->create_payment_config();
-		$amount       = new Amount( $order->get_total(), $order->get_currency() );
+		$amount       = new Amount( number_format( $order->get_total(), wc_get_price_decimals() ), $order->get_currency() );
 
 		$this->transaction->setNotificationUrl( $this->create_notification_url( $order, $this->type ) );
 		$this->transaction->setRedirect( $redirect_urls );
