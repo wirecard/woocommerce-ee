@@ -324,6 +324,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	public function execute_transaction( $transaction, $config, $operation, $order ) {
 		$logger              = new Logger();
 		$transaction_service = new TransactionService( $config, $logger );
+
 		try {
 			/** @var $response Response */
 			$response = $transaction_service->process( $transaction, $operation );
