@@ -325,14 +325,6 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 		$logger              = new Logger();
 		$transaction_service = new TransactionService( $config, $logger );
 
-		if ( 'Purchase' == $operation ) {
-			$operation = 'pay';
-		}
-
-		if ( 'Authorization' == $operation ) {
-			$operation = 'reserve';
-		}
-
 		try {
 			/** @var $response Response */
 			$response = $transaction_service->process( $transaction, $operation );
