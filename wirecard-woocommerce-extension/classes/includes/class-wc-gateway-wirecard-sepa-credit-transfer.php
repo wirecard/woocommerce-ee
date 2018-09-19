@@ -194,6 +194,13 @@ class WC_Gateway_Wirecard_Sepa_Credit_Transfer extends WC_Wirecard_Payment_Gatew
 		return parent::process_refund( $order_id, $amount, '' );
 	}
 
+    /**
+     * Defines availability of payment method.
+     * SEPA Credit Transfer is only available in the WooCommerce backend.
+     *
+     * @since 1.2.0
+     * @return bool
+     */
 	public function is_available() {
 		if ( is_checkout() ) {
 			return false;
