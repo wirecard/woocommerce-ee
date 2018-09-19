@@ -156,7 +156,7 @@ jQuery( document ).ajaxComplete(
 			checkout_form.on(
 				"checkout_place_order",
 				function() {
-					if ( $( "#payment_method_wirecard_ee_sepa" ).is( ":checked" )) {
+					if ( $( "#payment_method_wirecard_ee_sepadirectdebit" ).is( ":checked" )) {
 						if (window.sepaplaceorderchecked) {
 							window.sepaplaceorderchecked = false;
 							return;

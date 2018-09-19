@@ -191,8 +191,9 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 			header( 'Location:' . $redirect_url );
 			die();
 		}
-		$order_id = $_REQUEST['order-id'];
-		$order    = new WC_Order( $order_id );
+		$payment_method = $_REQUEST['payment-method'];
+		$order_id       = $_REQUEST['order-id'];
+		$order          = new WC_Order( $order_id );
 
 		if ( 'cancel' == $_REQUEST['payment-state'] ) {
 			wc_add_notice( __( 'You have canceled the payment process.', 'wirecard-woocommerce-extension' ), 'notice' );
@@ -202,26 +203,29 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 
 		$response_handler = new Wirecard_Response_Handler();
 		try {
-			$status = $response_handler->handle_response( $_REQUEST );
+			$transaction_factory = new Wirecard_Transaction_Factory();
+			$response            = $response_handler->handle_response( $_REQUEST );
+
+			if ( ! $response || $transaction_factory->get_transaction( $response->getTransactionId() ) ) {
+				wc_add_notice( __( 'An error occurred during the payment process. Please try again.', 'wirecard-woocommerce-extension' ), 'error' );
+				$redirect_url = $order->get_cancel_endpoint();
+			} else {
+				if ( ! $order->is_paid() && ( 'authorization' != $order->get_status() ) ) {
+					$order->update_status( 'on-hold', __( 'Awaiting payment from Wirecard', 'wirecard-woocommerce-extension' ) );
+				}
+				if ( is_array( $response ) ) {
+					foreach ( $response as $key => $value ) {
+						add_post_meta( $order->get_id(), $key, $value );
+					}
+				}
+
+				$this->update_payment_transaction( $order, $response, 'awaiting', $payment_method );
+				$redirect_url = $this->get_return_url( $order );
+			}
 		} catch ( Exception $exception ) {
 			wc_add_notice( __( 'An error occurred during the payment process. Please try again.', 'wirecard-woocommerce-extension' ), 'error' );
 			header( 'Location:' . $order->get_cancel_endpoint() );
 			die();
-		}
-
-		if ( ! $status ) {
-			wc_add_notice( __( 'An error occurred during the payment process. Please try again.', 'wirecard-woocommerce-extension' ), 'error' );
-			$redirect_url = $order->get_cancel_endpoint();
-		} else {
-			if ( ! $order->is_paid() && ( 'authorization' != $order->get_status() ) ) {
-				$order->update_status( 'on-hold', __( 'Awaiting payment from Wirecard', 'wirecard-woocommerce-extension' ) );
-			}
-			if ( is_array( $status ) ) {
-				foreach ( $status as $key => $value ) {
-					add_post_meta( $order->get_id(), $key, $value );
-				}
-			}
-			$redirect_url = $this->get_return_url( $order );
 		}
 		header( 'Location: ' . $redirect_url );
 		die();
@@ -324,7 +328,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 			/** @var $response Response */
 			$response = $transaction_service->process( $transaction, $operation );
 		} catch ( \Exception $exception ) {
-			$logger->error( __METHOD__ . ':' . $exception->getMessage() );
+			$logger->error( __METHOD__ . ': ' . get_class( $exception ) . ': ' . $exception->getMessage() . ' - ' . $operation );
 
 			wc_add_notice( __( 'An error occurred during the payment process. Please try again.', 'wirecard-woocommerce-extension' ), 'error' );
 
