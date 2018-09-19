@@ -302,7 +302,7 @@ class WC_Gateway_Wirecard_Sepa_Direct_Debit extends WC_Wirecard_Payment_Gateway 
 
 			return false;
 		}
-		$this->payment_action = $this->get_option( 'payment_action' ) == 'Purchase' ? 'pay' : 'reserve';
+		$this->payment_action = $this->get_option( 'payment_action' );
 
 		$account_holder = new AccountHolder();
 		$account_holder->setFirstName( sanitize_text_field( $_POST['sepa_lastname'] ) );
