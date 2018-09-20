@@ -231,7 +231,16 @@ HTML;
 	public function get_request_data_upi() {
 		$config              = $this->create_payment_config();
 		$transaction_service = new TransactionService( $config );
-		wp_send_json_success( $transaction_service->getDataForUpiUi() );
+		$lang                = 'en';
+		try {
+			$supported_lang = json_decode( file_get_contents( 'https://api-test.wirecard.com/engine/includes/i18n/languages/hpplanguages.json' ) );
+			if ( key_exists( substr( get_locale(), 0, 2 ), $supported_lang ) ) {
+				$lang = substr( get_locale(), 0, 2 );
+			}
+		} catch ( Exception $e ) {
+			wp_send_json_error( $e->getMessage() );
+		}
+		wp_send_json_success( $transaction_service->getDataForUpiUi( $lang, new Amount( 0, get_woocommerce_currency() ) ) );
 		wp_die();
 	}
 
