@@ -206,7 +206,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 			$transaction_factory = new Wirecard_Transaction_Factory();
 			$response            = $response_handler->handle_response( $_REQUEST );
 
-			if ( ! $response || $transaction_factory->get_transaction( $response->getTransactionId() ) ) {
+			if ( ! $response ) {
 				wc_add_notice( __( 'An error occurred during the payment process. Please try again.', 'wirecard-woocommerce-extension' ), 'error' );
 				$redirect_url = $order->get_cancel_endpoint();
 			} else {
@@ -218,8 +218,9 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 						add_post_meta( $order->get_id(), $key, $value );
 					}
 				}
-
-				$this->update_payment_transaction( $order, $response, 'awaiting', $payment_method );
+				if ( ! $transaction_factory->get_transaction( $response->getTransactionId() ) ) {
+                    $this->update_payment_transaction( $order, $response, 'awaiting', $payment_method );
+                }
 				$redirect_url = $this->get_return_url( $order );
 			}
 		} catch ( Exception $exception ) {
