@@ -233,7 +233,7 @@ HTML;
 		$transaction_service = new TransactionService( $config );
 		$lang                = 'en';
 		try {
-			$supported_lang = json_decode( file_get_contents( 'https://api-test.wirecard.com/engine/includes/i18n/languages/hpplanguages.json' ) );
+			$supported_lang = json_decode( file_get_contents( $this->get_option( 'base_url' ) . '/engine/includes/i18n/languages/hpplanguages.json' ) );
 			if ( key_exists( substr( get_locale(), 0, 2 ), $supported_lang ) ) {
 				$lang = substr( get_locale(), 0, 2 );
 			}
