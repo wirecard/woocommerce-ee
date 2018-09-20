@@ -219,8 +219,8 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 					}
 				}
 				if ( ! $transaction_factory->get_transaction( $response->getTransactionId() ) ) {
-                    $this->update_payment_transaction( $order, $response, 'awaiting', $payment_method );
-                }
+					$this->update_payment_transaction( $order, $response, 'awaiting', $payment_method );
+				}
 				$redirect_url = $this->get_return_url( $order );
 			}
 		} catch ( Exception $exception ) {

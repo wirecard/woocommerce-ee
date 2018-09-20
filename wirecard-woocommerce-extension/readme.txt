@@ -4,7 +4,7 @@ Tags: Wirecard, Credit Card, Alipay Cross-border, Guaranteed Invoice by Wirecard
 Requires at least: 4.9
 Tested up to: 4.9.8
 Requires PHP: 5.6
-Stable tag: 1.1.9
+Stable tag: 1.2.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -67,5 +67,7 @@ Our general Terms of Use can be found on [Github](https://github.com/wirecard/wo
 4. Wirecard Transaction Detailview for Back-end Operations
 
 == Changelog ==
-- Dynamic loading of credit card form language
-- WooCommerce 3.4.5 Compatibility
+- Update paymentSDK
+- Update response handling for awaiting transactions
+- Sepa split into Sepa Direct Debit and Sepa Cretdit Transfer
+- Add state variable to transactions
