@@ -978,6 +978,11 @@ msgstr "このトランザクションで利用可能なバックエンド操作
 msgid "No Back-end operations available for this transaction"
 msgstr "このトランザクションで利用可能なバックエンド操作がありません"
 
+#: woocommerce-wirecard-payment-gateway.php:228
+#: woocommerce-wirecard-payment-gateway.php:229
+msgid "Wirecard Payment Gateway"
+msgstr "Wirecard決済ゲートウェイ"
+
 #: classes/admin/class-wirecard-transaction-factory.php:340
 #: woocommerce-wirecard-payment-gateway.php:252
 #: woocommerce-wirecard-payment-gateway.php:253
@@ -995,6 +1000,13 @@ msgstr "トランザクションのキャプチャー"
 #: woocommerce-wirecard-payment-gateway.php:237
 msgid "Cancel transaction"
 msgstr "トランザクションの取り消し"
+
+#: woocommerce-wirecard-payment-gateway.php:260
+#: woocommerce-wirecard-payment-gateway.php:261
+#: woocommerce-wirecard-payment-gateway.php:268
+#: woocommerce-wirecard-payment-gateway.php:269
+msgid "Wirecard Payment Gateway Support"
+msgstr "サポート"
 
 #: classes/admin/class-wirecard-transaction-factory.php:325
 msgid " payment"

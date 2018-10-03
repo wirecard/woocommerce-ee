@@ -998,6 +998,11 @@ msgstr "没有可用于此交易的后端操作，交易尚未确认。"
 msgid "No Back-end operations available for this transaction"
 msgstr "没有可用于此交易的后端操作"
 
+#: woocommerce-wirecard-payment-gateway.php:228
+#: woocommerce-wirecard-payment-gateway.php:229
+msgid "Wirecard Payment Gateway"
+msgstr "Wirecard 支付流程网关"
+
 #: classes/admin/class-wirecard-transaction-factory.php:340
 #: woocommerce-wirecard-payment-gateway.php:252
 #: woocommerce-wirecard-payment-gateway.php:253
@@ -1015,6 +1020,13 @@ msgstr "获取交易"
 #: woocommerce-wirecard-payment-gateway.php:237
 msgid "Cancel transaction"
 msgstr "取消交易"
+
+#: woocommerce-wirecard-payment-gateway.php:260
+#: woocommerce-wirecard-payment-gateway.php:261
+#: woocommerce-wirecard-payment-gateway.php:268
+#: woocommerce-wirecard-payment-gateway.php:269
+msgid "Wirecard Payment Gateway Support"
+msgstr "支持"
 
 #: classes/admin/class-wirecard-transaction-factory.php:325
 msgid " payment"

@@ -296,7 +296,7 @@ msgstr "Warenkorb"
 
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:168
 msgid "For the purpose of confirmation, PayPal payment supports shopping basket display during checkout. To enable this feature, activate Shopping Basket."
-msgstr ""
+msgstr "Zur Bestätigung, bietet PayPal die Möglichkeit während des Bezahlvorgangs den Warenkorb anzuzeigen. Um dies zu ermöglichen, muss der Warenkorb aktiviert werden."
 
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:157
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:193
@@ -330,11 +330,11 @@ msgstr "Zahlungsmittel Masterpass aktivieren und dem Endkunden beim Checkout anb
 
 #: classes/includes/class-wc-gateway-wirecard-masterpass.php:98
 msgid "Enable Wirecard Masterpass"
-msgstr "Wirecard MasterPass aktivieren"
+msgstr "Wirecard Masterpass aktivieren"
 
 #: classes/includes/class-wc-gateway-wirecard-masterpass.php:63
 msgid "Masterpass transactions via Wirecard Payment Processing Gateway"
-msgstr "MasterPass Transaktionen via Wirecard Payment Processing Gateway."
+msgstr "Masterpass Transaktionen via Wirecard Payment Processing Gateway."
 
 #: classes/includes/class-wc-gateway-wirecard-masterpass.php:62
 msgid "Masterpass"
@@ -343,7 +343,7 @@ msgstr "Masterpass"
 #: classes/includes/class-wc-gateway-wirecard-masterpass.php:61
 #: classes/includes/class-wc-gateway-wirecard-masterpass.php:106
 msgid "Wirecard Masterpass"
-msgstr "Wirecard MasterPass"
+msgstr "Wirecard Masterpass"
 
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:101
 msgid "Enable Wirecard iDEAL"

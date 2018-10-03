@@ -46,7 +46,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 define( 'WIRECARD_EXTENSION_NAME', 'Wirecard WooCommerce Extension' );
-define( 'WIRECARD_EXTENSION_VERSION', '1.2.0' );
+define( 'WIRECARD_EXTENSION_VERSION', '1.2.1' );
 define( 'WIRECARD_EXTENSION_BASEDIR', plugin_dir_path( __FILE__ ) );
 define( 'WIRECARD_EXTENSION_URL', plugin_dir_url( __FILE__ ) );
 
@@ -225,8 +225,8 @@ function wirecard_gateway_options_page() {
 	$admin = new Wirecard_Settings();
 	add_submenu_page(
 		'woocommerce',
-		'Wirecard Payment Gateway',
-		'Wirecard Payment Gateway',
+		__( 'Wirecard Payment Gateway', 'wirecard-woocommerce-extension' ),
+		__( 'Wirecard Payment Gateway', 'wirecard-woocommerce-extension' ),
 		'manage_options',
 		'wirecardpayment',
 		array( $admin, 'wirecard_payment_gateway_settings' )
@@ -257,16 +257,16 @@ function wirecard_gateway_options_page() {
 	);
 	add_submenu_page(
 		'wirecardpayment',
-		'Wirecard Payment Gateway Support',
-		'Wirecard Payment Gateway Support',
+		__( 'Wirecard Payment Gateway Support', 'wirecard-woocommerce-extensions' ),
+		__( 'Wirecard Payment Gateway Support', 'wirecard-woocommerce-extensions' ),
 		'manage_options',
 		'wirecardsupport',
 		array( $admin, 'wirecard_payment_gateway_support' )
 	);
 	add_submenu_page(
 		null,
-		'Wirecard Payment Gateway Support',
-		'Wirecard Payment Gateway Support',
+		__( 'Wirecard Payment Gateway Support', 'wirecard-woocommerce-extension' ),
+		__( 'Wirecard Payment Gateway Support', 'wirecard-woocommerce-extension' ),
 		'manage_options',
 		'wirecardsendsupport',
 		array( $admin, 'send_email_to_support' )

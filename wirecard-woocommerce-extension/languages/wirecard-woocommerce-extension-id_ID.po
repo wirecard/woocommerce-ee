@@ -1001,6 +1001,11 @@ msgstr "Tidak ada operasi pendukung untuk transaksi ini, transaksi belum dapat d
 msgid "No Back-end operations available for this transaction"
 msgstr "Tidak ada operasi pendukung untuk transaksi ini"
 
+#: woocommerce-wirecard-payment-gateway.php:228
+#: woocommerce-wirecard-payment-gateway.php:229
+msgid "Wirecard Payment Gateway"
+msgstr "Payment Gateway Wirecard"
+
 #: classes/admin/class-wirecard-transaction-factory.php:340
 #: woocommerce-wirecard-payment-gateway.php:252
 #: woocommerce-wirecard-payment-gateway.php:253
@@ -1018,6 +1023,13 @@ msgstr "Catat transaksi"
 #: woocommerce-wirecard-payment-gateway.php:237
 msgid "Cancel transaction"
 msgstr "Batalkan transaksi"
+
+#: woocommerce-wirecard-payment-gateway.php:260
+#: woocommerce-wirecard-payment-gateway.php:261
+#: woocommerce-wirecard-payment-gateway.php:268
+#: woocommerce-wirecard-payment-gateway.php:269
+msgid "Wirecard Payment Gateway Support"
+msgstr "Dukungan"
 
 #: classes/admin/class-wirecard-transaction-factory.php:325
 msgid " payment"
