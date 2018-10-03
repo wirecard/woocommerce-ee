@@ -60,8 +60,8 @@ class WC_Gateway_Wirecard_Ideal extends WC_Wirecard_Payment_Gateway {
 		$this->type               = 'ideal';
 		$this->id                 = 'wirecard_ee_ideal';
 		$this->icon               = WIRECARD_EXTENSION_URL . 'assets/images/ideal.png';
-		$this->method_title       = __( 'Wirecard iDEAL', 'wooocommerce-gateway-wirecard' );
-		$this->method_name        = __( 'iDEAL', 'wooocommerce-gateway-wirecard' );
+		$this->method_title       = __( 'Wirecard iDEAL', 'wirecard-woocommerce-extension' );
+		$this->method_name        = __( 'iDEAL', 'wirecard-woocommerce-extension' );
 		$this->method_description = __( 'iDEAL transactions via Wirecard Payment Processing Gateway', 'wirecard-woocommerce-extension' );
 		$this->has_fields         = true;
 

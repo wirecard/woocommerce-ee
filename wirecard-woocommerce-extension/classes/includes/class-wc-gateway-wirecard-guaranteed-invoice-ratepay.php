@@ -60,8 +60,8 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 		$this->type               = 'ratepay-invoice';
 		$this->id                 = 'wirecard_ee_invoice';
 		$this->icon               = WIRECARD_EXTENSION_URL . 'assets/images/invoice.png';
-		$this->method_title       = __( 'Wirecard Guaranteed Invoice', 'wooocommerce-gateway-wirecard' );
-		$this->method_name        = __( 'Guaranteed Invoice', 'wooocommerce-gateway-wirecard' );
+		$this->method_title       = __( 'Wirecard Guaranteed Invoice', 'wirecard-woocommerce-extension' );
+		$this->method_name        = __( 'Guaranteed Invoice', 'wirecard-woocommerce-extension' );
 		$this->method_description = __( 'Guaranteed Invoice transactions via Wirecard Payment Processing Gateway', 'wirecard-woocommerce-extension' );
 		$this->has_fields         = true;
 
