@@ -235,7 +235,9 @@ HTML;
 		try {
 			$supported_lang = json_decode( file_get_contents( $this->get_option( 'base_url' ) . '/engine/includes/i18n/languages/hpplanguages.json' ) );
 			if ( key_exists( substr( get_locale(), 0, 2 ), $supported_lang ) ) {
-				$lang = substr( get_locale(), 0, 2 );
+				$lang = substr( get_locale(), 0, strlen( $supported_lang ) );
+			} elseif ( key_exists( get_locale(), $supported_lang ) ) {
+				$lang = get_locale();
 			}
 		} catch ( Exception $e ) {
 			wp_send_json_error( $e->getMessage() );
