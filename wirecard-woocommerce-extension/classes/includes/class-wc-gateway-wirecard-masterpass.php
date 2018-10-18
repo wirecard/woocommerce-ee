@@ -155,7 +155,7 @@ class WC_Gateway_Wirecard_Masterpass extends WC_Wirecard_Payment_Gateway {
 				'title'       => __( 'Payment Action', 'wirecard-woocommerce-extension' ),
 				'type'        => 'select',
 				'description' => __( 'Select between "Capture" to capture / invoice your order automatically or "Authorization" to manually capture / invoice. ', 'wirecard-woocommerce-extension' ),
-				'default'     => 'Purchase',
+				'default'     => 'pay',
 				'label'       => __( 'Payment Action', 'wirecard-woocommerce-extension' ),
 				'options'     => array(
 					'reserve' => 'Authorization',
