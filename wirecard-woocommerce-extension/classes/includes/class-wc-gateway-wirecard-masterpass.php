@@ -58,8 +58,8 @@ class WC_Gateway_Wirecard_Masterpass extends WC_Wirecard_Payment_Gateway {
 		$this->type               = 'masterpass';
 		$this->id                 = 'wirecard_ee_masterpass';
 		$this->icon               = WIRECARD_EXTENSION_URL . 'assets/images/masterpass.png';
-		$this->method_title       = __( 'Wirecard Masterpass', 'wooocommerce-gateway-wirecard' );
-		$this->method_name        = __( 'Masterpass', 'wooocommerce-gateway-wirecard' );
+		$this->method_title       = __( 'Wirecard Masterpass', 'wirecard-woocommerce-extension' );
+		$this->method_name        = __( 'Masterpass', 'wirecard-woocommerce-extension' );
 		$this->method_description = __( 'Masterpass transactions via Wirecard Payment Processing Gateway', 'wirecard-woocommerce-extension' );
 
 		$this->supports = array(
@@ -155,7 +155,7 @@ class WC_Gateway_Wirecard_Masterpass extends WC_Wirecard_Payment_Gateway {
 				'title'       => __( 'Payment Action', 'wirecard-woocommerce-extension' ),
 				'type'        => 'select',
 				'description' => __( 'Select between "Capture" to capture / invoice your order automatically or "Authorization" to manually capture / invoice. ', 'wirecard-woocommerce-extension' ),
-				'default'     => 'Purchase',
+				'default'     => 'pay',
 				'label'       => __( 'Payment Action', 'wirecard-woocommerce-extension' ),
 				'options'     => array(
 					'reserve' => 'Authorization',

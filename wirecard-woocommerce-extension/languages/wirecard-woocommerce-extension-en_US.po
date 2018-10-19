@@ -27,6 +27,11 @@ msgid_plural "Authorized<span class=\"count\">(%s)</span>"
 msgstr[0] "Authorized <span class=\"count\">(%s)</span>"
 msgstr[1] "Authorized <span class=\"count\">(%s)</span>"
 
+#: woocommerce-wirecard-payment-gateway.php:228
+#: woocommerce-wirecard-payment-gateway.php:229
+msgid "Wirecard Payment Gateway"
+msgstr "Wirecard Payment Gateway"
+
 #: woocommerce-wirecard-payment-gateway.php:231 
 #: woocommerce-wirecard-payment-gateway.php:232 
 #: classes/admin/class-wirecard-transaction-factory.php:290
@@ -44,6 +49,13 @@ msgstr "Capture transaction"
 #: classes/admin/class-wirecard-transaction-factory.php:296
 msgid "Refund transaction"
 msgstr "Refund transaction"
+
+#: woocommerce-wirecard-payment-gateway.php:260
+#: woocommerce-wirecard-payment-gateway.php:261
+#: woocommerce-wirecard-payment-gateway.php:268
+#: woocommerce-wirecard-payment-gateway.php:269
+msgid "Wirecard Payment Gateway Support"
+msgstr "Wirecard Payment Gateway Support"
 
 #: woocommerce-wirecard-payment-gateway.php:289 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:145 
