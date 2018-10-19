@@ -57,8 +57,8 @@ class WC_Gateway_Wirecard_Sepa_Credit_Transfer extends WC_Wirecard_Payment_Gatew
 		$this->type               = 'sepacredit';
 		$this->id                 = 'wirecard_ee_sepacredit';
 		$this->icon               = WIRECARD_EXTENSION_URL . 'assets/images/sepa.png';
-		$this->method_title       = __( 'Wirecard SEPA Credit Transfer', 'wooocommerce-gateway-wirecard' );
-		$this->method_name        = __( 'SEPA Credit Transfer', 'wooocommerce-gateway-wirecard' );
+		$this->method_title       = __( 'Wirecard SEPA Credit Transfer', 'wirecard-woocommerce-extension' );
+		$this->method_name        = __( 'SEPA Credit Transfer', 'wirecard-woocommerce-extension' );
 		$this->method_description = __( 'SEPA Credit Transfer transactions via Wirecard Payment Processing Gateway', 'wirecard-woocommerce-extension' );
 
 		$this->supports = array(

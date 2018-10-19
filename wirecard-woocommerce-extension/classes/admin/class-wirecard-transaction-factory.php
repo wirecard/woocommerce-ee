@@ -449,10 +449,10 @@ class Wirecard_Transaction_Factory {
 		$transaction_id = $response->getTransactionId();
 		$output         = sprintf(
 			'%s <a target="_blank" href="' . $base_url . '/engine/rest/merchants/%s/payments/%s">%s</a>',
-			__( 'For more transaction information click ', 'woocommerce-wirecard-gateway' ),
+			__( 'For more transaction information click ', 'wirecard-woocommerce-extension' ),
 			$response->findElement( 'merchant-account-id' ),
 			$transaction_id,
-			__( 'here', 'woocommerce-wirecard-gateway' )
+			__( 'here', 'wirecard-woocommerce-extension' )
 		);
 
 		return $output;

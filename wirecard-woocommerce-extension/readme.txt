@@ -15,14 +15,14 @@ Wirecard WooCommerce Extension can be integrated into your shop system fast and 
 
 = Payment methods: =
 - Credit and debit cards (American Express, Diners Club, Discover, Maestro, Mastercard, Visa and many more)
-- Alipay Cross-Border
+- Alipay Cross-border
 - iDEAL
 - Purchase on account
 - Purchase on account with guaranteed payment via Wirecard
 - Masterpass
 - PayPal
-- SEPA direct debit
-- Online Bank Transfer. (Klarna)
+- SEPA Direct Debit
+- Sofort.
 - UnionPay International
 - Pre-payment
 
@@ -62,12 +62,10 @@ Our general Terms of Use can be found on [Github](https://github.com/wirecard/wo
 
 == Screenshots ==
 1. Configure Wirecard CreditCard
-2. Wirecard payment methods
+2. Wirecard Payment Methods
 3. Wirecard Payment Gateway Transactions
-4. Wirecard Transaction Detailview for Back-end Operations
+4. Wirecard Transaction Detailview for Post-Processing Operations
 
 == Changelog ==
-- Update paymentSDK
-- Update response handling for awaiting transactions
-- Sepa split into Sepa Direct Debit and Sepa Cretdit Transfer
-- Add state variable to transactions
+- Update translation slugs
+- Improve translation files

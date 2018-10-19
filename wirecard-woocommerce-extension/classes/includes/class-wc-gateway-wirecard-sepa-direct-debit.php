@@ -56,8 +56,8 @@ class WC_Gateway_Wirecard_Sepa_Direct_Debit extends WC_Wirecard_Payment_Gateway 
 		$this->type               = 'sepadirectdebit';
 		$this->id                 = 'wirecard_ee_sepadirectdebit';
 		$this->icon               = WIRECARD_EXTENSION_URL . 'assets/images/sepa.png';
-		$this->method_title       = __( 'Wirecard SEPA Direct Debit', 'wooocommerce-gateway-wirecard' );
-		$this->method_name        = __( 'SEPA Direct Debit', 'wooocommerce-gateway-wirecard' );
+		$this->method_title       = __( 'Wirecard SEPA Direct Debit', 'wirecard-woocommerce-extension' );
+		$this->method_name        = __( 'SEPA Direct Debit', 'wirecard-woocommerce-extension' );
 		$this->method_description = __( 'SEPA Direct Debit transactions via Wirecard Payment Processing Gateway', 'wirecard-woocommerce-extension' );
 		$this->has_fields         = true;
 
@@ -261,22 +261,22 @@ class WC_Gateway_Wirecard_Sepa_Direct_Debit extends WC_Wirecard_Payment_Gateway 
 			<div id="dialog" title="SEPA"></div>
 			<input type="hidden" name="sepa_nonce" value="' . wp_create_nonce() . '" />
 			<p class="form-row form-row-wide validate-required">
-				<label for="sepa_firstname">' . __( 'First name', 'wooocommerce-gateway-wirecard' ) . '</label>
+				<label for="sepa_firstname">' . __( 'First name', 'wirecard-woocommerce-extension' ) . '</label>
 				<input id="sepa_firstname" class="input-text wc-sepa-input" type="text" name="sepa_firstname">
 			</p>
 			<p class="form-row form-row-wide validate-required">
-				<label for="sepa_lastname">' . __( 'Last name', 'wooocommerce-gateway-wirecard' ) . '</label>
+				<label for="sepa_lastname">' . __( 'Last name', 'wirecard-woocommerce-extension' ) . '</label>
 				<input id="sepa_lastname" class="input-text wc-sepa-input" type="text" name="sepa_lastname">
 			</p>
 			<p class="form-row form-row-wide validate-required">
-				<label for="sepa_iban">' . __( 'IBAN', 'wooocommerce-gateway-wirecard' ) . '</label>
+				<label for="sepa_iban">' . __( 'IBAN', 'wirecard-woocommerce-extension' ) . '</label>
 				<input id="sepa_iban" class="input-text wc-sepa-input" type="text" name="sepa_iban">
 			</p>';
 
 		if ( $this->get_option( 'enable_bic' ) == 'yes' ) {
 			$html .= '			
 			<p class="form-row form-row-wide validate-required">
-				<label for="sepa_bic">' . __( 'BIC', 'wooocommerce-gateway-wirecard' ) . '</label>
+				<label for="sepa_bic">' . __( 'BIC', 'wirecard-woocommerce-extension' ) . '</label>
 				<input id="sepa_bic" class="input-text wc-sepa-input" type="text" name="sepa_bic">
 			</p>';
 		}

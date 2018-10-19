@@ -58,8 +58,8 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 		$this->type               = 'creditcard';
 		$this->id                 = 'wirecard_ee_creditcard';
 		$this->icon               = WIRECARD_EXTENSION_URL . 'assets/images/creditcard.png';
-		$this->method_title       = __( 'Wirecard Credit Card', 'wooocommerce-gateway-wirecard' );
-		$this->method_name        = __( 'Credit Card', 'wooocommerce-gateway-wirecard' );
+		$this->method_title       = __( 'Wirecard Credit Card', 'wirecard-woocommerce-extension' );
+		$this->method_name        = __( 'Credit Card', 'wirecard-woocommerce-extension' );
 		$this->method_description = __( 'Credit Card transactions via Wirecard Payment Processing Gateway', 'wirecard-woocommerce-extension' );
 		$this->has_fields         = true;
 		$this->vault              = new Credit_Card_Vault();
@@ -156,7 +156,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 			'base_url'                    => array(
 				'title'       => __( 'Base URL', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
-				'description' => __( 'The Wirecard base URL. (e.g. https://api.wirecard.com)', 'woocomerce-gateway-wirecard' ),
+				'description' => __( 'The Wirecard base URL. (e.g. https://api.wirecard.com)', 'wirecard-woocommerce-extension' ),
 				'default'     => 'https://api-test.wirecard.com',
 			),
 			'http_user'                   => array(
@@ -421,7 +421,9 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 		try {
 			$supported_lang = json_decode( file_get_contents( $this->get_option( 'base_url' ) . '/engine/includes/i18n/languages/hpplanguages.json' ) );
 			if ( key_exists( substr( get_locale(), 0, 2 ), $supported_lang ) ) {
-				$lang = substr( get_locale(), 0, 2 );
+				$lang = substr( get_locale(), 0, strlen( $supported_lang ) );
+			} elseif ( key_exists( get_locale(), $supported_lang ) ) {
+				$lang = get_locale();
 			}
 		} catch ( Exception $e ) {
 			wp_send_json_error( $e->getMessage() );

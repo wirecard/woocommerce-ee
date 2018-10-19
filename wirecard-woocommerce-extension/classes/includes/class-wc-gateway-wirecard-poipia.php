@@ -58,8 +58,8 @@ class WC_Gateway_Wirecard_Poipia extends WC_Wirecard_Payment_Gateway {
 		$this->type               = 'wiretransfer';
 		$this->id                 = 'wirecard_ee_poipia';
 		$this->icon               = WIRECARD_EXTENSION_URL . 'assets/images/poipia.png';
-		$this->method_title       = __( 'Wirecard Payment on Invoice / Payment in Advance', 'wooocommerce-gateway-wirecard' );
-		$this->method_name        = __( 'Payment on Invoice / Payment in Advance', 'wooocommerce-gateway-wirecard' );
+		$this->method_title       = __( 'Wirecard Payment on Invoice / Payment in Advance', 'wirecard-woocommerce-extension' );
+		$this->method_name        = __( 'Payment on Invoice / Payment in Advance', 'wirecard-woocommerce-extension' );
 		$this->method_description = __( 'Payment on Invoice / Payment in Advance transactions via Wirecard Payment Processing Gateway', 'wirecard-woocommerce-extension' );
 
 		$this->supports       = array(
@@ -261,7 +261,7 @@ class WC_Gateway_Wirecard_Poipia extends WC_Wirecard_Payment_Gateway {
 			$result      .= __( 'Please transfer the amount using the following data:', 'wirecard-woocommerce-extension' );
 			$result      .= '</th></tr></thead>';
 			$result      .= '<tr><td>' . __( 'Amount', 'wirecard-woocommerce-extension' ) . '</td><td>' . $order->get_total() . '</td></tr>';
-			$result      .= '<tr><td>' . __( 'IBAN', 'wooocommerce-gateway-wirecard' ) . '</td><td>' . $iban . '</td></tr>';
+			$result      .= '<tr><td>' . __( 'IBAN', 'wirecard-woocommerce-extension' ) . '</td><td>' . $iban . '</td></tr>';
 			$result      .= '<tr><td>' . __( 'BIC', 'wirecard-woocommerce-extension' ) . '</td><td>' . $bic . '</td></tr>';
 			$result      .= '<tr><td>' . __( 'Provider transaction reference id', 'wirecard-woocommerce-extension' ) . '</td><td>' . $reference_id . '</td></tr>';
 			echo $result;
