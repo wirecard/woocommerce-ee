@@ -387,9 +387,7 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 		if ( parent::is_available() ) {
 			global $woocommerce;
 			$customer = $woocommerce->customer;
-
-			$cart = new WC_Cart();
-			$cart->get_cart_from_session();
+			$cart     = $woocommerce->cart;
 
 			if ( ! in_array( get_woocommerce_currency(), $this->get_option( 'allowed_currencies' ) ) ||
 				! $this->validate_cart_amounts( floatval( $cart->get_total( 'total' ) ) ) ||
