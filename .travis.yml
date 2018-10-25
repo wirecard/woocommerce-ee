@@ -28,13 +28,17 @@ install:
 
 script:
   - composer test-coverage
-  - $PHPCS_DIR/bin/phpcs -p --ignore=*/Test/*,*/vendor/* . --standard=WordPress-Core
+  - $PHPCS_DIR/bin/phpcs -p --ignore=*/Test/*,*/vendor/*,*/.bin/* . --standard=WordPress-Core
 
 after_script:
   - travis_retry composer upload-coverage
   - bash .bin/generate-tag.sh
 
 before_deploy:
+  - export REPO_NAME=`echo $TRAVIS_REPO_SLUG | awk -F'/' '{print $2}'`
+  - export RELEASE_NOTES=$(composer make-release-notes)
+  - bash .bin/generate-wiki-notes.sh
+  - bash .bin/generate-readme-badge.sh
   - bash .bin/generate-release-package.sh $TRAVIS_TAG
 
 deploy:
@@ -42,9 +46,10 @@ deploy:
   api_key:
     secure: pL51FT1uFo4QfBg7kCIu843uAkf1EYuiWLevkfYsgTMLMaRoR+VcaIfCk8SmUm8JKzGHdaQFIlS8MFpxZRxNhl5nNkes6+SEyGpoC7OV8KO9y/1nxKyTXL5IOo1/ri77eV9aJt13JOl9wEEMpTDiejSJCJZN6P7jzBdo00usgmKQanZsEjMzwg0I59Kbanlj30NwLHUt3Nrdp5gyP41EJR/w826zCkjECVoAC1UFzfhd2g4l5cNDuzdpqgcXi89+ABkKZVG4f4HZhGsQG0APXdJn9jSBCc28Kgq1ubjAwxZGNmJAYOMYgVxQ9tmarZrQ67T/OHToq2lssPeX7XypV/L1YwAhYbC/I5Z06Q8UyGTd2gEZUM+8htPdpJPCyuSlzpasKfH9AJ12JjbspwtPd1CPakpU1VmVDwXhkBV/Zm8lfy8BQXY0KP6A09KJ5hklqky45xJZtlWRqAzWOniIhfo8GT2OLC8215Oc4X7LCIWMreJI8Dt4eradSK6iEA9sRjDVq3iZjNsrCD36h+nXUFnOiQwYQ0y4Hu6z/ZN1kKOKI4gDxWPnnjYnE9kJurAZ00WLMkMMrSzAEZyDj2fIecPTisK6Uo2PTxqU31Jd6VaGTvm0gFoZ8Hi5Z4hRYrskbDKvEtuqj9gtSE12yc9G5qJsjfrF/dZlrco8olSWlRk=
   file: woocommerce-wirecard-ee.zip
+  body: "${RELEASE_NOTES}"
   skip_cleanup: true
   on:
-    repo: wirecard/woocommerce-ee
+    repo: ${TRAVIS_REPO_SLUG}
     tags: true
 
 notifications:

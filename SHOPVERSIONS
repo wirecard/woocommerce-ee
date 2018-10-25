@@ -1,0 +1,14 @@
+[
+  {
+    "release": "1.2.0",
+    "shopsystem": "WooCommerce",
+    "tested": "3.4.5",
+    "compatibility": "3.3.4",
+    "changelog": [
+      "Update paymentSDK",
+      "Update response handling for awaiting transactions",
+      "SEPA split into SEPA Direct Debit and SEPA Credit Transfer",
+      "Add state variable to transactions"
+    ]
+  }
+]

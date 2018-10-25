@@ -7,4 +7,5 @@
 	<!-- Paths to check -->
 	<file>.</file>
 	<exclude-pattern>./vendor/*</exclude-pattern>
+	<exclude-pattern>./.bin/*</exclude-pattern>
 </ruleset>
