@@ -2,7 +2,7 @@
 
 if [[ $TRAVIS_BRANCH == 'master' ]]; then
     if [[ $TRAVIS_PULL_REQUEST == 'false' ]]; then
-        VERSION=`cat SHOPVERSIONS | jq -r '.release'`
+        VERSION=`cat SHOPVERSIONS | jq -r '.[0] | .release'`
         STATUS=`curl -s -o /dev/null -w "%{http_code}" -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/${TRAVIS_REPO_SLUG}/git/refs/tags/${VERSION}`
 
         if [[ ${STATUS} == "200" ]] ; then
