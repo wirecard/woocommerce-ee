@@ -2,8 +2,8 @@
 
 if [[ $TRAVIS_BRANCH == 'master' ]]; then
     if [[ $TRAVIS_PULL_REQUEST == 'false' ]]; then
-        VERSION=`cat VERSION`
-        STATUS=`curl -s -o /dev/null -w "%{http_code}" -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/wirecard/woocommerce-ee/git/refs/tags/${VERSION}`
+        VERSION=`cat SHOPVERSION | jq -r '.release'`
+        STATUS=`curl -s -o /dev/null -w "%{http_code}" -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/${TRAVIS_REPO_SLUG}/git/refs/tags/${VERSION}`
 
         if [[ ${STATUS} == "200" ]] ; then
             echo "Tag is up to date with version."
@@ -19,6 +19,6 @@ if [[ $TRAVIS_BRANCH == 'master' ]]; then
         git config --global user.email "wirecard@travis-ci.org"
 
         git tag -a ${VERSION} -m "Pre-release version"
-        git push --quiet https://$GITHUB_TOKEN@github.com/wirecard/woocommerce-ee $VERSION > /dev/null 2>&1
+        git push --quiet https://$GITHUB_TOKEN@github.com/$TRAVIS_REPO_SLUG $VERSION > /dev/null 2>&1
     fi
 fi
