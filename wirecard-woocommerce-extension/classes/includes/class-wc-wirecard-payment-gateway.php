@@ -719,7 +719,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 *
 	 * @param WC_Order $order
 	 *
-	 * @since 1.2.1
+	 * @since 1.3.0
 	 */
 	private function payment_on_hold( $order ) {
 		if ( ! $order->is_paid() && ( 'authorization' != $order->get_status() ) ) {
