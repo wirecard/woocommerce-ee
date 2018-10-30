@@ -190,6 +190,8 @@ class Wirecard_Transaction_Factory {
 					$requested_amount
 				)
 			);
+			// Reduce stock after successful transaction creation to avoid duplicated reduction
+			wc_reduce_stock_levels( $order->get_id() );
 		}
 
 		return $wpdb->insert_id;
