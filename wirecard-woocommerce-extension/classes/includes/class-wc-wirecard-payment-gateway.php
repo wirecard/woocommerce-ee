@@ -210,9 +210,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 				wc_add_notice( __( 'An error occurred during the payment process. Please try again.', 'wirecard-woocommerce-extension' ), 'error' );
 				$redirect_url = $order->get_cancel_endpoint();
 			} else {
-				if ( ! $order->is_paid() && ( 'authorization' != $order->get_status() ) ) {
-					$order->update_status( 'on-hold', __( 'Awaiting payment from Wirecard', 'wirecard-woocommerce-extension' ) );
-				}
+				$this->payment_on_hold( $order );
 				if ( is_array( $response ) ) {
 					foreach ( $response as $key => $value ) {
 						add_post_meta( $order->get_id(), $key, $value );
@@ -579,8 +577,6 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 *
 	 * @param int $order_id
 	 *
-	 * @return array
-	 *
 	 * @since 1.1.0
 	 */
 	public function process_payment( $order_id ) {
@@ -716,5 +712,18 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 		$custom_fields->add( new CustomField( 'pluginVersion', 'woocommerce-ee v' . WIRECARD_EXTENSION_VERSION ) );
 
 		return $custom_fields;
+	}
+
+	/**
+	 * Update order status for awaiting payments
+	 *
+	 * @param WC_Order $order
+	 *
+	 * @since 1.2.1
+	 */
+	private function payment_on_hold( $order ) {
+		if ( ! $order->is_paid() && ( 'authorization' != $order->get_status() ) ) {
+			$order->update_status( 'on-hold', __( 'Awaiting payment from Wirecard', 'wirecard-woocommerce-extension' ) );
+		}
 	}
 }

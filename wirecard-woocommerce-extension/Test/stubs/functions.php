@@ -144,3 +144,7 @@ function wp_verify_nonce() {
 function wp_create_nonce() {
 	return 'nonce';
 }
+
+function wc_reduce_stock_levels( $order ) {
+	return $order;
+}
