@@ -76,6 +76,15 @@ class Wirecard_Transaction_Factory {
 	private $transaction_handler;
 
 	/**
+	 * Transactiontypes for stock reduction
+	 *
+	 * @since  1.3.1
+	 * @access private
+	 * @var array
+	 */
+	private $stock_reduction_types;
+
+	/**
 	 * Wirecard_Transaction_Factory constructor.
 	 *
 	 * @since 1.0.0
@@ -83,9 +92,10 @@ class Wirecard_Transaction_Factory {
 	public function __construct() {
 		global $wpdb;
 
-		$this->transaction_handler = new Wirecard_Transaction_Handler();
-		$this->table_name          = $wpdb->base_prefix . 'wirecard_payment_gateway_tx';
-		$this->fields_list         = array(
+		$this->transaction_handler   = new Wirecard_Transaction_Handler();
+		$this->table_name            = $wpdb->base_prefix . 'wirecard_payment_gateway_tx';
+		$this->stock_reduction_types = array( 'authorization', 'purchase', 'debit' );
+		$this->fields_list           = array(
 			'tx_id'                 => array(
 				'title' => __( 'Transaction', 'wirecard-woocommerce-extension' ),
 			),
@@ -190,8 +200,9 @@ class Wirecard_Transaction_Factory {
 					$requested_amount
 				)
 			);
-			// Do not reduce stock for check-payer-response
-			if ( 'check-payer-response' != $response->getTransactionType() ) {
+			// Do not reduce stock for follow-up transactions
+			if ( in_array( $response->getTransactionType(), $this->stock_reduction_types ) &&
+				! $this->active_germanized() ) {
 				// Reduce stock after successful transaction creation to avoid duplicated reduction
 				wc_reduce_stock_levels( $order->get_id() );
 			}
@@ -499,5 +510,22 @@ class Wirecard_Transaction_Factory {
 			'response'              => wp_json_encode( $response->getData() ),
 			'transaction_link'      => $transaction_link,
 		);
+	}
+
+	/**
+	 * Returns true if WooCommerce Germanized exists and is activated
+	 *
+	 * @return bool
+	 *
+	 * @since 1.3.1
+	 */
+	private function active_germanized() {
+		if ( ! class_exists( 'WooCommerce_Germanized' ) ) {
+			return false;
+		}
+		if ( is_plugin_active( 'woocommerce-germanized/woocommerce-germanized.php' ) ) {
+			return true;
+		}
+		return false;
 	}
 }
