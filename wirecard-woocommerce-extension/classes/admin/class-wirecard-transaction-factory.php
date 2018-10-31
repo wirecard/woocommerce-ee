@@ -92,9 +92,10 @@ class Wirecard_Transaction_Factory {
 	public function __construct() {
 		global $wpdb;
 
-		$this->transaction_handler = new Wirecard_Transaction_Handler();
-		$this->table_name          = $wpdb->base_prefix . 'wirecard_payment_gateway_tx';
-		$this->fields_list         = array(
+		$this->transaction_handler   = new Wirecard_Transaction_Handler();
+		$this->table_name            = $wpdb->base_prefix . 'wirecard_payment_gateway_tx';
+		$this->stock_reduction_types = array( 'authorization', 'purchase', 'debit' );
+		$this->fields_list           = array(
 			'tx_id'                 => array(
 				'title' => __( 'Transaction', 'wirecard-woocommerce-extension' ),
 			),
@@ -123,7 +124,6 @@ class Wirecard_Transaction_Factory {
 				'title' => __( 'Currency', 'wirecard-woocommerce-extension' ),
 			),
 		);
-		$this->stock_reduction_types = array( 'authorization', 'purchase', 'debit' );
 	}
 
 	/**
@@ -202,7 +202,7 @@ class Wirecard_Transaction_Factory {
 			);
 			// Do not reduce stock for follow-up transactions
 			if ( in_array( $response->getTransactionType(), $this->stock_reduction_types ) &&
-				!$this->active_germanized() ) {
+				! $this->active_germanized() ) {
 				// Reduce stock after successful transaction creation to avoid duplicated reduction
 				wc_reduce_stock_levels( $order->get_id() );
 			}

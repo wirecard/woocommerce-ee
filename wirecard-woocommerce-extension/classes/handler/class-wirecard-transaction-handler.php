@@ -149,7 +149,7 @@ class Wirecard_Transaction_Handler extends Wirecard_Handler {
 	 * @since 1.3.1
 	 */
 	private function restock_returned_items( $order_id ) {
-		$order = wc_get_order( $order_id );
+		$order      = wc_get_order( $order_id );
 		$line_items = $order->get_items();
 
 		foreach ( $line_items as $item_id => $item ) {
@@ -157,6 +157,7 @@ class Wirecard_Transaction_Handler extends Wirecard_Handler {
 			if ( $product && $product->managing_stock() ) {
 				$old_stock = $product->get_stock_quantity();
 				$new_stock = wc_update_product_stock( $product, $item->get_quantity(), 'increase' );
+				/* translators: 1: item name 2: old stock quantity 3: new stock quantity */
 				$order->add_order_note( sprintf( __( 'Item #%1$s stock increased from %2$s to %3$s.', 'woocommerce' ), $product->get_id(), $old_stock, $new_stock ) );
 			}
 		}
