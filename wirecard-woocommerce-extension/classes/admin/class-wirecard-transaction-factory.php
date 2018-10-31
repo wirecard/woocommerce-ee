@@ -76,6 +76,15 @@ class Wirecard_Transaction_Factory {
 	private $transaction_handler;
 
 	/**
+	 * Transactiontypes for stock reduction
+	 *
+	 * @since  1.3.1
+	 * @access private
+	 * @var array
+	 */
+	private $stock_reduction_types;
+
+	/**
 	 * Wirecard_Transaction_Factory constructor.
 	 *
 	 * @since 1.0.0
@@ -114,6 +123,7 @@ class Wirecard_Transaction_Factory {
 				'title' => __( 'Currency', 'wirecard-woocommerce-extension' ),
 			),
 		);
+		$this->stock_reduction_types = array( 'authorization', 'purchase', 'debit' );
 	}
 
 	/**
@@ -190,8 +200,9 @@ class Wirecard_Transaction_Factory {
 					$requested_amount
 				)
 			);
-			// Do not reduce stock for check-payer-response
-			if ( 'check-payer-response' != $response->getTransactionType() ) {
+			// Do not reduce stock for follow-up transactions
+			if ( in_array( $response->getTransactionType(), $this->stock_reduction_types ) &&
+				! is_plugin_active( 'woocommerce-germanized/woocommerce-germanized.php' ) ) {
 				// Reduce stock after successful transaction creation to avoid duplicated reduction
 				wc_reduce_stock_levels( $order->get_id() );
 			}
