@@ -211,10 +211,11 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 				$redirect_url = $order->get_cancel_endpoint();
 			} else {
 				$this->payment_on_hold( $order );
-				if ( is_array( $response ) ) {
-					foreach ( $response as $key => $value ) {
-						add_post_meta( $order->get_id(), $key, $value );
-					}
+				if ( 'wiretransfer' == $response->getPaymentMethod() ) {
+					$response_data = $response->getData();
+					add_post_meta( $order->get_id(), 'pia-iban', $response_data['merchant-bank-account.0.iban']);
+					add_post_meta( $order->get_id(), 'pia-bic', $response_data['merchant-bank-account.0.bic']);
+					add_post_meta( $order->get_id(), 'pia-reference-id', $response_data['provider-transaction-reference-id']);
 				}
 				if ( ! $transaction_factory->get_transaction( $response->getTransactionId() ) ) {
 					$this->update_payment_transaction( $order, $response, 'awaiting', $payment_method );

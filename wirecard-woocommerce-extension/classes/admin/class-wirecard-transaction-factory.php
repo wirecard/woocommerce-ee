@@ -202,7 +202,7 @@ class Wirecard_Transaction_Factory {
 			);
 			// Do not reduce stock for follow-up transactions
 			if ( in_array( $response->getTransactionType(), $this->stock_reduction_types ) &&
-				! is_plugin_active( 'woocommerce-germanized/woocommerce-germanized.php' ) ) {
+				!$this->active_germanized() ) {
 				// Reduce stock after successful transaction creation to avoid duplicated reduction
 				wc_reduce_stock_levels( $order->get_id() );
 			}
@@ -510,5 +510,22 @@ class Wirecard_Transaction_Factory {
 			'response'              => wp_json_encode( $response->getData() ),
 			'transaction_link'      => $transaction_link,
 		);
+	}
+
+	/**
+	 * Returns true if WooCommerce Germanized exists and is activated
+	 *
+	 * @return bool
+	 *
+	 * @since 1.3.1
+	 */
+	private function active_germanized() {
+		if ( ! class_exists( 'WooCommerce_Germanized' ) ) {
+			return false;
+		}
+		if ( is_plugin_active( 'woocommerce-germanized/woocommerce-germanized.php' ) ) {
+			return true;
+		}
+		return false;
 	}
 }
