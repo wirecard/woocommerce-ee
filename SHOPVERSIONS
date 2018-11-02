@@ -1,5 +1,14 @@
 [
   {
+    "release": "1.3.1",
+    "shopsystem": "WooCommerce",
+    "tested": "3.5.0",
+    "compatibility": "3.3.4",
+    "changelog": [
+      "Remove stock reduction for follow-up operations"
+    ]
+  },
+  {
     "release": "1.3.0",
     "shopsystem": "WooCommerce",
     "tested": "3.5.0",
