@@ -210,7 +210,6 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 				wc_add_notice( __( 'An error occurred during the payment process. Please try again.', 'wirecard-woocommerce-extension' ), 'error' );
 				$redirect_url = $order->get_cancel_endpoint();
 			} else {
-				$this->payment_on_hold( $order );
 				if ( 'wiretransfer' == $response->getPaymentMethod() ) {
 					$response_data = $response->getData();
 					add_post_meta( $order->get_id(), 'pia-iban', $response_data['merchant-bank-account.0.iban'] );
@@ -218,6 +217,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 					add_post_meta( $order->get_id(), 'pia-reference-id', $response_data['provider-transaction-reference-id'] );
 				}
 				if ( ! $transaction_factory->get_transaction( $response->getTransactionId() ) ) {
+					$this->payment_on_hold( $order );
 					$this->update_payment_transaction( $order, $response, 'awaiting', $payment_method );
 				}
 				$redirect_url = $this->get_return_url( $order );
@@ -723,7 +723,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 * @since 1.3.0
 	 */
 	private function payment_on_hold( $order ) {
-		if ( ! $order->is_paid() && ( 'authorization' != $order->get_status() ) ) {
+		if ( ! $order->is_paid() && ( 'authorization' != $order->get_status() ) && ( 'processing' != $order->get_status() ) ) {
 			$order->update_status( 'on-hold', __( 'Awaiting payment from Wirecard', 'wirecard-woocommerce-extension' ) );
 		}
 	}

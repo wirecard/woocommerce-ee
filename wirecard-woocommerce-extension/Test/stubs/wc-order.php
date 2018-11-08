@@ -60,8 +60,8 @@ class WC_Order {
 	}
 
 	public function get_billing_state() {
-	    return 'OR';
-    }
+		return 'OR';
+	}
 
 	public function get_billing_city() {
 		return 'City';
@@ -114,8 +114,8 @@ class WC_Order {
 	}
 
 	public function get_shipping_state() {
-	    return 'OR';
-    }
+		return 'OR';
+	}
 
 	public function get_shipping_city() {
 		return 'City';
