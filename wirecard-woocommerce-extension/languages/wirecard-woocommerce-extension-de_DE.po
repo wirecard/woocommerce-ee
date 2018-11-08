@@ -896,7 +896,7 @@ msgstr "Ich bestätige, den oben stehenden Text verstanden und akzeptiert zu hab
 
 #: classes/helper/sepa-template.php:86
 msgid " my full name, address and date of birth."
-msgstr "oder Dritten auf Anforderung meinen Namen, Adresse und Geburtsdatum vollständig mitzuteilen."
+msgstr " oder Dritten auf Anforderung meinen Namen, Adresse und Geburtsdatum vollständig mitzuteilen."
 
 #: classes/helper/sepa-template.php:84
 msgid "I irrevocably agree that, in the event that the direct debit is not honored, or objection against the direct debit exists, my bank will disclose to the creditor "
@@ -908,11 +908,11 @@ msgstr "Hinweis: Ich kann innerhalb von acht Wochen, beginnend mit dem Belastung
 
 #: classes/helper/sepa-template.php:71
 msgid " to send instructions to my bank to collect one single direct debit from my account. At the same time I instruct my bank to debit my account in accordance with the instructions from the creditor "
-msgstr "einmalig eine Zahlung von meinem Konto mittels SEPA Lastschrift einzuziehen. Zugleich weise ich mein Kreditinstitut an, die von der Firma"
+msgstr " einmalig eine Zahlung von meinem Konto mittels SEPA Lastschrift einzuziehen. Zugleich weise ich mein Kreditinstitut an, die von der Firma "
 
 #: classes/helper/sepa-template.php:69
 msgid "I authorize the creditor "
-msgstr "Ich ermächtige die Firma"
+msgstr "Ich ermächtige die Firma "
 
 #: classes/helper/sepa-template.php:56
 msgid "BIC:"
