@@ -353,7 +353,10 @@ class WC_Gateway_Wirecard_Sepa_Direct_Debit extends WC_Wirecard_Payment_Gateway 
 	 * @return string
 	 */
 	private function generate_mandate_id( $order_id ) {
-		return $this->get_option( 'creditor_id' ) . '-' . $order_id . '-' . strtotime( date( 'Y-m-d H:i:s' ) );
+		$creditor_id = $this->get_option( 'creditor_id' );
+		$appendix    = '-' . $order_id . '-' . strtotime( date( 'Y-m-d H:i:s' ) );
+
+		return substr( $creditor_id, 0, 35 - strlen( $appendix ) ) . $appendix;
 	}
 
 	public function sepa_mandate() {
