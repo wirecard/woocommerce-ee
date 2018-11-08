@@ -75,7 +75,7 @@ class WC_Gateway_Wirecard_Additional_Information_Utest extends \PHPUnit_Framewor
 		$shipping->setFirstName( 'first-name' );
 		$address = new \Wirecard\PaymentSdk\Entity\Address( 'AT', 'City', 'street1' );
 		$address->setPostalCode( '1234' );
-        $address->setState( 'OR' );
+		$address->setState( 'OR' );
 		$shipping->setAddress( $address );
 		$expected->setShipping( $shipping );
 
