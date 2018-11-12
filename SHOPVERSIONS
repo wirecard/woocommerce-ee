@@ -1,5 +1,17 @@
 [
   {
+    "release": "1.3.2",
+    "shopsystem": "WooCommerce",
+    "tested": "3.5.1",
+    "compatibility": "3.3.4",
+    "changelog": [
+      "Update SEPA mandate confirmation text",
+      "Update handling of post-processing operations for Guaranteed Invoice",
+      "Enforce 35 character limit for SEPA mandate IDs",
+      "Prevent order state from changing from processing to awaiting"
+    ]
+  },
+  {
     "release": "1.3.1",
     "shopsystem": "WooCommerce",
     "tested": "3.5.0",
