@@ -913,7 +913,7 @@ msgstr "向我的銀行傳送指令，從我的帳戶直接扣除單筆款項。
 
 #: classes/helper/sepa-template.php:72
 msgid "sepa_text_2b"
-msgstr " "
+msgstr "。"
 
 #: classes/helper/sepa-template.php:69
 msgid "I authorize the creditor "

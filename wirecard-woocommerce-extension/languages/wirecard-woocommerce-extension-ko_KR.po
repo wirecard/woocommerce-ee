@@ -706,7 +706,7 @@ msgstr "참고: 본인은 권리의 일부로서, 은행 이용 약관에 따라
 
 #: classes/helper/sepa-template.php:72
 msgid "sepa_text_2b"
-msgstr " "
+msgstr "."
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:130
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:163

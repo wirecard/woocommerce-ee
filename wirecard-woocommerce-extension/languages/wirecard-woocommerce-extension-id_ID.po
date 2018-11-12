@@ -912,7 +912,7 @@ msgstr "Catatan: Sebagai bagian dari hak saya, saya berhak atas pengembalian dan
 
 #: classes/helper/sepa-template.php:72
 msgid "sepa_text_2b"
-msgstr " "
+msgstr "."
 
 #: classes/helper/sepa-template.php:71
 msgid " to send instructions to my bank to collect one single direct debit from my account. At the same time I instruct my bank to debit my account in accordance with the instructions from the creditor "

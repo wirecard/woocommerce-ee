@@ -1012,6 +1012,30 @@ msgstr ""
 msgid "https://www.wirecard.com/"
 msgstr ""
 
+#: classes/helper/sepa-template.php:104
+msgid "I have read and accepted the SEPA Direct Debit Mandate information."
+msgstr "I have read and accepted the SEPA Direct Debit Mandate information."
+
+#: classes/helper/sepa-template.php:86
+msgid " my full name, address and date of birth."
+msgstr "my full name, address and date of birth."
+
+#: classes/helper/sepa-template.php:84
+msgid "I irrevocably agree that, in the event that the direct debit is not honored, or objection against the direct debit exists, my bank will disclose to the creditor "
+msgstr "I irrevocably agree that, in the event that the direct debit is not honored, or objection against the direct debit exists, my bank will disclose to the creditor"
+
+#: classes/helper/sepa-template.php:78
+msgid "Note: As part of my rights, I am entitled to a refund under the terms and conditions of my agreement with my bank. A refund must be claimed within 8 weeks starting from the date on which my account was debited."
+msgstr "Note: As part of my rights, I am entitled to a refund under the terms and conditions of my agreement with my bank. A refund must be claimed within 8 weeks starting from the date on which my account was debited."
+
+#: classes/helper/sepa-template.php:71
+msgid " to send instructions to my bank to collect one single direct debit from my account. At the same time I instruct my bank to debit my account in accordance with the instructions from the creditor "
+msgstr "to send instructions to my bank to collect one single direct debit from my account. At the same time I instruct my bank to debit my account in accordance with the instructions from the creditor"
+
+#: classes/helper/sepa-template.php:69
+msgid "I authorize the creditor "
+msgstr "I authorize the creditor"
+
 #: classes/helper/sepa-template.php:72
 msgid "sepa_text_2b"
 msgstr "."

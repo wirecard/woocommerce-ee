@@ -909,7 +909,7 @@ msgstr "备注：作为我权力的一部分，根据我与银行之间协议的
 
 #: classes/helper/sepa-template.php:72
 msgid "sepa_text_2b"
-msgstr " "
+msgstr "。"
 
 #: classes/helper/sepa-template.php:71
 msgid " to send instructions to my bank to collect one single direct debit from my account. At the same time I instruct my bank to debit my account in accordance with the instructions from the creditor "
