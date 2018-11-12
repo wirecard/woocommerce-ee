@@ -69,7 +69,7 @@ $html .= '</td>
 	__( 'I authorize the creditor ', 'wirecard-woocommerce-extension' ) . ' ' .
 	$creditor_name . ' ' .
 	__( ' to send instructions to my bank to collect one single direct debit from my account. At the same time I instruct my bank to debit my account in accordance with the instructions from the creditor ', 'wirecard-woocommerce-extension' ) . ' ' .
-	$creditor_name . ' ' . __( 'auf mein Konto gezogenen SEPA Lastschrift einzulösen.', 'wirecard-woocommerce-extension' ) . ' ' . $additional_text . '
+	$creditor_name . ' ' . __( 'sepa_text_2b', 'wirecard-woocommerce-extension' ) . ' ' . $additional_text . '
 					</td>
 					<td width="10%">&nbsp;</td>
 				</tr>

@@ -908,7 +908,7 @@ msgid "Note: As part of my rights, I am entitled to a refund under the terms and
 msgstr "备注：作为我权力的一部分，根据我与银行之间协议的使用条款，我应当获得退款。该退款必须在我账户计入债务起的 8 周内索取。"
 
 #: classes/helper/sepa-template.php:72
-msgid "auf mein Konto gezogenen SEPA Lastschrift einzulösen."
+msgid "sepa_text_2b"
 msgstr " "
 
 #: classes/helper/sepa-template.php:71

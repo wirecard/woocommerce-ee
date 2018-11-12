@@ -911,7 +911,7 @@ msgid "Note: As part of my rights, I am entitled to a refund under the terms and
 msgstr "Catatan: Sebagai bagian dari hak saya, saya berhak atas pengembalian dana sesuai dengan syarat dan ketentuan perjanjian saya dengan bank. Pengembalian dana harus diklaim dalam waktu 8 minggu dimulai dari tanggal akun saya didebit."
 
 #: classes/helper/sepa-template.php:72
-msgid "auf mein Konto gezogenen SEPA Lastschrift einzulösen."
+msgid "sepa_text_2b"
 msgstr " "
 
 #: classes/helper/sepa-template.php:71

@@ -705,7 +705,7 @@ msgid "Note: As part of my rights, I am entitled to a refund under the terms and
 msgstr "참고: 본인은 권리의 일부로서, 은행 이용 약관에 따라 환불받을 권리가 있습니다. 환불은 본인 계좌에서 인출된 날로부터 8주 이내에 청구되어야 합니다."
 
 #: classes/helper/sepa-template.php:72
-msgid "auf mein Konto gezogenen SEPA Lastschrift einzulösen."
+msgid "sepa_text_2b"
 msgstr " "
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:130

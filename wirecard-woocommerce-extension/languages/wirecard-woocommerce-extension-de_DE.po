@@ -911,7 +911,7 @@ msgid " to send instructions to my bank to collect one single direct debit from 
 msgstr " einmalig eine Zahlung von meinem Konto mittels SEPA Lastschrift einzuziehen. Zugleich weise ich mein Kreditinstitut an, die von der Firma "
 
 #: classes/helper/sepa-template.php:72
-msgid "auf mein Konto gezogenen SEPA Lastschrift einzulösen."
+msgid "sepa_text_2b"
 msgstr "auf mein Konto gezogene SEPA Lastschrift einzulösen."
 
 #: classes/helper/sepa-template.php:69

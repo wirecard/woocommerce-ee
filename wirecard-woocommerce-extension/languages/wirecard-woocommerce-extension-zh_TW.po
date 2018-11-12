@@ -912,7 +912,7 @@ msgid " to send instructions to my bank to collect one single direct debit from 
 msgstr "向我的銀行傳送指令，從我的帳戶直接扣除單筆款項。同時，我指示我的銀行依照債權人的指示從我的賬戶中扣款"
 
 #: classes/helper/sepa-template.php:72
-msgid "auf mein Konto gezogenen SEPA Lastschrift einzulösen."
+msgid "sepa_text_2b"
 msgstr " "
 
 #: classes/helper/sepa-template.php:69

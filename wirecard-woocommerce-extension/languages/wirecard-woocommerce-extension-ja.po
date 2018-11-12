@@ -697,7 +697,7 @@ msgid " my full name, address and date of birth."
 msgstr "に対して私の氏名、住所、生年月日を開示することに同意します。"
 
 #: classes/helper/sepa-template.php:72
-msgid "auf mein Konto gezogenen SEPA Lastschrift einzulösen."
+msgid "sepa_text_2b"
 msgstr " "
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:130

@@ -1013,5 +1013,5 @@ msgid "https://www.wirecard.com/"
 msgstr ""
 
 #: classes/helper/sepa-template.php:72
-msgid "auf mein Konto gezogenen SEPA Lastschrift einzulösen."
+msgid "sepa_text_2b"
 msgstr "."
