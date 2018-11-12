@@ -35,12 +35,57 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay_Utest extends \PHPUnit_Fram
 
 	/** @var WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay */
 	private $payment;
+	private $basket;
+	private $mock_additional_helper;
 
 	public function setUp() {
 		global $woocommerce;
+
 		$woocommerce->cart     = new WC_Cart();
 		$woocommerce->customer = new WC_Customer();
-		$this->payment         = new WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay();
+
+		$this->payment = new WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay();
+
+		$version = new \Wirecard\PaymentSdk\Transaction\RatepayInvoiceTransaction();
+		$version->setParentTransactionId( 'transaction_id' );
+		$version->setAmount( new \Wirecard\PaymentSdk\Entity\Amount( 50, 'EUR' ) );
+
+		$this->basket = new \Wirecard\PaymentSdk\Entity\Basket();
+		$item         = new \Wirecard\PaymentSdk\Entity\Item(
+			'nemo',
+			new \Wirecard\PaymentSdk\Entity\Amount( 20, 'EUR' ),
+			1
+		);
+		$item->setDescription( 'short description' );
+		$item->setArticleNumber( '1' );
+		$item->setTaxRate( 0.0 );
+		$item->setTaxAmount( new \Wirecard\PaymentSdk\Entity\Amount( 10, 'EUR' ) );
+		$this->basket->add( $item );
+
+		$item = new \Wirecard\PaymentSdk\Entity\Item(
+			'Shipping',
+			new \Wirecard\PaymentSdk\Entity\Amount( 22, 'EUR' ),
+			1
+		);
+		$item->setDescription( 'Shipping' );
+		$item->setArticleNumber( 'Shipping' );
+		$item->setTaxRate( 10.0 );
+		$this->basket->add( $item );
+
+		$this->basket->setVersion( $version );
+
+		$this->mock_additional_helper = $this->getMockBuilder( Additional_Information::class )
+			->setMethods( [ 'create_basket_from_parent_transaction' ] )
+			->getMock();
+
+		$this->mock_additional_helper->method( 'create_basket_from_parent_transaction' )
+			->willReturn( $this->basket );
+
+		$reflection = new \ReflectionClass( $this->payment );
+		$property   = $reflection->getProperty( 'additional_helper' );
+
+		$property->setAccessible( true );
+		$property->setValue( $this->payment, $this->mock_additional_helper );
 	}
 
 	public function test_init_form_fields() {
@@ -64,6 +109,7 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay_Utest extends \PHPUnit_Fram
 		$expected = new \Wirecard\PaymentSdk\Transaction\RatepayInvoiceTransaction();
 		$expected->setParentTransactionId( 'transaction_id' );
 		$expected->setAmount( new \Wirecard\PaymentSdk\Entity\Amount( 50, 'EUR' ) );
+		$expected->setBasket( $this->basket );
 		$this->assertEquals( $expected, $this->payment->process_cancel( 12, 50 ) );
 	}
 
@@ -71,31 +117,7 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay_Utest extends \PHPUnit_Fram
 		$expected = new \Wirecard\PaymentSdk\Transaction\RatepayInvoiceTransaction();
 		$expected->setParentTransactionId( 'transaction_id' );
 		$expected->setAmount( new \Wirecard\PaymentSdk\Entity\Amount( 50, 'EUR' ) );
-
-		$basket = new \Wirecard\PaymentSdk\Entity\Basket();
-		$item   = new \Wirecard\PaymentSdk\Entity\Item(
-			'nemo',
-			new \Wirecard\PaymentSdk\Entity\Amount( 20, 'EUR' ),
-			1
-		);
-		$item->setDescription( 'short description' );
-		$item->setArticleNumber( '1' );
-		$item->setTaxRate( 0.0 );
-		$item->setTaxAmount( new \Wirecard\PaymentSdk\Entity\Amount( 10, 'EUR' ) );
-		$basket->add( $item );
-
-		$item = new \Wirecard\PaymentSdk\Entity\Item(
-			'Shipping',
-			new \Wirecard\PaymentSdk\Entity\Amount( 22, 'EUR' ),
-			1
-		);
-		$item->setDescription( 'Shipping' );
-		$item->setArticleNumber( 'Shipping' );
-		$item->setTaxRate( 10.0 );
-		$basket->add( $item );
-		$basket->setVersion( $expected );
-
-		$expected->setBasket( $basket );
+		$expected->setBasket( $this->basket );
 		$this->assertEquals( $expected, $this->payment->process_capture( 12, 50 ) );
 	}
 

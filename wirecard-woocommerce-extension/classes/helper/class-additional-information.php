@@ -314,4 +314,32 @@ class Additional_Information {
 
 		return $state;
 	}
+
+	/**
+	 * Creates a basket that is equivalent to the parent transaction
+	 *
+	 * @param WC_Order $order
+	 * @param \Wirecard\PaymentSdk\Config\Config $config
+	 * @param $payment_method
+	 * @return Basket
+	 * @since 1.3.2
+	 */
+	public function create_basket_from_parent_transaction( $order, $config, $payment_method ) {
+		$basket              = new Basket();
+		$transaction_service = new \Wirecard\PaymentSdk\TransactionService( $config );
+		$parent_transaction  = $transaction_service->getTransactionByTransactionId( $order->get_transaction_id(), $payment_method );
+
+		foreach ( $parent_transaction['payment']['order-items']['order-item'] as $item ) {
+			$basket_item_amount = new Amount( $item['amount']['value'], $item['amount']['currency'] );
+
+			$basket_item = new Item( $item['name'], $basket_item_amount, $item['quantity'] );
+			$basket_item->setDescription( $item['description'] );
+			$basket_item->setArticleNumber( $item['article-number'] );
+			$basket_item->setTaxRate( $item['tax-rate'] );
+
+			$basket->add( $basket_item );
+		}
+
+		return $basket;
+	}
 }

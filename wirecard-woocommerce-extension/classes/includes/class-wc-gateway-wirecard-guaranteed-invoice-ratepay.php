@@ -275,10 +275,19 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 	 * @since 1.1.0
 	 */
 	public function process_cancel( $order_id, $amount = null ) {
-		$order = wc_get_order( $order_id );
-
+		$order       = wc_get_order( $order_id );
+		$config      = $this->create_payment_config();
 		$transaction = new RatepayInvoiceTransaction();
+
+		$basket = $this->additional_helper->create_basket_from_parent_transaction(
+			$order,
+			$config,
+			RatepayInvoiceTransaction::NAME
+		);
+
 		$transaction->setParentTransactionId( $order->get_transaction_id() );
+		$transaction->setBasket( $basket );
+
 		if ( ! is_null( $amount ) ) {
 			$transaction->setAmount( new Amount( $amount, $order->get_currency() ) );
 		}
@@ -298,22 +307,18 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 	 */
 	public function process_capture( $order_id, $amount = null ) {
 		/** @var WC_Order $order */
-		$order = wc_get_order( $order_id );
-
-		$basket      = new Basket();
+		$order       = wc_get_order( $order_id );
 		$transaction = new RatepayInvoiceTransaction();
+		$config      = $this->create_payment_config();
+
+		$basket = $this->additional_helper->create_basket_from_parent_transaction(
+			$order,
+			$config,
+			RatepayInvoiceTransaction::NAME
+		);
 
 		$transaction->setParentTransactionId( $order->get_transaction_id() );
 		$transaction->setAmount( new Amount( $amount, $order->get_currency() ) );
-
-		$basket = $this->additional_helper->create_basket_from_order(
-			$order->get_items(),
-			$basket,
-			$transaction,
-			$order->get_shipping_total(),
-			$order->get_shipping_tax(),
-			$order->get_total()
-		);
 		$transaction->setBasket( $basket );
 
 		return $transaction;
@@ -332,24 +337,20 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 	 */
 	public function process_refund( $order_id, $amount = null, $reason = '' ) {
 		/** @var WC_Order $order */
-		$order = wc_get_order( $order_id );
+		$order  = wc_get_order( $order_id );
+		$config = $this->create_payment_config();
 
-		$basket            = new Basket();
 		$this->transaction = new RatepayInvoiceTransaction();
-
 		$this->transaction->setParentTransactionId( $order->get_transaction_id() );
 		$this->transaction->setAmount( new Amount( $amount, $order->get_currency() ) );
 
-		$basket = $this->additional_helper->create_basket_from_order(
-			$order->get_items(),
-			$basket,
-			$this->transaction,
-			$order->get_shipping_total(),
-			$order->get_shipping_tax(),
-			$order->get_total()
+		$basket = $this->additional_helper->create_basket_from_parent_transaction(
+			$order,
+			$config,
+			RatepayInvoiceTransaction::NAME
 		);
+
 		$this->transaction->setBasket( $basket );
-		$config = $this->create_payment_config();
 		return $this->execute_refund( $this->transaction, $config, $order );
 	}
 
