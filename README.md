@@ -5,7 +5,7 @@
 [![PHP v5.6](https://img.shields.io/badge/php-v5.6-yellow.svg)](http://www.php.net)
 [![PHP v7.0](https://img.shields.io/badge/php-v7.0-yellow.svg)](http://www.php.net)
 [![PHP v7.1](https://img.shields.io/badge/php-v7.1-yellow.svg)](http://www.php.net)
-[![WooCommerce v3.5.0](https://img.shields.io/badge/WooCommerce-v3.5.0-green.svg)](https://woocommerce.com/)
+[![WooCommerce v3.5.0](https://img.shields.io/badge/WooCommerce-v3.5.1-green.svg)](https://woocommerce.com/)
 [![WordPress](https://img.shields.io/badge/WordPress-v4.9.8-green.svg)](https://wordpress.org/)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/a3d65afeb5b94e919555dc86e2e6dc68)](https://www.codacy.com/app/Wirecard/woocommerce-ee?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=wirecard/woocommerce-ee&amp;utm_campaign=Badge_Grade)
 [![Codacy Badge](https://api.codacy.com/project/badge/Coverage/a3d65afeb5b94e919555dc86e2e6dc68)](https://www.codacy.com/app/Wirecard/woocommerce-ee?utm_source=github.com&utm_medium=referral&utm_content=wirecard/woocommerce-ee&utm_campaign=Badge_Coverage)
