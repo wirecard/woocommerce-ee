@@ -910,6 +910,10 @@ msgstr "Hinweis: Ich kann innerhalb von acht Wochen, beginnend mit dem Belastung
 msgid " to send instructions to my bank to collect one single direct debit from my account. At the same time I instruct my bank to debit my account in accordance with the instructions from the creditor "
 msgstr "einmalig eine Zahlung von meinem Konto mittels SEPA Lastschrift einzuziehen. Zugleich weise ich mein Kreditinstitut an, die von der Firma"
 
+#: classes/helper/sepa-template.php:72
+msgid "sepa_text_2b"
+msgstr "auf mein Konto gezogene SEPA Lastschrift einzulösen."
+
 #: classes/helper/sepa-template.php:69
 msgid "I authorize the creditor "
 msgstr "Ich ermächtige die Firma"

@@ -911,6 +911,10 @@ msgstr "附註：作為我的權利的一部分，我有權根據我與我的銀
 msgid " to send instructions to my bank to collect one single direct debit from my account. At the same time I instruct my bank to debit my account in accordance with the instructions from the creditor "
 msgstr "向我的銀行傳送指令，從我的帳戶直接扣除單筆款項。同時，我指示我的銀行依照債權人的指示從我的賬戶中扣款"
 
+#: classes/helper/sepa-template.php:72
+msgid "sepa_text_2b"
+msgstr "。"
+
 #: classes/helper/sepa-template.php:69
 msgid "I authorize the creditor "
 msgstr "我授權債權人"
@@ -997,11 +1001,6 @@ msgstr "無後端操作可用於此交易，該交易尚未經確認。"
 #: classes/admin/class-wirecard-transaction-factory.php:343
 msgid "No Back-end operations available for this transaction"
 msgstr "無後端操作可用於此交易"
-
-#: woocommerce-wirecard-payment-gateway.php:228
-#: woocommerce-wirecard-payment-gateway.php:229
-msgid "Wirecard Payment Gateway"
-msgstr "Wirecard 支付處理閘道"
 
 #: classes/admin/class-wirecard-transaction-factory.php:340
 #: woocommerce-wirecard-payment-gateway.php:252

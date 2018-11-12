@@ -704,6 +704,10 @@ msgstr "본인의 계좌에서 금액이 이체되지 않거나 계좌 이체에
 msgid "Note: As part of my rights, I am entitled to a refund under the terms and conditions of my agreement with my bank. A refund must be claimed within 8 weeks starting from the date on which my account was debited."
 msgstr "참고: 본인은 권리의 일부로서, 은행 이용 약관에 따라 환불받을 권리가 있습니다. 환불은 본인 계좌에서 인출된 날로부터 8주 이내에 청구되어야 합니다."
 
+#: classes/helper/sepa-template.php:72
+msgid "sepa_text_2b"
+msgstr "."
+
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:130
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:163
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:139
@@ -977,11 +981,6 @@ msgstr "이 트랜잭션에 대해 사용할 수 있는 백엔드 작업이 없�
 #: classes/admin/class-wirecard-transaction-factory.php:343
 msgid "No Back-end operations available for this transaction"
 msgstr "이 트랜잭션에 대해 사용할 수 있는 백엔드 작업이 없습니다."
-
-#: woocommerce-wirecard-payment-gateway.php:228
-#: woocommerce-wirecard-payment-gateway.php:229
-msgid "Wirecard Payment Gateway"
-msgstr "와이어카드 지불 프로세스 게이트웨이"
 
 #: classes/admin/class-wirecard-transaction-factory.php:340
 #: woocommerce-wirecard-payment-gateway.php:252
