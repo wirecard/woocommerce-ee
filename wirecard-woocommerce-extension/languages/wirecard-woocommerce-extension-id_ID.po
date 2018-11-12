@@ -910,6 +910,10 @@ msgstr "Saya menyatakan persetujuan yang tidak dapat dibatalkan bahwa jika debit
 msgid "Note: As part of my rights, I am entitled to a refund under the terms and conditions of my agreement with my bank. A refund must be claimed within 8 weeks starting from the date on which my account was debited."
 msgstr "Catatan: Sebagai bagian dari hak saya, saya berhak atas pengembalian dana sesuai dengan syarat dan ketentuan perjanjian saya dengan bank. Pengembalian dana harus diklaim dalam waktu 8 minggu dimulai dari tanggal akun saya didebit."
 
+#: classes/helper/sepa-template.php:72
+msgid "auf mein Konto gezogenen SEPA Lastschrift einzulösen."
+msgstr " "
+
 #: classes/helper/sepa-template.php:71
 msgid " to send instructions to my bank to collect one single direct debit from my account. At the same time I instruct my bank to debit my account in accordance with the instructions from the creditor "
 msgstr "untuk mengirimkan instruksi ke bank saya untuk mengumpulkan satu debit langsung dari akun saya. Pada waktu yang sama saya menginstruksikan bank untuk mendebit akun saya sesuai dengan instruksi dari kreditor"
@@ -1000,11 +1004,6 @@ msgstr "Tidak ada operasi pendukung untuk transaksi ini, transaksi belum dapat d
 #: classes/admin/class-wirecard-transaction-factory.php:343
 msgid "No Back-end operations available for this transaction"
 msgstr "Tidak ada operasi pendukung untuk transaksi ini"
-
-#: woocommerce-wirecard-payment-gateway.php:228
-#: woocommerce-wirecard-payment-gateway.php:229
-msgid "Wirecard Payment Gateway"
-msgstr "Payment Gateway Wirecard"
 
 #: classes/admin/class-wirecard-transaction-factory.php:340
 #: woocommerce-wirecard-payment-gateway.php:252

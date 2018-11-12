@@ -696,6 +696,10 @@ msgstr "私は、SEPAダイレクトデビットマンデート情報を読ん�
 msgid " my full name, address and date of birth."
 msgstr "に対して私の氏名、住所、生年月日を開示することに同意します。"
 
+#: classes/helper/sepa-template.php:72
+msgid "auf mein Konto gezogenen SEPA Lastschrift einzulösen."
+msgstr " "
+
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:130
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:163
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:139
@@ -978,10 +982,6 @@ msgstr "このトランザクションで利用可能なバックエンド操作
 msgid "No Back-end operations available for this transaction"
 msgstr "このトランザクションで利用可能なバックエンド操作がありません"
 
-#: woocommerce-wirecard-payment-gateway.php:228
-#: woocommerce-wirecard-payment-gateway.php:229
-msgid "Wirecard Payment Gateway"
-msgstr "Wirecard決済ゲートウェイ"
 
 #: classes/admin/class-wirecard-transaction-factory.php:340
 #: woocommerce-wirecard-payment-gateway.php:252
