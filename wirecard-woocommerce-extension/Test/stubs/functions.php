@@ -148,3 +148,7 @@ function wp_create_nonce() {
 function wc_reduce_stock_levels( $order ) {
 	return $order;
 }
+
+function wp_strip_all_tags( $string ) {
+	return $string;
+}
