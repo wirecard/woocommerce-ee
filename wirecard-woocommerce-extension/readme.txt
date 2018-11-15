@@ -67,7 +67,5 @@ Our general Terms of Use can be found on [Github](https://github.com/wirecard/wo
 4. Wirecard Transaction Detailview for Post-Processing Operations
 
 == Changelog ==
-- Update SEPA mandate confirmation text
-- Update handling of post-processing operations for Guaranteed Invoice
-- Enforce 35 character limit for SEPA mandate IDs
-- Prevent order state from changing from processing to awaiting
+- Update SEPA mandate closing of the popup
+- Strip HTML tags in product name and short descrition
