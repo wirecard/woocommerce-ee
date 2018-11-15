@@ -256,7 +256,7 @@ class Additional_Information {
 		$item_tax_rate          = $tax / $item_unit_gross_amount;
 
 		$article_nr  = $product->get_id();
-		$description = $product->get_short_description();
+		$description = wp_strip_all_tags( $product->get_short_description() );
 		$amount      = new Amount( number_format( $item_unit_gross_amount, wc_get_price_decimals() ), get_woocommerce_currency() );
 
 		$tax_rate = 0;
@@ -264,7 +264,7 @@ class Additional_Information {
 			$tax_rate = number_format( $item_tax_rate * 100, wc_get_price_decimals() );
 		}
 
-		$item = new Item( $product->get_name(), $amount, $quantity );
+		$item = new Item( wp_strip_all_tags( $product->get_name() ), $amount, $quantity );
 		$item->setDescription( $description );
 		$item->setArticleNumber( $article_nr );
 		$item->setTaxRate( floatval( number_format( $tax_rate, wc_get_price_decimals() ) ) );

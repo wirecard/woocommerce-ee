@@ -156,13 +156,7 @@ jQuery( document ).ajaxComplete(
 			checkout_form.on(
 				"checkout_place_order",
 				function() {
-					if ( $( "#payment_method_wirecard_ee_sepadirectdebit" ).is( ":checked" )) {
-						if (window.sepaplaceorderchecked) {
-							window.sepaplaceorderchecked = false;
-							return;
-						} else {
-							window.sepaplaceorderchecked = true;
-						}
+					if ( $( "#payment_method_wirecard_ee_sepadirectdebit" ).is( ":checked" ) ) {
 						if ( ! sepa_check ) {
 							if (validate_inputs() === false) {
 								return false;
