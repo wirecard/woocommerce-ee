@@ -128,7 +128,7 @@ function get_sepa_mandate_data() {
 
 jQuery( document ).ajaxComplete(
 	function() {
-			jQuery( document ).off().on(
+			jQuery( document ).off("checkout_error").on(
 				"checkout_error",
 				"body",
 				function () {
