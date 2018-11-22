@@ -225,11 +225,11 @@ class Additional_Information {
 		$item_unit_gross_amount = $total + $tax;
 
 		$article_nr  = $product->get_id();
-		$description = wp_strip_all_tags( str_replace( array( "\r\n", "\r", "\n" ), '', $product->get_short_description() ) );
+		$description = wp_strip_all_tags( html_entity_decode( $product->get_short_description() ), true );
 		$amount      = new Amount( number_format( $item_unit_gross_amount, wc_get_price_decimals() ), get_woocommerce_currency() );
 
 		$item = new Item(
-			wp_strip_all_tags( str_replace( array( "\r\n", "\r", "\n" ), '', $product->get_name() ) ),
+			wp_strip_all_tags( html_entity_decode( $product->get_name() ), true ),
 			$amount,
 			$quantity
 		);
