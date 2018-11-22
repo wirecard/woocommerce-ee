@@ -346,7 +346,7 @@ class Additional_Information {
 					$shipping['tax-rate']
 				);
 			} else {
-				return new WP_Error( 'error', __( 'You can only refund full shipping or none :D muhahahahaha.', 'wirecard-woocommerce-extension' ) );
+				return new WP_Error( 'error', __( 'You are only able to refund the whole shipping, partial shipping refunds are not possible.', 'wirecard-woocommerce-extension' ) );
 			}
 		}
 
