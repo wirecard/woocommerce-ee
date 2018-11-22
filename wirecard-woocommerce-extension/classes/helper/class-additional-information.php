@@ -70,7 +70,7 @@ class Additional_Information {
 		$basket = new Basket();
 		$basket->setVersion( $transaction );
 		//depending on the backend woocommerce_tax_based_on setting in WC (shipping, billing, shop) we get the tax rate
-		$tax_country = $this->getCorrectCountryForTaxRate();
+		$tax_country = $this->get_correct_country_for_tax_rate();
 		$sum         = 0;
 
 		foreach ( $cart->get_cart() as $cart_item_key => $cart_item ) {
@@ -83,7 +83,7 @@ class Additional_Information {
 				$cart_item['quantity'],
 				wc_get_price_excluding_tax( $product ),
 				( wc_get_price_including_tax( $product ) - wc_get_price_excluding_tax( $product ) ),
-				$this->getTaxRateFromTaxClassDependingOnCountry( $tax_country, $tax_class )
+				$this->get_tax_rate_from_tax_class_depending_on_country( $tax_country, $tax_class )
 			);
 			$sum      += number_format( wc_get_price_including_tax( $product ), wc_get_price_decimals() ) * $cart_item['quantity'];
 		}
@@ -91,7 +91,7 @@ class Additional_Information {
 		$shipping           = $cart->get_shipping_total();
 		$wc_tax             = new WC_Tax();
 		$shipping_tax_class = $wc_tax->get_shipping_tax_rates();
-		$shipping_tax_rate  = $this->getTaxRateFromTaxClassDependingOnCountry( $tax_country, $shipping_tax_class );
+		$shipping_tax_rate  = $this->get_tax_rate_from_tax_class_depending_on_country( $tax_country, $shipping_tax_class );
 		$sum               += $shipping + $cart->get_shipping_tax();
 
 		if ( $cart->get_total( 'total' ) - $sum > 0 ) {
@@ -307,7 +307,7 @@ class Additional_Information {
 				foreach ( $refund_basket as $refund_item ) {
 					if ( $refund_item['product']->get_id() == $item['article-number'] ) {
 						$items_total += $item['amount']['value'];
-						$basket       = $this->setItemFromResponse(
+						$basket       = $this->set_item_from_response(
 							$basket,
 							new Amount( $item['amount']['value'], $item['amount']['currency'] ),
 							$item['name'],
@@ -317,12 +317,12 @@ class Additional_Information {
 							$item['tax-rate']
 						);
 					}
-					if ( $item['name'] === 'Shipping' ) {
+					if ( 'Shipping' === $item['name'] ) {
 						$shipping = $item;
 					}
 				}
 			} else {
-				$basket = $this->setItemFromResponse(
+				$basket = $this->set_item_from_response(
 					$basket,
 					new Amount( $item['amount']['value'], $item['amount']['currency'] ),
 					$item['name'],
@@ -335,8 +335,8 @@ class Additional_Information {
 		}
 
 		if ( ! empty( $refund_basket ) && $refunding_amount - $items_total > 0 ) {
-			if ( $refunding_amount - $items_total - $shipping['amount']['value'] === 0 ) {
-				$basket = $this->setItemFromResponse(
+			if ( 0 === $refunding_amount - $items_total - $shipping['amount']['value'] ) {
+				$basket = $this->set_item_from_response(
 					$basket,
 					new Amount( $shipping['amount']['value'], $shipping['amount']['currency'] ),
 					$shipping['name'],
@@ -359,7 +359,7 @@ class Additional_Information {
 	 * @return string
 	 * @since 1.4.0
 	 */
-	private function getCorrectCountryForTaxRate() {
+	private function get_correct_country_for_tax_rate() {
 		$tax_setting = get_option( 'woocommerce_tax_based_on' );
 
 		switch ( $tax_setting ) {
@@ -382,7 +382,7 @@ class Additional_Information {
 	 * @return float
 	 * @since 1.4.0
 	 */
-	private function getTaxRateFromTaxClassDependingOnCountry( $country, $tax_classes ) {
+	private function get_tax_rate_from_tax_class_depending_on_country( $country, $tax_classes ) {
 		$wc_tax    = new WC_Tax();
 		$tax_rates = $wc_tax->find_rates(
 			array(
@@ -405,7 +405,7 @@ class Additional_Information {
 	 * @return Basket
 	 * @since 1.4.0
 	 */
-	private function setItemFromResponse( $basket, $amount, $name, $quantity, $description, $item_number, $tax_rate ) {
+	private function set_item_from_response( $basket, $amount, $name, $quantity, $description, $item_number, $tax_rate ) {
 		$basket_item = new Item( $name, $amount, $quantity );
 		$basket_item->setDescription( $description );
 		$basket_item->setArticleNumber( $item_number );
