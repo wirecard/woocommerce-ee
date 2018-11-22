@@ -332,13 +332,23 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 	 * @param string $reason
 	 *
 	 * @return bool|RatepayInvoiceTransaction|WP_Error
-	 *
 	 * @since 1.1.0
 	 */
 	public function process_refund( $order_id, $amount = null, $reason = '' ) {
 		/** @var WC_Order $order */
-		$order  = wc_get_order( $order_id );
-		$config = $this->create_payment_config();
+		$order         = wc_get_order( $order_id );
+		$refund_basket = [];
+		$config        = $this->create_payment_config();
+
+		if ($order->get_total() > $amount) {
+			$refund_items = json_decode( stripslashes( $_POST['line_item_qtys'] ) );
+			$order_items  = $order->get_items();
+
+			foreach ($refund_items as $item_id => $quantity) {
+				$refund_basket[$item_id]['product'] = $order_items[$item_id]->get_product();
+				$refund_basket[$item_id]['qty'] = $quantity;
+			}
+		}
 
 		$this->transaction = new RatepayInvoiceTransaction();
 		$this->transaction->setParentTransactionId( $order->get_transaction_id() );
@@ -347,8 +357,14 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 		$basket = $this->additional_helper->create_basket_from_parent_transaction(
 			$order,
 			$config,
-			RatepayInvoiceTransaction::NAME
+			RatepayInvoiceTransaction::NAME,
+			$refund_basket,
+			$amount
 		);
+
+		if (is_wp_error($basket)) {
+			return $basket;
+		}
 
 		$this->transaction->setBasket( $basket );
 		return $this->execute_refund( $this->transaction, $config, $order );
