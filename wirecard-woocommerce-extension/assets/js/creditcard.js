@@ -345,7 +345,7 @@ jQuery( document ).ajaxComplete(
 				getRequestData( renderForm, logCallback );
 			}
 
-			jQuery( document ).off().on(
+			jQuery( document ).off( "checkout_error" ).on(
 				"checkout_error",
 				"body",
 				function () {
