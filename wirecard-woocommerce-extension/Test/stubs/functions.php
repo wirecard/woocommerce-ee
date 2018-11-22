@@ -152,3 +152,15 @@ function wc_reduce_stock_levels( $order ) {
 function wp_strip_all_tags( $string ) {
 	return $string;
 }
+
+function get_option( $option ) {
+	return $option;
+}
+
+function apply_filters ( $string, $parameter, $option ) {
+	return $string;
+}
+
+function is_wp_error() {
+	return;
+}
