@@ -157,7 +157,7 @@ function get_option( $option ) {
 	return $option;
 }
 
-function apply_filters ( $string, $parameter, $option ) {
+function apply_filters( $string, $parameter, $option ) {
 	return $string;
 }
 
