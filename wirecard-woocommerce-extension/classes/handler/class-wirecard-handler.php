@@ -80,6 +80,7 @@ class Wirecard_Handler {
 			'alipay-xborder'        => new WC_Gateway_Wirecard_Alipay_Crossborder(),
 			'unionpayinternational' => new WC_Gateway_Wirecard_Unionpay_International(),
 			'masterpass'            => new WC_Gateway_Wirecard_Masterpass(),
+			'payolution-inv'        => new WC_Gateway_Wirecard_Payolution_Invoice(),
 		);
 
 		$this->logger = new Logger();

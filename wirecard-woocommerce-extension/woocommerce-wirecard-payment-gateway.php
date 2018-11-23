@@ -85,6 +85,7 @@ function wirecard_init_payment_gateway() {
 	require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php' );
 	require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-unionpay-international.php' );
 	require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-masterpass.php' );
+	require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-payolution-invoice.php' );
 	require_once( WIRECARD_EXTENSION_BASEDIR . 'vendor/autoload.php' );
 
 	add_filter( 'woocommerce_payment_gateways', 'wirecard_add_payment_gateway', 0 );
@@ -148,6 +149,7 @@ function wirecard_get_payments() {
 		'WC_Gateway_Wirecard_Sepa_Direct_Debit'          => new WC_Gateway_Wirecard_Sepa_Direct_Debit(),
 		'WC_Gateway_Wirecard_Sofort'                     => new WC_Gateway_Wirecard_Sofort(),
 		'WC_Gateway_Wirecard_Unionpay_International'     => new WC_Gateway_Wirecard_Unionpay_International(),
+		'WC_Gateway_Wirecard_Payolution_Invoice'         => new WC_Gateway_Wirecard_Payolution_Invoice(),
 	);
 }
 
