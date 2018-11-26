@@ -37,6 +37,9 @@ $wpdb = new WPDB();
 global $woocommerce;
 $woocommerce = new stdClass();
 
+global $wc_notices;
+$wc_notices = array();
+
 function __( $text, $domain = 'default' ) {
 	return $text;
 }
@@ -66,7 +69,11 @@ function is_ssl() {
 }
 
 function wc_add_notice( $message, $type ) {
-
+    global $wc_notices;
+    $wc_notices[] = array(
+        'message' => $message,
+        'type'    => $type
+    );
 }
 
 function get_bloginfo() {
@@ -151,4 +158,12 @@ function wc_reduce_stock_levels( $order ) {
 
 function wp_strip_all_tags( $string ) {
 	return $string;
+}
+
+function get_last_mocked_notice() {
+    global $wc_notices;
+    if (empty($wc_notices)) {
+        return null;
+    }
+    return $wc_notices[count( $wc_notices ) - 1]['message'];
 }
