@@ -321,7 +321,7 @@ class Additional_Information {
 						);
 					}
 				}
-			} elseif ( 0 === $refunding_amount )  {
+			} elseif ( 0 === $refunding_amount ) {
 				$basket = $this->set_item_from_response(
 					$basket,
 					new Amount( $item['amount']['value'], $item['amount']['currency'] ),
