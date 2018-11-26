@@ -303,10 +303,13 @@ class Additional_Information {
 		$shipping            = 0;
 
 		foreach ( $parent_transaction['payment']['order-items']['order-item'] as $item ) {
+			if ( 'Shipping' === $item['name'] ) {
+				$shipping = $item;
+			}
 			if ( ! empty( $refund_basket ) ) {
 				foreach ( $refund_basket as $refund_item ) {
 					if ( $refund_item['product']->get_id() == $item['article-number'] ) {
-						$items_total += $item['amount']['value'];
+						$items_total += $item['amount']['value'] * $refund_item['qty'];
 						$basket       = $this->set_item_from_response(
 							$basket,
 							new Amount( $item['amount']['value'], $item['amount']['currency'] ),
@@ -317,11 +320,8 @@ class Additional_Information {
 							$item['tax-rate']
 						);
 					}
-					if ( 'Shipping' === $item['name'] ) {
-						$shipping = $item;
-					}
 				}
-			} else {
+			} elseif ( $refunding_amount === 0 ) {
 				$basket = $this->set_item_from_response(
 					$basket,
 					new Amount( $item['amount']['value'], $item['amount']['currency'] ),
@@ -334,8 +334,8 @@ class Additional_Information {
 			}
 		}
 
-		if ( ! empty( $refund_basket ) && $refunding_amount - $items_total > 0 ) {
-			if ( 0 === $refunding_amount - $items_total - $shipping['amount']['value'] ) {
+		if ( ( ! empty( $refund_basket ) || $refunding_amount > 0 ) && $refunding_amount - $items_total > 0 ) {
+			if ( 0 == $refunding_amount - $items_total - $shipping['amount']['value'] ) {
 				$basket = $this->set_item_from_response(
 					$basket,
 					new Amount( $shipping['amount']['value'], $shipping['amount']['currency'] ),
@@ -349,7 +349,6 @@ class Additional_Information {
 				return new WP_Error( 'error', __( 'You can only refund the shipping fees in full, partial shipping fee refunds are not possible.', 'wirecard-woocommerce-extension' ) );
 			}
 		}
-
 		return $basket;
 	}
 

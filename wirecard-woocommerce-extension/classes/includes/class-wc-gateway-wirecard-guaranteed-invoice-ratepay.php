@@ -345,8 +345,10 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 			$order_items  = $order->get_items();
 
 			foreach ( $refund_items as $item_id => $quantity ) {
-				$refund_basket[ $item_id ]['product'] = $order_items[ $item_id ]->get_product();
-				$refund_basket[ $item_id ]['qty']     = $quantity;
+				if ( $quantity > 0 ) {
+					$refund_basket[ $item_id ]['product'] = $order_items[ $item_id ]->get_product();
+					$refund_basket[ $item_id ]['qty']     = $quantity;
+				}
 			}
 		}
 		$this->transaction = new RatepayInvoiceTransaction();
