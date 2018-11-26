@@ -1,4 +1,15 @@
 [
+{
+    "release": "1.4.0",
+    "shopsystem": "WooCommerce",
+    "tested": "3.5.1",
+    "compatibility": "3.3.4",
+    "changelog": [
+      "Update handling of setting taxes in basket",
+      "Update handling of partial refunds",
+      "Detecting and striping encoded html in requests"
+    ]
+  },
   {
     "release": "1.3.3",
     "shopsystem": "WooCommerce",
