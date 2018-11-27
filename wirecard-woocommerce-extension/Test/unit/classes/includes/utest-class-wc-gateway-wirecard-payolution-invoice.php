@@ -48,6 +48,18 @@ class  WC_Gateway_Wirecard_Payolution_Invoice_Utest extends PHPUnit_Framework_Te
         $this->assertFalse( $this->payment->validate_cart_amounts( $high_amount ) );
     }
 
+    public function test_minamount_itself_notallowed() {
+
+        $min_amount = $this->payment->get_option( 'min_amount' );
+        $this->assertFalse( $this->payment->validate_cart_amounts( $min_amount ) );
+
+    }
+
+    public function test_maxamount_itself_notallowed() {
+        $max_amount = $this->payment->get_option( 'max_amount' );
+        $this->assertFalse( $this->payment->validate_cart_amounts( $max_amount ) );
+    }
+
     public function test_amount_ok() {
 
         // prepare

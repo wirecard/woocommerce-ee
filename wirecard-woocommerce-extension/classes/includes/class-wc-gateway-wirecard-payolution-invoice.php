@@ -45,7 +45,7 @@ use Wirecard\PaymentSdk\Transaction\PayolutionInvoiceTransaction;
  *
  * @extends WC_Wirecard_Payment_Gateway
  *
- * @since   1.3.4
+ * @since   1.4.1
  */
 class WC_Gateway_Wirecard_Payolution_Invoice extends WC_Wirecard_Payment_Gateway {
 
@@ -85,7 +85,7 @@ class WC_Gateway_Wirecard_Payolution_Invoice extends WC_Wirecard_Payment_Gateway
     /**
      * Load form fields for configuration
      *
-     * @since 1.3.4
+     * @since 1.4.1
      */
     public function init_form_fields() {
 
@@ -233,7 +233,7 @@ class WC_Gateway_Wirecard_Payolution_Invoice extends WC_Wirecard_Payment_Gateway
      *
      * @return Config
      *
-     * @since 1.3.4
+     * @since 1.4.1
      */
     public function create_payment_config( $base_url = null, $http_user = null, $http_pass = null ) {
 
@@ -255,7 +255,7 @@ class WC_Gateway_Wirecard_Payolution_Invoice extends WC_Wirecard_Payment_Gateway
      *
      * @return bool
      *
-     * @since 1.3.4
+     * @since 1.4.1
      */
     public function is_available() {
 
@@ -285,7 +285,7 @@ class WC_Gateway_Wirecard_Payolution_Invoice extends WC_Wirecard_Payment_Gateway
      *
      * @return array|bool|void
      *
-     * @since 1.3.4
+     * @since 1.4.1
      */
     public function process_payment( $order_id ) {
 
@@ -318,7 +318,7 @@ class WC_Gateway_Wirecard_Payolution_Invoice extends WC_Wirecard_Payment_Gateway
      *
      * @return PayolutionInvoiceTransaction
      *
-     * @since 1.3.4
+     * @since 1.4.1
      */
     public function process_cancel( $order_id, $amount = null ) {
 
@@ -352,7 +352,7 @@ class WC_Gateway_Wirecard_Payolution_Invoice extends WC_Wirecard_Payment_Gateway
      *
      * @return PayolutionInvoiceTransaction
      *
-     * @since 1.0.0
+     * @since 1.4.1
      */
     public function process_capture( $order_id, $amount = null ) {
 
@@ -389,7 +389,7 @@ class WC_Gateway_Wirecard_Payolution_Invoice extends WC_Wirecard_Payment_Gateway
      *
      * @return bool|string|WP_Error
      *
-     * @since 1.3.4
+     * @since 1.4.1
      */
     public function process_refund( $order_id, $amount = null, $reason = '') {
 
@@ -418,7 +418,7 @@ class WC_Gateway_Wirecard_Payolution_Invoice extends WC_Wirecard_Payment_Gateway
     /**
      * Add additional fields for this payment method while perform checkout
      *
-     * @since 1.3.4
+     * @since 1.4.1
      */
     public function payment_fields() {
 
@@ -439,6 +439,8 @@ PAYMENT_FIELD;
      * @param $date_str
      *
      * @return bool
+     *
+     * @since 1.4.1
      */
     public function validate_date_of_birth( $date_str ) {
 
@@ -472,7 +474,7 @@ PAYMENT_FIELD;
      *
      * @return bool
      *
-     * @since 1.3.4
+     * @since 1.4.1
      */
     public function validate_cart_products( $cart ) {
 
@@ -493,14 +495,14 @@ PAYMENT_FIELD;
      *
      * @return bool
      *
-     * @since 1.3.4
+     * @since 1.4.1
      */
     public function validate_cart_amounts( $total ) {
 
         $min_allowed_amount = max( 0, floatval( $this->get_option( 'min_amount' ) ) );
         $max_allowed_amount = max( 0, floatval( $this->get_option( 'max_amount' ) ) );
 
-        if ( ( $total < $min_allowed_amount ) || ( $total > $max_allowed_amount ) ) {
+        if ( ( $total <= $min_allowed_amount ) || ( $total >= $max_allowed_amount ) ) {
             return false;
         }
 
@@ -516,7 +518,7 @@ PAYMENT_FIELD;
      *
      * @return bool
      *
-     * @since 1.3.4
+     * @since 1.4.1
      */
     public function validate_billing_shipping_address( $customer ) {
 
@@ -553,7 +555,7 @@ PAYMENT_FIELD;
      *
      * @return bool
      *
-     * @since 1.3.4
+     * @since 1.4.1
      */
     public function validate_countries( $customer ) {
 
