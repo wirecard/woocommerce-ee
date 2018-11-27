@@ -66,32 +66,39 @@ class Additional_Information {
 		global $woocommerce;
 
 		/** @var $cart WC_Cart */
-		$cart = $woocommerce->cart;
-
+		$cart   = $woocommerce->cart;
 		$basket = new Basket();
 		$basket->setVersion( $transaction );
+		//depending on the backend woocommerce_tax_based_on setting in WC (shipping, billing, shop) we get the tax rate
+		$tax_country = $this->get_correct_country_for_tax_rate();
+		$sum         = 0;
 
-		$sum = 0;
 		foreach ( $cart->get_cart() as $cart_item_key => $cart_item ) {
 			/** @var $product WC_Product */
-			$product = $cart_item['data'];
-			$basket  = $this->set_basket_item(
+			$product   = $cart_item['data'];
+			$tax_class = apply_filters( 'woocommerce_cart_item_tax', $product->get_tax_class(), $cart_item, $cart_item_key );
+			$basket    = $this->set_basket_item(
 				$basket,
 				$product,
 				$cart_item['quantity'],
 				wc_get_price_excluding_tax( $product ),
-				( wc_get_price_including_tax( $product ) - wc_get_price_excluding_tax( $product ) )
+				( wc_get_price_including_tax( $product ) - wc_get_price_excluding_tax( $product ) ),
+				$this->get_tax_rate_from_tax_class_depending_on_country( $tax_country, $tax_class )
 			);
-			$sum    += number_format( wc_get_price_including_tax( $product ), wc_get_price_decimals() ) * $cart_item['quantity'];
+			$sum      += number_format( wc_get_price_including_tax( $product ), wc_get_price_decimals() ) * $cart_item['quantity'];
 		}
 		//Check if there is a rounding difference and if so add the difference to shipping
-		$shipping = $cart->get_shipping_total();
-		$sum     += $shipping + $cart->get_shipping_tax();
+		$shipping           = $cart->get_shipping_total();
+		$wc_tax             = new WC_Tax();
+		$shipping_tax_class = $wc_tax->get_shipping_tax_rates();
+		$shipping_tax_rate  = $this->get_tax_rate_from_tax_class_depending_on_country( $tax_country, $shipping_tax_class );
+		$sum               += $shipping + $cart->get_shipping_tax();
+
 		if ( $cart->get_total( 'total' ) - $sum > 0 ) {
 			$shipping += number_format( ( $cart->get_total( 'total' ) - $sum ), wc_get_price_decimals() );
 		}
 		if ( $shipping > 0 ) {
-			$basket = $this->set_shipping_item( $basket, $shipping, $cart->get_shipping_tax() );
+			$basket = $this->set_shipping_item( $basket, $shipping, $cart->get_shipping_tax(), $shipping_tax_rate );
 		}
 
 		return $basket;
@@ -203,45 +210,6 @@ class Additional_Information {
 	}
 
 	/**
-	 * Create basket from order
-	 *
-	 * @param array $orderd_products
-	 * @param Basket $basket
-	 * @param Transaction $transaction
-	 * @param float $shipping_total
-	 * @param float $shipping_tax
-	 * @param float $order_total
-	 * @return Basket
-	 * @since 1.1.0
-	 */
-	public function create_basket_from_order( $orderd_products, $basket, $transaction, $shipping_total, $shipping_tax, $order_total ) {
-		$basket->setVersion( $transaction );
-		$sum = 0;
-		foreach ( $orderd_products as $item_id => $item ) {
-			$product  = new WC_Product( $orderd_products[ $item_id ]->get_product_id() );
-			$item_sum = number_format( wc_get_price_including_tax( $product ), wc_get_price_decimals() );
-			$basket   = $this->set_basket_item(
-				$basket,
-				$product,
-				$orderd_products[ $item_id ]->get_quantity(),
-				wc_get_price_excluding_tax( $product ),
-				( wc_get_price_including_tax( $product ) - wc_get_price_excluding_tax( $product ) )
-			);
-			$sum     += $item_sum * ( $orderd_products[ $item_id ]->get_quantity() );
-		}
-		//Check if there is a rounding difference and if so add the difference to shipping
-		$sum += $shipping_total + $shipping_tax;
-		if ( ( $order_total - $sum ) > 0 ) {
-			$shipping_total += $order_total - $sum;
-		}
-		if ( $shipping_total > 0 ) {
-			$basket = $this->set_shipping_item( $basket, $shipping_total, $shipping_tax );
-		}
-
-		return $basket;
-	}
-
-	/**
 	 * Set an Item to basket
 	 *
 	 * @param Basket $basket
@@ -249,22 +217,22 @@ class Additional_Information {
 	 * @param int $quantity
 	 * @param float $total
 	 * @param float $tax
+	 * @param float $tax_rate
 	 * @return Basket
+	 * @since 1.4.0
 	 */
-	private function set_basket_item( $basket, $product, $quantity, $total, $tax ) {
+	private function set_basket_item( $basket, $product, $quantity, $total, $tax, $tax_rate ) {
 		$item_unit_gross_amount = $total + $tax;
-		$item_tax_rate          = $tax / $item_unit_gross_amount;
 
 		$article_nr  = $product->get_id();
-		$description = wp_strip_all_tags( $product->get_short_description() );
+		$description = wp_strip_all_tags( html_entity_decode( $product->get_short_description() ), true );
 		$amount      = new Amount( number_format( $item_unit_gross_amount, wc_get_price_decimals() ), get_woocommerce_currency() );
 
-		$tax_rate = 0;
-		if ( $product->is_taxable() ) {
-			$tax_rate = number_format( $item_tax_rate * 100, wc_get_price_decimals() );
-		}
-
-		$item = new Item( wp_strip_all_tags( $product->get_name() ), $amount, $quantity );
+		$item = new Item(
+			wp_strip_all_tags( html_entity_decode( $product->get_name() ), true ),
+			$amount,
+			$quantity
+		);
 		$item->setDescription( $description );
 		$item->setArticleNumber( $article_nr );
 		$item->setTaxRate( floatval( number_format( $tax_rate, wc_get_price_decimals() ) ) );
@@ -280,17 +248,18 @@ class Additional_Information {
 	 * @param Basket $basket
 	 * @param float $shipping_total
 	 * @param float $shipping_tax
+	 * @param float $tax_rate
 	 * @return Basket
+	 * @since 1.4.0
 	 */
-	private function set_shipping_item( $basket, $shipping_total, $shipping_tax ) {
-		$amount        = floatval( number_format( $shipping_total + $shipping_tax, wc_get_price_decimals() ) );
-		$unit_tax_rate = $shipping_tax / $shipping_total;
+	private function set_shipping_item( $basket, $shipping_total, $shipping_tax, $tax_rate ) {
+		$amount = floatval( number_format( $shipping_total + $shipping_tax, wc_get_price_decimals() ) );
 
 		$amount = new Amount( $amount, get_woocommerce_currency() );
 		$item   = new Item( 'Shipping', $amount, 1 );
 		$item->setDescription( 'Shipping' );
 		$item->setArticleNumber( 'Shipping' );
-		$item->setTaxRate( floatval( number_format( $unit_tax_rate * 100, 2 ) ) );
+		$item->setTaxRate( floatval( number_format( $tax_rate, wc_get_price_decimals() ) ) );
 		$basket->add( $item );
 
 		return $basket;
@@ -321,25 +290,126 @@ class Additional_Information {
 	 * @param WC_Order $order
 	 * @param \Wirecard\PaymentSdk\Config\Config $config
 	 * @param $payment_method
-	 * @return Basket
+	 * @param $refund_basket
+	 * @param $refunding_amount
+	 * @return Basket|WP_Error
 	 * @since 1.3.2
 	 */
-	public function create_basket_from_parent_transaction( $order, $config, $payment_method ) {
+	public function create_basket_from_parent_transaction( $order, $config, $payment_method, $refund_basket = [], $refunding_amount = 0 ) {
 		$basket              = new Basket();
 		$transaction_service = new \Wirecard\PaymentSdk\TransactionService( $config );
 		$parent_transaction  = $transaction_service->getTransactionByTransactionId( $order->get_transaction_id(), $payment_method );
+		$items_total         = 0;
+		$shipping            = 0;
 
 		foreach ( $parent_transaction['payment']['order-items']['order-item'] as $item ) {
-			$basket_item_amount = new Amount( $item['amount']['value'], $item['amount']['currency'] );
-
-			$basket_item = new Item( $item['name'], $basket_item_amount, $item['quantity'] );
-			$basket_item->setDescription( $item['description'] );
-			$basket_item->setArticleNumber( $item['article-number'] );
-			$basket_item->setTaxRate( $item['tax-rate'] );
-
-			$basket->add( $basket_item );
+			if ( 'Shipping' === $item['name'] ) {
+				$shipping = $item;
+			}
+			if ( ! empty( $refund_basket ) ) {
+				foreach ( $refund_basket as $refund_item ) {
+					if ( $refund_item['product']->get_id() == $item['article-number'] ) {
+						$items_total += $item['amount']['value'] * $refund_item['qty'];
+						$basket       = $this->set_item_from_response(
+							$basket,
+							new Amount( $item['amount']['value'], $item['amount']['currency'] ),
+							$item['name'],
+							$refund_item['qty'],
+							$item['description'],
+							$item['article-number'],
+							$item['tax-rate']
+						);
+					}
+				}
+			} elseif ( 0 === $refunding_amount ) {
+				$basket = $this->set_item_from_response(
+					$basket,
+					new Amount( $item['amount']['value'], $item['amount']['currency'] ),
+					$item['name'],
+					$item['quantity'],
+					$item['description'],
+					$item['article-number'],
+					$item['tax-rate']
+				);
+			}
 		}
 
+		if ( ( ! empty( $refund_basket ) || $refunding_amount > 0 ) && $refunding_amount - $items_total > 0 ) {
+			if ( 0 == $refunding_amount - $items_total - $shipping['amount']['value'] ) {
+				$basket = $this->set_item_from_response(
+					$basket,
+					new Amount( $shipping['amount']['value'], $shipping['amount']['currency'] ),
+					$shipping['name'],
+					$shipping['quantity'],
+					$shipping['description'],
+					$shipping['article-number'],
+					$shipping['tax-rate']
+				);
+			} else {
+				return new WP_Error( 'error', __( 'You can only refund the shipping fees in full, partial shipping fee refunds are not possible.', 'wirecard-woocommerce-extension' ) );
+			}
+		}
 		return $basket;
+	}
+
+	/**
+	 * Return country code
+	 *
+	 * @return string
+	 * @since 1.4.0
+	 */
+	private function get_correct_country_for_tax_rate() {
+		$tax_setting = get_option( 'woocommerce_tax_based_on' );
+
+		switch ( $tax_setting ) {
+			case 'billing':
+				return WC()->customer->get_billing_country();
+				break;
+			case 'shipping':
+				return WC()->customer->get_shipping_country();
+				break;
+			case 'base':
+				return wc_get_base_location()['country'];
+				break;
+		}
+	}
+
+	/**
+	 * @param $country
+	 * @param $tax_classes
+	 *
+	 * @return float
+	 * @since 1.4.0
+	 */
+	private function get_tax_rate_from_tax_class_depending_on_country( $country, $tax_classes ) {
+		$wc_tax    = new WC_Tax();
+		$tax_rates = $wc_tax->find_rates(
+			array(
+				'country'   => $country,
+				'tax_class' => $tax_classes,
+			)
+		);
+		return array_column( $tax_rates, 'rate' )[0];
+	}
+
+	/**
+	 * @param Basket $basket
+	 * @param Amount $amount
+	 * @param string $name
+	 * @param int $quantity
+	 * @param string $description
+	 * @param string $item_number
+	 * @param float $tax_rate
+	 *
+	 * @return Basket
+	 * @since 1.4.0
+	 */
+	private function set_item_from_response( $basket, $amount, $name, $quantity, $description, $item_number, $tax_rate ) {
+		$basket_item = new Item( $name, $amount, $quantity );
+		$basket_item->setDescription( $description );
+		$basket_item->setArticleNumber( $item_number );
+		$basket_item->setTaxRate( $tax_rate );
+
+		return $basket->add( $basket_item );
 	}
 }

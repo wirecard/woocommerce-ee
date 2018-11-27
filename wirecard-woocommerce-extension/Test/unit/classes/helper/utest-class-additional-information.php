@@ -87,7 +87,7 @@ class WC_Gateway_Wirecard_Additional_Information_Utest extends \PHPUnit_Framewor
 		);
 		$item->setDescription( 'Testdescription' );
 		$item->setArticleNumber( '1' );
-		$item->setTaxRate( 0.0 );
+		$item->setTaxRate( 12 );
 		$item->setTaxAmount( new \Wirecard\PaymentSdk\Entity\Amount( 10, 'EUR' ) );
 		$basket->add( $item );
 		$basket->setVersion( $expected );

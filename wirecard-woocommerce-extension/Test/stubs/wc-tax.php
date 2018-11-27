@@ -29,40 +29,13 @@
  * Please do not use the plugin if you do not agree to these terms of use!
  */
 
-class WC_Product {
-	public function get_id() {
-		return 1;
+class WC_Tax {
+
+	public function find_rates( $array ) {
+		return array( 'id' => array( 'rate' => 12 ) );
 	}
 
-	public function get_short_description() {
-		return 'short description';
-	}
-
-	public function is_taxable() {
-		return false;
-	}
-
-	public function get_name() {
-		return 'nemo';
-	}
-
-	public function get_quantity() {
-		return 1;
-	}
-
-	public function is_downloadable() {
-		return false;
-	}
-
-	public function is_virtual() {
-		return false;
-	}
-
-	public function get_product_id() {
-		return 1;
-	}
-
-	public function get_tax_class() {
-		return 'tax_class';
+	public function get_shipping_tax_rates() {
+		return array();
 	}
 }
