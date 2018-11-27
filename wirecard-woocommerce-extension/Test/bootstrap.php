@@ -50,6 +50,7 @@ require_once __DIR__ . '/stubs/wc-product.php';
 require_once __DIR__ . '/stubs/wc.php';
 require_once __DIR__ . '/stubs/wc-session.php';
 require_once __DIR__ . '/stubs/wc-customer.php';
+require_once __DIR__ . '/stubs/wc-tax.php';
 
 //payment methods
 require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-paypal.php' );

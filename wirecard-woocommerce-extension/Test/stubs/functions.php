@@ -167,3 +167,15 @@ function get_last_mocked_notice() {
     }
     return $wc_notices[count( $wc_notices ) - 1]['message'];
 }
+
+function get_option( $option ) {
+	return $option;
+}
+
+function apply_filters( $string, $parameter, $option ) {
+	return $string;
+}
+
+function is_wp_error() {
+	return;
+}
