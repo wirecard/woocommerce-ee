@@ -1,0 +1,9 @@
+li.wc_payment_method label::after {
+    content: '';
+    display: block;
+    clear: both;
+}
+
+.payment_box > p {
+    margin-bottom: 1em !important;
+}

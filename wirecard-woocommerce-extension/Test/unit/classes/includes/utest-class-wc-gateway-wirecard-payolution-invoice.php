@@ -113,18 +113,27 @@ class  WC_Gateway_Wirecard_Payolution_Invoice_Utest extends PHPUnit_Framework_Te
 
     public function test_process_payment_fails_without_birthdate() {
         $order_id = 12;
+		$_POST = $this->prepare_post_parameter_for_pay();
         $_POST['payolution_date_of_birth'] = '';
         $result = $this->payment->process_payment( $order_id );
         $this->assertFalse( $result );
     }
 
-    // NOTE: it's a stupid test because the result is an array with an error - instead with a success
+    public function test_process_payment_failes_without_gdpr_agreement() {
+		$order_id = 12;
+		$_POST = $this->prepare_post_parameter_for_pay();
+		$_POST['payolution_date_of_birth'] = '';
+		$result = $this->payment->process_payment( $order_id );
+		$this->assertFalse( $result );
+	}
+
     public function test_process_payment() {
         $order_id = 12;
-        $_POST['payolution_date_of_birth'] = '30.10.1999';
+        $_POST = $this->prepare_post_parameter_for_pay();
         $result = $this->payment->process_payment( $order_id );
         $this->assertTrue( is_array( $result ) );
     }
+
 
     // NOTE: it's a stupid test because the result is a wordpress error instead a success
     public function test_process_refund() {
@@ -156,4 +165,11 @@ class  WC_Gateway_Wirecard_Payolution_Invoice_Utest extends PHPUnit_Framework_Te
 
         $this->assertEquals( $expected, $this->payment->process_capture( $order_id, $amount ) );
     }
+
+    private function prepare_post_parameter_for_pay() {
+    	return array(
+			'payolution_date_of_birth'  => '30.10.1999',
+			'payolution_gpdr_agreement' => '1',
+		);
+	}
 }

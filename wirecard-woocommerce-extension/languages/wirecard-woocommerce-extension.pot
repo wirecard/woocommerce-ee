@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wirecard WooCommerce Extension\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-26 08:27+0000\n"
+"POT-Creation-Date: 2018-11-28 08:36+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -63,7 +63,7 @@ msgstr ""
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:154
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:149
 #: classes/includes/class-wc-gateway-wirecard-masterpass.php:147
-#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:149
+#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:150
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:152
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:144
 #: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:150
@@ -194,6 +194,12 @@ msgstr ""
 msgid "You are being redirected. Please wait"
 msgstr ""
 
+#: classes/helper/class-additional-information.php:349
+msgid ""
+"You can only refund the shipping fees in full, partial shipping fee refunds "
+"are not possible."
+msgstr ""
+
 #: classes/helper/class-credit-card-vault.php:156
 msgid "Account number"
 msgstr ""
@@ -301,10 +307,10 @@ msgstr ""
 #: classes/includes/class-wc-gateway-wirecard-masterpass.php:96
 #: classes/includes/class-wc-gateway-wirecard-masterpass.php:166
 #: classes/includes/class-wc-gateway-wirecard-masterpass.php:173
-#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:98
-#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:157
-#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:212
-#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:219
+#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:99
+#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:158
+#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:213
+#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:220
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:96
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:166
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:173
@@ -338,7 +344,7 @@ msgstr ""
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:110
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:105
 #: classes/includes/class-wc-gateway-wirecard-masterpass.php:103
-#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:105
+#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:106
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:103
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:100
 #: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:100
@@ -353,7 +359,7 @@ msgstr ""
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:112
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:107
 #: classes/includes/class-wc-gateway-wirecard-masterpass.php:105
-#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:107
+#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:108
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:105
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:102
 #: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:102
@@ -372,7 +378,7 @@ msgstr ""
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:116
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:111
 #: classes/includes/class-wc-gateway-wirecard-masterpass.php:109
-#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:111
+#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:112
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:109
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:106
 #: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:109
@@ -387,7 +393,7 @@ msgstr ""
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:118
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:113
 #: classes/includes/class-wc-gateway-wirecard-masterpass.php:111
-#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:113
+#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:114
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:111
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:108
 #: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:111
@@ -402,7 +408,7 @@ msgstr ""
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:122
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:117
 #: classes/includes/class-wc-gateway-wirecard-masterpass.php:115
-#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:117
+#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:118
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:115
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:112
 #: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:115
@@ -417,7 +423,7 @@ msgstr ""
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:124
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:119
 #: classes/includes/class-wc-gateway-wirecard-masterpass.php:117
-#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:119
+#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:120
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:117
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:114
 #: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:117
@@ -433,7 +439,7 @@ msgstr ""
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:128
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:123
 #: classes/includes/class-wc-gateway-wirecard-masterpass.php:121
-#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:123
+#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:124
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:121
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:118
 #: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:121
@@ -448,7 +454,7 @@ msgstr ""
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:130
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:125
 #: classes/includes/class-wc-gateway-wirecard-masterpass.php:123
-#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:125
+#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:126
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:123
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:120
 #: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:123
@@ -463,7 +469,7 @@ msgstr ""
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:133
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:128
 #: classes/includes/class-wc-gateway-wirecard-masterpass.php:126
-#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:128
+#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:129
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:126
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:123
 #: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:129
@@ -477,7 +483,7 @@ msgstr ""
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:159
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:135
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:130
-#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:130
+#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:131
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:128
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:125
 #: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:131
@@ -491,7 +497,7 @@ msgstr ""
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:139
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:134
 #: classes/includes/class-wc-gateway-wirecard-masterpass.php:132
-#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:134
+#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:135
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:132
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:129
 #: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:135
@@ -506,7 +512,7 @@ msgstr ""
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:141
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:136
 #: classes/includes/class-wc-gateway-wirecard-masterpass.php:134
-#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:136
+#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:137
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:134
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:131
 #: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:137
@@ -521,7 +527,7 @@ msgstr ""
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:145
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:140
 #: classes/includes/class-wc-gateway-wirecard-masterpass.php:138
-#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:140
+#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:141
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:138
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:135
 #: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:141
@@ -536,7 +542,7 @@ msgstr ""
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:147
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:142
 #: classes/includes/class-wc-gateway-wirecard-masterpass.php:140
-#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:142
+#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:143
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:140
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:137
 #: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:143
@@ -551,7 +557,7 @@ msgstr ""
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:151
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:146
 #: classes/includes/class-wc-gateway-wirecard-masterpass.php:144
-#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:146
+#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:147
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:149
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:141
 #: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:147
@@ -566,7 +572,7 @@ msgstr ""
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:157
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:152
 #: classes/includes/class-wc-gateway-wirecard-masterpass.php:150
-#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:152
+#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:153
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:144
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:147
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:186
@@ -580,7 +586,7 @@ msgstr ""
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:216
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:159
 #: classes/includes/class-wc-gateway-wirecard-masterpass.php:168
-#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:214
+#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:215
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:175
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:165
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:204
@@ -595,7 +601,7 @@ msgstr ""
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:217
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:160
 #: classes/includes/class-wc-gateway-wirecard-masterpass.php:169
-#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:215
+#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:216
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:176
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:166
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:205
@@ -608,7 +614,7 @@ msgstr ""
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:223
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:166
 #: classes/includes/class-wc-gateway-wirecard-masterpass.php:175
-#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:221
+#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:222
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:182
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:172
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:211
@@ -625,7 +631,7 @@ msgstr ""
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:224
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:167
 #: classes/includes/class-wc-gateway-wirecard-masterpass.php:176
-#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:222
+#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:223
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:183
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:173
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:212
@@ -755,12 +761,12 @@ msgid ""
 msgstr ""
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:165
-#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:160
+#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:161
 msgid "Billing/Shipping address must be identical"
 msgstr ""
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:169
-#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:164
+#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:165
 msgid "Allowed billing countries"
 msgstr ""
 
@@ -772,7 +778,7 @@ msgid ""
 msgstr ""
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:182
-#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:178
+#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:179
 msgid "Allowed shipping countries"
 msgstr ""
 
@@ -784,7 +790,7 @@ msgid ""
 msgstr ""
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:195
-#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:192
+#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:193
 msgid "Allowed currencies"
 msgstr ""
 
@@ -795,7 +801,7 @@ msgid ""
 msgstr ""
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:204
-#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:202
+#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:203
 msgid "Minimum Amount"
 msgstr ""
 
@@ -806,7 +812,7 @@ msgid ""
 msgstr ""
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:209
-#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:207
+#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:208
 msgid "Maximum Amount"
 msgstr ""
 
@@ -816,13 +822,13 @@ msgid ""
 "amount is smaller than this defined amount. Amount in default shop currency"
 msgstr ""
 
-#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:413
-#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:419
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:430
+#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:450
 msgid "Date of birth"
 msgstr ""
 
-#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:433
-#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:442
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:450
+#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:497
 msgid "You need to be older then 18 to order."
 msgstr ""
 
@@ -868,72 +874,101 @@ msgstr ""
 msgid "Activate payment method Masterpass"
 msgstr ""
 
-#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:57
+#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:56
 msgid "Payolution Invoice"
 msgstr ""
 
-#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:58
-#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:108
+#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:57
 msgid "Guaranteed Invoice by payolution"
 msgstr ""
 
-#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:59
+#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:58
 msgid ""
 "Guaranteed Invoice by payolution via Wirecard Payment Processing Gateway"
 msgstr ""
 
-#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:100
+#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:101
 msgid "Activate payment method Payolution Invoice"
 msgstr ""
 
-#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:101
+#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:102
 msgid "Enable Payolution Invoice"
 msgstr ""
 
-#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:159
+#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:109
+msgid "Wirecard Payment on account (Payolution B2C)"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:160
 msgid ""
 "If activated, payment method Payolution Invoice will only be displayed if "
 "Billing/Shipping address are identical"
 msgstr ""
 
-#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:166
+#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:167
 msgid ""
 "Payment method Payolution Invoice will only be displayed if consumers "
-"billing country equals one of these chosen countries. \n"
+"billing country equals one of these chosen countries.\n"
 "\t\t\t\tPredefined the following countries are allowed: AT, DE, CH, NL."
 msgstr ""
 
-#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:180
+#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:181
 msgid ""
 "Payment method Payolution Invoice will only be displayed if consumers "
-"shipping country equals one of these chosen countries. \n"
+"shipping country equals one of these chosen countries.\n"
 "\t\t\t\tPredefined the following countries are allowed: AT, DE, CH, NL."
 msgstr ""
 
-#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:194
+#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:195
 msgid ""
 "Payment method Payolution Invoice will only be displayed if the active "
 "currency equals one of these chosen currencies."
 msgstr ""
 
-#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:203
+#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:204
 msgid ""
 "Payment method Payolution Invoice will only be displayed if the ordered "
 "amount is bigger than this defined amount. Amount in default shop currency"
 msgstr ""
 
-#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:208
+#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:209
 msgid ""
 "Payment method Payolution Invoice will only be displayed if the ordered "
 "amount is smaller than this defined amount. Amount in default shop currency"
 msgstr ""
 
-#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:433
+#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:227
+msgid "Payolution merchant ID"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:229
+msgid ""
+"Your merchant ID from your payolution contract is necessary to provide your "
+"customer a revocable agreement for data processing."
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:460
+msgid "GPRR allowance"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:462
+msgid ""
+"I agree that the data which are necessary for the liquidation of purchase on "
+"account and which are used to complete the identity and credit check are "
+"transmitted to payolution. <a href=\"%LINK%\" target=\"_blank\">My "
+"consent</a> can be revoked at any time with effect for the future."
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:488
 msgid "You need to enter your birthdate to proceed."
 msgstr ""
 
-#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:448
-msgid "You need to enter a valid date as birthday."
+#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:503
+msgid "You need to enter a valid date as birthdate."
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:522
+msgid "You need to give your consent for data processing on Payolution"
 msgstr ""
 
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:61
