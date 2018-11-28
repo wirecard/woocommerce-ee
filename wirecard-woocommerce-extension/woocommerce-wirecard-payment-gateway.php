@@ -46,7 +46,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 define( 'WIRECARD_EXTENSION_NAME', 'Wirecard WooCommerce Extension' );
-define( 'WIRECARD_EXTENSION_VERSION', '1.4.0' );
+define( 'WIRECARD_EXTENSION_VERSION', '1.4.1' );
 define( 'WIRECARD_EXTENSION_BASEDIR', plugin_dir_path( __FILE__ ) );
 define( 'WIRECARD_EXTENSION_URL', plugin_dir_url( __FILE__ ) );
 
