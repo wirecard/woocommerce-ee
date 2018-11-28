@@ -232,7 +232,7 @@ function loadCreditCardData() {
 jQuery( document.body ).on(
 	'updated_checkout',
 	function() {
-		var paymentMethod = $('li.wc_payment_method > input[name=payment_method]:checked').val();
+		var paymentMethod = $( 'li.wc_payment_method > input[name=payment_method]:checked' ).val();
 
 		if ( paymentMethod === "wirecard_ee_creditcard" ) {
 			loadCreditCardData();
@@ -345,7 +345,7 @@ jQuery( "form.checkout" ).on(
 			);
 		}
 
-		if ( $('li.wc_payment_method > input[name=payment_method]:checked').val() === 'wirecard_ee_creditcard' &&
+		if ( $( 'li.wc_payment_method > input[name=payment_method]:checked' ).val() === 'wirecard_ee_creditcard' &&
 			processing === false ) {
 			processing = true;
 			if ( token ) {
