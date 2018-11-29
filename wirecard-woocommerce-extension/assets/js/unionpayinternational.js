@@ -110,8 +110,8 @@ function formSubmitUpiSuccessHandler( response ) {
 }
 
 jQuery( document.body ).on(
-    'updated_checkout',
-    function() {
+	'updated_checkout',
+	function() {
 		if ( $( 'li.wc_payment_method > input[name=payment_method]:checked' ).val() === "wirecard_ee_unionpayinternational" ) {
 			getUpiRequestData();
 			return false;
@@ -120,11 +120,11 @@ jQuery( document.body ).on(
 );
 
 jQuery( document ).one(
-    "checkout_error",
-    "body",
-    function () {
-        getUpiRequestData();
-    }
+	"checkout_error",
+	"body",
+	function () {
+		getUpiRequestData();
+	}
 );
 
 /**
@@ -133,25 +133,25 @@ jQuery( document ).one(
  * @since 1.1.0
  */
 checkout_form.on(
-    "checkout_place_order",
-    function() {
-        if ( $( 'li.wc_payment_method > input[name=payment_method]:checked' ).val() === "wirecard_ee_unionpayinternational"
+	"checkout_place_order",
+	function() {
+		if ( $( 'li.wc_payment_method > input[name=payment_method]:checked' ).val() === "wirecard_ee_unionpayinternational"
 			&& processing === false ) {
-            processing = true;
-            if ( token ) {
-                return true;
-            } else {
-                /* global WirecardPaymentPage b:true */
-                WirecardPaymentPage.seamlessSubmitForm(
-                    {
-                        onSuccess: formSubmitUpiSuccessHandler,
-                        onError: logCallback,
-                        wrappingDivId: "wc_payment_method_wirecard_unionpayinternational_form"
-                    }
-                );
-                return false;
-            }
-        }
-        processing = false;
-    }
+			processing = true;
+			if ( token ) {
+				return true;
+			} else {
+				/* global WirecardPaymentPage b:true */
+				WirecardPaymentPage.seamlessSubmitForm(
+					{
+						onSuccess: formSubmitUpiSuccessHandler,
+						onError: logCallback,
+						wrappingDivId: "wc_payment_method_wirecard_unionpayinternational_form"
+					}
+				);
+				return false;
+			}
+		}
+		processing = false;
+	}
 );
