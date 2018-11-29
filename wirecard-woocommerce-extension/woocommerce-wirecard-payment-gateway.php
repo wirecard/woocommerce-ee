@@ -3,7 +3,7 @@
  * Plugin Name: Wirecard WooCommerce Extension
  * Plugin URI: https://github.com/wirecard/woocommerce-ee
  * Description: Payment Gateway for WooCommerce
- * Version: 1.4.0
+ * Version: 1.4.1
  * Author: Wirecard AG
  * Author URI: https://www.wirecard.com/
  * License: GPLv3
