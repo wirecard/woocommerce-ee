@@ -245,10 +245,6 @@ jQuery( document.body ).on(
 			new_credit_card    = jQuery( "#wc_payment_method_wirecard_new_credit_card" );
 			new_credit_card.hide();
 			loadWirecardEEScripts();
-
-			if (jQuery( ".cards" ).html() === "") {
-				getVaultData( saved_credit_cards );
-			}
 		}
 	}
 );
