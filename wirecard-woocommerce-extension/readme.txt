@@ -67,4 +67,4 @@ Our general Terms of Use can be found on [Github](https://github.com/wirecard/wo
 4. Wirecard Transaction Detailview for Post-Processing Operations
 
 == Changelog ==
-- Update flow of credit card event loading
+- Update flow of credit card an unionpayinternational event loading

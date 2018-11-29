@@ -246,6 +246,11 @@ jQuery( document.body ).on(
 			new_credit_card.hide();
 			loadWirecardEEScripts();
 		}
+
+		if (jQuery( ".cards" ).html() === "" &&
+			paymentMethod === "wirecard_ee_creditcard") {
+			getVaultData( saved_credit_cards );
+		}
 	}
 );
 
