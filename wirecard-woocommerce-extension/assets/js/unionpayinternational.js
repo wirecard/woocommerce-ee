@@ -109,47 +109,49 @@ function formSubmitUpiSuccessHandler( response ) {
 	checkout_form.submit();
 }
 
-jQuery( document ).ajaxComplete(
+jQuery( document.body ).on(
+	'updated_checkout',
 	function() {
-		if ( $( "#wc_payment_method_wirecard_unionpayinternational_form" ).is( ":visible" ) ) {
+		if ( $( 'li.wc_payment_method > input[name=payment_method]:checked' ).val() === "wirecard_ee_unionpayinternational" ) {
 			getUpiRequestData();
+			return false;
 		}
+	}
+);
 
-		$( "input[name=payment_method]" ).change(
-			function() {
-				if ( $( this ).val() === "wirecard_ee_unionpayinternational" ) {
-					getUpiRequestData();
-					return false;
-				}
-			}
-		);
+jQuery( document ).one(
+	"checkout_error",
+	"body",
+	function () {
+		getUpiRequestData();
+	}
+);
 
-		/**
-	 * Submit the seamless form before order is placed
-	 *
-	 * @since 1.1.0
-	 */
-		checkout_form.on(
-			"checkout_place_order",
-			function() {
-				if ( $( "#payment_method_wirecard_ee_unionpayinternational" )[0].checked === true && processing === false ) {
-					processing = true;
-					if ( token ) {
-						return true;
-					} else {
-						/* global WirecardPaymentPage b:true */
-						WirecardPaymentPage.seamlessSubmitForm(
-							{
-								onSuccess: formSubmitUpiSuccessHandler,
-								onError: logCallback,
-								wrappingDivId: "wc_payment_method_wirecard_unionpayinternational_form"
-							}
-						);
-						return false;
+/**
+ * Submit the seamless form before order is placed
+ *
+ * @since 1.1.0
+ */
+checkout_form.on(
+	"checkout_place_order",
+	function() {
+		if ( $( 'li.wc_payment_method > input[name=payment_method]:checked' ).val() === "wirecard_ee_unionpayinternational"
+			&& processing === false ) {
+			processing = true;
+			if ( token ) {
+				return true;
+			} else {
+				/* global WirecardPaymentPage b:true */
+				WirecardPaymentPage.seamlessSubmitForm(
+					{
+						onSuccess: formSubmitUpiSuccessHandler,
+						onError: logCallback,
+						wrappingDivId: "wc_payment_method_wirecard_unionpayinternational_form"
 					}
-				}
-				processing = false;
+				);
+				return false;
 			}
-		);
+		}
+		processing = false;
 	}
 );
