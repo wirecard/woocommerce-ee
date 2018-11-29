@@ -1,5 +1,14 @@
 [
 {
+    "release": "1.4.1",
+    "shopsystem": "WooCommerce",
+    "tested": "3.5.1",
+    "compatibility": "3.3.4",
+    "changelog": [
+      "Update flow of credit card an unionpayinternational event loading"
+    ]
+},
+{
     "release": "1.4.0",
     "shopsystem": "WooCommerce",
     "tested": "3.5.1",
