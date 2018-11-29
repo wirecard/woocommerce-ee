@@ -12,11 +12,9 @@
 
 ***
 ## General Information 
-Before proceeding, please read [general information](https://github.com/wirecard/woocommerce-ee/wiki/Wirecard-Shop-Extensions-General-Information), as it provides information on Wirecard Shop Extensions functionality and features.
+Before you proceed, please read our [General Information](https://github.com/wirecard/woocommerce-ee/wiki/Wirecard-Shop-Extensions-General-Information) for more details on Wirecard Shop Extension functionality and features.
 
 ***
 ## Documentation
+[WooCommerce Wiki](https://github.com/wirecard/woocommerce-ee/wiki) provides detailed technical documentation: it includes extensive instructions on how to [install](https://github.com/wirecard/woocommerce-ee/wiki/Installation) and [configure](https://github.com/wirecard/woocommerce-ee/wiki/Configuration) the extension. It also lists all available [payment methods](https://github.com/wirecard/woocommerce-ee/wiki#supported-payment-methods) and post-processing operations.
 
-[WooCommerce Wiki](https://github.com/wirecard/woocommerce-ee/wiki) provides detailed technical documentation.
-It lists all available [payment methods](https://github.com/wirecard/woocommerce-ee/wiki#supported-payment-methods) and back-end operations.
-Furthermore, it includes extensive instructions how to [install](https://github.com/wirecard/woocommerce-ee/wiki/Installation) and [configure](https://github.com/wirecard/woocommerce-ee/wiki/Configuration).
