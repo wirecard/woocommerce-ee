@@ -11,11 +11,11 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Coverage/a3d65afeb5b94e919555dc86e2e6dc68)](https://www.codacy.com/app/Wirecard/woocommerce-ee?utm_source=github.com&utm_medium=referral&utm_content=wirecard/woocommerce-ee&utm_campaign=Badge_Coverage)
 
 ***
-## General information 
-Before proceeding, please read [general information](https://github.com/wirecard/woocommerce-ee/wiki/Wirecard-Shop-Extensions-General-Information), as it provides information on Wirecard shop plugins functionality and features.
+## General Information 
+Before proceeding, please read [general information](https://github.com/wirecard/woocommerce-ee/wiki/Wirecard-Shop-Extensions-General-Information), as it provides information on Wirecard Shop Extensions functionality and features.
 
 ***
-## WooCommerce documentation - Wiki
+## Documentation
 
 [WooCommerce Wiki](https://github.com/wirecard/woocommerce-ee/wiki) provides detailed technical documentation.
 It lists all available [payment methods](https://github.com/wirecard/woocommerce-ee/wiki#supported-payment-methods) and back-end operations.
