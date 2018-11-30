@@ -136,8 +136,8 @@ jQuery( document ).off( "checkout_error" ).on(
 );
 
 jQuery( document.body ).on(
-    'updated_checkout',
-    function() {
+	'updated_checkout',
+	function() {
 			/**
 			* Create popup window
 			*/
