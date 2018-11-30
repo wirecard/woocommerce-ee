@@ -53,7 +53,7 @@ class WC_Gateway_Wirecard_Payolution_Invoice extends WC_Wirecard_Payment_Gateway
 		$this->type               = 'payolution-inv';
 		$this->id                 = 'wirecard_ee_payolution-inv';
 		$this->icon               = WIRECARD_EXTENSION_URL . 'assets/images/payolution.png';
-		$this->method_title       = __( 'Payolution Invoice', 'wirecard-woocommerce-extension' );
+		$this->method_title       = __( 'Wirecard Payolution Invoice', 'wirecard-woocommerce-extension' );
 		$this->method_name        = __( 'Guaranteed Invoice by payolution', 'wirecard-woocommerce-extension' );
 		$this->method_description = __( 'Guaranteed Invoice by payolution via Wirecard Payment Processing Gateway', 'wirecard-woocommerce-extension' );
 		$this->has_fields         = true;

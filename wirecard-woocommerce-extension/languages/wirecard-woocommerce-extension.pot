@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wirecard WooCommerce Extension\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-28 08:36+0000\n"
+"POT-Creation-Date: 2018-11-30 13:42+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -875,7 +875,7 @@ msgid "Activate payment method Masterpass"
 msgstr ""
 
 #: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:56
-msgid "Payolution Invoice"
+msgid "Wirecard Payolution Invoice"
 msgstr ""
 
 #: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:57

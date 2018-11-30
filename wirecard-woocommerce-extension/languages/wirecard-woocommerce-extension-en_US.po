@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wirecard WooCommerce Extension\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-28 08:36+0000\n"
-"PO-Revision-Date: 2018-11-28 08:40+0000\n"
+"POT-Creation-Date: 2018-11-30 13:42+0000\n"
+"PO-Revision-Date: 2018-11-30 13:43+0000\n"
 "Last-Translator: marco <marco.horn@wirecard.com>\n"
 "Language-Team: English (United States)\n"
 "Language: en_US\n"
@@ -920,8 +920,8 @@ msgstr ""
 "Activate payment method MasterPass to make it available for your consumers."
 
 #: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:56
-msgid "Payolution Invoice"
-msgstr "Payolution Invoice"
+msgid "Wirecard Payolution Invoice"
+msgstr "Wirecard Payolution Invoice"
 
 #: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:57
 msgid "Guaranteed Invoice by payolution"
