@@ -119,12 +119,16 @@ jQuery( document.body ).on(
 	}
 );
 
-jQuery( document ).one(
+checkout_form.on(
+    'change', // when payment selection changes
+    'input[name^="payment_method"]',
+    getUpiRequestData
+);
+
+jQuery( document ).on(
 	"checkout_error",
 	"body",
-	function () {
-		getUpiRequestData();
-	}
+	getUpiRequestData
 );
 
 /**
