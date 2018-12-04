@@ -154,8 +154,9 @@ $( document.body ).on(
 	"dialogclose",
 	popup,
 	function() {
-    $( "body" ).css( "overflow", "auto" );
-});
+		$( "body" ).css( "overflow", "auto" );
+	}
+);
 
 /**
  * Submit the seamless form before order is placed
