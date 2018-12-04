@@ -73,21 +73,23 @@ function renderUpiForm( request_data ) {
  * @since 1.1.0
  */
 function getUpiRequestData() {
-	$.ajax(
-		{
-			type: "POST",
-			/* global upi_vars b:true */
-			url: upi_vars.ajax_url,
-			data: { "action" : "get_upi_request_data" },
-			dataType: "json",
-			success: function (data) {
-				renderUpiForm( JSON.parse( data.data ) );
-			},
-			error: function (data) {
-				logCallback( data );
+	if ($( 'li.wc_payment_method > input[name=payment_method]:checked' ).val() === "wirecard_ee_unionpayinternational") {
+		$.ajax(
+			{
+				type: "POST",
+				/* global upi_vars b:true */
+				url: upi_vars.ajax_url,
+				data: { "action" : "get_upi_request_data" },
+				dataType: "json",
+				success: function (data) {
+					renderUpiForm( JSON.parse( data.data ) );
+				},
+				error: function (data) {
+					logCallback( data );
+				}
 			}
-		}
-	);
+		);	
+	}
 }
 
 /**
