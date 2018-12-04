@@ -88,7 +88,7 @@ function getUpiRequestData() {
 					logCallback( data );
 				}
 			}
-		);	
+		);
 	}
 }
 
