@@ -68,7 +68,7 @@ function addVaultData( data, saved_credit_cards ) {
  *
  * @since 1.1.0
  */
-function getVaultData(saved_credit_cards) {
+function getVaultData( saved_credit_cards ) {
 	var new_credit_card = jQuery( "#wc_payment_method_wirecard_new_credit_card" );
 	jQuery( ".show-spinner", saved_credit_cards ).show();
 	jQuery.ajax(
@@ -173,7 +173,7 @@ function resizeIframe() {
  *
  * @since 1.0.0
  */
-function logCallback(response) {
+function logCreditCardCallback( response ) {
 	console.error( response );
 	processing = false;
 	token      = null;
@@ -184,14 +184,14 @@ function logCallback(response) {
  *
  * @since 1.0.0
  */
-function renderForm(request_data) {
+function renderForm( request_data ) {
 	/* global WirecardPaymentPage b:true */
 	WirecardPaymentPage.seamlessRenderForm(
 		{
 			requestData: request_data,
 			wrappingDivId: "wc_payment_method_wirecard_creditcard_form",
 			onSuccess: resizeIframe,
-			onError: logCallback
+			onError: logCreditCardCallback
 		}
 	);
 }
@@ -201,7 +201,7 @@ function renderForm(request_data) {
  *
  * @since 1.0.0
  */
-function getRequestData(success, error) {
+function getRequestData( success, error ) {
 	jQuery( "#wc_payment_method_wirecard_creditcard_form" ).empty();
 	jQuery( ".show-spinner" ).show();
 	jQuery.ajax(
@@ -211,11 +211,11 @@ function getRequestData(success, error) {
 			cache: false,
 			data: {"action": "get_credit_card_request_data"},
 			dataType: "json",
-			success: function (data) {
+			success: function ( data ) {
 				jQuery( ".show-spinner" ).hide();
 				success( JSON.parse( data.data ) );
 			},
-			error: function (data) {
+			error: function ( data ) {
 				jQuery( ".show-spinner" ).hide();
 				error( data );
 			}
@@ -224,7 +224,7 @@ function getRequestData(success, error) {
 }
 
 function loadCreditCardData() {
-	getRequestData( renderForm, logCallback );
+	getRequestData( renderForm, logCreditCardCallback );
 	getVaultData();
 	return false;
 }
@@ -250,8 +250,8 @@ function paymentMethodChangeAndCheckoutUpdateEvent() {
 		loadWirecardEEScripts();
 	}
 
-	if (jQuery( ".cards" ).html() === "" &&
-		paymentMethod === "wirecard_ee_creditcard") {
+	if ( jQuery( ".cards" ).html() === "" &&
+		paymentMethod === "wirecard_ee_creditcard" ) {
 		getVaultData( saved_credit_cards );
 	}
 }
@@ -267,7 +267,7 @@ function placeOrderEvent() {
 	 *
 	 * @since 1.0.0
 	 */
-	function formSubmitSuccessHandler(response) {
+	function formSubmitSuccessHandler( response ) {
 		if ( response.hasOwnProperty( "token_id" ) ) {
 			token = response.token_id;
 		} else if ( response.hasOwnProperty( "card_token" ) && response.card_token.hasOwnProperty( "token" )) {
@@ -298,7 +298,7 @@ function placeOrderEvent() {
 			}
 		}
 
-		if (jQuery( "#wirecard-store-card" ).is( ":checked" ) && response.transaction_state === "success") {
+		if ( jQuery( "#wirecard-store-card" ).is( ":checked" ) && response.transaction_state === "success" ) {
 			jQuery.ajax(
 				{
 					type: "POST",
@@ -316,7 +316,7 @@ function placeOrderEvent() {
 			);
 		}
 
-		if (jQuery( "#tokenId" ).length > 0) {
+		if ( jQuery( "#tokenId" ).length > 0 ) {
 			jQuery( "#tokenId" ).remove();
 		}
 
@@ -340,7 +340,7 @@ function placeOrderEvent() {
 		WirecardPaymentPage.seamlessSubmitForm(
 			{
 				onSuccess: formSubmitSuccessHandler,
-				onError: logCallback
+				onError: logCreditCardCallback
 			}
 		);
 	}
