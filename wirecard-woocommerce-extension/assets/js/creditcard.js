@@ -357,18 +357,20 @@ function placeOrderEvent() {
 	}
 }
 
-jQuery( document ).ready( function() {
-	checkout_form.on(
-		'change', // when payment selection changes
-		'input[name^="payment_method"]',
-		paymentMethodChangeAndCheckoutUpdateEvent
-	).on(
-		'checkout_place_order', // when order is placed
-		placeOrderEvent
-	);
+jQuery( document ).ready(
+	function() {
+		checkout_form.on(
+			'change', // when payment selection changes
+			'input[name^="payment_method"]',
+			paymentMethodChangeAndCheckoutUpdateEvent
+		).on(
+			'checkout_place_order', // when order is placed
+			placeOrderEvent
+		);
 
-	jQuery( document.body ).on(
-		'updated_checkout', // when checkout data gets updated so that we have the correct user data
-		paymentMethodChangeAndCheckoutUpdateEvent
-	)
-});
+		jQuery( document.body ).on(
+			'updated_checkout', // when checkout data gets updated so that we have the correct user data
+			paymentMethodChangeAndCheckoutUpdateEvent
+		)
+	}
+);
