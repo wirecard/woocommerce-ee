@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wirecard WooCommerce Extension\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-30 13:42+0000\n"
-"PO-Revision-Date: 2018-11-30 13:43+0000\n"
+"POT-Creation-Date: 2018-12-04 12:37+0000\n"
+"PO-Revision-Date: 2018-12-04 12:39+0000\n"
 "Last-Translator: marco <marco.horn@wirecard.com>\n"
 "Language-Team: English (United States)\n"
 "Language: en_US\n"
@@ -867,12 +867,12 @@ msgstr ""
 "amount is smaller than this defined amount. Amount in default shop currency."
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:430
-#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:450
+#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:448
 msgid "Date of birth"
 msgstr "Date of birth"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:450
-#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:497
+#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:495
 msgid "You need to be older then 18 to order."
 msgstr "Minimum age to pay with Guaranteed Invoice: 18."
 
@@ -920,18 +920,13 @@ msgstr ""
 "Activate payment method MasterPass to make it available for your consumers."
 
 #: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:56
+#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:57
 msgid "Wirecard Payolution Invoice"
 msgstr "Wirecard Payolution Invoice"
 
-#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:57
-msgid "Guaranteed Invoice by payolution"
-msgstr "Guaranteed Invoice by payolution"
-
 #: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:58
-msgid ""
-"Guaranteed Invoice by payolution via Wirecard Payment Processing Gateway"
-msgstr ""
-"Guaranteed Invoice by payolution via Wirecard Payment Processing Gateway"
+msgid "Payolution Invoice via Wirecard Payment Processing Gateway"
+msgstr "Payolution Invoice via Wirecard Payment Processing Gateway"
 
 #: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:101
 msgid "Activate payment method Payolution Invoice"
@@ -1011,11 +1006,11 @@ msgstr ""
 "Your merchant ID from your payolution contract is necessary to provide your "
 "customer a revocable agreement for data processing."
 
-#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:460
+#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:458
 msgid "GPRR allowance"
 msgstr "Consent"
 
-#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:462
+#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:460
 msgid ""
 "I agree that the data which are necessary for the liquidation of purchase on "
 "account and which are used to complete the identity and credit check are "
@@ -1027,17 +1022,17 @@ msgstr ""
 "transmitted to payolution. <a href=\"%LINK%\" target=\"_blank\">My "
 "consent</a> can be revoked at any time with effect for the future."
 
-#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:488
+#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:486
 msgid "You need to enter your birthdate to proceed."
 msgstr "You need to enter your birthdate to proceed."
 
-#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:503
+#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:501
 msgid "You need to enter a valid date as birthdate."
 msgstr "You need to enter a valid date as birthdate."
 
-#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:522
-msgid "You need to give your consent for data processing on Payolution"
-msgstr "You need to give your consent for data processing on Payolution."
+#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:520
+msgid "You need to give your consent for data processing"
+msgstr "You need to give your consent for data processing to continue"
 
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:61
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:106

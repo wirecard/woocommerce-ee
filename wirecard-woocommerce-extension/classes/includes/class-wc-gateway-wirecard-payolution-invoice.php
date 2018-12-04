@@ -54,8 +54,8 @@ class WC_Gateway_Wirecard_Payolution_Invoice extends WC_Wirecard_Payment_Gateway
 		$this->id                 = 'wirecard_ee_payolution-inv';
 		$this->icon               = WIRECARD_EXTENSION_URL . 'assets/images/payolution.png';
 		$this->method_title       = __( 'Wirecard Payolution Invoice', 'wirecard-woocommerce-extension' );
-		$this->method_name        = __( 'Guaranteed Invoice by payolution', 'wirecard-woocommerce-extension' );
-		$this->method_description = __( 'Guaranteed Invoice by payolution via Wirecard Payment Processing Gateway', 'wirecard-woocommerce-extension' );
+		$this->method_name        = __( 'Wirecard Payolution Invoice', 'wirecard-woocommerce-extension' );
+		$this->method_description = __( 'Payolution Invoice via Wirecard Payment Processing Gateway', 'wirecard-woocommerce-extension' );
 		$this->has_fields         = true;
 
 		$this->supports = array(
@@ -267,13 +267,11 @@ class WC_Gateway_Wirecard_Payolution_Invoice extends WC_Wirecard_Payment_Gateway
 	public function is_available() {
 
 		if ( parent::is_available() ) {
-			$customer       = WC()->customer;
-			$cart           = WC()->cart;
-			$price_total    = floatval( $cart->get_total( 'total' ) );
-			$payolution_mid = $this->get_option( 'payolution_mid' );
+			$customer    = WC()->customer;
+			$cart        = WC()->cart;
+			$price_total = floatval( $cart->get_total( 'total' ) );
 
-			if ( empty( $payolution_mid ) ||
-				! in_array( get_woocommerce_currency(), $this->get_option( 'allowed_currencies' ) ) ||
+			if ( ! in_array( get_woocommerce_currency(), $this->get_option( 'allowed_currencies' ) ) ||
 				! $this->validate_cart_amounts( $price_total ) ||
 				! $this->validate_cart_products( $cart ) ||
 				! $this->validate_billing_shipping_address( $customer ) ||
@@ -519,7 +517,7 @@ AGREEMENT_CHECKBOX;
 	public function validate_gdpr_allowance_given( $gdpr_allowance_str ) {
 
 		if ( empty( $gdpr_allowance_str ) || ( '1' != $gdpr_allowance_str ) ) {
-			wc_add_notice( __( 'You need to give your consent for data processing on Payolution', 'wirecard-woocommerce-extension' ), 'error' );
+			wc_add_notice( __( 'You need to give your consent for data processing', 'wirecard-woocommerce-extension' ), 'error' );
 			return false;
 		}
 

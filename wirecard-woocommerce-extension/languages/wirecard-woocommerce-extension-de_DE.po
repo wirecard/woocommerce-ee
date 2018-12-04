@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Plugins - Wirecard WooCommerce Extension - Stable (latest release) package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2018-11-30 13:42+0000\n"
+"PO-Revision-Date: 2018-12-04 12:38+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: Plugins - Wirecard WooCommerce Extension - Stable "
 "(latest release)(latest release)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-30 13:42+0000\n"
+"POT-Creation-Date: 2018-12-04 12:37+0000\n"
 "Last-Translator: marco <marco.horn@wirecard.com>\n"
 "Language-Team: German\n"
 "X-Loco-Version: 2.2.0; wp-4.9.8"
@@ -872,12 +872,12 @@ msgstr ""
 "niedriger ist als der hier definierte Wert (in Standardwährung)."
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:430
-#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:450
+#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:448
 msgid "Date of birth"
 msgstr "Geburtsdatum"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:450
-#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:497
+#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:495
 msgid "You need to be older then 18 to order."
 msgstr ""
 "Für die Nutzung dieses Zahlungmittels müssen Sie mindestens 18 Jahre alt "
@@ -929,18 +929,13 @@ msgstr ""
 "anbieten."
 
 #: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:56
+#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:57
 msgid "Wirecard Payolution Invoice"
 msgstr "Wirecard Payolution Invoice"
 
-#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:57
-msgid "Guaranteed Invoice by payolution"
-msgstr "Guaranteed Invoice by payolution"
-
 #: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:58
-msgid ""
-"Guaranteed Invoice by payolution via Wirecard Payment Processing Gateway"
-msgstr ""
-"Guaranteed Invoice by payolution via Wirecard Payment Processing Gateway"
+msgid "Payolution Invoice via Wirecard Payment Processing Gateway"
+msgstr "Payolution Invoice via Wirecard Payment Processing Gateway"
 
 #: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:101
 msgid "Activate payment method Payolution Invoice"
@@ -1022,11 +1017,11 @@ msgstr ""
 "Die payolution merchant ID wird für die widerrufbare Zustimmung der "
 "Datenverarbeitung im payolution System benötigt."
 
-#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:460
+#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:458
 msgid "GPRR allowance"
 msgstr "Einwilligung"
 
-#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:462
+#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:460
 msgid ""
 "I agree that the data which are necessary for the liquidation of purchase on "
 "account and which are used to complete the identity and credit check are "
@@ -1038,20 +1033,19 @@ msgstr ""
 "einverstanden. <a href=\"%LINK%\" target=\"_blank\">Meine Einwilligung</a> "
 "kann ich jederzeit mit Wirkung für die Zukunft widerrufen."
 
-#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:488
+#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:486
 msgid "You need to enter your birthdate to proceed."
 msgstr ""
 "Für die Nutzung dieses Zahlungmittels müssen Sie Ihr Geburtsdatum eingeben."
 
-#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:503
+#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:501
 msgid "You need to enter a valid date as birthdate."
 msgstr "Es ist ein gültiges Datumsformat erforderlich."
 
-#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:522
-msgid "You need to give your consent for data processing on Payolution"
+#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:520
+msgid "You need to give your consent for data processing"
 msgstr ""
-"Sie müssen der Datenverarbeitung bei Payolution zustimmen um diese "
-"Zahlungsmethode nutzen zu können."
+"Sie müssen Ihr Einverständnis geben, um diese Zahlmethode nutzen zu können"
 
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:61
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:106
