@@ -120,9 +120,9 @@ jQuery( document.body ).on(
 );
 
 checkout_form.on(
-    'change', // when payment selection changes
-    'input[name^="payment_method"]',
-    getUpiRequestData
+	'change', // when payment selection changes
+	'input[name^="payment_method"]',
+	getUpiRequestData
 );
 
 jQuery( document ).on(

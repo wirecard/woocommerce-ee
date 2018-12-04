@@ -285,14 +285,14 @@ function placeOrderEvent() {
 					element.remove();
 				} else {
 					if ( response.card.hasOwnProperty( el ) ) {
-					    jQuery( "<input>" ).attr(
-					        {
-					            type: "hidden",
-					            name: el,
-					            id: "#" + el,
-					            value: response.card[el]
-					        }
-					    ).appendTo( checkout_form );
+						jQuery( "<input>" ).attr(
+							{
+								type: "hidden",
+								name: el,
+								id: "#" + el,
+								value: response.card[el]
+							}
+						).appendTo( checkout_form );
 					}
 				}
 			}
@@ -304,13 +304,13 @@ function placeOrderEvent() {
 					type: "POST",
 					url: php_vars.vault_url,
 					data: {
-					    "action": "save_cc_to_vault",
-					    "token": response.token_id,
-					    "mask_pan": response.masked_account_number
+						"action": "save_cc_to_vault",
+						"token": response.token_id,
+						"mask_pan": response.masked_account_number
 					},
 					dataType: "json",
 					error: function (data) {
-					    console.log( data );
+						console.log( data );
 					}
 				}
 			);
