@@ -1,14 +1,5 @@
 [
 {
-    "release": "1.4.3",
-    "shopsystem": "WooCommerce",
-    "tested": "3.5.1",
-    "compatibility": "3.3.4",
-    "changelog": [
-      "Prevent a possible issue during checkout where if you canceled a payment the credit-card might have not worked"
-    ]
-},
-{
     "release": "1.4.2",
     "shopsystem": "WooCommerce",
     "tested": "3.5.1",
