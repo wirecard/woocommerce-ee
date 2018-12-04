@@ -161,7 +161,7 @@ checkout_form.on(
 	function() {
 		if ( $( "#payment_method_wirecard_ee_sepadirectdebit" ).is( ":checked" ) ) {
 			if ( ! sepa_check ) {
-				if (validate_inputs() === false) {
+				if ( validate_inputs() === false ) {
 					return false;
 				}
 				get_sepa_mandate_data();
