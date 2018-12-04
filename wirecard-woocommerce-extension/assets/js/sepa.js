@@ -56,7 +56,6 @@ function process_order() {
 		checkout_form.submit();
 	} else {
 		popup.dialog( "close" );
-		$( "body" ).css( "overflow", "auto" );
 	}
 }
 
@@ -126,17 +125,16 @@ function get_sepa_mandate_data() {
 	);
 }
 
-jQuery( document ).off( "checkout_error" ).on(
+$( document ).off( "checkout_error" ).on(
 	"checkout_error",
 	"body",
 	function () {
-		$( "body" ).css( "overflow", "auto" );
 		popup.dialog( "close" );
 	}
 );
 
-jQuery( document.body ).on(
-	'updated_checkout',
+$( document.body ).on(
+	"updated_checkout",
 	function() {
 			/**
 			* Create popup window
@@ -149,6 +147,14 @@ jQuery( document.body ).on(
 					hide: "blind"
 				}
 			);
+	}
+);
+
+$( document.body ).on(
+	"dialogclose",
+	popup,
+	function() {
+		$( "body" ).css( "overflow", "auto" );
 	}
 );
 
@@ -169,7 +175,6 @@ checkout_form.on(
 			} else {
 				sepa_check = false;
 				popup.dialog( "close" );
-				$( "body" ).css( "overflow", "auto" );
 				return true;
 			}
 		}
