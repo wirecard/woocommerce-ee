@@ -115,6 +115,7 @@ jQuery( document ).ready(
 			placeUpiOrderEvent
 		);
 
+        // if the germanized plugin is installed this gets triggered on switching payment method as well
 		jQuery( document.body ).on(
 			'updated_checkout', // when checkout data gets updated so that we have the correct user data
 			getUpiRequestData
@@ -155,4 +156,3 @@ function placeUpiOrderEvent() {
 	}
 	processing = false;
 }
-
