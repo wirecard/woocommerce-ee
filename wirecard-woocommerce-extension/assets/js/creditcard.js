@@ -48,7 +48,7 @@ function setToken() {
 			id: "tokenId",
 			value: token
 		}
-	).appendTo( jQuery( "form.checkout" ) );
+	).appendTo( checkout_form );
 }
 
 /**
@@ -68,7 +68,7 @@ function addVaultData( data, saved_credit_cards ) {
  *
  * @since 1.1.0
  */
-function getVaultData(saved_credit_cards) {
+function getVaultData( saved_credit_cards ) {
 	var new_credit_card = jQuery( "#wc_payment_method_wirecard_new_credit_card" );
 	jQuery( ".show-spinner", saved_credit_cards ).show();
 	jQuery.ajax(
@@ -173,7 +173,7 @@ function resizeIframe() {
  *
  * @since 1.0.0
  */
-function logCallback(response) {
+function logCreditCardCallback( response ) {
 	console.error( response );
 	processing = false;
 	token      = null;
@@ -184,14 +184,14 @@ function logCallback(response) {
  *
  * @since 1.0.0
  */
-function renderForm(request_data) {
+function renderForm( request_data ) {
 	/* global WirecardPaymentPage b:true */
 	WirecardPaymentPage.seamlessRenderForm(
 		{
 			requestData: request_data,
 			wrappingDivId: "wc_payment_method_wirecard_creditcard_form",
 			onSuccess: resizeIframe,
-			onError: logCallback
+			onError: logCreditCardCallback
 		}
 	);
 }
@@ -201,7 +201,7 @@ function renderForm(request_data) {
  *
  * @since 1.0.0
  */
-function getRequestData(success, error) {
+function getRequestData( success, error ) {
 	jQuery( "#wc_payment_method_wirecard_creditcard_form" ).empty();
 	jQuery( ".show-spinner" ).show();
 	jQuery.ajax(
@@ -211,11 +211,11 @@ function getRequestData(success, error) {
 			cache: false,
 			data: {"action": "get_credit_card_request_data"},
 			dataType: "json",
-			success: function (data) {
+			success: function ( data ) {
 				jQuery( ".show-spinner" ).hide();
 				success( JSON.parse( data.data ) );
 			},
-			error: function (data) {
+			error: function ( data ) {
 				jQuery( ".show-spinner" ).hide();
 				error( data );
 			}
@@ -224,145 +224,159 @@ function getRequestData(success, error) {
 }
 
 function loadCreditCardData() {
-	getRequestData( renderForm, logCallback );
+	getRequestData( renderForm, logCreditCardCallback );
 	getVaultData();
 	return false;
 }
 
-jQuery( document.body ).on(
-	'updated_checkout',
-	function() {
-		var paymentMethod = jQuery( 'li.wc_payment_method > input[name=payment_method]:checked' ).val();
+/**
+ * this method gets called whenever the payment selection changes or checkout data was updated
+ *
+ * @since 1.4.3
+ */
+function paymentMethodChangeAndCheckoutUpdateEvent() {
+	var paymentMethod = jQuery( 'li.wc_payment_method > input[name=payment_method]:checked' ).val();
 
-		if ( paymentMethod === "wirecard_ee_creditcard" ) {
-			loadCreditCardData();
-			loadWirecardEEScripts();
-		}
-
-		if ( false === processing ) {
-			saved_credit_cards = jQuery( "#wc_payment_method_wirecard_creditcard_vault" );
-			checkout_form      = jQuery( "form.checkout" );
-			new_credit_card    = jQuery( "#wc_payment_method_wirecard_new_credit_card" );
-			new_credit_card.hide();
-			loadWirecardEEScripts();
-		}
-
-		if (jQuery( ".cards" ).html() === "" &&
-			paymentMethod === "wirecard_ee_creditcard") {
-			getVaultData( saved_credit_cards );
-		}
+	if ( paymentMethod === "wirecard_ee_creditcard" ) {
+		loadCreditCardData();
+		loadWirecardEEScripts();
 	}
-);
+
+	if ( false === processing ) {
+		saved_credit_cards = jQuery( "#wc_payment_method_wirecard_creditcard_vault" );
+		checkout_form      = jQuery( "form.checkout" );
+		new_credit_card    = jQuery( "#wc_payment_method_wirecard_new_credit_card" );
+		new_credit_card.hide();
+		loadWirecardEEScripts();
+	}
+
+	if ( jQuery( ".cards" ).html() === "" &&
+		paymentMethod === "wirecard_ee_creditcard" ) {
+		getVaultData( saved_credit_cards );
+	}
+}
 
 /**
- * Submit the seamless form before order is placed
+ * this function gets called whenever place order button is pressed
  *
- * @since 1.0.0
+ * @since 1.4.3
  */
-jQuery( "form.checkout" ).on(
-	"checkout_place_order",
-	function () {
+function placeOrderEvent() {
+	/**
+	 * Add the tokenId to the submited form
+	 *
+	 * @since 1.0.0
+	 */
+	function formSubmitSuccessHandler( response ) {
+		if ( response.hasOwnProperty( "token_id" ) ) {
+			token = response.token_id;
+		} else if ( response.hasOwnProperty( "card_token" ) && response.card_token.hasOwnProperty( "token" )) {
+			token = response.card_token.token;
 
-		/**
-		 * Add the tokenId to the submited form
-		 *
-		 * @since 1.0.0
-		 */
-		function formSubmitSuccessHandler(response) {
-			if ( response.hasOwnProperty( "token_id" ) ) {
-				token = response.token_id;
-			} else if ( response.hasOwnProperty( "card_token" ) && response.card_token.hasOwnProperty( "token" )) {
-				token = response.card_token.token;
+			var fields = ["expiration_month", "expiration_year"];
 
-				var fields = ["expiration_month", "expiration_year"];
-
-				for ( var el in  fields ) {
-					if ( ! fields.hasOwnProperty( el ) ) {
-						break;
-					}
-					el          = fields[el];
-					var element = jQuery( "#" + el );
-					if ( element.length > 0 ) {
-						element.remove();
-					} else {
-						if ( response.card.hasOwnProperty( el ) ) {
-							jQuery( "<input>" ).attr(
-								{
-									type: "hidden",
-									name: el,
-									id: "#" + el,
-									value: response.card[el]
-								}
-							).appendTo( checkout_form );
-						}
+			for ( var el in  fields ) {
+				if ( ! fields.hasOwnProperty( el ) ) {
+					break;
+				}
+				el          = fields[el];
+				var element = jQuery( "#" + el );
+				if ( element.length > 0 ) {
+					element.remove();
+				} else {
+					if ( response.card.hasOwnProperty( el ) ) {
+						jQuery( "<input>" ).attr(
+							{
+								type: "hidden",
+								name: el,
+								id: "#" + el,
+								value: response.card[el]
+							}
+						).appendTo( checkout_form );
 					}
 				}
 			}
-
-			if (jQuery( "#wirecard-store-card" ).is( ":checked" ) && response.transaction_state === "success") {
-				jQuery.ajax(
-					{
-						type: "POST",
-						url: php_vars.vault_url,
-						data: {
-							"action": "save_cc_to_vault",
-							"token": response.token_id,
-							"mask_pan": response.masked_account_number
-						},
-						dataType: "json",
-						error: function (data) {
-							console.log( data );
-						}
-					}
-				);
-			}
-
-			if (jQuery( "#tokenId" ).length > 0) {
-				jQuery( "#tokenId" ).remove();
-			}
-
-			jQuery( "<input>" ).attr(
-				{
-					type: "hidden",
-					name: "tokenId",
-					id: "tokenId",
-					value: token
-				}
-			).appendTo( checkout_form );
-
-			checkout_form.submit();
 		}
 
-		/**
-		 * Submit Payment page seamless form
-		 * @since 1.1.0
-		 */
-		function submitForm() {
-			WirecardPaymentPage.seamlessSubmitForm(
+		if ( jQuery( "#wirecard-store-card" ).is( ":checked" ) && response.transaction_state === "success" ) {
+			jQuery.ajax(
 				{
-					onSuccess: formSubmitSuccessHandler,
-					onError: logCallback
+					type: "POST",
+					url: php_vars.vault_url,
+					data: {
+						"action": "save_cc_to_vault",
+						"token": response.token_id,
+						"mask_pan": response.masked_account_number
+					},
+					dataType: "json",
+					error: function (data) {
+						console.log( data );
+					}
 				}
 			);
 		}
 
-		if ( jQuery( 'li.wc_payment_method > input[name=payment_method]:checked' ).val() === 'wirecard_ee_creditcard' &&
-			processing === false ) {
-			processing = true;
-			if ( token ) {
-				return true;
-			} else {
-				submitForm();
-				return false;
+		if ( jQuery( "#tokenId" ).length > 0 ) {
+			jQuery( "#tokenId" ).remove();
+		}
+
+		jQuery( "<input>" ).attr(
+			{
+				type: "hidden",
+				name: "tokenId",
+				id: "tokenId",
+				value: token
 			}
+		).appendTo( checkout_form );
+
+		checkout_form.submit();
+	}
+
+	/**
+	 * Submit Payment page seamless form
+	 * @since 1.1.0
+	 */
+	function submitForm() {
+		WirecardPaymentPage.seamlessSubmitForm(
+			{
+				wrappingDivId: "wc_payment_method_wirecard_creditcard_form",
+				onSuccess: formSubmitSuccessHandler,
+				onError: logCreditCardCallback
+			}
+		);
+	}
+
+	if ( jQuery( 'li.wc_payment_method > input[name=payment_method]:checked' ).val() === 'wirecard_ee_creditcard' &&
+		processing === false ) {
+		processing = true;
+		if ( token ) {
+			return true;
+		} else {
+			submitForm();
+			return false;
 		}
 	}
-);
+}
 
-jQuery( document ).one(
-	"checkout_error",
-	"body",
-	function () {
-		getRequestData( renderForm, logCallback );
+jQuery( document ).ready(
+	function() {
+		checkout_form.on(
+			'change', // when payment selection changes
+			'input[name^="payment_method"]',
+			function () {
+				//this is to prevent double loading of cc form when germanized is installed
+				if (window.germanized == undefined ) {
+					paymentMethodChangeAndCheckoutUpdateEvent();
+				}
+			}
+		).on(
+			'checkout_place_order', // when order is placed
+			placeOrderEvent
+		);
+
+		jQuery( document.body ).on(
+			'updated_checkout', // when checkout data gets updated so that we have the correct user data
+			paymentMethodChangeAndCheckoutUpdateEvent
+		)
 	}
 );
