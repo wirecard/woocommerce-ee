@@ -574,7 +574,7 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 	}
 
 	/**
-	 * Create RatePay script
+	 * Create Ratepay script
 	 *
 	 * @return string
 	 * @since 1.1.0
@@ -601,7 +601,7 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 	}
 
 	/**
-	 * Returns deviceIdentToken for ratepayscript
+	 * Returns deviceIdentToken for Ratepay script
 	 *
 	 * @return string
 	 * @since 1.1.0

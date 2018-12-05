@@ -69,3 +69,4 @@ Our general Terms of Use can be found on [Github](https://github.com/wirecard/wo
 == Changelog ==
 - Update SEPA Direct Debit mandate loading
 - Update credit card error handling
+- Add checkbox for terms and conditions when paying with Guaranteed Invoice by Wirecard
