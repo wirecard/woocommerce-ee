@@ -240,7 +240,8 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 		$order = wc_get_order( $order_id );
 
 		if ( ! wp_verify_nonce( $_POST['ratepay_nonce'] ) ||
-			! $this->validate_date_of_birth( $_POST['invoice_date_of_birth'] ) ) {
+			! $this->validate_date_of_birth( $_POST['invoice_date_of_birth'] ) ||
+			! $this->validate_consent( $_POST['invoice_data_protection'] ) ) {
 			return false;
 		}
 		$this->transaction = new RatepayInvoiceTransaction();
@@ -425,13 +426,26 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 	 * @since 1.1.0
 	 */
 	public function payment_fields() {
-		$html  = $this->create_ratepay_script();
+		$html = $this->create_ratepay_script();
+
 		$html .= '<p class="form-row form-row-wide validate-required">
 		<label for="invoice_dateofbirth" class="">' . __( 'Date of birth', 'wirecard-woocommerce-extension' ) . '
 		<abbr class="required" title="required">*</abbr></label>
 		<input class="input-text " name="invoice_date_of_birth" id="invoice_date_of_birth" placeholder="" type="date" />
 		<input type="hidden" name="ratepay_nonce" value="' . wp_create_nonce() . '" />
 		</p>';
+
+		$html .= '
+        <br />
+        <p class="form-row form-row-wide validate-required">
+        <div class="checkbox">
+        <label for="invoice_data_protection">
+        <input type="checkbox" name="invoice_data_protection" id="invoice_data_protection">&nbsp;'
+		. __( 'I herewith confirm that I have read the privacy notice and additional terms and conditions for Wirecard payment types and that I accept their validity', 'wirecard-woocommerce-extension' ) .
+		'<abbr class="required" title="required">*</abbr></label>
+        </div>
+        </p>
+		';
 
 		echo $html;
 	}
@@ -450,6 +464,22 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 			wc_add_notice( __( 'You need to be older then 18 to order.', 'wirecard-woocommerce-extension' ), 'error' );
 			return false;
 		}
+		return true;
+	}
+
+	/**
+	 * Validates consent for sending data to Wirecard.
+	 *
+	 * @param $consent
+	 * @return bool
+	 * @since 1.4.3
+	 */
+	public function validate_consent( $consent ) {
+		if ( 'on' !== $consent ) {
+			wc_add_notice( __( 'You must agree to the privacy notice and additional terms of Wirecard payment methods', 'wirecard-woocommerce-extension' ), 'error' );
+			return false;
+		}
+
 		return true;
 	}
 
@@ -544,7 +574,7 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 	}
 
 	/**
-	 * Create RatePay script
+	 * Create Ratepay script
 	 *
 	 * @return string
 	 * @since 1.1.0
@@ -558,7 +588,7 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 		return '<script language="JavaScript">
 			var di = {t: "' . $device_ident . '", v: "WDWL", l: "Checkout"};
 			</script>
-				<script type="text/javascript" src="//d.ratepay.com/WDWL/di.js">
+			<script type="text/javascript" src="//d.ratepay.com/WDWL/di.js">
 			</script>
 			<noscript>
 				<link rel="stylesheet" type="text/css" href="//d.ratepay.com/di.css?t=' . $device_ident . '&v=WDWL&l=Checkout" >
@@ -571,7 +601,7 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 	}
 
 	/**
-	 * Returns deviceIdentToken for ratepayscript
+	 * Returns deviceIdentToken for Ratepay script
 	 *
 	 * @return string
 	 * @since 1.1.0

@@ -1,5 +1,17 @@
 [
 {
+    "release": "1.4.3",
+    "shopsystem": "WooCommerce",
+    "tested": "3.5.1",
+    "compatibility": "3.3.4",
+    "changelog": [
+      "Update SEPA Direct Debit mandate loading",
+      "Update credit card UI error handling",
+      "Add checkbox for terms and conditions when paying with Guaranteed Invoice by Wirecard",
+      "Update LiveZilla live chat url"
+    ]
+},
+{
     "release": "1.4.2",
     "shopsystem": "WooCommerce",
     "tested": "3.5.1",
