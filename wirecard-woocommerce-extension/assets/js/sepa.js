@@ -56,7 +56,6 @@ function process_order() {
 		checkout_form.submit();
 	} else {
 		popup.dialog( "close" );
-		$( "body" ).css( "overflow", "auto" );
 	}
 }
 
@@ -126,16 +125,17 @@ function get_sepa_mandate_data() {
 	);
 }
 
-jQuery( document ).ajaxComplete(
+$( document ).off( "checkout_error" ).on(
+	"checkout_error",
+	"body",
+	function () {
+		popup.dialog( "close" );
+	}
+);
+
+$( document.body ).on(
+	"updated_checkout",
 	function() {
-			jQuery( document ).off( "checkout_error" ).on(
-				"checkout_error",
-				"body",
-				function () {
-					$( "body" ).css( "overflow", "auto" );
-					popup.dialog( "close" );
-				}
-			);
 			/**
 			* Create popup window
 			*/
@@ -147,30 +147,36 @@ jQuery( document ).ajaxComplete(
 					hide: "blind"
 				}
 			);
+	}
+);
 
-			/**
-			* Submit the seamless form before order is placed
-			*
-			* @since 1.0.0
-			*/
-			checkout_form.on(
-				"checkout_place_order",
-				function() {
-					if ( $( "#payment_method_wirecard_ee_sepadirectdebit" ).is( ":checked" ) ) {
-						if ( ! sepa_check ) {
-							if (validate_inputs() === false) {
-								return false;
-							}
-							get_sepa_mandate_data();
-							return false;
-						} else {
-							sepa_check = false;
-							popup.dialog( "close" );
-							$( "body" ).css( "overflow", "auto" );
-							return true;
-						}
-					}
+$( document.body ).on(
+	"dialogclose",
+	popup,
+	function() {
+		$( "body" ).css( "overflow", "auto" );
+	}
+);
+
+/**
+ * Submit the seamless form before order is placed
+ * @since 1.0.0
+ */
+checkout_form.on(
+	"checkout_place_order",
+	function() {
+		if ( $( "#payment_method_wirecard_ee_sepadirectdebit" ).is( ":checked" ) ) {
+			if ( ! sepa_check ) {
+				if ( validate_inputs() === false ) {
+					return false;
 				}
-			);
+				get_sepa_mandate_data();
+				return false;
+			} else {
+				sepa_check = false;
+				popup.dialog( "close" );
+				return true;
+			}
+		}
 	}
 );

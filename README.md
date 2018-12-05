@@ -11,12 +11,10 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Coverage/a3d65afeb5b94e919555dc86e2e6dc68)](https://www.codacy.com/app/Wirecard/woocommerce-ee?utm_source=github.com&utm_medium=referral&utm_content=wirecard/woocommerce-ee&utm_campaign=Badge_Coverage)
 
 ***
-## General information 
-Before proceeding, please read [general information](https://github.com/wirecard/woocommerce-ee/wiki/Wirecard-Shop-Extensions-General-Information), as it provides information on Wirecard shop plugins functionality and features.
+## General Information 
+Before you proceed, please read our [General Information](https://github.com/wirecard/woocommerce-ee/wiki/Wirecard-Shop-Extensions-General-Information) for more details on Wirecard Shop Extension functionality and features.
 
 ***
-## WooCommerce documentation - Wiki
+## Documentation
+Our [documentation](https://github.com/wirecard/woocommerce-ee/wiki) provides detailed technical information: it includes extensive instructions on how to [install](https://github.com/wirecard/woocommerce-ee/wiki/Installation) and [configure](https://github.com/wirecard/woocommerce-ee/wiki/Configuration) the extension. It also lists all available [payment methods](https://github.com/wirecard/woocommerce-ee/wiki#supported-payment-methods) and post-processing operations.
 
-[WooCommerce Wiki](https://github.com/wirecard/woocommerce-ee/wiki) provides detailed technical documentation.
-It lists all available [payment methods](https://github.com/wirecard/woocommerce-ee/wiki#supported-payment-methods) and back-end operations.
-Furthermore, it includes extensive instructions how to [install](https://github.com/wirecard/woocommerce-ee/wiki/Installation) and [configure](https://github.com/wirecard/woocommerce-ee/wiki/Configuration).

@@ -33,15 +33,6 @@ var processing    = false;
 $                 = jQuery;
 
 /**
- * Display error massages
- *
- * @since 1.1.0
- */
-function logCallback( response ) {
-	console.error( response );
-}
-
-/**
  * Resize the unionpayinternational form when loaded
  *
  * @since 1.1.0
@@ -62,7 +53,9 @@ function renderUpiForm( request_data ) {
 			requestData: request_data,
 			wrappingDivId: "wc_payment_method_wirecard_unionpayinternational_form",
 			onSuccess: resizeUpiIframe,
-			onError: logCallback
+			onError: function ( response ) {
+				console.error( response );
+			}
 		}
 	);
 }
@@ -73,21 +66,23 @@ function renderUpiForm( request_data ) {
  * @since 1.1.0
  */
 function getUpiRequestData() {
-	$.ajax(
-		{
-			type: "POST",
-			/* global upi_vars b:true */
-			url: upi_vars.ajax_url,
-			data: { "action" : "get_upi_request_data" },
-			dataType: "json",
-			success: function (data) {
-				renderUpiForm( JSON.parse( data.data ) );
-			},
-			error: function (data) {
-				logCallback( data );
+	if ( $( 'li.wc_payment_method > input[name=payment_method]:checked' ).val() === "wirecard_ee_unionpayinternational" ) {
+		$.ajax(
+			{
+				type: "POST",
+				/* global upi_vars b:true */
+				url: upi_vars.ajax_url,
+				data: { "action" : "get_upi_request_data" },
+				dataType: "json",
+				success: function (data) {
+					renderUpiForm( JSON.parse( data.data ) );
+				},
+				error: function (data) {
+					console.error( data );
+				}
 			}
-		}
-	);
+		);
+	}
 }
 
 /**
@@ -109,47 +104,60 @@ function formSubmitUpiSuccessHandler( response ) {
 	checkout_form.submit();
 }
 
-jQuery( document ).ajaxComplete(
+jQuery( document ).ready(
 	function() {
-		if ( $( "#wc_payment_method_wirecard_unionpayinternational_form" ).is( ":visible" ) ) {
-			getUpiRequestData();
-		}
-
-		$( "input[name=payment_method]" ).change(
-			function() {
-				if ( $( this ).val() === "wirecard_ee_unionpayinternational" ) {
-					getUpiRequestData();
-					return false;
-				}
-			}
-		);
-
-		/**
-	 * Submit the seamless form before order is placed
-	 *
-	 * @since 1.1.0
-	 */
 		checkout_form.on(
-			"checkout_place_order",
-			function() {
-				if ( $( "#payment_method_wirecard_ee_unionpayinternational" )[0].checked === true && processing === false ) {
-					processing = true;
-					if ( token ) {
-						return true;
-					} else {
-						/* global WirecardPaymentPage b:true */
-						WirecardPaymentPage.seamlessSubmitForm(
-							{
-								onSuccess: formSubmitUpiSuccessHandler,
-								onError: logCallback,
-								wrappingDivId: "wc_payment_method_wirecard_unionpayinternational_form"
-							}
-						);
-						return false;
-					}
+			'change', // when payment selection changes
+			'input[name^="payment_method"]',
+			function () {
+				//this is to prevent double loading of cc form when germanized is installed
+				if (window.germanized == undefined ) {
+					getUpiRequestData();
 				}
-				processing = false;
 			}
+		).on(
+			'checkout_place_order', // when order is placed
+			placeUpiOrderEvent
 		);
+
+		// if the germanized plugin is installed this gets triggered on switching payment method as well
+		jQuery( document.body ).on(
+			'updated_checkout', // when checkout data gets updated so that we have the correct user data
+			getUpiRequestData
+		)
 	}
 );
+
+jQuery( document ).on(
+	"checkout_error",
+	"body",
+	getUpiRequestData
+);
+
+/**
+ * Submit the seamless form before order is placed
+ *
+ * @since 1.1.0
+ */
+function placeUpiOrderEvent() {
+	if ( $( 'li.wc_payment_method > input[name=payment_method]:checked' ).val() === "wirecard_ee_unionpayinternational"
+		&& processing === false ) {
+		processing = true;
+		if ( token ) {
+			return true;
+		} else {
+			/* global WirecardPaymentPage b:true */
+			WirecardPaymentPage.seamlessSubmitForm(
+				{
+					onSuccess: formSubmitUpiSuccessHandler,
+					onError: function ( response ) {
+						console.error( response );
+					},
+					wrappingDivId: "wc_payment_method_wirecard_unionpayinternational_form"
+				}
+			);
+			return false;
+		}
+	}
+	processing = false;
+}
