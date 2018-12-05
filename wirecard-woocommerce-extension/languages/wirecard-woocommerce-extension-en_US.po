@@ -1039,3 +1039,7 @@ msgstr "I authorize the creditor"
 #: classes/helper/sepa-template.php:72
 msgid "sepa_text_2b"
 msgstr "."
+
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:445
+msgid "I herewith confirm that I have read the privacy notice and additional terms and conditions for Wirecard payment types and that I accept their validity"
+msgstr "I herewith confirm that I have read the privacy notice and additional terms and conditions for Wirecard payment types and that I accept their validity"

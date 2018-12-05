@@ -85,6 +85,7 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 
 		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
 		add_action( 'woocommerce_after_checkout_validation', 'validate', 10, 2 );
+        add_action( 'wp_enqueue_scripts', array( $this, 'payment_scripts' ), 999 );
 
 		parent::add_payment_gateway_actions();
 	}
@@ -425,13 +426,27 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 	 * @since 1.1.0
 	 */
 	public function payment_fields() {
+        wp_enqueue_script('invoice_js');
 		$html  = $this->create_ratepay_script();
+
 		$html .= '<p class="form-row form-row-wide validate-required">
 		<label for="invoice_dateofbirth" class="">' . __( 'Date of birth', 'wirecard-woocommerce-extension' ) . '
 		<abbr class="required" title="required">*</abbr></label>
 		<input class="input-text " name="invoice_date_of_birth" id="invoice_date_of_birth" placeholder="" type="date" />
 		<input type="hidden" name="ratepay_nonce" value="' . wp_create_nonce() . '" />
 		</p>';
+
+		$html .= '
+        <br />
+        <p class="form-row form-row-wide validate-required">
+        <div class="checkbox">
+        <label for="invoice_dataprotection">
+        <input type="checkbox" name="invoice_data_protection" id="invoice_data_protection">&nbsp;'
+        . __( 'I herewith confirm that I have read the privacy notice and additional terms and conditions for Wirecard payment types and that I accept their validity', 'wirecard-woocommerce-extension' ) .
+        '<abbr class="required" title="required">*</abbr></label>
+        </div>
+        </p>
+		';
 
 		echo $html;
 	}
@@ -558,7 +573,7 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 		return '<script language="JavaScript">
 			var di = {t: "' . $device_ident . '", v: "WDWL", l: "Checkout"};
 			</script>
-				<script type="text/javascript" src="//d.ratepay.com/WDWL/di.js">
+			<script type="text/javascript" src="//d.ratepay.com/WDWL/di.js">
 			</script>
 			<noscript>
 				<link rel="stylesheet" type="text/css" href="//d.ratepay.com/di.css?t=' . $device_ident . '&v=WDWL&l=Checkout" >
@@ -579,4 +594,16 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 	private function create_device_ident() {
 		return md5( $this->get_option( 'merchant_account_id' ) . '_' . microtime() );
 	}
+
+    /**
+     * Register custom scripts for payment method
+     *
+     * @since 1.4.4
+     */
+    public function payment_scripts() {
+        $gateway_url = WIRECARD_EXTENSION_URL;
+
+        wp_register_script( 'invoice_js', $gateway_url . 'assets/js/invoice.js', array( 'jquery' ), null, true );
+    }
+
 }

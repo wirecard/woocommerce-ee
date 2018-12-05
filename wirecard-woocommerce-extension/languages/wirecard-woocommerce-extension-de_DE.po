@@ -1092,3 +1092,7 @@ msgstr "Weiter >"
 #: classes/admin/class-wirecard-settings.php:119
 msgid "< Back"
 msgstr "< Zurück"
+
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:445
+msgid "I herewith confirm that I have read the privacy notice and additional terms and conditions for Wirecard payment types and that I accept their validity"
+msgstr "Hiermit bestätige ich, dass ich die Datenschutzhinweise und zusätzliche Geschäftsbedingungen für Wirecard-Zahlarten zur Kenntnis genommen habe und mit deren Geltung einverstanden bin."
