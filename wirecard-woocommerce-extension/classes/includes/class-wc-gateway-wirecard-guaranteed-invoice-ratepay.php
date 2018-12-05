@@ -85,7 +85,6 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 
 		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
 		add_action( 'woocommerce_after_checkout_validation', 'validate', 10, 2 );
-		add_action( 'wp_enqueue_scripts', array( $this, 'payment_scripts' ), 999 );
 
 		parent::add_payment_gateway_actions();
 	}
@@ -241,7 +240,8 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 		$order = wc_get_order( $order_id );
 
 		if ( ! wp_verify_nonce( $_POST['ratepay_nonce'] ) ||
-			! $this->validate_date_of_birth( $_POST['invoice_date_of_birth'] ) ) {
+			! $this->validate_date_of_birth( $_POST['invoice_date_of_birth'] ) ||
+            ! $this->validate_consent( $_POST['invoice_data_protection'] ) ) {
 			return false;
 		}
 		$this->transaction = new RatepayInvoiceTransaction();
@@ -426,7 +426,6 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 	 * @since 1.1.0
 	 */
 	public function payment_fields() {
-		wp_enqueue_script( 'invoice_js' );
 		$html = $this->create_ratepay_script();
 
 		$html .= '<p class="form-row form-row-wide validate-required">
@@ -467,6 +466,22 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 		}
 		return true;
 	}
+
+    /**
+     * Validates consent for sending data to Wirecard.
+     *
+     * @param $consent
+     * @return bool
+     * @since 1.4.4
+     */
+	public function validate_consent ( $consent ) {
+	    if ( 'on' !== $consent ) {
+            wc_add_notice( __( 'You must agree to the privacy notice and additional terms of Wirecard payment methods', 'wirecard-woocommerce-extension' ), 'error' );
+            return false;
+        }
+
+        return true;
+    }
 
 	/**
 	 * Check the cart for digital items
@@ -594,16 +609,4 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 	private function create_device_ident() {
 		return md5( $this->get_option( 'merchant_account_id' ) . '_' . microtime() );
 	}
-
-	/**
-	 * Register custom scripts for payment method
-	 *
-	 * @since 1.4.4
-	 */
-	public function payment_scripts() {
-		$gateway_url = WIRECARD_EXTENSION_URL;
-
-		wp_register_script( 'invoice_js', $gateway_url . 'assets/js/invoice.js', array( 'jquery' ), null, true );
-	}
-
 }
