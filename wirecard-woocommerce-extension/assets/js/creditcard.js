@@ -339,6 +339,7 @@ function placeOrderEvent() {
 	function submitForm() {
 		WirecardPaymentPage.seamlessSubmitForm(
 			{
+				wrappingDivId: "wc_payment_method_wirecard_creditcard_form",
 				onSuccess: formSubmitSuccessHandler,
 				onError: logCreditCardCallback
 			}
@@ -362,13 +363,16 @@ jQuery( document ).ready(
 		checkout_form.on(
 			'change', // when payment selection changes
 			'input[name^="payment_method"]',
-			paymentMethodChangeAndCheckoutUpdateEvent
+            function () {
+                if (window.germanized == undefined ) {
+                    paymentMethodChangeAndCheckoutUpdateEvent();
+                }
+            }
 		).on(
 			'checkout_place_order', // when order is placed
 			placeOrderEvent
 		);
 
-		// if the germanized plugin is installed this gets triggered on switching payment method as well
 		jQuery( document.body ).on(
 			'updated_checkout', // when checkout data gets updated so that we have the correct user data
 			paymentMethodChangeAndCheckoutUpdateEvent

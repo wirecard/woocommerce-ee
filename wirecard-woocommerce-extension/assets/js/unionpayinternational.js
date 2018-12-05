@@ -109,13 +109,17 @@ jQuery( document ).ready(
 		checkout_form.on(
 			'change', // when payment selection changes
 			'input[name^="payment_method"]',
-			getUpiRequestData
+			function () {
+				if (window.germanized == undefined ) {
+					getUpiRequestData();
+                }
+            }
 		).on(
 			'checkout_place_order', // when order is placed
 			placeUpiOrderEvent
 		);
 
-        // if the germanized plugin is installed this gets triggered on switching payment method as well
+		// if the germanized plugin is installed this gets triggered on switching payment method as well
 		jQuery( document.body ).on(
 			'updated_checkout', // when checkout data gets updated so that we have the correct user data
 			getUpiRequestData
