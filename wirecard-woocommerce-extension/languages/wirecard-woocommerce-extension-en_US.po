@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wirecard WooCommerce Extension\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-04 12:37+0000\n"
-"PO-Revision-Date: 2018-12-04 12:39+0000\n"
+"POT-Creation-Date: 2018-12-05 13:30+0000\n"
+"PO-Revision-Date: 2018-12-05 13:33+0000\n"
 "Last-Translator: marco <marco.horn@wirecard.com>\n"
 "Language-Team: English (United States)\n"
 "Language: en_US\n"
@@ -866,15 +866,27 @@ msgstr ""
 "Payment method Guaranteed Invoice will only be displayed if the ordered "
 "amount is smaller than this defined amount. Amount in default shop currency."
 
-#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:430
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:432
 #: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:448
 msgid "Date of birth"
 msgstr "Date of birth"
 
-#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:450
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:444
+msgid ""
+"I herewith confirm that I have read the privacy notice and additional terms "
+"and conditions for Wirecard payment types and that I accept their validity"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:464
 #: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:495
 msgid "You need to be older then 18 to order."
 msgstr "Minimum age to pay with Guaranteed Invoice: 18."
+
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:479
+msgid ""
+"You must agree to the privacy notice and additional terms of Wirecard "
+"payment methods"
+msgstr ""
 
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:63
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:108

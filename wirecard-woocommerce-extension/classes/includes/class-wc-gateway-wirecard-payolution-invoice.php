@@ -433,7 +433,7 @@ class WC_Gateway_Wirecard_Payolution_Invoice extends WC_Wirecard_Payment_Gateway
 	 * @since 1.4.1
 	 */
 	public function payment_scripts() {
-		wp_register_style( 'payment_select', WIRECARD_EXTENSION_URL . '/assets/styles/payment_method_select.css', array(), null, false );
+		wp_register_style( 'payment_select_style', WIRECARD_EXTENSION_URL . 'assets/styles/multiple_additional_elements.css', array(), null, false );
 	}
 
 	/**
@@ -443,7 +443,7 @@ class WC_Gateway_Wirecard_Payolution_Invoice extends WC_Wirecard_Payment_Gateway
 	 */
 	public function payment_fields() {
 
-		wp_enqueue_style( 'payment_select' );
+		wp_enqueue_style( 'payment_select_style' );
 
 		$date_of_birth_label = __( 'Date of birth', 'wirecard-woocommerce-extension' );
 

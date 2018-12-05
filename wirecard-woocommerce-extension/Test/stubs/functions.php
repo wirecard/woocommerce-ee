@@ -69,11 +69,11 @@ function is_ssl() {
 }
 
 function wc_add_notice( $message, $type ) {
-    global $wc_notices;
-    $wc_notices[] = array(
-        'message' => $message,
-        'type'    => $type
-    );
+	global $wc_notices;
+	$wc_notices[] = array(
+		'message' => $message,
+		'type'    => $type,
+	);
 }
 
 function get_bloginfo() {
@@ -161,11 +161,11 @@ function wp_strip_all_tags( $string ) {
 }
 
 function get_last_mocked_notice() {
-    global $wc_notices;
-    if (empty($wc_notices)) {
-        return null;
-    }
-    return $wc_notices[count( $wc_notices ) - 1]['message'];
+	global $wc_notices;
+	if ( empty( $wc_notices ) ) {
+		return null;
+	}
+	return $wc_notices[ count( $wc_notices ) - 1 ]['message'];
 }
 
 function get_option( $option ) {
