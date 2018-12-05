@@ -197,7 +197,7 @@ function renderForm(request_data) {
 }
 
 /**
- * Get data rquired to render the form
+ * Get data required to render the form
  *
  * @since 1.0.0
  */

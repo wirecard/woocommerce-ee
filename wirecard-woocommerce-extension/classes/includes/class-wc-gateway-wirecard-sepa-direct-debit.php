@@ -304,7 +304,8 @@ class WC_Gateway_Wirecard_Sepa_Direct_Debit extends WC_Wirecard_Payment_Gateway 
 		}
 		$this->payment_action = $this->get_option( 'payment_action' );
 
-		$account_holder = new AccountHolder();
+		$additional_information = new Additional_Information();
+		$account_holder = $additional_information->create_account_holder( $order, 'billing' );
 		$account_holder->setFirstName( sanitize_text_field( $_POST['sepa_firstname'] ) );
 		$account_holder->setLastName( sanitize_text_field( $_POST['sepa_lastname'] ) );
 
