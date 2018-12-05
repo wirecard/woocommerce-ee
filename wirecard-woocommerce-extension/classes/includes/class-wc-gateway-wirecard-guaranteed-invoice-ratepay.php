@@ -472,7 +472,7 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 	 *
 	 * @param $consent
 	 * @return bool
-	 * @since 1.4.4
+	 * @since 1.4.3
 	 */
 	public function validate_consent( $consent ) {
 		if ( 'on' !== $consent ) {
