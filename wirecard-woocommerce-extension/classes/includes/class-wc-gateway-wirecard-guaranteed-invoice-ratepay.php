@@ -241,7 +241,7 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 
 		if ( ! wp_verify_nonce( $_POST['ratepay_nonce'] ) ||
 			! $this->validate_date_of_birth( $_POST['invoice_date_of_birth'] ) ||
-            ! $this->validate_consent( $_POST['invoice_data_protection'] ) ) {
+			! $this->validate_consent( $_POST['invoice_data_protection'] ) ) {
 			return false;
 		}
 		$this->transaction = new RatepayInvoiceTransaction();
@@ -467,21 +467,21 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 		return true;
 	}
 
-    /**
-     * Validates consent for sending data to Wirecard.
-     *
-     * @param $consent
-     * @return bool
-     * @since 1.4.4
-     */
-	public function validate_consent ( $consent ) {
-	    if ( 'on' !== $consent ) {
-            wc_add_notice( __( 'You must agree to the privacy notice and additional terms of Wirecard payment methods', 'wirecard-woocommerce-extension' ), 'error' );
-            return false;
-        }
+	/**
+	 * Validates consent for sending data to Wirecard.
+	 *
+	 * @param $consent
+	 * @return bool
+	 * @since 1.4.4
+	 */
+	public function validate_consent( $consent ) {
+		if ( 'on' !== $consent ) {
+			wc_add_notice( __( 'You must agree to the privacy notice and additional terms of Wirecard payment methods', 'wirecard-woocommerce-extension' ), 'error' );
+			return false;
+		}
 
-        return true;
-    }
+		return true;
+	}
 
 	/**
 	 * Check the cart for digital items
