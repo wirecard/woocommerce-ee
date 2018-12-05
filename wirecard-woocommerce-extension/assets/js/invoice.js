@@ -30,10 +30,12 @@
 
 $ = jQuery;
 
-$(function() {
-	$( "body" ).on( "change", "#invoice_data_protection", handle_order_button_state );
-    $( "#place_order" ).attr( "disabled", "disabled" )
-});
+$(
+	function() {
+		$( "body" ).on( "change", "#invoice_data_protection", handle_order_button_state );
+		$( "#place_order" ).attr( "disabled", "disabled" )
+	}
+);
 
 function handle_order_button_state() {
 	// Here $this refers to the checkbox, due to how jQuery binds events.
@@ -44,5 +46,5 @@ function handle_order_button_state() {
 		return;
 	}
 
-    $( "#place_order" ).attr( "disabled", "disabled" );
+	$( "#place_order" ).attr( "disabled", "disabled" );
 }
