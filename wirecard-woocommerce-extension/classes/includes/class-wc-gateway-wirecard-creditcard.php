@@ -400,9 +400,8 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 			parent::process_payment( $order_id );
 
 			if ( isset( $_POST['cc_first_name'] ) && isset( $_POST['cc_last_name'] ) ) {
-			    $additional_information =  new Additional_Information();
-			    $account_holder = $additional_information->create_account_holder( $order, 'billing' );
-				//$account_holder = new \Wirecard\PaymentSdk\Entity\AccountHolder();
+				$additional_information = new Additional_Information();
+				$account_holder         = $additional_information->create_account_holder( $order, 'billing' );
 				$account_holder->setFirstName( sanitize_text_field( $_POST['cc_first_name'] ) );
 				$account_holder->setLastName( sanitize_text_field( $_POST['cc_last_name'] ) );
 				$this->transaction->setAccountHolder( $account_holder );

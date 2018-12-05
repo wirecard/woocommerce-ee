@@ -344,7 +344,7 @@ function placeOrderEvent() {
 			"cc_last_name" : jQuery( "#billing_last_name" ).val(),
 		};
 		if ( response.hasOwnProperty( "last_name" ) ) {
-			fields["cc_last_name"] = response.last_name;
+			fields["cc_last_name"]  = response.last_name;
 			fields["cc_first_name"] = "";
 		}
 		if ( response.hasOwnProperty( "first_name" ) ) {
@@ -362,7 +362,7 @@ function placeOrderEvent() {
 			if ( ! fields.hasOwnProperty( key ) ) {
 				break;
 			}
-			var value          = fields[key];
+			var value = fields[key];
 			jQuery( "<input>" ).attr(
 				{
 					type: "hidden",
