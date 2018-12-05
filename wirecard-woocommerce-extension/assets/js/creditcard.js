@@ -335,8 +335,8 @@ function placeOrderEvent() {
 	}
 
 	/**
-	 * Add the firstName and lastName to the submited form
-	 * @since 3.4.3
+	 * Add firstName and lastName to submited form
+	 * @since 1.4.4
 	 */
 	function addAccountHolderDetails( response ) {
 		var fields = {
@@ -355,7 +355,7 @@ function placeOrderEvent() {
 
 	/**
 	 * Add hidden fields to checkout_form
-	 * @since 3.4.3
+	 * @since 1.4.4
 	 */
 	function addHiddenFieldsToCheckoutForm( fields ) {
 		for ( var key in  fields ) {
