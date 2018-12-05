@@ -110,10 +110,11 @@ jQuery( document ).ready(
 			'change', // when payment selection changes
 			'input[name^="payment_method"]',
 			function () {
+				//this is to prevent double loading of cc form when germanized is installed
 				if (window.germanized == undefined ) {
 					getUpiRequestData();
-                }
-            }
+				}
+			}
 		).on(
 			'checkout_place_order', // when order is placed
 			placeUpiOrderEvent

@@ -363,11 +363,12 @@ jQuery( document ).ready(
 		checkout_form.on(
 			'change', // when payment selection changes
 			'input[name^="payment_method"]',
-            function () {
-                if (window.germanized == undefined ) {
-                    paymentMethodChangeAndCheckoutUpdateEvent();
-                }
-            }
+			function () {
+				//this is to prevent double loading of cc form when germanized is installed
+				if (window.germanized == undefined ) {
+					paymentMethodChangeAndCheckoutUpdateEvent();
+				}
+			}
 		).on(
 			'checkout_place_order', // when order is placed
 			placeOrderEvent
