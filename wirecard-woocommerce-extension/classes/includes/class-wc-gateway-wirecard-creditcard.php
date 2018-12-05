@@ -334,9 +334,9 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 		if ( is_user_logged_in() ) {
 			if ( $this->get_option( 'cc_vault_enabled' ) == 'yes' && $this->has_cc_in_vault() ) {
 				$html .= '<div id="open-vault-popup"><span class="dashicons dashicons-arrow-up"></span>' . __( 'Use saved Credit Cards', 'wirecard-woocommerce-extension' ) . '</div>
-            <div id="wc_payment_method_wirecard_creditcard_vault"><div class="show-spinner"><div class="spinner"></div></div><div class="cards"></div></div><br>
-            <div id="open-new-card"><span class="dashicons dashicons-arrow-down"></span>' . __( 'Use new Credit Card', 'wirecard-woocommerce-extension' ) . '</div>
-            <div id="wc_payment_method_wirecard_new_credit_card">';
+			<div id="wc_payment_method_wirecard_creditcard_vault"><div class="show-spinner"><div class="spinner"></div></div><div class="cards"></div></div><br>
+			<div id="open-new-card"><span class="dashicons dashicons-arrow-down"></span>' . __( 'Use new Credit Card', 'wirecard-woocommerce-extension' ) . '</div>
+			<div id="wc_payment_method_wirecard_new_credit_card">';
 			}
 		}
 
@@ -398,6 +398,15 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 			}
 
 			parent::process_payment( $order_id );
+
+			if ( isset( $_POST['cc_first_name'] ) && isset( $_POST['cc_last_name'] ) ) {
+			    $additional_information =  new Additional_Information();
+			    $account_holder = $additional_information->create_account_holder( $order, 'billing' );
+				//$account_holder = new \Wirecard\PaymentSdk\Entity\AccountHolder();
+				$account_holder->setFirstName( sanitize_text_field( $_POST['cc_first_name'] ) );
+				$account_holder->setLastName( sanitize_text_field( $_POST['cc_last_name'] ) );
+				$this->transaction->setAccountHolder( $account_holder );
+			}
 
 			$this->transaction->setTokenId( $token );
 			$this->transaction->setTermUrl( $this->create_redirect_url( $order, 'success', $this->type ) );

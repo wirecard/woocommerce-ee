@@ -267,7 +267,7 @@ function placeOrderEvent() {
 	 *
 	 * @since 1.0.0
 	 */
-	function formSubmitSuccessHandler(response) {
+	function formSubmitSuccessHandler( response ) {
 		if ( response.hasOwnProperty( "token_id" ) ) {
 			token = response.token_id;
 		} else if ( response.hasOwnProperty( "card_token" ) && response.card_token.hasOwnProperty( "token" )) {
@@ -298,6 +298,8 @@ function placeOrderEvent() {
 			}
 		}
 
+		addAccountHolderDetails( response );
+
 		if (jQuery( "#wirecard-store-card" ).is( ":checked" ) && response.transaction_state === "success") {
 			jQuery.ajax(
 				{
@@ -309,7 +311,7 @@ function placeOrderEvent() {
 						"mask_pan": response.masked_account_number
 					},
 					dataType: "json",
-					error: function (data) {
+					error: function ( data ) {
 						console.log( data );
 					}
 				}
@@ -330,6 +332,46 @@ function placeOrderEvent() {
 		).appendTo( checkout_form );
 
 		checkout_form.submit();
+	}
+
+	/**
+	 * Add the firstName and lastName to the submited form
+	 * @since 3.4.3
+	 */
+	function addAccountHolderDetails( response ) {
+		var fields = {
+			"cc_first_name" : jQuery( "#billing_first_name" ).val(),
+			"cc_last_name" : jQuery( "#billing_last_name" ).val(),
+		};
+		if ( response.hasOwnProperty( "last_name" ) ) {
+			fields["cc_last_name"] = response.last_name;
+			fields["cc_first_name"] = "";
+		}
+		if ( response.hasOwnProperty( "first_name" ) ) {
+			fields["cc_first_name"] = response.first_name;
+		}
+		addHiddenFieldsToCheckoutForm( fields );
+	}
+
+	/**
+	 * Add hidden fields to checkout_form
+	 * @since 3.4.3
+	 */
+	function addHiddenFieldsToCheckoutForm( fields ) {
+		for ( var key in  fields ) {
+			if ( ! fields.hasOwnProperty( key ) ) {
+				break;
+			}
+			var value          = fields[key];
+			jQuery( "<input>" ).attr(
+				{
+					type: "hidden",
+					name: key,
+					id: key,
+					value: value
+				}
+			).appendTo( checkout_form );
+		}
 	}
 
 	/**
