@@ -440,7 +440,7 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
         <br />
         <p class="form-row form-row-wide validate-required">
         <div class="checkbox">
-        <label for="invoice_dataprotection">
+        <label for="invoice_data_protection">
         <input type="checkbox" name="invoice_data_protection" id="invoice_data_protection">&nbsp;'
 		. __( 'I herewith confirm that I have read the privacy notice and additional terms and conditions for Wirecard payment types and that I accept their validity', 'wirecard-woocommerce-extension' ) .
 		'<abbr class="required" title="required">*</abbr></label>
