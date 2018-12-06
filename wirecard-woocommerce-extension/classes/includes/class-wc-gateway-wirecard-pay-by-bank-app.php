@@ -52,7 +52,7 @@ class WC_Gateway_Wirecard_Pay_By_Bank_App extends WC_Wirecard_Payment_Gateway {
 	 * @since 1.1.0
 	 */
 	public function __construct() {
-        $this->type               = 'zapp';
+		$this->type               = 'zapp';
 		$this->id                 = 'wirecard_ee_pbba';
 		$this->icon               = WIRECARD_EXTENSION_URL . 'assets/images/pbba.png';
 		$this->method_title       = __( 'Wirecard Pay By Bank App', 'wirecard-woocommerce-extension' );
@@ -91,70 +91,70 @@ class WC_Gateway_Wirecard_Pay_By_Bank_App extends WC_Wirecard_Payment_Gateway {
 	 */
 	public function init_form_fields() {
 		$this->form_fields = array(
-			'enabled'             => array(
+			'enabled'         => array(
 				'title'       => __( 'Enable/Disable', 'wirecard-woocommerce-extension' ),
 				'type'        => 'checkbox',
 				'description' => __( 'Activate payment method Pay By Bank App', 'wirecard-woocommerce-extension' ),
 				'label'       => __( 'Enable Wirecard Pay By Bank App', 'wirecard-woocommerce-extension' ),
 				'default'     => 'no',
 			),
-			'title'               => array(
+			'title'            => array(
 				'title'       => __( 'Title', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
 				'description' => __( 'This controls the title which the consumer sees during checkout.', 'wirecard-woocommerce-extension' ),
 				'default'     => __( 'Pay By Bank App', 'wirecard-woocommerce-extension' ),
 			),
-			'merchant_account_id' => array(
+			'merchant_account_id'    => array(
 				'title'       => __( 'Merchant Account ID', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
 				'description' => __( 'The unique identifier assigned for your Merchant Account.', 'wirecard-woocommerce-extension' ),
 				'default'     => '70055b24-38f1-4500-a3a8-afac4b1e3249',
 			),
-			'secret'              => array(
+			'secret'       => array(
 				'title'       => __( 'Secret Key', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
 				'description' => __( 'Secret key is mandatory to calculate the Digital Signature for the payment.', 'wirecard-woocommerce-extension' ),
 				'default'     => '4a4396df-f78c-44b9-b8a0-b72b108ac465',
 			),
-			'credentials'         => array(
+			'credentials'            => array(
 				'title'       => __( 'Credentials', 'wirecard-woocommerce-extension' ),
 				'type'        => 'title',
 				'description' => __( 'Enter your Wirecard credentials.', 'wirecard-woocommerce-extension' ),
 			),
-			'base_url'            => array(
+			'base_url'               => array(
 				'title'       => __( 'Base URL', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
 				'description' => __( 'The Wirecard base URL. (e.g. https://api.wirecard.com)', 'woocomerce-gateway-wirecard' ),
 				'default'     => 'https://api-test.wirecard.com',
 			),
-			'http_user'           => array(
+			'http_user'              => array(
 				'title'       => __( 'HTTP User', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
 				'description' => __( 'The http user provided in your Wirecard contract', 'wirecard-woocommerce-extension' ),
 				'default'     => '70000-APITEST-AP',
 			),
-			'http_pass'           => array(
+			'http_pass'              => array(
 				'title'       => __( 'HTTP Password', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
 				'description' => __( 'The http password provided in your Wirecard contract', 'wirecard-woocommerce-extension' ),
 				'default'     => 'qD2wzQ_hrc!8',
 			),
-			'test_button'         => array(
+			'test_button'            => array(
 				'title'   => __( 'Test configuration', 'wirecard-woocommerce-extension' ),
 				'type'    => 'button',
 				'class'   => 'wc_wirecard_test_credentials_button button-primary',
 				'default' => __( 'Test', 'wirecard-woocommerce-extension' ),
 			),
-            'advanced'            => array(
-                'title'       => __( 'Advanced Options', 'wirecard-woocommerce-extension' ),
-                'type'        => 'title',
-                'description' => '',
-            ),
-            'merchant_return_string'    => array(
-                'title'       => __( 'Merchant return string', 'wirecard-woocommerce-extension' ),
-                'type'        => 'text',
-                'description' => __( 'Merchant Return String to redirect the Consumer from the Mobile Banking App to the Merchant’s browser or App.', 'wirecard-woocommerce-extension' ),
-                'default'     => '',
+			'advanced'            => array(
+				'title'       => __( 'Advanced Options', 'wirecard-woocommerce-extension' ),
+				'type'        => 'title',
+				'description' => '',
+			),
+			'merchant_return_string'    => array(
+				'title'       => __( 'Merchant return string', 'wirecard-woocommerce-extension' ),
+				'type'        => 'text',
+				'description' => __( 'Merchant Return String to redirect the Consumer from the Mobile Banking App to the Merchant’s browser or App.', 'wirecard-woocommerce-extension' ),
+				'default'     => '',
             ),
 		);
 	}
@@ -174,12 +174,12 @@ class WC_Gateway_Wirecard_Pay_By_Bank_App extends WC_Wirecard_Payment_Gateway {
 		$this->payment_action = 'pay';
 
 		$this->transaction = new PayByBankAppTransaction();
-        $this->transaction->setDeviceType("pc");
-        $this->transaction->setDeviceOperatingSystem("windows");
+		$this->transaction->setDeviceType( 'pc' );
+		$this->transaction->setDeviceOperatingSystem( 'windows' );
 
-        $this->transaction->setMerchantReturnString($this->get_option( 'merchant_return_string' ));
-        $this->transaction->setTransactionType('PAYMT');
-        $this->transaction->setDeliveryType('DELTAD');
+		$this->transaction->setMerchantReturnString($this->get_option( 'merchant_return_string' ));
+		$this->transaction->setTransactionType('PAYMT');
+		$this->transaction->setDeliveryType('DELTAD');
 
 		parent::process_payment( $order_id );
 
@@ -222,8 +222,8 @@ class WC_Gateway_Wirecard_Pay_By_Bank_App extends WC_Wirecard_Payment_Gateway {
 	 */
 	public function process_refund( $order_id, $amount = null, $reason = '' ) {
 		$this->transaction = new PayByBankAppTransaction();
-        $this->transaction->setRefundReasonType("LATECONFIRMATION");
-        $this->transaction->setRefundMethod("BACS");
+		$this->transaction->setRefundReasonType( 'LATECONFIRMATION' );
+		$this->transaction->setRefundMethod( 'BACS' );
 
 		return parent::process_refund( $order_id, $amount, '' );
 	}
