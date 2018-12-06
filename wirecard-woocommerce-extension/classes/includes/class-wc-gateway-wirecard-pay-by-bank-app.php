@@ -91,14 +91,14 @@ class WC_Gateway_Wirecard_Pay_By_Bank_App extends WC_Wirecard_Payment_Gateway {
 	 */
 	public function init_form_fields() {
 		$this->form_fields = array(
-			'enabled'         => array(
+			'enabled'                => array(
 				'title'       => __( 'Enable/Disable', 'wirecard-woocommerce-extension' ),
 				'type'        => 'checkbox',
 				'description' => __( 'Activate payment method Pay By Bank App', 'wirecard-woocommerce-extension' ),
 				'label'       => __( 'Enable Wirecard Pay By Bank App', 'wirecard-woocommerce-extension' ),
 				'default'     => 'no',
 			),
-			'title'            => array(
+			'title'                  => array(
 				'title'       => __( 'Title', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
 				'description' => __( 'This controls the title which the consumer sees during checkout.', 'wirecard-woocommerce-extension' ),
@@ -110,7 +110,7 @@ class WC_Gateway_Wirecard_Pay_By_Bank_App extends WC_Wirecard_Payment_Gateway {
 				'description' => __( 'The unique identifier assigned for your Merchant Account.', 'wirecard-woocommerce-extension' ),
 				'default'     => '70055b24-38f1-4500-a3a8-afac4b1e3249',
 			),
-			'secret'       => array(
+			'secret'                 => array(
 				'title'       => __( 'Secret Key', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
 				'description' => __( 'Secret key is mandatory to calculate the Digital Signature for the payment.', 'wirecard-woocommerce-extension' ),
@@ -145,17 +145,17 @@ class WC_Gateway_Wirecard_Pay_By_Bank_App extends WC_Wirecard_Payment_Gateway {
 				'class'   => 'wc_wirecard_test_credentials_button button-primary',
 				'default' => __( 'Test', 'wirecard-woocommerce-extension' ),
 			),
-			'advanced'            => array(
+			'advanced'               => array(
 				'title'       => __( 'Advanced Options', 'wirecard-woocommerce-extension' ),
 				'type'        => 'title',
 				'description' => '',
 			),
-			'merchant_return_string'    => array(
+			'merchant_return_string' => array(
 				'title'       => __( 'Merchant return string', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
 				'description' => __( 'Merchant Return String to redirect the Consumer from the Mobile Banking App to the Merchant’s browser or App.', 'wirecard-woocommerce-extension' ),
 				'default'     => '',
-            ),
+			),
 		);
 	}
 
@@ -177,9 +177,9 @@ class WC_Gateway_Wirecard_Pay_By_Bank_App extends WC_Wirecard_Payment_Gateway {
 		$this->transaction->setDeviceType( 'pc' );
 		$this->transaction->setDeviceOperatingSystem( 'windows' );
 
-		$this->transaction->setMerchantReturnString($this->get_option( 'merchant_return_string' ));
-		$this->transaction->setTransactionType('PAYMT');
-		$this->transaction->setDeliveryType('DELTAD');
+		$this->transaction->setMerchantReturnString( $this->get_option( 'merchant_return_string' ) );
+		$this->transaction->setTransactionType( 'PAYMT' );
+		$this->transaction->setDeliveryType( 'DELTAD' );
 
 		parent::process_payment( $order_id );
 
