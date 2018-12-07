@@ -2,7 +2,7 @@
 set -e # Exit with nonzero exit code if anything fails
 
 docker-compose build --build-arg WOOCOMMERCE_VERSION=3.5.1 webserver
-docker-compose up
+docker-compose up > /dev/null &
 # wordpress running on 8080
 
 #install wordpress

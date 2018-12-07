@@ -35,7 +35,7 @@ RUN if [ "$WOOCOMMERCE_VERSION" != "0" ]; then \
 ADD woocommerce-wirecard-ee.zip /tmp/temp.zip
 
 RUN cd /usr/src/wordpress/wp-content/plugins \
-    && unzip /tmp/woocommerce-wirecard-ee.zip.zip \
+    && unzip /tmp/temp.zip \
     && chown -R www-data:www-data /usr/src/wordpress/wp-content/plugins/wirecard-woocommerce-extension
 
 #Housekeep
