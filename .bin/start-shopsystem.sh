@@ -12,5 +12,5 @@ docker exec woo_commerce wp core install --allow-root --url=localhost:8080 --adm
 docker exec woo_commerce wp plugin activate woocommerce --allow-root
 
 #activate woocommerce-ee
-docker exec woo_commerce wp plugin activate --all --allow-root
+docker exec woo_commerce wp plugin activate wirecard-woocommerce-extension --allow-root
 
