@@ -2,17 +2,45 @@ sudo: false
 dist: trusty
 language: php
 
-php:
-  - 7.1
-  - 7.0
-  - 5.6
-
 env:
   global:
   - COMPOSER_ARGS="--no-interaction"
   - github_token:
       secure: "Iy/Plz3V++TKSQbz/A0x7ZhETSfcvbXxT4zKQh51W8fjBUlKKrQmDA1rICIjnfFs0bNAe6M2yQxxHgJKUJPBsi9Nk/Ynuk/I5lLK1jLL6THioGB6oKUyRBytlcVLZ+0lNqmV/jRKYdwEPI+jNduCk5GSjubSGMIWGNDcqAUiTu+oy3Gu9FS/auEGxim7UaZYC+MM+7ir0zD6w/0nuCaxalAeLahFz0g3QlXc7FB88SxH//lxzKDZh3U6XKyIEXGG8IQiCYaJRUqr9unzHDVbjOvNT6HWZQ4jGSfnCZTnp4aPfOrk1Ir334/4Cuy4xCP4iiuiRFHoxw++uknh77slUwRtZbrUlwoCbvT0V/GOQaN2HSjrTOc5n1/M0XsPRumbZ+I/4EoCnZUwNiBpWtVhrzSpE84+0BBj67gmStzca1sZMkts+oHnr5S6qajVY5ePY4Sn3rI/JbUJP501zexRHgqKY26a+Hqz9TAnNJqRKfm6ez5pSlXUKk4eCl7slgYuY8I="
 
+matrix:
+  allow_failures:
+    - stage: acceptance-test
+  include:
+  - php: 5.6
+    if: type != cron
+  - php: 7.0
+    if: type != cron
+  - php: 7.1
+    if: type != cron
+
+  - &acceptance-test
+    stage: acceptance-test
+    if: type = cron
+    php: 7.1
+    env: GATEWAY=API-TEST
+    before_install: skip
+    install:
+    - travis_retry composer require --dev $COMPOSER_ARGS codeception/codeception
+    - travis_retry composer install $COMPOSER_ARGS
+    - composer show
+    script: bash .bin/run-ui-tests.sh
+    after_script: skip
+    before_deploy: skip
+    deploy: skip
+    after_success:
+    - bash .bin/upload-logs-and-notify.sh
+    after_failure:
+    - bash .bin/upload-logs-and-notify.sh fail
+  - <<: *acceptance-test
+    env: GATEWAY=API-WDCEE-TEST
+  - <<: *acceptance-test
+    env: GATEWAY=NOVA
 
 before_install:
   - export PHPCS_DIR=/tmp/phpcs
