@@ -58,9 +58,9 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 		$this->type               = 'creditcard';
 		$this->id                 = 'wirecard_ee_creditcard';
 		$this->icon               = WIRECARD_EXTENSION_URL . 'assets/images/creditcard.png';
-		$this->method_title       = __( 'Wirecard Credit Card', 'wirecard-woocommerce-extension' );
-		$this->method_name        = __( 'Credit Card', 'wirecard-woocommerce-extension' );
-		$this->method_description = __( 'Credit Card transactions via Wirecard Payment Processing Gateway', 'wirecard-woocommerce-extension' );
+		$this->method_title       = __( 'heading_title_creditcard', 'wirecard-woocommerce-extension' );
+		$this->method_name        = __( 'creditcard', 'wirecard-woocommerce-extension' );
+		$this->method_description = __( 'creditcard_desc', 'wirecard-woocommerce-extension' );
 		$this->has_fields         = true;
 		$this->vault              = new Credit_Card_Vault();
 
@@ -100,118 +100,118 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	public function init_form_fields() {
 		$this->form_fields = array(
 			'enabled'                     => array(
-				'title'       => __( 'Enable/Disable', 'wirecard-woocommerce-extension' ),
+				'title'       => __( 'text_enable_disable', 'wirecard-woocommerce-extension' ),
 				'type'        => 'checkbox',
-				'label'       => __( 'Enable Wirecard Credit Card', 'wirecard-woocommerce-extension' ),
-				'description' => __( 'Activate payment method Credit Card', 'wirecard-woocommerce-extension' ),
+				'label'       => __( 'enable_heading_title_creditcard', 'wirecard-woocommerce-extension' ),
+				'description' => __( 'config_status_desc_creditcard', 'wirecard-woocommerce-extension' ),
 				'default'     => 'no',
 			),
 			'title'                       => array(
-				'title'       => __( 'Title', 'wirecard-woocommerce-extension' ),
+				'title'       => __( 'config_title', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
-				'description' => __( 'This controls the title which the consumer sees during checkout.', 'wirecard-woocommerce-extension' ),
-				'default'     => __( 'Wirecard Credit Card', 'wirecard-woocommerce-extension' ),
+				'description' => __( 'config_title_desc', 'wirecard-woocommerce-extension' ),
+				'default'     => __( 'heading_title_creditcard', 'wirecard-woocommerce-extension' ),
 			),
 			'merchant_account_id'         => array(
-				'title'       => __( 'Merchant Account ID', 'wirecard-woocommerce-extension' ),
+				'title'       => __( 'config_merchant_account_id', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
-				'description' => __( 'The unique identifier assigned for your Merchant Account.', 'wirecard-woocommerce-extension' ),
+				'description' => __( 'config_merchant_account_id_desc', 'wirecard-woocommerce-extension' ),
 				'default'     => '53f2895a-e4de-4e82-a813-0d87a10e55e6',
 			),
 			'secret'                      => array(
-				'title'       => __( 'Secret Key', 'wirecard-woocommerce-extension' ),
+				'title'       => __( 'config_merchant_secret', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
-				'description' => __( 'Secret key is mandatory to calculate the Digital Signature for the payment.', 'wirecard-woocommerce-extension' ),
+				'description' => __( 'config_merchant_secret_desc', 'wirecard-woocommerce-extension' ),
 				'default'     => 'dbc5a498-9a66-43b9-bf1d-a618dd399684',
 			),
 			'three_d_merchant_account_id' => array(
-				'title'       => __( '3-D Secure Merchant Account ID', 'wirecard-woocommerce-extension' ),
+				'title'       => __( 'config_three_d_merchant_account_id', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
-				'description' => __( 'The unique identifier assigned for your 3D Merchant Account.', 'wirecard-woocommerce-extension' ),
+				'description' => __( 'config_three_d_merchant_account_id_desc', 'wirecard-woocommerce-extension' ),
 				'default'     => '508b8896-b37d-4614-845c-26bf8bf2c948',
 			),
 			'three_d_secret'              => array(
-				'title'       => __( '3-D Secure Secret Key', 'wirecard-woocommerce-extension' ),
+				'title'       => __( 'config_three_d_merchant_secret', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
-				'description' => __( 'Secret key is mandatory to calculate the Digital Signature for the 3D payment.', 'wirecard-woocommerce-extension' ),
+				'description' => __( 'config_three_d_merchant_secret_desc', 'wirecard-woocommerce-extension' ),
 				'default'     => 'dbc5a498-9a66-43b9-bf1d-a618dd399684',
 			),
 			'ssl_max_limit'               => array(
-				'title'       => __( 'Non 3-D Secure Max. Limit', 'wirecard-woocommerce-extension' ),
+				'title'       => __( 'config_ssl_max_limit', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
-				'description' => __( 'Amount in default shop currency', 'wirecard-woocommerce-extension' ),
+				'description' => __( 'config_limit_desc', 'wirecard-woocommerce-extension' ),
 				'default'     => '100.0',
 			),
 			'three_d_min_limit'           => array(
-				'title'       => __( '3-D Secure Min. Limit', 'wirecard-woocommerce-extension' ),
+				'title'       => __( 'config_three_d_min_limit', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
-				'description' => __( 'Amount in default shop currency', 'wirecard-woocommerce-extension' ),
+				'description' => __( 'config_limit_desc', 'wirecard-woocommerce-extension' ),
 				'default'     => '50.0',
 			),
 			'credentials'                 => array(
-				'title'       => __( 'Credentials', 'wirecard-woocommerce-extension' ),
+				'title'       => __( 'text_credentials', 'wirecard-woocommerce-extension' ),
 				'type'        => 'title',
-				'description' => __( 'Enter your Wirecard credentials.', 'wirecard-woocommerce-extension' ),
+				'description' => __( 'text_credentials_desc', 'wirecard-woocommerce-extension' ),
 			),
 			'base_url'                    => array(
-				'title'       => __( 'Base URL', 'wirecard-woocommerce-extension' ),
+				'title'       => __( 'config_base_url', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
-				'description' => __( 'The Wirecard base URL. (e.g. https://api.wirecard.com)', 'wirecard-woocommerce-extension' ),
+				'description' => __( 'config_base_url_desc', 'wirecard-woocommerce-extension' ),
 				'default'     => 'https://api-test.wirecard.com',
 			),
 			'http_user'                   => array(
-				'title'       => __( 'HTTP User', 'wirecard-woocommerce-extension' ),
+				'title'       => __( 'config_http_user', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
-				'description' => __( 'The http user provided in your Wirecard contract', 'wirecard-woocommerce-extension' ),
+				'description' => __( 'config_http_user_desc', 'wirecard-woocommerce-extension' ),
 				'default'     => '70000-APITEST-AP',
 			),
 			'http_pass'                   => array(
-				'title'       => __( 'HTTP Password', 'wirecard-woocommerce-extension' ),
+				'title'       => __( 'config_http_password', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
-				'description' => __( 'The http password provided in your Wirecard contract', 'wirecard-woocommerce-extension' ),
+				'description' => __( 'config_http_password_desc', 'wirecard-woocommerce-extension' ),
 				'default'     => 'qD2wzQ_hrc!8',
 			),
 			'test_button'                 => array(
-				'title'   => __( 'Test configuration', 'wirecard-woocommerce-extension' ),
+				'title'   => __( 'test_config', 'wirecard-woocommerce-extension' ),
 				'type'    => 'button',
 				'class'   => 'wc_wirecard_test_credentials_button button-primary',
-				'default' => __( 'Test', 'wirecard-woocommerce-extension' ),
+				'default' => __( 'test_credentials', 'wirecard-woocommerce-extension' ),
 			),
 			'advanced'                    => array(
-				'title'       => __( 'Advanced Options', 'wirecard-woocommerce-extension' ),
+				'title'       => __( 'text_advanced', 'wirecard-woocommerce-extension' ),
 				'type'        => 'title',
 				'description' => '',
 			),
 			'payment_action'              => array(
-				'title'       => __( 'Payment Action', 'wirecard-woocommerce-extension' ),
+				'title'       => __( 'config_payment_action', 'wirecard-woocommerce-extension' ),
 				'type'        => 'select',
-				'description' => __( 'Select between "Capture" to capture / invoice your order automatically or "Authorization" to manually capture / invoice. ', 'wirecard-woocommerce-extension' ),
+				'description' => __( 'config_payment_action_desc', 'wirecard-woocommerce-extension' ),
 				'default'     => 'pay',
-				'label'       => __( 'Payment Action', 'wirecard-woocommerce-extension' ),
+				'label'       => __( 'config_payment_action', 'wirecard-woocommerce-extension' ),
 				'options'     => array(
-					'reserve' => 'Authorization',
-					'pay'     => 'Purchase',
+					'reserve' => __( 'text_payment_action_reserve', 'wirecard-woocommerce-extension' ),
+					'pay'     => __( 'text_payment_action_pay', 'wirecard-woocommerce-extension' ),
 				),
 			),
 			'descriptor'                  => array(
-				'title'       => __( 'Enable/Disable', 'wirecard-woocommerce-extension' ),
+				'title'       => __( 'text_enable_disable', 'wirecard-woocommerce-extension' ),
 				'type'        => 'checkbox',
-				'description' => __( 'Send text which is displayed on the bank statement issued to your consumer by the financial service provider', 'wirecard-woocommerce-extension' ),
-				'label'       => __( 'Descriptor', 'wirecard-woocommerce-extension' ),
+				'description' => __( 'config_descriptor_desc', 'wirecard-woocommerce-extension' ),
+				'label'       => __( 'config_descriptor', 'wirecard-woocommerce-extension' ),
 				'default'     => 'no',
 			),
 			'send_additional'             => array(
-				'title'       => __( 'Enable/Disable', 'wirecard-woocommerce-extension' ),
+				'title'       => __( 'text_enable_disable', 'wirecard-woocommerce-extension' ),
 				'type'        => 'checkbox',
-				'description' => __( 'Additional data will be sent for the purpose of fraud protection. This additional data includes billing / shipping address, shopping basket and descriptor.', 'wirecard-woocommerce-extension' ),
-				'label'       => __( 'Send additional information', 'wirecard-woocommerce-extension' ),
+				'description' => __( 'config_additional_info_desc', 'wirecard-woocommerce-extension' ),
+				'label'       => __( 'config_additional_info', 'wirecard-woocommerce-extension' ),
 				'default'     => 'yes',
 			),
 			'cc_vault_enabled'            => array(
-				'title'       => __( 'Enable/Disable', 'wirecard-woocommerce-extension' ),
+				'title'       => __( 'text_enable_disable', 'wirecard-woocommerce-extension' ),
 				'type'        => 'checkbox',
-				'description' => __( 'Credit Cards can be saved and used for later purpose without', 'wirecard-woocommerce-extension' ),
-				'label'       => __( 'Enable Recurring Payment', 'wirecard-woocommerce-extension' ),
+				'description' => __( 'config_vault_desc', 'wirecard-woocommerce-extension' ),
+				'label'       => __( 'enable_vault', 'wirecard-woocommerce-extension' ),
 				'default'     => 'no',
 			),
 		);
@@ -333,9 +333,9 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 		$html = '<input type="hidden" name="cc_nonce" value="' . wp_create_nonce() . '" />';
 		if ( is_user_logged_in() ) {
 			if ( $this->get_option( 'cc_vault_enabled' ) == 'yes' && $this->has_cc_in_vault() ) {
-				$html .= '<div id="open-vault-popup"><span class="dashicons dashicons-arrow-up"></span>' . __( 'Use saved Credit Cards', 'wirecard-woocommerce-extension' ) . '</div>
+				$html .= '<div id="open-vault-popup"><span class="dashicons dashicons-arrow-up"></span>' . __( 'vault_use_existing_text', 'wirecard-woocommerce-extension' ) . '</div>
 			<div id="wc_payment_method_wirecard_creditcard_vault"><div class="show-spinner"><div class="spinner"></div></div><div class="cards"></div></div><br>
-			<div id="open-new-card"><span class="dashicons dashicons-arrow-down"></span>' . __( 'Use new Credit Card', 'wirecard-woocommerce-extension' ) . '</div>
+			<div id="open-new-card"><span class="dashicons dashicons-arrow-down"></span>' . __( 'vault_use_new_text', 'wirecard-woocommerce-extension' ) . '</div>
 			<div id="wc_payment_method_wirecard_new_credit_card">';
 			}
 		}
@@ -346,7 +346,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 			if ( $this->get_option( 'cc_vault_enabled' ) == 'yes' ) {
 				$html .= '<div class="save-later"><label for="wirecard-store-card">
 			<input type="checkbox" id="wirecard-store-card" /> ' .
-					__( 'Save for later use.', 'wirecard-woocommerce-extension' ) . '</label></div>';
+					__( 'vault_save_text', 'wirecard-woocommerce-extension' ) . '</label></div>';
 				if ( $this->has_cc_in_vault() ) {
 					$html .= '</div>';
 				}
