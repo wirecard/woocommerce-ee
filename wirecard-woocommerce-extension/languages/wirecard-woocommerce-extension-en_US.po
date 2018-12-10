@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wirecard WooCommerce Extension\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-05 13:30+0000\n"
-"PO-Revision-Date: 2018-12-05 13:33+0000\n"
+"POT-Creation-Date: 2018-12-10 07:21+0000\n"
+"PO-Revision-Date: 2018-12-10 08:15+0000\n"
 "Last-Translator: marco <marco.horn@wirecard.com>\n"
 "Language-Team: English (United States)\n"
 "Language: en_US\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco https://localise.biz/\n"
-"X-Loco-Version: 2.2.0; wp-4.9.8"
+"X-Loco-Version: 2.2.0; wp-5.0"
 
 #: woocommerce-wirecard-payment-gateway.php:100
 #: woocommerce-wirecard-payment-gateway.php:166
@@ -810,7 +810,7 @@ msgid ""
 msgstr ""
 "Payment method Guaranteed Invoice is only displayed if the consumer's "
 "billing country equals one of these selected countries. STRG-click to select."
-" Default pre-selection: Austria and Germany. "
+" Default pre-selection: Austria and Germany. \n"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:182
 #: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:179
@@ -933,78 +933,83 @@ msgstr ""
 
 #: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:56
 #: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:57
-msgid "Wirecard Payolution Invoice"
-msgstr "Wirecard Payolution Invoice"
+#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:109
+msgid "Wirecard Payment on Invoice (Payolution B2C)"
+msgstr "Wirecard Payment on Invoice (Payolution B2C)"
 
 #: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:58
-msgid "Payolution Invoice via Wirecard Payment Processing Gateway"
-msgstr "Payolution Invoice via Wirecard Payment Processing Gateway"
+msgid ""
+"Payment on Invoice (Payolution B2C) via Wirecard Payment Processing Gateway"
+msgstr ""
+"Payment on Invoice (Payolution B2C) via Wirecard Payment Processing Gateway"
 
 #: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:101
-msgid "Activate payment method Payolution Invoice"
+msgid "Activate payment method Payment on Invoice (Payolution B2C)"
 msgstr ""
-"Activate payment method Payolution Invoice to make it available for your "
-"consumers."
+"Activate payment method Payment on Invoice (Payolution B2C) to make it "
+"available for your consumers."
 
 #: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:102
-msgid "Enable Payolution Invoice"
-msgstr "Enable Payolution Invoice"
-
-#: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:109
-msgid "Wirecard Payment on account (Payolution B2C)"
-msgstr "Wirecard Payment on account (Payolution B2C)"
+msgid "Enable Payment on Invoice (Payolution B2C)"
+msgstr "Enable Payment on Invoice (Payolution B2C)"
 
 #: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:160
 msgid ""
-"If activated, payment method Payolution Invoice will only be displayed if "
-"Billing/Shipping address are identical"
+"If activated, payment method Payment on Invoice (Payolution B2C) will only "
+"be displayed if Billing/Shipping address are identical"
 msgstr ""
-"If activated, payment method Payolution Invoice will only be displayed if "
-"Billing/Shipping address are identical."
+"If activated, payment method Payment on Invoice (Payolution B2C) will only "
+"be displayed if billing/shipping address are identical."
 
 #: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:167
 msgid ""
-"Payment method Payolution Invoice will only be displayed if consumers "
-"billing country equals one of these chosen countries.\n"
+"Payment method Payment on Invoice (Payolution B2C) will only be displayed if "
+"consumers billing country equals one of these chosen countries.\n"
 "\t\t\t\tPredefined the following countries are allowed: AT, DE, CH, NL."
 msgstr ""
-"Payolution Invoice is only displayed if the consumer's billing country "
-"equals one of these selected countries. STRG-click to select. Default pre-"
-"selection: Austria, Germany, Switzerland, Netherlands."
+"Payment method Payment on Invoice (Payolution B2C) is only displayed if the "
+"consumer's billing country equals one of these selected countries. STRG-"
+"click to select. Default pre-selection: Austria, Germany, Switzerland, "
+"Netherlands."
 
 #: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:181
 msgid ""
-"Payment method Payolution Invoice will only be displayed if consumers "
-"shipping country equals one of these chosen countries.\n"
+"Payment method Payment on Invoice (Payolution B2C) will only be displayed if "
+"consumers shipping country equals one of these chosen countries.\n"
 "\t\t\t\tPredefined the following countries are allowed: AT, DE, CH, NL."
 msgstr ""
-"Payolution Invoice is only displayed if the consumer's shipping country "
-"equals one of these selected countries. STRG-click to select. Default pre-"
-"selection: Austria, Germany, Switzerland, Netherlands."
+"Payment method Payment on Invoice (Payolution B2C) will only be displayed if "
+"consumers shipping country equals one of these chosen countries. \n"
+"\t\t\t\tPredefined the following countries are allowed: Austria, Germany, "
+"Switzerland, Netherlands."
 
 #: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:195
 msgid ""
-"Payment method Payolution Invoice will only be displayed if the active "
-"currency equals one of these chosen currencies."
+"Payment method Payment on Invoice (Payolution B2C) will only be displayed if "
+"the active currency equals one of these chosen currencies."
 msgstr ""
-"Payment method Payolution Invoice will only be displayed if the active "
-"currency equals one of these chosen currencies."
+"Payment method Payment on Invoice (Payolution B2C) will only be displayed if "
+"the active currency is one of these selected currencies."
 
 #: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:204
 msgid ""
-"Payment method Payolution Invoice will only be displayed if the ordered "
-"amount is bigger than this defined amount. Amount in default shop currency"
+"Payment method Payment on Invoice (Payolution B2C) will only be displayed if "
+"the ordered amount is bigger than this defined amount. Amount in default "
+"shop currency"
 msgstr ""
-"Payment method Payolution Invoice will only be displayed if the ordered "
-"amount is bigger than this defined amount. Amount in default shop currency."
+"Payment method Payment on Invoice (Payolution B2C) will only be displayed if "
+"the ordered amount exceeds the amount defined here. Amount in default shop "
+"currency."
 
 #: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:209
 msgid ""
-"Payment method Payolution Invoice will only be displayed if the ordered "
-"amount is smaller than this defined amount. Amount in default shop currency"
+"Payment method Payment on Invoice (Payolution B2C) will only be displayed if "
+"the ordered amount is smaller than this defined amount. Amount in default "
+"shop currency"
 msgstr ""
-"Payment method Payolution Invoice will only be displayed if the ordered "
-"amount is smaller than this defined amount. Amount in default shop currency"
+"Payment method Payment on Invoice (Payolution B2C) will only be displayed if "
+"the ordered amount is smaller than this defined amount. Amount in default "
+"shop currency."
 
 #: classes/includes/class-wc-gateway-wirecard-payolution-invoice.php:227
 msgid "Payolution merchant ID"

@@ -53,9 +53,9 @@ class WC_Gateway_Wirecard_Payolution_Invoice extends WC_Wirecard_Payment_Gateway
 		$this->type               = 'payolution-inv';
 		$this->id                 = 'wirecard_ee_payolution-inv';
 		$this->icon               = WIRECARD_EXTENSION_URL . 'assets/images/payolution.png';
-		$this->method_title       = __( 'Wirecard Payolution Invoice', 'wirecard-woocommerce-extension' );
-		$this->method_name        = __( 'Wirecard Payolution Invoice', 'wirecard-woocommerce-extension' );
-		$this->method_description = __( 'Payolution Invoice via Wirecard Payment Processing Gateway', 'wirecard-woocommerce-extension' );
+		$this->method_title       = __( 'Wirecard Payment on Invoice (Payolution B2C)', 'wirecard-woocommerce-extension' );
+		$this->method_name        = __( 'Wirecard Payment on Invoice (Payolution B2C)', 'wirecard-woocommerce-extension' );
+		$this->method_description = __( 'Payment on Invoice (Payolution B2C) via Wirecard Payment Processing Gateway', 'wirecard-woocommerce-extension' );
 		$this->has_fields         = true;
 
 		$this->supports = array(
@@ -98,15 +98,15 @@ class WC_Gateway_Wirecard_Payolution_Invoice extends WC_Wirecard_Payment_Gateway
 			'enabled'               => array(
 				'title'       => __( 'Enable/Disable', 'wirecard-woocommerce-extension' ),
 				'type'        => 'checkbox',
-				'description' => __( 'Activate payment method Payolution Invoice', 'wirecard-woocommerce-extension' ),
-				'label'       => __( 'Enable Payolution Invoice', 'wirecard-woocommerce-extension' ),
+				'description' => __( 'Activate payment method Payment on Invoice (Payolution B2C)', 'wirecard-woocommerce-extension' ),
+				'label'       => __( 'Enable Payment on Invoice (Payolution B2C)', 'wirecard-woocommerce-extension' ),
 				'default'     => 'no',
 			),
 			'title'                 => array(
 				'title'       => __( 'Title', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
 				'description' => __( 'This controls the title which the consumer sees during checkout.', 'wirecard-woocommerce-extension' ),
-				'default'     => __( 'Wirecard Payment on account (Payolution B2C)', 'wirecard-woocommerce-extension' ),
+				'default'     => __( 'Wirecard Payment on Invoice (Payolution B2C)', 'wirecard-woocommerce-extension' ),
 			),
 			'merchant_account_id'   => array(
 				'title'       => __( 'Merchant Account ID', 'wirecard-woocommerce-extension' ),
@@ -157,7 +157,7 @@ class WC_Gateway_Wirecard_Payolution_Invoice extends WC_Wirecard_Payment_Gateway
 			'billing_shipping_same' => array(
 				'title'       => __( 'Enable/Disable', 'wirecard-woocommerce-extension' ),
 				'type'        => 'checkbox',
-				'description' => __( 'If activated, payment method Payolution Invoice will only be displayed if Billing/Shipping address are identical', 'wirecard-woocommerce-extension' ),
+				'description' => __( 'If activated, payment method Payment on Invoice (Payolution B2C) will only be displayed if Billing/Shipping address are identical', 'wirecard-woocommerce-extension' ),
 				'label'       => __( 'Billing/Shipping address must be identical', 'wirecard-woocommerce-extension' ),
 				'default'     => 'yes',
 			),
@@ -165,7 +165,7 @@ class WC_Gateway_Wirecard_Payolution_Invoice extends WC_Wirecard_Payment_Gateway
 				'title'          => __( 'Allowed billing countries', 'wirecard-woocommerce-extension' ),
 				'type'           => 'multiselect',
 				'description'    => __(
-					'Payment method Payolution Invoice will only be displayed if consumers billing country equals one of these chosen countries.
+					'Payment method Payment on Invoice (Payolution B2C) will only be displayed if consumers billing country equals one of these chosen countries.
 				Predefined the following countries are allowed: AT, DE, CH, NL.',
 					'wirecard-woocommerce-extension'
 				),
@@ -179,7 +179,7 @@ class WC_Gateway_Wirecard_Payolution_Invoice extends WC_Wirecard_Payment_Gateway
 				'title'          => __( 'Allowed shipping countries', 'wirecard-woocommerce-extension' ),
 				'type'           => 'multiselect',
 				'description'    => __(
-					'Payment method Payolution Invoice will only be displayed if consumers shipping country equals one of these chosen countries.
+					'Payment method Payment on Invoice (Payolution B2C) will only be displayed if consumers shipping country equals one of these chosen countries.
 				Predefined the following countries are allowed: AT, DE, CH, NL.',
 					'wirecard-woocommerce-extension'
 				),
@@ -192,7 +192,7 @@ class WC_Gateway_Wirecard_Payolution_Invoice extends WC_Wirecard_Payment_Gateway
 			'allowed_currencies'    => array(
 				'title'          => __( 'Allowed currencies', 'wirecard-woocommerce-extension' ),
 				'type'           => 'multiselect',
-				'description'    => __( 'Payment method Payolution Invoice will only be displayed if the active currency equals one of these chosen currencies.', 'wirecard-woocommerce-extension' ),
+				'description'    => __( 'Payment method Payment on Invoice (Payolution B2C) will only be displayed if the active currency equals one of these chosen currencies.', 'wirecard-woocommerce-extension' ),
 				'options'        => get_woocommerce_currencies(),
 				'default'        => array( 'EUR' ),
 				'multiple'       => true,
@@ -201,12 +201,12 @@ class WC_Gateway_Wirecard_Payolution_Invoice extends WC_Wirecard_Payment_Gateway
 			),
 			'min_amount'            => array(
 				'title'       => __( 'Minimum Amount', 'wirecard-woocommerce-extension' ),
-				'description' => __( 'Payment method Payolution Invoice will only be displayed if the ordered amount is bigger than this defined amount. Amount in default shop currency', 'wirecard-woocommerce-extension' ),
+				'description' => __( 'Payment method Payment on Invoice (Payolution B2C) will only be displayed if the ordered amount is bigger than this defined amount. Amount in default shop currency', 'wirecard-woocommerce-extension' ),
 				'default'     => 25,
 			),
 			'max_amount'            => array(
 				'title'       => __( 'Maximum Amount', 'wirecard-woocommerce-extension' ),
-				'description' => __( 'Payment method Payolution Invoice will only be displayed if the ordered amount is smaller than this defined amount. Amount in default shop currency', 'wirecard-woocommerce-extension' ),
+				'description' => __( 'Payment method Payment on Invoice (Payolution B2C) will only be displayed if the ordered amount is smaller than this defined amount. Amount in default shop currency', 'wirecard-woocommerce-extension' ),
 				'default'     => 3500,
 			),
 			'descriptor'            => array(
