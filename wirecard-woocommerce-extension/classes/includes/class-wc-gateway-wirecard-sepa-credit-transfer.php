@@ -57,9 +57,9 @@ class WC_Gateway_Wirecard_Sepa_Credit_Transfer extends WC_Wirecard_Payment_Gatew
 		$this->type               = 'sepacredit';
 		$this->id                 = 'wirecard_ee_sepacredit';
 		$this->icon               = WIRECARD_EXTENSION_URL . 'assets/images/sepa.png';
-		$this->method_title       = __( 'Wirecard SEPA Credit Transfer', 'wirecard-woocommerce-extension' );
-		$this->method_name        = __( 'SEPA Credit Transfer', 'wirecard-woocommerce-extension' );
-		$this->method_description = __( 'SEPA Credit Transfer transactions via Wirecard Payment Processing Gateway', 'wirecard-woocommerce-extension' );
+		$this->method_title       = __( 'heading_title_sepact', 'wirecard-woocommerce-extension' );
+		$this->method_name        = __( 'sepact', 'wirecard-woocommerce-extension' );
+		$this->method_description = __( 'sepact_desc', 'wirecard-woocommerce-extension' );
 
 		$this->supports = array(
 			'products',
@@ -90,64 +90,58 @@ class WC_Gateway_Wirecard_Sepa_Credit_Transfer extends WC_Wirecard_Payment_Gatew
 	public function init_form_fields() {
 		$this->form_fields = array(
 			'enabled'             => array(
-				'title'       => __( 'Enable/Disable', 'wirecard-woocommerce-extension' ),
+				'title'       => __( 'text_enable_disable', 'wirecard-woocommerce-extension' ),
 				'type'        => 'checkbox',
-				'description' => __( 'Activate payment method SEPA Credit Transfer', 'wirecard-woocommerce-extension' ),
-				'label'       => __( 'Enable Wirecard SEPA Credit Transfer', 'wirecard-woocommerce-extension' ),
+				'description' => __( 'config_status_desc_sepact', 'wirecard-woocommerce-extension' ),
+				'label'       => __( 'enable_heading_title_sepact', 'wirecard-woocommerce-extension' ),
 				'default'     => 'no',
 			),
 			'title'               => array(
-				'title'       => __( 'Title', 'wirecard-woocommerce-extension' ),
+				'title'       => __( 'config_title', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
-				'description' => __(
-					'This controls the title which the consumer sees during checkout.',
-					'wirecard-woocommerce-extension'
-				),
-				'default'     => __( 'Wirecard SEPA Credit Transfer', 'wirecard-woocommerce-extension' ),
+				'description' => __( 'config_title_desc', 'wirecard-woocommerce-extension' ),
+				'default'     => __( 'heading_title_sepact', 'wirecard-woocommerce-extension' ),
 			),
 			'merchant_account_id' => array(
-				'title'       => __( 'Merchant Account ID', 'wirecard-woocommerce-extension' ),
+				'title'       => __( 'config_merchant_account_id', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
-				'description' => __( 'The unique identifier assigned for your Merchant Account.', 'wirecard-woocommerce-extension' ),
+				'description' => __( 'config_merchant_account_id_desc', 'wirecard-woocommerce-extension' ),
 				'default'     => '59a01668-693b-49f0-8a1f-f3c1ba025d45',
 			),
 			'secret'              => array(
-				'title'       => __( 'Secret Key', 'wirecard-woocommerce-extension' ),
+				'title'       => __( 'config_merchant_secret', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
-				'description' => __( 'Secret key is mandatory to calculate the Digital Signature for the payment.', 'wirecard-woocommerce-extension' ),
+				'description' => __( 'config_merchant_secret_desc', 'wirecard-woocommerce-extension' ),
 				'default'     => 'ecdf5990-0372-47cd-a55d-037dccfe9d25',
 			),
 			'credentials'         => array(
-				'title'       => __( 'Credentials', 'wirecard-woocommerce-extension' ),
+				'title'       => __( 'text_credentials', 'wirecard-woocommerce-extension' ),
 				'type'        => 'title',
-				'description' => __(
-					'Enter your Wirecard credentials.',
-					'wirecard-woocommerce-extension'
-				),
+				'description' => __( 'text_credentials_desc', 'wirecard-woocommerce-extension' ),
 			),
 			'base_url'            => array(
-				'title'       => __( 'Base URL', 'wirecard-woocommerce-extension' ),
+				'title'       => __( 'config_base_url', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
-				'description' => __( 'The Wirecard base URL. (e.g. https://api.wirecard.com)', 'wirecard-woocommerce-extension' ),
+				'description' => __( 'config_base_url_desc', 'wirecard-woocommerce-extension' ),
 				'default'     => 'https://api-test.wirecard.com',
 			),
 			'http_user'           => array(
-				'title'       => __( 'HTTP User', 'wirecard-woocommerce-extension' ),
+				'title'       => __( 'config_http_user', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
-				'description' => __( 'The http user provided in your Wirecard contract', 'wirecard-woocommerce-extension' ),
+				'description' => __( 'config_http_user_desc', 'wirecard-woocommerce-extension' ),
 				'default'     => '16390-testing',
 			),
 			'http_pass'           => array(
-				'title'       => __( 'HTTP Password', 'wirecard-woocommerce-extension' ),
+				'title'       => __( 'config_http_password', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
-				'description' => __( 'The http password provided in your Wirecard contract', 'wirecard-woocommerce-extension' ),
+				'description' => __( 'config_http_password_desc', 'wirecard-woocommerce-extension' ),
 				'default'     => '3!3013=D3fD8X7',
 			),
 			'test_button'         => array(
-				'title'   => __( 'Test configuration', 'wirecard-woocommerce-extension' ),
+				'title'   => __( 'test_config', 'wirecard-woocommerce-extension' ),
 				'type'    => 'button',
 				'class'   => 'wc_wirecard_test_credentials_button button-primary',
-				'default' => __( 'Test', 'wirecard-woocommerce-extension' ),
+				'default' => __( 'test_credentials', 'wirecard-woocommerce-extension' ),
 			),
 		);
 	}

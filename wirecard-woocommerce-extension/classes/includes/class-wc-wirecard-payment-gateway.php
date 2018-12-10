@@ -198,7 +198,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 		$order          = new WC_Order( $order_id );
 
 		if ( 'cancel' == $_REQUEST['payment-state'] ) {
-			wc_add_notice( __( 'You have canceled the payment process.', 'wirecard-woocommerce-extension' ), 'notice' );
+			wc_add_notice( __( 'canceled_payment_process', 'wirecard-woocommerce-extension' ), 'notice' );
 			header( 'Location:' . $order->get_cancel_endpoint() );
 			die();
 		}
@@ -209,7 +209,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 			$response            = $response_handler->handle_response( $_REQUEST );
 
 			if ( ! $response ) {
-				wc_add_notice( __( 'An error occurred during the payment process. Please try again.', 'wirecard-woocommerce-extension' ), 'error' );
+				wc_add_notice( __( 'order_error', 'wirecard-woocommerce-extension' ), 'error' );
 				$redirect_url = $order->get_cancel_endpoint();
 			} else {
 				if ( 'wiretransfer' == $response->getPaymentMethod() ) {
@@ -225,7 +225,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 				$redirect_url = $this->get_return_url( $order );
 			}
 		} catch ( Exception $exception ) {
-			wc_add_notice( __( 'An error occurred during the payment process. Please try again.', 'wirecard-woocommerce-extension' ), 'error' );
+			wc_add_notice( __( 'order_error', 'wirecard-woocommerce-extension' ), 'error' );
 			header( 'Location:' . $order->get_cancel_endpoint() );
 			die();
 		}
@@ -337,7 +337,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 		} catch ( \Exception $exception ) {
 			$logger->error( __METHOD__ . ': ' . get_class( $exception ) . ': ' . $exception->getMessage() . ' - ' . $operation );
 
-			wc_add_notice( __( 'An error occurred during the payment process. Please try again.', 'wirecard-woocommerce-extension' ), 'error' );
+			wc_add_notice( __( 'order_error', 'wirecard-woocommerce-extension' ), 'error' );
 
 			return array(
 				'result'   => 'error',
@@ -406,7 +406,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 		} catch ( \Exception $exception ) {
 			$logger->error( __METHOD__ . ':' . $exception->getMessage() );
 
-			return new WP_Error( 'error', __( 'Processing refund failed.', 'wirecard-woocommerce-extension' ) );
+			return new WP_Error( 'error', __( 'refund_processing_error', 'wirecard-woocommerce-extension' ) );
 		}
 		if ( $response instanceof SuccessResponse ) {
 			$this->update_payment_transaction( $order, $response, 'awaiting', $transaction::NAME );
@@ -415,10 +415,10 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 			return true;
 		}
 		if ( $response instanceof FailureResponse ) {
-			return new WP_Error( 'error', __( 'Refund via Wirecard Payment Processing Gateway failed.', 'wirecard-woocommerce-extension' ) );
+			return new WP_Error( 'error', __( 'refund_gateway_error', 'wirecard-woocommerce-extension' ) );
 		}
 
-		return new WP_Error( 'error', __( 'Refund via Wirecard Payment Processing Gateway failed.', 'wirecard-woocommerce-extension' ) );
+		return new WP_Error( 'error', __( 'refund_gateway_error', 'wirecard-woocommerce-extension' ) );
 	}
 
 	/**
@@ -518,7 +518,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 				$state = 'authorization';
 				break;
 		}
-		$order->update_status( $state, __( 'Update order status via Wirecard Payment Processing Gateway.', 'wirecard-woocommerce-extension' ) );
+		$order->update_status( $state, __( 'order_status_gateway_update', 'wirecard-woocommerce-extension' ) );
 
 		return $order;
 	}
@@ -629,7 +629,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 		$order = wc_get_order( $order_id );
 
 		if ( ! $this->can_refund_order( $order ) ) {
-			return new WP_Error( 'error', __( 'No online refund possible at this time.', 'wirecard-woocommerce-extension' ) );
+			return new WP_Error( 'error', __( 'refund_online_error', 'wirecard-woocommerce-extension' ) );
 		}
 		$this->config = $this->create_payment_config();
 		$this->transaction->setParentTransactionId( $order->get_transaction_id() );
@@ -677,9 +677,9 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 			$transaction_service = new TransactionService( $test_config, new Logger() );
 
 			if ( $transaction_service->checkCredentials() ) {
-				wp_send_json_success( __( 'The merchant configuration was successfully tested.', 'wirecard-woocommerce-extension' ) );
+				wp_send_json_success( __( 'success_credentials', 'wirecard-woocommerce-extension' ) );
 			} else {
-				wp_send_json_error( __( 'Test failed, please check your credentials.', 'wirecard-woocommerce-extension' ) );
+				wp_send_json_error( __( 'error_credentials', 'wirecard-woocommerce-extension' ) );
 			}
 		}
 		die();
@@ -730,7 +730,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 */
 	private function payment_on_hold( $order ) {
 		if ( ! $order->is_paid() && ( 'authorization' != $order->get_status() ) && ( 'processing' != $order->get_status() ) ) {
-			$order->update_status( 'on-hold', __( 'Awaiting payment from Wirecard', 'wirecard-woocommerce-extension' ) );
+			$order->update_status( 'on-hold', __( 'payment_awaiting', 'wirecard-woocommerce-extension' ) );
 		}
 	}
 }

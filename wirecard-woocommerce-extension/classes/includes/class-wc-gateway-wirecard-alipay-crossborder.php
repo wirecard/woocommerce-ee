@@ -57,9 +57,9 @@ class WC_Gateway_Wirecard_Alipay_Crossborder extends WC_Wirecard_Payment_Gateway
 		$this->type               = 'alipay-xborder';
 		$this->id                 = 'wirecard_ee_alipay-xborder';
 		$this->icon               = WIRECARD_EXTENSION_URL . 'assets/images/alipay-xborder.png';
-		$this->method_title       = __( 'Wirecard Alipay Cross-border', 'wirecard-woocommerce-extension' );
-		$this->method_name        = __( 'Alipay Crossborder', 'wirecard-woocommerce-extension' );
-		$this->method_description = __( 'Alipay Crossborder transactions via Wirecard Payment Processing Gateway', 'wirecard-woocommerce-extension' );
+		$this->method_title       = __( 'heading_title_alipay_crossborder', 'wirecard-woocommerce-extension' );
+		$this->method_name        = __( 'alipay_crossborder', 'wirecard-woocommerce-extension' );
+		$this->method_description = __( 'alipay_crossborder_desc', 'wirecard-woocommerce-extension' );
 
 		$this->supports = array(
 			'products',
@@ -91,76 +91,76 @@ class WC_Gateway_Wirecard_Alipay_Crossborder extends WC_Wirecard_Payment_Gateway
 	public function init_form_fields() {
 		$this->form_fields = array(
 			'enabled'             => array(
-				'title'       => __( 'Enable/Disable', 'wirecard-woocommerce-extension' ),
+				'title'       => __( 'text_enable_disable', 'wirecard-woocommerce-extension' ),
 				'type'        => 'checkbox',
-				'description' => __( 'Activate payment method Alipay Crossborder', 'wirecard-woocommerce-extension' ),
-				'label'       => __( 'Enable Wirecard Alipay Crossborder', 'wirecard-woocommerce-extension' ),
+				'description' => __( 'config_status_desc_alipay_crossborder', 'wirecard-woocommerce-extension' ),
+				'label'       => __( 'enable_heading_title_alipay_crossborder', 'wirecard-woocommerce-extension' ),
 				'default'     => 'no',
 			),
 			'title'               => array(
-				'title'       => __( 'Title', 'wirecard-woocommerce-extension' ),
+				'title'       => __( 'config_title', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
-				'description' => __( 'This controls the title which the consumer sees during checkout.', 'wirecard-woocommerce-extension' ),
-				'default'     => __( 'Wirecard Alipay Crossborder', 'wirecard-woocommerce-extension' ),
+				'description' => __( 'config_title_desc', 'wirecard-woocommerce-extension' ),
+				'default'     => __( 'heading_title_alipay_crossborder', 'wirecard-woocommerce-extension' ),
 			),
 			'merchant_account_id' => array(
-				'title'       => __( 'Merchant Account ID', 'wirecard-woocommerce-extension' ),
+				'title'       => __( 'config_merchant_account_id', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
-				'description' => __( 'The unique identifier assigned for your Merchant Account.', 'wirecard-woocommerce-extension' ),
+				'description' => __( 'config_merchant_account_id_desc', 'wirecard-woocommerce-extension' ),
 				'default'     => '7ca48aa0-ab12-4560-ab4a-af1c477cce43',
 			),
 			'secret'              => array(
-				'title'       => __( 'Secret Key', 'wirecard-woocommerce-extension' ),
+				'title'       => __( 'config_merchant_secret', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
-				'description' => __( 'Secret key is mandatory to calculate the Digital Signature for the payment.', 'wirecard-woocommerce-extension' ),
+				'description' => __( 'config_merchant_secret_desc', 'wirecard-woocommerce-extension' ),
 				'default'     => 'dbc5a498-9a66-43b9-bf1d-a618dd399684',
 			),
 			'credentials'         => array(
-				'title'       => __( 'Credentials', 'wirecard-woocommerce-extension' ),
+				'title'       => __( 'text_credentials', 'wirecard-woocommerce-extension' ),
 				'type'        => 'title',
-				'description' => __( 'Enter your Wirecard credentials.', 'wirecard-woocommerce-extension' ),
+				'description' => __( 'text_credentials_desc', 'wirecard-woocommerce-extension' ),
 			),
 			'base_url'            => array(
-				'title'       => __( 'Base URL', 'wirecard-woocommerce-extension' ),
+				'title'       => __( 'config_base_url', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
-				'description' => __( 'The Wirecard base URL. (e.g. https://api.wirecard.com)', 'wirecard-woocommerce-extension' ),
+				'description' => __( 'config_base_url_desc', 'wirecard-woocommerce-extension' ),
 				'default'     => 'https://api-test.wirecard.com',
 			),
 			'http_user'           => array(
-				'title'       => __( 'HTTP User', 'wirecard-woocommerce-extension' ),
+				'title'       => __( 'config_http_user', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
-				'description' => __( 'The http user provided in your Wirecard contract', 'wirecard-woocommerce-extension' ),
+				'description' => __( 'config_http_user_desc', 'wirecard-woocommerce-extension' ),
 				'default'     => '70000-APITEST-AP',
 			),
 			'http_pass'           => array(
-				'title'       => __( 'HTTP Password', 'wirecard-woocommerce-extension' ),
+				'title'       => __( 'config_http_password', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
-				'description' => __( 'The http password provided in your Wirecard contract', 'wirecard-woocommerce-extension' ),
+				'description' => __( 'config_http_password_desc', 'wirecard-woocommerce-extension' ),
 				'default'     => 'qD2wzQ_hrc!8',
 			),
 			'test_button'         => array(
-				'title'   => __( 'Test configuration', 'wirecard-woocommerce-extension' ),
+				'title'   => __( 'test_config', 'wirecard-woocommerce-extension' ),
 				'type'    => 'button',
 				'class'   => 'wc_wirecard_test_credentials_button button-primary',
-				'default' => __( 'Test', 'wirecard-woocommerce-extension' ),
+				'default' => __( 'test_credentials', 'wirecard-woocommerce-extension' ),
 			),
 			'advanced'            => array(
-				'title'       => __( 'Advanced Options', 'wirecard-woocommerce-extension' ),
+				'title'       => __( 'text_advanced', 'wirecard-woocommerce-extension' ),
 				'type'        => 'title',
 				'description' => '',
 			),
 			'descriptor'          => array(
-				'title'       => __( 'Enable/Disable', 'wirecard-woocommerce-extension' ),
+				'title'       => __( 'text_enable_disable', 'wirecard-woocommerce-extension' ),
 				'type'        => 'checkbox',
-				'description' => __( 'Send text which is displayed on the bank statement issued to your consumer by the financial service provider', 'wirecard-woocommerce-extension' ),
-				'label'       => __( 'Descriptor', 'wirecard-woocommerce-extension' ),
+				'description' => __( 'config_descriptor_desc', 'wirecard-woocommerce-extension' ),
+				'label'       => __( 'config_descriptor', 'wirecard-woocommerce-extension' ),
 				'default'     => 'no',
 			),
 			'send_additional'     => array(
-				'title'       => __( 'Enable/Disable', 'wirecard-woocommerce-extension' ),
+				'title'       => __( 'text_enable_disable', 'wirecard-woocommerce-extension' ),
 				'type'        => 'checkbox',
-				'description' => __( 'Additional data will be sent for the purpose of fraud protection. This additional data includes billing / shipping address, shopping basket and descriptor.', 'wirecard-woocommerce-extension' ),
-				'label'       => __( 'Send additional information', 'wirecard-woocommerce-extension' ),
+				'description' => __( 'config_additional_info_desc', 'wirecard-woocommerce-extension' ),
+				'label'       => __( 'config_additional_info', 'wirecard-woocommerce-extension' ),
 				'default'     => 'yes',
 			),
 		);
