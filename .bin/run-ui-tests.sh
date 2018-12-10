@@ -17,7 +17,7 @@ chmod +x $PWD/jq
 # Open ngrok tunnel
 $PWD/ngrok authtoken $NGROK_TOKEN
 TIMESTAMP=$(date +%s)
-$PWD/ngrok http 8080 -subdomain=${TIMESTAMP}${GATEWAY}> /dev/null &
+$PWD/ngrok http 9090 -subdomain="${TIMESTAMP}-woo-${GATEWAY}" > /dev/null &
 
 # sleep to allow ngrok to initialize
 sleep 150
@@ -25,17 +25,9 @@ sleep 150
 # extract the ngrok url
 export NGROK_URL=$(curl -s localhost:4040/api/tunnels/command_line | jq --raw-output .public_url)
 
+echo "NGROK_URL=${NGROK_URL}"
 #create the plugin package for installation
 bash .bin/generate-release-package.sh
 
 #start shopsystem and demoshop
 bash .bin/start-shopsystem.sh
-
-GROUP='default_gateway'
-
-if [[ ${GATEWAY} = "TEST-SG" ]] || [[ ${GATEWAY} = "SECURE-TEST-SG" ]]; then
-  GROUP='sg_gateway'
-fi
-
-#run tests
-vendor/bin/codecept run acceptance -g ${GROUP} --html

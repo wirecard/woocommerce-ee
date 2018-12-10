@@ -2,14 +2,18 @@ FROM wordpress:php7.1-apache
 #example :
 #docker build --build-arg WOOCOMMERCE_VERSION=2.6.14 --build-arg STOREFRONT_VERSION=2.1.8 -t woo .
 
+RUN apt-get update && apt-get install libicu-dev -y \
+    && docker-php-ext-configure intl \
+    && docker-php-ext-install intl \
+    && docker-php-ext-enable intl
+
 ARG WOOCOMMERCE_VERSION=0
 ARG STOREFRONT_VERSION=0
 
 ENV WOOCOMMERCE_VERSION $WOOCOMMERCE_VERSION
 ENV STOREFRONT_VERSION $STOREFRONT_VERSION
 
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends unzip wget
+RUN apt-get install -y --no-install-recommends unzip wget
 
 #Get Woocommerce when --build-arg WOOCOMMERCE_VERSION is not set
 RUN if [ "$WOOCOMMERCE_VERSION" = "0" ]; then \

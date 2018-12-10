@@ -24,15 +24,14 @@ matrix:
     if: type = cron
     php: 7.1
     env: GATEWAY=API-TEST
-    before_install: skip
+    before_install:
+    - travis_retry composer self-update
     install:
     - travis_retry composer require --dev $COMPOSER_ARGS codeception/codeception
     - travis_retry composer install $COMPOSER_ARGS
     - composer show
     script: bash .bin/run-ui-tests.sh
     after_script: skip
-    before_deploy: skip
-    deploy: skip
     after_success:
     - bash .bin/upload-logs-and-notify.sh
     after_failure:

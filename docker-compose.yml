@@ -6,7 +6,7 @@ webserver:
    links:
     - dbserver:mysql
    ports:
-    - 8080:80
+    - 9090:80
 
 dbserver:
    container_name: woo_mariadb
@@ -15,3 +15,4 @@ dbserver:
     MYSQL_ROOT_PASSWORD: example
    ports:
     - 3307:3306
+    
