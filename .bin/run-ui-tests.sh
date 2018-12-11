@@ -19,8 +19,12 @@ $PWD/ngrok authtoken $NGROK_TOKEN
 TIMESTAMP=$(date +%s)
 $PWD/ngrok http 9090 -subdomain="${TIMESTAMP}-woo-${GATEWAY}" > /dev/null &
 
-# sleep to allow ngrok to initialize
-sleep 150
+
+# allow ngrok to initialize
+while ! {  ps ax | grep -v grep | grep 'ngrok' > /dev/null; };  do
+    echo "Waiting for ngrok to initialize"
+    sleep 1
+done
 
 # extract the ngrok url
 export NGROK_URL=$(curl -s localhost:4040/api/tunnels/command_line | jq --raw-output .public_url)
