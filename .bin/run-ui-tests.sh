@@ -20,14 +20,14 @@ TIMESTAMP=$(date +%s)
 $PWD/ngrok http 9090 -subdomain="${TIMESTAMP}-woo-${GATEWAY}" > /dev/null &
 
 
+# extract the ngrok url
+NGROK_URL=$(curl -s localhost:4040/api/tunnels/command_line | jq --raw-output .public_url)
 # allow ngrok to initialize
-while ! {  ps ax | grep -v grep | grep 'ngrok' > /dev/null; };  do
+while [ ! ${NGROK_URL} ] || [ ${NGROK_URL} = 'null' ];  do
     echo "Waiting for ngrok to initialize"
+    export NGROK_URL=$(curl -s localhost:4040/api/tunnels/command_line | jq --raw-output .public_url)
     sleep 1
 done
-
-# extract the ngrok url
-export NGROK_URL=$(curl -s localhost:4040/api/tunnels/command_line | jq --raw-output .public_url)
 
 echo "NGROK_URL=${NGROK_URL}"
 #create the plugin package for installation
