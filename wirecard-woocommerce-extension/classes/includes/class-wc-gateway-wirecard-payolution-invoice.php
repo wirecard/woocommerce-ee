@@ -53,9 +53,9 @@ class WC_Gateway_Wirecard_Payolution_Invoice extends WC_Wirecard_Payment_Gateway
 		$this->type               = 'payolution-inv';
 		$this->id                 = 'wirecard_ee_payolution-inv';
 		$this->icon               = WIRECARD_EXTENSION_URL . 'assets/images/payolution.png';
-		$this->method_title       = __( 'Wirecard Payment on Invoice (Payolution B2C)', 'wirecard-woocommerce-extension' );
-		$this->method_name        = __( 'Wirecard Payment on Invoice (Payolution B2C)', 'wirecard-woocommerce-extension' );
-		$this->method_description = __( 'Payment on Invoice (Payolution B2C) via Wirecard Payment Processing Gateway', 'wirecard-woocommerce-extension' );
+		$this->method_title       = __( 'heading_title_payolutioninvoice', 'wirecard-woocommerce-extension' );
+		$this->method_name        = __( 'payolutioninvoice', 'wirecard-woocommerce-extension' );
+		$this->method_description = __( 'payolutioninvoice_desc', 'wirecard-woocommerce-extension' );
 		$this->has_fields         = true;
 
 		$this->supports = array(
@@ -96,79 +96,75 @@ class WC_Gateway_Wirecard_Payolution_Invoice extends WC_Wirecard_Payment_Gateway
 
 		$this->form_fields = array(
 			'enabled'               => array(
-				'title'       => __( 'Enable/Disable', 'wirecard-woocommerce-extension' ),
+				'title'       => __( 'text_enable_disable', 'wirecard-woocommerce-extension' ),
 				'type'        => 'checkbox',
-				'description' => __( 'Activate payment method Payment on Invoice (Payolution B2C)', 'wirecard-woocommerce-extension' ),
-				'label'       => __( 'Enable Payment on Invoice (Payolution B2C)', 'wirecard-woocommerce-extension' ),
+				'description' => __( 'config_status_desc_payolutioninvoice', 'wirecard-woocommerce-extension' ),
+				'label'       => __( 'enable_heading_title_payolutioninvoice', 'wirecard-woocommerce-extension' ),
 				'default'     => 'no',
 			),
 			'title'                 => array(
-				'title'       => __( 'Title', 'wirecard-woocommerce-extension' ),
+				'title'       => __( 'config_title', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
-				'description' => __( 'This controls the title which the consumer sees during checkout.', 'wirecard-woocommerce-extension' ),
-				'default'     => __( 'Wirecard Payment on Invoice (Payolution B2C)', 'wirecard-woocommerce-extension' ),
+				'description' => __( 'config_title_desc', 'wirecard-woocommerce-extension' ),
+				'default'     => __( 'heading_title_payolutioninvoice', 'wirecard-woocommerce-extension' ),
 			),
 			'merchant_account_id'   => array(
-				'title'       => __( 'Merchant Account ID', 'wirecard-woocommerce-extension' ),
+				'title'       => __( 'config_merchant_account_id', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
-				'description' => __( 'The unique identifier assigned for your Merchant Account.', 'wirecard-woocommerce-extension' ),
+				'description' => __( 'config_merchant_account_id_desc', 'wirecard-woocommerce-extension' ),
 				'default'     => '2048677d-57f4-44b0-8d67-9014c6631d5f',
 			),
 			'secret'                => array(
-				'title'       => __( 'Secret Key', 'wirecard-woocommerce-extension' ),
+				'title'       => __( 'config_merchant_secret', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
-				'description' => __( 'Secret key is mandatory to calculate the Digital Signature for the payment.', 'wirecard-woocommerce-extension' ),
+				'description' => __( 'config_merchant_secret_desc', 'wirecard-woocommerce-extension' ),
 				'default'     => '74bd2f0c-6d1b-4e9a-b278-abc34b83ab9f',
 			),
 			'credentials'           => array(
-				'title'       => __( 'Credentials', 'wirecard-woocommerce-extension' ),
+				'title'       => __( 'text_credentials', 'wirecard-woocommerce-extension' ),
 				'type'        => 'title',
-				'description' => __( 'Enter your Wirecard credentials.', 'wirecard-woocommerce-extension' ),
+				'description' => __( 'text_credentials_desc', 'wirecard-woocommerce-extension' ),
 			),
 			'base_url'              => array(
-				'title'       => __( 'Base URL', 'wirecard-woocommerce-extension' ),
+				'title'       => __( 'config_base_url', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
-				'description' => __( 'The Wirecard base URL. (e.g. https://api.wirecard.com)', 'wirecard-woocommerce-extension' ),
+				'description' => __( 'config_base_url_desc', 'wirecard-woocommerce-extension' ),
 				'default'     => 'https://api-test.wirecard.com',
 			),
 			'http_user'             => array(
-				'title'       => __( 'HTTP User', 'wirecard-woocommerce-extension' ),
+				'title'       => __( 'config_http_user', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
-				'description' => __( 'The http user provided in your Wirecard contract', 'wirecard-woocommerce-extension' ),
+				'description' => __( 'config_http_user_desc', 'wirecard-woocommerce-extension' ),
 				'default'     => '16390-testing',
 			),
 			'http_pass'             => array(
-				'title'       => __( 'HTTP Password', 'wirecard-woocommerce-extension' ),
+				'title'       => __( 'config_http_password', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
-				'description' => __( 'The http password provided in your Wirecard contract', 'wirecard-woocommerce-extension' ),
+				'description' => __( 'config_http_password_desc', 'wirecard-woocommerce-extension' ),
 				'default'     => '3!3013=D3fD8X7',
 			),
 			'test_button'           => array(
-				'title'   => __( 'Test configuration', 'wirecard-woocommerce-extension' ),
+				'title'   => __( 'test_config', 'wirecard-woocommerce-extension' ),
 				'type'    => 'button',
 				'class'   => 'wc_wirecard_test_credentials_button button-primary',
-				'default' => __( 'Test', 'wirecard-woocommerce-extension' ),
+				'default' => __( 'test_credentials', 'wirecard-woocommerce-extension' ),
 			),
 			'advanced'              => array(
-				'title'       => __( 'Advanced Options', 'wirecard-woocommerce-extension' ),
+				'title'       => __( 'text_advanced', 'wirecard-woocommerce-extension' ),
 				'type'        => 'title',
 				'description' => '',
 			),
 			'billing_shipping_same' => array(
-				'title'       => __( 'Enable/Disable', 'wirecard-woocommerce-extension' ),
+				'title'       => __( 'text_enable_disable', 'wirecard-woocommerce-extension' ),
 				'type'        => 'checkbox',
-				'description' => __( 'If activated, payment method Payment on Invoice (Payolution B2C) will only be displayed if Billing/Shipping address are identical', 'wirecard-woocommerce-extension' ),
-				'label'       => __( 'Billing/Shipping address must be identical', 'wirecard-woocommerce-extension' ),
+				'description' => __( 'config_billing_shipping_desc_payolution', 'wirecard-woocommerce-extension' ),
+				'label'       => __( 'config_billing_shipping', 'wirecard-woocommerce-extension' ),
 				'default'     => 'yes',
 			),
 			'billing_countries'     => array(
-				'title'          => __( 'Allowed billing countries', 'wirecard-woocommerce-extension' ),
+				'title'          => __( 'config_billing_countries', 'wirecard-woocommerce-extension' ),
 				'type'           => 'multiselect',
-				'description'    => __(
-					'Payment method Payment on Invoice (Payolution B2C) will only be displayed if consumers billing country equals one of these chosen countries.
-				Predefined the following countries are allowed: AT, DE, CH, NL.',
-					'wirecard-woocommerce-extension'
-				),
+				'description'    => __( 'config_billing_countries_desc_payolution', 'wirecard-woocommerce-extension' ),
 				'options'        => $countries,
 				'default'        => array( 'AT', 'DE', 'CH', 'NL' ),
 				'multiple'       => true,
@@ -176,13 +172,9 @@ class WC_Gateway_Wirecard_Payolution_Invoice extends WC_Wirecard_Payment_Gateway
 				'css'            => 'height: 100px',
 			),
 			'shipping_countries'    => array(
-				'title'          => __( 'Allowed shipping countries', 'wirecard-woocommerce-extension' ),
+				'title'          => __( 'config_shipping_countries', 'wirecard-woocommerce-extension' ),
 				'type'           => 'multiselect',
-				'description'    => __(
-					'Payment method Payment on Invoice (Payolution B2C) will only be displayed if consumers shipping country equals one of these chosen countries.
-				Predefined the following countries are allowed: AT, DE, CH, NL.',
-					'wirecard-woocommerce-extension'
-				),
+				'description'    => __( 'config_shipping_countries_desc_payolution', 'wirecard-woocommerce-extension' ),
 				'options'        => $countries,
 				'default'        => array( 'AT', 'DE', 'CH', 'NL' ),
 				'multiple'       => true,
@@ -190,9 +182,9 @@ class WC_Gateway_Wirecard_Payolution_Invoice extends WC_Wirecard_Payment_Gateway
 				'css'            => 'height: 100px',
 			),
 			'allowed_currencies'    => array(
-				'title'          => __( 'Allowed currencies', 'wirecard-woocommerce-extension' ),
+				'title'          => __( 'config_allowed_currencies', 'wirecard-woocommerce-extension' ),
 				'type'           => 'multiselect',
-				'description'    => __( 'Payment method Payment on Invoice (Payolution B2C) will only be displayed if the active currency equals one of these chosen currencies.', 'wirecard-woocommerce-extension' ),
+				'description'    => __( 'config_allowed_currencies_desc_payolution', 'wirecard-woocommerce-extension' ),
 				'options'        => get_woocommerce_currencies(),
 				'default'        => array( 'EUR' ),
 				'multiple'       => true,
@@ -200,33 +192,33 @@ class WC_Gateway_Wirecard_Payolution_Invoice extends WC_Wirecard_Payment_Gateway
 				'css'            => 'height: 100px',
 			),
 			'min_amount'            => array(
-				'title'       => __( 'Minimum Amount', 'wirecard-woocommerce-extension' ),
-				'description' => __( 'Payment method Payment on Invoice (Payolution B2C) will only be displayed if the ordered amount is bigger than this defined amount. Amount in default shop currency', 'wirecard-woocommerce-extension' ),
+				'title'       => __( 'config_basket_min', 'wirecard-woocommerce-extension' ),
+				'description' => __( 'config_basket_min_desc_payolution', 'wirecard-woocommerce-extension' ),
 				'default'     => 25,
 			),
 			'max_amount'            => array(
-				'title'       => __( 'Maximum Amount', 'wirecard-woocommerce-extension' ),
-				'description' => __( 'Payment method Payment on Invoice (Payolution B2C) will only be displayed if the ordered amount is smaller than this defined amount. Amount in default shop currency', 'wirecard-woocommerce-extension' ),
+				'title'       => __( 'config_basket_max', 'wirecard-woocommerce-extension' ),
+				'description' => __( 'config_basket_max_desc_payolution', 'wirecard-woocommerce-extension' ),
 				'default'     => 3500,
 			),
 			'descriptor'            => array(
-				'title'       => __( 'Enable/Disable', 'wirecard-woocommerce-extension' ),
+				'title'       => __( 'text_enable_disable', 'wirecard-woocommerce-extension' ),
 				'type'        => 'checkbox',
-				'description' => __( 'Send text which is displayed on the bank statement issued to your consumer by the financial service provider', 'wirecard-woocommerce-extension' ),
-				'label'       => __( 'Descriptor', 'wirecard-woocommerce-extension' ),
+				'description' => __( 'config_descriptor_desc', 'wirecard-woocommerce-extension' ),
+				'label'       => __( 'config_descriptor', 'wirecard-woocommerce-extension' ),
 				'default'     => 'no',
 			),
 			'send_additional'       => array(
-				'title'       => __( 'Enable/Disable', 'wirecard-woocommerce-extension' ),
+				'title'       => __( 'text_enable_disable', 'wirecard-woocommerce-extension' ),
 				'type'        => 'checkbox',
-				'description' => __( 'Additional data will be sent for the purpose of fraud protection. This additional data includes billing / shipping address, shopping basket and descriptor.', 'wirecard-woocommerce-extension' ),
-				'label'       => __( 'Send additional information', 'wirecard-woocommerce-extension' ),
+				'description' => __( 'config_additional_info_desc', 'wirecard-woocommerce-extension' ),
+				'label'       => __( 'config_additional_info', 'wirecard-woocommerce-extension' ),
 				'default'     => 'yes',
 			),
 			'payolution_mid'        => array(
-				'title'       => __( 'Payolution merchant ID', 'wirecard-woocommerce-extension' ),
+				'title'       => __( 'config_payolution_merchant_id', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
-				'description' => __( 'Your merchant ID from your payolution contract is necessary to provide your customer a revocable agreement for data processing.', 'wirecard-woocommerce-extension' ),
+				'description' => __( 'config_payolution_merchant_id_desc', 'wirecard-woocommerce-extension' ),
 			),
 		);
 	}
