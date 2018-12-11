@@ -6,9 +6,9 @@ docker-compose build --build-arg WOOCOMMERCE_VERSION=3.5.1 webserver
 docker-compose up > /dev/null &
 # wordpress running on 9090
 
-while ! {  docker inspect -f {{.State.Running}} ${WOOCOMMERCE_CONTAINER_NAME} };  do
+while ! $(curl --output /dev/null --silent --head --fail "${NGROK_URL}/wp-admin/install.php"); do
     echo "Waiting for docker container to initialize"
-    sleep 1
+    sleep 5
 done
 
 #install wordpress
