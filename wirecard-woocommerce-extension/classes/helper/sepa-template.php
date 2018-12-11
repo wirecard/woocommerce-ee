@@ -35,9 +35,9 @@ $html = '
 			<table border="0" width="100%">
 				<tr>
 					<td class="text11justify">
-						<i>' . __( 'Creditor', 'wirecard-woocommerce-extension' ) . '</i><br />' .
+						<i>' . __( 'creditor', 'wirecard-woocommerce-extension' ) . '</i><br />' .
 	$creditor_name . ' ' . $creditor_store_city . '<br />' .
-	__( 'Creditor ID:', 'wirecard-woocommerce-extension' ) . $creditor_id . '<br />
+	__( 'creditor_id_input', 'wirecard-woocommerce-extension' ) . ':' . $creditor_id . '<br />
 					</td>
 					<td width="10%">&nbsp;</td>
 				</tr>
@@ -49,11 +49,11 @@ $html = '
 			<table border="0" width="100%">
 				<tr>
 					<td class="text11">
-						<i>' . __( 'Debtor', 'wirecard-woocommerce-extension' ) . '</i><br />' .
-	__( 'Account owner:', 'wirecard-woocommerce-extension' ) . ' <span class="first_last_name"></span><br />' .
-	__( 'IBAN:', 'wirecard-woocommerce-extension' ) . ' <span class="bank_iban"></span><br />';
+						<i>' . __( 'debtor', 'wirecard-woocommerce-extension' ) . '</i><br />' .
+	__( 'debtor_acc_owner', 'wirecard-woocommerce-extension' ) . ': <span class="first_last_name"></span><br />' .
+	__( 'iban_input', 'wirecard-woocommerce-extension' ) . ': <span class="bank_iban"></span><br />';
 if ( ( $this->get_option( 'enable_bic' ) == 'yes' ) ) {
-	$html .= __( 'BIC:', 'wirecard-woocommerce-extension' ) . '<span class="bank_bic"></span><br />';
+	$html .= __( 'bic_input', 'wirecard-woocommerce-extension' ) . ':<span class="bank_bic"></span><br />';
 }
 $html .= '</td>
 					<td width="10%">&nbsp;</td>
@@ -66,24 +66,24 @@ $html .= '</td>
 			<table border="0" width="100%">
 				<tr>
 					<td class="text11justify">' .
-	__( 'I authorize the creditor ', 'wirecard-woocommerce-extension' ) . ' ' .
+	__( 'sepa_text_1', 'wirecard-woocommerce-extension' ) . ' ' .
 	$creditor_name . ' ' .
-	__( ' to send instructions to my bank to collect one single direct debit from my account. At the same time I instruct my bank to debit my account in accordance with the instructions from the creditor ', 'wirecard-woocommerce-extension' ) . ' ' .
+	__( 'sepa_text_2', 'wirecard-woocommerce-extension' ) . ' ' .
 	$creditor_name . ' ' . __( 'sepa_text_2b', 'wirecard-woocommerce-extension' ) . ' ' . $additional_text . '
 					</td>
 					<td width="10%">&nbsp;</td>
 				</tr>
 				<tr>
 					<td class="text11justify">' .
-	__( 'Note: As part of my rights, I am entitled to a refund under the terms and conditions of my agreement with my bank. A refund must be claimed within 8 weeks starting from the date on which my account was debited.', 'wirecard-woocommerce-extension' ) . '
+	__( 'sepa_text_3', 'wirecard-woocommerce-extension' ) . '
 					</td>
 					<td width="10%">&nbsp;</td>
 				</tr>
 				<tr>
 					<td class="text11justify">' .
-	__( 'I irrevocably agree that, in the event that the direct debit is not honored, or objection against the direct debit exists, my bank will disclose to the creditor ', 'wirecard-woocommerce-extension' ) . ' ' .
+	__( 'sepa_text_4', 'wirecard-woocommerce-extension' ) . ' ' .
 	$creditor_name . ' ' .
-	__( ' my full name, address and date of birth.', 'wirecard-woocommerce-extension' ) . '
+	__( 'sepa_text_5', 'wirecard-woocommerce-extension' ) . '
 					</td>
 					<td width="10%">&nbsp;</td>
 				</tr>
@@ -101,11 +101,11 @@ $html .= '</td>
 				</tr>
 				<tr>
 					<td>
-						<input type="checkbox" id="sepa-check">&nbsp;<label for="sepa-check">' . __( 'I have read and accepted the SEPA Direct Debit Mandate information.', 'wirecard-woocommerce-extension' ) . '</label>
+						<input type="checkbox" id="sepa-check">&nbsp;<label for="sepa-check">' . __( 'sepa_text_6', 'wirecard-woocommerce-extension' ) . '</label>
 					</td>
 				</tr>
 				<tr>
-					<td style="text-align: right;"><button id="sepa-button"> ' . __( 'Cancel', 'wirecard-woocommerce-extension' ) . '</button></td>
+					<td style="text-align: right;"><button id="sepa-button"> ' . __( 'cancel', 'wirecard-woocommerce-extension' ) . '</button></td>
 				</tr>
 			</table>
 		</td>

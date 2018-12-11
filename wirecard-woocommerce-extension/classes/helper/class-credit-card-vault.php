@@ -153,14 +153,14 @@ class Credit_Card_Vault {
 		$html = '<table id="vault-table">
 		<tr>
 			<th></th>
-			<th>' . __( 'Account number', 'wirecard-woocommerce-extension' ) . '</th>
-			<th>' . __( 'Delete Card', 'wirecard-woocommerce-extension' ) . '</th>
+			<th>' . __( 'vault_account_number', 'wirecard-woocommerce-extension' ) . '</th>
+			<th>' . __( 'vault_delete_card_text', 'wirecard-woocommerce-extension' ) . '</th>
 		</tr>';
 		foreach ( $cards as $card ) {
 			$html .= '<tr>
 				<td><input class="token" name="token" onclick="javascript:setToken()" type="radio" data-token="' . $card->token . '" /></td>
 				<td>' . $card->masked_pan . '</td>
-				<td><div class="delete-from-vault" onclick="javascript:deleteCard(' . $card->vault_id . ')">' . __( 'Delete', 'wirecard-woocommerce-extension' ) . '</div></td>
+				<td><div class="delete-from-vault" onclick="javascript:deleteCard(' . $card->vault_id . ')">' . __( 'text_delete', 'wirecard-woocommerce-extension' ) . '</div></td>
 			</tr>';
 		}
 		$html .= '</table>';

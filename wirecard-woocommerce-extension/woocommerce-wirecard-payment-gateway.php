@@ -3,7 +3,7 @@
  * Plugin Name: Wirecard WooCommerce Extension
  * Plugin URI: https://github.com/wirecard/woocommerce-ee
  * Description: Payment Gateway for WooCommerce
- * Version: 1.4.3
+ * Version: 1.4.4
  * Author: Wirecard AG
  * Author URI: https://www.wirecard.com/
  * License: GPLv3
@@ -46,7 +46,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 define( 'WIRECARD_EXTENSION_NAME', 'Wirecard WooCommerce Extension' );
-define( 'WIRECARD_EXTENSION_VERSION', '1.4.3' );
+define( 'WIRECARD_EXTENSION_VERSION', '1.4.4' );
 define( 'WIRECARD_EXTENSION_BASEDIR', plugin_dir_path( __FILE__ ) );
 define( 'WIRECARD_EXTENSION_URL', plugin_dir_url( __FILE__ ) );
 
@@ -97,13 +97,13 @@ function wirecard_init_payment_gateway() {
 	register_post_status(
 		'wc-authorization',
 		array(
-			'label'                     => _x( 'Authorized', 'Order status', 'wirecard-woocommerce-extension' ),
+			'label'                     => _x( 'order_status_authorized', 'Order status', 'wirecard-woocommerce-extension' ),
 			'public'                    => true,
 			'exclude_from_search'       => false,
 			'show_in_admin_all_list'    => true,
 			'show_in_admin_status_list' => true,
 			// translators:
-			'label_count'               => _n_noop( 'Authorized <span class="count">(%s)</span>', 'Authorized<span class="count">(%s)</span>', 'wirecard-woocommerce-extension' ),
+			'label_count'               => _n_noop( 'order_status_authorized_count_single', 'order_status_authorized_count_plural', 'wirecard-woocommerce-extension' ),
 		)
 	);
 }
@@ -163,7 +163,7 @@ function wirecard_get_payments() {
  * @since 1.0.0
  */
 function wirecard_wc_order_statuses( $order_statuses ) {
-	$order_statuses['wc-authorization'] = _x( 'Authorized', 'Order status', 'wirecard-woocommerce-extension' );
+	$order_statuses['wc-authorization'] = _x( 'order_status_authorized', 'Order status', 'wirecard-woocommerce-extension' );
 
 	return $order_statuses;
 }
@@ -227,48 +227,48 @@ function wirecard_gateway_options_page() {
 	$admin = new Wirecard_Settings();
 	add_submenu_page(
 		'woocommerce',
-		__( 'Wirecard Payment Gateway', 'wirecard-woocommerce-extension' ),
-		__( 'Wirecard Payment Gateway', 'wirecard-woocommerce-extension' ),
+		__( 'title_payment_gateway', 'wirecard-woocommerce-extension' ),
+		__( 'title_payment_gateway', 'wirecard-woocommerce-extension' ),
 		'manage_options',
 		'wirecardpayment',
 		array( $admin, 'wirecard_payment_gateway_settings' )
 	);
 	add_submenu_page(
 		null,
-		__( 'Cancel transaction', 'wirecard-woocommerce-extension' ),
-		__( 'Cancel transaction', 'wirecard-woocommerce-extension' ),
+		__( 'text_cancel_transaction', 'wirecard-woocommerce-extension' ),
+		__( 'text_cancel_transaction', 'wirecard-woocommerce-extension' ),
 		'manage_options',
 		'cancelpayment',
 		array( $admin, 'cancel_transaction' )
 	);
 	add_submenu_page(
 		null,
-		__( 'Capture transaction', 'wirecard-woocommerce-extension' ),
-		__( 'Capture transaction', 'wirecard-woocommerce-extension' ),
+		__( 'text_capture_transaction', 'wirecard-woocommerce-extension' ),
+		__( 'text_capture_transaction', 'wirecard-woocommerce-extension' ),
 		'manage_options',
 		'capturepayment',
 		array( $admin, 'capture_transaction' )
 	);
 	add_submenu_page(
 		null,
-		__( 'Refund transaction', 'wirecard-woocommerce-extension' ),
-		__( 'Refund transaction', 'wirecard-woocommerce-extension' ),
+		__( 'text_refund_transaction', 'wirecard-woocommerce-extension' ),
+		__( 'text_refund_transaction', 'wirecard-woocommerce-extension' ),
 		'manage_options',
 		'refundpayment',
 		array( $admin, 'refund_transaction' )
 	);
 	add_submenu_page(
 		'wirecardpayment',
-		__( 'Wirecard Payment Gateway Support', 'wirecard-woocommerce-extensions' ),
-		__( 'Wirecard Payment Gateway Support', 'wirecard-woocommerce-extensions' ),
+		__( 'heading_title_support', 'wirecard-woocommerce-extensions' ),
+		__( 'heading_title_support', 'wirecard-woocommerce-extensions' ),
 		'manage_options',
 		'wirecardsupport',
 		array( $admin, 'wirecard_payment_gateway_support' )
 	);
 	add_submenu_page(
 		null,
-		__( 'Wirecard Payment Gateway Support', 'wirecard-woocommerce-extension' ),
-		__( 'Wirecard Payment Gateway Support', 'wirecard-woocommerce-extension' ),
+		__( 'heading_title_support', 'wirecard-woocommerce-extension' ),
+		__( 'heading_title_support', 'wirecard-woocommerce-extension' ),
 		'manage_options',
 		'wirecardsendsupport',
 		array( $admin, 'send_email_to_support' )
@@ -298,7 +298,7 @@ function wirecard_add_support_chat() {
 
 	$args = array(
 		'admin_url'               => $admin_url,
-		'test_credentials_button' => __( 'Test', 'wirecard-woocommerce-extension' ),
+		'test_credentials_button' => __( 'test_credentials', 'wirecard-woocommerce-extension' ),
 		'admin_nonce'             => wp_create_nonce(),
 	);
 
@@ -318,7 +318,7 @@ function wirecard_check_if_woo_installed() {
 		return;
 	}
 	wp_die(
-		__( 'Sorry, but this plugin requires WooCommerce Plugin to be installed and active.', 'wirecard-woocommerce-extension' ) .
-		'<br><a href="' . admin_url( 'plugins.php' ) . '">' . __( 'Go to Plugins', 'wirecard-woocommerce-extension' ) . '</a>'
+		__( 'error_woocommerce_missing', 'wirecard-woocommerce-extension' ) .
+		'<br><a href="' . admin_url( 'plugins.php' ) . '">' . __( 'text_go_to_plugins', 'wirecard-woocommerce-extension' ) . '</a>'
 	);
 }

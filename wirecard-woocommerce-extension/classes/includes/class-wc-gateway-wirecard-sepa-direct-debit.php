@@ -56,9 +56,9 @@ class WC_Gateway_Wirecard_Sepa_Direct_Debit extends WC_Wirecard_Payment_Gateway 
 		$this->type               = 'sepadirectdebit';
 		$this->id                 = 'wirecard_ee_sepadirectdebit';
 		$this->icon               = WIRECARD_EXTENSION_URL . 'assets/images/sepa.png';
-		$this->method_title       = __( 'Wirecard SEPA Direct Debit', 'wirecard-woocommerce-extension' );
-		$this->method_name        = __( 'SEPA Direct Debit', 'wirecard-woocommerce-extension' );
-		$this->method_description = __( 'SEPA Direct Debit transactions via Wirecard Payment Processing Gateway', 'wirecard-woocommerce-extension' );
+		$this->method_title       = __( 'heading_title_sepadd', 'wirecard-woocommerce-extension' );
+		$this->method_name        = __( 'sepadd', 'wirecard-woocommerce-extension' );
+		$this->method_description = __( 'sepadd_desc', 'wirecard-woocommerce-extension' );
 		$this->has_fields         = true;
 
 		$this->supports = array(
@@ -94,129 +94,123 @@ class WC_Gateway_Wirecard_Sepa_Direct_Debit extends WC_Wirecard_Payment_Gateway 
 	public function init_form_fields() {
 		$this->form_fields = array(
 			'enabled'                => array(
-				'title'       => __( 'Enable/Disable', 'wirecard-woocommerce-extension' ),
+				'title'       => __( 'text_enable_disable', 'wirecard-woocommerce-extension' ),
 				'type'        => 'checkbox',
-				'description' => __( 'Activate payment method SEPA Direct Debit', 'wirecard-woocommerce-extension' ),
-				'label'       => __( 'Enable Wirecard SEPA Direct Debit', 'wirecard-woocommerce-extension' ),
+				'description' => __( 'config_status_desc_sepadd', 'wirecard-woocommerce-extension' ),
+				'label'       => __( 'enable_heading_title_sepadd', 'wirecard-woocommerce-extension' ),
 				'default'     => 'no',
 			),
 			'title'                  => array(
-				'title'       => __( 'Title', 'wirecard-woocommerce-extension' ),
+				'title'       => __( 'config_title', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
-				'description' => __(
-					'This controls the title which the consumer sees during checkout.',
-					'wirecard-woocommerce-extension'
-				),
-				'default'     => __( 'Wirecard SEPA Direct Debit', 'wirecard-woocommerce-extension' ),
+				'description' => __( 'config_title_desc', 'wirecard-woocommerce-extension' ),
+				'default'     => __( 'heading_title_sepadd', 'wirecard-woocommerce-extension' ),
 			),
 			'merchant_account_id'    => array(
-				'title'       => __( 'Merchant Account ID', 'wirecard-woocommerce-extension' ),
+				'title'       => __( 'config_merchant_account_id', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
-				'description' => __( 'The unique identifier assigned for your Merchant Account.', 'wirecard-woocommerce-extension' ),
+				'description' => __( 'config_merchant_account_id_desc', 'wirecard-woocommerce-extension' ),
 				'default'     => '933ad170-88f0-4c3d-a862-cff315ecfbc0',
 			),
 			'secret'                 => array(
-				'title'       => __( 'Secret Key', 'wirecard-woocommerce-extension' ),
+				'title'       => __( 'config_merchant_secret', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
-				'description' => __( 'Secret key is mandatory to calculate the Digital Signature for the payment.', 'wirecard-woocommerce-extension' ),
+				'description' => __( 'config_merchant_secret_desc', 'wirecard-woocommerce-extension' ),
 				'default'     => '5caf2ed9-5f79-4e65-98cb-0b70d6f569aa',
 			),
 			'credentials'            => array(
-				'title'       => __( 'Credentials', 'wirecard-woocommerce-extension' ),
+				'title'       => __( 'text_credentials', 'wirecard-woocommerce-extension' ),
 				'type'        => 'title',
-				'description' => __(
-					'Enter your Wirecard credentials.',
-					'wirecard-woocommerce-extension'
-				),
+				'description' => __( 'text_credentials_desc', 'wirecard-woocommerce-extension' ),
 			),
 			'base_url'               => array(
-				'title'       => __( 'Base URL', 'wirecard-woocommerce-extension' ),
+				'title'       => __( 'config_base_url', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
-				'description' => __( 'The Wirecard base URL. (e.g. https://api.wirecard.com)', 'wirecard-woocommerce-extension' ),
+				'description' => __( 'config_base_url_desc', 'wirecard-woocommerce-extension' ),
 				'default'     => 'https://api-test.wirecard.com',
 			),
 			'http_user'              => array(
-				'title'       => __( 'HTTP User', 'wirecard-woocommerce-extension' ),
+				'title'       => __( 'config_http_user', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
-				'description' => __( 'The http user provided in your Wirecard contract', 'wirecard-woocommerce-extension' ),
+				'description' => __( 'config_http_user_desc', 'wirecard-woocommerce-extension' ),
 				'default'     => '16390-testing',
 			),
 			'http_pass'              => array(
-				'title'       => __( 'HTTP Password', 'wirecard-woocommerce-extension' ),
+				'title'       => __( 'config_http_password', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
-				'description' => __( 'The http password provided in your Wirecard contract', 'wirecard-woocommerce-extension' ),
+				'description' => __( 'config_http_password_desc', 'wirecard-woocommerce-extension' ),
 				'default'     => '3!3013=D3fD8X7',
 			),
 			'test_button'            => array(
-				'title'   => __( 'Test configuration', 'wirecard-woocommerce-extension' ),
+				'title'   => __( 'test_config', 'wirecard-woocommerce-extension' ),
 				'type'    => 'button',
 				'class'   => 'wc_wirecard_test_credentials_button button-primary',
-				'default' => __( 'Test', 'wirecard-woocommerce-extension' ),
+				'default' => __( 'test_credentials', 'wirecard-woocommerce-extension' ),
 			),
 			'sepa_credentials'       => array(
-				'title'       => __( 'SEPA Credentials', 'wirecard-woocommerce-extension' ),
+				'title'       => __( 'text_sepa_config', 'wirecard-woocommerce-extension' ),
 				'type'        => 'title',
-				'description' => __( 'Enter your SEPA credentials and SEPA Direct Debit Mandate settings.', 'wirecard-woocommerce-extension' ),
+				'description' => __( 'text_sepadd_config_desc', 'wirecard-woocommerce-extension' ),
 			),
 			'creditor_id'            => array(
-				'title'       => __( 'Creditor ID', 'wirecard-woocommerce-extension' ),
+				'title'       => __( 'config_creditor_id', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
-				'description' => __( 'SEPA requires Creditor ID to create SEPA Direct Debit Mandate. To get a Creditor ID apply at the responsible bank institute.', 'wirecard-woocommerce-extension' ),
+				'description' => __( 'config_creditor_id_desc', 'wirecard-woocommerce-extension' ),
 				'default'     => 'DE98ZZZ09999999999',
 			),
 			'creditor_name'          => array(
-				'title'       => __( 'Creditor Name', 'wirecard-woocommerce-extension' ),
+				'title'       => __( 'config_creditor_name', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
-				'description' => __( 'SEPA requires a Creditor Name for display on the SEPA Direct Debit Mandate page.', 'wirecard-woocommerce-extension' ),
+				'description' => __( 'config_creditor_name_desc', 'wirecard-woocommerce-extension' ),
 				'default'     => '',
 			),
 			'creditor_city'          => array(
-				'title'       => __( 'Creditor City', 'wirecard-woocommerce-extension' ),
+				'title'       => __( 'config_creditor_city', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
-				'description' => __( 'SEPA requires a Creditor City for display on the SEPA Direct Debit Mandate page.', 'wirecard-woocommerce-extension' ),
+				'description' => __( 'config_creditor_city_desc', 'wirecard-woocommerce-extension' ),
 				'default'     => '',
 			),
 			'sepa_mandate_textextra' => array(
-				'title'       => __( 'Additional Text', 'wirecard-woocommerce-extension' ),
+				'title'       => __( 'config_mandate_text', 'wirecard-woocommerce-extension' ),
 				'type'        => 'textarea',
 				'default'     => '',
-				'description' => __( 'This text appears on the SEPA Direct Debit Mandate page at the end of the first paragraph.', 'wirecard-woocommerce-extension' ),
+				'description' => __( 'config_mandate_text_desc', 'wirecard-woocommerce-extension' ),
 			),
 			'advanced'               => array(
-				'title'       => __( 'Advanced Options', 'wirecard-woocommerce-extension' ),
+				'title'       => __( 'text_advanced', 'wirecard-woocommerce-extension' ),
 				'type'        => 'title',
 				'description' => '',
 			),
 			'payment_action'         => array(
-				'title'       => __( 'Payment Action', 'wirecard-woocommerce-extension' ),
+				'title'       => __( 'config_payment_action', 'wirecard-woocommerce-extension' ),
 				'type'        => 'select',
-				'description' => __( 'Select between "Capture" to capture / invoice your order automatically or "Authorization" to manually capture / invoice.', 'wirecard-woocommerce-extension' ),
+				'description' => __( 'config_payment_action_desc', 'wirecard-woocommerce-extension' ),
 				'default'     => 'pay',
-				'label'       => __( 'Payment Action', 'wirecard-woocommerce-extension' ),
+				'label'       => __( 'config_payment_action', 'wirecard-woocommerce-extension' ),
 				'options'     => array(
-					'reserve' => 'Authorization',
-					'pay'     => 'Purchase',
+					'reserve' => __( 'text_payment_action_reserve', 'wirecard-woocommerce-extension' ),
+					'pay'     => __( 'text_payment_action_pay', 'wirecard-woocommerce-extension' ),
 				),
 			),
 			'descriptor'             => array(
-				'title'       => __( 'Enable/Disable', 'wirecard-woocommerce-extension' ),
+				'title'       => __( 'text_enable_disable', 'wirecard-woocommerce-extension' ),
 				'type'        => 'checkbox',
-				'description' => __( 'Send text which is displayed on the bank statement issued to your consumer by the financial service provider', 'wirecard-woocommerce-extension' ),
-				'label'       => __( 'Descriptor', 'wirecard-woocommerce-extension' ),
+				'description' => __( 'config_descriptor_desc', 'wirecard-woocommerce-extension' ),
+				'label'       => __( 'config_descriptor', 'wirecard-woocommerce-extension' ),
 				'default'     => 'no',
 			),
 			'send_additional'        => array(
-				'title'       => __( 'Enable/Disable', 'wirecard-woocommerce-extension' ),
+				'title'       => __( 'text_enable_disable', 'wirecard-woocommerce-extension' ),
 				'type'        => 'checkbox',
-				'description' => __( 'Additional data will be sent for the purpose of fraud protection. This additional data includes billing / shipping address, shopping basket and descriptor.', 'wirecard-woocommerce-extension' ),
-				'label'       => __( 'Send additional information', 'wirecard-woocommerce-extension' ),
+				'description' => __( 'config_additional_info_desc', 'wirecard-woocommerce-extension' ),
+				'label'       => __( 'config_additional_info', 'wirecard-woocommerce-extension' ),
 				'default'     => 'yes',
 			),
 			'enable_bic'             => array(
-				'title'       => __( 'Enable/Disable', 'wirecard-woocommerce-extension' ),
+				'title'       => __( 'text_enable_disable', 'wirecard-woocommerce-extension' ),
 				'type'        => 'checkbox',
-				'description' => __( 'If BIC is activated, the consumer must enter a BIC in checkout.', 'woocommerce-gateway-wireced' ),
-				'label'       => __( 'BIC enabled', 'wirecard-woocommerce-extension' ),
+				'description' => __( 'config_enable_bic_desc', 'woocommerce-gateway-wireced' ),
+				'label'       => __( 'config_enable_bic', 'wirecard-woocommerce-extension' ),
 				'default'     => 'no',
 			),
 		);
@@ -248,8 +242,8 @@ class WC_Gateway_Wirecard_Sepa_Direct_Debit extends WC_Wirecard_Payment_Gateway 
 
 		$args = array(
 			'ajax_url'          => $page_url,
-			'sepa_process_text' => __( 'Process', 'wirecard-woocommerce-extension' ),
-			'sepa_cancel_text'  => __( 'Cancel', 'wirecard-woocommerce-extension' ),
+			'sepa_process_text' => __( 'text_confirm', 'wirecard-woocommerce-extension' ),
+			'sepa_cancel_text'  => __( 'sepa_cancel', 'wirecard-woocommerce-extension' ),
 		);
 
 		wp_enqueue_style( 'jquery_ui' );
@@ -261,22 +255,22 @@ class WC_Gateway_Wirecard_Sepa_Direct_Debit extends WC_Wirecard_Payment_Gateway 
 			<div id="dialog" title="SEPA"></div>
 			<input type="hidden" name="sepa_nonce" value="' . wp_create_nonce() . '" />
 			<p class="form-row form-row-wide validate-required">
-				<label for="sepa_firstname">' . __( 'First name', 'wirecard-woocommerce-extension' ) . '</label>
+				<label for="sepa_firstname">' . __( 'first-name', 'wirecard-woocommerce-extension' ) . '</label>
 				<input id="sepa_firstname" class="input-text wc-sepa-input" type="text" name="sepa_firstname">
 			</p>
 			<p class="form-row form-row-wide validate-required">
-				<label for="sepa_lastname">' . __( 'Last name', 'wirecard-woocommerce-extension' ) . '</label>
+				<label for="sepa_lastname">' . __( 'last-name', 'wirecard-woocommerce-extension' ) . '</label>
 				<input id="sepa_lastname" class="input-text wc-sepa-input" type="text" name="sepa_lastname">
 			</p>
 			<p class="form-row form-row-wide validate-required">
-				<label for="sepa_iban">' . __( 'IBAN', 'wirecard-woocommerce-extension' ) . '</label>
+				<label for="sepa_iban">' . __( 'iban', 'wirecard-woocommerce-extension' ) . '</label>
 				<input id="sepa_iban" class="input-text wc-sepa-input" type="text" name="sepa_iban">
 			</p>';
 
 		if ( $this->get_option( 'enable_bic' ) == 'yes' ) {
-			$html .= '			
+			$html .= '
 			<p class="form-row form-row-wide validate-required">
-				<label for="sepa_bic">' . __( 'BIC', 'wirecard-woocommerce-extension' ) . '</label>
+				<label for="sepa_bic">' . __( 'bic', 'wirecard-woocommerce-extension' ) . '</label>
 				<input id="sepa_bic" class="input-text wc-sepa-input" type="text" name="sepa_bic">
 			</p>';
 		}
@@ -298,13 +292,14 @@ class WC_Gateway_Wirecard_Sepa_Direct_Debit extends WC_Wirecard_Payment_Gateway 
 		$order = wc_get_order( $order_id );
 		if ( ! wp_verify_nonce( $_POST['sepa_nonce'] ) || ! isset( $_POST['sepa_firstname'] ) || ! isset( $_POST['sepa_lastname'] ) || ! isset( $_POST['sepa_iban'] )
 			|| ( $this->get_option( 'enable_bic' ) == 'yes' && ! $_POST['sepa_bic'] ) ) {
-			wc_add_notice( __( 'Please fill in the SEPA fields and try again.', 'wirecard-woocommerce-extension' ), 'error' );
+			wc_add_notice( __( 'sepa_fields_error', 'wirecard-woocommerce-extension' ), 'error' );
 
 			return false;
 		}
 		$this->payment_action = $this->get_option( 'payment_action' );
 
-		$account_holder = new AccountHolder();
+		$additional_information = new Additional_Information();
+		$account_holder         = $additional_information->create_account_holder( $order, 'billing' );
 		$account_holder->setFirstName( sanitize_text_field( $_POST['sepa_firstname'] ) );
 		$account_holder->setLastName( sanitize_text_field( $_POST['sepa_lastname'] ) );
 

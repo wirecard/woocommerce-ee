@@ -81,7 +81,7 @@ class Wirecard_Transaction_Handler extends Wirecard_Handler {
 			wp_die();
 		}
 		if ( $response instanceof FailureResponse ) {
-			echo __( 'An error occured. The transaction could not be cancelled!', 'woocommercer-gateway-wirecard' );
+			echo __( 'error_transaction_cancel', 'woocommercer-gateway-wirecard' );
 		}
 	}
 
@@ -116,7 +116,7 @@ class Wirecard_Transaction_Handler extends Wirecard_Handler {
 			die();
 		}
 		if ( $response instanceof FailureResponse ) {
-			echo __( 'An error occured. The transaction could not be captured!', 'woocommercer-gateway-wirecard' );
+			echo __( 'error_transaction_capture', 'woocommercer-gateway-wirecard' );
 		}
 	}
 
@@ -158,7 +158,7 @@ class Wirecard_Transaction_Handler extends Wirecard_Handler {
 				$old_stock = $product->get_stock_quantity();
 				$new_stock = wc_update_product_stock( $product, $item->get_quantity(), 'increase' );
 				/* translators: 1: item name 2: old stock quantity 3: new stock quantity */
-				$order->add_order_note( sprintf( __( 'Item #%1$s stock increased from %2$s to %3$s.', 'woocommerce' ), $product->get_id(), $old_stock, $new_stock ) );
+				$order->add_order_note( sprintf( __( 'text_item_stock_increased', 'woocommerce' ), $product->get_id(), $old_stock, $new_stock ) );
 			}
 		}
 	}
