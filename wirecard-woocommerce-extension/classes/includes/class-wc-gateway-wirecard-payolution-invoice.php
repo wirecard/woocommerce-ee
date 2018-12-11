@@ -437,7 +437,7 @@ class WC_Gateway_Wirecard_Payolution_Invoice extends WC_Wirecard_Payment_Gateway
 
 		wp_enqueue_style( 'payment_select_style' );
 
-		$date_of_birth_label = __( 'Date of birth', 'wirecard-woocommerce-extension' );
+		$date_of_birth_label = __( 'birthdate_input', 'wirecard-woocommerce-extension' );
 
 		$html = <<<BIRTHDAY_INPUT_FIELD
 <p class="form-row form-row-wide">
@@ -475,7 +475,7 @@ AGREEMENT_CHECKBOX;
 	public function validate_date_of_birth( $date_str ) {
 
 		if ( empty( $date_str ) ) {
-			wc_add_notice( __( 'You need to enter your birthdate to proceed.', 'wirecard-woocommerce-extension' ), 'error' );
+			wc_add_notice( __( 'empty_birthdate_error', 'wirecard-woocommerce-extension' ), 'error' );
 			return false;
 		}
 
@@ -484,13 +484,13 @@ AGREEMENT_CHECKBOX;
 			$difference = $birth_day->diff( new DateTime() );
 			$age        = $difference->format( '%y' );
 			if ( $age < 18 ) {
-				wc_add_notice( __( 'You need to be older then 18 to order.', 'wirecard-woocommerce-extension' ), 'error' );
+				wc_add_notice( __( 'incorrect_birthdate_error', 'wirecard-woocommerce-extension' ), 'error' );
 				return false;
 			}
 			return true;
 
 		} catch ( Exception $e ) {
-			wc_add_notice( __( 'You need to enter a valid date as birthdate.', 'wirecard-woocommerce-extension' ), 'error' );
+			wc_add_notice( __( 'invalid_birthdate_error', 'wirecard-woocommerce-extension' ), 'error' );
 			return false;
 		}
 
