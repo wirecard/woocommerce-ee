@@ -1,4 +1,4 @@
-# WooCommerce Wirecard Payment Processing Gateway Shop Extension
+# Wirecard WooCommerce Extension
 
 [![Build Status](https://travis-ci.org/wirecard/woocommerce-ee.svg?branch=master)](https://travis-ci.org/wirecard/magento2-ee)
 [![License](https://img.shields.io/badge/license-GPLv3-blue.svg)](https://raw.githubusercontent.com/wirecard/woocommerce-ee/master/LICENSE)
