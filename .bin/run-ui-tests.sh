@@ -30,8 +30,13 @@ while [ ! ${NGROK_URL} ] || [ ${NGROK_URL} = 'null' ];  do
 done
 
 echo "NGROK_URL=${NGROK_URL}"
-#create the plugin package for installation
-bash .bin/generate-release-package.sh
 
 #start shopsystem and demoshop
 bash .bin/start-shopsystem.sh
+
+sleep 300
+
+#run tests
+cd wirecard-woocommerce-extension && vendor/bin/codecept run acceptance --html
+
+

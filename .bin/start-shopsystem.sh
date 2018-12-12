@@ -32,3 +32,6 @@ docker exec ${WOOCOMMERCE_CONTAINER_NAME} wp theme install storefront --activate
 #install shop pages
 docker exec ${WOOCOMMERCE_CONTAINER_NAME} wp wc tool run install_pages --user=admin --allow-root
 
+#configure credit card payment method
+docker exec ${WOOCOMMERCE_CONTAINER_NAME} php /var/www/html/configure_creditcard_paymentmethod.php
+
