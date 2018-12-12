@@ -80,7 +80,7 @@ class  WC_Gateway_Wirecard_Payolution_Invoice_Utest extends PHPUnit_Framework_Te
 
 		$last_error_msg = get_last_mocked_notice();
 		$this->assertNotNull( $last_error_msg );
-		$this->assertEquals( 'You need to be older then 18 to order.', $last_error_msg );
+		$this->assertEquals( 'incorrect_birthdate_error', $last_error_msg );
 	}
 
 	public function test_refuse_invalid_birthdate() {
@@ -91,7 +91,7 @@ class  WC_Gateway_Wirecard_Payolution_Invoice_Utest extends PHPUnit_Framework_Te
 
 		$last_error_msg = get_last_mocked_notice();
 		$this->assertNotNull( $last_error_msg );
-		$this->assertEquals( 'You need to enter a valid date as birthdate.', $last_error_msg );
+		$this->assertEquals( 'invalid_birthdate_error', $last_error_msg );
 	}
 
 	public function test_refuse_empty_birthdate() {
@@ -100,7 +100,7 @@ class  WC_Gateway_Wirecard_Payolution_Invoice_Utest extends PHPUnit_Framework_Te
 
 		$last_error_msg = get_last_mocked_notice();
 		$this->assertNotNull( $last_error_msg );
-		$this->assertEquals( 'You need to enter your birthdate to proceed.', $last_error_msg );
+		$this->assertEquals( 'empty_birthdate_error', $last_error_msg );
 	}
 
 	public function test_allowed_birthdate_over18() {
@@ -175,8 +175,8 @@ class  WC_Gateway_Wirecard_Payolution_Invoice_Utest extends PHPUnit_Framework_Te
 
 	private function prepare_post_parameter_for_pay() {
 		return array(
-			'payolution_date_of_birth'  => '30.10.1999',
-			'payolution_gpdr_agreement' => '1',
+			'payolution_date_of_birth'   => '30.10.1999',
+			'payolution_data_protection' => '1',
 		);
 	}
 }

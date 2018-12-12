@@ -45,7 +45,7 @@ use Wirecard\PaymentSdk\Transaction\PayolutionInvoiceTransaction;
  *
  * @extends WC_Wirecard_Payment_Gateway
  *
- * @since   1.4.1
+ * @since   1.5.0
  */
 class WC_Gateway_Wirecard_Payolution_Invoice extends WC_Wirecard_Payment_Gateway {
 
@@ -79,15 +79,13 @@ class WC_Gateway_Wirecard_Payolution_Invoice extends WC_Wirecard_Payment_Gateway
 		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
 		add_action( 'woocommerce_after_checkout_validation', 'validate', 10, 2 );
 
-		add_action( 'wp_enqueue_scripts', array( $this, 'payment_scripts' ), 999 );
-
 		parent::add_payment_gateway_actions();
 	}
 
 	/**
 	 * Load form fields for configuration
 	 *
-	 * @since 1.4.1
+	 * @since 1.5.0
 	 */
 	public function init_form_fields() {
 
@@ -226,13 +224,13 @@ class WC_Gateway_Wirecard_Payolution_Invoice extends WC_Wirecard_Payment_Gateway
 	/**
 	 * Create payment method configuration
 	 *
-	 * @param null $base_url
-	 * @param null $http_user
-	 * @param null $http_pass
+	 * @param string|null $base_url
+	 * @param string|null $http_user
+	 * @param string|null $http_pass
 	 *
 	 * @return Config
 	 *
-	 * @since 1.4.1
+	 * @since 1.5.0
 	 */
 	public function create_payment_config( $base_url = null, $http_user = null, $http_pass = null ) {
 
@@ -254,7 +252,7 @@ class WC_Gateway_Wirecard_Payolution_Invoice extends WC_Wirecard_Payment_Gateway
 	 *
 	 * @return bool
 	 *
-	 * @since 1.4.1
+	 * @since 1.5.0
 	 */
 	public function is_available() {
 
@@ -284,7 +282,7 @@ class WC_Gateway_Wirecard_Payolution_Invoice extends WC_Wirecard_Payment_Gateway
 	 *
 	 * @return array|bool|void
 	 *
-	 * @since 1.4.1
+	 * @since 1.5.0
 	 */
 	public function process_payment( $order_id ) {
 
@@ -295,8 +293,8 @@ class WC_Gateway_Wirecard_Payolution_Invoice extends WC_Wirecard_Payment_Gateway
 			return false;
 		}
 
-		$gdpr_allowance = sanitize_text_field( $_POST['payolution_gpdr_agreement'] );
-		if ( ! $this->validate_gdpr_allowance_given( $gdpr_allowance ) ) {
+		$consent = sanitize_text_field( $_POST['payolution_data_protection'] );
+		if ( ! $this->validate_consent( $consent ) ) {
 			return false;
 		}
 
@@ -322,7 +320,7 @@ class WC_Gateway_Wirecard_Payolution_Invoice extends WC_Wirecard_Payment_Gateway
 	 *
 	 * @return PayolutionInvoiceTransaction
 	 *
-	 * @since 1.4.1
+	 * @since 1.5.0
 	 */
 	public function process_cancel( $order_id, $amount = null ) {
 
@@ -356,7 +354,7 @@ class WC_Gateway_Wirecard_Payolution_Invoice extends WC_Wirecard_Payment_Gateway
 	 *
 	 * @return PayolutionInvoiceTransaction
 	 *
-	 * @since 1.4.1
+	 * @since 1.5.0
 	 */
 	public function process_capture( $order_id, $amount = null ) {
 
@@ -393,7 +391,7 @@ class WC_Gateway_Wirecard_Payolution_Invoice extends WC_Wirecard_Payment_Gateway
 	 *
 	 * @return bool|string|WP_Error
 	 *
-	 * @since 1.4.1
+	 * @since 1.5.0
 	 */
 	public function process_refund( $order_id, $amount = null, $reason = '' ) {
 
@@ -420,22 +418,11 @@ class WC_Gateway_Wirecard_Payolution_Invoice extends WC_Wirecard_Payment_Gateway
 	}
 
 	/**
-	 * Inject the customized scripts in payment page
-	 *
-	 * @since 1.4.1
-	 */
-	public function payment_scripts() {
-		wp_register_style( 'payment_select_style', WIRECARD_EXTENSION_URL . 'assets/styles/multiple_additional_elements.css', array(), null, false );
-	}
-
-	/**
 	 * Add additional fields for this payment method while perform checkout
 	 *
-	 * @since 1.4.1
+	 * @since 1.5.0
 	 */
 	public function payment_fields() {
-
-		wp_enqueue_style( 'payment_select_style' );
 
 		$date_of_birth_label = __( 'birthdate_input', 'wirecard-woocommerce-extension' );
 
@@ -447,18 +434,19 @@ class WC_Gateway_Wirecard_Payolution_Invoice extends WC_Wirecard_Payment_Gateway
 </p>
 BIRTHDAY_INPUT_FIELD;
 
-		$gdpr_agreement_label   = __( 'GPRR allowance', 'wirecard-woocommerce-extension' );
-		$gdpr_agreement_link    = 'https://payment.payolution.com/payolution-payment/infoport/dataprivacyconsent?mId=' . base64_encode( $this->get_option( 'payolution_mid' ) );
-		$gdpr_agreement_rawtext = __( 'I agree that the data which are necessary for the liquidation of purchase on account and which are used to complete the identity and credit check are transmitted to payolution. <a href="%LINK%" target="_blank">My consent</a> can be revoked at any time with effect for the future.', 'wirecard-woocommerce-extension' );
-		$gdpr_agreement_text    = str_replace( '%LINK%', $gdpr_agreement_link, $gdpr_agreement_rawtext );
+		$html .= "<br />\n";
 
-		$html .= <<<AGREEMENT_CHECKBOX
+		$consent_linktarget = 'https://payment.payolution.com/payolution-payment/infoport/dataprivacyconsent?mId=' . base64_encode( $this->get_option( 'payolution_mid' ) );
+		$consent_linktext   = __( 'payolution_text_terms_linktext', 'wirecard-woocommerce-extension' );
+		$content_link       = '<a href="' . $consent_linktarget . '" target="_blank">' . $consent_linktext . '</a>';
+		$consent_text       = sprintf( __( 'payolution_text_terms_accept', 'wirecard-woocommerce-extension' ), $content_link );
+
+		$html .= <<<CONSENT_CHECKBOX
 <p class="form-row form-row-wide validate-required">
-   <label for="payolution_gpdr_agreement" class="">$gdpr_agreement_label
+   <input type="checkbox" class="" name="payolution_data_protection" id="payolution_data_protection" value="1" /> $consent_text
    <abbr class="required" title="required">*</abbr></label>
-   <input type="checkbox" class="" name="payolution_gpdr_agreement" id="payolution_gpdr_agreement_checkbox" value="1" /> $gdpr_agreement_text
 </p>
-AGREEMENT_CHECKBOX;
+CONSENT_CHECKBOX;
 
 		echo $html;
 	}
@@ -466,11 +454,11 @@ AGREEMENT_CHECKBOX;
 	/**
 	 * Check input is not empty, a valid date and difference to NOW() is at least 18 years
 	 *
-	 * @param $date_str
+	 * @param string $date_str
 	 *
 	 * @return bool
 	 *
-	 * @since 1.4.1
+	 * @since 1.5.0
 	 */
 	public function validate_date_of_birth( $date_str ) {
 
@@ -500,16 +488,16 @@ AGREEMENT_CHECKBOX;
 	/**
 	 * Check if the checkbox with data processing agreement is selected in form request
 	 *
-	 * @param $date_str
+	 * @param string $consent_str
 	 *
 	 * @return bool
 	 *
-	 * @since 1.4.1
+	 * @since 1.5.0
 	 */
-	public function validate_gdpr_allowance_given( $gdpr_allowance_str ) {
+	public function validate_consent( $consent_str ) {
 
-		if ( empty( $gdpr_allowance_str ) || ( '1' != $gdpr_allowance_str ) ) {
-			wc_add_notice( __( 'You need to give your consent for data processing', 'wirecard-woocommerce-extension' ), 'error' );
+		if ( empty( $consent_str ) || ( '1' != $consent_str ) ) {
+			wc_add_notice( __( 'payolution_text_terms_notice', 'wirecard-woocommerce-extension' ), 'error' );
 			return false;
 		}
 
@@ -523,7 +511,7 @@ AGREEMENT_CHECKBOX;
 	 *
 	 * @return bool
 	 *
-	 * @since 1.4.1
+	 * @since 1.5.0
 	 */
 	public function validate_cart_products( $cart ) {
 
@@ -544,7 +532,7 @@ AGREEMENT_CHECKBOX;
 	 *
 	 * @return bool
 	 *
-	 * @since 1.4.1
+	 * @since 1.5.0
 	 */
 	public function validate_cart_amounts( $total ) {
 
@@ -567,7 +555,7 @@ AGREEMENT_CHECKBOX;
 	 *
 	 * @return bool
 	 *
-	 * @since 1.4.1
+	 * @since 1.5.0
 	 */
 	public function validate_billing_shipping_address( $customer ) {
 
@@ -604,7 +592,7 @@ AGREEMENT_CHECKBOX;
 	 *
 	 * @return bool
 	 *
-	 * @since 1.4.1
+	 * @since 1.5.0
 	 */
 	public function validate_countries( $customer ) {
 

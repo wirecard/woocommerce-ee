@@ -449,13 +449,27 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 	 * @return bool
 	 */
 	public function validate_date_of_birth( $date ) {
-		$birth_day  = new \DateTime( $date );
-		$difference = $birth_day->diff( new \DateTime() );
-		$age        = $difference->format( '%y' );
-		if ( $age < 18 ) {
-			wc_add_notice( __( 'ratepayinvoice_fields_error', 'wirecard-woocommerce-extension' ), 'error' );
+
+		if ( empty( $date ) ) {
+			wc_add_notice( __( 'empty_birthdate_error', 'wirecard-woocommerce-extension' ), 'error' );
 			return false;
 		}
+
+		try {
+			$birth_day  = new DateTime( $date );
+			$difference = $birth_day->diff( new DateTime() );
+			$age        = $difference->format( '%y' );
+			if ( $age < 18 ) {
+				wc_add_notice( __( 'ratepayinvoice_fields_error', 'wirecard-woocommerce-extension' ), 'error' );
+				return false;
+			}
+			return true;
+
+		} catch ( Exception $e ) {
+			wc_add_notice( __( 'invalid_birthdate_error', 'wirecard-woocommerce-extension' ), 'error' );
+			return false;
+		}
+
 		return true;
 	}
 
