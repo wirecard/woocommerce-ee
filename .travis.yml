@@ -56,7 +56,7 @@ install:
 
 script:
   - composer test-coverage
-  - $PHPCS_DIR/bin/phpcs -p --ignore=*/Test/*,*/vendor/*,*/.bin/* . --standard=WordPress-Core
+  - $PHPCS_DIR/bin/phpcs -p --ignore=*/Test/*,*/vendor/*,*/.bin/*,*/tests/* . --standard=WordPress-Core
 
 after_script:
   - travis_retry composer upload-coverage
