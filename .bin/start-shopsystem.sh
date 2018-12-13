@@ -2,7 +2,7 @@
 set -e # Exit with nonzero exit code if anything fails
 WOOCOMMERCE_CONTAINER_NAME=woo_commerce
 
-docker-compose build --build-arg WOOCOMMERCE_VERSION=3.5.1 webserver
+docker-compose build --build-arg WOOCOMMERCE_VERSION=3.5.1 --build-arg GATEWAY=${GATEWAY} webserver
 docker-compose up > /dev/null &
 # wordpress running on 9090
 
