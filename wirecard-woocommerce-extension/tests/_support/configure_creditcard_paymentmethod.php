@@ -1,7 +1,5 @@
 <?php
 $gateway = getenv('GATEWAY');
-echo("Configuring Shop System Credit Card Payment method");
-echo($gateway);
 
 $gatewayConfig = function ($key) use ($gateway) {
     // if no gateway was defined in the environment, use the api-test.wirecard.com
@@ -59,7 +57,6 @@ $gatewayConfig = function ($key) use ($gateway) {
     return $dataArray[$gateway][$key];
 };
 
-echo($gateway);
 // test setup
 $maid = $gatewayConfig('non_threed_maid');
 $secret = $gatewayConfig('non_threed_secret');
@@ -89,8 +86,8 @@ function updateCreditCartConfig(
     $dbHost = 'mysql';
     $dbName = 'wordpress';
     $dbUser = 'root';
-    $dbPass = 'example';
-    $dbPort = 3306;
+    $dbPass = getenv('WOOCOMMERCE_DB_PASSWORD');
+    $dbPort = getenv('WOOCOMMERCE_DB_PORT');
 
     // table name
     $tableName = 'wp_options';

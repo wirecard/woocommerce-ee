@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e # Exit with nonzero exit code if anything fails
 #get version
-export VERSION=`cat VERSION`
+export VERSION=`jq .[0].release SHOPVERSIONS`
 
 #start payment-sdk
 php -S localhost:8080 > /dev/null &
@@ -29,12 +29,8 @@ while [ ! ${NGROK_URL} ] || [ ${NGROK_URL} = 'null' ];  do
     sleep 1
 done
 
-echo "NGROK_URL=${NGROK_URL}"
-
 #start shopsystem and demoshop
 bash .bin/start-shopsystem.sh
-
-sleep 300
 
 #run tests
 cd wirecard-woocommerce-extension && vendor/bin/codecept run acceptance --html
