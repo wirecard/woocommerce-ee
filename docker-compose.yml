@@ -15,4 +15,3 @@ dbserver:
     MYSQL_ROOT_PASSWORD: "${WOOCOMMERCE_DB_PASSWORD}"
    ports:
     - 3307:${WOOCOMMERCE_DB_PORT}
-    

@@ -14,5 +14,3 @@ Feature: guest_checkout
     And I am redirected to "Checkout" page
     And I fill fields with "Customer data"
     Then I see "Wirecard Credit Card"
-
-
