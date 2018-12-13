@@ -1,0 +1,18 @@
+webserver:
+   container_name: woo_commerce
+   build: .
+   environment:
+    WORDPRESS_DB_PASSWORD: example
+   links:
+    - dbserver:mysql
+   ports:
+    - 9090:80
+
+dbserver:
+   container_name: woo_mariadb
+   image: mariadb
+   environment:
+    MYSQL_ROOT_PASSWORD: example
+   ports:
+    - 3307:3306
+    
