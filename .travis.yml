@@ -13,20 +13,11 @@ matrix:
     - stage: acceptance-test
   include:
   - php: 5.6
-    if: type != cron
+    if: type != cron AND env(PHRASEAPP_PULL) != '1'
   - php: 7.0
-    if: type != cron
+    if: type != cron AND env(PHRASEAPP_PULL) != '1'
   - php: 7.1
-    if: type != cron
-
-  - &phraseapp-pull
-    stage: phraseapp-pull
-    if: type != cron AND env(PHRASEAPP_PULL) = '1'
-    php: 7.1
-    install:
-    - bundle install
-    script:
-    - ./.travis.rb
+    if: type != cron AND env(PHRASEAPP_PULL) != '1'
 
   - &acceptance-test
     stage: acceptance-test
@@ -49,6 +40,15 @@ matrix:
     env: GATEWAY=API-WDCEE-TEST
   - <<: *acceptance-test
     env: GATEWAY=NOVA
+
+  - &phraseapp-pull
+    stage: phraseapp-pull
+    if: type != cron AND env(PHRASEAPP_PULL) = '1'
+    ruby: 2.5.3
+    install:
+    - bundle install
+    script:
+    - .bin/phraseapp/main.rb
 
 before_install:
   - export PHPCS_DIR=/tmp/phpcs
