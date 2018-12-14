@@ -17,10 +17,17 @@ class WdPhraseApp
     $log.info('Updating translations...')
     pull_locales
 
-    # any changes?
-    changes = @git.status.any? { |f| f.path =~ /^#{Const::PLUGIN_I18N_DIR}.*(?:po|mo)/ && (f.type || f.untracked) }
+    changed = @git.status.changed.any? { |key, val| key =~ /#{Const::PLUGIN_I18N_DIR}.*(?:po|mo)/ }
+    untracked = @git.status.untracked.any? { |key, val| key =~ /#{Const::PLUGIN_I18N_DIR}.*(?:po|mo)/ }
 
-    if changes
+    if changed || untracked
+      $log.info('Adding and pushing changed/untracked files...')
+
+      $log.debug('Changed:')
+      $log.debug(@git.status.changed.keys)
+      $log.debug('Untracked:')
+      $log.debug(@git.status.untracked.keys)
+
       @git.add(File.join(@plugin_i18n_dir, '*.po'))
       @git.add(File.join(@plugin_i18n_dir, '*.mo'))
       @git.commit('[skip ci] Update translations from PhraseApp')
