@@ -8,7 +8,4 @@
 	<file>.</file>
 	<exclude-pattern>./vendor/*</exclude-pattern>
 	<exclude-pattern>./.bin/*</exclude-pattern>
-	<exclude-pattern>*/Test/*</exclude-pattern>
-	<exclude-pattern>*/tests/*</exclude-pattern>
-
 </ruleset>
