@@ -38,6 +38,7 @@ require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-gateway-wi
 
 use Wirecard\PaymentSdk\Config\Config;
 use Wirecard\PaymentSdk\Config\PaymentMethodConfig;
+use Wirecard\PaymentSdk\Entity\BankAccount;
 use Wirecard\PaymentSdk\Transaction\EpsTransaction;
 use Wirecard\PaymentSdk\Transaction\SepaCreditTransferTransaction;
 
@@ -171,7 +172,11 @@ class WC_Gateway_Wirecard_Eps extends WC_Wirecard_Payment_Gateway {
      * @return bool
      */
     public function payment_fields() {
-        $html = '<input type="hidden" name="eps_nonce" value="' . wp_create_nonce() . '" />< name="eps_bank_bic" type="text">';
+        $html = '<input type="hidden" name="eps_nonce" value="' . wp_create_nonce() . '" />
+            <p class="form-row form-row-wide">
+				<label for="eps_bic">' . __( 'bic', 'wirecard-woocommerce-extension' ) . '</label>
+				<input id="eps_bic" class="input-text wc-eps-input" type="text" name="eps_bank_bic">
+			</p>';
 
         echo $html;
         return true;
@@ -193,9 +198,11 @@ class WC_Gateway_Wirecard_Eps extends WC_Wirecard_Payment_Gateway {
 
         $this->transaction = new EpsTransaction();
         parent::process_payment( $order_id );
-        if (isset($_POST['eps_bank_bic']) && strlen($_POST['eps_bank_bic']))
+        if ( isset( $_POST['eps_bank_bic'] ) && strlen( $_POST['eps_bank_bic'] ) )
         {
-            $this->transaction->setBic(sanitize_text_field($_POST['eps_bank_bic']));
+            $bankAccount = new BankAccount();
+            $bankAccount->setBic( sanitize_text_field( $_POST['eps_bank_bic'] ) );
+            $this->transaction->setBankAccount( $bankAccount );
         }
 
         return $this->execute_transaction( $this->transaction, $this->config, $this->payment_action, $order );
