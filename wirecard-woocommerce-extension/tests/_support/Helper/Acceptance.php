@@ -51,7 +51,7 @@ class Acceptance extends \Codeception\Module
         $json_data = json_decode(file_get_contents('tests/_data/CustomerData.json'));
         if (!$json_data) {
             $error = error_get_last();
-            echo "Failed to get custumer data from tests/_data/CustomerData.json. Error was: " . $error['message'];
+            echo "Failed to get customer data from tests/_data/CustomerData.json. Error was: " . $error['message'];
         } else {
             return $json_data;
         }

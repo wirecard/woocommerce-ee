@@ -40,7 +40,7 @@ class Base
     protected $URL = '';
 
     /**
-     * @var string
+     * @var array
      * @since 1.4.4
      */
     protected $elements = array();
