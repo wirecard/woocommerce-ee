@@ -68,6 +68,20 @@ $httpPass = $gatewayConfig('http_pass');
 $sslMaxLimit = 100.0;
 $threeDMinLimit = 50.0;
 
+/**
+ * Method updateCreditCartConfig
+ *
+ * @param string $maid
+ * @param string $secret
+ * @param string $threeDMaid
+ * @param string $sslMaxLimit
+ * @param string $threeDMinLimit
+ * @param string $baseUrl
+ * @param string $httpUser
+ * @return boolean
+ *
+ * @since   1.4.4
+ */
 updateCreditCartConfig($maid, $secret, $threeDMaid, $threeDSecret, $sslMaxLimit, $threeDMinLimit, $baseUrl, $httpUser,
     $httpPass);
 

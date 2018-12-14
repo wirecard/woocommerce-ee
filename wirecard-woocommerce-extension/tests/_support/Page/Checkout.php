@@ -51,6 +51,8 @@ class Checkout extends Base
 
     /**
      * Method fillBillingDetails
+     *
+     * @since   1.4.4
      */
     public function fillBillingDetails()
     {

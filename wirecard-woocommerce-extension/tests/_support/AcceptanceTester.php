@@ -64,6 +64,8 @@ class AcceptanceTester extends \Codeception\Actor
      *
      * @param string $name
      * @return Base
+     *
+     * @since   1.4.4
      */
     private function selectPage($name)
     {
@@ -90,6 +92,8 @@ class AcceptanceTester extends \Codeception\Actor
      *
      * @param string $elementName
      * @return string
+     *
+     * @since   1.4.4
      */
     private function getPageElement($elementName)
     {

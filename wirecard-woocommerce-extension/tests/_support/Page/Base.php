@@ -52,6 +52,8 @@ class Base
      *
      * @param string $name
      * @return string
+     *
+     * @since   1.4.4
      */
     public function getElement($name)
     {
@@ -62,6 +64,8 @@ class Base
      * Method getURL
      *
      * @return string
+     *
+     * @since   1.4.4
      */
     public function getURL()
     {
@@ -70,6 +74,8 @@ class Base
 
     /**
      * Method fillBillingDetails
+     *
+     * @since   1.4.4
      */
     public function fillBillingDetails()
     {
@@ -78,6 +84,8 @@ class Base
 
     /**
      * Method fillCreditCardDetails
+     *
+     * @since   1.4.4
      */
     public function fillCreditCardDetails()
     {
