@@ -18,8 +18,15 @@ matrix:
     if: type != cron
   - php: 7.1
     if: type != cron
-  - ruby: 2.5.3
-    if: env(PHRASEAPP_PULL) = '1'
+
+  - &phraseapp-pull
+    stage: phraseapp-pull
+    if: type != cron AND env(PHRASEAPP_PULL) = '1'
+    php: 7.1
+    install:
+    - bundle install
+    script:
+    - ./.travis.rb
 
   - &acceptance-test
     stage: acceptance-test
@@ -56,6 +63,7 @@ install:
   - composer show
 
 script:
+  -
   - composer test-coverage
   - $PHPCS_DIR/bin/phpcs -p --ignore=*/Test/*,*/vendor/*,*/.bin/* . --standard=WordPress-Core
 

@@ -59,13 +59,13 @@ class WdPhraseApp
       File.write(
         File.join(@plugin_i18n_dir, "#{file_basename}.po"),
         @phraseapp.locale_download(Const::PHRASEAPP_PROJECT_ID, id, params)
-      ) || ($log.error("Couldn't write file #{@plugin_i18n_dir}/#{file_basename}.po") && exit 1)
+      ) || ($log.error("Couldn't write file #{@plugin_i18n_dir}/#{file_basename}.po") && exit(1))
 
       params.file_format = 'gettext_mo'
       File.write(
         File.join(@plugin_i18n_dir, "#{file_basename}.mo"),
         @phraseapp.locale_download(Const::PHRASEAPP_PROJECT_ID, id, params)
-      ) || ($log.error("Couldn't write file #{@plugin_i18n_dir}/#{file_basename}.mo") && exit 1)
+      ) || ($log.error("Couldn't write file #{@plugin_i18n_dir}/#{file_basename}.mo") && exit(1))
     end
   end
 end
