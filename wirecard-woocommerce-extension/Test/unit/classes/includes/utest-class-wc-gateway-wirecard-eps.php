@@ -37,8 +37,8 @@ class WC_Gateway_Wirecard_Eps_Utest extends \PHPUnit_Framework_TestCase {
 	private $payment;
 
 	public function setUp() {
-		$this->payment           = new WC_Gateway_Wirecard_Eps();
-		$_POST['eps_bank_bic'] = "BWFBATW1XXX";
+		$this->payment         = new WC_Gateway_Wirecard_Eps();
+		$_POST['eps_bank_bic'] = 'BWFBATW1XXX';
 		$_POST['eps_nonce']    = 'test';
 	}
 

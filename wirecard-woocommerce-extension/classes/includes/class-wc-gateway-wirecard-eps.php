@@ -130,38 +130,38 @@ class WC_Gateway_Wirecard_Eps extends WC_Wirecard_Payment_Gateway {
 				'title'       => __( 'config_http_user', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
 				'description' => __( 'config_http_user_desc', 'wirecard-woocommerce-extension' ),
-				'default'	 => '16390-testing',
+				'default'     => '16390-testing',
 			),
-			'http_pass'		   => array(
-				'title'	   => __( 'config_http_password', 'wirecard-woocommerce-extension' ),
-				'type'		=> 'text',
+			'http_pass'           => array(
+				'title'       => __( 'config_http_password', 'wirecard-woocommerce-extension' ),
+				'type'        => 'text',
 				'description' => __( 'config_http_password_desc', 'wirecard-woocommerce-extension' ),
-				'default'	 => '3!3013=D3fD8X7',
+				'default'     => '3!3013=D3fD8X7',
 			),
-			'test_button'		 => array(
+			'test_button'         => array(
 				'title'   => __( 'test_config', 'wirecard-woocommerce-extension' ),
-				'type'	=> 'button',
+				'type'    => 'button',
 				'class'   => 'wc_wirecard_test_credentials_button button-primary',
 				'default' => __( 'test_credentials', 'wirecard-woocommerce-extension' ),
 			),
-			'advanced'			=> array(
-				'title'	   => __( 'text_advanced', 'wirecard-woocommerce-extension' ),
-				'type'		=> 'title',
+			'advanced'            => array(
+				'title'       => __( 'text_advanced', 'wirecard-woocommerce-extension' ),
+				'type'        => 'title',
 				'description' => '',
 			),
-			'descriptor'		  => array(
-				'title'	   => __( 'text_enable_disable', 'wirecard-woocommerce-extension' ),
-				'type'		=> 'checkbox',
+			'descriptor'          => array(
+				'title'       => __( 'text_enable_disable', 'wirecard-woocommerce-extension' ),
+				'type'        => 'checkbox',
 				'description' => __( 'config_descriptor_desc', 'wirecard-woocommerce-extension' ),
-				'label'	   => __( 'config_descriptor', 'wirecard-woocommerce-extension' ),
-				'default'	 => 'no',
+				'label'       => __( 'config_descriptor', 'wirecard-woocommerce-extension' ),
+				'default'     => 'no',
 			),
-			'send_additional'	 => array(
-				'title'	   => __( 'text_enable_disable', 'wirecard-woocommerce-extension' ),
-				'type'		=> 'checkbox',
+			'send_additional'     => array(
+				'title'       => __( 'text_enable_disable', 'wirecard-woocommerce-extension' ),
+				'type'        => 'checkbox',
 				'description' => __( 'config_additional_info_desc', 'wirecard-woocommerce-extension' ),
-				'label'	   => __( 'config_additional_info', 'wirecard-woocommerce-extension' ),
-				'default'	 => 'yes',
+				'label'       => __( 'config_additional_info', 'wirecard-woocommerce-extension' ),
+				'default'     => 'yes',
 			),
 		);
 	}
@@ -174,7 +174,7 @@ class WC_Gateway_Wirecard_Eps extends WC_Wirecard_Payment_Gateway {
 	public function payment_fields() {
 		$html = '<input type="hidden" name="eps_nonce" value="' . wp_create_nonce() . '" />
 			<p class="form-row form-row-wide">
-s				<label for="eps_bic">' . __( 'bic', 'wirecard-woocommerce-extension' ) . '</label>
+				<label for="eps_bic">' . __( 'bic', 'wirecard-woocommerce-extension' ) . '</label>
 				<input id="eps_bic" class="input-text wc-eps-input" type="text" name="eps_bank_bic">
 			</p>';
 
@@ -198,11 +198,10 @@ s				<label for="eps_bic">' . __( 'bic', 'wirecard-woocommerce-extension' ) . '<
 
 		$this->transaction = new EpsTransaction();
 		parent::process_payment( $order_id );
-		if ( isset( $_POST['eps_bank_bic'] ) && strlen( $_POST['eps_bank_bic'] ) )
-		{
-			$bankAccount = new BankAccount();
-			$bankAccount->setBic( sanitize_text_field( $_POST['eps_bank_bic'] ) );
-			$this->transaction->setBankAccount( $bankAccount );
+		if ( isset( $_POST['eps_bank_bic'] ) && strlen( $_POST['eps_bank_bic'] ) ) {
+			$bank_account = new BankAccount();
+			$bank_account->setBic( sanitize_text_field( $_POST['eps_bank_bic'] ) );
+			$this->transaction->setBankAccount( $bank_account );
 		}
 
 		return $this->execute_transaction( $this->transaction, $this->config, $this->payment_action, $order );
@@ -211,9 +210,9 @@ s				<label for="eps_bic">' . __( 'bic', 'wirecard-woocommerce-extension' ) . '<
 	/**
 	 * Create transaction for refund
 	 *
-	 * @param int		$order_id
+	 * @param int        $order_id
 	 * @param float|null $amount
-	 * @param string	 $reason
+	 * @param string     $reason
 	 *
 	 * @return bool|SepaCreditTransferTransaction|WP_Error
 	 *
@@ -241,7 +240,7 @@ s				<label for="eps_bic">' . __( 'bic', 'wirecard-woocommerce-extension' ) . '<
 			$http_pass = $this->get_option( 'http_pass' );
 		}
 
-		$config		 = parent::create_payment_config( $base_url, $http_user, $http_pass );
+		$config         = parent::create_payment_config( $base_url, $http_user, $http_pass );
 		$payment_config = new PaymentMethodConfig( EpsTransaction::NAME, $this->get_option( 'merchant_account_id' ), $this->get_option( 'secret' ) );
 		$config->add( $payment_config );
 
