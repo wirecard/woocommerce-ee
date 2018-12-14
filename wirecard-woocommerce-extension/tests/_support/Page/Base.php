@@ -33,14 +33,27 @@ namespace Page;
 
 class Base
 {
+    /**
+     * @var string
+     * @since 1.4.4
+     */
     protected $URL = '';
 
+    /**
+     * @var string
+     * @since 1.4.4
+     */
     protected $elements = array();
 
+    /**
+     * @var string
+     * @since 1.4.4
+     */
     protected $tester;
 
     /**
      * @var AcceptanceTester
+     * @since 1.4.4
      */
     public function __construct(\AcceptanceTester $I)
     {

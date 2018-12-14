@@ -34,8 +34,16 @@ namespace Page;
 class Checkout extends Base
 {
     // include url of current page
+    /**
+     * @var string
+     * @since 1.4.4
+     */
     public $URL = '/checkout';
 
+    /**
+     * @var array
+     * @since 1.4.4
+     */
     public $elements = array(
         'First Name' => "//*[@id='billing_first_name']",
         'Last Name' => "//*[@id='billing_last_name']",

@@ -57,6 +57,10 @@ class AcceptanceTester extends \Codeception\Actor
 {
     use _generated\AcceptanceTesterActions;
 
+    /**
+     * @var string
+     * @since 1.4.4
+     */
     private $currentPage;
 
     /**
@@ -104,6 +108,7 @@ class AcceptanceTester extends \Codeception\Actor
 
     /**
      * @Given I am on :page page
+     * @since 1.4.4
      */
     public function iAmOnPage($page)
     {
@@ -114,6 +119,7 @@ class AcceptanceTester extends \Codeception\Actor
 
     /**
      * @When I click :object
+     * @since 1.4.4
      */
     public function iClick($object)
     {
@@ -123,6 +129,7 @@ class AcceptanceTester extends \Codeception\Actor
 
     /**
      * @When I am redirected to :page page
+     * @since 1.4.4
      */
     public function iAmRedirectedToPage($page)
     {
@@ -134,6 +141,7 @@ class AcceptanceTester extends \Codeception\Actor
 
     /**
      * @When I fill fields with :data
+     * @since 1.4.4
      */
     public function iFillFieldsWith($data)
     {
@@ -142,6 +150,7 @@ class AcceptanceTester extends \Codeception\Actor
 
     /**
      * @Then I see :text
+     * @since 1.4.4
      */
     public function iSee($text)
     {

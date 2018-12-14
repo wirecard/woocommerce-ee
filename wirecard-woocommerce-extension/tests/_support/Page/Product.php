@@ -33,9 +33,17 @@ namespace Page;
 
 class Product extends Base
 {
+    /**
+     * @var string
+     * @since 1.4.4
+     */
     // include url of current page
     public $URL = 'product/';
 
+    /**
+     * @var array
+     * @since 1.4.4
+     */
     public $elements = array(
         'Add to cart' => "//*[@class='single_add_to_cart_button button alt']",
         'Cart' => "Cart",
