@@ -59,6 +59,7 @@ msgstr "Wirecard Payment Gateway Support"
 #: woocommerce-wirecard-payment-gateway.php:299
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:152
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:149
+#: classes/includes/class-wc-gateway-wirecard-eps.php:147
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:147
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:147
 #: classes/includes/class-wc-gateway-wirecard-masterpass.php:147
@@ -106,6 +107,7 @@ msgstr "PayPal transactions via Wirecard Payment Processing Gateway."
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:98
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:157
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:164
+#: classes/includes/class-wc-gateway-wirecard-eps.php:156
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:96
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:166
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:173
@@ -203,6 +205,7 @@ msgstr "Unique identifier assigned to your merchant account."
 
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:115
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:117
+#: classes/includes/class-wc-gateway-wirecard-eps.php:116
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:115
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:115
 #: classes/includes/class-wc-gateway-wirecard-masterpass.php:115
@@ -217,6 +220,7 @@ msgstr "Secret Key"
 
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:117
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:119
+#: classes/includes/class-wc-gateway-wirecard-eps.php:118
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:117
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:117
 #: classes/includes/class-wc-gateway-wirecard-masterpass.php:117
@@ -232,6 +236,7 @@ msgstr ""
 
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:121
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:123
+#: classes/includes/class-wc-gateway-wirecard-eps.php:122
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:121
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:121
 #: classes/includes/class-wc-gateway-wirecard-masterpass.php:121
@@ -246,6 +251,7 @@ msgstr "Credentials"
 
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:123
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:125
+#: classes/includes/class-wc-gateway-wirecard-eps.php:124
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:123
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:123
 #: classes/includes/class-wc-gateway-wirecard-masterpass.php:123
@@ -260,6 +266,7 @@ msgstr "Enter your Wirecard credentials."
 
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:126
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:128
+#: classes/includes/class-wc-gateway-wirecard-eps.php:127
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:126
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:126
 #: classes/includes/class-wc-gateway-wirecard-masterpass.php:126
@@ -274,6 +281,7 @@ msgstr "Base URL"
 
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:128
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:130
+#: classes/includes/class-wc-gateway-wirecard-eps.php:129
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:128
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:128
 #: classes/includes/class-wc-gateway-wirecard-masterpass.php:128
@@ -288,6 +296,7 @@ msgstr "Wirecard Base URL (e.g. https://api.wirecard.com)."
 
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:132
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:134
+#: classes/includes/class-wc-gateway-wirecard-eps.php:133
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:132
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:132
 #: classes/includes/class-wc-gateway-wirecard-masterpass.php:132
@@ -302,6 +311,7 @@ msgstr "HTTP User"
 
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:134
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:136
+#: classes/includes/class-wc-gateway-wirecard-eps.php:132
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:134
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:134
 #: classes/includes/class-wc-gateway-wirecard-masterpass.php:134
@@ -511,21 +521,42 @@ msgstr "Awaiting payment from Wirecard."
 msgid "heading_title_ideal"
 msgstr "Wirecard iDEAL"
 
+#: classes/includes/class-wc-gateway-wirecard-eps.php:62
+#: classes/includes/class-wc-gateway-wirecard-eps.php:107
+msgid "heading_title_eps"
+msgstr "Wirecard eps-Überweisung"
+
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:64
 msgid "ideal"
 msgstr "iDEAL"
+
+#: classes/includes/class-wc-gateway-wirecard-eps.php:63
+msgid "eps"
+msgstr "eps-Überweisung"
 
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:65
 msgid "ideal_desc"
 msgstr "iDEAL transactions via Wirecard Payment Processing Gateway."
 
+#: classes/includes/class-wc-gateway-wirecard-eps.php:64
+msgid "eps_desc"
+msgstr "eps-Überweisung transactions via Wirecard Payment Processing Gateway."
+
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:100
 msgid "config_status_desc_ideal"
 msgstr "Activate payment method iDEAL to make it available for your consumers."
 
+#: classes/includes/class-wc-gateway-wirecard-eps.php:99
+msgid "config_status_desc_eps"
+msgstr "Activate payment method eps-Überweisung to make it available for your consumers."
+
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:101
 msgid "enable_heading_title_ideal"
 msgstr "Enable Wirecard iDEAL"
+
+#: classes/includes/class-wc-gateway-wirecard-eps.php:100
+msgid "enable_heading_title_eps"
+msgstr "Enable Wirecard eps-Überweisung"
 
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:58
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:106

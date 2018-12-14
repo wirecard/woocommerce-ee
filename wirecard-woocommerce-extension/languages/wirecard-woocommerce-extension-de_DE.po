@@ -520,22 +520,44 @@ msgstr "Ausständige Zahlung von Wirecard"
 msgid "heading_title_ideal"
 msgstr "Wirecard iDEAL"
 
+#: classes/includes/class-wc-gateway-wirecard-eps.php:62
+#: classes/includes/class-wc-gateway-wirecard-eps.php:107
+msgid "heading_title_eps"
+msgstr "Wirecard eps-Überweisung"
+
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:64
 msgid "ideal"
 msgstr "iDEAL"
 
+#: classes/includes/class-wc-gateway-wirecard-eps.php:63
+msgid "eps"
+msgstr "eps-Überweisung"
+
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:65
 msgid "ideal_desc"
 msgstr "iDEAL Transaktionen via Wirecard Payment Processing Gateway."
+
+#: classes/includes/class-wc-gateway-wirecard-eps.php:64
+msgid "eps_desc"
+msgstr "eps-Überweisung Transaktionen via Wirecard Payment Processing Gateway."
 
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:100
 msgid "config_status_desc_ideal"
 msgstr ""
 "Zahlungsmittel iDEAL aktivieren und dem Endkunden beim Checkout anbieten."
 
+#: classes/includes/class-wc-gateway-wirecard-ideal.php:99
+msgid "config_status_desc_eps"
+msgstr ""
+"Zahlungsmittel eps-Überweisung aktivieren und dem Endkunden beim Checkout anbieten."
+
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:101
 msgid "enable_heading_title_ideal"
 msgstr "Wirecard iDEAL aktivieren"
+
+#: classes/includes/class-wc-gateway-wirecard-eps.php:100
+msgid "enable_heading_title_eps"
+msgstr "Wirecard eps-Überweisung aktivieren"
 
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:58
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:106
