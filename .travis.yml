@@ -18,6 +18,8 @@ matrix:
     if: type != cron
   - php: 7.1
     if: type != cron
+  - ruby: 2.5.3
+    if: env(PHRASEAPP_PULL) = '1'
 
   - &acceptance-test
     stage: acceptance-test
