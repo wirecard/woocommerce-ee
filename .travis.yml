@@ -44,11 +44,13 @@ matrix:
   - &phraseapp-pull
     stage: phraseapp-pull
     if: type != cron AND env(PHRASEAPP_PULL) = '1'
+    language: ruby
     ruby: 2.5.3
     install:
     - bundle install
     script:
     - .bin/phraseapp/main.rb
+    after_script: skip
 
 before_install:
   - export PHPCS_DIR=/tmp/phpcs
@@ -63,7 +65,6 @@ install:
   - composer show
 
 script:
-  -
   - composer test-coverage
   - $PHPCS_DIR/bin/phpcs -p --ignore=*/Test/*,*/vendor/*,*/.bin/* . --standard=WordPress-Core
 
