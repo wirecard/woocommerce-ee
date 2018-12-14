@@ -69,7 +69,6 @@ class AcceptanceTester extends \Codeception\Actor
      */
     private function selectPage($name)
     {
-        $page = null;
         switch ($name) {
             case "Cart":
                 $page = new CartPage($this);
@@ -83,6 +82,8 @@ class AcceptanceTester extends \Codeception\Actor
             case "Shop":
                 $page = new ShopPage($this);
                 break;
+            default:
+                $page = null;
         }
         return $page;
     }
