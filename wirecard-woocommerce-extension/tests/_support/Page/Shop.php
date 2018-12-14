@@ -37,6 +37,6 @@ class Shop extends Base
     public $URL = '/shop';
 
     public $elements = array(
-        'Album' => "//*[@id='main']/ul/li[1]/a[1]"
+        'First Product in the Product List' => "//*[@id='main']/ul/li[1]/a[1]"
     );
 }

@@ -6,7 +6,7 @@ Feature: guest_checkout
 
   Scenario: try guest_checkout
     Given I am on "Shop" page
-    When I click "Album"
+    When I click "First Product in the Product List"
     And I am redirected to "Product" page
     And I click "Add to cart"
     And I am on "Cart" page
