@@ -42,12 +42,19 @@ class Acceptance extends \Codeception\Module
      * Method getCustomerDataFromDataFile
      *
      * @return string
+     *
+     * @since   1.4.4
      */
     public static function getCustomerDataFromDataFile()
     {
-        $fileData = file_get_contents('tests/_support/CustomerData.json');
-        $data = json_decode($fileData); // decode the JSON feed
-        return $data;
+        // decode the JSON feed
+        $json_data = json_decode(file_get_contents('tests/_data/CustomerData.json'));
+        if (!$json_data) {
+            $error = error_get_last();
+            echo "Failed to get custumer data from tests/_data/CustomerData.json. Error was: " . $error['message'];
+        } else {
+            return $json_data;
+        }
     }
 
     /**
@@ -55,6 +62,8 @@ class Acceptance extends \Codeception\Module
      *
      * @param string $dataType
      * @param PageObject $page
+     *
+     * @since   1.4.4
      */
     public static function fillFieldsWithData($dataType, $page)
     {

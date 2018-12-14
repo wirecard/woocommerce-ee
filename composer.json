@@ -24,7 +24,8 @@
     "wpackagist-plugin/woocommerce": ">=3.2.4",
     "composer/installers": "^1.0",
     "codacy/coverage": "1.4.2",
-    "symfony/yaml": "^3"
+    "symfony/yaml": "^3",
+    "codeception/codeception": "^2.5"
   },
   "type": "wordpress-plugin",
   "scripts": {
@@ -32,7 +33,9 @@
     "make-wiki-notes": "@php .bin/version-helper.php -w",
     "make-release-notes": "@php .bin/version-helper.php",
     "upload-coverage": "codacycoverage clover build/coverage/xml",
+    "cs-check-configure": "phpcs --config-set installed_paths vendor/wp-coding-standards/wpcs",
     "cs-check": "phpcs --standard=./phpcs.xml .",
+
     "cs-fix": "phpcbf --standard=./phpcs.xml .",
     "test": "phpunit --colors=always",
     "test-coverage": "phpunit --colors=always --coverage-clover build/coverage/xml"
