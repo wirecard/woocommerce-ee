@@ -78,4 +78,24 @@ class WdPhraseApp
       @phraseapp.locale_download(Const::PHRASEAPP_PROJECT_ID, Const::PHRASEAPP_FALLBACK_LOCALE, params)
     ) || (@log.error("Couldn't write file #{@plugin_i18n_dir}/#{Const::LOCALE_FILE_PREFIX}.pot") && exit(1))
   end
+
+  def create_branch_from_current
+    local_branch_name = Git.open(Dir.pwd, :log => @log).current_branch
+    phraseapp_branch_name = "#{Const::PHRASEAPP_TAG}-#{local_branch_name.downcase.gsub(/(\W|_)/, '-')}"
+
+    if HighLine.agree("This will create a branch on PhraseApp called '#{phraseapp_branch_name}'. Proceed? (y/n)")
+      params = OpenStruct.new
+      params.name = phraseapp_branch_name
+
+      begin
+        @phraseapp.branch_create(Const::PHRASEAPP_PROJECT_ID, params)
+        @log.info('Success!')
+      rescue
+        @log.warn('Request to create branch failed. Maybe it already exists?')
+        @log.debug(e)
+      end
+    else
+      @log.info('Aborted.')
+    end
+  end
 end
