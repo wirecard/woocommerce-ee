@@ -54,28 +54,28 @@ class WdPhraseApp
     params.tags = Const::PHRASEAPP_TAG
 
     get_locale_ids.each do |id|
-      pomo_basename = "#{Const::LOCALE_FILE_PREFIX}-#{Const::LOCALE_SPECIFIC_MAP[id.to_sym] || id}"
+      file_basename = "#{Const::LOCALE_FILE_PREFIX}-#{Const::LOCALE_SPECIFIC_MAP[id.to_sym] || id}"
 
       # po
       params.file_format = 'gettext'
       File.write(
-        File.join(@plugin_i18n_dir, "#{pomo_basename}.po"),
+        File.join(@plugin_i18n_dir, "#{file_basename}.po"),
         @phraseapp.locale_download(Const::PHRASEAPP_PROJECT_ID, id, params)
-      ) || (@log.error("Couldn't write file #{@plugin_i18n_dir}/#{pomo_basename}.po") && exit(1))
+      ) || (@log.error("Couldn't write file #{@plugin_i18n_dir}/#{file_basename}.po") && exit(1))
 
       # mo
       params.file_format = 'gettext_mo'
       File.write(
-        File.join(@plugin_i18n_dir, "#{pomo_basename}.mo"),
+        File.join(@plugin_i18n_dir, "#{file_basename}.mo"),
         @phraseapp.locale_download(Const::PHRASEAPP_PROJECT_ID, id, params)
-      ) || (@log.error("Couldn't write file #{@plugin_i18n_dir}/#{pomo_basename}.mo") && exit(1))
-
-      # pot
-      params.file_format = 'gettext_template'
-      File.write(
-        File.join(@plugin_i18n_dir, "#{Const::LOCALE_FILE_PREFIX}.pot"),
-        @phraseapp.locale_download(Const::PHRASEAPP_PROJECT_ID, id, params)
-      ) || (@log.error("Couldn't write file #{@plugin_i18n_dir}/#{Const::LOCALE_FILE_PREFIX}.pot") && exit(1))
+      ) || (@log.error("Couldn't write file #{@plugin_i18n_dir}/#{file_basename}.mo") && exit(1))
     end
+
+    # pot of the fallback locale
+    params.file_format = 'gettext_template'
+    File.write(
+      File.join(@plugin_i18n_dir, "#{Const::LOCALE_FILE_PREFIX}.pot"),
+      @phraseapp.locale_download(Const::PHRASEAPP_PROJECT_ID, Const::PHRASEAPP_FALLBACK_LOCALE, params)
+    ) || (@log.error("Couldn't write file #{@plugin_i18n_dir}/#{Const::LOCALE_FILE_PREFIX}.pot") && exit(1))
   end
 end
