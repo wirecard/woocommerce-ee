@@ -49,7 +49,7 @@ matrix:
     install:
     - bundle install
     script:
-    - .bin/phraseapp/main.rb
+    - .bin/rake phraseapp:ci_update
     after_script: skip
 
 before_install:

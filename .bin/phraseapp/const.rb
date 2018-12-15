@@ -4,8 +4,8 @@ module Const
   PHRASEAPP_FALLBACK_LOCALE = 'en_US'.freeze
 
   # project-specific
-  PHRASEAPP_TAGS = 'woocommerce'.freeze
-  LOCALE_FILE_PREFIX = 'wirecard-woocommerce-extension-'.freeze
+  PHRASEAPP_TAG = 'woocommerce'.freeze
+  LOCALE_FILE_PREFIX = 'wirecard-woocommerce-extension'.freeze
   LOCALE_SPECIFIC_MAP = {
     'ja_JP': 'ja',
   }.freeze
