@@ -16,6 +16,6 @@ class WdGithub
   rescue Octokit::Error => e
     @log.fatal('Error while creating pull request.')
     @log.debug(e)
-    exit(-1)
+    exit(1)
   end
 end
