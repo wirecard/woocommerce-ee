@@ -2,20 +2,28 @@ require 'git'
 require 'highline'
 require 'logger'
 require 'phraseapp-ruby'
+require 'rainbow/refinement'
 require_relative 'const.rb'
 require_relative 'env.rb'
 require_relative 'wd-github.rb'
+require_relative 'wd-project.rb'
+
+using Rainbow
 
 class WdPhraseApp
   def initialize()
     @log = Logger.new(STDOUT, level: Env::DEBUG ? 'DEBUG' : 'INFO')
 
-    credentials = PhraseApp::Auth::Credentials.new(token: Env::PHRASEAPP_TOKEN)
+    credentials = PhraseApp::Auth::Credentials.new(token: Env::PHRASEAPP_TOKEN, debug: Env::DEBUG)
     @phraseapp = PhraseApp::Client.new(credentials)
     @plugin_i18n_dir = File.expand_path(Const::PLUGIN_I18N_DIR, Dir.pwd)
   end
 
-  def commit_push_translations()
+  def push_to_branch
+    create_branch && push_keys
+  end
+
+  def commit_push_to_repo()
     @log.info('Committing & pushing any added/changed locales...')
     git = Git.open(Dir.pwd, :log => @log)
     git.add(File.join(@plugin_i18n_dir, '*.po'))
@@ -26,8 +34,7 @@ class WdPhraseApp
       "https://#{Env::GITHUB_TOKEN}@github.com/#{Env::TRAVIS_REPO_SLUG}",
       "HEAD:refs/heads/#{Env::TRAVIS_BRANCH}"
     )
-    github = WdGithub.new
-    github.create_pr(Env::TRAVIS_REPO_SLUG, 'master', Env::TRAVIS_BRANCH, Const::GITHUB_PHRASEAPP_PR_TITLE, '')
+    WdGithub.new.create_pr(Env::TRAVIS_REPO_SLUG, 'master', Env::TRAVIS_BRANCH, Const::GITHUB_PHRASEAPP_PR_TITLE, '')
   rescue Git::GitExecuteError => e
     @log.warn(e)
   end
@@ -36,24 +43,33 @@ class WdPhraseApp
     params = OpenStruct.new
 
     # TODO: handle case of potentially more than 100 locales
-    @phraseapp.locales_list(Const::PHRASEAPP_PROJECT_ID, 1, 100, params).
-      select { |l| !l.nil? }.
-      map { |l| Array(l) }.
-      flatten!.
-      map { |l| l.name }
+    locales = @phraseapp.locales_list(Const::PHRASEAPP_PROJECT_ID, 1, 100, params)
+    if locales.last.nil?
+      locales = locales.first.map { |l| l.name }
+      @log.info('Retrieved list of locales.')
+      @log.info(locales)
+      return locales
+    else
+      @log.error('An error occurred while getting locales from PhraseApp.'.red.bright)
+      @log.debug(locales.last.errors)
+      exit(1)
+    end
   end
 
   def pull_locales()
-    @log.info('Downloading locales...')
-    params = OpenStruct.new
-    params.encoding = 'UTF-8'
-    params.fallback_locale_id = Const::PHRASEAPP_FALLBACK_LOCALE
-    params.include_empty_translations = true
-    params.include_translated_keys = true
-    params.include_unverified_translations = true
-    params.tags = Const::PHRASEAPP_TAG
+    @log.info('Downloading locales...'.cyan.bright)
+    params = OpenStruct.new({
+      :encoding => 'UTF-8',
+      :fallback_locale_id => Const::PHRASEAPP_FALLBACK_LOCALE,
+      :include_empty_translations => true,
+      :include_translated_keys => true,
+      :include_unverified_translations => true,
+      :tags => Const::PHRASEAPP_TAG,
+    })
 
     get_locale_ids.each do |id|
+      @log.info("Downloading locale file for #{id}...".bright)
+
       file_basename = "#{Const::LOCALE_FILE_PREFIX}-#{Const::LOCALE_SPECIFIC_MAP[id.to_sym] || id}"
 
       # po
@@ -79,23 +95,59 @@ class WdPhraseApp
     ) || (@log.error("Couldn't write file #{@plugin_i18n_dir}/#{Const::LOCALE_FILE_PREFIX}.pot") && exit(1))
   end
 
-  def create_branch_from_current
+  def branch_name
     local_branch_name = Git.open(Dir.pwd, :log => @log).current_branch
-    phraseapp_branch_name = "#{Const::PHRASEAPP_TAG}-#{local_branch_name.downcase.gsub(/(\W|_)/, '-')}"
+    "#{Const::PHRASEAPP_TAG}-#{local_branch_name.downcase.gsub(/(\W|_)/, '-')}"
+  end
 
-    if HighLine.agree("This will create a branch on PhraseApp called '#{phraseapp_branch_name}'. Proceed? (y/n)")
+  def create_branch
+    if HighLine.agree("This will create branch '#{branch_name}' on PhraseApp. Proceed? (y/n)".bright)
       params = OpenStruct.new
-      params.name = phraseapp_branch_name
+      params.name = branch_name
 
       begin
         @phraseapp.branch_create(Const::PHRASEAPP_PROJECT_ID, params)
-        @log.info('Success!')
-      rescue
-        @log.warn('Request to create branch failed. Maybe it already exists?')
+        @log.info('Success! Branch created.'.green.bright)
+      rescue NoMethodError => e
+        @log.warn('Request failed. Branch already exists.'.cyan.bright)
         @log.debug(e)
       end
+      true
     else
       @log.info('Aborted.')
+      false
+    end
+  end
+
+  def push_keys
+    project = WdProject.new
+    new_pot_path = project.new_pot_path
+    pot_path = project.pot_path
+
+    if !File.exist?(new_pot_path) || !File.exist?(pot_path)
+      @log.fatal('Couldn\'t find the POT files.'.red.bright) && exit(1)
+    end
+
+    File.rename(new_pot_path, pot_path)
+
+    params = OpenStruct.new({
+      :autotranslate => false,
+      :branch => branch_name,
+      :file => pot_path,
+      :file_encoding => 'UTF-8',
+      :file_format => 'gettext_template',
+      :locale_id => Const::PHRASEAPP_FALLBACK_LOCALE,
+      :tags => Const::PHRASEAPP_TAG,
+      :update_descriptions => false,
+      :update_translations => true,
+    })
+
+    upload = @phraseapp.upload_create(Const::PHRASEAPP_PROJECT_ID, params)
+    if upload.last.nil?
+      @log.info('Success! Uploaded to PhraseApp'.green.bright)
+    else
+      @log.error('An error occurred while uploading to PhraseApp.'.red.bright)
+      @log.debug(upload.last.errors)
     end
   end
 end
