@@ -27,7 +27,7 @@ class WdPhraseApp
   end
 
   # Returns true if PhraseApp keys are in sync with the project, false otherwise.
-  def is_up_to_date?
+  def is_in_sync?
     pull_pot && WdProject.new.worktree_has_key_changes?
   end
 
@@ -35,8 +35,8 @@ class WdPhraseApp
   def get_locale_ids()
     params = OpenStruct.new
 
-    # PhraseApp has a limit of 100 items per page on this paginated endpoint
-    # TODO: handle case of potentially more than 100 locales in total
+    # PhraseApp has a limit of 100 items per page on this paginated endpoint.
+    # TODO(nickstamat): handle case of potentially more than 100 locales in total.
     locales = @phraseapp.locales_list(Const::PHRASEAPP_PROJECT_ID, 1, 100, params)
     if locales.last.nil?
       locales = locales.first.map { |l| l.name }

@@ -23,8 +23,8 @@ namespace :phraseapp do
   end
 
   desc '[CI] Check if PhraseApp is up to date with the project'
-  task :ci_check_is_up_to_date do
-    unless WdPhraseApp.new.is_up_to_date?
+  task :ci_check_if_in_sync do
+    unless WdPhraseApp.new.is_in_sync?
       exit(1)
     end
   end
