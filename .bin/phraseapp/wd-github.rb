@@ -1,6 +1,9 @@
 require 'octokit'
+require 'rainbow/refinement'
 require_relative 'const.rb'
 require_relative 'env.rb'
+
+using Rainbow
 
 class WdGithub
   def initialize
