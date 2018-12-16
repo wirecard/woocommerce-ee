@@ -42,7 +42,8 @@ class WdPhraseApp
   def get_locale_ids()
     params = OpenStruct.new
 
-    # TODO: handle case of potentially more than 100 locales
+    # PhraseApp has a limit of 100 items per page on this paginated endpoint
+    # TODO: handle case of potentially more than 100 locales in total
     locales = @phraseapp.locales_list(Const::PHRASEAPP_PROJECT_ID, 1, 100, params)
     if locales.last.nil?
       locales = locales.first.map { |l| l.name }
