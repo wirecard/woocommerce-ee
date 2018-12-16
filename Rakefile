@@ -21,4 +21,11 @@ namespace :phraseapp do
   task :ci_update do
     WdPhraseApp.new.pull_locales && WdProject.new.commit_push_pr_locales
   end
+
+  desc '[CI] Check if PhraseApp is up to date with the project'
+  task :ci_check_is_up_to_date do
+    unless WdPhraseApp.new.is_up_to_date?
+      exit(1)
+    end
+  end
 end

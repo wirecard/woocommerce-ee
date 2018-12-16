@@ -21,10 +21,17 @@ class WdPhraseApp
     @plugin_i18n_dir = File.expand_path(Const::PLUGIN_I18N_DIR, Dir.pwd)
   end
 
+  # Creates a branch on PhraseApp & pushes keys to it.
   def push_to_branch
     create_branch && push_keys
   end
 
+  # Returns true if PhraseApp keys are in sync with the project, false otherwise.
+  def is_up_to_date?
+    pull_pot && WdProject.new.worktree_has_key_changes?
+  end
+
+  # Returns an array of locale ids available on the PhraseApp project.
   def get_locale_ids()
     params = OpenStruct.new
 
@@ -43,6 +50,7 @@ class WdPhraseApp
     end
   end
 
+  # Downloads locale files for all locale ids into the plugin i18n dir.
   def pull_locales()
     @log.info('Downloading locales...'.cyan.bright)
     params = OpenStruct.new({
@@ -76,7 +84,11 @@ class WdPhraseApp
       end
     end
 
-    # pot of the fallback locale
+    pull_pot
+  end
+
+  # Downloads POT file for fallback locale. Replaces the existing POT in the plugin i18n dir.
+  def pull_pot
     @log.info("Downloading POT...".bright)
     params.file_format = 'gettext_template'
     pot = @phraseapp.locale_download(Const::PHRASEAPP_PROJECT_ID, Const::PHRASEAPP_FALLBACK_LOCALE, params)
@@ -89,11 +101,13 @@ class WdPhraseApp
     end
   end
 
+  # Returns branch name for use on PhraseApp. Uses normalized local git branch, prepended by the plugin tag.
   def branch_name
     local_branch_name = Git.open(Dir.pwd, :log => @log).current_branch
     "#{Const::PHRASEAPP_TAG}-#{local_branch_name.downcase.gsub(/(\W|_)/, '-')}"
   end
 
+  # Creates branch on PhraseApp for the current git branch.
   def create_branch
     if HighLine.agree("This will create branch '#{branch_name}' on PhraseApp. Proceed? (y/n)".bright)
       params = OpenStruct.new({ :name => branch_name })
@@ -112,6 +126,7 @@ class WdPhraseApp
     end
   end
 
+  # Uploads previously generated POT file to the PhraseApp branch.
   def push_keys
     project = WdProject.new
     pot_new_path = project.pot_new_path
