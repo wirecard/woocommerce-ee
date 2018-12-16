@@ -9,6 +9,7 @@ class WdGithub
   end
 
   def create_pr(repo, base, head, title, body)
+    @log.info("Creating PR from '#{head}' to '#{base}', if it doesn't exist...".bright)
     pr = @github.create_pull_request(repo, base, head, title, body)
     @log.info("View pull request here: #{pr.html_url}")
   rescue Octokit::UnprocessableEntity
