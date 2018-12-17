@@ -96,7 +96,7 @@ function wirecard_init_payment_gateway() {
 	register_post_status(
 		'wc-authorization',
 		array(
-			'label'                     => _x( 'order_status_authorized', 'Order status', 'wirecard-woocommerce-extension' ),
+			'label'                     => __( 'order_status_authorized', 'wirecard-woocommerce-extension' ),
 			'public'                    => true,
 			'exclude_from_search'       => false,
 			'show_in_admin_all_list'    => true,
@@ -161,7 +161,7 @@ function wirecard_get_payments() {
  * @since 1.0.0
  */
 function wirecard_wc_order_statuses( $order_statuses ) {
-	$order_statuses['wc-authorization'] = _x( 'order_status_authorized', 'Order status', 'wirecard-woocommerce-extension' );
+	$order_statuses['wc-authorization'] = __( 'order_status_authorized', 'wirecard-woocommerce-extension' );
 
 	return $order_statuses;
 }
