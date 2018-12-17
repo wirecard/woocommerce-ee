@@ -46,5 +46,22 @@ class Cart extends Base
      */
     public $elements = array(
         'Proceed to checkout' => "//*[@class='checkout-button button alt wc-forward']",
+        'Quantity' => "//*[@class='input-text qty text']",
+        'Update Cart' => "//*[@name='update_cart']"
     );
+
+    /**
+     * Method waitBeforeClick
+     *
+     * @param string $object
+     *
+     * @since   1.4.4
+     */
+    public function waitBeforeClick($object)
+    {
+        $I = $this->tester;
+        if ($object == 'Proceed to checkout') {
+            $I->wait(2);
+        }
+    }
 }
