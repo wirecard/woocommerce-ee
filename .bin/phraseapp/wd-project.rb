@@ -22,10 +22,12 @@ class WdProject
     @head = Env::TRAVIS_BRANCH
   end
 
+  # Returns true if source code has modified keys compared to the existing POT.
   def worktree_has_key_changes?
     pot_generate && has_key_changes?
   end
 
+  # Generates a new POT for the plugin source files, using the WP-CLI.
   def pot_generate
     @log.info('curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar')
     stdout, stderr, status = Open3.capture3('curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar')
@@ -46,6 +48,7 @@ class WdProject
     true
   end
 
+  # Compares two POT files and returns true if they have any difference in keys, false otherwise.
   def has_key_changes?
     existing_keys = SimplePoParser.parse(@pot_path).map { |h| h[:msgid] }.select { |k| !k.empty? }
     new_keys = SimplePoParser.parse(@pot_new_path).map { |h| h[:msgid] }.select { |k| !k.empty? }
@@ -67,6 +70,7 @@ class WdProject
     has_key_changes
   end
 
+  # Adds, commits, pushes to remote any modified/untracked files in the i18n dir. Then creates a PR.
   def commit_push_pr_locales()
     path = Const::PLUGIN_I18N_DIR
     base = Const::GIT_PHRASEAPP_BRANCH_BASE

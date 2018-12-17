@@ -33,11 +33,9 @@ class WdPhraseApp
 
   # Returns an array of locale ids available on the PhraseApp project.
   def get_locale_ids()
-    params = OpenStruct.new
-
     # PhraseApp has a limit of 100 items per page on this paginated endpoint.
     # TODO(nickstamat): handle case of potentially more than 100 locales in total.
-    locales = @phraseapp.locales_list(Const::PHRASEAPP_PROJECT_ID, 1, 100, params)
+    locales = @phraseapp.locales_list(Const::PHRASEAPP_PROJECT_ID, 1, 100, OpenStruct.new)
     if locales.last.nil?
       locales = locales.first.map { |l| l.name }
       @log.info('Retrieved list of locales.')
@@ -90,8 +88,17 @@ class WdPhraseApp
   # Downloads POT file for fallback locale. Replaces the existing POT in the plugin i18n dir.
   def pull_pot
     @log.info("Downloading POT...".bright)
-    params.file_format = 'gettext_template'
-    pot = @phraseapp.locale_download(Const::PHRASEAPP_PROJECT_ID, Const::PHRASEAPP_FALLBACK_LOCALE, params)
+
+    pot = @phraseapp.locale_download(Const::PHRASEAPP_PROJECT_ID, Const::PHRASEAPP_FALLBACK_LOCALE, OpenStruct.new({
+      :encoding => 'UTF-8',
+      :fallback_locale_id => Const::PHRASEAPP_FALLBACK_LOCALE,
+      :file_format => 'gettext_template',
+      :include_empty_translations => true,
+      :include_translated_keys => true,
+      :include_unverified_translations => true,
+      :tags => Const::PHRASEAPP_TAG,
+    }))
+
     if pot.last.nil?
       File.write(File.join(@plugin_i18n_dir, "#{Const::LOCALE_FILE_PREFIX}.pot"), pot)
     else
@@ -110,10 +117,8 @@ class WdPhraseApp
   # Creates branch on PhraseApp for the current git branch.
   def create_branch
     if HighLine.agree("This will create branch '#{branch_name}' on PhraseApp. Proceed? (y/n)".bright)
-      params = OpenStruct.new({ :name => branch_name })
-
       begin
-        @phraseapp.branch_create(Const::PHRASEAPP_PROJECT_ID, params)
+        @phraseapp.branch_create(Const::PHRASEAPP_PROJECT_ID, OpenStruct.new({ :name => branch_name }))
         @log.info('Success! Branch created.'.green.bright)
       rescue NoMethodError => e
         @log.warn('Request failed. Branch already exists.'.cyan.bright)
@@ -138,7 +143,7 @@ class WdPhraseApp
 
     File.rename(pot_new_path, pot_path)
 
-    params = OpenStruct.new({
+    upload = @phraseapp.upload_create(Const::PHRASEAPP_PROJECT_ID, OpenStruct.new({
       :autotranslate => false,
       :branch => branch_name,
       :file => pot_path,
@@ -148,9 +153,8 @@ class WdPhraseApp
       :tags => Const::PHRASEAPP_TAG,
       :update_descriptions => false,
       :update_translations => true,
-    })
+    }))
 
-    upload = @phraseapp.upload_create(Const::PHRASEAPP_PROJECT_ID, params)
     if upload.last.nil?
       @log.info('Success! Uploaded to PhraseApp'.green.bright)
     else
