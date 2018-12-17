@@ -50,17 +50,22 @@ class WdProject
 
   # Compares two POT files and returns true if they have any difference in keys, false otherwise.
   def has_key_changes?
-    existing_keys = SimplePoParser.parse(@pot_path).map { |h| h[:msgid] }.select { |k| !k.empty? }
-    new_keys = SimplePoParser.parse(@pot_new_path).map { |h| h[:msgid] }.select { |k| !k.empty? }
+    pot = SimplePoParser.parse(@pot_path)
+    existing_keys = pot.map { |h| h[:msgid] }.select { |k| !k.empty? }.uniq
+    existing_keys += pot.map { |h| h[:msgid_plural] }.select { |k| !k.nil? }.uniq
 
-    @log.info("Number of keys in the existing POT: #{existing_keys.size}")
-    @log.info("Number of keys in the new POT: #{new_keys.size}")
+    pot_new = SimplePoParser.parse(@pot_new_path)
+    new_keys = pot_new.map { |h| h[:msgid] }.select { |k| !k.empty? }.uniq
+    new_keys += pot_new.map { |h| h[:msgid_plural] }.select { |k| !k.nil? }.uniq
+
+    @log.info("Number of keys in the existing POT: #{existing_keys.length}")
+    @log.info("Number of keys in the new POT: #{new_keys.length}")
 
     @log.info("Removed keys: #{existing_keys - new_keys}")
     @log.info("Added keys: #{new_keys - existing_keys}")
 
     # keys are unique; we use the intersection to detect differences
-    has_key_changes = (new_keys.size != existing_keys.size) || (new_keys & existing_keys != new_keys)
+    has_key_changes = (new_keys.length != existing_keys.length) || (new_keys & existing_keys != new_keys)
     if has_key_changes
       @log.warn('Changes to translatable keys have been detected in the working tree.'.yellow.bright)
     else
