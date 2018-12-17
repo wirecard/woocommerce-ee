@@ -33,7 +33,7 @@ class WdPhraseApp
 
   # Returns true if PhraseApp keys are in sync with the project, false otherwise.
   def is_in_sync?
-    pull_pot && WdProject.new.worktree_has_key_changes?
+    pull_pot && !WdProject.new.worktree_has_key_changes?
   end
 
   # Returns an array of locale ids available on the PhraseApp project.
