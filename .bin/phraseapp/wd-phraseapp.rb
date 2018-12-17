@@ -15,10 +15,15 @@ using Rainbow
 class WdPhraseApp
   def initialize()
     @log = Logger.new(STDOUT, level: Env::DEBUG ? 'DEBUG' : 'INFO')
-
     credentials = PhraseApp::Auth::Credentials.new(token: Env::PHRASEAPP_TOKEN, debug: Env::DEBUG)
     @phraseapp = PhraseApp::Client.new(credentials)
-    @plugin_i18n_dir = File.expand_path(Const::PLUGIN_I18N_DIR, Dir.pwd)
+
+    @phraseapp_id              = Const::PHRASEAPP_PROJECT_ID
+    @phraseapp_fallback_locale = Const::PHRASEAPP_FALLBACK_LOCALE
+    @phraseapp_tag             = Const::PHRASEAPP_TAG
+    @locale_file_prefix        = Const::LOCALE_FILE_PREFIX
+    @locale_specific_map       = Const::LOCALE_SPECIFIC_MAP
+    @plugin_i18n_dir           = File.expand_path(Const::PLUGIN_I18N_DIR, Dir.pwd)
   end
 
   # Creates a branch on PhraseApp & pushes keys to it.
@@ -35,15 +40,15 @@ class WdPhraseApp
   def get_locale_ids()
     # PhraseApp has a limit of 100 items per page on this paginated endpoint.
     # TODO(nickstamat): handle case of potentially more than 100 locales in total.
-    locales = @phraseapp.locales_list(Const::PHRASEAPP_PROJECT_ID, 1, 100, OpenStruct.new)
-    if locales.last.nil?
-      locales = locales.first.map { |l| l.name }
+    locales, err = @phraseapp.locales_list(@phraseapp_id, 1, 100, OpenStruct.new)
+    if err.nil?
+      locales = locales.map { |l| l.name }
       @log.info('Retrieved list of locales.')
       @log.info(locales)
       return locales
     else
       @log.error('An error occurred while getting locales from PhraseApp.'.red.bright)
-      @log.debug(locales.last.errors)
+      @log.debug(err)
       exit(1)
     end
   end
@@ -53,31 +58,36 @@ class WdPhraseApp
     @log.info('Downloading locales...'.cyan.bright)
     params = OpenStruct.new({
       :encoding => 'UTF-8',
-      :fallback_locale_id => Const::PHRASEAPP_FALLBACK_LOCALE,
+      :fallback_locale_id => @phraseapp_fallback_locale,
       :include_empty_translations => true,
       :include_translated_keys => true,
       :include_unverified_translations => true,
-      :tags => Const::PHRASEAPP_TAG,
+      :tags => @phraseapp_tag,
     })
 
     get_locale_ids.each do |id|
       @log.info("Downloading locale files for #{id}...".bright)
 
-      file_basename = "#{Const::LOCALE_FILE_PREFIX}-#{Const::LOCALE_SPECIFIC_MAP[id.to_sym] || id}"
+      file_basename = "#{@locale_file_prefix}-#{@locale_specific_map[id.to_sym] || id}"
 
       # po/mo
       params.file_format = 'gettext'
-      po = @phraseapp.locale_download(Const::PHRASEAPP_PROJECT_ID, id, params)
+      po, err = @phraseapp.locale_download(@phraseapp_id, id, params)
+      if err.nil?
+        File.write(File.join(@plugin_i18n_dir, "#{file_basename}.po"), po)
+      else
+        @log.error("An error occurred while downloading locale #{id}.po from PhraseApp.".red.bright)
+        @log.debug(err)
+        exit(1)
+      end
 
       params.file_format = 'gettext_mo'
-      mo = @phraseapp.locale_download(Const::PHRASEAPP_PROJECT_ID, id, params)
-
-      if po.last.nil? && mo.last.nil?
-        File.write(File.join(@plugin_i18n_dir, "#{file_basename}.po"), po)
+      mo, err = @phraseapp.locale_download(@phraseapp_id, id, params)
+      if err.nil?
         File.write(File.join(@plugin_i18n_dir, "#{file_basename}.mo"), mo)
       else
-        @log.error("An error occurred while downloading locale #{id} from PhraseApp.".red.bright)
-        @log.debug(po.last.nil? ? mo.last.errors : po.last.errors)
+        @log.error("An error occurred while downloading locale #{id}.mo from PhraseApp.".red.bright)
+        @log.debug(err)
         exit(1)
       end
     end
@@ -89,21 +99,21 @@ class WdPhraseApp
   def pull_pot
     @log.info("Downloading POT...".bright)
 
-    pot = @phraseapp.locale_download(Const::PHRASEAPP_PROJECT_ID, Const::PHRASEAPP_FALLBACK_LOCALE, OpenStruct.new({
+    pot, err = @phraseapp.locale_download(@phraseapp_id, @phraseapp_fallback_locale, OpenStruct.new({
       :encoding => 'UTF-8',
-      :fallback_locale_id => Const::PHRASEAPP_FALLBACK_LOCALE,
+      :fallback_locale_id => @phraseapp_fallback_locale,
       :file_format => 'gettext_template',
       :include_empty_translations => true,
       :include_translated_keys => true,
       :include_unverified_translations => true,
-      :tags => Const::PHRASEAPP_TAG,
+      :tags => @phraseapp_tag,
     }))
 
-    if pot.last.nil?
-      File.write(File.join(@plugin_i18n_dir, "#{Const::LOCALE_FILE_PREFIX}.pot"), pot)
+    if err.nil?
+      File.write(File.join(@plugin_i18n_dir, "#{@locale_file_prefix}.pot"), pot)
     else
       @log.error("An error occurred while downloading the POT from PhraseApp.".red.bright)
-      @log.debug(pot.last.errors)
+      @log.debug(err)
       exit(1)
     end
   end
@@ -111,15 +121,21 @@ class WdPhraseApp
   # Returns branch name for use on PhraseApp. Uses normalized local git branch, prepended by the plugin tag.
   def branch_name
     local_branch_name = Git.open(Dir.pwd, :log => @log).current_branch
-    "#{Const::PHRASEAPP_TAG}-#{local_branch_name.downcase.gsub(/(\W|_)/, '-')}"
+    "#{@phraseapp_tag}-#{local_branch_name.downcase.gsub(/(\W|_)/, '-')}"
   end
 
   # Creates branch on PhraseApp for the current git branch.
   def create_branch
     if HighLine.agree("This will create branch '#{branch_name}' on PhraseApp. Proceed? (y/n)".bright)
       begin
-        @phraseapp.branch_create(Const::PHRASEAPP_PROJECT_ID, OpenStruct.new({ :name => branch_name }))
-        @log.info('Success! Branch created.'.green.bright)
+        _branch, err = @phraseapp.branch_create(@phraseapp_id, OpenStruct.new({ :name => branch_name }))
+        if err.nil?
+          @log.info('Success! Branch created.'.green.bright)
+        else
+          @log.error("An error occurred while creating branch on PhraseApp.".red.bright)
+          @log.debug(err)
+          exit(1)
+        end
       rescue NoMethodError => e
         @log.warn('Request failed. Branch already exists.'.cyan.bright)
         @log.debug(e)
@@ -143,23 +159,25 @@ class WdPhraseApp
 
     File.rename(pot_new_path, pot_path)
 
-    upload = @phraseapp.upload_create(Const::PHRASEAPP_PROJECT_ID, OpenStruct.new({
+    upload, err = @phraseapp.upload_create(@phraseapp_id, OpenStruct.new({
       :autotranslate => false,
       :branch => branch_name,
       :file => pot_path,
       :file_encoding => 'UTF-8',
       :file_format => 'gettext_template',
-      :locale_id => Const::PHRASEAPP_FALLBACK_LOCALE,
-      :tags => Const::PHRASEAPP_TAG,
+      :locale_id => @phraseapp_fallback_locale,
+      :tags => @phraseapp_tag,
       :update_descriptions => false,
       :update_translations => true,
     }))
 
-    if upload.last.nil?
+    if err.nil?
       @log.info('Success! Uploaded to PhraseApp'.green.bright)
+      @log.info(upload.summary)
     else
       @log.error('An error occurred while uploading to PhraseApp.'.red.bright)
-      @log.debug(upload.last.errors)
+      @log.debug(err)
+      exit(1)
     end
   end
 end
