@@ -46,6 +46,7 @@ matrix:
     if: type != cron AND env(PHRASEAPP_PULL) = '1'
     language: ruby
     ruby: 2.5.3
+    before_install: skip
     install:
     - bundle install
     script:
@@ -57,6 +58,7 @@ matrix:
     if: type != cron AND branch = master OR type = pull_request
     language: ruby
     ruby: 2.5.3
+    before_install: skip
     install:
     - bundle install
     script:
