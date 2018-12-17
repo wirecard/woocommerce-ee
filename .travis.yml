@@ -54,7 +54,7 @@ matrix:
     
   - &phraseapp-check-if-in-sync
     stage: phraseapp-check-if-in-sync
-    if: type != cron AND branch = master
+    if: type != cron AND branch = master OR type = pull_request
     language: ruby
     ruby: 2.5.3
     install:
