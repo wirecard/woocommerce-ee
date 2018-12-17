@@ -1,5 +1,8 @@
+require 'rainbow/refinement'
 require_relative '.bin/phraseapp/wd-phraseapp.rb'
 require_relative '.bin/phraseapp/wd-project.rb'
+
+using Rainbow
 
 #-------------------------------------------------------------------------------
 # PhraseApp tasks
@@ -25,6 +28,7 @@ namespace :phraseapp do
   desc '[CI] Check if PhraseApp is up to date with the project'
   task :ci_check_if_in_sync do
     unless WdPhraseApp.new.is_in_sync?
+      puts 'PhraseApp is not in sync with the current commit. Exiting.'.red.bright
       exit(1)
     end
   end

@@ -62,9 +62,9 @@ class WdProject
     # keys are unique; we use the intersection to detect differences
     has_key_changes = (new_keys.size != existing_keys.size) || (new_keys & existing_keys != new_keys)
     if has_key_changes
-      @log.warn('Changes to translatable keys have been detected in your working tree.'.yellow.bright)
+      @log.warn('Changes to translatable keys have been detected in the working tree.'.yellow.bright)
     else
-      @log.info('No changes to translatable keys have been detected in your working tree.'.green.bright)
+      @log.info('No changes to translatable keys have been detected in the working tree.'.green.bright)
     end
 
     has_key_changes
