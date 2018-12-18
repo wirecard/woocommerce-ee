@@ -4,17 +4,11 @@ Feature: check_credit_card_3DS_functionality_happy_path
   And to see that transaction was successful
 
   Background:
-    Given I am on "Shop" page
-    When I click "First Product in the Product List"
-    And I am redirected to "Product" page
-    And I click "Add to cart"
-    And I am on "Cart" page
-    And I enter "5" in field "Quantity"
-    And I click "Update Cart"
-    And I click "Proceed to checkout"
-    And I am redirected to "Checkout" page
+    Given I prepare checkout
+    And I am on "Checkout" page
     And I fill fields with "Customer data"
     Then I see "Wirecard Credit Card"
+
 
   Scenario: try purchase_check
     Given I fill fields with "Valid Credit Card Data"

@@ -46,6 +46,7 @@
  */
 
 use Helper\Acceptance;
+use Helper\PhpBrowserAPITest;
 use Page\Base;
 use Page\Cart as CartPage;
 use Page\Checkout as CheckoutPage;
@@ -53,6 +54,7 @@ use Page\Product as ProductPage;
 use Page\Shop as ShopPage;
 use Page\OrderReceived as OrderReceivedPage;
 use Page\Verified as VerifiedPage;
+
 
 
 class AcceptanceTester extends \Codeception\Actor
@@ -176,6 +178,20 @@ class AcceptanceTester extends \Codeception\Actor
     public function iSee($text)
     {
         $this->see($text);
+    }
+
+    /**
+     * @Given I prepare checkout
+     * @since 1.4.4
+     */
+    public function iPrepareCheckout()
+    {
+        // Do choosing of product and adding it to the cart in PhpBrowser
+        $shopPage = new ShopPage($this);
+        $productPage = new ProductPage($this);
+        $this->prepareCheckout($shopPage, $productPage);
+        //sync sessions between PhpBrowser and WebDriver
+        $this->syncCookies();
     }
 }
 
