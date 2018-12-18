@@ -257,8 +257,8 @@ function wirecard_gateway_options_page() {
 	);
 	add_submenu_page(
 		'wirecardpayment',
-		__( 'heading_title_support', 'wirecard-woocommerce-extensions' ),
-		__( 'heading_title_support', 'wirecard-woocommerce-extensions' ),
+		__( 'heading_title_support', 'wirecard-woocommerce-extension' ),
+		__( 'heading_title_support', 'wirecard-woocommerce-extension' ),
 		'manage_options',
 		'wirecardsupport',
 		array( $admin, 'wirecard_payment_gateway_support' )
