@@ -75,16 +75,24 @@ class Checkout extends Base
     {
         $I = $this->tester;
         $data_field_values = $I->getDataFromDataFile('tests/_data/CustomerData.json');
+        $I->waitForElementVisible($this->getElement("First Name"));
         $I->fillField($this->getElement("First Name"), $data_field_values->first_name);
+        $I->waitForElementVisible($this->getElement("Last Name"));
         $I->fillField($this->getElement("Last Name"), $data_field_values->first_name);
+        $I->waitForElementVisible($this->getElement("Country"));
         $I->click($this->getElement("Country"));
         $I->fillField($this->getElement("Country entry"), $data_field_values->country);
+        $I->wait(2);
         $I->click($this->getElement("Country entry selected"));
-        $I->click($this->getElement("Street address"));
+        $I->waitForElementVisible($this->getElement("Street address"));
         $I->fillField($this->getElement("Street address"), $data_field_values->street_address);
+        $I->waitForElementVisible($this->getElement("Town/City"));
         $I->fillField($this->getElement("Town/City"), $data_field_values->town);
+        $I->waitForElementVisible($this->getElement("Postcode"));
         $I->fillField($this->getElement("Postcode"), $data_field_values->post_code);
+        $I->waitForElementVisible($this->getElement("Phone"));
         $I->fillField($this->getElement("Phone"), $data_field_values->phone);
+        $I->waitForElementVisible($this->getElement("Email address"));
         $I->fillField($this->getElement("Email address"), $data_field_values->email_address);
 
     }
@@ -97,6 +105,7 @@ class Checkout extends Base
         $I = $this->tester;
         $data_field_values = $I->getDataFromDataFile('tests/_data/CardData.json');
         $this->switchFrame();
+        $I->waitForElementVisible($this->getElement("Credit Card Last Name"));
         $I->fillField($this->getElement("Credit Card Last Name"), $data_field_values->last_name);
         $I->fillField($this->getElement("Credit Card Card number"), $data_field_values->card_number);
         $I->fillField($this->getElement("Credit Card CVV"), $data_field_values->cvv);

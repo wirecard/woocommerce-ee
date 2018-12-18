@@ -17,7 +17,6 @@ modules:
            'project': 'woocommerce-ee'
            'browserstack.user': '%BROWSERSTACK_USER%'
            'browserstack.key': '%BROWSERSTACK_ACCESS_KEY%'
-    - \Helper\Acceptance
-    - \Helper\PhpBrowserAPI:
+     - \Helper\Acceptance
+     - \Helper\PhpBrowserAPI:
         url: '%NGROK_URL%'
-

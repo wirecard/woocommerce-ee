@@ -104,16 +104,4 @@ class Base
     {
         ;
     }
-
-    /**
-     * Method waitBeforeClick
-     *
-     * @param string $object
-     *
-     * @since   1.4.4
-     */
-    public function waitBeforeClick($object)
-    {
-        ;
-    }
 }

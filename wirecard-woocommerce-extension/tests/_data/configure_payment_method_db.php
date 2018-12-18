@@ -1,42 +1,71 @@
 <?php
+/**
+ * Shop System Plugins - Terms of Use
+ *
+ * The plugins offered are provided free of charge by Wirecard AG and are explicitly not part
+ * of the Wirecard AG range of products and services.
+ *
+ * They have been tested and approved for full functionality in the standard configuration
+ * (status on delivery) of the corresponding shop system. They are under General Public
+ * License version 3 (GPLv3) and can be used, developed and passed on to third parties under
+ * the same terms.
+ *
+ * However, Wirecard AG does not provide any guarantee or accept any liability for any errors
+ * occurring when used in an enhanced, customized shop system configuration.
+ *
+ * Operation in an enhanced, customized configuration is at your own risk and requires a
+ * comprehensive test phase by the user of the plugin.
+ *
+ * Customers use the plugins at their own risk. Wirecard AG does not guarantee their full
+ * functionality neither does Wirecard AG assume liability for any disadvantages related to
+ * the use of the plugins. Additionally, Wirecard AG does not guarantee the full functionality
+ * for customized shop systems or installed plugins of other vendors of plugins within the same
+ * shop system.
+ *
+ * Customers are responsible for testing the plugin's functionality before starting productive
+ * operation.
+ *
+ * By installing the plugin into the shop system the customer agrees to these terms of use.
+ * Please do not use the plugin if you do not agree to these terms of use!
+ */
 
 // the path for different config files, each named as <paymentmethod>.json
 define('GATEWAY_CONFIG_PATH', 'gateway_configs');
 
 $gateway = getenv('GATEWAY');
 if (!$gateway) {
-	$gateway = 'API-TEST';
+    $gateway = 'API-TEST';
 }
 
 // the default config defines valid keys for each payment method and is prefilled with API-TEST setup by default
 $default_config = [
-	'creditcard' => [
-		'base_url' => 'https://api-test.wirecard.com',
-		'http_user' => '70000-APITEST-AP',
-		'http_pass' => 'qD2wzQ_hrc!8',
-		'threed_maid' => '508b8896-b37d-4614-845c-26bf8bf2c948',
-		'threed_secret' => 'dbc5a498-9a66-43b9-bf1d-a618dd399684',
-		'merchant_account_id' => '53f2895a-e4de-4e82-a813-0d87a10e55e6',
-		'secret' => 'dbc5a498-9a66-43b9-bf1d-a618dd399684',
-		'ssl_max_limit' => 100,
-		'three_d_min_limit' => 50,
+    'creditcard' => [
+        'base_url' => 'https://api-test.wirecard.com',
+        'http_user' => '70000-APITEST-AP',
+        'http_pass' => 'qD2wzQ_hrc!8',
+        'threed_maid' => '508b8896-b37d-4614-845c-26bf8bf2c948',
+        'threed_secret' => 'dbc5a498-9a66-43b9-bf1d-a618dd399684',
+        'merchant_account_id' => '53f2895a-e4de-4e82-a813-0d87a10e55e6',
+        'secret' => 'dbc5a498-9a66-43b9-bf1d-a618dd399684',
+        'ssl_max_limit' => 100,
+        'three_d_min_limit' => 50,
 
-		'enabled' => 'yes',
-		'title' => 'Wirecard Credit Card',
-		'credentials' => '',
-		'test_button' => 'Test',
-		'advanced' => '',
-		'payment_action' => 'pay',
-		'descriptor' => 'no',
-		'send_additional' => 'yes',
-		'cc_vault_enabled' => 'no',
-	],
+        'enabled' => 'yes',
+        'title' => 'Wirecard Credit Card',
+        'credentials' => '',
+        'test_button' => 'Test',
+        'advanced' => '',
+        'payment_action' => 'pay',
+        'descriptor' => 'no',
+        'send_additional' => 'yes',
+        'cc_vault_enabled' => 'no',
+    ],
 ];
 
 // main script - read payment method from command line, build the config and write it into database
 if (count($argv) < 2) {
-	$supported_payment_methods = implode("\n  ", array_keys($GLOBALS['default_config']));
-	echo <<<END_USAGE
+    $supported_payment_methods = implode("\n  ", array_keys($GLOBALS['default_config']));
+    echo <<<END_USAGE
 Usage: php configure_payment_method_db.php <paymentmethod>
 
 Supported payment methods:
@@ -44,41 +73,61 @@ Supported payment methods:
 
 
 END_USAGE;
-	exit(1);
+    exit(1);
 }
 $payment_method = trim($argv[1]);
 
 $db_config = build_config_by_payment_method($payment_method, $gateway);
 if (empty($db_config)) {
-	echo "Payment method $payment_method is not supported\n";
-	exit(1);
+    echo "Payment method $payment_method is not supported\n";
+    exit(1);
 }
+
 update_woocommerce_ee_db_config($db_config, $payment_method);
 
-function build_config_by_payment_method($payment_method, $gateway) {
-	if (!array_key_exists($payment_method, $GLOBALS['default_config'])) {
-		return null;
-	}
-	$config = $GLOBALS['default_config'][$payment_method];
+/**
+ * Method build_config_by_payment_method
+ * @param string $payment_method
+ * @param string $gateway
+ * @return array
+ *
+ * @since   1.4.4
+ */
 
-	$jsonFile = GATEWAY_CONFIG_PATH . DIRECTORY_SEPARATOR . $payment_method . ".json";
-	if (file_exists($jsonFile)) {
-		$jsonData = json_decode(file_get_contents($jsonFile));
-		if (!empty($jsonData) && !empty($jsonData->$gateway)) {
-			foreach (get_object_vars($jsonData->$gateway) as $key => $data) {
-				// only replace values from json if the key is defined in defaultDbValues
-				if (array_key_exists($key, $config)) {
-					$config[$key] = $data;
-				}
-			}
-		}
-	}
-	return $config;
+function build_config_by_payment_method($payment_method, $gateway)
+{
+    if (!array_key_exists($payment_method, $GLOBALS['default_config'])) {
+        return null;
+    }
+    $config = $GLOBALS['default_config'][$payment_method];
+
+    $jsonFile = GATEWAY_CONFIG_PATH . DIRECTORY_SEPARATOR . $payment_method . ".json";
+    if (file_exists($jsonFile)) {
+        $jsonData = json_decode(file_get_contents($jsonFile));
+        if (!empty($jsonData) && !empty($jsonData->$gateway)) {
+            foreach (get_object_vars($jsonData->$gateway) as $key => $data) {
+                // only replace values from json if the key is defined in defaultDbValues
+                if (array_key_exists($key, $config)) {
+                    $config[$key] = $data;
+                }
+            }
+        }
+    }
+    return $config;
 }
 
-function update_woocommerce_ee_db_config($db_config, $payment_method) {
-
-	//DB setup
+/**
+ * Method update_woocommerce_ee_db_config
+ * @param array $db_config
+ * @param string $payment_method
+ * @return boolean
+ *
+ * @since   1.4.4
+ */
+function update_woocommerce_ee_db_config($db_config, $payment_method)
+{
+    echo "Configuring " . $payment_method . " payment method in the shop system \n";
+    //DB setup
     $dbHost = 'mysql';
     $dbName = 'wordpress';
     $dbUser = 'root';

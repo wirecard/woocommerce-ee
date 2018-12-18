@@ -49,19 +49,4 @@ class Cart extends Base
         'Quantity' => "//*[@class='input-text qty text']",
         'Update Cart' => "//*[@name='update_cart']"
     );
-
-    /**
-     * Method waitBeforeClick
-     *
-     * @param string $object
-     *
-     * @since   1.4.4
-     */
-    public function waitBeforeClick($object)
-    {
-        $I = $this->tester;
-        if ($object == 'Proceed to checkout') {
-            $I->wait(2);
-        }
-    }
 }
