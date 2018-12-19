@@ -39,7 +39,6 @@ class WdPhraseApp
   # Returns an array of locale ids available on the PhraseApp project.
   def get_locale_ids()
     # PhraseApp has a limit of 100 items per page on this paginated endpoint.
-    # TODO(nickstamat): handle case of potentially more than 100 locales in total.
     locales, err = @phraseapp.locales_list(@phraseapp_id, 1, 100, OpenStruct.new)
     if err.nil?
       locales = locales.map { |l| l.name }
