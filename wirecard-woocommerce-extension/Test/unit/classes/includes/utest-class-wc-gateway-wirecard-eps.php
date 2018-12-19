@@ -51,10 +51,6 @@ class WC_Gateway_Wirecard_Eps_Utest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals( true, is_array( $this->payment->process_payment( 12 ) ) );
 	}
 
-	public function test_process_refund() {
-		$this->assertNotNull( $this->payment->process_refund( 12 ) );
-	}
-
 	public function test_payment_fields() {
 		$this->assertTrue( $this->payment->payment_fields() );
 	}

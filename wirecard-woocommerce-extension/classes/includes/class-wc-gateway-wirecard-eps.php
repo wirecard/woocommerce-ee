@@ -40,7 +40,6 @@ use Wirecard\PaymentSdk\Config\Config;
 use Wirecard\PaymentSdk\Config\PaymentMethodConfig;
 use Wirecard\PaymentSdk\Entity\BankAccount;
 use Wirecard\PaymentSdk\Transaction\EpsTransaction;
-use Wirecard\PaymentSdk\Transaction\SepaCreditTransferTransaction;
 
 /**
  * Class WC_Gateway_Wirecard_Eps
@@ -68,9 +67,7 @@ class WC_Gateway_Wirecard_Eps extends WC_Wirecard_Payment_Gateway {
 			'refunds',
 		);
 
-		$this->refund         = array( 'debit' );
 		$this->payment_action = 'pay';
-		$this->refund_action  = 'credit';
 
 		$this->init_form_fields();
 		$this->init_settings();
@@ -205,23 +202,6 @@ class WC_Gateway_Wirecard_Eps extends WC_Wirecard_Payment_Gateway {
 		}
 
 		return $this->execute_transaction( $this->transaction, $this->config, $this->payment_action, $order );
-	}
-
-	/**
-	 * Create transaction for refund
-	 *
-	 * @param int        $order_id
-	 * @param float|null $amount
-	 * @param string     $reason
-	 *
-	 * @return bool|SepaCreditTransferTransaction|WP_Error
-	 *
-	 * @throws Exception
-	 */
-	public function process_refund( $order_id, $amount = null, $reason = '' ) {
-		$sepa_payment = new WC_Gateway_Wirecard_Sepa_Credit_Transfer();
-
-		return $sepa_payment->process_refund( $order_id, $amount, $reason );
 	}
 
 	/**
