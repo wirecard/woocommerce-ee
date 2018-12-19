@@ -52,6 +52,8 @@ class WC_Gateway_Wirecard_Eps extends WC_Wirecard_Payment_Gateway {
 
 	/**
 	 * WC_Gateway_Wirecard_Eps constructor.
+	 *
+	 * @since 1.5.0
 	 */
 	public function __construct() {
 		$this->type               = 'eps';
@@ -84,6 +86,8 @@ class WC_Gateway_Wirecard_Eps extends WC_Wirecard_Payment_Gateway {
 
 	/**
 	 * Load form fields for configuration
+	 *
+	 * @since 1.5.0
 	 */
 	public function init_form_fields() {
 		$this->form_fields = array(
@@ -167,6 +171,8 @@ class WC_Gateway_Wirecard_Eps extends WC_Wirecard_Payment_Gateway {
 	 * Add payment fields to payment method
 	 *
 	 * @return bool
+	 *
+	 * @since 1.5.0
 	 */
 	public function payment_fields() {
 		$html = '<input type="hidden" name="eps_nonce" value="' . wp_create_nonce() . '" />
@@ -185,6 +191,8 @@ class WC_Gateway_Wirecard_Eps extends WC_Wirecard_Payment_Gateway {
 	 * @param int $order_id
 	 *
 	 * @return array
+	 *
+	 * @since 1.5.0
 	 */
 	public function process_payment( $order_id ) {
 		if ( ! wp_verify_nonce( $_POST['eps_nonce'] ) ) {
@@ -207,11 +215,13 @@ class WC_Gateway_Wirecard_Eps extends WC_Wirecard_Payment_Gateway {
 	/**
 	 * Create payment method configuration
 	 *
-	 * @param null $base_url
-	 * @param null $http_user
-	 * @param null $http_pass
+	 * @param string|null $base_url
+	 * @param string|null $http_user
+	 * @param string|null $http_pass
 	 *
 	 * @return Config
+	 *
+	 * @since 1.5.0
 	 */
 	public function create_payment_config( $base_url = null, $http_user = null, $http_pass = null ) {
 		if ( is_null( $base_url ) ) {
