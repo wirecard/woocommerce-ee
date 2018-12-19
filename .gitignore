@@ -1,3 +1,7 @@
 .idea/*
+.bin/*
+!.bin/phraseapp
+!.bin/*.*
 wirecard-woocommerce-extension/vendor/*
 composer.lock
+/wp-cli.phar

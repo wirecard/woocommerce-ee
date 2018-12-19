@@ -1,11 +1,11 @@
 <?php
 /**
  * Plugin Name: Wirecard WooCommerce Extension
- * Plugin URI: https://github.com/wirecard/woocommerce-ee
- * Description: Payment Gateway for WooCommerce
+ * Plugin URI: plugin_url_woocommerce
+ * Description: plugin_description_woocommerce
  * Version: 1.4.4
- * Author: Wirecard AG
- * Author URI: https://www.wirecard.com/
+ * Author: plugin_author
+ * Author URI: plugin_author_url
  * License: GPLv3
  * License URI: https://www.gnu.org/licenses/gpl-3.0.html
  * Text Domain: wirecard-woocommerce-extension
@@ -96,7 +96,7 @@ function wirecard_init_payment_gateway() {
 	register_post_status(
 		'wc-authorization',
 		array(
-			'label'                     => _x( 'order_status_authorized', 'Order status', 'wirecard-woocommerce-extension' ),
+			'label'                     => __( 'order_status_authorized', 'wirecard-woocommerce-extension' ),
 			'public'                    => true,
 			'exclude_from_search'       => false,
 			'show_in_admin_all_list'    => true,
@@ -161,7 +161,7 @@ function wirecard_get_payments() {
  * @since 1.0.0
  */
 function wirecard_wc_order_statuses( $order_statuses ) {
-	$order_statuses['wc-authorization'] = _x( 'order_status_authorized', 'Order status', 'wirecard-woocommerce-extension' );
+	$order_statuses['wc-authorization'] = __( 'order_status_authorized', 'wirecard-woocommerce-extension' );
 
 	return $order_statuses;
 }
@@ -257,8 +257,8 @@ function wirecard_gateway_options_page() {
 	);
 	add_submenu_page(
 		'wirecardpayment',
-		__( 'heading_title_support', 'wirecard-woocommerce-extensions' ),
-		__( 'heading_title_support', 'wirecard-woocommerce-extensions' ),
+		__( 'heading_title_support', 'wirecard-woocommerce-extension' ),
+		__( 'heading_title_support', 'wirecard-woocommerce-extension' ),
 		'manage_options',
 		'wirecardsupport',
 		array( $admin, 'wirecard_payment_gateway_support' )

@@ -209,7 +209,7 @@ class WC_Gateway_Wirecard_Sepa_Direct_Debit extends WC_Wirecard_Payment_Gateway 
 			'enable_bic'             => array(
 				'title'       => __( 'text_enable_disable', 'wirecard-woocommerce-extension' ),
 				'type'        => 'checkbox',
-				'description' => __( 'config_enable_bic_desc', 'woocommerce-gateway-wireced' ),
+				'description' => __( 'config_enable_bic_desc', 'wirecard-woocommerce-extension' ),
 				'label'       => __( 'config_enable_bic', 'wirecard-woocommerce-extension' ),
 				'default'     => 'no',
 			),
