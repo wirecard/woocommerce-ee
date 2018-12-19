@@ -48,13 +48,38 @@ class WdProject
     true
   end
 
+  # Parses a PO/POT file and returns an array of messages.
+  # Used instead of SimplePoParser.parse(path), due to the latter not properly closing the file on Windows.
+  def parse_file(path)
+    file = File.open(path, 'r')
+    if file.gets =~ /\r$/
+      # detected Windows line ending
+      file.close
+      file = File.open(path, 'rt')
+    else
+      file.rewind
+    end
+    messages = []
+    file.each_line("\n\n") do |block|
+      block.strip! # don't parse empty blocks
+      messages << parse_block(block) if block != ''
+    end
+    file.close
+    messages
+  end
+
+  # Parses a message block using SimplePoParser.
+  def parse_block(block)
+    SimplePoParser.parse_message(block)
+  end
+
   # Compares two POT files and returns true if they have any difference in keys, false otherwise.
   def has_key_changes?
-    pot = SimplePoParser.parse(@pot_path)
+    pot = parse_file(@pot_path)
     existing_keys = pot.map { |h| h[:msgid] }.select { |k| !k.empty? }.uniq
     existing_keys += pot.map { |h| h[:msgid_plural] }.select { |k| !k.nil? }.uniq
 
-    pot_new = SimplePoParser.parse(@pot_new_path)
+    pot_new = parse_file(@pot_new_path)
     new_keys = pot_new.map { |h| h[:msgid] }.select { |k| !k.empty? }.uniq
     new_keys += pot_new.map { |h| h[:msgid_plural] }.select { |k| !k.nil? }.uniq
 

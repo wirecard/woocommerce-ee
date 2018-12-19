@@ -157,7 +157,13 @@ class WdPhraseApp
       @log.fatal('Couldn\'t find the POT files.'.red.bright) && exit(1)
     end
 
-    File.rename(pot_new_path, pot_path)
+    begin
+      File.rename(pot_new_path, pot_path)
+    rescue => e
+      @log.error("Error while renaming file #{pot_new_path} to #{pot_path}.")
+      @log.debug(e.inspect)
+      exit(1)
+    end
 
     upload, err = @phraseapp.upload_create(@phraseapp_id, OpenStruct.new({
       :autotranslate => false,
