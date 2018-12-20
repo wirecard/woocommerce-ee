@@ -1,4 +1,4 @@
-Feature: check_credit_card_3DS_functionality_happy_path
+Feature: checkCreditCard3DSFunctionalityHappyPath
   As a guest  user
   I want to make a purchase with a Credit Card 3DS
   And to see that transaction was successful
@@ -10,7 +10,7 @@ Feature: check_credit_card_3DS_functionality_happy_path
     Then I see "Wirecard Credit Card"
 
 
-  Scenario: try purchase_check
+  Scenario: try purchaseCheck
     Given I fill fields with "Valid Credit Card Data"
     When I click "Place order"
     And I am redirected to "Verified" page

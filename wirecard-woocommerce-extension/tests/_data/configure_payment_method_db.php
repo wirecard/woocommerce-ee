@@ -38,7 +38,7 @@ if (!$gateway) {
 }
 
 // the default config defines valid keys for each payment method and is prefilled with API-TEST setup by default
-$default_config = [
+$defaultConfig = [
     'creditcard' => [
         'base_url' => 'https://api-test.wirecard.com',
         'http_user' => '70000-APITEST-AP',
@@ -64,44 +64,44 @@ $default_config = [
 
 // main script - read payment method from command line, build the config and write it into database
 if (count($argv) < 2) {
-    $supported_payment_methods = implode("\n  ", array_keys($GLOBALS['default_config']));
+    $supportedPaymentMethods = implode("\n  ", array_keys($GLOBALS['default_config']));
     echo <<<END_USAGE
 Usage: php configure_payment_method_db.php <paymentmethod>
 
 Supported payment methods:
-  $supported_payment_methods
+  $supportedPaymentMethods
 
 
 END_USAGE;
     exit(1);
 }
-$payment_method = trim($argv[1]);
+$paymentMethod = trim($argv[1]);
 
-$db_config = build_config_by_payment_method($payment_method, $gateway);
-if (empty($db_config)) {
-    echo "Payment method $payment_method is not supported\n";
+$dbConfig = buildConfigByPaymentMethod($paymentMethod, $gateway);
+if (empty($dbConfig)) {
+    echo "Payment method $paymentMethod is not supported\n";
     exit(1);
 }
 
-update_woocommerce_ee_db_config($db_config, $payment_method);
+updateWoocommerceEeDbConfig($dbConfig, $paymentMethod);
 
 /**
- * Method build_config_by_payment_method
- * @param string $payment_method
+ * Method buildConfigByPaymentMethod
+ * @param string $paymentMethod
  * @param string $gateway
  * @return array
  *
  * @since   1.4.4
  */
 
-function build_config_by_payment_method($payment_method, $gateway)
+function buildConfigByPaymentMethod($paymentMethod, $gateway)
 {
-    if (!array_key_exists($payment_method, $GLOBALS['default_config'])) {
+    if (!array_key_exists($paymentMethod, $GLOBALS['default_config'])) {
         return null;
     }
-    $config = $GLOBALS['default_config'][$payment_method];
+    $config = $GLOBALS['default_config'][$paymentMethod];
 
-    $jsonFile = GATEWAY_CONFIG_PATH . DIRECTORY_SEPARATOR . $payment_method . ".json";
+    $jsonFile = GATEWAY_CONFIG_PATH . DIRECTORY_SEPARATOR . $paymentMethod . ".json";
     if (file_exists($jsonFile)) {
         $jsonData = json_decode(file_get_contents($jsonFile));
         if (!empty($jsonData) && !empty($jsonData->$gateway)) {
@@ -124,7 +124,7 @@ function build_config_by_payment_method($payment_method, $gateway)
  *
  * @since   1.4.4
  */
-function update_woocommerce_ee_db_config($db_config, $payment_method)
+function updateWoocommerceEeDbConfig($db_config, $payment_method)
 {
     echo "Configuring " . $payment_method . " payment method in the shop system \n";
     //DB setup
