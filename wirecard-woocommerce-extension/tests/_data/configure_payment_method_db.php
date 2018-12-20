@@ -96,7 +96,7 @@ updateWoocommerceEeDbConfig($dbConfig, $paymentMethod);
 
 function buildConfigByPaymentMethod($paymentMethod, $gateway)
 {
-    if (!array_key_exists($paymentMethod, $GLOBALS['default_config'])) {
+    if (!array_key_exists($paymentMethod, $GLOBALS['defaultConfig'])) {
         return null;
     }
     $config = $GLOBALS['defaultConfig'][$paymentMethod];
