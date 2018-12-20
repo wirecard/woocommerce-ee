@@ -39,6 +39,7 @@ require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-gateway-wi
 use Wirecard\PaymentSdk\Config\Config;
 use Wirecard\PaymentSdk\Config\PaymentMethodConfig;
 use Wirecard\PaymentSdk\Entity\BankAccount;
+use Wirecard\PaymentSdk\Entity\Device;
 use Wirecard\PaymentSdk\Transaction\EpsTransaction;
 
 /**
@@ -80,6 +81,7 @@ class WC_Gateway_Wirecard_Eps extends WC_Wirecard_Payment_Gateway {
 		$this->additional_helper = new Additional_Information();
 
 		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
+		add_action( 'wp_enqueue_scripts', array( $this, 'payment_scripts' ), 999 );
 
 		parent::add_payment_gateway_actions();
 	}
@@ -168,6 +170,16 @@ class WC_Gateway_Wirecard_Eps extends WC_Wirecard_Payment_Gateway {
 	}
 
 	/**
+	 * Load basic scripts
+	 *
+	 * @since 1.5.0
+	 */
+	public function payment_scripts() {
+		$this->fps_session_id = $this->generate_fps_session_id( 'merchant_account_id' );
+		wp_register_script( 'device_fingerprint_js', 'https://h.wirecard.com/fp/tags.js?org_id=6xxznhva&session_id=' . $this->fps_session_id, array(), null, true );
+	}
+
+	/**
 	 * Add payment fields to payment method
 	 *
 	 * @return bool
@@ -175,7 +187,19 @@ class WC_Gateway_Wirecard_Eps extends WC_Wirecard_Payment_Gateway {
 	 * @since 1.5.0
 	 */
 	public function payment_fields() {
-		$html = '<input type="hidden" name="eps_nonce" value="' . wp_create_nonce() . '" />
+
+		$html = '';
+
+		if ( $this->get_option( 'send_additional' ) == 'yes' ) {
+			wp_enqueue_script( 'device_fingerprint_js' );
+			$html .= '<noscript>
+				<iframe style="width: 100px; height: 100px; border: 0; position: absolute; top: -5000px;"
+                    src="https://h.wirecard.com/tags?org_id=6xxznhva&session_id=' . $this->fps_session_id . '"></iframe>
+				</noscript>';
+			$html .= '<input type="hidden" value="' . htmlspecialchars( $this->fps_session_id ) . '" id="input-fingerprint-session" name="fingerprint-session"/>' . "\n";
+		}
+
+		$html .= '<input type="hidden" name="eps_nonce" value="' . wp_create_nonce() . '" />
 			<p class="form-row form-row-wide">
 				<label for="eps_bic">' . __( 'bic', 'wirecard-woocommerce-extension' ) . '</label>
 				<input id="eps_bic" class="input-text wc-eps-input" type="text" name="eps_bank_bic">
@@ -207,6 +231,12 @@ class WC_Gateway_Wirecard_Eps extends WC_Wirecard_Payment_Gateway {
 			$bank_account = new BankAccount();
 			$bank_account->setBic( sanitize_text_field( $_POST['eps_bank_bic'] ) );
 			$this->transaction->setBankAccount( $bank_account );
+		}
+
+		if ( $this->get_option( 'send_additional' ) == 'yes' ) {
+			$device = new Device();
+			$device->setFingerprint( $_POST['fingerprint-session'] );
+			$this->transaction->setDevice( $device );
 		}
 
 		return $this->execute_transaction( $this->transaction, $this->config, $this->payment_action, $order );
