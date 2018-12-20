@@ -64,7 +64,7 @@ $defaultConfig = [
 
 // main script - read payment method from command line, build the config and write it into database
 if (count($argv) < 2) {
-    $supportedPaymentMethods = implode("\n  ", array_keys($GLOBALS['default_config']));
+    $supportedPaymentMethods = implode("\n  ", array_keys($GLOBALS['defaultConfig']));
     echo <<<END_USAGE
 Usage: php configure_payment_method_db.php <paymentmethod>
 
@@ -99,7 +99,7 @@ function buildConfigByPaymentMethod($paymentMethod, $gateway)
     if (!array_key_exists($paymentMethod, $GLOBALS['default_config'])) {
         return null;
     }
-    $config = $GLOBALS['default_config'][$paymentMethod];
+    $config = $GLOBALS['defaultConfig'][$paymentMethod];
 
     $jsonFile = GATEWAY_CONFIG_PATH . DIRECTORY_SEPARATOR . $paymentMethod . ".json";
     if (file_exists($jsonFile)) {
