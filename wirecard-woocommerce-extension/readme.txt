@@ -2,9 +2,9 @@
 Contributors: Wirecard AG
 Tags: Wirecard, Credit Card, Alipay Cross-border, Guaranteed Invoice by Wirecard / Ratepay, iDEAL, eps-Überweisung, Masterpass, PayPal, Payment in Advance, Payment on Invoice, SEPA, Sofort., UnionPay International, e-commerce, payment, checkout, payment-methods, One-click-checkout, WooCommerce, PSP, payment-service
 Requires at least: 4.9
-Tested up to: 4.9.8
+Tested up to: 5.0.2
 Requires PHP: 5.6
-Stable tag: 1.4.4
+Stable tag: 1.5.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -68,7 +68,5 @@ Our general Terms of Use can be found on [Github](https://github.com/wirecard/wo
 4. Wirecard Transaction Detailview for Post-Processing Operations
 
 == Changelog ==
-- Update SEPA Direct Debit mandate loading
-- Update credit card UI error handling
-- Add checkbox for terms and conditions when paying with Guaranteed Invoice by Wirecard
-- Update LiveZilla live chat url
+- Update translation files
+- Add eps-Überweisung payment method

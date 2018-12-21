@@ -1,5 +1,15 @@
 [
 {
+    "release": "1.5.0",
+    "shopsystem": "WooCommerce",
+    "tested": "3.5.2",
+    "compatibility": "3.3.4",
+    "changelog": [
+      "Update translation files",
+      "Add eps-Überweisung payment method"
+    ]
+}
+{
     "release": "1.4.3",
     "shopsystem": "WooCommerce",
     "tested": "3.5.1",
