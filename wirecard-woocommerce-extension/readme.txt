@@ -1,6 +1,6 @@
 === Wirecard WooCommerce Extension ===
 Contributors: Wirecard AG
-Tags: Wirecard, Credit Card, Alipay Cross-border, Guaranteed Invoice by Wirecard / Ratepay, iDEAL, Masterpass, PayPal, Payment in Advance, Payment on Invoice, SEPA, Sofort., UnionPay International, e-commerce, payment, checkout, payment-methods, One-click-checkout, WooCommerce, PSP, payment-service
+Tags: Wirecard, Credit Card, Alipay Cross-border, Guaranteed Invoice by Wirecard / Ratepay, iDEAL, eps-Überweisung, Masterpass, PayPal, Payment in Advance, Payment on Invoice, SEPA, Sofort., UnionPay International, e-commerce, payment, checkout, payment-methods, One-click-checkout, WooCommerce, PSP, payment-service
 Requires at least: 4.9
 Tested up to: 4.9.8
 Requires PHP: 5.6
@@ -17,6 +17,7 @@ Wirecard WooCommerce Extension can be integrated into your shop system fast and 
 - Credit and debit cards (American Express, Diners Club, Discover, Maestro, Mastercard, Visa and many more)
 - Alipay Cross-border
 - iDEAL
+- eps-Überweisung
 - Purchase on account
 - Purchase on account with guaranteed payment via Wirecard
 - Masterpass

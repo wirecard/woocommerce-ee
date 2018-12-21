@@ -145,6 +145,15 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	protected $config;
 
 	/**
+	 * Fraud protection fingerprint id
+	 *
+	 * @since 1.5.0
+	 * @access protected
+	 * @var string
+	 */
+	protected $fps_session_id;
+
+	/**
 	 * Add global wirecard payment gateway actions
 	 *
 	 * @since 1.0.0
@@ -732,5 +741,18 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 		if ( ! $order->is_paid() && ( 'authorization' != $order->get_status() ) && ( 'processing' != $order->get_status() ) ) {
 			$order->update_status( 'on-hold', __( 'payment_awaiting', 'wirecard-woocommerce-extension' ) );
 		}
+	}
+
+	/**
+	 * Generates the fraud protection fingerprint id
+	 *
+	 * @param string $maid_option_name the key to access the merchant account id, 'merchant_account_id' in most payment methods
+	 * @return string the generated fingerprint id for this session
+	 * @since 1.5.0
+	 */
+	public function generate_fps_session_id( $maid_option_name ) {
+		$maid   = $this->get_option( $maid_option_name );
+		$random = md5( uniqId() . '_' . microtime() );
+		return $maid . '_' . $random;
 	}
 }
