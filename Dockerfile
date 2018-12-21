@@ -12,6 +12,7 @@ ARG STOREFRONT_VERSION=0
 
 ENV WOOCOMMERCE_VERSION $WOOCOMMERCE_VERSION
 ENV STOREFRONT_VERSION $STOREFRONT_VERSION
+ENV GATEWAY $GATEWAY
 
 RUN apt-get install -y --no-install-recommends unzip wget
 
@@ -37,6 +38,8 @@ RUN if [ "$WOOCOMMERCE_VERSION" != "0" ]; then \
 
 #get woocommerce-wirecard-ee package into the docker image
 ADD woocommerce-wirecard-ee.zip /tmp/temp.zip
+
+ADD wirecard-woocommerce-extension/tests/_data/configure_creditcard_paymentmethod.php /usr/src/wordpress/configure_creditcard_paymentmethod.php
 
 RUN cd /usr/src/wordpress/wp-content/plugins \
     && unzip /tmp/temp.zip \

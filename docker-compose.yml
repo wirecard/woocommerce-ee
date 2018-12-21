@@ -1,8 +1,8 @@
 webserver:
-   container_name: woo_commerce
+   container_name: "${WOOCOMMERCE_CONTAINER_NAME}"
    build: .
    environment:
-    WORDPRESS_DB_PASSWORD: example
+    WORDPRESS_DB_PASSWORD: "${WOOCOMMERCE_DB_PASSWORD}"
    links:
     - dbserver:mysql
    ports:
@@ -12,7 +12,6 @@ dbserver:
    container_name: woo_mariadb
    image: mariadb
    environment:
-    MYSQL_ROOT_PASSWORD: example
+    MYSQL_ROOT_PASSWORD: "${WOOCOMMERCE_DB_PASSWORD}"
    ports:
-    - 3307:3306
-    
+    - 3307:${WOOCOMMERCE_DB_PORT}

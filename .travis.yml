@@ -27,6 +27,7 @@ matrix:
     before_install:
     - travis_retry composer self-update
     install:
+    - bash .bin/generate-release-package.sh
     - travis_retry composer require --dev $COMPOSER_ARGS codeception/codeception
     - travis_retry composer install $COMPOSER_ARGS
     - composer show
@@ -79,7 +80,7 @@ install:
 
 script:
   - composer test-coverage
-  - $PHPCS_DIR/bin/phpcs -p --ignore=*/Test/*,*/vendor/*,*/.bin/* . --standard=WordPress-Core
+  - $PHPCS_DIR/bin/phpcs -p --ignore=*/Test/*,*/vendor/*,*/.bin/*,*/tests/* . --standard=WordPress-Core
 
 after_script:
   - travis_retry composer upload-coverage
