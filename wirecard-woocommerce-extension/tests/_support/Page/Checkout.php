@@ -31,6 +31,8 @@
 
 namespace Page;
 
+use \Codeception\Util\Locator;
+
 class Checkout extends Base
 {
     // include url of current page
@@ -49,12 +51,19 @@ class Checkout extends Base
         'Last Name' => "//*[@id='billing_last_name']",
         'Country' => "//*[@id='select2-billing_country-container']",
         'Country entry' => "//*[@class='select2-search__field']",
+        'Country entry selected' => "//*[@class='select2-results']",
         'Street address' => "//*[@id='billing_address_1']",
         'Town/City' => "//*[@id='billing_city']",
         'Postcode' => "//*[@id='billing_postcode']",
         'Phone' => "//*[@id='billing_phone']",
         'Email address' => "//*[@id='billing_email']",
         'Place order' => "//*[@id='place_order']",
+        'Credit Card First Name' => "//*[@id='first_name']",
+        'Credit Card Last Name' => "//*[@id='last_name']",
+        'Credit Card Card number' => "//*[@id='account_number']",
+        'Credit Card CVV' => "//*[@id='card_security_code']",
+        'Credit Card Valid until month' => "//*[@id='expiration_month_list']",
+        'Credit Card Valid until year' => "//*[@id='expiration_year_list']",
     );
 
     /**
@@ -65,25 +74,66 @@ class Checkout extends Base
     public function fillBillingDetails()
     {
         $I = $this->tester;
-        $data_field_values = $I->getCustomerDataFromDataFile();
+        $data_field_values = $I->getDataFromDataFile('tests/_data/CustomerData.json');
+        $I->waitForElementVisible($this->getElement("First Name"));
         $I->fillField($this->getElement("First Name"), $data_field_values->first_name);
+        //Explicit wait times to avoid flakiness
+        $I->wait(2);
+        $I->waitForElementVisible($this->getElement("Last Name"));
         $I->fillField($this->getElement("Last Name"), $data_field_values->first_name);
+        $I->wait(2);
+        $I->waitForElementVisible($this->getElement("Country"));
         $I->click($this->getElement("Country"));
         $I->fillField($this->getElement("Country entry"), $data_field_values->country);
-        $I->click($this->getElement("Street address"));
+        $I->wait(2);
+        $I->click($this->getElement("Country entry selected"));
+        $I->wait(2);
+        $I->waitForElementVisible($this->getElement("Street address"));
         $I->fillField($this->getElement("Street address"), $data_field_values->street_address);
+        $I->wait(2);
+        $I->waitForElementVisible($this->getElement("Town/City"));
         $I->fillField($this->getElement("Town/City"), $data_field_values->town);
+        $I->wait(2);
+        $I->waitForElementVisible($this->getElement("Postcode"));
         $I->fillField($this->getElement("Postcode"), $data_field_values->post_code);
+        $I->wait(2);
+        $I->waitForElementVisible($this->getElement("Phone"));
         $I->fillField($this->getElement("Phone"), $data_field_values->phone);
+        $I->wait(2);
+        $I->waitForElementVisible($this->getElement("Email address"));
         $I->fillField($this->getElement("Email address"), $data_field_values->email_address);
 
     }
-
     /**
      * Method fillCreditCardDetails
+     * @since   1.4.4
      */
     public function fillCreditCardDetails()
     {
-        ;
+        $I = $this->tester;
+        $data_field_values = $I->getDataFromDataFile('tests/_data/CardData.json');
+        $this->switchFrame();
+        $I->waitForElementVisible($this->getElement("Credit Card Last Name"));
+        $I->fillField($this->getElement("Credit Card Last Name"), $data_field_values->last_name);
+        $I->fillField($this->getElement("Credit Card Card number"), $data_field_values->card_number);
+        $I->fillField($this->getElement("Credit Card CVV"), $data_field_values->cvv);
+        $I->selectOption($this->getElement("Credit Card Valid until month"), $data_field_values->valid_until_month);
+        $I->selectOption($this->getElement("Credit Card Valid until year"), $data_field_values->valid_until_year);
+        $I->switchToIFrame();
+    }
+
+    /**
+     * Method switchFrame
+     * @since   1.4.4
+     */
+    public function switchFrame()
+    {
+        // Switch to Credit Card UI frame
+        $I = $this->tester;
+        //wait for Javascript to load iframe and it's contents
+        $I->wait(2);
+        //get wirecard seemless frame name
+        $wirecard_frame_name = $I->executeJS('return document.querySelector(".wirecard-seamless-frame").getAttribute("name")');
+        $I->switchToIFrame("$wirecard_frame_name");
     }
 }

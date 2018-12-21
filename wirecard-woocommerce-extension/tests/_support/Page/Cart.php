@@ -46,5 +46,7 @@ class Cart extends Base
      */
     public $elements = array(
         'Proceed to checkout' => "//*[@class='checkout-button button alt wc-forward']",
+        'Quantity' => "//*[@class='input-text qty text']",
+        'Update Cart' => "//*[@name='update_cart']"
     );
 }
