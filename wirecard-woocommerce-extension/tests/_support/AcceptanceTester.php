@@ -46,11 +46,15 @@
  */
 
 use Helper\Acceptance;
+use Helper\PhpBrowserAPITest;
 use Page\Base;
 use Page\Cart as CartPage;
 use Page\Checkout as CheckoutPage;
 use Page\Product as ProductPage;
 use Page\Shop as ShopPage;
+use Page\OrderReceived as OrderReceivedPage;
+use Page\Verified as VerifiedPage;
+
 
 
 class AcceptanceTester extends \Codeception\Actor
@@ -85,6 +89,14 @@ class AcceptanceTester extends \Codeception\Actor
                 break;
             case "Shop":
                 $page = new ShopPage($this);
+                break;
+            case "Verified":
+                $this->wait(5);
+                $page = new VerifiedPage($this);
+                break;
+            case "Order Received":
+                $this->wait(7);
+                $page = new OrderReceivedPage($this);
                 break;
             default:
                 $page = null;
@@ -124,6 +136,7 @@ class AcceptanceTester extends \Codeception\Actor
     public function iClick($object)
     {
         $this->waitForElementVisible($this->getPageElement($object));
+        $this->waitForElementClickable($this->getPageElement($object));
         $this->click($this->getPageElement($object));
     }
 
@@ -149,6 +162,16 @@ class AcceptanceTester extends \Codeception\Actor
     }
 
     /**
+     * @When I enter :fieldValue in field :fieldID
+     * @since 1.4.4
+     */
+    public function iEnterInField($fieldValue, $fieldID)
+    {
+        $this->waitForElementVisible($this->getPageElement($fieldID));
+        $this->fillField($this->getPageElement($fieldID), $fieldValue);
+    }
+
+    /**
      * @Then I see :text
      * @since 1.4.4
      */
@@ -156,4 +179,19 @@ class AcceptanceTester extends \Codeception\Actor
     {
         $this->see($text);
     }
+
+    /**
+     * @Given I prepare checkout
+     * @since 1.4.4
+     */
+    public function iPrepareCheckout()
+    {
+        // Do choosing of product and adding it to the cart in PhpBrowser
+        $shopPage = new ShopPage($this);
+        $productPage = new ProductPage($this);
+        $this->prepareCheckout($shopPage, $productPage);
+        //sync sessions between PhpBrowser and WebDriver
+        $this->syncCookies();
+    }
 }
+

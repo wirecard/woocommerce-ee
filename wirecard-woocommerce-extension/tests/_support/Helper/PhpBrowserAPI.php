@@ -33,45 +33,64 @@ namespace Helper;
 
 // here you can define custom actions
 // all public methods declared in helper class will be available in $I
+//
 
-use Codeception\Lib\Generator\PageObject;
+use Codeception\Module\PhpBrowser;
 
-class Acceptance extends \Codeception\Module
+class PhpBrowserAPI extends \Codeception\Module
 {
 
     /**
-     * Method getDataFromDataFile
-     * @param string $fileName
-     * @return string
+     * @var PhpBrowser
+     * @since 1.4.4
+     */
+    private $phpBrowser;
+
+    public function _initialize()
+    {
+        // we initialize PhpBrowser here
+        $this->phpBrowser = new PhpBrowser($this->moduleContainer, [
+            'url' => $this->config['url'],
+            'auth' => [$this->config['user'], $this->config['password']]
+        ]);
+        $this->phpBrowser->_initialize();
+    }
+
+    /**
+     * Method prepareCheckout
+     *
+     * @param PageObject $shopPage
+     * @param PageObject $productPage
      *
      * @since   1.4.4
      */
-    public static function getDataFromDataFile($fileName)
+    public function prepareCheckout($shopPage, $productPage)
     {
-        // decode the JSON feed
-        $json_data = json_decode(file_get_contents($fileName));
-        if (!$json_data) {
-            $error = error_get_last();
-            echo "Failed to get customer data from tests/_data/CustomerData.json. Error was: " . $error['message'];
-        } else {
-            return $json_data;
+        //go to shop page
+        $this->phpBrowser->amOnPage($shopPage->getURL());
+        //chose a product and open product page
+        $this->phpBrowser->click($shopPage->getElement("First Product in the Product List"));
+        //choose a product to the cart 5 times
+        for ($i = 0; $i <= 4; $i++) {
+            $this->phpBrowser->click($productPage->getElement("Add to cart"));
         }
     }
 
     /**
-     * Method fillFieldsWithData
-     *
-     * @param string $dataType
-     * @param PageObject $page
-     *
+     * Method syncCookies
      * @since   1.4.4
      */
-    public static function fillFieldsWithData($dataType, $page)
+    public function syncCookies()
     {
-        if (strpos($dataType, 'Customer') !== false) {
-            $page->fillBillingDetails();
-        } elseif (strpos($dataType, 'Credit Card') !== false) {
-            $page->fillCreditCardDetails();
+        // open page in PhpBrowser
+        $this->phpBrowser->amOnPage('/');
+        $webdriver = $this->getModule('WebDriver');
+        // open page in WebDriver
+        $webdriver->amOnPage('/');
+        $cookieJar = $this->phpBrowser->client->getCookieJar();
+        foreach ($cookieJar->all() as $cookie) {
+            // copy cookies from PhpBrowser to WebDriver
+            $webdriver->setCookie($cookie->getName(), $cookie->getValue());
         }
     }
 }
