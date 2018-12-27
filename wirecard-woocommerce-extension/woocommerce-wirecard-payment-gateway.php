@@ -1,11 +1,11 @@
 <?php
 /**
  * Plugin Name: Wirecard WooCommerce Extension
- * Plugin URI: plugin_url_woocommerce
- * Description: plugin_description_woocommerce
+ * Plugin URI: https://github.com/wirecard/woocommerce-ee
+ * Description: Payment Gateway for WooCommerce
  * Version: 1.5.0
- * Author: plugin_author
- * Author URI: plugin_author_url
+ * Author: Wirecard AG
+ * Author URI: https://www.wirecard.com/
  * License: GPLv3
  * License URI: https://www.gnu.org/licenses/gpl-3.0.html
  * Text Domain: wirecard-woocommerce-extension
