@@ -193,8 +193,10 @@ $travisConfig = Yaml::parseFile(TRAVIS_FILE);
 $travisMatrix = $travisConfig['matrix'];
 $phpVersions = [];
 foreach  ($travisMatrix["include"] as $version){
-    if (!(in_array($version["php"], $phpVersions)) and isset($version["php"])) {
-        array_push($phpVersions, $version["php"]);
+    if (!empty($version["php"])) {
+        if (!in_array($version["php"], $phpVersions)) {
+            array_push($phpVersions, $version["php"]);
+        }
     }
 }
 
