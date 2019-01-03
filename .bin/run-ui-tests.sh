@@ -33,4 +33,4 @@ done
 bash .bin/start-shopsystem.sh
 
 #run tests
-cd wirecard-woocommerce-extension && vendor/bin/codecept run acceptance --html
+cd wirecard-woocommerce-extension && vendor/bin/codecept run acceptance --html --xml

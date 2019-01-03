@@ -25,6 +25,7 @@ fi
 
 #copy report files
 cp wirecard-woocommerce-extension/tests/_output/*.html ${DATE_FOLDER}
+cp wirecard-woocommerce-extension/tests/_output/*.xml ${DATE_FOLDER}
 if [[ $1 == 'fail' ]]; then
     cp wirecard-woocommerce-extension/tests/_output/*.fail.png ${DATE_FOLDER}
 fi
