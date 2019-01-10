@@ -69,7 +69,7 @@ function wirecard_load_locale_fallback( $override, $domain, $mofile ) {
 	if ( 'wirecard-woocommerce-extension' === $domain ) {
 		$locale          = get_locale();
 		$fallback_locale = WIRECARD_EXTENSION_LOCALE_FALLBACK;
-		
+
 		if ( ! is_readable( $mofile ) ) {
 			$mofile = str_replace( $locale . '.mo', $fallback_locale . '.mo', $mofile );
 
