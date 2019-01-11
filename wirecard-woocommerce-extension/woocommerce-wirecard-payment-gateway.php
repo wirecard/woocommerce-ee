@@ -66,27 +66,23 @@ add_action( 'override_load_textdomain', 'wirecard_load_locale_fallback', 10, 3 )
  * @since 1.5.1
  */
 function wirecard_load_locale_fallback( $override, $domain, $mofile ) {
-	if ( 'wirecard-woocommerce-extension' === $domain ) {
-		$locale          = get_locale();
-		$fallback_locale = WIRECARD_EXTENSION_LOCALE_FALLBACK;
-
-		if ( ! is_readable( $mofile ) ) {
-			$mofile = str_replace( $locale . '.mo', $fallback_locale . '.mo', $mofile );
-
-			if ( ! is_readable( $mofile ) ) {
-				// Fallback mofile not found
-				return false;
-			} else {
-				// Load fallback mofile
-				load_textdomain( $domain, $mofile );
-
-				// Return true to skip the loading of the originally requested file
-				return true;
-			}
-		}
+	if ( 'wirecard-woocommerce-extension' !== $domain || is_readable( $mofile ) ) {
+		return false;
 	}
 
-	return false;
+	$locale          = get_locale();
+	$fallback_locale = WIRECARD_EXTENSION_LOCALE_FALLBACK;
+
+	$fallback_mofile = str_replace( $locale . '.mo', $fallback_locale . '.mo', $mofile );
+
+	if ( ! is_readable( $fallback_mofile ) ) {
+		return false;
+	}
+
+	load_textdomain( $domain, $fallback_mofile );
+
+	// Return true to skip loading of the originally requested file.
+	return true;
 }
 
 /**
