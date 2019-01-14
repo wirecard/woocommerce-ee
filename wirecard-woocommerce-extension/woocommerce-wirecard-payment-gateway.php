@@ -49,7 +49,45 @@ define( 'WIRECARD_EXTENSION_NAME', 'Wirecard WooCommerce Extension' );
 define( 'WIRECARD_EXTENSION_VERSION', '1.5.0' );
 define( 'WIRECARD_EXTENSION_BASEDIR', plugin_dir_path( __FILE__ ) );
 define( 'WIRECARD_EXTENSION_URL', plugin_dir_url( __FILE__ ) );
+define( 'WIRECARD_EXTENSION_LOCALE_FALLBACK', 'en_US' );
 
+/**
+ * Action that is triggered when a textdomain is loaded.
+ */
+add_action( 'override_load_textdomain', 'wirecard_load_locale_fallback', 10, 3 );
+
+/**
+ * Loads a predefined fallback locale in case the plugin does not contain translations for the current one.
+ *
+ * @param bool $override
+ * @param string $domain
+ * @param string $mofile
+ * @return bool
+ * @since 1.5.1
+ */
+function wirecard_load_locale_fallback( $override, $domain, $mofile ) {
+	if ( 'wirecard-woocommerce-extension' !== $domain || is_readable( $mofile ) ) {
+		return false;
+	}
+
+	$locale          = get_locale();
+	$fallback_locale = WIRECARD_EXTENSION_LOCALE_FALLBACK;
+
+	$fallback_mofile = str_replace( $locale . '.mo', $fallback_locale . '.mo', $mofile );
+
+	if ( ! is_readable( $fallback_mofile ) ) {
+		return false;
+	}
+
+	load_textdomain( $domain, $fallback_mofile );
+
+	// Return true to skip loading of the originally requested file.
+	return true;
+}
+
+/**
+ * Load textdomain after the above callback is set.
+ */
 load_plugin_textdomain(
 	'wirecard-woocommerce-extension',
 	false,
