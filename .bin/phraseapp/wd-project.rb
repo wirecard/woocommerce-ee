@@ -85,8 +85,8 @@ class WdProject
     new_keys_plural = pot_new.map { |h| h[:msgid_plural] }.select { |k| !k.nil? }
     new_keys = (new_keys_singular + new_keys_plural).uniq
 
-    @log.info("Number of keys in the existing POT: #{existing_keys.length}")
-    @log.info("Number of keys in the new POT: #{new_keys.length}")
+    @log.info("Number of keys in the currently existing POT: #{existing_keys.length}")
+    @log.info("Number of keys in the newly generated POT: #{new_keys.length}")
 
     @log.info("Removed keys: #{existing_keys - new_keys}")
     @log.info("Added keys: #{new_keys - existing_keys}")
