@@ -76,12 +76,14 @@ class WdProject
   # Compares two POT files and returns true if they have any difference in keys, false otherwise.
   def has_key_changes?
     pot = parse_file(@pot_path)
-    existing_keys = pot.map { |h| h[:msgid] }.select { |k| !k.empty? }.uniq
-    existing_keys += pot.map { |h| h[:msgid_plural] }.select { |k| !k.nil? }.uniq
+    existing_keys_singular = pot.map { |h| h[:msgid] }.select { |k| !k.empty? }
+    existing_keys_plural = pot.map { |h| h[:msgid_plural] }.select { |k| !k.nil? }
+    existing_keys = (existing_keys_singular + existing_keys_plural).uniq
 
     pot_new = parse_file(@pot_new_path)
-    new_keys = pot_new.map { |h| h[:msgid] }.select { |k| !k.empty? }.uniq
-    new_keys += pot_new.map { |h| h[:msgid_plural] }.select { |k| !k.nil? }.uniq
+    new_keys_singular = pot_new.map { |h| h[:msgid] }.select { |k| !k.empty? }
+    new_keys_plural = pot_new.map { |h| h[:msgid_plural] }.select { |k| !k.nil? }
+    new_keys = (new_keys_singular + new_keys_plural).uniq
 
     @log.info("Number of keys in the existing POT: #{existing_keys.length}")
     @log.info("Number of keys in the new POT: #{new_keys.length}")
