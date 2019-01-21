@@ -165,7 +165,7 @@ class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 			'shopping_basket'     => array(
 				'title'       => __( 'text_enable_disable', 'wirecard-woocommerce-extension' ),
 				'type'        => 'checkbox',
-				'description' => __( 'config_shopping_basket_desc', 'woocommerce-gatewa-wirecard' ),
+				'description' => __( 'config_shopping_basket_desc', 'wirecard-woocommerce-extension' ),
 				'label'       => __( 'config_shopping_basket', 'wirecard-woocommerce-extension' ),
 				'default'     => 'no',
 			),
