@@ -1,5 +1,14 @@
 [
 {
+    "release": "1.5.1",
+    "shopsystem": "WooCommerce",
+    "tested": "3.5.2",
+    "compatibility": "3.3.4",
+    "changelog": [
+      "Update translation files"
+    ]
+},
+{
     "release": "1.5.0",
     "shopsystem": "WooCommerce",
     "tested": "3.5.2",
