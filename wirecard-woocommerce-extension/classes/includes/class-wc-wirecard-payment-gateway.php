@@ -505,6 +505,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 			case 'capture-authorization':
 			case 'debit':
 			case 'purchase':
+			case 'deposit':
 				$state = 'processing';
 				break;
 			case 'void-authorization':
