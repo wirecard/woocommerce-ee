@@ -8,14 +8,12 @@ msgstr ""
 "X-Generator: PhraseApp (phraseapp.com)\n"
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:61
-#, fuzzy
 msgid "alipay_crossborder"
 msgstr "Alipay Cross-border"
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:62
-#, fuzzy
 msgid "alipay_crossborder_desc"
-msgstr "Alipay Crossborder transactions via Wirecard Payment Processing Gateway"
+msgstr "Alipay Cross-border transactions via Wirecard Payment Processing Gateway."
 
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:263
 msgid "amount"
@@ -36,7 +34,6 @@ msgid "bic_input"
 msgstr "BIC"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:424
-#, fuzzy
 msgid "birthdate_input"
 msgstr "Date of Birth"
 
@@ -45,7 +42,6 @@ msgid "cancel"
 msgstr "Cancel"
 
 #: classes/includes/class-wc-wirecard-payment-gateway.php:201
-#, fuzzy
 msgid "canceled_payment_process"
 msgstr "You have canceled the payment process."
 
@@ -60,7 +56,6 @@ msgstr "You have canceled the payment process."
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:206
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:159
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:176
-#, fuzzy
 msgid "config_additional_info"
 msgstr "Send Additional Information"
 
@@ -79,14 +74,12 @@ msgid "config_additional_info_desc"
 msgstr "Additional data will be sent for the purpose of fraud protection. This additional data includes billing/shipping address, shopping basket and descriptor."
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:187
-#, fuzzy
 msgid "config_allowed_currencies"
 msgstr "Allowed Currencies"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:189
-#, fuzzy
 msgid "config_allowed_currencies_desc"
-msgstr "Payment method Guaranteed Invoice will only be displayed if the active currency is one of these selected currencies."
+msgstr "Payment method Guaranteed Invoice is only displayed if the activated currency is one of the currencies selected here."
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:124
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:157
@@ -100,7 +93,6 @@ msgstr "Payment method Guaranteed Invoice will only be displayed if the active c
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:127
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:126
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:126
-#, fuzzy
 msgid "config_base_url"
 msgstr "Wirecard Server Address"
 
@@ -116,7 +108,6 @@ msgstr "Wirecard Server Address"
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:129
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:128
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:128
-#, fuzzy
 msgid "config_base_url_desc"
 msgstr "The Wirecard Server Address (e.g. https://api.wirecard.com)."
 
@@ -125,38 +116,32 @@ msgid "config_basket_max"
 msgstr "Maximum Amount"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:202
-#, fuzzy
 msgid "config_basket_max_desc"
-msgstr "Payment method Guaranteed Invoice will only be displayed if the ordered amount is smaller than this defined amount. Amount in default shop currency."
+msgstr "Payment method Guaranteed Invoice is only displayed if the ordered amount is smaller than the defined amount. Amount in default shop currency."
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:196
 msgid "config_basket_min"
 msgstr "Minimum Amount"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:197
-#, fuzzy
 msgid "config_basket_min_desc"
-msgstr "Payment method Guaranteed Invoice will only be displayed if the ordered amount exceeds the amount defined here. Amount in default shop currency."
+msgstr "Payment method Guaranteed Invoice is only displayed if the ordered amount exceeds the defined amount. Amount in default shop currency."
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:169
-#, fuzzy
 msgid "config_billing_countries"
 msgstr "Allowed Billing Countries"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:171
-#, fuzzy
 msgid "config_billing_countries_desc"
-msgstr "Payment method Guaranteed Invoice is only displayed during checkout if the consumer's billing country is one of the selected countries. STRG-click to select. Default pre-selection: Austria and Germany."
+msgstr "Payment method Guaranteed Invoice is only displayed during checkout if the consumer's billing country is one of the countries selected here. CTRL-click to select. Default pre-selection: Austria and Germany."
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:165
-#, fuzzy
 msgid "config_billing_shipping"
 msgstr "Identical Billing/Shipping Address"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:164
-#, fuzzy
 msgid "config_billing_shipping_desc"
-msgstr "If activated, payment method Guaranteed Invoice will only be displayed if billing/shipping address are identical."
+msgstr "If activated, payment method Guaranteed Invoice is only displayed if billing/shipping address are identical."
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:168
 msgid "config_creditor_city"
@@ -209,7 +194,6 @@ msgid "config_descriptor_desc"
 msgstr "Send text which is displayed on the bank statement issued to your consumer by the financial service provider."
 
 #: classes/admin/class-wirecard-settings.php:226
-#, fuzzy
 msgid "config_email"
 msgstr "Your email address"
 
@@ -306,7 +290,6 @@ msgstr "This text appears on the SEPA Direct Debit Mandate page at the end of th
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:110
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:109
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:109
-#, fuzzy
 msgid "config_merchant_account_id"
 msgstr "MAID"
 
@@ -377,49 +360,46 @@ msgstr "Payment Action"
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:157
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:187
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:157
-#, fuzzy
 msgid "config_payment_action_desc"
 msgstr "Select between \"Purchase\" to capture/invoice your order automatically or \"Authorization\" to capture/invoice manually."
 
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:152
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:156
-#, fuzzy
 msgid "config_payment_type"
 msgstr "Payment Type"
 
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:154
 msgid "config_payment_type_desc"
-msgstr "Choose between \"Payment in Advance\" to display bankdata after the checkout process and \"Payment on Invoice\" to send bankdata with the invoice"
+msgstr "Choose \"Payment In Advance\" to display bank data after the checkout process, or \"Payment On Invoice\" to send bank data with the invoice."
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:178
 msgid "config_shipping_countries"
 msgstr "Allowed Shipping Countries"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:180
-#, fuzzy
 msgid "config_shipping_countries_desc"
-msgstr "Payment method Guaranteed Invoice is only displayed if the consumer's shipping country equals one of these selected countries. STRG-click to select. Default pre-selection: Austria and Germany. "
+msgstr "Payment method Guaranteed Invoice is only displayed if the consumer's shipping country is one of the countries selected here. CTRL-click to select. Default pre-selection: Austria and Germany."
 
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:169
 msgid "config_shopping_basket"
 msgstr "Shopping Basket"
+
+msgid "config_shopping_basket_desc"
+msgstr "For the purpose of confirmation, payment supports shopping basket display during checkout. To enable this feature, activate Shopping Basket."
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:140
 msgid "config_ssl_max_limit"
 msgstr "Non 3-D Secure Max. Limit"
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:96
-#, fuzzy
 msgid "config_status_desc_alipay_crossborder"
-msgstr "Alipay Cross-border transactions via Wirecard Payment Processing Gateway"
+msgstr "Activate payment method Alipay Cross-border to make it available for your consumers."
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:106
-#, fuzzy
 msgid "config_status_desc_creditcard"
-msgstr "Credit Card transactions via Wirecard Payment Processing Gateway."
+msgstr "Activate payment method Credit Card to make it available for your consumers."
 
 #: classes/includes/class-wc-gateway-wirecard-eps.php:97
-#, fuzzy
 msgid "config_status_desc_eps"
 msgstr "Activate payment method eps-Überweisung to make it available for your consumers."
 
@@ -428,23 +408,20 @@ msgid "config_status_desc_ideal"
 msgstr "Activate payment method iDEAL to make it available for your consumers."
 
 #: classes/includes/class-wc-gateway-wirecard-masterpass.php:99
-#, fuzzy
 msgid "config_status_desc_masterpass"
-msgstr "Activate payment method MasterPass to make it available for your consumers."
+msgstr "Activate payment method Masterpass to make it available for your consumers."
 
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:98
 msgid "config_status_desc_paypal"
 msgstr "Activate payment method PayPal to make it available for your consumers."
 
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:95
-#, fuzzy
 msgid "config_status_desc_poi_pia"
-msgstr "Activate payment method Payment on Invoice or Payment in Advance to make it available for your consumers."
+msgstr "Activate payment method Payment On Invoice or Payment In Advance to make it available for your consumers."
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:105
-#, fuzzy
 msgid "config_status_desc_ratepayinvoice"
-msgstr "Activate payment method Guaranteed Invoice to make it available for your consumers."
+msgstr "Activate payment method Guaranteed Invoice by Wirecard to make it available for your consumers."
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:95
 msgid "config_status_desc_sepact"
@@ -463,23 +440,20 @@ msgid "config_status_desc_upi"
 msgstr "Activate payment method UnionPay International to make it available for your consumers."
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:128
-#, fuzzy
 msgid "config_three_d_merchant_account_id"
 msgstr "3-D Secure MAID"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:130
-#, fuzzy
 msgid "config_three_d_merchant_account_id_desc"
-msgstr "Unique identifier assigned to your 3-D Secure merchant account."
+msgstr "Unique identifier assigned to your 3-D Secure merchant account. Can be set to \"null\" to force SSL process."
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:134
 msgid "config_three_d_merchant_secret"
 msgstr "3-D Secure Secret Key"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:136
-#, fuzzy
 msgid "config_three_d_merchant_secret_desc"
-msgstr "Secret Key is mandatory to calculate the Digital Signature for the 3-D Secure payment."
+msgstr "Secret Key is mandatory to calculate the Digital Signature for the 3-D Secure payment. Can be set to \"null\" to force SSL process."
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:146
 msgid "config_three_d_min_limit"
@@ -516,19 +490,16 @@ msgid "config_title_desc"
 msgstr "Payment method name as displayed for the consumer during checkout."
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:213
-#, fuzzy
 msgid "config_vault_desc"
-msgstr "Credit Cards can be saved for further use without re-entering credit card details."
+msgstr "Credit Card details are saved for later use."
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:62
-#, fuzzy
 msgid "creditcard"
 msgstr "Credit Card"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:63
-#, fuzzy
 msgid "creditcard_desc"
-msgstr "Credit Card transactions via Wirecard Payment Processing Gateway"
+msgstr "Credit Card transactions via Wirecard Payment Processing Gateway."
 
 #: classes/helper/sepa-template.php:38
 msgid "creditor"
@@ -547,77 +518,62 @@ msgid "debtor_acc_owner"
 msgstr "Account Owner"
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:97
-#, fuzzy
 msgid "enable_heading_title_alipay_crossborder"
 msgstr "Enable Wirecard Alipay Cross-border"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:105
-#, fuzzy
 msgid "enable_heading_title_creditcard"
 msgstr "Enable Wirecard Credit Card"
 
 #: classes/includes/class-wc-gateway-wirecard-eps.php:98
-#, fuzzy
 msgid "enable_heading_title_eps"
 msgstr "Enable Wirecard eps-Überweisung"
 
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:101
-#, fuzzy
 msgid "enable_heading_title_ideal"
 msgstr "Enable Wirecard iDEAL"
 
 #: classes/includes/class-wc-gateway-wirecard-masterpass.php:98
-#, fuzzy
 msgid "enable_heading_title_masterpass"
 msgstr "Enable Wirecard Masterpass"
 
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:99
-#, fuzzy
 msgid "enable_heading_title_paypal"
 msgstr "Enable Wirecard PayPal"
 
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:96
-#, fuzzy
 msgid "enable_heading_title_poi_pia"
-msgstr "Enable Wirecard Payment on Invoice / Payment in Advance"
+msgstr "Enable Wirecard Payment On Invoice / Payment In Advance"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:106
-#, fuzzy
 msgid "enable_heading_title_ratepayinvoice"
 msgstr "Enable Wirecard Guaranteed Invoice"
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:96
-#, fuzzy
 msgid "enable_heading_title_sepact"
 msgstr "Enable Wirecard SEPA Credit Transfer"
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:100
-#, fuzzy
 msgid "enable_heading_title_sepadd"
 msgstr "Enable Wirecard SEPA Direct Debit"
 
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:99
-#, fuzzy
 msgid "enable_heading_title_sofortbanking"
 msgstr "Enable Wirecard Sofort."
 
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:99
-#, fuzzy
 msgid "enable_heading_title_upi"
 msgstr "Enable Wirecard UnionPay International"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:214
-#, fuzzy
 msgid "enable_vault"
-msgstr "Enable One-click checkout"
+msgstr "Enable One-Click Checkout"
 
 #: classes/includes/class-wc-gateway-wirecard-eps.php:63
-#, fuzzy
 msgid "eps"
 msgstr "eps-Überweisung"
 
 #: classes/includes/class-wc-gateway-wirecard-eps.php:64
-#, fuzzy
 msgid "eps_desc"
 msgstr "eps-Überweisung transactions via Wirecard Payment Processing Gateway."
 
@@ -626,32 +582,27 @@ msgid "error_credentials"
 msgstr "Test failed, please check your credentials."
 
 #: classes/admin/class-wirecard-settings.php:301
-#, fuzzy
 msgid "error_email"
 msgstr "Email delivery error."
 
 #: classes/admin/class-wirecard-transaction-factory.php:359
-#, fuzzy
 msgid "error_no_post_processing_operations"
-msgstr "No back-end operations available for this transaction."
+msgstr "No post-processing operations available for this transaction."
 
 #: classes/admin/class-wirecard-transaction-factory.php:363
-#, fuzzy
 msgid "error_no_post_processing_operations_unconfirmed"
-msgstr "No back-end operations available for this transaction; the transaction has not yet been confirmed."
+msgstr "No post-processing operations available for this transaction; the transaction has not yet been confirmed."
 
 #: classes/admin/class-wirecard-transaction-factory.php:323
 #: classes/admin/class-wirecard-transaction-factory.php:411
 #: classes/admin/class-wirecard-transaction-factory.php:429
 #: classes/admin/class-wirecard-transaction-factory.php:447
-#, fuzzy
 msgid "error_no_transaction"
 msgstr "No transaction found."
 
 #: woocommerce-wirecard-payment-gateway.php:319
-#, fuzzy
 msgid "error_woocommerce_missing"
-msgstr "Sorry, but this extension requires WooCommerce Plugin to be installed and active."
+msgstr "Sorry, but this plugin requires the Wirecard WooCommerce Extension to be installed and active."
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:258
 msgid "first-name"
@@ -669,7 +620,6 @@ msgstr "Wirecard Credit Card"
 
 #: classes/includes/class-wc-gateway-wirecard-eps.php:62
 #: classes/includes/class-wc-gateway-wirecard-eps.php:108
-#, fuzzy
 msgid "heading_title_eps"
 msgstr "Wirecard eps-Überweisung"
 
@@ -690,13 +640,11 @@ msgstr "Wirecard PayPal"
 
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:61
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:103
-#, fuzzy
 msgid "heading_title_poi_pia"
-msgstr "Wirecard Payment on Invoice / Payment in Advance"
+msgstr "Wirecard Payment On Invoice / Payment In Advance"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:63
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:113
-#, fuzzy
 msgid "heading_title_ratepayinvoice"
 msgstr "Wirecard Guaranteed Invoice by Wirecard"
 
@@ -717,7 +665,6 @@ msgstr "Wirecard Sofort."
 
 #: woocommerce-wirecard-payment-gateway.php:268
 #: woocommerce-wirecard-payment-gateway.php:269
-#, fuzzy
 msgid "heading_title_support"
 msgstr "Wirecard Support"
 
@@ -725,6 +672,14 @@ msgstr "Wirecard Support"
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:106
 msgid "heading_title_upi"
 msgstr "Wirecard UnionPay International"
+
+#. Plugin URI of the plugin
+msgid "https://github.com/wirecard/woocommerce-ee"
+msgstr "https://github.com/wirecard/woocommerce-ee"
+
+#. Author URI of the plugin
+msgid "https://www.wirecard.com/"
+msgstr "https://www.wirecard.com/"
 
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:264
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:266
@@ -736,12 +691,10 @@ msgid "iban_input"
 msgstr "IBAN"
 
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:64
-#, fuzzy
 msgid "ideal"
 msgstr "iDEAL"
 
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:65
-#, fuzzy
 msgid "ideal_desc"
 msgstr "iDEAL transactions via Wirecard Payment Processing Gateway."
 
@@ -750,14 +703,12 @@ msgid "last-name"
 msgstr "Last Name"
 
 #: classes/includes/class-wc-gateway-wirecard-masterpass.php:62
-#, fuzzy
 msgid "masterpass"
 msgstr "Masterpass"
 
 #: classes/includes/class-wc-gateway-wirecard-masterpass.php:63
-#, fuzzy
 msgid "masterpass_desc"
-msgstr "MasterPass transactions via Wirecard Payment Processing Gateway."
+msgstr "Masterpass transactions via Wirecard Payment Processing Gateway."
 
 #: classes/includes/class-wc-wirecard-payment-gateway.php:212
 #: classes/includes/class-wc-wirecard-payment-gateway.php:228
@@ -767,34 +718,28 @@ msgstr "An error occurred during the payment process. Please try again."
 
 #: woocommerce-wirecard-payment-gateway.php:100
 #: woocommerce-wirecard-payment-gateway.php:166
-#, fuzzy
 msgid "order_status_authorized"
 msgstr "Authorized"
 
-#, fuzzy
 msgid "order_status_authorized_count_plural"
 msgstr "Authorized <span class=\"count\">(%s)</span>"
 
 #. translators:
 #: woocommerce-wirecard-payment-gateway.php:105
-#, fuzzy
 msgid "order_status_authorized_count_single"
 msgid_plural "order_status_authorized_count_plural"
 msgstr[0] ""
 msgstr[1] "Authorized <span class=\"count\">(%s)</span>"
 
 #: classes/includes/class-wc-wirecard-payment-gateway.php:521
-#, fuzzy
 msgid "order_status_gateway_update"
 msgstr "Update order status via Wirecard Payment Processing Gateway."
 
 #: classes/admin/class-wirecard-settings.php:119
-#, fuzzy
 msgid "pagination_back"
 msgstr "< Back"
 
 #: classes/admin/class-wirecard-settings.php:120
-#, fuzzy
 msgid "pagination_next"
 msgstr "Next >"
 
@@ -815,12 +760,10 @@ msgid "panel_order_number"
 msgstr "Order Number"
 
 #: classes/admin/class-wirecard-transaction-factory.php:109
-#, fuzzy
 msgid "panel_parent_transaction_id"
 msgstr "Parent Transaction ID"
 
 #: classes/admin/class-wirecard-transaction-factory.php:115
-#, fuzzy
 msgid "panel_payment_method"
 msgstr "Payment Method"
 
@@ -829,76 +772,50 @@ msgid "panel_transaction"
 msgstr "Transaction"
 
 #: classes/admin/class-wirecard-transaction-factory.php:118
-#, fuzzy
 msgid "panel_transaction_state"
-msgstr "Transaction state"
+msgstr "Transaction State"
 
 #: classes/admin/class-wirecard-transaction-factory.php:106
 msgid "panel_transcation_id"
 msgstr "Transaction ID"
 
+#. Description of the plugin
+msgid "Payment Gateway for WooCommerce"
+msgstr "Payment Gateway for WooCommerce"
+
 #: classes/includes/class-wc-wirecard-payment-gateway.php:733
-#, fuzzy
 msgid "payment_awaiting"
 msgstr "Awaiting payment from Wirecard."
 
 #: classes/admin/class-wirecard-transaction-factory.php:341
-#, fuzzy
 msgid "payment_suffix"
 msgstr "payment"
 
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:62
-#, fuzzy
 msgid "paypal"
 msgstr "PayPal"
 
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:63
-#, fuzzy
 msgid "paypal_desc"
 msgstr "PayPal transactions via Wirecard Payment Processing Gateway."
 
-#. Author of the plugin
-#, fuzzy
-msgid "plugin_author"
-msgstr "Wirecard AG"
-
-#. Author URI of the plugin
-#, fuzzy
-msgid "plugin_author_url"
-msgstr "https://www.wirecard.com/"
-
-#. Description of the plugin
-#, fuzzy
-msgid "plugin_description_woocommerce"
-msgstr "Payment Gateway for WooCommerce"
-
-#. URI of the plugin
-#, fuzzy
-msgid "plugin_url_woocommerce"
-msgstr "https://github.com/wirecard/woocommerce-ee"
-
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:62
-#, fuzzy
 msgid "poi_pia"
-msgstr "Payment on Invoice / Payment in Advance"
+msgstr "Payment On Invoice / Payment In Advance"
 
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:63
-#, fuzzy
 msgid "poi_pia_desc"
-msgstr "Payment on Invoice / Payment in Advance transactions via Wirecard Payment Processing Gateway."
+msgstr "Payment On Invoice / Payment In Advance transactions via Wirecard Payment Processing Gateway."
 
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:266
-#, fuzzy
 msgid "ptrid"
 msgstr "Provider Transaction Reference ID"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:64
-#, fuzzy
 msgid "ratepayinvoice"
-msgstr "Invoice"
+msgstr "Guaranteed Invoice"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:65
-#, fuzzy
 msgid "ratepayinvoice_desc"
 msgstr "Guaranteed Invoice transactions via Wirecard Payment Processing Gateway."
 
@@ -913,41 +830,34 @@ msgstr "You are being redirected. Please wait."
 
 #: classes/includes/class-wc-wirecard-payment-gateway.php:418
 #: classes/includes/class-wc-wirecard-payment-gateway.php:421
-#, fuzzy
 msgid "refund_gateway_error"
 msgstr "Refund via Wirecard Payment Processing Gateway failed."
 
 #: classes/includes/class-wc-wirecard-payment-gateway.php:632
-#, fuzzy
 msgid "refund_online_error"
-msgstr "No online refund possible at the moment."
+msgstr "Currently no online refund possible."
 
 #: classes/helper/class-additional-information.php:349
 msgid "refund_partial_shipping_error"
-msgstr "You can only refund the shipping fees in full, partial shipping fee refunds are not possible."
+msgstr "You can refund shipping fees only in full; partial refund of shipping fees is not possible."
 
 #: classes/includes/class-wc-wirecard-payment-gateway.php:409
-#, fuzzy
 msgid "refund_processing_error"
 msgstr "Processing refund failed."
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:61
-#, fuzzy
 msgid "sepact"
 msgstr "SEPA Credit Transfer"
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:62
-#, fuzzy
 msgid "sepact_desc"
-msgstr "SEPA Credit Transfer transactions via Wirecard Payment Processing Gateway"
+msgstr "SEPA Credit Transfer transactions via Wirecard Payment Processing Gateway."
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:60
-#, fuzzy
 msgid "sepadd"
 msgstr "SEPA Direct Debit"
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:61
-#, fuzzy
 msgid "sepadd_desc"
 msgstr "SEPA Direct Debit transactions via Wirecard Payment Processing Gateway."
 
@@ -988,17 +898,14 @@ msgid "sepa_text_6"
 msgstr "I have read and accepted the SEPA Direct Debit Mandate information."
 
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:63
-#, fuzzy
 msgid "sofortbanking"
 msgstr "Sofort."
 
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:64
-#, fuzzy
 msgid "sofortbanking_desc"
 msgstr "Sofort. transactions via Wirecard Payment Processing Gateway."
 
 #: classes/admin/class-wirecard-settings.php:242
-#, fuzzy
 msgid "submit_button"
 msgstr "Submit"
 
@@ -1007,7 +914,6 @@ msgid "success_credentials"
 msgstr "Merchant configuration was successfully tested."
 
 #: classes/admin/class-wirecard-settings.php:299
-#, fuzzy
 msgid "success_email"
 msgstr "Email sent successfully."
 
@@ -1022,9 +928,8 @@ msgstr "Email sent successfully."
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:142
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:145
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:175
-#, fuzzy
 msgid "test_config"
-msgstr "Test configuration"
+msgstr "Test Configuration"
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:145
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:178
@@ -1039,7 +944,6 @@ msgstr "Test configuration"
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:147
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:147
 #: woocommerce-wirecard-payment-gateway.php:301
-#, fuzzy
 msgid "test_credentials"
 msgstr "Test Credentials"
 
@@ -1060,19 +964,16 @@ msgstr "Advanced Options"
 #: woocommerce-wirecard-payment-gateway.php:236
 #: woocommerce-wirecard-payment-gateway.php:237
 #: classes/admin/class-wirecard-transaction-factory.php:350
-#, fuzzy
 msgid "text_cancel_transaction"
 msgstr "Cancel transaction"
 
 #: woocommerce-wirecard-payment-gateway.php:244
 #: woocommerce-wirecard-payment-gateway.php:245
 #: classes/admin/class-wirecard-transaction-factory.php:353
-#, fuzzy
 msgid "text_capture_transaction"
 msgstr "Capture transaction"
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:245
-#, fuzzy
 msgid "text_confirm"
 msgstr "Confirm"
 
@@ -1102,12 +1003,10 @@ msgstr "Credentials"
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:121
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:124
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:154
-#, fuzzy
 msgid "text_credentials_desc"
 msgstr "Enter your Wirecard credentials."
 
 #: classes/helper/class-credit-card-vault.php:163
-#, fuzzy
 msgid "text_delete"
 msgstr "Delete"
 
@@ -1145,12 +1044,10 @@ msgstr "Delete"
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:197
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:204
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:211
-#, fuzzy
 msgid "text_enable_disable"
 msgstr "Enable/Disable"
 
 #: woocommerce-wirecard-payment-gateway.php:320
-#, fuzzy
 msgid "text_go_to_plugins"
 msgstr "Go to Extensions"
 
@@ -1171,53 +1068,44 @@ msgid "text_payment_action_reserve"
 msgstr "Authorization"
 
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:159
-#, fuzzy
 msgid "text_payment_type_pia"
-msgstr "Payment in Advance"
+msgstr "Payment In Advance"
 
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:158
-#, fuzzy
 msgid "text_payment_type_poi"
-msgstr "Payment on Invoice"
+msgstr "Payment On Invoice"
 
 #: woocommerce-wirecard-payment-gateway.php:252
 #: woocommerce-wirecard-payment-gateway.php:253
 #: classes/admin/class-wirecard-transaction-factory.php:356
-#, fuzzy
 msgid "text_refund_transaction"
 msgstr "Refund transaction"
 
 #: classes/admin/class-wirecard-transaction-factory.php:371
-#, fuzzy
 msgid "text_response_data"
 msgstr "Response Data"
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:153
-#, fuzzy
 msgid "text_sepadd_config_desc"
 msgstr "Enter your SEPA Direct Debit credentials and mandate settings."
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:151
-#, fuzzy
 msgid "text_sepa_config"
-msgstr "SEPA Direct Debit Credentials"
+msgstr "SEPA Credentials"
 
 #: classes/admin/class-wirecard-settings.php:98
-#, fuzzy
 msgid "text_support"
 msgstr "Support"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:436
-#, fuzzy
 msgid "text_terms_accept"
-msgstr "I herewith confirm that I have read the <a href=\"https://www.wirecardbank.com/privacy-documents/datenschutzhinweise-fuer-die-wirecard-zahlarten/\" target=\"_blank\">privacy notice</a> and <a target=\"_blank\" href=\"https://www.wirecardbank.com/privacy-documents/zusatzliche-geschaftsbedingungen-fur-wirecard-zahlarten/\">additional terms and conditions</a> for Wirecard payment types and that I accept their validity."
+msgstr "I herewith confirm that I have read the <a href=\"https://www.wirecardbank.de/privacy-documents/datenschutzhinweis-fur-die-wirecard-zahlarten/\" target=\"_blank\">privacy notice</a> and <a target=\"_blank\" href=\"https://www.wirecardbank.de/privacy-documents/zusatzliche-geschaftsbedingungen-fur-wirecard-zahlarten/\">additional terms and conditions</a> for Wirecard payment types and that I accept their validity."
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:471
 msgid "text_terms_notice"
 msgstr "You must agree to the privacy notice and additional terms of Wirecard payment methods."
 
 #: classes/admin/class-wirecard-transaction-factory.php:376
-#, fuzzy
 msgid "text_total"
 msgstr "Total"
 
@@ -1226,59 +1114,54 @@ msgid "text_transaction"
 msgstr "Transaction"
 
 #: classes/admin/class-wirecard-transaction-factory.php:468
-#, fuzzy
 msgid "text_transaction_details_1"
 msgstr "For more transaction information click "
 
 #: classes/admin/class-wirecard-transaction-factory.php:471
-#, fuzzy
 msgid "text_transaction_details_2"
 msgstr "here"
 
 #: woocommerce-wirecard-payment-gateway.php:228
 #: woocommerce-wirecard-payment-gateway.php:229
 #: classes/admin/class-wirecard-transaction-factory.php:367
-#, fuzzy
 msgid "title_payment_gateway"
-msgstr "Wirecard Payment Gateway"
+msgstr "Wirecard Payment Processing Gateway"
 
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:261
 msgid "transfer_notice"
 msgstr "Please transfer the amount using the following data:"
 
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:59
-#, fuzzy
 msgid "upi"
 msgstr "UnionPay International"
 
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:60
-#, fuzzy
 msgid "upi_desc"
 msgstr "UnionPay International transactions via Wirecard Payment Processing Gateway."
 
 #: classes/helper/class-credit-card-vault.php:156
-#, fuzzy
 msgid "vault_account_number"
-msgstr "Account number"
+msgstr "Account Number"
 
 #: classes/helper/class-credit-card-vault.php:157
-#, fuzzy
 msgid "vault_delete_card_text"
-msgstr "Delete Card"
+msgstr "Delete card"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:349
 msgid "vault_save_text"
 msgstr "Save for later use."
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:336
-#, fuzzy
 msgid "vault_use_existing_text"
 msgstr "Use saved credit card"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:338
-#, fuzzy
 msgid "vault_use_new_text"
 msgstr "Use new credit card"
+
+#. Author of the plugin
+msgid "Wirecard AG"
+msgstr "Wirecard AG"
 
 #. Plugin Name of the plugin
 msgid "Wirecard WooCommerce Extension"

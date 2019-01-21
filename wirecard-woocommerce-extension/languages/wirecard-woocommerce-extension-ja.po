@@ -379,7 +379,7 @@ msgstr "支払いの種類"
 
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:154
 msgid "config_payment_type_desc"
-msgstr "Choose between \"Payment in Advance\" to display bankdata after the checkout process and \"Payment on Invoice\" to send bankdata with the invoice"
+msgstr "Choose \"Payment In Advance\" to display bank data after the checkout process, or \"Payment On Invoice\" to send bank data with the invoice."
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:178
 #, fuzzy
@@ -393,6 +393,9 @@ msgstr "消費者の請求先国がこれらの選択された国々のいずれ
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:169
 msgid "config_shopping_basket"
 msgstr "ショッピング バスケット"
+
+msgid "config_shopping_basket_desc"
+msgstr "確認のため、この支払方法では注文中に買い物かごが表示されます。この機能を有効化するには、買い物かごを有効にします。"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:140
 msgid "config_ssl_max_limit"
@@ -686,6 +689,14 @@ msgstr "サポート"
 msgid "heading_title_upi"
 msgstr "Wirecard UnionPay International"
 
+#. Plugin URI of the plugin
+msgid "https://github.com/wirecard/woocommerce-ee"
+msgstr "https://github.com/wirecard/woocommerce-ee"
+
+#. Author URI of the plugin
+msgid "https://www.wirecard.com/"
+msgstr "https://www.wirecard.com/"
+
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:264
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:266
 msgid "iban"
@@ -779,6 +790,10 @@ msgstr "トランザクションの状態"
 msgid "panel_transcation_id"
 msgstr "トランザクション ID"
 
+#. Description of the plugin
+msgid "Payment Gateway for WooCommerce"
+msgstr "WooCommerce 用支払いゲートウェイ"
+
 #: classes/includes/class-wc-wirecard-payment-gateway.php:733
 msgid "payment_awaiting"
 msgstr "Wirecard からの支払いを待機しています"
@@ -794,22 +809,6 @@ msgstr "PayPal"
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:63
 msgid "paypal_desc"
 msgstr "Wirecard 支払い処理ゲートウェイ経由での PayPal トランザクション"
-
-#. Author of the plugin
-msgid "plugin_author"
-msgstr "Wirecard AG"
-
-#. Author URI of the plugin
-msgid "plugin_author_url"
-msgstr "https://www.wirecard.com/"
-
-#. Description of the plugin
-msgid "plugin_description_woocommerce"
-msgstr "WooCommerce 用支払いゲートウェイ"
-
-#. URI of the plugin
-msgid "plugin_url_woocommerce"
-msgstr "https://github.com/wirecard/woocommerce-ee"
 
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:62
 msgid "poi_pia"
@@ -852,7 +851,7 @@ msgstr "現在、オンラインでの返金はできません。"
 
 #: classes/helper/class-additional-information.php:349
 msgid "refund_partial_shipping_error"
-msgstr "You can only refund the shipping fees in full, partial shipping fee refunds are not possible."
+msgstr "You can refund shipping fees only in full; partial refund of shipping fees is not possible."
 
 #: classes/includes/class-wc-wirecard-payment-gateway.php:409
 msgid "refund_processing_error"
@@ -1116,7 +1115,7 @@ msgstr "Support"
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:436
 #, fuzzy
 msgid "text_terms_accept"
-msgstr "I herewith confirm that I have read the <a href=\"https://www.wirecardbank.com/privacy-documents/datenschutzhinweise-fuer-die-wirecard-zahlarten/\" target=\"_blank\">privacy notice</a> and <a target=\"_blank\" href=\"https://www.wirecardbank.com/privacy-documents/zusatzliche-geschaftsbedingungen-fur-wirecard-zahlarten/\">additional terms and conditions</a> for Wirecard payment types and that I accept their validity."
+msgstr "I herewith confirm that I have read the <a href=\"https://www.wirecardbank.de/privacy-documents/datenschutzhinweis-fur-die-wirecard-zahlarten/\" target=\"_blank\">privacy notice</a> and <a target=\"_blank\" href=\"https://www.wirecardbank.de/privacy-documents/zusatzliche-geschaftsbedingungen-fur-wirecard-zahlarten/\">additional terms and conditions</a> for Wirecard payment types and that I accept their validity."
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:471
 msgid "text_terms_notice"
@@ -1177,6 +1176,10 @@ msgstr "保存済みのクレジット カードを使用する"
 #, fuzzy
 msgid "vault_use_new_text"
 msgstr "新しいクレジット カードを使用する"
+
+#. Author of the plugin
+msgid "Wirecard AG"
+msgstr "Wirecard AG"
 
 #. Plugin Name of the plugin
 msgid "Wirecard WooCommerce Extension"
