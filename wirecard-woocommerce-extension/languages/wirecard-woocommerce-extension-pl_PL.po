@@ -727,7 +727,7 @@ msgstr "Authorized <span class=\"count\">(%s)</span>"
 #. translators:
 #: woocommerce-wirecard-payment-gateway.php:105
 msgid "order_status_authorized_count_single"
-msgid_plural ""
+msgid_plural "order_status_authorized_count_plural"
 msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
