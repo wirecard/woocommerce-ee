@@ -89,8 +89,7 @@ class Additional_Information {
 		}
 		//Check if there is a rounding difference and if so add the difference to shipping
 		$shipping           = $cart->get_shipping_total();
-		$wc_tax             = new WC_Tax();
-		$shipping_tax_class = $wc_tax->get_shipping_tax_rates();
+		$shipping_tax_class = get_option( 'woocommerce_shipping_tax_class' );
 		$shipping_tax_rate  = $this->get_tax_rate_from_tax_class_depending_on_country( $tax_country, $shipping_tax_class );
 		$sum               += $shipping + $cart->get_shipping_tax();
 
