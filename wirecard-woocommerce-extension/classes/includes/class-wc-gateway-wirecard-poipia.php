@@ -252,7 +252,7 @@ class WC_Gateway_Wirecard_Poipia extends WC_Wirecard_Payment_Gateway {
 	 */
 	public function thankyou_page( $order_id ) {
 		$order = wc_get_order( $order_id );
-		if ( $this->settings['payment_type'] == 'pia' ) {
+		if ( 'pia' === $this->settings['payment_type'] ) {
 			$iban         = get_post_meta( $order_id, 'pia-iban', true );
 			$bic          = get_post_meta( $order_id, 'pia-bic', true );
 			$reference_id = get_post_meta( $order_id, 'pia-reference-id', true );
