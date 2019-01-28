@@ -157,11 +157,19 @@ function wirecard_init_payment_gateway() {
  * @since 1.0.0
  */
 function wirecard_add_payment_gateway( $methods ) {
-	foreach ( wirecard_get_payments() as $key => $payment_method ) {
-		if ( is_checkout() && $payment_method->is_available() ) {
-			$methods[] = $key;
-		} else {
-			$methods[] = $key;
+	//If not on the checkout page show all available payment methods
+	if ( !is_checkout() ) {
+		foreach ( wirecard_get_payments() as $key => $payment_method ) {
+			if ( !key_exists( $key, $methods ) ) {
+				array_push($methods, $key );
+			}
+		}
+	} else {
+		foreach ( wirecard_get_payments() as $key => $payment_method ) {
+			//Check if the payment method is enabled and not added to payment methods then add it.
+			if ( $payment_method->is_available() && !key_exists( $key, $methods ) ) {
+				array_push( $methods, $key );
+			}
 		}
 	}
 
