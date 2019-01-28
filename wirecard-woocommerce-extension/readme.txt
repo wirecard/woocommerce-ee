@@ -70,3 +70,4 @@ Our general Terms of Use can be found on [Github](https://github.com/wirecard/wo
 == Changelog ==
 - Add deposit to processing order state
 - View reference id on thank you page for Payment in Advance (PIA) payment
+- Update tax handling for shipping
