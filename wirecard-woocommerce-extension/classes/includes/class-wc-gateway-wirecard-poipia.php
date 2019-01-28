@@ -77,7 +77,6 @@ class WC_Gateway_Wirecard_Poipia extends WC_Wirecard_Payment_Gateway {
 		$this->additional_helper = new Additional_Information();
 
 		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
-		add_action( 'woocommerce_thankyou_' . $this->id, array( $this, 'thankyou_page' ) );
 
 		parent::add_payment_gateway_actions();
 	}
@@ -242,7 +241,7 @@ class WC_Gateway_Wirecard_Poipia extends WC_Wirecard_Payment_Gateway {
 	}
 
 	/**
-	 * Hook for thankyou page text
+	 * Hook for poipia thankyou page text
 	 *
 	 * @param $order_id
 	 *
@@ -250,9 +249,9 @@ class WC_Gateway_Wirecard_Poipia extends WC_Wirecard_Payment_Gateway {
 	 *
 	 * @since 1.1.0
 	 */
-	public function thankyou_page( $order_id ) {
+	public function thankyou_page_poipia( $order_id ) {
 		$order = wc_get_order( $order_id );
-		if ( $this->get_option( 'payment_type' ) == 'pia' ) {
+		if ( 'pia' === $this->settings['payment_type'] ) {
 			$iban         = get_post_meta( $order_id, 'pia-iban', true );
 			$bic          = get_post_meta( $order_id, 'pia-bic', true );
 			$reference_id = get_post_meta( $order_id, 'pia-reference-id', true );

@@ -131,6 +131,7 @@ function wirecard_init_payment_gateway() {
 	add_action( 'admin_enqueue_scripts', 'backend_scripts', 999 );
 	add_action( 'woocommerce_settings_checkout', 'wirecard_add_support_chat', 0 );
 	add_action( 'admin_menu', 'wirecard_gateway_options_page' );
+	add_action( 'woocommerce_thankyou_wirecard_ee_poipia', array( new WC_Gateway_Wirecard_Poipia(), 'thankyou_page_poipia' ) );
 
 	register_post_status(
 		'wc-authorization',
@@ -156,11 +157,19 @@ function wirecard_init_payment_gateway() {
  * @since 1.0.0
  */
 function wirecard_add_payment_gateway( $methods ) {
-	foreach ( wirecard_get_payments() as $key => $payment_method ) {
-		if ( is_checkout() && $payment_method->is_available() ) {
-			$methods[] = $key;
-		} else {
-			$methods[] = $key;
+	//If not on the checkout page show all available payment methods
+	if ( ! is_checkout() ) {
+		foreach ( wirecard_get_payments() as $key => $payment_method ) {
+			if ( ! key_exists( $key, $methods ) ) {
+				array_push( $methods, $key );
+			}
+		}
+	} else {
+		foreach ( wirecard_get_payments() as $key => $payment_method ) {
+			//Check if the payment method is enabled and not added to payment methods then add it.
+			if ( $payment_method->is_available() && ! key_exists( $key, $methods ) ) {
+				array_push( $methods, $key );
+			}
 		}
 	}
 
