@@ -5,8 +5,8 @@
     "tested": "3.5.2",
     "compatibility": "3.3.4",
     "changelog": [
-      "Add deposit to processing order state"
-	  "View reference id on thank you page for Payment in Advance (PIA) payment"
+      "Add deposit to processing order state",
+	  "View reference id on thank you page for Payment in Advance (PIA) payment",
 	  "Update tax handling for shipping"
     ]
 },
