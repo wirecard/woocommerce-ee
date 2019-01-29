@@ -1,5 +1,14 @@
 [
 {
+    "release": "1.6.0",
+    "shopsystem": "WooCommerce",
+    "tested": "3.5.2",
+    "compatibility": "3.3.4",
+    "changelog": [
+      "Add Pay by Bank app payment method"
+    ]
+},
+{
     "release": "1.5.2",
     "shopsystem": "WooCommerce",
     "tested": "3.5.2",
