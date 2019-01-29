@@ -394,6 +394,7 @@ msgstr "消費者の請求先国がこれらの選択された国々のいずれ
 msgid "config_shopping_basket"
 msgstr "ショッピング バスケット"
 
+#: classes/includes/class-wc-gateway-wirecard-paypal.php:168
 msgid "config_shopping_basket_desc"
 msgstr "確認のため、この支払方法では注文中に買い物かごが表示されます。この機能を有効化するには、買い物かごを有効にします。"
 
@@ -420,6 +421,10 @@ msgstr "支払い方法として iDEAL を有効にする"
 #: classes/includes/class-wc-gateway-wirecard-masterpass.php:99
 msgid "config_status_desc_masterpass"
 msgstr "支払い方法として Masterpass を有効にする"
+
+#: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:98
+msgid "config_status_desc_paybybankapp"
+msgstr "Activate payment method Pay by Bank app to make it available for your consumers."
 
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:98
 msgid "config_status_desc_paypal"
@@ -504,6 +509,14 @@ msgstr "ここで、精算時に消費者に表示されるタイトルを管理
 msgid "config_vault_desc"
 msgstr "クレジット カードを保存しておけば、次回からはクレジット カードの詳細を入力しなくても使用できるようになります。"
 
+#: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:155
+msgid "config_zapp_merchant_return_string"
+msgstr "Merchant Return URL"
+
+#: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:157
+msgid "config_zapp_merchant_return_string_desc"
+msgstr "Merchant Return URL to redirect the Consumer from the mobile banking app to the merchant’s browser or App."
+
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:62
 msgid "creditcard"
 msgstr "Credit Card"
@@ -547,6 +560,10 @@ msgstr "Wirecard iDEAL を有効にする"
 #: classes/includes/class-wc-gateway-wirecard-masterpass.php:98
 msgid "enable_heading_title_masterpass"
 msgstr "Wirecard Masterpass を有効にする"
+
+#: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:99
+msgid "enable_heading_title_paybybankapp"
+msgstr "Enable Wirecard Pay by Bank app"
 
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:99
 msgid "enable_heading_title_paypal"
@@ -646,6 +663,11 @@ msgstr "Wirecard iDEAL"
 #: classes/includes/class-wc-gateway-wirecard-masterpass.php:106
 msgid "heading_title_masterpass"
 msgstr "Wirecard Masterpass"
+
+#: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:60
+#: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:106
+msgid "heading_title_paybybankapp"
+msgstr "Wirecard Pay by Bank app"
 
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:61
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:106
@@ -789,6 +811,14 @@ msgstr "トランザクションの状態"
 #: classes/admin/class-wirecard-transaction-factory.php:106
 msgid "panel_transcation_id"
 msgstr "トランザクション ID"
+
+#: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:61
+msgid "paybybankapp"
+msgstr "Pay by Bank app"
+
+#: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:62
+msgid "paybybankapp_desc"
+msgstr "Pay by Bank app transactions via Wirecard Payment Processing Gateway."
 
 #. Description of the plugin
 msgid "Payment Gateway for WooCommerce"
