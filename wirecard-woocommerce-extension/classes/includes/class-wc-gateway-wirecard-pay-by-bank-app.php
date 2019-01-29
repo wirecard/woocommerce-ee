@@ -65,7 +65,7 @@ class WC_Gateway_Wirecard_Pay_By_Bank_App extends WC_Wirecard_Payment_Gateway {
 			'products',
 			'refunds',
 		);
-		
+
 		// Refund not supported for now - This can be enabled if it gets supported
 		//$this->refund        = array( 'debit' );
 		//$this->refund_action = 'cancel';
@@ -94,8 +94,8 @@ class WC_Gateway_Wirecard_Pay_By_Bank_App extends WC_Wirecard_Payment_Gateway {
 			'enabled'                => array(
 				'title'       => __( 'text_enable_disable', 'wirecard-woocommerce-extension' ),
 				'type'        => 'checkbox',
-				'description'       => __( 'config_status_desc_paybybankapp', 'wirecard-woocommerce-extension' ),
-				'label' => __( 'enable_heading_title_paybybankapp', 'wirecard-woocommerce-extension' ),
+				'description' => __( 'config_status_desc_paybybankapp', 'wirecard-woocommerce-extension' ),
+				'label'       => __( 'enable_heading_title_paybybankapp', 'wirecard-woocommerce-extension' ),
 				'default'     => 'no',
 			),
 			'title'                  => array(
@@ -161,12 +161,12 @@ class WC_Gateway_Wirecard_Pay_By_Bank_App extends WC_Wirecard_Payment_Gateway {
 
 	/**
 	 * Add Pay by Bank app fields
-	 * 
+	 *
 	 * @param string $key
 	 * @param string value
 	 *
 	 * @return CustomField
-	 * 
+	 *
 	 * @since 1.6.0
 	 *
 	 */
@@ -207,7 +207,7 @@ class WC_Gateway_Wirecard_Pay_By_Bank_App extends WC_Wirecard_Payment_Gateway {
 		$custom_fields->add( $this->createCustomField( 'zapp.in.MerchantRtnStrng', $merchant_return_string ) );
 		$custom_fields->add( $this->createCustomField( 'zapp.in.TxType', 'PAYMT' ) );
 		$custom_fields->add( $this->createCustomField( 'zapp.in.DeliveryType', 'DELTAD' ) );
-		
+
 		$this->transaction->setCustomFields( $custom_fields );
 
 		return $this->execute_transaction( $this->transaction, $this->config, $this->payment_action, $order );
@@ -250,17 +250,17 @@ class WC_Gateway_Wirecard_Pay_By_Bank_App extends WC_Wirecard_Payment_Gateway {
 	public function process_refund( $order_id, $amount = null, $reason = '' ) {
 		$this->transaction = new PayByBankAppTransaction();
 
-		$custom_fields          = new \Wirecard\PaymentSdk\Entity\CustomFieldCollection();
-		$custom_fields->add( $this->createCustomField( 'zapp.in.RefundReasonType', 'LATECONFIRMATION') );
+		$custom_fields = new \Wirecard\PaymentSdk\Entity\CustomFieldCollection();
+		$custom_fields->add( $this->createCustomField( 'zapp.in.RefundReasonType', 'LATECONFIRMATION' ) );
 		$custom_fields->add( $this->createCustomField( 'zapp.in.RefundMethod', 'BACS' ) );
-		$this->transaction->setCustomFields($custom_fields);
+		$this->transaction->setCustomFields( $custom_fields );
 
 		return parent::process_refund( $order_id, $amount, '' );
 	}
 
 	/**
 	 * Create payment method Configuration
-	 * 
+	 *
 	 * @param string|null $base_url
 	 * @param string|null $http_user
 	 * @param string|null $http_pass
