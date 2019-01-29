@@ -413,7 +413,6 @@ msgid "config_status_desc_masterpass"
 msgstr ""
 
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:98
-#, fuzzy
 msgid "config_status_desc_paybybankapp"
 msgstr ""
 
@@ -500,12 +499,10 @@ msgid "config_vault_desc"
 msgstr ""
 
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:155
-#, fuzzy
 msgid "config_zapp_merchant_return_string"
 msgstr ""
 
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:157
-#, fuzzy
 msgid "config_zapp_merchant_return_string_desc"
 msgstr ""
 
@@ -554,7 +551,6 @@ msgid "enable_heading_title_masterpass"
 msgstr ""
 
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:99
-#, fuzzy
 msgid "enable_heading_title_paybybankapp"
 msgstr ""
 
@@ -656,7 +652,6 @@ msgstr ""
 
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:60
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:106
-#, fuzzy
 msgid "heading_title_paybybankapp"
 msgstr ""
 
@@ -807,12 +802,10 @@ msgid "panel_transcation_id"
 msgstr ""
 
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:61
-#, fuzzy
 msgid "paybybankapp"
 msgstr ""
 
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:62
-#, fuzzy
 msgid "paybybankapp_desc"
 msgstr ""
 

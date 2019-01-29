@@ -413,7 +413,6 @@ msgid "config_status_desc_masterpass"
 msgstr "Activate payment method Masterpass to make it available for your consumers."
 
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:98
-#, fuzzy
 msgid "config_status_desc_paybybankapp"
 msgstr "Activate payment method Pay by Bank app to make it available for your consumers."
 
@@ -500,12 +499,10 @@ msgid "config_vault_desc"
 msgstr "Credit Card details are saved for later use."
 
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:155
-#, fuzzy
 msgid "config_zapp_merchant_return_string"
 msgstr "Merchant Return URL"
 
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:157
-#, fuzzy
 msgid "config_zapp_merchant_return_string_desc"
 msgstr "Merchant Return URL to redirect the Consumer from the mobile banking app to the merchant’s browser or App."
 
@@ -554,7 +551,6 @@ msgid "enable_heading_title_masterpass"
 msgstr "Enable Wirecard Masterpass"
 
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:99
-#, fuzzy
 msgid "enable_heading_title_paybybankapp"
 msgstr "Enable Wirecard Pay by Bank app"
 
@@ -656,7 +652,6 @@ msgstr "Wirecard Masterpass"
 
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:60
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:106
-#, fuzzy
 msgid "heading_title_paybybankapp"
 msgstr "Wirecard Pay by Bank app"
 
@@ -807,12 +802,10 @@ msgid "panel_transcation_id"
 msgstr "Transaction ID"
 
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:61
-#, fuzzy
 msgid "paybybankapp"
 msgstr "Pay by Bank app"
 
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:62
-#, fuzzy
 msgid "paybybankapp_desc"
 msgstr "Pay by Bank app transactions via Wirecard Payment Processing Gateway."
 
