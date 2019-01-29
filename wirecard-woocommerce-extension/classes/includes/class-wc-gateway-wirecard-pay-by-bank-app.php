@@ -44,32 +44,31 @@ use Wirecard\PaymentSdk\TransactionService;
  *
  * @extends WC_Wirecard_Payment_Gateway
  *
- * @since   1.1.0
+ * @since   1.6.0
  */
 class WC_Gateway_Wirecard_Pay_By_Bank_App extends WC_Wirecard_Payment_Gateway {
 
 	/**
 	 * WC_Gateway_Wirecard_Pay_By_Bank_App constructor.
 	 *
-	 * @since 1.1.0
+	 * @since 1.6.0
 	 */
 	public function __construct() {
 		$this->type               = 'zapp';
 		$this->id                 = 'wirecard_ee_pbba';
 		$this->icon               = WIRECARD_EXTENSION_URL . 'assets/images/pbba.png';
-		$this->method_title       = __( 'Wirecard Pay by Bank app', 'wirecard-woocommerce-extension' );
-		$this->method_name        = __( 'Pay by Bank app', 'wirecard-woocommerce-extension' );
-		$this->method_description = __( 'Pay by Bank app transactions via Wirecard Payment Processing Gateway', 'wirecard-woocommerce-extension' );
+		$this->method_title       = __( 'heading_title_paybybankapp', 'wirecard-woocommerce-extension' );
+		$this->method_name        = __( 'paybybankapp', 'wirecard-woocommerce-extension' );
+		$this->method_description = __( 'paybybankapp_desc', 'wirecard-woocommerce-extension' );
 
 		$this->supports = array(
 			'products',
 			'refunds',
 		);
-
-		$this->cancel        = array( 'authorization' );
-		$this->capture       = array( 'authorization' );
-		$this->refund        = array( 'purchase', 'capture-authorization' );
-		$this->refund_action = 'cancel';
+		
+		// Refund not supported for now - This can be enabled if it gets supported
+		//$this->refund        = array( 'debit' );
+		//$this->refund_action = 'cancel';
 
 		$this->init_form_fields();
 		$this->init_settings();
@@ -88,22 +87,22 @@ class WC_Gateway_Wirecard_Pay_By_Bank_App extends WC_Wirecard_Payment_Gateway {
 	/**
 	 * Load form fields for configuration
 	 *
-	 * @since 1.1.0
+	 * @since 1.6.0
 	 */
 	public function init_form_fields() {
 		$this->form_fields = array(
 			'enabled'                => array(
 				'title'       => __( 'text_enable_disable', 'wirecard-woocommerce-extension' ),
 				'type'        => 'checkbox',
-				'description' => __( 'enable_heading_title_pbba', 'wirecard-woocommerce-extension' ),
-				'label'       => __( 'config_status_desc_pbba', 'wirecard-woocommerce-extension' ),
+				'description'       => __( 'config_status_desc_paybybankapp', 'wirecard-woocommerce-extension' ),
+				'label' => __( 'enable_heading_title_paybybankapp', 'wirecard-woocommerce-extension' ),
 				'default'     => 'no',
 			),
 			'title'                  => array(
 				'title'       => __( 'config_title', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
 				'description' => __( 'config_title_desc', 'wirecard-woocommerce-extension' ),
-				'default'     => __( 'heading_title_pbba', 'wirecard-woocommerce-extension' ),
+				'default'     => __( 'heading_title_paybybankapp', 'wirecard-woocommerce-extension' ),
 			),
 			'merchant_account_id'    => array(
 				'title'       => __( 'config_merchant_account_id', 'wirecard-woocommerce-extension' ),
@@ -125,13 +124,13 @@ class WC_Gateway_Wirecard_Pay_By_Bank_App extends WC_Wirecard_Payment_Gateway {
 			'base_url'               => array(
 				'title'       => __( 'config_base_url', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
-				'description' => __( 'config_base_url_desc', 'woocomerce-gateway-wirecard' ),
+				'description' => __( 'config_base_url_desc', 'wirecard-woocommerce-extension' ),
 				'default'     => 'https://api-test.wirecard.com',
 			),
 			'http_user'              => array(
 				'title'       => __( 'config_http_user', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
-				'description' => __( 'The http user provided in your Wirecard contract', 'wirecard-woocommerce-extension' ),
+				'description' => __( 'config_http_user_desc', 'wirecard-woocommerce-extension' ),
 				'default'     => '70000-APITEST-AP',
 			),
 			'http_pass'              => array(
@@ -152,23 +151,26 @@ class WC_Gateway_Wirecard_Pay_By_Bank_App extends WC_Wirecard_Payment_Gateway {
 				'description' => '',
 			),
 			'merchant_return_string' => array(
-				'title'       => __( 'Merchant return string', 'wirecard-woocommerce-extension' ),
+				'title'       => __( 'config_zapp_merchant_return_string', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
-				'description' => __( 'Merchant Return String to redirect the Consumer from the Mobile Banking App to the Merchant’s browser or App.', 'wirecard-woocommerce-extension' ),
-				'default'     => 'PayByBankApp',
+				'description' => __( 'config_zapp_merchant_return_string_desc', 'wirecard-woocommerce-extension' ),
+				'default'     => 'https://www.demoshop.com/return',
 			),
 		);
 	}
 
 	/**
-	 *
+	 * Add Pay by Bank app fields
+	 * 
 	 * @param string $key
 	 * @param string value
 	 *
 	 * @return CustomField
+	 * 
+	 * @since 1.6.0
 	 *
 	 */
-	function createCustomField( $key, $value ) {
+	private function createCustomField( $key, $value ) {
 		$custom_field = new CustomField( $key, $value );
 		$custom_field->setPrefix( '' );
 		return $custom_field;
@@ -181,7 +183,7 @@ class WC_Gateway_Wirecard_Pay_By_Bank_App extends WC_Wirecard_Payment_Gateway {
 	 *
 	 * @return array
 	 *
-	 * @since 1.1.0
+	 * @since 1.6.0
 	 */
 	public function process_payment( $order_id ) {
 		$order = wc_get_order( $order_id );
@@ -200,11 +202,13 @@ class WC_Gateway_Wirecard_Pay_By_Bank_App extends WC_Wirecard_Payment_Gateway {
 		$custom_fields          = $this->transaction->getCustomFields();
 		$merchant_return_string = $this->get_option( 'merchant_return_string' );
 		if ( ! isset( $merchant_return_string ) || trim( $merchant_return_string ) === '' ) {
-			$merchant_return_string = 'pbba';
+			$merchant_return_string = $this->create_redirect_url( $order, 'pending', $this->type );
 		}
 		$custom_fields->add( $this->createCustomField( 'zapp.in.MerchantRtnStrng', $merchant_return_string ) );
 		$custom_fields->add( $this->createCustomField( 'zapp.in.TxType', 'PAYMT' ) );
 		$custom_fields->add( $this->createCustomField( 'zapp.in.DeliveryType', 'DELTAD' ) );
+		
+		$this->transaction->setCustomFields( $custom_fields );
 
 		return $this->execute_transaction( $this->transaction, $this->config, $this->payment_action, $order );
 	}
@@ -215,9 +219,9 @@ class WC_Gateway_Wirecard_Pay_By_Bank_App extends WC_Wirecard_Payment_Gateway {
 	 * @param int        $order_id
 	 * @param float|null $amount
 	 *
-	 * @return UpiTransaction
+	 * @return PayByBankAppTransaction
 	 *
-	 * @since 1.1.0
+	 * @since 1.6.0
 	 */
 	public function process_cancel( $order_id, $amount = null ) {
 		$order = wc_get_order( $order_id );
@@ -238,26 +242,32 @@ class WC_Gateway_Wirecard_Pay_By_Bank_App extends WC_Wirecard_Payment_Gateway {
 	 * @param float|null $amount
 	 * @param string     $reason
 	 *
-	 * @return bool|UpiTransaction|WP_Error
+	 * @return bool|PayByBankAppTransaction|WP_Error
 	 *
-	 * @since 1.1.0
+	 * @since 1.6.0
 	 * @throws Exception
 	 */
 	public function process_refund( $order_id, $amount = null, $reason = '' ) {
 		$this->transaction = new PayByBankAppTransaction();
 
-		$this->transaction->setRefundReasonType( 'LATECONFIRMATION' );
-		$this->transaction->setRefundMethod( 'BACS' );
+		$custom_fields          = new \Wirecard\PaymentSdk\Entity\CustomFieldCollection();
+		$custom_fields->add( $this->createCustomField( 'zapp.in.RefundReasonType', 'LATECONFIRMATION') );
+		$custom_fields->add( $this->createCustomField( 'zapp.in.RefundMethod', 'BACS' ) );
+		$this->transaction->setCustomFields($custom_fields);
 
 		return parent::process_refund( $order_id, $amount, '' );
 	}
 
 	/**
 	 * Create payment method Configuration
+	 * 
+	 * @param string|null $base_url
+	 * @param string|null $http_user
+	 * @param string|null $http_pass
 	 *
 	 * @return Config
 	 *
-	 * @since 1.1.0
+	 * @since 1.6.0
 	 */
 	public function create_payment_config( $base_url = null, $http_user = null, $http_pass = null ) {
 		if ( is_null( $base_url ) ) {
@@ -276,15 +286,5 @@ class WC_Gateway_Wirecard_Pay_By_Bank_App extends WC_Wirecard_Payment_Gateway {
 		$config->add( $payment_config );
 
 		return $config;
-	}
-
-	/**
-	 * Submit a form with the data from the response
-	 *
-	 * @since 1.1.0
-	 */
-	public function callback() {
-		$callback = new Wirecard_Callback();
-		$callback->post_upi_form();
 	}
 }
