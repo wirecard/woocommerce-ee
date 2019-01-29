@@ -394,6 +394,7 @@ msgstr "Metode pembayaran Faktur Bergaransi hanya akan ditampilkan bila negara t
 msgid "config_shopping_basket"
 msgstr "Keranjang Belanja"
 
+#: classes/includes/class-wc-gateway-wirecard-paypal.php:168
 msgid "config_shopping_basket_desc"
 msgstr "Untuk tujuan konfirmasi, metode pembayaran ini mendukung tampilan keranjang belanja saat checkout. Untuk mengaktifkan fitur ini, aktifkan Keranjang Belanja."
 
@@ -420,6 +421,10 @@ msgstr "Aktifkan metode pembayaran iDEAL"
 #: classes/includes/class-wc-gateway-wirecard-masterpass.php:99
 msgid "config_status_desc_masterpass"
 msgstr "Aktifkan metode pembayaran Masterpass"
+
+#: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:98
+msgid "config_status_desc_paybybankapp"
+msgstr "Activate payment method Pay by Bank app to make it available for your consumers."
 
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:98
 msgid "config_status_desc_paypal"
@@ -504,6 +509,14 @@ msgstr "Ini mengendalikan judul yang dilihat pelanggan ketika akan melakukan pem
 msgid "config_vault_desc"
 msgstr "Kartu Kredit dapat disimpan untuk digunakan kembali di kemudian hari tanpa memasukkan perincian kartu kredit"
 
+#: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:155
+msgid "config_zapp_merchant_return_string"
+msgstr "Merchant Return URL"
+
+#: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:157
+msgid "config_zapp_merchant_return_string_desc"
+msgstr "Merchant Return URL to redirect the Consumer from the mobile banking app to the merchant’s browser or App."
+
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:62
 msgid "creditcard"
 msgstr "Credit Card"
@@ -547,6 +560,10 @@ msgstr "Aktifkan iDEAL Wirecard"
 #: classes/includes/class-wc-gateway-wirecard-masterpass.php:98
 msgid "enable_heading_title_masterpass"
 msgstr "Aktifkan Masterpass Wirecard"
+
+#: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:99
+msgid "enable_heading_title_paybybankapp"
+msgstr "Enable Wirecard Pay by Bank app"
 
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:99
 msgid "enable_heading_title_paypal"
@@ -646,6 +663,11 @@ msgstr "iDEAL Wirecard"
 #: classes/includes/class-wc-gateway-wirecard-masterpass.php:106
 msgid "heading_title_masterpass"
 msgstr "Wirecard Masterpass"
+
+#: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:60
+#: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:106
+msgid "heading_title_paybybankapp"
+msgstr "Wirecard Pay by Bank app"
 
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:61
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:106
@@ -789,6 +811,14 @@ msgstr "Status transaksi"
 #: classes/admin/class-wirecard-transaction-factory.php:106
 msgid "panel_transcation_id"
 msgstr "ID Transaksi"
+
+#: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:61
+msgid "paybybankapp"
+msgstr "Pay by Bank app"
+
+#: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:62
+msgid "paybybankapp_desc"
+msgstr "Pay by Bank app transactions via Wirecard Payment Processing Gateway."
 
 #. Description of the plugin
 msgid "Payment Gateway for WooCommerce"

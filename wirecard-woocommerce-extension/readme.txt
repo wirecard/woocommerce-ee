@@ -4,7 +4,7 @@ Tags: Wirecard, Credit Card, Alipay Cross-border, Guaranteed Invoice by Wirecard
 Requires at least: 4.9
 Tested up to: 5.0.2
 Requires PHP: 5.6
-Stable tag: 1.5.2
+Stable tag: 1.6.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -21,6 +21,7 @@ Wirecard WooCommerce Extension can be integrated into your shop system fast and 
 - Purchase on account
 - Purchase on account with guaranteed payment via Wirecard
 - Masterpass
+- Pay By Bank app
 - PayPal
 - SEPA Direct Debit
 - Sofort.
@@ -68,6 +69,4 @@ Our general Terms of Use can be found on [Github](https://github.com/wirecard/wo
 4. Wirecard Transaction Detailview for Post-Processing Operations
 
 == Changelog ==
-- Add deposit to processing order state
-- View reference id on thank you page for Payment in Advance (PIA) payment
-- Update tax handling for shipping
+- Implement payment method Pay by Bank app

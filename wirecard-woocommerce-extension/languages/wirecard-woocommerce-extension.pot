@@ -384,6 +384,7 @@ msgstr ""
 msgid "config_shopping_basket"
 msgstr ""
 
+#: classes/includes/class-wc-gateway-wirecard-paypal.php:168
 msgid "config_shopping_basket_desc"
 msgstr ""
 
@@ -409,6 +410,10 @@ msgstr ""
 
 #: classes/includes/class-wc-gateway-wirecard-masterpass.php:99
 msgid "config_status_desc_masterpass"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:98
+msgid "config_status_desc_paybybankapp"
 msgstr ""
 
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:98
@@ -493,6 +498,14 @@ msgstr ""
 msgid "config_vault_desc"
 msgstr ""
 
+#: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:155
+msgid "config_zapp_merchant_return_string"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:157
+msgid "config_zapp_merchant_return_string_desc"
+msgstr ""
+
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:62
 msgid "creditcard"
 msgstr ""
@@ -535,6 +548,10 @@ msgstr ""
 
 #: classes/includes/class-wc-gateway-wirecard-masterpass.php:98
 msgid "enable_heading_title_masterpass"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:99
+msgid "enable_heading_title_paybybankapp"
 msgstr ""
 
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:99
@@ -631,6 +648,11 @@ msgstr ""
 #: classes/includes/class-wc-gateway-wirecard-masterpass.php:61
 #: classes/includes/class-wc-gateway-wirecard-masterpass.php:106
 msgid "heading_title_masterpass"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:60
+#: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:106
+msgid "heading_title_paybybankapp"
 msgstr ""
 
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:61
@@ -777,6 +799,14 @@ msgstr ""
 
 #: classes/admin/class-wirecard-transaction-factory.php:106
 msgid "panel_transcation_id"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:61
+msgid "paybybankapp"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:62
+msgid "paybybankapp_desc"
 msgstr ""
 
 #. Description of the plugin
