@@ -94,7 +94,7 @@ class Wirecard_Transaction_Factory {
 
 		$this->transaction_handler   = new Wirecard_Transaction_Handler();
 		$this->table_name            = $wpdb->base_prefix . 'wirecard_payment_gateway_tx';
-		$this->stock_reduction_types = array( 'authorization', 'purchase', 'debit' );
+		$this->stock_reduction_types = array( 'authorization', 'purchase', 'debit', 'deposit' );
 		$this->fields_list           = array(
 			'tx_id'                 => array(
 				'title' => __( 'panel_transaction', 'wirecard-woocommerce-extension' ),
@@ -311,13 +311,47 @@ class Wirecard_Transaction_Factory {
 
 
 	/**
+	 * Handling of post-processing actions
+	 * 
+	 * @param $transaction_id
+	 * @param null $action
+	 * 
+	 * @since 1.6.1
+	 */
+	public function show_post_processing_info( $transaction_id, $action = null ) {
+		$message = null;
+		$severity = 'error';
+		if ( isset( $action ) ) {
+			switch ( $action ) {
+				case 'refund':
+					$message = $this->handle_refund( $transaction_id );
+					break;
+				case 'cancel':
+					$message = $this->handle_cancel( $transaction_id );
+					break;
+				case 'capture':
+					$message = $this->handle_capture( $transaction_id );
+					break;
+			}
+		}
+		if ( $message instanceof SuccessResponse) {
+			$severity = 'updated';
+			$message = __( 'success_new_transaction', 'wirecard-woocommerce-extension' ) . ' <a href="?page=wirecardpayment&id=' . $message->getTransactionId() . '">' . $message->getTransactionId() . '</a>';
+		}
+		
+		$this->show_transaction( $transaction_id, $message, $severity );
+	}
+	
+	/**
 	 * Print transaction detail information and possible back-end operations
 	 *
-	 * @param $transaction_id
+	 * @param string $transaction_id
+	 * @param null|string $message
+	 * @param string $severity
 	 *
 	 * @since 1.0.0
 	 */
-	public function show_transaction( $transaction_id ) {
+	public function show_transaction( $transaction_id, $message, $severity ) {
 		$transaction = $this->get_transaction( $transaction_id );
 		if ( ! $transaction ) {
 			echo __( 'error_no_transaction', 'wirecard-woocommerce-extension' );
@@ -331,12 +365,17 @@ class Wirecard_Transaction_Factory {
 		?>
 		<link rel='stylesheet' href='<?php echo plugins_url( 'wirecard-woocommerce-extension/assets/styles/admin.css' ); ?>'>
 		<div class="wrap">
+			<?php 
+			if ( isset( $message ) ) {
+				$this->print_admin_notice( $message, $severity );
+			}
+			?>
 			<div class="postbox-container">
 				<div class="postbox">
 					<div class="inside">
 						<div class="panel-wrap woocommerce">
 							<div class="panel woocommerce-order-data">
-								<h2 class="woocommerce-order-data__heading"><?php echo __( 'text_transaction', 'wirecard-woocommerce-extension' ) . $transaction_id; ?></h2>
+								<h2 class="woocommerce-order-data__heading"><?php echo __( 'text_transaction', 'wirecard-woocommerce-extension' ) . '' . $transaction_id; ?></h2>
 								<h3>
 									<?php echo $payment->method_name . ' ' . __( 'payment_suffix', 'wirecard-woocommerce-extension' ); ?>
 								</h3>
@@ -347,13 +386,13 @@ class Wirecard_Transaction_Factory {
 								<div class="wc-order-data-row">
 									<?php
 									if ( $payment->can_cancel( $transaction->transaction_type ) && ! $transaction->closed && 'awaiting' != $transaction->transaction_state ) {
-										echo "<a href='?page=cancelpayment&id={$transaction_id}' class='button'>" . __( 'text_cancel_transaction', 'wirecard-woocommerce-extension' ) . '</a> ';
+										echo "<a href='?page=wirecardpayment&id={$transaction_id}&action=cancel' class='button'>" . __( 'text_cancel_transaction', 'wirecard-woocommerce-extension' ) . '</a> ';
 									}
 									if ( $payment->can_capture( $transaction->transaction_type ) && ! $transaction->closed && 'awaiting' != $transaction->transaction_state ) {
-										echo "<a href='?page=capturepayment&id={$transaction_id}' class='button'>" . __( 'text_capture_transaction', 'wirecard-woocommerce-extension' ) . '</a> ';
+										echo "<a href='?page=wirecardpayment&id={$transaction_id}&action=capture' class='button'>" . __( 'text_capture_transaction', 'wirecard-woocommerce-extension' ) . '</a> ';
 									}
 									if ( $payment->can_refund( $transaction->transaction_type ) && ! $transaction->closed && 'awaiting' != $transaction->transaction_state ) {
-										echo "<a href='?page=refundpayment&id={$transaction_id}' class='button'>" . __( 'text_refund_transaction', 'wirecard-woocommerce-extension' ) . '</a> ';
+										echo "<a href='?page=wirecardpayment&id={$transaction_id}&action=refund' class='button'>" . __( 'text_refund_transaction', 'wirecard-woocommerce-extension' ) . '</a> ';
 									}
 									if ( $transaction->closed ) {
 										echo "<p class='add-items'>" . __( 'error_no_post_processing_operations', 'wirecard-woocommerce-extension' ) . '</p>';
@@ -398,9 +437,27 @@ class Wirecard_Transaction_Factory {
 	}
 
 	/**
+	 * Create notice, success, error box in admin interface
+	 * 
+	 * @param $message
+	 * @param string $severity
+	 * 
+	 * @since 1.6.1
+	 */
+	public function print_admin_notice( $message, $severity = 'update-nag' ) {
+		?>
+			<div class="<?php echo $severity; ?> notice">
+				<?php echo $message; ?>
+			</div>
+		<?php
+	}
+	
+	/**
 	 * Handles cancel transaction calls
 	 *
 	 * @param $transaction_id
+	 * 
+	 * @return string|SuccessResponse
 	 *
 	 * @since 1.0.0
 	 */
@@ -408,17 +465,17 @@ class Wirecard_Transaction_Factory {
 		/** @var stdClass $transaction */
 		$transaction = $this->get_transaction( $transaction_id );
 		if ( ! $transaction ) {
-			echo __( 'error_no_transaction', 'wirecard-woocommerce-extension' );
-
-			return;
+			return __( 'error_no_transaction', 'wirecard-woocommerce-extension' );
 		}
-		$this->transaction_handler->cancel_transaction( $transaction );
+		return $this->transaction_handler->cancel_transaction( $transaction );
 	}
 
 	/**
 	 * Handles capture transaction calls
 	 *
 	 * @param $transaction_id
+	 * 
+	 * @return string|SuccessResponse
 	 *
 	 * @since 1.0.0
 	 */
@@ -426,17 +483,17 @@ class Wirecard_Transaction_Factory {
 		/** @var stdClass $transaction */
 		$transaction = $this->get_transaction( $transaction_id );
 		if ( ! $transaction ) {
-			echo __( 'error_no_transaction', 'wirecard-woocommerce-extension' );
-
-			return;
+			return __( 'error_no_transaction', 'wirecard-woocommerce-extension' );
 		}
-		$this->transaction_handler->capture_transaction( $transaction );
+		return $this->transaction_handler->capture_transaction( $transaction );
 	}
 
 	/**
 	 * Handles refund transaction calls
 	 *
 	 * @param $transaction_id
+	 * 
+	 * @return string|SuccessResponse
 	 *
 	 * @since 1.0.0
 	 */
@@ -444,11 +501,9 @@ class Wirecard_Transaction_Factory {
 		/** @var stdClass $transaction */
 		$transaction = $this->get_transaction( $transaction_id );
 		if ( ! $transaction ) {
-			echo __( 'error_no_transaction', 'wirecard-woocommerce-extension' );
-
-			return;
+			return __( 'error_no_transaction', 'wirecard-woocommerce-extension' );
 		}
-		$this->transaction_handler->refund_transaction( $transaction );
+		return $this->transaction_handler->refund_transaction( $transaction );
 	}
 
 	/**

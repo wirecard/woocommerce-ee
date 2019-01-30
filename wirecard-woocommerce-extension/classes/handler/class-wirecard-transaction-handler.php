@@ -75,13 +75,14 @@ class Wirecard_Transaction_Handler extends Wirecard_Handler {
 		if ( $response instanceof SuccessResponse ) {
 			$order = wc_get_order( $transaction_data->order_id );
 			$order->set_transaction_id( $response->getTransactionId() );
-			$redirect_url = '/admin.php?page=wirecardpayment&id=' . $response->getTransactionId();
+			return $response;
+			/*$redirect_url = '/admin.php?page=wirecardpayment&id=' . $response->getTransactionId();
 			$this->restock_returned_items( $transaction_data->order_id );
 			wp_redirect( admin_url( $redirect_url ), 301 );
-			wp_die();
+			wp_die();*/
 		}
 		if ( $response instanceof FailureResponse ) {
-			echo __( 'error_transaction_cancel', 'woocommercer-gateway-wirecard' );
+			return __( 'error_transaction_cancel', 'woocommercer-gateway-wirecard' );
 		}
 	}
 
@@ -111,12 +112,13 @@ class Wirecard_Transaction_Handler extends Wirecard_Handler {
 		if ( $response instanceof SuccessResponse ) {
 			$order = wc_get_order( $transaction_data->order_id );
 			$order->set_transaction_id( $response->getTransactionId() );
-			$redirect_url = '/admin.php?page=wirecardpayment&id=' . $response->getTransactionId();
+			return $response;
+			/*$redirect_url = '/admin.php?page=wirecardpayment&id=' . $response->getTransactionId();
 			wp_redirect( admin_url( $redirect_url ), 301 );
-			die();
+			die();*/
 		}
 		if ( $response instanceof FailureResponse ) {
-			echo __( 'error_transaction_capture', 'woocommercer-gateway-wirecard' );
+			return __( 'error_transaction_capture', 'woocommercer-gateway-wirecard' );
 		}
 	}
 
@@ -133,12 +135,13 @@ class Wirecard_Transaction_Handler extends Wirecard_Handler {
 		$payment = $this->get_payment_method( $transaction_data->payment_method );
 		$return  = $payment->process_refund( $transaction_data->order_id, $transaction_data->amount );
 		if ( is_wp_error( $return ) ) {
-			echo $return->get_error_message();
+			return $return->get_error_message();
 		} else {
 			$this->restock_returned_items( $transaction_data->order_id );
-			wp_redirect( admin_url( $return ), 301 );
+			return $return;
+			//wp_redirect( admin_url( $return ), 301 );
 		}
-		die();
+		//die();
 	}
 
 	/**
