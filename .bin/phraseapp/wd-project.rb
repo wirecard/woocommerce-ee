@@ -51,11 +51,11 @@ class WdProject
   # Parses a PO/POT file and returns an array of messages.
   # Used instead of SimplePoParser.parse(path), due to the latter not properly closing the file on Windows.
   def parse_file(path)
-    file = File.open(path, 'r')
+    file = File.open(path, 'r:utf-8')
     if file.gets =~ /\r$/
       # detected Windows line ending
       file.close
-      file = File.open(path, 'rt')
+      file = File.open(path, 'rt:utf-8')
     else
       file.rewind
     end
