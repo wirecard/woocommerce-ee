@@ -55,7 +55,7 @@ class Wirecard_Transaction_Handler extends Wirecard_Handler {
 	 * @param stdClass $transaction_data
 	 *
 	 * @return string|SuccessResponse
-	 * 
+	 *
 	 * @throws Exception
 	 *
 	 * @since 1.0.0
