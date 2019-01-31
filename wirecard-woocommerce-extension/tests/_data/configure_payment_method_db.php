@@ -30,42 +30,42 @@
  */
 
 // the path for different config files, each named as <paymentmethod>.json
-define('GATEWAY_CONFIG_PATH', 'gateway_configs');
+define( 'GATEWAY_CONFIG_PATH', 'gateway_configs' );
 
-$gateway = getenv('GATEWAY');
-if (!$gateway) {
-    $gateway = 'API-TEST';
+$gateway = getenv( 'GATEWAY' );
+if ( ! $gateway ) {
+	$gateway = 'API-TEST';
 }
 
 // the default config defines valid keys for each payment method and is prefilled with API-TEST setup by default
 $defaultConfig = [
-    'creditcard' => [
-        'base_url' => 'https://api-test.wirecard.com',
-        'http_user' => '70000-APITEST-AP',
-        'http_pass' => 'qD2wzQ_hrc!8',
-        'threed_maid' => '508b8896-b37d-4614-845c-26bf8bf2c948',
-        'threed_secret' => 'dbc5a498-9a66-43b9-bf1d-a618dd399684',
-        'merchant_account_id' => '53f2895a-e4de-4e82-a813-0d87a10e55e6',
-        'secret' => 'dbc5a498-9a66-43b9-bf1d-a618dd399684',
-        'ssl_max_limit' => 100,
-        'three_d_min_limit' => 50,
+	'creditcard' => [
+		'base_url'            => 'https://api-test.wirecard.com',
+		'http_user'           => '70000-APITEST-AP',
+		'http_pass'           => 'qD2wzQ_hrc!8',
+		'threed_maid'         => '508b8896-b37d-4614-845c-26bf8bf2c948',
+		'threed_secret'       => 'dbc5a498-9a66-43b9-bf1d-a618dd399684',
+		'merchant_account_id' => '53f2895a-e4de-4e82-a813-0d87a10e55e6',
+		'secret'              => 'dbc5a498-9a66-43b9-bf1d-a618dd399684',
+		'ssl_max_limit'       => 100,
+		'three_d_min_limit'   => 50,
 
-        'enabled' => 'yes',
-        'title' => 'Wirecard Credit Card',
-        'credentials' => '',
-        'test_button' => 'Test',
-        'advanced' => '',
-        'payment_action' => 'pay',
-        'descriptor' => 'no',
-        'send_additional' => 'yes',
-        'cc_vault_enabled' => 'no',
-    ],
+		'enabled'             => 'yes',
+		'title'               => 'Wirecard Credit Card',
+		'credentials'         => '',
+		'test_button'         => 'Test',
+		'advanced'            => '',
+		'payment_action'      => 'pay',
+		'descriptor'          => 'no',
+		'send_additional'     => 'yes',
+		'cc_vault_enabled'    => 'no',
+	],
 ];
 
 // main script - read payment method from command line, build the config and write it into database
-if (count($argv) < 2) {
-    $supportedPaymentMethods = implode("\n  ", array_keys($GLOBALS['defaultConfig']));
-    echo <<<END_USAGE
+if ( count( $argv ) < 2 ) {
+	$supportedPaymentMethods = implode( "\n  ", array_keys( $GLOBALS['defaultConfig'] ) );
+	echo <<<END_USAGE
 Usage: php configure_payment_method_db.php <paymentmethod>
 
 Supported payment methods:
@@ -73,17 +73,17 @@ Supported payment methods:
 
 
 END_USAGE;
-    exit(1);
+	exit( 1 );
 }
-$paymentMethod = trim($argv[1]);
+$paymentMethod = trim( $argv[1] );
 
-$dbConfig = buildConfigByPaymentMethod($paymentMethod, $gateway);
-if (empty($dbConfig)) {
-    echo "Payment method $paymentMethod is not supported\n";
-    exit(1);
+$dbConfig = buildConfigByPaymentMethod( $paymentMethod, $gateway );
+if ( empty( $dbConfig ) ) {
+	echo "Payment method $paymentMethod is not supported\n";
+	exit( 1 );
 }
 
-updateWoocommerceEeDbConfig($dbConfig, $paymentMethod);
+updateWoocommerceEeDbConfig( $dbConfig, $paymentMethod );
 
 /**
  * Method buildConfigByPaymentMethod
@@ -94,26 +94,25 @@ updateWoocommerceEeDbConfig($dbConfig, $paymentMethod);
  * @since   1.4.4
  */
 
-function buildConfigByPaymentMethod($paymentMethod, $gateway)
-{
-    if (!array_key_exists($paymentMethod, $GLOBALS['defaultConfig'])) {
-        return null;
-    }
-    $config = $GLOBALS['defaultConfig'][$paymentMethod];
+function buildConfigByPaymentMethod( $paymentMethod, $gateway ) {
+	if ( ! array_key_exists( $paymentMethod, $GLOBALS['defaultConfig'] ) ) {
+		return null;
+	}
+	$config = $GLOBALS['defaultConfig'][ $paymentMethod ];
 
-    $jsonFile = GATEWAY_CONFIG_PATH . DIRECTORY_SEPARATOR . $paymentMethod . ".json";
-    if (file_exists($jsonFile)) {
-        $jsonData = json_decode(file_get_contents($jsonFile));
-        if (!empty($jsonData) && !empty($jsonData->$gateway)) {
-            foreach (get_object_vars($jsonData->$gateway) as $key => $data) {
-                // only replace values from json if the key is defined in defaultDbValues
-                if (array_key_exists($key, $config)) {
-                    $config[$key] = $data;
-                }
-            }
-        }
-    }
-    return $config;
+	$jsonFile = GATEWAY_CONFIG_PATH . DIRECTORY_SEPARATOR . $paymentMethod . '.json';
+	if ( file_exists( $jsonFile ) ) {
+		$jsonData = json_decode( file_get_contents( $jsonFile ) );
+		if ( ! empty( $jsonData ) && ! empty( $jsonData->$gateway ) ) {
+			foreach ( get_object_vars( $jsonData->$gateway ) as $key => $data ) {
+				// only replace values from json if the key is defined in defaultDbValues
+				if ( array_key_exists( $key, $config ) ) {
+					$config[ $key ] = $data;
+				}
+			}
+		}
+	}
+	return $config;
 }
 
 /**
@@ -124,38 +123,37 @@ function buildConfigByPaymentMethod($paymentMethod, $gateway)
  *
  * @since   1.4.4
  */
-function updateWoocommerceEeDbConfig($db_config, $payment_method)
-{
-    echo "Configuring " . $payment_method . " payment method in the shop system \n";
-    //DB setup
-    $dbHost = 'mysql';
-    $dbName = 'wordpress';
-    $dbUser = 'root';
-    $dbPass = getenv('WOOCOMMERCE_DB_PASSWORD');
-    $dbPort = getenv('WOOCOMMERCE_DB_PORT');
+function updateWoocommerceEeDbConfig( $db_config, $payment_method ) {
+	echo 'Configuring ' . $payment_method . " payment method in the shop system \n";
+	//DB setup
+	$dbHost = 'mysql';
+	$dbName = 'WordPress';
+	$dbUser = 'root';
+	$dbPass = getenv( 'WOOCOMMERCE_DB_PASSWORD' );
+	$dbPort = getenv( 'WOOCOMMERCE_DB_PORT' );
 
-    // table name
-    $tableName = 'wp_options';
-    $creditCardSettingKey = 'woocommerce_wirecard_ee_' . $payment_method . '_settings';
+	// table name
+	$tableName            = 'wp_options';
+	$creditCardSettingKey = 'woocommerce_wirecard_ee_' . $payment_method . '_settings';
 
-    $serializedConfig = serialize($db_config);
+	$serializedConfig = serialize( $db_config );
 
-    // create connection
-    $mysqli = new mysqli($dbHost, $dbUser, $dbPass, $dbName, $dbPort);
-    if ($mysqli->connect_errno) {
-        echo "Can't connect DB $dbName on host $dbHost as user $dbUser \n";
-        return false;
-    }
+	// create connection
+	$mysqli = new mysqli( $dbHost, $dbUser, $dbPass, $dbName, $dbPort );
+	if ( $mysqli->connect_errno ) {
+		echo "Can't connect DB $dbName on host $dbHost as user $dbUser \n";
+		return false;
+	}
 
-    // remove existing config if any exists - or do nothing
-    $stmtDelete = $mysqli->prepare("DELETE FROM $tableName WHERE option_name = ?");
-    $stmtDelete->bind_param("s", $creditCardSettingKey);
-    $stmtDelete->execute();
+	// remove existing config if any exists - or do nothing
+	$stmtDelete = $mysqli->prepare( "DELETE FROM $tableName WHERE option_name = ?" );
+	$stmtDelete->bind_param( 's', $creditCardSettingKey );
+	$stmtDelete->execute();
 
-    // insert the new config
-    $stmtInsert = $mysqli->prepare("INSERT INTO $tableName (option_name, option_value, autoload) VALUES (?, ?, 'yes')");
-    $stmtInsert->bind_param("ss", $creditCardSettingKey, $serializedConfig);
-    $stmtInsert->execute();
+	// insert the new config
+	$stmtInsert = $mysqli->prepare( "INSERT INTO $tableName (option_name, option_value, autoload) VALUES (?, ?, 'yes')" );
+	$stmtInsert->bind_param( 'ss', $creditCardSettingKey, $serializedConfig );
+	$stmtInsert->execute();
 
-    return true;
+	return true;
 }

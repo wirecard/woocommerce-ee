@@ -31,22 +31,22 @@
 
 namespace Page;
 
-class Cart extends Base
-{
-    /**
-     * @var string
-     * @since 1.4.4
-     */
-    // include url of current page
-    public $URL = '/cart';
+class Cart extends Base {
 
-    /**
-     * @var array
-     * @since 1.4.4
-     */
-    public $elements = array(
-        'Proceed to checkout' => "//*[@class='checkout-button button alt wc-forward']",
-        'Quantity' => "//*[@class='input-text qty text']",
-        'Update Cart' => "//*[@name='update_cart']"
-    );
+	/**
+	 * @var string
+	 * @since 1.4.4
+	 */
+	// include url of current page
+	public $URL = '/cart';
+
+	/**
+	 * @var array
+	 * @since 1.4.4
+	 */
+	public $elements = array(
+		'Proceed to checkout' => "//*[@class='checkout-button button alt wc-forward']",
+		'Quantity'            => "//*[@class='input-text qty text']",
+		'Update Cart'         => "//*[@name='update_cart']",
+	);
 }

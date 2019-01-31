@@ -31,20 +31,20 @@
 
 namespace Page;
 
-class Shop extends Base
-{
-    /**
-     * @var string
-     * @since 1.4.4
-     */
-    // include url of current page
-    public $URL = '/shop';
+class Shop extends Base {
 
-    /**
-     * @var array
-     * @since 1.4.4
-     */
-    public $elements = array(
-        'First Product in the Product List' => "//*[@id='main']/ul/li[1]/a[1]"
-    );
+	/**
+	 * @var string
+	 * @since 1.4.4
+	 */
+	// include url of current page
+	public $URL = '/shop';
+
+	/**
+	 * @var array
+	 * @since 1.4.4
+	 */
+	public $elements = array(
+		'First Product in the Product List' => "//*[@id='main']/ul/li[1]/a[1]",
+	);
 }

@@ -312,14 +312,14 @@ class Wirecard_Transaction_Factory {
 
 	/**
 	 * Handling of post-processing actions
-	 * 
+	 *
 	 * @param $transaction_id
 	 * @param null $action
-	 * 
+	 *
 	 * @since 1.6.1
 	 */
 	public function show_post_processing_info( $transaction_id, $action = null ) {
-		$message = null;
+		$message  = null;
 		$severity = 'error';
 		if ( isset( $action ) ) {
 			switch ( $action ) {
@@ -334,14 +334,14 @@ class Wirecard_Transaction_Factory {
 					break;
 			}
 		}
-		if ( $message instanceof SuccessResponse) {
+		if ( $message instanceof SuccessResponse ) {
 			$severity = 'updated';
-			$message = __( 'success_new_transaction', 'wirecard-woocommerce-extension' ) . ' <a href="?page=wirecardpayment&id=' . $message->getTransactionId() . '">' . $message->getTransactionId() . '</a>';
+			$message  = __( 'success_new_transaction', 'wirecard-woocommerce-extension' ) . ' <a href="?page=wirecardpayment&id=' . $message->getTransactionId() . '">' . $message->getTransactionId() . '</a>';
 		}
-		
+
 		$this->show_transaction( $transaction_id, $message, $severity );
 	}
-	
+
 	/**
 	 * Print transaction detail information and possible back-end operations
 	 *
@@ -365,7 +365,7 @@ class Wirecard_Transaction_Factory {
 		?>
 		<link rel='stylesheet' href='<?php echo plugins_url( 'wirecard-woocommerce-extension/assets/styles/admin.css' ); ?>'>
 		<div class="wrap">
-			<?php 
+			<?php
 			if ( isset( $message ) ) {
 				$this->print_admin_notice( $message, $severity );
 			}
@@ -438,10 +438,10 @@ class Wirecard_Transaction_Factory {
 
 	/**
 	 * Create notice, success, error box in admin interface
-	 * 
+	 *
 	 * @param $message
 	 * @param string $severity
-	 * 
+	 *
 	 * @since 1.6.1
 	 */
 	public function print_admin_notice( $message, $severity = 'update-nag' ) {
@@ -451,12 +451,12 @@ class Wirecard_Transaction_Factory {
 			</div>
 		<?php
 	}
-	
+
 	/**
 	 * Handles cancel transaction calls
 	 *
 	 * @param $transaction_id
-	 * 
+	 *
 	 * @return string|SuccessResponse
 	 *
 	 * @since 1.0.0
@@ -474,7 +474,7 @@ class Wirecard_Transaction_Factory {
 	 * Handles capture transaction calls
 	 *
 	 * @param $transaction_id
-	 * 
+	 *
 	 * @return string|SuccessResponse
 	 *
 	 * @since 1.0.0
@@ -492,7 +492,7 @@ class Wirecard_Transaction_Factory {
 	 * Handles refund transaction calls
 	 *
 	 * @param $transaction_id
-	 * 
+	 *
 	 * @return string|SuccessResponse
 	 *
 	 * @since 1.0.0

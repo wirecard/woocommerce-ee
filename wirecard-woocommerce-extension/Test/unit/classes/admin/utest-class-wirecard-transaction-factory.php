@@ -149,7 +149,7 @@ class WC_Gateway_Wirecard_Transaction_Factory_Utest extends \PHPUnit_Framework_T
 		$wpdb = $mocked_wpdb;
 
 		$actual   = $this->transaction_factory->handle_cancel( '123' );
-		$expected = null;
+		$expected = 'error_no_transaction';
 
 		$this->assertEquals( $expected, $actual );
 	}
@@ -164,7 +164,7 @@ class WC_Gateway_Wirecard_Transaction_Factory_Utest extends \PHPUnit_Framework_T
 		$wpdb = $mocked_wpdb;
 
 		$actual   = $this->transaction_factory->handle_capture( '123' );
-		$expected = null;
+		$expected = 'error_no_transaction';
 
 		$this->assertEquals( $expected, $actual );
 	}
@@ -179,7 +179,7 @@ class WC_Gateway_Wirecard_Transaction_Factory_Utest extends \PHPUnit_Framework_T
 		$wpdb = $mocked_wpdb;
 
 		$actual   = $this->transaction_factory->handle_refund( '123' );
-		$expected = null;
+		$expected = 'error_no_transaction';
 
 		$this->assertEquals( $expected, $actual );
 	}
