@@ -664,7 +664,7 @@ msgstr "Wirecard iDEAL"
 msgid "heading_title_masterpass"
 msgstr "Wirecard Masterpass"
 
-#: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:60
+#: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:60
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:106
 msgid "heading_title_paybybankapp"
 msgstr "Wirecard Pay by Bank app"
@@ -960,6 +960,10 @@ msgstr "商家配置已成功通过测试。"
 #, fuzzy
 msgid "success_email"
 msgstr "电子邮件已发送成功"
+
+#: classes/admin/class-wirecard-transaction-factory.php:339
+msgid "success_new_transaction"
+msgstr "后续处理操作成功了。已创建新交易。"
 
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:149
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:146

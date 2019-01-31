@@ -650,7 +650,7 @@ msgstr "Wirecard iDEAL"
 msgid "heading_title_masterpass"
 msgstr "Wirecard Masterpass"
 
-#: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:60
+#: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:60
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:106
 msgid "heading_title_paybybankapp"
 msgstr "Wirecard Pay by Bank app"
@@ -946,6 +946,10 @@ msgstr "Die Konfigurationseinstellungen wurden erfolgreich getestet."
 #: classes/admin/class-wirecard-settings.php:299
 msgid "success_email"
 msgstr "E-Mail wurde erfolgreich versendet."
+
+#: classes/admin/class-wirecard-transaction-factory.php:339
+msgid "success_new_transaction"
+msgstr "Die Folgeoperation war erfolgreich. Eine neue Transaktion wurde erstellt."
 
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:149
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:146

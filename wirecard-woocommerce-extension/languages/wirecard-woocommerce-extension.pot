@@ -650,7 +650,7 @@ msgstr ""
 msgid "heading_title_masterpass"
 msgstr ""
 
-#: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:60
+#: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:60
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:106
 msgid "heading_title_paybybankapp"
 msgstr ""
@@ -945,6 +945,10 @@ msgstr ""
 
 #: classes/admin/class-wirecard-settings.php:299
 msgid "success_email"
+msgstr ""
+
+#: classes/admin/class-wirecard-transaction-factory.php:339
+msgid "success_new_transaction"
 msgstr ""
 
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:149
