@@ -447,11 +447,8 @@ class Wirecard_Transaction_Factory {
 	 * @since 1.6.1
 	 */
 	public function print_admin_notice( $message, $severity = 'update-nag' ) {
-		?>
-			<div class="<?php echo $severity; ?> notice">
-				<?php echo $message; ?>
-			</div>
-		<?php
+		$notice = '<div class="' . $severity . ' notice">' . $message . '</div>';
+		echo $notice;
 	}
 
 	/**
