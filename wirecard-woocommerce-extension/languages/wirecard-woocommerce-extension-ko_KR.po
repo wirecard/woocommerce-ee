@@ -372,7 +372,7 @@ msgstr "결제 동작"
 msgid "config_payment_action_desc"
 msgstr "캡처 / 송장 발송하기 위한 \"캡처\" 또는 수동으로 캡처 / 송장 발송하기 위한 \"승인\" 중에서 선택합니다."
 
-#: classes/includes/class-wc-gateway-wirecard-poipia.php:152
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:152
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:156
 msgid "config_payment_type"
 msgstr "결제 유형"
@@ -674,7 +674,7 @@ msgstr "Wirecard Pay by Bank app"
 msgid "heading_title_paypal"
 msgstr "Wirecard PayPal"
 
-#: classes/includes/class-wc-gateway-wirecard-poipia.php:61
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:61
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:103
 msgid "heading_title_poi_pia"
 msgstr "Wirecard 송장 결제 / 사전 결제"
@@ -960,6 +960,10 @@ msgstr "상인 구성이 성공적으로 테스트되었습니다."
 #, fuzzy
 msgid "success_email"
 msgstr "이메일이 성공적으로 전송됨"
+
+#: classes/admin/class-wirecard-transaction-factory.php:339
+msgid "success_new_transaction"
+msgstr "처리 후 작업이 성공하였습니다. 새로운 트랜잭션이 생성되었습니다."
 
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:149
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:146

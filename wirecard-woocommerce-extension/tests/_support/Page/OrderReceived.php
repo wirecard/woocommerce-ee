@@ -31,13 +31,13 @@
 
 namespace Page;
 
-class OrderReceived extends Base
-{
-    // include url of current page
-    /**
-     * @var string
-     * @since 1.4.4
-     */
-    public $URL = '/order-received';
+class OrderReceived extends Base {
+
+	// include url of current page
+	/**
+	 * @var string
+	 * @since 1.4.4
+	 */
+	public $URL = '/order-received';
 
 }

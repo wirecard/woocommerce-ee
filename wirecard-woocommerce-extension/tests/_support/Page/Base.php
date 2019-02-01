@@ -31,77 +31,70 @@
 
 namespace Page;
 
-class Base
-{
-    /**
-     * @var string
-     * @since 1.4.4
-     */
-    protected $URL = '';
+class Base {
 
-    /**
-     * @var array
-     * @since 1.4.4
-     */
-    protected $elements = array();
+	/**
+	 * @var string
+	 * @since 1.4.4
+	 */
+	protected $URL = '';
 
-    /**
-     * @var string
-     * @since 1.4.4
-     */
-    protected $tester;
+	/**
+	 * @var array
+	 * @since 1.4.4
+	 */
+	protected $elements = array();
 
-    /**
-     * @var AcceptanceTester
-     * @since 1.4.4
-     */
-    public function __construct(\AcceptanceTester $I)
-    {
-        $this->tester = $I;
-    }
+	/**
+	 * @var string
+	 * @since 1.4.4
+	 */
+	protected $tester;
 
-    /**
-     * Method getElement
-     *
-     * @param string $name
-     * @return string
-     *
-     * @since   1.4.4
-     */
-    public function getElement($name)
-    {
-        return $this->elements[$name];
-    }
+	/**
+	 * @var AcceptanceTester
+	 * @since 1.4.4
+	 */
+	public function __construct( \AcceptanceTester $I ) {
+		$this->tester = $I;
+	}
 
-    /**
-     * Method getURL
-     *
-     * @return string
-     *
-     * @since   1.4.4
-     */
-    public function getURL()
-    {
-        return $this->URL;
-    }
+	/**
+	 * Method getElement
+	 *
+	 * @param string $name
+	 * @return string
+	 *
+	 * @since   1.4.4
+	 */
+	public function getElement( $name ) {
+		return $this->elements[ $name ];
+	}
 
-    /**
-     * Method fillBillingDetails
-     *
-     * @since   1.4.4
-     */
-    public function fillBillingDetails()
-    {
-        ;
-    }
+	/**
+	 * Method getURL
+	 *
+	 * @return string
+	 *
+	 * @since   1.4.4
+	 */
+	public function getURL() {
+		return $this->URL;
+	}
 
-    /**
-     * Method fillCreditCardDetails
-     *
-     * @since   1.4.4
-     */
-    public function fillCreditCardDetails()
-    {
-        ;
-    }
+	/**
+	 * Method fillBillingDetails
+	 *
+	 * @since   1.4.4
+	 */
+	public function fillBillingDetails() {;
+	}
+
+	/**
+	 * Method fillCreditCardDetails
+	 *
+	 * @since   1.4.4
+	 */
+	public function fillCreditCardDetails() {;
+	}
 }

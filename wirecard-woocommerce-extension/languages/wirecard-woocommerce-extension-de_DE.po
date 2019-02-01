@@ -363,7 +363,7 @@ msgstr "Zahlungsaktion"
 msgid "config_payment_action_desc"
 msgstr "Wählen Sie \"Buchung\", um automatisch eine Buchung durchzuführen, oder \"Genehmigung\", um eine manuelle Buchung zu ermöglichen."
 
-#: classes/includes/class-wc-gateway-wirecard-poipia.php:152
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:152
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:156
 msgid "config_payment_type"
 msgstr "Zahlungsmittel"
@@ -660,7 +660,7 @@ msgstr "Wirecard Pay by Bank app"
 msgid "heading_title_paypal"
 msgstr "Wirecard PayPal"
 
-#: classes/includes/class-wc-gateway-wirecard-poipia.php:61
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:61
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:103
 msgid "heading_title_poi_pia"
 msgstr "Wirecard Kauf auf Rechnung / Vorkasse"
@@ -946,6 +946,10 @@ msgstr "Die Konfigurationseinstellungen wurden erfolgreich getestet."
 #: classes/admin/class-wirecard-settings.php:299
 msgid "success_email"
 msgstr "E-Mail wurde erfolgreich versendet."
+
+#: classes/admin/class-wirecard-transaction-factory.php:339
+msgid "success_new_transaction"
+msgstr "Die Folgeoperation war erfolgreich. Eine neue Transaktion wurde erstellt."
 
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:149
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:146

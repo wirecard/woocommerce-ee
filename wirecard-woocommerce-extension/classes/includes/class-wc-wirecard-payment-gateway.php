@@ -421,7 +421,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 			$this->update_payment_transaction( $order, $response, 'awaiting', $transaction::NAME );
 			$order->set_transaction_id( $response->getTransactionId() );
 
-			return true;
+			return $response;
 		}
 		if ( $response instanceof FailureResponse ) {
 			return new WP_Error( 'error', __( 'refund_gateway_error', 'wirecard-woocommerce-extension' ) );

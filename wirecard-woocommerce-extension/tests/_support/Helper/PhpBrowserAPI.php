@@ -37,60 +37,60 @@ namespace Helper;
 
 use Codeception\Module\PhpBrowser;
 
-class PhpBrowserAPI extends \Codeception\Module
-{
+class PhpBrowserAPI extends \Codeception\Module {
 
-    /**
-     * @var PhpBrowser
-     * @since 1.4.4
-     */
-    private $phpBrowser;
 
-    public function _initialize()
-    {
-        // we initialize PhpBrowser here
-        $this->phpBrowser = new PhpBrowser($this->moduleContainer, [
-            'url' => $this->config['url'],
-            'auth' => [$this->config['user'], $this->config['password']]
-        ]);
-        $this->phpBrowser->_initialize();
-    }
+	/**
+	 * @var PhpBrowser
+	 * @since 1.4.4
+	 */
+	private $phpBrowser;
 
-    /**
-     * Method prepareCheckout
-     *
-     * @param PageObject $shopPage
-     * @param PageObject $productPage
-     *
-     * @since   1.4.4
-     */
-    public function prepareCheckout($shopPage, $productPage)
-    {
-        //go to shop page
-        $this->phpBrowser->amOnPage($shopPage->getURL());
-        //chose a product and open product page
-        $this->phpBrowser->click($shopPage->getElement("First Product in the Product List"));
-        //choose a product to the cart 5 times
-        for ($i = 0; $i <= 4; $i++) {
-            $this->phpBrowser->click($productPage->getElement("Add to cart"));
-        }
-    }
+	public function _initialize() {
+		 // we initialize PhpBrowser here
+		$this->phpBrowser = new PhpBrowser(
+			$this->moduleContainer,
+			[
+				'url'  => $this->config['url'],
+				'auth' => [ $this->config['user'], $this->config['password'] ],
+			]
+		);
+		$this->phpBrowser->_initialize();
+	}
 
-    /**
-     * Method syncCookies
-     * @since   1.4.4
-     */
-    public function syncCookies()
-    {
-        // open page in PhpBrowser
-        $this->phpBrowser->amOnPage('/');
-        $webdriver = $this->getModule('WebDriver');
-        // open page in WebDriver
-        $webdriver->amOnPage('/');
-        $cookieJar = $this->phpBrowser->client->getCookieJar();
-        foreach ($cookieJar->all() as $cookie) {
-            // copy cookies from PhpBrowser to WebDriver
-            $webdriver->setCookie($cookie->getName(), $cookie->getValue());
-        }
-    }
+	/**
+	 * Method prepareCheckout
+	 *
+	 * @param PageObject $shopPage
+	 * @param PageObject $productPage
+	 *
+	 * @since   1.4.4
+	 */
+	public function prepareCheckout( $shopPage, $productPage ) {
+		//go to shop page
+		$this->phpBrowser->amOnPage( $shopPage->getURL() );
+		//chose a product and open product page
+		$this->phpBrowser->click( $shopPage->getElement( 'First Product in the Product List' ) );
+		//choose a product to the cart 5 times
+		for ( $i = 0; $i <= 4; $i++ ) {
+			$this->phpBrowser->click( $productPage->getElement( 'Add to cart' ) );
+		}
+	}
+
+	/**
+	 * Method syncCookies
+	 * @since   1.4.4
+	 */
+	public function syncCookies() {
+		 // open page in PhpBrowser
+		$this->phpBrowser->amOnPage( '/' );
+		$webdriver = $this->getModule( 'WebDriver' );
+		// open page in WebDriver
+		$webdriver->amOnPage( '/' );
+		$cookieJar = $this->phpBrowser->client->getCookieJar();
+		foreach ( $cookieJar->all() as $cookie ) {
+			// copy cookies from PhpBrowser to WebDriver
+			$webdriver->setCookie( $cookie->getName(), $cookie->getValue() );
+		}
+	}
 }

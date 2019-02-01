@@ -372,7 +372,7 @@ msgstr "支払い処理"
 msgid "config_payment_action_desc"
 msgstr "注文のキャプチャ / インボイスを自動的に行う場合は「キャプチャ」を、キャプチャ / インボイスを手動で行う場合は「承認」を選択します。"
 
-#: classes/includes/class-wc-gateway-wirecard-poipia.php:152
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:152
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:156
 msgid "config_payment_type"
 msgstr "支払いの種類"
@@ -674,7 +674,7 @@ msgstr "Wirecard Pay by Bank app"
 msgid "heading_title_paypal"
 msgstr "Wirecard PayPal"
 
-#: classes/includes/class-wc-gateway-wirecard-poipia.php:61
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:61
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:103
 msgid "heading_title_poi_pia"
 msgstr "Wirecard のインボイスでの支払い / 事前支払い"
@@ -959,6 +959,10 @@ msgstr "販売者構成のテストが成功しました。"
 #, fuzzy
 msgid "success_email"
 msgstr "メールの送信に成功しました"
+
+#: classes/admin/class-wirecard-transaction-factory.php:339
+msgid "success_new_transaction"
+msgstr "処理後の操作に成功しました。新規の取引が作成されました。"
 
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:149
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:146

@@ -372,7 +372,7 @@ msgstr "Tindakan Pembayaran"
 msgid "config_payment_action_desc"
 msgstr "Pilih \"Catat transaksi\" untuk mencatat transaksi/menerbitkan faktur atas pesanan Anda secara otomatis atau \"Otorisasi\" untuk mencata transaksi/menerbitkan faktur secara manual."
 
-#: classes/includes/class-wc-gateway-wirecard-poipia.php:152
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:152
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:156
 msgid "config_payment_type"
 msgstr "Jenis Pembayaran"
@@ -674,7 +674,7 @@ msgstr "Wirecard Pay by Bank app"
 msgid "heading_title_paypal"
 msgstr "Wirecard PayPal"
 
-#: classes/includes/class-wc-gateway-wirecard-poipia.php:61
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:61
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:103
 msgid "heading_title_poi_pia"
 msgstr "Pembayaran Berdasarkan Faktur/Pembayaran di Muka Wirecard"
@@ -959,6 +959,10 @@ msgstr "Pengujian konfigurasi penjual berhasil."
 #, fuzzy
 msgid "success_email"
 msgstr "E-Mail berhasil dikirim"
+
+#: classes/admin/class-wirecard-transaction-factory.php:339
+msgid "success_new_transaction"
+msgstr "Operasi pascapemrosesan berhasil. Transaksi baru dibuat."
 
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:149
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:146

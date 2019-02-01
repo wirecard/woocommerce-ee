@@ -57,141 +57,132 @@ use Page\Verified as VerifiedPage;
 
 
 
-class AcceptanceTester extends \Codeception\Actor
-{
-    use _generated\AcceptanceTesterActions;
+class AcceptanceTester extends \Codeception\Actor {
 
-    /**
-     * @var string
-     * @since 1.4.4
-     */
-    private $currentPage;
+	use _generated\AcceptanceTesterActions;
 
-    /**
-     * Method selectPage
-     *
-     * @param string $name
-     * @return Base
-     *
-     * @since   1.4.4
-     */
-    private function selectPage($name)
-    {
-        switch ($name) {
-            case "Cart":
-                $page = new CartPage($this);
-                break;
-            case "Checkout":
-                $page = new CheckoutPage($this);
-                break;
-            case "Product":
-                $page = new ProductPage($this);
-                break;
-            case "Shop":
-                $page = new ShopPage($this);
-                break;
-            case "Verified":
-                $this->wait(5);
-                $page = new VerifiedPage($this);
-                break;
-            case "Order Received":
-                $this->wait(7);
-                $page = new OrderReceivedPage($this);
-                break;
-            default:
-                $page = null;
-        }
-        return $page;
-    }
+	/**
+	 * @var string
+	 * @since 1.4.4
+	 */
+	private $currentPage;
 
-    /**
-     * Method getPageElement
-     *
-     * @param string $elementName
-     * @return string
-     *
-     * @since   1.4.4
-     */
-    private function getPageElement($elementName)
-    {
-        //Takes the required element by it's name from required page
-        return $this->currentPage->getElement($elementName);
-    }
+	/**
+	 * Method selectPage
+	 *
+	 * @param string $name
+	 * @return Base
+	 *
+	 * @since   1.4.4
+	 */
+	private function selectPage( $name ) {
+		switch ( $name ) {
+			case 'Cart':
+				$page = new CartPage( $this );
+				break;
+			case 'Checkout':
+				$page = new CheckoutPage( $this );
+				break;
+			case 'Product':
+				$page = new ProductPage( $this );
+				break;
+			case 'Shop':
+				$page = new ShopPage( $this );
+				break;
+			case 'Verified':
+				$this->wait( 5 );
+				$page = new VerifiedPage( $this );
+				break;
+			case 'Order Received':
+				$this->wait( 7 );
+				$page = new OrderReceivedPage( $this );
+				break;
+			default:
+				$page = null;
+		}
+		return $page;
+	}
 
-    /**
-     * @Given I am on :page page
-     * @since 1.4.4
-     */
-    public function iAmOnPage($page)
-    {
-        // Open the page and initialize required pageObject
-        $this->currentPage = $this->selectPage($page);
-        $this->amOnPage($this->currentPage->getURL());
-    }
+	/**
+	 * Method getPageElement
+	 *
+	 * @param string $elementName
+	 * @return string
+	 *
+	 * @since   1.4.4
+	 */
+	private function getPageElement( $elementName ) {
+		//Takes the required element by it's name from required page
+		return $this->currentPage->getElement( $elementName );
+	}
 
-    /**
-     * @When I click :object
-     * @since 1.4.4
-     */
-    public function iClick($object)
-    {
-        $this->waitForElementVisible($this->getPageElement($object));
-        $this->waitForElementClickable($this->getPageElement($object));
-        $this->click($this->getPageElement($object));
-    }
+	/**
+	 * @Given I am on :page page
+	 * @since 1.4.4
+	 */
+	public function iAmOnPage( $page ) {
+		// Open the page and initialize required pageObject
+		$this->currentPage = $this->selectPage( $page );
+		$this->amOnPage( $this->currentPage->getURL() );
+	}
 
-    /**
-     * @When I am redirected to :page page
-     * @since 1.4.4
-     */
-    public function iAmRedirectedToPage($page)
-    {
-        // Initialize required pageObject WITHOUT checking URL
-        $this->currentPage = $this->selectPage($page);
-        // Check only specific keyword that page URL should contain
-        $this->seeInCurrentUrl($this->currentPage->getURL());
-    }
+	/**
+	 * @When I click :object
+	 * @since 1.4.4
+	 */
+	public function iClick( $object ) {
+		 $this->waitForElementVisible( $this->getPageElement( $object ) );
+		$this->waitForElementClickable( $this->getPageElement( $object ) );
+		$this->click( $this->getPageElement( $object ) );
+	}
 
-    /**
-     * @When I fill fields with :data
-     * @since 1.4.4
-     */
-    public function iFillFieldsWith($data)
-    {
-        $this->fillFieldsWithData($data, $this->currentPage);
-    }
+	/**
+	 * @When I am redirected to :page page
+	 * @since 1.4.4
+	 */
+	public function iAmRedirectedToPage( $page ) {
+		// Initialize required pageObject WITHOUT checking URL
+		$this->currentPage = $this->selectPage( $page );
+		// Check only specific keyword that page URL should contain
+		$this->seeInCurrentUrl( $this->currentPage->getURL() );
+	}
 
-    /**
-     * @When I enter :fieldValue in field :fieldID
-     * @since 1.4.4
-     */
-    public function iEnterInField($fieldValue, $fieldID)
-    {
-        $this->waitForElementVisible($this->getPageElement($fieldID));
-        $this->fillField($this->getPageElement($fieldID), $fieldValue);
-    }
+	/**
+	 * @When I fill fields with :data
+	 * @since 1.4.4
+	 */
+	public function iFillFieldsWith( $data ) {
+		$this->fillFieldsWithData( $data, $this->currentPage );
+	}
 
-    /**
-     * @Then I see :text
-     * @since 1.4.4
-     */
-    public function iSee($text)
-    {
-        $this->see($text);
-    }
+	/**
+	 * @When I enter :fieldValue in field :fieldID
+	 * @since 1.4.4
+	 */
+	public function iEnterInField( $fieldValue, $fieldID ) {
+		$this->waitForElementVisible( $this->getPageElement( $fieldID ) );
+		$this->fillField( $this->getPageElement( $fieldID ), $fieldValue );
+	}
 
-    /**
-     * @Given I prepare checkout
-     * @since 1.4.4
-     */
-    public function iPrepareCheckout()
-    {
-        // Do choosing of product and adding it to the cart in PhpBrowser
-        $shopPage = new ShopPage($this);
-        $productPage = new ProductPage($this);
-        $this->prepareCheckout($shopPage, $productPage);
-        //sync sessions between PhpBrowser and WebDriver
-        $this->syncCookies();
-    }
+	/**
+	 * @Then I see :text
+	 * @since 1.4.4
+	 */
+	public function iSee( $text ) {
+		 $this->see( $text );
+	}
+
+	/**
+	 * @Given I prepare checkout
+	 * @since 1.4.4
+	 */
+	public function iPrepareCheckout() {
+		// Do choosing of product and adding it to the cart in PhpBrowser
+		$shopPage    = new ShopPage( $this );
+		$productPage = new ProductPage( $this );
+		$this->prepareCheckout( $shopPage, $productPage );
+		//sync sessions between PhpBrowser and WebDriver
+		$this->syncCookies();
+	}
 }
 
