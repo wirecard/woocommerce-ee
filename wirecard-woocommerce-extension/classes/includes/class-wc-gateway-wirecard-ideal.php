@@ -279,6 +279,10 @@ class WC_Gateway_Wirecard_Ideal extends WC_Wirecard_Payment_Gateway {
 					'label' => 'Knab',
 				),
 				array(
+					'key'   => IdealBic::MOYONL21,
+					'label' => 'Moneyou',
+				),
+				array(
 					'key'   => IdealBic::RABONL2U,
 					'label' => 'Rabobank',
 				),
@@ -289,6 +293,10 @@ class WC_Gateway_Wirecard_Ideal extends WC_Wirecard_Payment_Gateway {
 				array(
 					'key'   => IdealBic::SNSBNL2A,
 					'label' => 'SNS Bank',
+				),
+				array(
+					'key'   => IdealBic::HANDNL2A,
+					'label' => 'Svenska Handelsbanken',
 				),
 				array(
 					'key'   => IdealBic::TRIONL2U,
