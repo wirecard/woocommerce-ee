@@ -308,7 +308,7 @@ class Wirecard_Transaction_Factory {
 		}
 		return $rest;
 	}
-	
+
 	/**
 	 * Handling of post-processing actions
 	 *
@@ -327,7 +327,7 @@ class Wirecard_Transaction_Factory {
 			$this->print_admin_notice( $message, $severity );
 			return;
 		}
-		
+
 		if ( isset( $action ) ) {
 			switch ( $action ) {
 				case 'refund':
@@ -341,7 +341,7 @@ class Wirecard_Transaction_Factory {
 					break;
 			}
 		}
-		
+
 		if ( $message instanceof SuccessResponse ) {
 			$severity = 'updated';
 			$message  = __( 'success_new_transaction', 'wirecard-woocommerce-extension' ) . ' <a href="?page=wirecardpayment&id=' . $message->getTransactionId() . '">' . $message->getTransactionId() . '</a>';
@@ -453,7 +453,7 @@ class Wirecard_Transaction_Factory {
 			</div>
 		<?php
 	}
-	
+
 	/**
 	 * Create transaction link for detailed information
 	 *
