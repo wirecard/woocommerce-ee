@@ -1,5 +1,17 @@
 [
 {
+    "release": "1.6.1",
+    "shopsystem": "WooCommerce",
+    "tested": "3.5.4",
+    "compatibility": "3.3.4",
+    "changelog": [
+      "Add french language package",
+      "Remove post-processing redirects",
+      "Add post-processing notifications",
+      "Add iDEAL issuer Moneyou and Svenska Handelsbanken"
+    ]
+},
+{
     "release": "1.6.0",
     "shopsystem": "WooCommerce",
     "tested": "3.5.2",
