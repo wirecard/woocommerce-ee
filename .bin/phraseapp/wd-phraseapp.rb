@@ -73,6 +73,9 @@ class WdPhraseApp
       params.file_format = 'gettext'
       po, err = @phraseapp.locale_download(@phraseapp_id, id, params)
       if err.nil?
+        # Look into each translation string. If one contains a line break at the end remove it.
+        # Needed to generate mo files from po files without errors
+        po.gsub!(/(?<translation>msgstr .*)\\n\"/, '\k<translation>"')
         File.write(File.join(@plugin_i18n_dir, "#{file_basename}.po"), po)
       else
         @log.error("An error occurred while downloading locale #{id}.po from PhraseApp.".red.bright)
