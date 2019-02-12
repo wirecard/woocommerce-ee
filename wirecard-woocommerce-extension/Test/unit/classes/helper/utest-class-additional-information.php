@@ -92,7 +92,7 @@ class WC_Gateway_Wirecard_Additional_Information_Utest extends \PHPUnit_Framewor
 		$basket->add( $item );
 		$item   = new \Wirecard\PaymentSdk\Entity\Item(
 			'Voucher',
-			new \Wirecard\PaymentSdk\Entity\Amount( 13, 'EUR' ),
+			new \Wirecard\PaymentSdk\Entity\Amount( -14, 'EUR' ),
 			1
 		);
 		$item->setDescription( 'Voucher' );
