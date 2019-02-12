@@ -46,14 +46,14 @@ use  Wirecard\PaymentSdk\Entity\SubMerchantInfo;
  *
  * @extends WC_Wirecard_Payment_Gateway
  *
- * @since   1.6.1
+ * @since 1.7.0
  */
 class WC_Gateway_Wirecard_WeChat extends WC_Wirecard_Payment_Gateway {
 
 	/**
 	 * WC_Gateway_Wirecard_WeChat constructor.
 	 *
-	 * @since 1.6.1
+	 * @since 1.7.0
 	 */
 	public function __construct() {
 		$this->type               = 'wechat-qrpay';
@@ -87,7 +87,7 @@ class WC_Gateway_Wirecard_WeChat extends WC_Wirecard_Payment_Gateway {
 	/**
 	 * Load form fields for configuration
 	 *
-	 * @since 1.6.1
+	 * @since 1.7.0
 	 */
 	public function init_form_fields() {
 		$this->form_fields = array(
@@ -143,13 +143,38 @@ class WC_Gateway_Wirecard_WeChat extends WC_Wirecard_Payment_Gateway {
 	}
 
 	/**
+	 * Create payment method configuration
+	 *
+	 * @param null $base_url
+	 * @param null $http_user
+	 * @param null $http_pass
+	 *
+	 * @return Config
+	 *
+	 * @since 1.7.0
+	 */
+	public function create_payment_config( $base_url = null, $http_user = null, $http_pass = null ) {
+		if ( is_null( $base_url ) ) {
+			$base_url  = $this->get_option( 'base_url' );
+			$http_user = $this->get_option( 'http_user' );
+			$http_pass = $this->get_option( 'http_pass' );
+		}
+
+		$config         = parent::create_payment_config( $base_url, $http_user, $http_pass );
+		$payment_config = new PaymentMethodConfig( WeChatTransaction::NAME, $this->get_option( 'merchant_account_id' ), $this->get_option( 'secret' ) );
+		$config->add( $payment_config );
+
+		return $config;
+	}
+
+	/**
 	 * Process payment gateway transactions
 	 *
 	 * @param int $order_id
 	 *
 	 * @return array
 	 *
-	 * @since 1.6.1
+	 * @since 1.7.0
 	 */
 	public function process_payment( $order_id ) {
 		$order = wc_get_order( $order_id );
@@ -162,10 +187,10 @@ class WC_Gateway_Wirecard_WeChat extends WC_Wirecard_Payment_Gateway {
 
 		$this->transaction->setSubMerchantInfo( $sub_merchant_info );
 
-		$this->transaction->setOrderDetail($order->get_id());
+		$this->transaction->setOrderDetail( $order->get_id() );
 
 		// FIXME remove :-D
-		var_dump('order: ',$order, 'transaction: ', $this->transaction, 'config: ', $this->config);
+		var_dump( 'order: ', $order, 'transaction: ', $this->transaction, 'config: ', $this->config );
 
 		return $this->execute_transaction( $this->transaction, $this->config, $this->payment_action, $order );
 	}
@@ -179,7 +204,7 @@ class WC_Gateway_Wirecard_WeChat extends WC_Wirecard_Payment_Gateway {
 	 *
 	 * @return bool|WeChatTransaction|WP_Error
 	 *
-	 * @since 1.6.1
+	 * @since 1.7.0
 	 * @throws Exception
 	 */
 	public function process_refund( $order_id, $amount = null, $reason = '' ) {
@@ -196,7 +221,7 @@ class WC_Gateway_Wirecard_WeChat extends WC_Wirecard_Payment_Gateway {
 	 *
 	 * @return WeChatTransaction
 	 *
-	 * @since 1.6.1
+	 * @since 1.7.0
 	 */
 	public function process_cancel( $order_id, $amount = null ) {
 		$order = wc_get_order( $order_id );
@@ -208,28 +233,5 @@ class WC_Gateway_Wirecard_WeChat extends WC_Wirecard_Payment_Gateway {
 		}
 
 		return $transaction;
-	}
-
-	/**
-	 * Create payment method configuration
-	 *
-	 * @param null $base_url
-	 * @param null $http_user
-	 * @param null $http_pass
-	 *
-	 * @return Config
-	 */
-	public function create_payment_config( $base_url = null, $http_user = null, $http_pass = null ) {
-		if ( is_null( $base_url ) ) {
-			$base_url  = $this->get_option( 'base_url' );
-			$http_user = $this->get_option( 'http_user' );
-			$http_pass = $this->get_option( 'http_pass' );
-		}
-
-		$config         = parent::create_payment_config( $base_url, $http_user, $http_pass );
-		$payment_config = new PaymentMethodConfig( WeChatTransaction::NAME, $this->get_option( 'merchant_account_id' ), $this->get_option( 'secret' ) );
-		$config->add( $payment_config );
-
-		return $config;
 	}
 }
