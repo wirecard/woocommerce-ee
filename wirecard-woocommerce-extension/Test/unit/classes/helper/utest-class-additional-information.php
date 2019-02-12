@@ -90,6 +90,14 @@ class WC_Gateway_Wirecard_Additional_Information_Utest extends \PHPUnit_Framewor
 		$item->setTaxRate( 12 );
 		$item->setTaxAmount( new \Wirecard\PaymentSdk\Entity\Amount( 10, 'EUR' ) );
 		$basket->add( $item );
+		$item   = new \Wirecard\PaymentSdk\Entity\Item(
+			'Voucher',
+			new \Wirecard\PaymentSdk\Entity\Amount( 13, 'EUR' ),
+			1
+		);
+		$item->setDescription( 'Voucher' );
+		$item->setArticleNumber( 'Voucher' );
+		$basket->add( $item );
 		$basket->setVersion( $expected );
 
 		$expected->setBasket( $basket );
