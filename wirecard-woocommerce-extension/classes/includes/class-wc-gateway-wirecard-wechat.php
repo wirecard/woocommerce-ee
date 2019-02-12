@@ -162,10 +162,55 @@ class WC_Gateway_Wirecard_WeChat extends WC_Wirecard_Payment_Gateway {
 
 		$this->transaction->setSubMerchantInfo( $sub_merchant_info );
 
+		$this->transaction->setOrderDetail($order->get_id());
+
+		// FIXME remove :-D
+		var_dump('order: ',$order, 'transaction: ', $this->transaction, 'config: ', $this->config);
+
 		return $this->execute_transaction( $this->transaction, $this->config, $this->payment_action, $order );
 	}
 
-		/**
+	/**
+	 * Create transaction for refund
+	 *
+	 * @param int        $order_id
+	 * @param float|null $amount
+	 * @param string     $reason
+	 *
+	 * @return bool|WeChatTransaction|WP_Error
+	 *
+	 * @since 1.6.1
+	 * @throws Exception
+	 */
+	public function process_refund( $order_id, $amount = null, $reason = '' ) {
+		$this->transaction = new WeChatTransaction();
+
+		return parent::process_refund( $order_id, $amount, '' );
+	}
+
+	/**
+	 * Create transaction for cancel
+	 *
+	 * @param int        $order_id
+	 * @param float|null $amount
+	 *
+	 * @return WeChatTransaction
+	 *
+	 * @since 1.6.1
+	 */
+	public function process_cancel( $order_id, $amount = null ) {
+		$order = wc_get_order( $order_id );
+
+		$transaction = new WeChatTransaction();
+		$transaction->setParentTransactionId( $order->get_transaction_id() );
+		if ( ! is_null( $amount ) ) {
+			$transaction->setAmount( new Amount( $amount, $order->get_currency() ) );
+		}
+
+		return $transaction;
+	}
+
+	/**
 	 * Create payment method configuration
 	 *
 	 * @param null $base_url
