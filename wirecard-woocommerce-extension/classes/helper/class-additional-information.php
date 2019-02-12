@@ -94,7 +94,7 @@ class Additional_Information {
 		$sum               += $shipping + $cart->get_shipping_tax();
 
 		//If coupons are applied
-		if ( !empty( $cart->get_applied_coupons() ) ) {
+		if ( ! empty( $cart->get_applied_coupons() ) ) {
 			$coupon_netto = 0;
 			$coupon_tax   = 0;
 			//for the netto amount
@@ -106,7 +106,7 @@ class Additional_Information {
 				$coupon_tax += $coupon_tax;
 			}
 			$coupon_total = $coupon_netto + $coupon_tax;
-			$sum -= $coupon_total;
+			$sum         -= $coupon_total;
 
 			$basket = $this->set_voucher_item(
 				$basket,
