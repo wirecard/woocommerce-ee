@@ -46,14 +46,14 @@ use  Wirecard\PaymentSdk\Entity\SubMerchantInfo;
  *
  * @extends WC_Wirecard_Payment_Gateway
  *
- * @since   1.0.0
+ * @since   1.6.1
  */
 class WC_Gateway_Wirecard_WeChat extends WC_Wirecard_Payment_Gateway {
 
 	/**
 	 * WC_Gateway_Wirecard_WeChat constructor.
 	 *
-	 * @since 1.1.0
+	 * @since 1.6.1
 	 */
 	public function __construct() {
 		$this->type               = 'wechat-qrpay';
@@ -69,6 +69,7 @@ class WC_Gateway_Wirecard_WeChat extends WC_Wirecard_Payment_Gateway {
 		);
 
 		$this->payment_action = 'pay';
+		$this->refund_action  = 'refund';
 
 		$this->init_form_fields();
 		$this->init_settings();
@@ -86,7 +87,7 @@ class WC_Gateway_Wirecard_WeChat extends WC_Wirecard_Payment_Gateway {
 	/**
 	 * Load form fields for configuration
 	 *
-	 * @since 1.1.0
+	 * @since 1.6.1
 	 */
 	public function init_form_fields() {
 		$this->form_fields = array(
@@ -101,15 +102,13 @@ class WC_Gateway_Wirecard_WeChat extends WC_Wirecard_Payment_Gateway {
 				'title'       => __( 'config_merchant_account_id', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
 				'description' => __( 'config_merchant_account_id_desc', 'wirecard-woocommerce-extension' ),
-				// FIXME check correct default value
-				'default'     => '2a0e9351-24ed-4110-9a1b-fd0fee6bec26',
+				'default'     => '20216dc1-0656-454a-94a1-ee51140d57fa',
 			),
 			'secret'              => array(
 				'title'       => __( 'config_merchant_secret', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
 				'description' => __( 'config_merchant_secret_desc', 'wirecard-woocommerce-extension' ),
-				// FIXME check correct default value
-				'default'     => 'dbc5a498-9a66-43b9-bf1d-a618dd399684',
+				'default'     => '9486b283-778f-4623-a70a-9ca663928d28',
 			),
 			'credentials'         => array(
 				'title'       => __( 'text_credentials', 'wirecard-woocommerce-extension' ),
@@ -120,21 +119,19 @@ class WC_Gateway_Wirecard_WeChat extends WC_Wirecard_Payment_Gateway {
 				'title'       => __( 'config_base_url', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
 				'description' => __( 'config_base_url_desc', 'wirecard-woocommerce-extension' ),
-				'default'     => 'https://api-test.wirecard.com',
+				'default'     => 'https://api-wdcee-test.wirecard.com',
 			),
 			'http_user'           => array(
 				'title'       => __( 'config_http_user', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
 				'description' => __( 'config_http_user_desc', 'wirecard-woocommerce-extension' ),
-				// FIXME check correct default value
-				'default'     => '70000-APITEST-AP',
+				'default'     => 'wechat_sandbox',
 			),
 			'http_pass'           => array(
 				'title'       => __( 'config_http_password', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
 				'description' => __( 'config_http_password_desc', 'wirecard-woocommerce-extension' ),
-				// FIXME check correct default value
-				'default'     => 'qD2wzQ_hrc!8',
+				'default'     => '9p0q8w8i',
 			),
 			'test_button'         => array(
 				'title'   => __( 'test_config', 'wirecard-woocommerce-extension' ),
@@ -152,7 +149,7 @@ class WC_Gateway_Wirecard_WeChat extends WC_Wirecard_Payment_Gateway {
 	 *
 	 * @return array
 	 *
-	 * @since 1.0.0
+	 * @since 1.6.1
 	 */
 	public function process_payment( $order_id ) {
 		$order = wc_get_order( $order_id );
