@@ -39,7 +39,7 @@ use Wirecard\PaymentSdk\Config\Config;
 use Wirecard\PaymentSdk\Config\PaymentMethodConfig;
 use Wirecard\PaymentSdk\Entity\Amount;
 use Wirecard\PaymentSdk\Transaction\WeChatTransaction;
-use  Wirecard\PaymentSdk\Entity\SubMerchantInfo;
+use Wirecard\PaymentSdk\Entity\SubMerchantInfo;
 
 /**
  * Class WC_Gateway_Wirecard_WeChat
@@ -56,8 +56,8 @@ class WC_Gateway_Wirecard_WeChat extends WC_Wirecard_Payment_Gateway {
 	 * @since 1.7.0
 	 */
 	public function __construct() {
-		$this->type               = 'wechat-qrpay';
-		$this->id                 = 'wirecard_ee_wechat';
+		$this->type = 'wechat-qrpay';
+		$this->id   = 'wirecard_ee_wechat';
 		// FIXME cgrach: request image
 		$this->icon               = WIRECARD_EXTENSION_URL . 'assets/images/wechat.png';
 		$this->method_title       = __( 'heading_title_wechat', 'wirecard-woocommerce-extension' );
