@@ -93,6 +93,28 @@ class Additional_Information {
 		$shipping_tax_rate  = $this->get_tax_rate_from_tax_class_depending_on_country( $tax_country, $shipping_tax_class );
 		$sum               += $shipping + $cart->get_shipping_tax();
 
+		//If coupons are applied
+		if ( ! empty( $cart->get_applied_coupons() ) ) {
+			$coupon_netto = 0;
+			$coupon_tax   = 0;
+			//for the netto amount
+			foreach ( $cart->get_coupon_discount_totals() as $coupon_code => $coupon_amount ) {
+				$coupon_netto += $coupon_amount;
+			}
+			//to add tax
+			foreach ( $cart->get_coupon_discount_tax_totals() as $coupon_code => $coupon_tax ) {
+				$coupon_tax += $coupon_tax;
+			}
+			$coupon_total = $coupon_netto + $coupon_tax;
+			$sum         -= $coupon_total;
+
+			$basket = $this->set_voucher_item(
+				$basket,
+				$coupon_netto,
+				$coupon_tax
+			);
+		}
+
 		if ( $cart->get_total( 'total' ) - $sum > 0 ) {
 			$shipping += number_format( ( $cart->get_total( 'total' ) - $sum ), wc_get_price_decimals() );
 		}
@@ -410,5 +432,25 @@ class Additional_Information {
 		$basket_item->setTaxRate( $tax_rate );
 
 		return $basket->add( $basket_item );
+	}
+
+	/**
+	 * @param Basket $basket
+	 * @param float $voucher_total
+	 * @param float $voucher_tax
+	 *
+	 * @return Basket
+	 * @since 1.6.2
+	 */
+	private function set_voucher_item( $basket, $voucher_total, $voucher_tax ) {
+		$amount = floatval( number_format( $voucher_total + $voucher_tax, wc_get_price_decimals() ) );
+
+		$amount = new Amount( $amount * -1, get_woocommerce_currency() );
+		$item   = new Item( 'Voucher', $amount, 1 );
+		$item->setDescription( 'Voucher' );
+		$item->setArticleNumber( 'Voucher' );
+		$basket->add( $item );
+
+		return $basket;
 	}
 }

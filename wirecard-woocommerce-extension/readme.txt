@@ -4,7 +4,7 @@ Tags: Wirecard, Credit Card, Alipay Cross-border, Guaranteed Invoice by Wirecard
 Requires at least: 4.9
 Tested up to: 5.0.3
 Requires PHP: 5.6
-Stable tag: 1.6.1
+Stable tag: 1.6.2
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -69,7 +69,4 @@ Our general Terms of Use can be found on [Github](https://github.com/wirecard/wo
 4. Wirecard Transaction Detailview for Post-Processing Operations
 
 == Changelog ==
-- Add french language package
-- Remove post-processing redirects
-- Add post-processing notifications
-- Add iDEAL issuer Moneyou and Svenska Handelsbanken
+- Add vouchers to cart
