@@ -79,7 +79,7 @@ msgstr "Erlaubte Währungen"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:189
 msgid "config_allowed_currencies_desc"
-msgstr "Garantierter Kauf auf Rechnung wird nur dann angezeigt, wenn die aktive Währung einer der hier gewählten Währungen entspricht. \n"
+msgstr "Garantierter Kauf auf Rechnung wird nur dann angezeigt, wenn die aktive Währung einer der hier gewählten Währungen entspricht. "
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:124
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:157
@@ -133,7 +133,7 @@ msgstr "Erlaubte Rechnungsländer"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:171
 msgid "config_billing_countries_desc"
-msgstr "Garantierter Kauf auf Rechnung wird nur dann angezeigt, wenn das Rechnungsland einem der hier gewählten Länder entspricht. Mehrfachauswahl mit STRG + Klick. Standardvorauswahl: Österreich und Deutschland.\n"
+msgstr "Garantierter Kauf auf Rechnung wird nur dann angezeigt, wenn das Rechnungsland einem der hier gewählten Länder entspricht. Mehrfachauswahl mit STRG + Klick. Standardvorauswahl: Österreich und Deutschland."
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:165
 msgid "config_billing_shipping"
@@ -306,7 +306,7 @@ msgstr "MAID"
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:111
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:111
 msgid "config_merchant_account_id_desc"
-msgstr "Eindeutiger Identifikator, der Ihrem Händlerkonto zugewiesen ist.\n"
+msgstr "Eindeutiger Identifikator, der Ihrem Händlerkonto zugewiesen ist."
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:113
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:122
@@ -418,7 +418,7 @@ msgstr "Activate payment method Pay by Bank app to make it available for your co
 
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:98
 msgid "config_status_desc_paypal"
-msgstr "PayPal aktivieren, um dieses Zahlungsmittel beim Checkout anzubieten.\n"
+msgstr "PayPal aktivieren, um dieses Zahlungsmittel beim Checkout anzubieten."
 
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:95
 msgid "config_status_desc_poi_pia"
@@ -438,7 +438,7 @@ msgstr "SEPA-Lastschrift aktivieren, um dieses Zahlungsmittel beim Checkout anzu
 
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:98
 msgid "config_status_desc_sofortbanking"
-msgstr "Sofort. aktivieren, um dieses Zahlungsmittel beim Checkout anzubieten.\n"
+msgstr "Sofort. aktivieren, um dieses Zahlungsmittel beim Checkout anzubieten."
 
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:98
 msgid "config_status_desc_upi"
@@ -496,7 +496,7 @@ msgstr "Name des Zahlungsmittels wie beim Checkout angezeigt."
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:213
 msgid "config_vault_desc"
-msgstr "Kreditkartendetails werden für die spätere Verwendung gespeichert. \n"
+msgstr "Kreditkartendetails werden für die spätere Verwendung gespeichert. "
 
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:155
 msgid "config_zapp_merchant_return_string"
@@ -619,7 +619,7 @@ msgstr "Es wurde keine Transaktion gefunden."
 
 #: woocommerce-wirecard-payment-gateway.php:319
 msgid "error_woocommerce_missing"
-msgstr "Für die Verwendung dieses Plugins müssen Sie zuerst die Wirecard WooCommerce Extension installieren und aktivieren.\n"
+msgstr "Für die Verwendung dieses Plugins müssen Sie zuerst die Wirecard WooCommerce Extension installieren und aktivieren."
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:258
 msgid "first-name"
@@ -925,7 +925,7 @@ msgstr "oder Dritten auf Anforderung meinen Namen, Adresse und Geburtsdatum voll
 
 #: classes/helper/sepa-template.php:104
 msgid "sepa_text_6"
-msgstr "Ich habe die Informationen zum SEPA-Lastschriftmandat gelesen und verstanden.\n"
+msgstr "Ich habe die Informationen zum SEPA-Lastschriftmandat gelesen und verstanden."
 
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:63
 msgid "sofortbanking"
@@ -1163,7 +1163,7 @@ msgstr "Wirecard Payment Processing Gateway"
 
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:261
 msgid "transfer_notice"
-msgstr "Verwenden Sie für die Überweisung die folgenden Daten:\n"
+msgstr "Verwenden Sie für die Überweisung die folgenden Daten:"
 
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:59
 msgid "upi"
