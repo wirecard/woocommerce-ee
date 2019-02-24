@@ -1,5 +1,14 @@
 [
 {
+    "release": "1.6.2",
+    "shopsystem": "WooCommerce",
+    "tested": "3.5.4",
+    "compatibility": "3.3.4",
+    "changelog": [
+      "Add vouchers to cart"
+    ]
+},
+{
     "release": "1.6.1",
     "shopsystem": "WooCommerce",
     "tested": "3.5.4",
