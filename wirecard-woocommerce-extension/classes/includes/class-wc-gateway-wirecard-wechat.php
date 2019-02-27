@@ -195,7 +195,7 @@ class WC_Gateway_Wirecard_WeChat extends WC_Wirecard_Payment_Gateway {
 
 		$this->transaction->setSubMerchantInfo( $sub_merchant_info );
 
-		$this->transaction->setOrderDetail( $order->get_id() );
+		$this->transaction->setOrderDetail( $this->additional_helper->create_descriptor($order) );
 
 		// FIXME remove :-D
 		//var_dump( 'order: ', $order, 'transaction: ', $this->transaction, 'config: ', $this->config );
