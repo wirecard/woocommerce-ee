@@ -67,11 +67,12 @@ matrix:
     after_script: skip
   
   - stage: deploy
-    if: tag IS present AND branch = master AND type = push
+    if: tag IS present AND type = push
     language: php
     php: 7.1
     before_install: skip
     install:
+      - travis_retry composer install $COMPOSER_ARGS
       - rvm install 2.5.3
     after_install: skip
     before_script: skip
