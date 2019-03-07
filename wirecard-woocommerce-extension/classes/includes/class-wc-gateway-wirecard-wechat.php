@@ -187,6 +187,7 @@ class WC_Gateway_Wirecard_WeChat extends WC_Wirecard_Payment_Gateway {
 		$order = wc_get_order( $order_id );
 
 		$this->transaction = new WeChatTransaction();
+
 		parent::process_payment( $order_id );
 
 		$sub_merchant_info = new SubMerchantInfo();
