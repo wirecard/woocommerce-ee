@@ -48,7 +48,7 @@ class WC_Gateway_Wirecard_WeChat_Utest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function test_create_payment_config() {
-		$config = $this->payment->create_payment_config( 'baseurl', 'httuser', 'httppass' );
+		$config = $this->payment->create_payment_config( 'baseurl', 'httpuser', 'httppass' );
 		$this->assertNotNull( $config );
 		$this->assertNotNull( $config->get( WeChatTransaction::NAME ) );
 	}

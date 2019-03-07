@@ -56,12 +56,11 @@ class WC_Gateway_Wirecard_WeChat extends WC_Wirecard_Payment_Gateway {
 	 * @since 1.7.0
 	 */
 	public function __construct() {
-		$this->type = 'wechat-qrpay';
-		$this->id   = 'wirecard_ee_wechat';
-		// FIXME cgrach: request image
+		$this->type               = 'wechat-qrpay';
+		$this->id                 = 'wirecard_ee_wechat';
 		$this->icon               = WIRECARD_EXTENSION_URL . 'assets/images/wechat.png';
 		$this->method_title       = __( 'heading_title_wechat', 'wirecard-woocommerce-extension' );
-		$this->method_name        = __( 'wechat-qrpay', 'wirecard-woocommerce-extension' );
+		$this->method_name        = __( 'wechat_qrpay', 'wirecard-woocommerce-extension' );
 		$this->method_description = __( 'wechat_desc', 'wirecard-woocommerce-extension' );
 
 		$this->supports = array(
@@ -195,10 +194,7 @@ class WC_Gateway_Wirecard_WeChat extends WC_Wirecard_Payment_Gateway {
 
 		$this->transaction->setSubMerchantInfo( $sub_merchant_info );
 
-		$this->transaction->setOrderDetail( $this->additional_helper->create_descriptor($order) );
-
-		// FIXME remove :-D
-		//var_dump( 'order: ', $order, 'transaction: ', $this->transaction, 'config: ', $this->config );
+		$this->transaction->setOrderDetail( $this->additional_helper->create_descriptor( $order ) );
 
 		return $this->execute_transaction( $this->transaction, $this->config, $this->payment_action, $order );
 	}
