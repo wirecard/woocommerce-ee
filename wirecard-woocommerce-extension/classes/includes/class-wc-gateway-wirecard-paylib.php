@@ -33,6 +33,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+use Wirecard\PaymentSdk\Config\PaymentMethodConfig;
 use Wirecard\PaymentSdk\Transaction\PaylibTransaction;
 
 require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-wirecard-payment-gateway.php' );
