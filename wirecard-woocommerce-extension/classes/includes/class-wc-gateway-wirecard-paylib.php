@@ -52,9 +52,8 @@ class WC_Gateway_Wirecard_Paylib extends WC_Wirecard_Payment_Gateway {
 	 * @since 1.7.0
 	 */
 	public function __construct() {
-		$this->type = 'paylib';
-		$this->id   = 'wirecard_ee_paylib';
-		//FIXME cgrach request official image
+		$this->type               = 'paylib';
+		$this->id                 = 'wirecard_ee_paylib';
 		$this->icon               = WIRECARD_EXTENSION_URL . 'assets/images/paylib.png';
 		$this->method_title       = __( 'heading_title_paylib', 'wirecard-woocommerce-extension' );
 		$this->method_name        = __( 'paylib', 'wirecard-woocommerce-extension' );
