@@ -146,6 +146,20 @@ class WC_Gateway_Wirecard_WeChat extends WC_Wirecard_Payment_Gateway {
 				'class'   => 'wc_wirecard_test_credentials_button button-primary',
 				'default' => __( 'test_credentials', 'wirecard-woocommerce-extension' ),
 			),
+			'descriptor'          => array(
+				'title'       => __( 'text_enable_disable', 'wirecard-woocommerce-extension' ),
+				'type'        => 'checkbox',
+				'description' => __( 'config_descriptor_desc', 'wirecard-woocommerce-extension' ),
+				'label'       => __( 'config_descriptor', 'wirecard-woocommerce-extension' ),
+				'default'     => 'no',
+			),
+			'send_additional'     => array(
+				'title'       => __( 'text_enable_disable', 'wirecard-woocommerce-extension' ),
+				'type'        => 'checkbox',
+				'description' => __( 'config_additional_info_desc', 'wirecard-woocommerce-extension' ),
+				'label'       => __( 'config_additional_info', 'wirecard-woocommerce-extension' ),
+				'default'     => 'yes',
+			),
 		);
 	}
 
@@ -195,7 +209,13 @@ class WC_Gateway_Wirecard_WeChat extends WC_Wirecard_Payment_Gateway {
 
 		$this->transaction->setSubMerchantInfo( $sub_merchant_info );
 
-		$this->transaction->setOrderDetail( $this->additional_helper->create_descriptor( $order ) );
+		if ( $this->get_option( 'descriptor' ) == 'yes' ) {
+			$this->transaction->setDescriptor( $this->additional_helper->create_descriptor( $order ) );
+		}
+
+		if ( $this->get_option( 'send_additional' ) == 'yes' ) {
+			$this->additional_helper->set_additional_information( $order, $this->transaction );
+		}
 
 		return $this->execute_transaction( $this->transaction, $this->config, $this->payment_action, $order );
 	}
