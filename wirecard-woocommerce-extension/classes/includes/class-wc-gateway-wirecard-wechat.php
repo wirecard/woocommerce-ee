@@ -60,7 +60,7 @@ class WC_Gateway_Wirecard_WeChat extends WC_Wirecard_Payment_Gateway {
 		$this->id                 = 'wirecard_ee_wechat';
 		$this->icon               = WIRECARD_EXTENSION_URL . 'assets/images/wechat.png';
 		$this->method_title       = __( 'heading_title_wechat', 'wirecard-woocommerce-extension' );
-		$this->method_name        = __( 'wechat_qrpay', 'wirecard-woocommerce-extension' );
+		$this->method_name        = __( 'wechat', 'wirecard-woocommerce-extension' );
 		$this->method_description = __( 'wechat_desc', 'wirecard-woocommerce-extension' );
 
 		$this->supports = array(
