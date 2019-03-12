@@ -126,7 +126,7 @@ class WC_Gateway_Wirecard_WeChat extends WC_Wirecard_Payment_Gateway {
 				'title'       => __( 'config_base_url', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
 				'description' => __( 'config_base_url_desc', 'wirecard-woocommerce-extension' ),
-				'default'     => 'https://api-wdcee-test.wirecard.com',
+				'default'     => 'https://api-test.wirecard.com',
 			),
 			'http_user'           => array(
 				'title'       => __( 'config_http_user', 'wirecard-woocommerce-extension' ),
@@ -209,13 +209,7 @@ class WC_Gateway_Wirecard_WeChat extends WC_Wirecard_Payment_Gateway {
 
 		$this->transaction->setSubMerchantInfo( $sub_merchant_info );
 
-		if ( $this->get_option( 'descriptor' ) == 'yes' ) {
-			$this->transaction->setDescriptor( $this->additional_helper->create_descriptor( $order ) );
-		}
-
-		if ( $this->get_option( 'send_additional' ) == 'yes' ) {
-			$this->additional_helper->set_additional_information( $order, $this->transaction );
-		}
+		$this->transaction->setOrderDetail( $this->additional_helper->create_descriptor( $order ) );
 
 		return $this->execute_transaction( $this->transaction, $this->config, $this->payment_action, $order );
 	}
