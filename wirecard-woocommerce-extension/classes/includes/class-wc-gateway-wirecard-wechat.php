@@ -223,7 +223,7 @@ class WC_Gateway_Wirecard_WeChat extends WC_Wirecard_Payment_Gateway {
 
 		$sub_merchant_info = new SubMerchantInfo();
 		$sub_merchant_info->setMerchantId( $this->get_option( 'sub_merchant_id' ) );
-		
+
 		if ( $this->get_option( 'sub_merchant_name' ) != '' ) {
 			$sub_merchant_info->setMerchantName( $this->get_option( 'sub_merchant_name' ) );
 		}
