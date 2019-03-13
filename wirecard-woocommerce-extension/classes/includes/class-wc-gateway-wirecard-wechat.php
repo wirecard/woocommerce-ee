@@ -117,6 +117,18 @@ class WC_Gateway_Wirecard_WeChat extends WC_Wirecard_Payment_Gateway {
 				'description' => __( 'config_merchant_secret_desc', 'wirecard-woocommerce-extension' ),
 				'default'     => '9486b283-778f-4623-a70a-9ca663928d28',
 			),
+			'sub_merchant_id'     => array(
+				'title'       => __( 'config_sub_merchant_id', 'wirecard-woocommerce-extension' ),
+				'type'        => 'text',
+				'description' => __( 'config_sub_merchant_id_desc', 'wirecard-woocommerce-extension' ),
+				'default'     => '12152566',
+			),
+			'sub_merchant_name'   => array(
+				'title'       => __( 'config_sub_merchant_name', 'wirecard-woocommerce-extension' ),
+				'type'        => 'text',
+				'description' => __( 'config_sub_merchant_name_desc', 'wirecard-woocommerce-extension' ),
+				'default'     => 'Merchant Store',
+			),
 			'credentials'         => array(
 				'title'       => __( 'text_credentials', 'wirecard-woocommerce-extension' ),
 				'type'        => 'title',
@@ -210,7 +222,11 @@ class WC_Gateway_Wirecard_WeChat extends WC_Wirecard_Payment_Gateway {
 		parent::process_payment( $order_id );
 
 		$sub_merchant_info = new SubMerchantInfo();
-		$sub_merchant_info->setMerchantId( $this->get_option( 'merchant_account_id' ) );
+		$sub_merchant_info->setMerchantId( $this->get_option( 'sub_merchant_id' ) );
+		
+		if ( $this->get_option( 'sub_merchant_name' ) != '' ) {
+			$sub_merchant_info->setMerchantName( $this->get_option( 'sub_merchant_name' ) );
+		}
 
 		$this->transaction->setSubMerchantInfo( $sub_merchant_info );
 
