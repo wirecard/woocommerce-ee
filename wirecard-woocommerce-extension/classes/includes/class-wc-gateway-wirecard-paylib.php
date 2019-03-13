@@ -136,6 +136,20 @@ class WC_Gateway_Wirecard_Paylib extends WC_Wirecard_Payment_Gateway {
 				'class'   => 'wc_wirecard_test_credentials_button button-primary',
 				'default' => __( 'test_credentials', 'wirecard-woocommerce-extension' ),
 			),
+			'descriptor'          => array(
+				'title'       => __( 'text_enable_disable', 'wirecard-woocommerce-extension' ),
+				'type'        => 'checkbox',
+				'description' => __( 'config_descriptor_desc', 'wirecard-woocommerce-extension' ),
+				'label'       => __( 'config_descriptor', 'wirecard-woocommerce-extension' ),
+				'default'     => 'no',
+			),
+			'send_additional'     => array(
+				'title'       => __( 'text_enable_disable', 'wirecard-woocommerce-extension' ),
+				'type'        => 'checkbox',
+				'description' => __( 'config_additional_info_desc', 'wirecard-woocommerce-extension' ),
+				'label'       => __( 'config_additional_info', 'wirecard-woocommerce-extension' ),
+				'default'     => 'yes',
+			),
 		);
 	}
 
