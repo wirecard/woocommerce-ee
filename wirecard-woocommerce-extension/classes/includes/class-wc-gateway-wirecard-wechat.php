@@ -140,6 +140,11 @@ class WC_Gateway_Wirecard_WeChat extends WC_Wirecard_Payment_Gateway {
 				'description' => __( 'config_http_password_desc', 'wirecard-woocommerce-extension' ),
 				'default'     => '9p0q8w8i',
 			),
+			'advanced'            => array(
+				'title'       => __( 'text_advanced', 'wirecard-woocommerce-extension' ),
+				'type'        => 'title',
+				'description' => '',
+			),
 			'test_button'         => array(
 				'title'   => __( 'test_config', 'wirecard-woocommerce-extension' ),
 				'type'    => 'button',
