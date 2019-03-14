@@ -122,6 +122,7 @@ class WC_Gateway_Wirecard_WeChat extends WC_Wirecard_Payment_Gateway {
 				'type'        => 'text',
 				'description' => __( 'config_sub_merchant_id_desc', 'wirecard-woocommerce-extension' ),
 				'default'     => '12152566',
+				'required'    => true,
 			),
 			'sub_merchant_name'   => array(
 				'title'       => __( 'config_sub_merchant_name', 'wirecard-woocommerce-extension' ),
@@ -203,6 +204,38 @@ class WC_Gateway_Wirecard_WeChat extends WC_Wirecard_Payment_Gateway {
 		$config->add( $payment_config );
 
 		return $config;
+	}
+
+	public function sub_merchant_id_admin_notice() {
+		?>
+		<div class="notice notice-error is-dismissible">
+			<p><?php __( 'sub_merchant_id_missing_error_notice', 'wirecard-woocommerce-extension' ); ?></p>
+		</div>
+		<?php
+	}
+
+	/**
+	 * Check if required admin options are filled in.
+	 * If all is fine, the settings will be save throught the base class definition of this function.
+	 *
+	 * @return bool was anything saved?
+	 */
+	public function process_admin_options() {
+		$this->init_settings();
+
+		$post_data = $this->get_post_data();
+		$form_fields = $this->get_form_fields();
+		
+		foreach ( $form_fields as $key => $field ) {			
+			if ( array_key_exists( 'required', $this->form_fields[ $key ] ) &&
+				$this->form_fields[ $key ]['required'] === true &&
+				trim( $this->get_field_value( $key, $field, $post_data ) ) === '' ) {
+				add_action( 'admin_notices', array($this, 'sub_merchant_id_admin_notice' ) );
+				return false;
+			}
+		}
+		
+		return parent::process_admin_options();
 	}
 
 	/**
