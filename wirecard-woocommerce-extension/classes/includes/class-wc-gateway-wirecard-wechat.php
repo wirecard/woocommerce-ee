@@ -223,18 +223,18 @@ class WC_Gateway_Wirecard_WeChat extends WC_Wirecard_Payment_Gateway {
 	public function process_admin_options() {
 		$this->init_settings();
 
-		$post_data = $this->get_post_data();
+		$post_data   = $this->get_post_data();
 		$form_fields = $this->get_form_fields();
-		
-		foreach ( $form_fields as $key => $field ) {			
+
+		foreach ( $form_fields as $key => $field ) {
 			if ( array_key_exists( 'required', $this->form_fields[ $key ] ) &&
-				$this->form_fields[ $key ]['required'] === true &&
-				trim( $this->get_field_value( $key, $field, $post_data ) ) === '' ) {
-				add_action( 'admin_notices', array($this, 'sub_merchant_id_admin_notice' ) );
+				true === $this->form_fields[ $key ]['required'] &&
+				'' === trim( $this->get_field_value( $key, $field, $post_data ) ) ) {
+				add_action( 'admin_notices', array( $this, 'sub_merchant_id_admin_notice' ) );
 				return false;
 			}
 		}
-		
+
 		return parent::process_admin_options();
 	}
 
