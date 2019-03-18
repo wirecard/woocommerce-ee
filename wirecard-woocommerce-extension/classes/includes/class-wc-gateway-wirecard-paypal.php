@@ -140,16 +140,16 @@ class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 				'description' => __( 'config_http_password_desc', 'wirecard-woocommerce-extension' ),
 				'default'     => 'qD2wzQ_hrc!8',
 			),
-			'advanced'            => array(
-				'title'       => __( 'text_advanced', 'wirecard-woocommerce-extension' ),
-				'type'        => 'title',
-				'description' => '',
-			),
 			'test_button'         => array(
 				'title'   => __( 'test_config', 'wirecard-woocommerce-extension' ),
 				'type'    => 'button',
 				'class'   => 'wc_wirecard_test_credentials_button button-primary',
 				'default' => __( 'test_credentials', 'wirecard-woocommerce-extension' ),
+			),
+			'advanced'            => array(
+				'title'       => __( 'text_advanced', 'wirecard-woocommerce-extension' ),
+				'type'        => 'title',
+				'description' => '',
 			),
 			'payment_action'      => array(
 				'title'       => __( 'config_payment_action', 'wirecard-woocommerce-extension' ),
