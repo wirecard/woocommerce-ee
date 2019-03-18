@@ -2,12 +2,12 @@
   "name": "wirecard/woocommerce-ee",
   "description": "Wirecard WooCommerce Extension",
   "license": "GPL-3.0",
-  "minimum-stability": "stable",
+  "minimum-stability": "dev",
   "prefer-stable": true,
   "require": {
     "php": ">=5.6",
     "symfony/options-resolver": "^3",
-    "wirecard/payment-sdk-php": "3.6.1",
+    "wirecard/payment-sdk-php": "dev-TPWDCEE-3225",
     "php-http/guzzle6-adapter": "1.1.1",
     "wirecard/iso-paypal-converter": "^1.0"
   },
