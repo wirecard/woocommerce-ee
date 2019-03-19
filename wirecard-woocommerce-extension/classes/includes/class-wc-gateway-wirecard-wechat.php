@@ -163,7 +163,6 @@ class WC_Gateway_Wirecard_WeChat extends WC_Wirecard_Payment_Gateway {
 				'type'        => 'text',
 				'description' => __( 'config_sub_merchant_name_desc', 'wirecard-woocommerce-extension' ),
 				'default'     => 'store name',
-				'required'    => true,
 			),
 			'descriptor'          => array(
 				'title'       => __( 'text_enable_disable', 'wirecard-woocommerce-extension' ),
