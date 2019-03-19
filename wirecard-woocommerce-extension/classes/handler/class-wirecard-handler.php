@@ -82,7 +82,7 @@ class Wirecard_Handler {
 			'unionpayinternational' => new WC_Gateway_Wirecard_Unionpay_International(),
 			'masterpass'            => new WC_Gateway_Wirecard_Masterpass(),
 			'zapp'                  => new WC_Gateway_Wirecard_Pay_By_Bank_App(),
-			'paylib'                => new WC_Gateway_Wirecard_Paylib()
+			'paylib'                => new WC_Gateway_Wirecard_Paylib(),
 		);
 
 		$this->logger = new Logger();
