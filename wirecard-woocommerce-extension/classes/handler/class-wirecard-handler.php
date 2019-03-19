@@ -82,6 +82,7 @@ class Wirecard_Handler {
 			'unionpayinternational' => new WC_Gateway_Wirecard_Unionpay_International(),
 			'masterpass'            => new WC_Gateway_Wirecard_Masterpass(),
 			'zapp'                  => new WC_Gateway_Wirecard_Pay_By_Bank_App(),
+			'wechat-qrpay'          => new WC_Gateway_Wirecard_WeChat(),
 		);
 
 		$this->logger = new Logger();
