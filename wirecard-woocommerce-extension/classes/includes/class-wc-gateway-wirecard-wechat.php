@@ -163,6 +163,7 @@ class WC_Gateway_Wirecard_WeChat extends WC_Wirecard_Payment_Gateway {
 				'type'        => 'text',
 				'description' => __( 'config_sub_merchant_name_desc', 'wirecard-woocommerce-extension' ),
 				'default'     => 'Merchant Store',
+				'required'    => true,
 			),
 			'descriptor'          => array(
 				'title'       => __( 'text_enable_disable', 'wirecard-woocommerce-extension' ),
@@ -206,10 +207,14 @@ class WC_Gateway_Wirecard_WeChat extends WC_Wirecard_Payment_Gateway {
 		return $config;
 	}
 
-	public function sub_merchant_id_admin_notice() {
+	public function add_error_notice( $field_name ) {
 		?>
 		<div class="notice notice-error is-dismissible">
-			<p><?php __( 'sub_merchant_id_missing_error_notice', 'wirecard-woocommerce-extension' ); ?></p>
+			<p>
+				<?php
+				echo sprintf( __( 'settings_error_required_field_missing', 'wirecard-woocommerce-extension' ), $field_name );
+				?>
+			</p>
 		</div>
 		<?php
 	}
@@ -230,7 +235,12 @@ class WC_Gateway_Wirecard_WeChat extends WC_Wirecard_Payment_Gateway {
 			if ( array_key_exists( 'required', $this->form_fields[ $key ] ) &&
 				true === $this->form_fields[ $key ]['required'] &&
 				'' === trim( $this->get_field_value( $key, $field, $post_data ) ) ) {
-				add_action( 'admin_notices', array( $this, 'sub_merchant_id_admin_notice' ) );
+				add_action(
+					'admin_notices',
+					function() use ( $key ) {
+						$this->add_error_notice( $this->form_fields[ $key ]['title'] );
+					}
+				);
 				return false;
 			}
 		}
