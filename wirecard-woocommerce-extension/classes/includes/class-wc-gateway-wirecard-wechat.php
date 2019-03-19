@@ -234,7 +234,7 @@ class WC_Gateway_Wirecard_WeChat extends WC_Wirecard_Payment_Gateway {
 		foreach ( $form_fields as $key => $field ) {
 			if ( array_key_exists( 'required', $this->form_fields[ $key ] ) &&
 				true === $this->form_fields[ $key ]['required'] &&
-				'' === trim( $this->get_field_value( $key, $field, $post_data ) ) ) {
+				empty( trim( $this->get_field_value( $key, $field, $post_data ) ) ) ) {
 				add_action(
 					'admin_notices',
 					function() use ( $key ) {
@@ -267,7 +267,7 @@ class WC_Gateway_Wirecard_WeChat extends WC_Wirecard_Payment_Gateway {
 		$sub_merchant_info = new SubMerchantInfo();
 		$sub_merchant_info->setMerchantId( $this->get_option( 'sub_merchant_id' ) );
 
-		if ( $this->get_option( 'sub_merchant_name' ) != '' ) {
+		if ( ! empty( $this->get_option( 'sub_merchant_name' ) ) ) {
 			$sub_merchant_info->setMerchantName( $this->get_option( 'sub_merchant_name' ) );
 		}
 
