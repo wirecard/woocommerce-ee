@@ -98,7 +98,7 @@ class WC_Gateway_Wirecard_Paylib extends WC_Wirecard_Payment_Gateway {
 			'merchant_account_id' => array(
 				'title'       => __( 'config_merchant_account_id', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
-				'description' => __( 'config_merchant_account_is_desc', 'wirecard-woocommerce-extension' ),
+				'description' => __( 'config_merchant_account_id_desc', 'wirecard-woocommerce-extension' ),
 				'default'     => 'f5f399c1-78b5-4559-bc0c-e077cb686ca9',
 			),
 			'secret'              => array(
