@@ -65,4 +65,16 @@ class WC_Cart {
 	public function get_total() {
 		return 50;
 	}
+	
+	public function get_applied_coupons() {
+		return array('test_coupon');
+	}
+	
+	public function get_coupon_discount_totals() {
+		return array('test_coupon' => 12);
+	}
+
+	public function get_coupon_discount_tax_totals() {
+		return array('test_coupon' => 1);
+	}
 }

@@ -127,7 +127,7 @@ function updateWoocommerceEeDbConfig( $db_config, $payment_method ) {
 	echo 'Configuring ' . $payment_method . " payment method in the shop system \n";
 	//DB setup
 	$dbHost = 'mysql';
-	$dbName = 'WordPress';
+	$dbName = 'wordpress';
 	$dbUser = 'root';
 	$dbPass = getenv( 'WOOCOMMERCE_DB_PASSWORD' );
 	$dbPort = getenv( 'WOOCOMMERCE_DB_PORT' );
