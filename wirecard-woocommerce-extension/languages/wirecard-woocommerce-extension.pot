@@ -416,6 +416,11 @@ msgstr ""
 msgid "config_status_desc_paybybankapp"
 msgstr ""
 
+# Info text for activating payment method. Example: "Activate payment method Alipay Cross-border to make it available for your consumers." 
+#: classes/includes/class-wc-gateway-wirecard-paylib.php:89
+msgid "config_status_desc_paylib"
+msgstr ""
+
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:98
 msgid "config_status_desc_paypal"
 msgstr ""
@@ -442,6 +447,26 @@ msgstr ""
 
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:98
 msgid "config_status_desc_upi"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-wechat.php:99
+msgid "config_status_desc_wechat"
+msgstr ""
+
+# Label for the configuration field of sub-merchant-id  for the merchant  in admin panel of the plugin  (sub-merchant-id is part of sub-merchant-info)
+msgid "config_sub_merchant_id"
+msgstr ""
+
+# Description for the configuration field of sub-merchant-id  for the merchant  in admin panel of the plugin  (sub-merchant-id is part of sub-merchant-info) - this field is mandatory! (required)
+msgid "config_sub_merchant_id_desc"
+msgstr ""
+
+# Label for the configuration field of sub-merchant-name  for the merchant  in admin panel of the plugin  (sub-merchant-name is part of sub-merchant-info)
+msgid "config_sub_merchant_name"
+msgstr ""
+
+# Description for the configuration field of sub-merchant-name  for the merchant  in admin panel of the plugin  (sub-merchant-name is part of sub-merchant-info)
+msgid "config_sub_merchant_name_desc"
 msgstr ""
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:128
@@ -554,6 +579,11 @@ msgstr ""
 msgid "enable_heading_title_paybybankapp"
 msgstr ""
 
+# Info for enabling the payment method. example: "Enable Wirecard Alipay Cross-border"
+#: classes/includes/class-wc-gateway-wirecard-paylib.php:88
+msgid "enable_heading_title_paylib"
+msgstr ""
+
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:99
 msgid "enable_heading_title_paypal"
 msgstr ""
@@ -580,6 +610,10 @@ msgstr ""
 
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:99
 msgid "enable_heading_title_upi"
+msgstr ""
+
+# Label for enabling checkbox of payment method. For example: "Enable Wirecard Credit Card"
+msgid "enable_heading_title_wechat"
 msgstr ""
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:214
@@ -655,6 +689,12 @@ msgstr ""
 msgid "heading_title_paybybankapp"
 msgstr ""
 
+# Payment method name with "Wirecard" prefix
+#: classes/includes/class-wc-gateway-wirecard-paylib.php:59
+#: classes/includes/class-wc-gateway-wirecard-paylib.php:96
+msgid "heading_title_paylib"
+msgstr ""
+
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:61
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:106
 msgid "heading_title_paypal"
@@ -693,6 +733,10 @@ msgstr ""
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:58
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:106
 msgid "heading_title_upi"
+msgstr ""
+
+# Payment method name with "Wirecard" prefix
+msgid "heading_title_wechat"
 msgstr ""
 
 #. Plugin URI of the plugin
@@ -807,6 +851,16 @@ msgstr ""
 
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:62
 msgid "paybybankapp_desc"
+msgstr ""
+
+# payment method name without "Wirecard" prefix
+#: classes/includes/class-wc-gateway-wirecard-paylib.php:60
+msgid "paylib"
+msgstr ""
+
+# Description for the payment method in admin panel. For example: "Alipay Cross-border transactions via Wirecard Payment Processing Gateway"
+#: classes/includes/class-wc-gateway-wirecard-paylib.php:61
+msgid "paylib_desc"
 msgstr ""
 
 #. Description of the plugin
@@ -925,6 +979,10 @@ msgstr ""
 
 #: classes/helper/sepa-template.php:104
 msgid "sepa_text_6"
+msgstr ""
+
+# Error message when there is a required field missing within admin panel settings for merchant - this is displayed when merchant saves payment settings - please be aware of the placeholder which will be filled with the field name
+msgid "settings_error_required_field_missing"
 msgstr ""
 
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:63
@@ -1191,6 +1249,14 @@ msgstr ""
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:338
 msgid "vault_use_new_text"
+msgstr ""
+
+# Payment method name without "Wirecard" prefix
+msgid "wechat"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-wechat.php:64
+msgid "wechat_desc"
 msgstr ""
 
 #. Author of the plugin

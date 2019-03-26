@@ -372,7 +372,7 @@ msgstr "Tindakan Pembayaran"
 msgid "config_payment_action_desc"
 msgstr "Pilih \"Catat transaksi\" untuk mencatat transaksi/menerbitkan faktur atas pesanan Anda secara otomatis atau \"Otorisasi\" untuk mencata transaksi/menerbitkan faktur secara manual."
 
-#: classes/includes/class-wc-gateway-wirecard-poipia.php:152
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:152
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:156
 msgid "config_payment_type"
 msgstr "Jenis Pembayaran"
@@ -426,6 +426,11 @@ msgstr "Aktifkan metode pembayaran Masterpass"
 msgid "config_status_desc_paybybankapp"
 msgstr "Activate payment method Pay by Bank app to make it available for your consumers."
 
+# Info text for activating payment method. Example: "Activate payment method Alipay Cross-border to make it available for your consumers." 
+#: classes/includes/class-wc-gateway-wirecard-paylib.php:89
+msgid "config_status_desc_paylib"
+msgstr "Activate payment method Paylib to make it available for your consumers."
+
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:98
 msgid "config_status_desc_paypal"
 msgstr "Aktifkan metode pembayaran PayPal"
@@ -453,6 +458,26 @@ msgstr "Aktifkan metode pembayaran Sofort."
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:98
 msgid "config_status_desc_upi"
 msgstr "Aktifkan metode pembayaran Unionpay Internasional"
+
+#: classes/includes/class-wc-gateway-wirecard-wechat.php:99
+msgid "config_status_desc_wechat"
+msgstr "Activate payment method WeChat Pay to make it available for your consumers."
+
+# Label for the configuration field of sub-merchant-id  for the merchant  in admin panel of the plugin  (sub-merchant-id is part of sub-merchant-info)
+msgid "config_sub_merchant_id"
+msgstr "Sub-Merchant ID"
+
+# Description for the configuration field of sub-merchant-id  for the merchant  in admin panel of the plugin  (sub-merchant-id is part of sub-merchant-info) - this field is mandatory! (required)
+msgid "config_sub_merchant_id_desc"
+msgstr "Sub-Merchant ID as provided by Wirecard."
+
+# Label for the configuration field of sub-merchant-name  for the merchant  in admin panel of the plugin  (sub-merchant-name is part of sub-merchant-info)
+msgid "config_sub_merchant_name"
+msgstr "Sub-Merchant Name"
+
+# Description for the configuration field of sub-merchant-name  for the merchant  in admin panel of the plugin  (sub-merchant-name is part of sub-merchant-info)
+msgid "config_sub_merchant_name_desc"
+msgstr "Sub-Merchant Name as provided by Wirecard."
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:128
 #, fuzzy
@@ -515,7 +540,7 @@ msgstr "Merchant Return URL"
 
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:157
 msgid "config_zapp_merchant_return_string_desc"
-msgstr "Merchant Return URL to redirect the Consumer from the mobile banking app to the merchant’s browser or App."
+msgstr "Merchant Return URL to redirect consumers from their mobile banking apps to your shop."
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:62
 msgid "creditcard"
@@ -565,6 +590,11 @@ msgstr "Aktifkan Masterpass Wirecard"
 msgid "enable_heading_title_paybybankapp"
 msgstr "Enable Wirecard Pay by Bank app"
 
+# Info for enabling the payment method. example: "Enable Wirecard Alipay Cross-border"
+#: classes/includes/class-wc-gateway-wirecard-paylib.php:88
+msgid "enable_heading_title_paylib"
+msgstr "Enable Wirecard Paylib"
+
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:99
 msgid "enable_heading_title_paypal"
 msgstr "Aktifkan PayPal Wirecard"
@@ -592,6 +622,10 @@ msgstr "Aktifkan Sofort. Wirecard"
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:99
 msgid "enable_heading_title_upi"
 msgstr "Aktifkan Unionpay Internasional Wirecard"
+
+# Label for enabling checkbox of payment method. For example: "Enable Wirecard Credit Card"
+msgid "enable_heading_title_wechat"
+msgstr "Enable Wirecard WeChat Pay"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:214
 #, fuzzy
@@ -664,17 +698,23 @@ msgstr "iDEAL Wirecard"
 msgid "heading_title_masterpass"
 msgstr "Wirecard Masterpass"
 
-#: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:60
+#: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:60
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:106
 msgid "heading_title_paybybankapp"
 msgstr "Wirecard Pay by Bank app"
+
+# Payment method name with "Wirecard" prefix
+#: classes/includes/class-wc-gateway-wirecard-paylib.php:59
+#: classes/includes/class-wc-gateway-wirecard-paylib.php:96
+msgid "heading_title_paylib"
+msgstr "Wirecard Paylib"
 
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:61
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:106
 msgid "heading_title_paypal"
 msgstr "Wirecard PayPal"
 
-#: classes/includes/class-wc-gateway-wirecard-poipia.php:61
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:61
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:103
 msgid "heading_title_poi_pia"
 msgstr "Pembayaran Berdasarkan Faktur/Pembayaran di Muka Wirecard"
@@ -710,6 +750,10 @@ msgstr "Dukungan"
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:106
 msgid "heading_title_upi"
 msgstr "Unionpay Internasional Wirecard"
+
+# Payment method name with "Wirecard" prefix
+msgid "heading_title_wechat"
+msgstr "Wirecard WeChat Pay"
 
 #. Plugin URI of the plugin
 msgid "https://github.com/wirecard/woocommerce-ee"
@@ -819,6 +863,16 @@ msgstr "Pay by Bank app"
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:62
 msgid "paybybankapp_desc"
 msgstr "Pay by Bank app transactions via Wirecard Payment Processing Gateway."
+
+# payment method name without "Wirecard" prefix
+#: classes/includes/class-wc-gateway-wirecard-paylib.php:60
+msgid "paylib"
+msgstr "Paylib"
+
+# Description for the payment method in admin panel. For example: "Alipay Cross-border transactions via Wirecard Payment Processing Gateway"
+#: classes/includes/class-wc-gateway-wirecard-paylib.php:61
+msgid "paylib_desc"
+msgstr "Paylib transactions via Wirecard Payment Processing Gateway."
 
 #. Description of the plugin
 msgid "Payment Gateway for WooCommerce"
@@ -938,6 +992,10 @@ msgstr "nama lengkap, alamat, dan tanggal lahir saya."
 #: classes/helper/sepa-template.php:104
 msgid "sepa_text_6"
 msgstr "Saya telah membaca dan menyetujui informasi mengenai Mandat Debit Langsung SEPA."
+
+# Error message when there is a required field missing within admin panel settings for merchant - this is displayed when merchant saves payment settings - please be aware of the placeholder which will be filled with the field name
+msgid "settings_error_required_field_missing"
+msgstr "Error: %s is a mandatory field and must be filled in."
 
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:63
 msgid "sofortbanking"
@@ -1211,6 +1269,14 @@ msgstr "Gunakan Kartu Kredit yang tersimpan"
 #, fuzzy
 msgid "vault_use_new_text"
 msgstr "Gunakan Kartu Kredit baru"
+
+# Payment method name without "Wirecard" prefix
+msgid "wechat"
+msgstr "WeChat Pay"
+
+#: classes/includes/class-wc-gateway-wirecard-wechat.php:64
+msgid "wechat_desc"
+msgstr "WeChat Pay transactions via Wirecard Payment Processing Gateway."
 
 #. Author of the plugin
 msgid "Wirecard AG"
