@@ -204,23 +204,21 @@ function renderForm( request_data ) {
 function getRequestData( success, error ) {
 	jQuery( "#wc_payment_method_wirecard_creditcard_form" ).empty();
 	jQuery( ".show-spinner" ).show();
-	jQuery.ajax(
-		{
-			type: "POST",
-			url: php_vars.ajax_url,
-			cache: false,
-			data: {"action": "get_credit_card_request_data"},
-			dataType: "json",
-			success: function ( data ) {
-				jQuery( ".show-spinner" ).hide();
-				success( JSON.parse( data.data ) );
-			},
-			error: function ( data ) {
-				jQuery( ".show-spinner" ).hide();
-				error( data );
-			}
+	jQuery.ajax({
+		type: "POST",
+		url: php_vars.ajax_url,
+		cache: false,
+		data: {"action": "get_credit_card_request_data"},
+		dataType: "json",
+		success: function ( data ) {
+			jQuery( ".show-spinner" ).hide();
+			success( JSON.parse( data.data ) );
+		},
+		error: function ( data ) {
+			jQuery( ".show-spinner" ).hide();
+			error( data );
 		}
-	);
+	});
 }
 
 function loadCreditCardData() {

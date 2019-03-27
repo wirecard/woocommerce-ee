@@ -44,3 +44,13 @@
 #vault-table td, #vault-table th {
 	padding: 5px;
 }
+
+.credit-card-heading {
+	margin-top: 0;
+	margin-bottom: 1em;
+}
+
+#checkout-submit {
+	float: right;
+	margin-bottom: 2rem;
+}
