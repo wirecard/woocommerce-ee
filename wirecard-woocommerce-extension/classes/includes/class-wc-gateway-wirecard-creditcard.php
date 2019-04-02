@@ -353,7 +353,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	 * @since 1.1.8
 	 */
 	public function load_cc_template() {
-		$html = '<h2 class="credit-card-heading">Enter card details</h2>';
+		$html = '<h2 class="credit-card-heading">' . __( 'heading_creditcard_form', 'wirecard-woocommerce-extension' ) . '</h2>';
 
 		if ( is_user_logged_in() ) {
 			if ( $this->get_option( 'cc_vault_enabled' ) == 'yes' && $this->has_cc_in_vault() ) {
@@ -369,7 +369,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 							</div>
 						</div>
 						
-						<button disabled id="vault-submit" class="wd-submit checkout-button button alt wc-forward">Jetzt zahlen</button>
+						<button disabled id="vault-submit" class="wd-submit checkout-button button alt wc-forward">' . __( 'Pay now', 'woocommerce' ) . '</button>
 						<div class="clear"></div>
 					</div>
 				
@@ -407,7 +407,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 		}
 
 		$html .= '
-				<button disabled id="seamless-submit" class="wd-submit checkout-button button alt wc-forward">Jetzt zahlen</button>
+				<button disabled id="seamless-submit" class="wd-submit checkout-button button alt wc-forward">' . __( 'Pay now', 'woocommerce' ) . '</button>
 			</div>
 		';
 

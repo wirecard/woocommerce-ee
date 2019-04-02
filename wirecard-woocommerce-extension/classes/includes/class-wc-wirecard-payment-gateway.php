@@ -368,6 +368,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 			$transaction_factory = new Wirecard_Transaction_Factory();
 
 			if ( ! $transaction_factory->get_transaction( $response->getTransactionId() ) ) {
+
 				$this->payment_on_hold( $order );
 				$this->update_payment_transaction( $order, $response, 'awaiting', $payment_method );
 			}

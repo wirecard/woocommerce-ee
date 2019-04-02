@@ -241,7 +241,7 @@ class WC_Gateway_Wirecard_Unionpay_International extends WC_Wirecard_Payment_Gat
 	 */
 	public function load_upi_template() {
 		$html = '
-			<h2 class="credit-card-heading">Enter card details</h2>
+			<h2 class="credit-card-heading">' . __( 'heading_creditcard_form', 'wirecard-woocommerce-extension' ) . '</h2>
 			<div id="wc_payment_method_wirecard_upi" class="wd-tab-content">
 				<div class="show-spinner">
 					<div class="spinner" style="background: url(\'' . admin_url() . 'images/loading.gif\') no-repeat;"></div>
@@ -253,7 +253,7 @@ class WC_Gateway_Wirecard_Unionpay_International extends WC_Wirecard_Payment_Gat
 				
 				<div id="wc_payment_method_wirecard_upi_form"></div>
 
-				<button disabled id="seamless-submit" class="wd-submit checkout-button button alt wc-forward">Jetzt zahlen</button>
+				<button disabled id="seamless-submit" class="wd-submit checkout-button button alt wc-forward">' . __( 'Pay now', 'woocommerce' ) . '</button>
 			</div>
 		';
 

@@ -65,6 +65,7 @@ function log_error( data ) {
  * @since 1.7.0
  */
 function save_credit_card_to_vault( response ) {
+	var deferred       = jQuery.Deferred();
 	var vault_checkbox = jQuery( "#wirecard-store-card" );
 	var request        = {
 		'action': 'save_cc_to_vault',
@@ -73,11 +74,11 @@ function save_credit_card_to_vault( response ) {
 	};
 
 	if ( "success" !== response.transaction_state ) {
-		return;
+		return deferred.resolve();
 	}
 
 	if ( ! vault_checkbox.is( ':checked' ) ) {
-		return;
+		return deferred.resolve();
 	}
 
 	return jQuery.ajax(
@@ -281,6 +282,7 @@ function on_form_submitted( response ) {
 	save_credit_card_to_vault( response )
 		.then(
 			function () {
+				console.log( "Submission" );
 				submit_credit_card_response( response )
 					.then( handle_submit_result )
 					.fail( log_error );
@@ -295,7 +297,6 @@ function on_form_submitted( response ) {
  */
 function render_form( response ) {
 	var request_data = JSON.parse( response.data );
-
 	WirecardPaymentPage.seamlessRenderForm(
 		{
 			requestData: request_data,
@@ -334,6 +335,8 @@ function initialize_vault() {
  */
 function initialize_form() {
 	var vault_needs_to_be_initialized = togglers.length > 0;
+
+	console.log( vault_needs_to_be_initialized );
 
 	if ( vault_needs_to_be_initialized ) {
 		initialize_vault();
@@ -386,5 +389,5 @@ function submit_vault_form() {
  */
 
 jQuery( document ).ready( initialize_form );
-seamless_submit_button.click( submit_vault_form );
-vault_submit_button.click( submit_seamless_form );
+seamless_submit_button.click( submit_seamless_form );
+vault_submit_button.click( submit_vault_form );

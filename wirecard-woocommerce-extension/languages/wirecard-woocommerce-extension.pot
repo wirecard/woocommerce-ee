@@ -1,517 +1,194 @@
+# Copyright (C) 2019 Wirecard AG
+# This file is distributed under the same license as the Wirecard WooCommerce Extension plugin.
 msgid ""
 msgstr ""
-"Language: en_US\n"
+"Project-Id-Version: Wirecard WooCommerce Extension 1.6.2\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wirecard-woocommerce-extension\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: PhraseApp (phraseapp.com)\n"
+"POT-Creation-Date: 2019-04-02T10:55:54+02:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.1.0\n"
+"X-Domain: wirecard-woocommerce-extension\n"
 
-#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:61
-msgid "alipay_crossborder"
+#. Plugin Name of the plugin
+msgid "Wirecard WooCommerce Extension"
 msgstr ""
 
-#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:62
-msgid "alipay_crossborder_desc"
+#. Plugin URI of the plugin
+msgid "https://github.com/wirecard/woocommerce-ee"
 msgstr ""
 
-#: classes/includes/class-wc-gateway-wirecard-poipia.php:263
-msgid "amount"
+#. Description of the plugin
+msgid "Payment Gateway for WooCommerce"
 msgstr ""
 
-#: classes/admin/class-wirecard-settings.php:241
-msgid "back_button"
+#. Author of the plugin
+msgid "Wirecard AG"
 msgstr ""
 
-#: classes/includes/class-wc-gateway-wirecard-eps.php:183
-#: classes/includes/class-wc-gateway-wirecard-poipia.php:265
-#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:273
-msgid "bic"
+#. Author URI of the plugin
+msgid "https://www.wirecard.com/"
 msgstr ""
 
-#: classes/helper/sepa-template.php:56
-msgid "bic_input"
+#: classes/admin/class-wirecard-settings.php:98
+msgid "text_support"
 msgstr ""
 
-#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:424
-msgid "birthdate_input"
+#: classes/admin/class-wirecard-settings.php:119
+msgid "pagination_back"
 msgstr ""
 
-#: classes/helper/sepa-template.php:108
-msgid "cancel"
-msgstr ""
-
-#: classes/includes/class-wc-wirecard-payment-gateway.php:201
-msgid "canceled_payment_process"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:163
-#: classes/includes/class-wc-gateway-wirecard-creditcard.php:207
-#: classes/includes/class-wc-gateway-wirecard-eps.php:167
-#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:216
-#: classes/includes/class-wc-gateway-wirecard-ideal.php:167
-#: classes/includes/class-wc-gateway-wirecard-masterpass.php:176
-#: classes/includes/class-wc-gateway-wirecard-paypal.php:183
-#: classes/includes/class-wc-gateway-wirecard-poipia.php:173
-#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:206
-#: classes/includes/class-wc-gateway-wirecard-sofort.php:159
-#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:176
-msgid "config_additional_info"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:162
-#: classes/includes/class-wc-gateway-wirecard-creditcard.php:206
-#: classes/includes/class-wc-gateway-wirecard-eps.php:166
-#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:215
-#: classes/includes/class-wc-gateway-wirecard-ideal.php:166
-#: classes/includes/class-wc-gateway-wirecard-masterpass.php:175
-#: classes/includes/class-wc-gateway-wirecard-paypal.php:182
-#: classes/includes/class-wc-gateway-wirecard-poipia.php:172
-#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:205
-#: classes/includes/class-wc-gateway-wirecard-sofort.php:158
-#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:175
-msgid "config_additional_info_desc"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:187
-msgid "config_allowed_currencies"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:189
-msgid "config_allowed_currencies_desc"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:124
-#: classes/includes/class-wc-gateway-wirecard-creditcard.php:157
-#: classes/includes/class-wc-gateway-wirecard-eps.php:128
-#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:133
-#: classes/includes/class-wc-gateway-wirecard-ideal.php:128
-#: classes/includes/class-wc-gateway-wirecard-masterpass.php:126
-#: classes/includes/class-wc-gateway-wirecard-paypal.php:126
-#: classes/includes/class-wc-gateway-wirecard-poipia.php:123
-#: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:123
-#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:127
-#: classes/includes/class-wc-gateway-wirecard-sofort.php:126
-#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:126
-msgid "config_base_url"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:126
-#: classes/includes/class-wc-gateway-wirecard-creditcard.php:159
-#: classes/includes/class-wc-gateway-wirecard-eps.php:130
-#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:135
-#: classes/includes/class-wc-gateway-wirecard-ideal.php:130
-#: classes/includes/class-wc-gateway-wirecard-masterpass.php:128
-#: classes/includes/class-wc-gateway-wirecard-paypal.php:128
-#: classes/includes/class-wc-gateway-wirecard-poipia.php:125
-#: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:125
-#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:129
-#: classes/includes/class-wc-gateway-wirecard-sofort.php:128
-#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:128
-msgid "config_base_url_desc"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:201
-msgid "config_basket_max"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:202
-msgid "config_basket_max_desc"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:196
-msgid "config_basket_min"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:197
-msgid "config_basket_min_desc"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:169
-msgid "config_billing_countries"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:171
-msgid "config_billing_countries_desc"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:165
-msgid "config_billing_shipping"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:164
-msgid "config_billing_shipping_desc"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:168
-msgid "config_creditor_city"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:170
-msgid "config_creditor_city_desc"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:156
-msgid "config_creditor_id"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:158
-msgid "config_creditor_id_desc"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:162
-msgid "config_creditor_name"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:164
-msgid "config_creditor_name_desc"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:156
-#: classes/includes/class-wc-gateway-wirecard-creditcard.php:200
-#: classes/includes/class-wc-gateway-wirecard-eps.php:160
-#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:209
-#: classes/includes/class-wc-gateway-wirecard-ideal.php:160
-#: classes/includes/class-wc-gateway-wirecard-masterpass.php:169
-#: classes/includes/class-wc-gateway-wirecard-paypal.php:176
-#: classes/includes/class-wc-gateway-wirecard-poipia.php:166
-#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:199
-#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:169
-msgid "config_descriptor"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:155
-#: classes/includes/class-wc-gateway-wirecard-creditcard.php:199
-#: classes/includes/class-wc-gateway-wirecard-eps.php:159
-#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:208
-#: classes/includes/class-wc-gateway-wirecard-ideal.php:159
-#: classes/includes/class-wc-gateway-wirecard-masterpass.php:168
-#: classes/includes/class-wc-gateway-wirecard-paypal.php:175
-#: classes/includes/class-wc-gateway-wirecard-poipia.php:165
-#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:198
-#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:168
-msgid "config_descriptor_desc"
+#: classes/admin/class-wirecard-settings.php:120
+msgid "pagination_next"
 msgstr ""
 
 #: classes/admin/class-wirecard-settings.php:226
 msgid "config_email"
 msgstr ""
 
-#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:213
-msgid "config_enable_bic"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:212
-msgid "config_enable_bic_desc"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:136
-#: classes/includes/class-wc-gateway-wirecard-creditcard.php:169
-#: classes/includes/class-wc-gateway-wirecard-eps.php:140
-#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:145
-#: classes/includes/class-wc-gateway-wirecard-ideal.php:140
-#: classes/includes/class-wc-gateway-wirecard-masterpass.php:138
-#: classes/includes/class-wc-gateway-wirecard-paypal.php:138
-#: classes/includes/class-wc-gateway-wirecard-poipia.php:135
-#: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:135
-#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:139
-#: classes/includes/class-wc-gateway-wirecard-sofort.php:138
-#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:138
-msgid "config_http_password"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:138
-#: classes/includes/class-wc-gateway-wirecard-creditcard.php:171
-#: classes/includes/class-wc-gateway-wirecard-eps.php:142
-#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:147
-#: classes/includes/class-wc-gateway-wirecard-ideal.php:142
-#: classes/includes/class-wc-gateway-wirecard-masterpass.php:140
-#: classes/includes/class-wc-gateway-wirecard-paypal.php:140
-#: classes/includes/class-wc-gateway-wirecard-poipia.php:137
-#: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:137
-#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:141
-#: classes/includes/class-wc-gateway-wirecard-sofort.php:140
-#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:140
-msgid "config_http_password_desc"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:130
-#: classes/includes/class-wc-gateway-wirecard-creditcard.php:163
-#: classes/includes/class-wc-gateway-wirecard-eps.php:134
-#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:139
-#: classes/includes/class-wc-gateway-wirecard-ideal.php:134
-#: classes/includes/class-wc-gateway-wirecard-masterpass.php:132
-#: classes/includes/class-wc-gateway-wirecard-paypal.php:132
-#: classes/includes/class-wc-gateway-wirecard-poipia.php:129
-#: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:129
-#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:133
-#: classes/includes/class-wc-gateway-wirecard-sofort.php:132
-#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:132
-msgid "config_http_user"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:132
-#: classes/includes/class-wc-gateway-wirecard-creditcard.php:165
-#: classes/includes/class-wc-gateway-wirecard-eps.php:136
-#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:141
-#: classes/includes/class-wc-gateway-wirecard-ideal.php:136
-#: classes/includes/class-wc-gateway-wirecard-masterpass.php:134
-#: classes/includes/class-wc-gateway-wirecard-paypal.php:134
-#: classes/includes/class-wc-gateway-wirecard-poipia.php:131
-#: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:131
-#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:135
-#: classes/includes/class-wc-gateway-wirecard-sofort.php:134
-#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:134
-msgid "config_http_user_desc"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-creditcard.php:142
-#: classes/includes/class-wc-gateway-wirecard-creditcard.php:148
-msgid "config_limit_desc"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:174
-msgid "config_mandate_text"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:177
-msgid "config_mandate_text_desc"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:107
-#: classes/includes/class-wc-gateway-wirecard-creditcard.php:116
-#: classes/includes/class-wc-gateway-wirecard-eps.php:111
-#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:116
-#: classes/includes/class-wc-gateway-wirecard-ideal.php:111
-#: classes/includes/class-wc-gateway-wirecard-masterpass.php:109
-#: classes/includes/class-wc-gateway-wirecard-paypal.php:109
-#: classes/includes/class-wc-gateway-wirecard-poipia.php:106
-#: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:106
-#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:110
-#: classes/includes/class-wc-gateway-wirecard-sofort.php:109
-#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:109
-msgid "config_merchant_account_id"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:109
-#: classes/includes/class-wc-gateway-wirecard-creditcard.php:118
-#: classes/includes/class-wc-gateway-wirecard-eps.php:113
-#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:118
-#: classes/includes/class-wc-gateway-wirecard-ideal.php:113
-#: classes/includes/class-wc-gateway-wirecard-masterpass.php:111
-#: classes/includes/class-wc-gateway-wirecard-paypal.php:111
-#: classes/includes/class-wc-gateway-wirecard-poipia.php:108
-#: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:108
-#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:112
-#: classes/includes/class-wc-gateway-wirecard-sofort.php:111
-#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:111
-msgid "config_merchant_account_id_desc"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:113
-#: classes/includes/class-wc-gateway-wirecard-creditcard.php:122
-#: classes/includes/class-wc-gateway-wirecard-eps.php:117
-#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:122
-#: classes/includes/class-wc-gateway-wirecard-ideal.php:117
-#: classes/includes/class-wc-gateway-wirecard-masterpass.php:115
-#: classes/includes/class-wc-gateway-wirecard-paypal.php:115
-#: classes/includes/class-wc-gateway-wirecard-poipia.php:112
-#: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:112
-#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:116
-#: classes/includes/class-wc-gateway-wirecard-sofort.php:115
-#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:115
-msgid "config_merchant_secret"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:115
-#: classes/includes/class-wc-gateway-wirecard-creditcard.php:124
-#: classes/includes/class-wc-gateway-wirecard-eps.php:119
-#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:124
-#: classes/includes/class-wc-gateway-wirecard-ideal.php:119
-#: classes/includes/class-wc-gateway-wirecard-masterpass.php:117
-#: classes/includes/class-wc-gateway-wirecard-paypal.php:117
-#: classes/includes/class-wc-gateway-wirecard-poipia.php:114
-#: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:114
-#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:118
-#: classes/includes/class-wc-gateway-wirecard-sofort.php:117
-#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:117
-msgid "config_merchant_secret_desc"
-msgstr ""
-
 #: classes/admin/class-wirecard-settings.php:234
 msgid "config_message"
 msgstr ""
 
-#: classes/includes/class-wc-gateway-wirecard-creditcard.php:186
-#: classes/includes/class-wc-gateway-wirecard-creditcard.php:190
-#: classes/includes/class-wc-gateway-wirecard-masterpass.php:155
-#: classes/includes/class-wc-gateway-wirecard-masterpass.php:159
-#: classes/includes/class-wc-gateway-wirecard-paypal.php:155
-#: classes/includes/class-wc-gateway-wirecard-paypal.php:159
-#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:185
-#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:189
-#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:155
-#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:159
-msgid "config_payment_action"
+#: classes/admin/class-wirecard-settings.php:241
+msgid "back_button"
 msgstr ""
 
-#: classes/includes/class-wc-gateway-wirecard-creditcard.php:188
-#: classes/includes/class-wc-gateway-wirecard-masterpass.php:157
-#: classes/includes/class-wc-gateway-wirecard-paypal.php:157
-#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:187
-#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:157
-msgid "config_payment_action_desc"
+#: classes/admin/class-wirecard-settings.php:242
+msgid "submit_button"
 msgstr ""
 
-#: classes/includes/class-wc-gateway-wirecard-poipia.php:152
-#: classes/includes/class-wc-gateway-wirecard-poipia.php:156
-msgid "config_payment_type"
+#: classes/admin/class-wirecard-settings.php:299
+msgid "success_email"
 msgstr ""
 
-#: classes/includes/class-wc-gateway-wirecard-poipia.php:154
-msgid "config_payment_type_desc"
+#: classes/admin/class-wirecard-settings.php:301
+msgid "error_email"
 msgstr ""
 
-#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:178
-msgid "config_shipping_countries"
+#: classes/admin/class-wirecard-transaction-factory.php:100
+msgid "panel_transaction"
 msgstr ""
 
-#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:180
-msgid "config_shipping_countries_desc"
+#: classes/admin/class-wirecard-transaction-factory.php:103
+msgid "panel_order_number"
 msgstr ""
 
-#: classes/includes/class-wc-gateway-wirecard-paypal.php:169
-msgid "config_shopping_basket"
+#: classes/admin/class-wirecard-transaction-factory.php:106
+msgid "panel_transcation_id"
 msgstr ""
 
-#: classes/includes/class-wc-gateway-wirecard-paypal.php:168
-msgid "config_shopping_basket_desc"
+#: classes/admin/class-wirecard-transaction-factory.php:109
+msgid "panel_parent_transaction_id"
 msgstr ""
 
-#: classes/includes/class-wc-gateway-wirecard-creditcard.php:140
-msgid "config_ssl_max_limit"
+#: classes/admin/class-wirecard-transaction-factory.php:112
+msgid "panel_action"
 msgstr ""
 
-#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:96
-msgid "config_status_desc_alipay_crossborder"
+#: classes/admin/class-wirecard-transaction-factory.php:115
+msgid "panel_payment_method"
 msgstr ""
 
-#: classes/includes/class-wc-gateway-wirecard-creditcard.php:106
-msgid "config_status_desc_creditcard"
+#: classes/admin/class-wirecard-transaction-factory.php:118
+msgid "panel_transaction_state"
 msgstr ""
 
-#: classes/includes/class-wc-gateway-wirecard-eps.php:97
-msgid "config_status_desc_eps"
+#: classes/admin/class-wirecard-transaction-factory.php:121
+msgid "panel_amount"
 msgstr ""
 
-#: classes/includes/class-wc-gateway-wirecard-ideal.php:100
-msgid "config_status_desc_ideal"
+#: classes/admin/class-wirecard-transaction-factory.php:124
+msgid "panel_currency"
 msgstr ""
 
-#: classes/includes/class-wc-gateway-wirecard-masterpass.php:99
-msgid "config_status_desc_masterpass"
+#: classes/admin/class-wirecard-transaction-factory.php:326
+msgid "error_no_transaction"
 msgstr ""
 
-#: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:98
-msgid "config_status_desc_paybybankapp"
+#: classes/admin/class-wirecard-transaction-factory.php:347
+msgid "success_new_transaction"
 msgstr ""
 
-#: classes/includes/class-wc-gateway-wirecard-paypal.php:98
-msgid "config_status_desc_paypal"
+#: classes/admin/class-wirecard-transaction-factory.php:380
+msgid "text_transaction"
 msgstr ""
 
-#: classes/includes/class-wc-gateway-wirecard-poipia.php:95
-msgid "config_status_desc_poi_pia"
+#: classes/admin/class-wirecard-transaction-factory.php:382
+msgid "payment_suffix"
 msgstr ""
 
-#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:105
-msgid "config_status_desc_ratepayinvoice"
+#: classes/admin/class-wirecard-transaction-factory.php:391
+#: woocommerce-wirecard-payment-gateway.php:289
+#: woocommerce-wirecard-payment-gateway.php:290
+msgid "text_cancel_transaction"
 msgstr ""
 
-#: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:95
-msgid "config_status_desc_sepact"
+#: classes/admin/class-wirecard-transaction-factory.php:394
+#: woocommerce-wirecard-payment-gateway.php:297
+#: woocommerce-wirecard-payment-gateway.php:298
+msgid "text_capture_transaction"
 msgstr ""
 
-#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:99
-msgid "config_status_desc_sepadd"
+#: classes/admin/class-wirecard-transaction-factory.php:397
+#: woocommerce-wirecard-payment-gateway.php:305
+#: woocommerce-wirecard-payment-gateway.php:306
+msgid "text_refund_transaction"
 msgstr ""
 
-#: classes/includes/class-wc-gateway-wirecard-sofort.php:98
-msgid "config_status_desc_sofortbanking"
+#: classes/admin/class-wirecard-transaction-factory.php:400
+msgid "error_no_post_processing_operations"
 msgstr ""
 
-#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:98
-msgid "config_status_desc_upi"
+#: classes/admin/class-wirecard-transaction-factory.php:404
+msgid "error_no_post_processing_operations_unconfirmed"
 msgstr ""
 
-#: classes/includes/class-wc-gateway-wirecard-creditcard.php:128
-msgid "config_three_d_merchant_account_id"
+#: classes/admin/class-wirecard-transaction-factory.php:408
+#: woocommerce-wirecard-payment-gateway.php:281
+#: woocommerce-wirecard-payment-gateway.php:282
+msgid "title_payment_gateway"
 msgstr ""
 
-#: classes/includes/class-wc-gateway-wirecard-creditcard.php:130
-msgid "config_three_d_merchant_account_id_desc"
+#: classes/admin/class-wirecard-transaction-factory.php:412
+msgid "text_response_data"
 msgstr ""
 
-#: classes/includes/class-wc-gateway-wirecard-creditcard.php:134
-msgid "config_three_d_merchant_secret"
+#: classes/admin/class-wirecard-transaction-factory.php:417
+msgid "text_total"
 msgstr ""
 
-#: classes/includes/class-wc-gateway-wirecard-creditcard.php:136
-msgid "config_three_d_merchant_secret_desc"
+#: classes/admin/class-wirecard-transaction-factory.php:468
+msgid "text_transaction_details_1"
 msgstr ""
 
-#: classes/includes/class-wc-gateway-wirecard-creditcard.php:146
-msgid "config_three_d_min_limit"
+#: classes/admin/class-wirecard-transaction-factory.php:471
+msgid "text_transaction_details_2"
 msgstr ""
 
-#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:101
-#: classes/includes/class-wc-gateway-wirecard-creditcard.php:110
-#: classes/includes/class-wc-gateway-wirecard-eps.php:105
-#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:110
-#: classes/includes/class-wc-gateway-wirecard-ideal.php:105
-#: classes/includes/class-wc-gateway-wirecard-masterpass.php:103
-#: classes/includes/class-wc-gateway-wirecard-paypal.php:103
-#: classes/includes/class-wc-gateway-wirecard-poipia.php:100
-#: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:100
-#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:104
-#: classes/includes/class-wc-gateway-wirecard-sofort.php:103
-#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:103
-msgid "config_title"
+#: classes/handler/class-wirecard-callback.php:53
+#: classes/handler/class-wirecard-callback.php:80
+msgid "redirect_text"
 msgstr ""
 
-#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:103
-#: classes/includes/class-wc-gateway-wirecard-creditcard.php:112
-#: classes/includes/class-wc-gateway-wirecard-eps.php:107
-#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:112
-#: classes/includes/class-wc-gateway-wirecard-ideal.php:107
-#: classes/includes/class-wc-gateway-wirecard-masterpass.php:105
-#: classes/includes/class-wc-gateway-wirecard-paypal.php:105
-#: classes/includes/class-wc-gateway-wirecard-poipia.php:102
-#: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:102
-#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:106
-#: classes/includes/class-wc-gateway-wirecard-sofort.php:105
-#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:105
-msgid "config_title_desc"
+#: classes/helper/class-additional-information.php:370
+msgid "refund_partial_shipping_error"
 msgstr ""
 
-#: classes/includes/class-wc-gateway-wirecard-creditcard.php:213
-msgid "config_vault_desc"
+#: classes/helper/class-credit-card-vault.php:156
+msgid "vault_account_number"
 msgstr ""
 
-#: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:155
-msgid "config_zapp_merchant_return_string"
+#: classes/helper/class-credit-card-vault.php:157
+msgid "vault_delete_card_text"
 msgstr ""
 
-#: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:157
-msgid "config_zapp_merchant_return_string_desc"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-creditcard.php:62
-msgid "creditcard"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-creditcard.php:63
-msgid "creditcard_desc"
+#: classes/helper/class-credit-card-vault.php:163
+msgid "text_delete"
 msgstr ""
 
 #: classes/helper/sepa-template.php:38
@@ -530,373 +207,12 @@ msgstr ""
 msgid "debtor_acc_owner"
 msgstr ""
 
-#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:97
-msgid "enable_heading_title_alipay_crossborder"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-creditcard.php:105
-msgid "enable_heading_title_creditcard"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-eps.php:98
-msgid "enable_heading_title_eps"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-ideal.php:101
-msgid "enable_heading_title_ideal"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-masterpass.php:98
-msgid "enable_heading_title_masterpass"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:99
-msgid "enable_heading_title_paybybankapp"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-paypal.php:99
-msgid "enable_heading_title_paypal"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-poipia.php:96
-msgid "enable_heading_title_poi_pia"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:106
-msgid "enable_heading_title_ratepayinvoice"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:96
-msgid "enable_heading_title_sepact"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:100
-msgid "enable_heading_title_sepadd"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-sofort.php:99
-msgid "enable_heading_title_sofortbanking"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:99
-msgid "enable_heading_title_upi"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-creditcard.php:214
-msgid "enable_vault"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-eps.php:63
-msgid "eps"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-eps.php:64
-msgid "eps_desc"
-msgstr ""
-
-#: classes/includes/class-wc-wirecard-payment-gateway.php:682
-msgid "error_credentials"
-msgstr ""
-
-#: classes/admin/class-wirecard-settings.php:301
-msgid "error_email"
-msgstr ""
-
-#: classes/admin/class-wirecard-transaction-factory.php:359
-msgid "error_no_post_processing_operations"
-msgstr ""
-
-#: classes/admin/class-wirecard-transaction-factory.php:363
-msgid "error_no_post_processing_operations_unconfirmed"
-msgstr ""
-
-#: classes/admin/class-wirecard-transaction-factory.php:323
-#: classes/admin/class-wirecard-transaction-factory.php:411
-#: classes/admin/class-wirecard-transaction-factory.php:429
-#: classes/admin/class-wirecard-transaction-factory.php:447
-msgid "error_no_transaction"
-msgstr ""
-
-#: woocommerce-wirecard-payment-gateway.php:319
-msgid "error_woocommerce_missing"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:258
-msgid "first-name"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:60
-#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:104
-msgid "heading_title_alipay_crossborder"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-creditcard.php:61
-#: classes/includes/class-wc-gateway-wirecard-creditcard.php:113
-msgid "heading_title_creditcard"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-eps.php:62
-#: classes/includes/class-wc-gateway-wirecard-eps.php:108
-msgid "heading_title_eps"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-ideal.php:63
-#: classes/includes/class-wc-gateway-wirecard-ideal.php:108
-msgid "heading_title_ideal"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-masterpass.php:61
-#: classes/includes/class-wc-gateway-wirecard-masterpass.php:106
-msgid "heading_title_masterpass"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:60
-#: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:106
-msgid "heading_title_paybybankapp"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-paypal.php:61
-#: classes/includes/class-wc-gateway-wirecard-paypal.php:106
-msgid "heading_title_paypal"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-poipia.php:61
-#: classes/includes/class-wc-gateway-wirecard-poipia.php:103
-msgid "heading_title_poi_pia"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:63
-#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:113
-msgid "heading_title_ratepayinvoice"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:60
-#: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:103
-msgid "heading_title_sepact"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:59
-#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:107
-msgid "heading_title_sepadd"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-sofort.php:62
-#: classes/includes/class-wc-gateway-wirecard-sofort.php:106
-msgid "heading_title_sofortbanking"
-msgstr ""
-
-#: woocommerce-wirecard-payment-gateway.php:268
-#: woocommerce-wirecard-payment-gateway.php:269
-msgid "heading_title_support"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:58
-#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:106
-msgid "heading_title_upi"
-msgstr ""
-
-#. Plugin URI of the plugin
-msgid "https://github.com/wirecard/woocommerce-ee"
-msgstr ""
-
-#. Author URI of the plugin
-msgid "https://www.wirecard.com/"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-poipia.php:264
-#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:266
-msgid "iban"
-msgstr ""
-
 #: classes/helper/sepa-template.php:54
 msgid "iban_input"
 msgstr ""
 
-#: classes/includes/class-wc-gateway-wirecard-ideal.php:64
-msgid "ideal"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-ideal.php:65
-msgid "ideal_desc"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:262
-msgid "last-name"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-masterpass.php:62
-msgid "masterpass"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-masterpass.php:63
-msgid "masterpass_desc"
-msgstr ""
-
-#: classes/includes/class-wc-wirecard-payment-gateway.php:212
-#: classes/includes/class-wc-wirecard-payment-gateway.php:228
-#: classes/includes/class-wc-wirecard-payment-gateway.php:340
-msgid "order_error"
-msgstr ""
-
-#: woocommerce-wirecard-payment-gateway.php:100
-#: woocommerce-wirecard-payment-gateway.php:166
-msgid "order_status_authorized"
-msgstr ""
-
-msgid "order_status_authorized_count_plural"
-msgstr ""
-
-#. translators:
-#: woocommerce-wirecard-payment-gateway.php:105
-msgid "order_status_authorized_count_single"
-msgid_plural "order_status_authorized_count_plural"
-msgstr[0] ""
-msgstr[1] ""
-
-#: classes/includes/class-wc-wirecard-payment-gateway.php:521
-msgid "order_status_gateway_update"
-msgstr ""
-
-#: classes/admin/class-wirecard-settings.php:119
-msgid "pagination_back"
-msgstr ""
-
-#: classes/admin/class-wirecard-settings.php:120
-msgid "pagination_next"
-msgstr ""
-
-#: classes/admin/class-wirecard-transaction-factory.php:112
-msgid "panel_action"
-msgstr ""
-
-#: classes/admin/class-wirecard-transaction-factory.php:121
-msgid "panel_amount"
-msgstr ""
-
-#: classes/admin/class-wirecard-transaction-factory.php:124
-msgid "panel_currency"
-msgstr ""
-
-#: classes/admin/class-wirecard-transaction-factory.php:103
-msgid "panel_order_number"
-msgstr ""
-
-#: classes/admin/class-wirecard-transaction-factory.php:109
-msgid "panel_parent_transaction_id"
-msgstr ""
-
-#: classes/admin/class-wirecard-transaction-factory.php:115
-msgid "panel_payment_method"
-msgstr ""
-
-#: classes/admin/class-wirecard-transaction-factory.php:100
-msgid "panel_transaction"
-msgstr ""
-
-#: classes/admin/class-wirecard-transaction-factory.php:118
-msgid "panel_transaction_state"
-msgstr ""
-
-#: classes/admin/class-wirecard-transaction-factory.php:106
-msgid "panel_transcation_id"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:61
-msgid "paybybankapp"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:62
-msgid "paybybankapp_desc"
-msgstr ""
-
-#. Description of the plugin
-msgid "Payment Gateway for WooCommerce"
-msgstr ""
-
-#: classes/includes/class-wc-wirecard-payment-gateway.php:733
-msgid "payment_awaiting"
-msgstr ""
-
-#: classes/admin/class-wirecard-transaction-factory.php:341
-msgid "payment_suffix"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-paypal.php:62
-msgid "paypal"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-paypal.php:63
-msgid "paypal_desc"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-poipia.php:62
-msgid "poi_pia"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-poipia.php:63
-msgid "poi_pia_desc"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-poipia.php:266
-msgid "ptrid"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:64
-msgid "ratepayinvoice"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:65
-msgid "ratepayinvoice_desc"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:456
-msgid "ratepayinvoice_fields_error"
-msgstr ""
-
-#: classes/handler/class-wirecard-callback.php:53
-#: classes/handler/class-wirecard-callback.php:80
-msgid "redirect_text"
-msgstr ""
-
-#: classes/includes/class-wc-wirecard-payment-gateway.php:418
-#: classes/includes/class-wc-wirecard-payment-gateway.php:421
-msgid "refund_gateway_error"
-msgstr ""
-
-#: classes/includes/class-wc-wirecard-payment-gateway.php:632
-msgid "refund_online_error"
-msgstr ""
-
-#: classes/helper/class-additional-information.php:349
-msgid "refund_partial_shipping_error"
-msgstr ""
-
-#: classes/includes/class-wc-wirecard-payment-gateway.php:409
-msgid "refund_processing_error"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:61
-msgid "sepact"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:62
-msgid "sepact_desc"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:60
-msgid "sepadd"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:61
-msgid "sepadd_desc"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:246
-msgid "sepa_cancel"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:295
-msgid "sepa_fields_error"
+#: classes/helper/sepa-template.php:56
+msgid "bic_input"
 msgstr ""
 
 #: classes/helper/sepa-template.php:69
@@ -927,6 +243,892 @@ msgstr ""
 msgid "sepa_text_6"
 msgstr ""
 
+#: classes/helper/sepa-template.php:108
+msgid "cancel"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:60
+#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:104
+msgid "heading_title_alipay_crossborder"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:61
+msgid "alipay_crossborder"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:62
+msgid "alipay_crossborder_desc"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:94
+#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:153
+#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:160
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:117
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:211
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:218
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:225
+#: classes/includes/class-wc-gateway-wirecard-eps.php:97
+#: classes/includes/class-wc-gateway-wirecard-eps.php:156
+#: classes/includes/class-wc-gateway-wirecard-eps.php:163
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:103
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:162
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:206
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:213
+#: classes/includes/class-wc-gateway-wirecard-ideal.php:98
+#: classes/includes/class-wc-gateway-wirecard-ideal.php:157
+#: classes/includes/class-wc-gateway-wirecard-ideal.php:164
+#: classes/includes/class-wc-gateway-wirecard-masterpass.php:96
+#: classes/includes/class-wc-gateway-wirecard-masterpass.php:166
+#: classes/includes/class-wc-gateway-wirecard-masterpass.php:173
+#: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:95
+#: classes/includes/class-wc-gateway-wirecard-paypal.php:96
+#: classes/includes/class-wc-gateway-wirecard-paypal.php:166
+#: classes/includes/class-wc-gateway-wirecard-paypal.php:173
+#: classes/includes/class-wc-gateway-wirecard-paypal.php:180
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:92
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:162
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:169
+#: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:93
+#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:97
+#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:196
+#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:203
+#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:210
+#: classes/includes/class-wc-gateway-wirecard-sofort.php:96
+#: classes/includes/class-wc-gateway-wirecard-sofort.php:155
+#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:110
+#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:180
+#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:187
+msgid "text_enable_disable"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:96
+msgid "config_status_desc_alipay_crossborder"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:97
+msgid "enable_heading_title_alipay_crossborder"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:101
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:124
+#: classes/includes/class-wc-gateway-wirecard-eps.php:104
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:110
+#: classes/includes/class-wc-gateway-wirecard-ideal.php:105
+#: classes/includes/class-wc-gateway-wirecard-masterpass.php:103
+#: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:102
+#: classes/includes/class-wc-gateway-wirecard-paypal.php:103
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:99
+#: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:100
+#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:104
+#: classes/includes/class-wc-gateway-wirecard-sofort.php:103
+#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:117
+msgid "config_title"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:103
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:126
+#: classes/includes/class-wc-gateway-wirecard-eps.php:106
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:112
+#: classes/includes/class-wc-gateway-wirecard-ideal.php:107
+#: classes/includes/class-wc-gateway-wirecard-masterpass.php:105
+#: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:104
+#: classes/includes/class-wc-gateway-wirecard-paypal.php:105
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:101
+#: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:102
+#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:106
+#: classes/includes/class-wc-gateway-wirecard-sofort.php:105
+#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:119
+msgid "config_title_desc"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:107
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:130
+#: classes/includes/class-wc-gateway-wirecard-eps.php:110
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:116
+#: classes/includes/class-wc-gateway-wirecard-ideal.php:111
+#: classes/includes/class-wc-gateway-wirecard-masterpass.php:109
+#: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:108
+#: classes/includes/class-wc-gateway-wirecard-paypal.php:109
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:105
+#: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:106
+#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:110
+#: classes/includes/class-wc-gateway-wirecard-sofort.php:109
+#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:123
+msgid "config_merchant_account_id"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:109
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:132
+#: classes/includes/class-wc-gateway-wirecard-eps.php:112
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:118
+#: classes/includes/class-wc-gateway-wirecard-ideal.php:113
+#: classes/includes/class-wc-gateway-wirecard-masterpass.php:111
+#: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:110
+#: classes/includes/class-wc-gateway-wirecard-paypal.php:111
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:107
+#: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:108
+#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:112
+#: classes/includes/class-wc-gateway-wirecard-sofort.php:111
+#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:125
+msgid "config_merchant_account_id_desc"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:113
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:136
+#: classes/includes/class-wc-gateway-wirecard-eps.php:116
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:122
+#: classes/includes/class-wc-gateway-wirecard-ideal.php:117
+#: classes/includes/class-wc-gateway-wirecard-masterpass.php:115
+#: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:114
+#: classes/includes/class-wc-gateway-wirecard-paypal.php:115
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:111
+#: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:112
+#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:116
+#: classes/includes/class-wc-gateway-wirecard-sofort.php:115
+#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:129
+msgid "config_merchant_secret"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:115
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:138
+#: classes/includes/class-wc-gateway-wirecard-eps.php:118
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:124
+#: classes/includes/class-wc-gateway-wirecard-ideal.php:119
+#: classes/includes/class-wc-gateway-wirecard-masterpass.php:117
+#: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:116
+#: classes/includes/class-wc-gateway-wirecard-paypal.php:117
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:113
+#: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:114
+#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:118
+#: classes/includes/class-wc-gateway-wirecard-sofort.php:117
+#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:131
+msgid "config_merchant_secret_desc"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:119
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:166
+#: classes/includes/class-wc-gateway-wirecard-eps.php:122
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:128
+#: classes/includes/class-wc-gateway-wirecard-ideal.php:123
+#: classes/includes/class-wc-gateway-wirecard-masterpass.php:121
+#: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:120
+#: classes/includes/class-wc-gateway-wirecard-paypal.php:121
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:117
+#: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:118
+#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:122
+#: classes/includes/class-wc-gateway-wirecard-sofort.php:121
+#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:135
+msgid "text_credentials"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:121
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:168
+#: classes/includes/class-wc-gateway-wirecard-eps.php:124
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:130
+#: classes/includes/class-wc-gateway-wirecard-ideal.php:125
+#: classes/includes/class-wc-gateway-wirecard-masterpass.php:123
+#: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:122
+#: classes/includes/class-wc-gateway-wirecard-paypal.php:123
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:119
+#: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:120
+#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:124
+#: classes/includes/class-wc-gateway-wirecard-sofort.php:123
+#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:137
+msgid "text_credentials_desc"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:124
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:171
+#: classes/includes/class-wc-gateway-wirecard-eps.php:127
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:133
+#: classes/includes/class-wc-gateway-wirecard-ideal.php:128
+#: classes/includes/class-wc-gateway-wirecard-masterpass.php:126
+#: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:125
+#: classes/includes/class-wc-gateway-wirecard-paypal.php:126
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:122
+#: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:123
+#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:127
+#: classes/includes/class-wc-gateway-wirecard-sofort.php:126
+#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:140
+msgid "config_base_url"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:126
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:173
+#: classes/includes/class-wc-gateway-wirecard-eps.php:129
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:135
+#: classes/includes/class-wc-gateway-wirecard-ideal.php:130
+#: classes/includes/class-wc-gateway-wirecard-masterpass.php:128
+#: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:127
+#: classes/includes/class-wc-gateway-wirecard-paypal.php:128
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:124
+#: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:125
+#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:129
+#: classes/includes/class-wc-gateway-wirecard-sofort.php:128
+#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:142
+msgid "config_base_url_desc"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:130
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:177
+#: classes/includes/class-wc-gateway-wirecard-eps.php:133
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:139
+#: classes/includes/class-wc-gateway-wirecard-ideal.php:134
+#: classes/includes/class-wc-gateway-wirecard-masterpass.php:132
+#: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:131
+#: classes/includes/class-wc-gateway-wirecard-paypal.php:132
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:128
+#: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:129
+#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:133
+#: classes/includes/class-wc-gateway-wirecard-sofort.php:132
+#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:146
+msgid "config_http_user"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:132
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:179
+#: classes/includes/class-wc-gateway-wirecard-eps.php:135
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:141
+#: classes/includes/class-wc-gateway-wirecard-ideal.php:136
+#: classes/includes/class-wc-gateway-wirecard-masterpass.php:134
+#: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:133
+#: classes/includes/class-wc-gateway-wirecard-paypal.php:134
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:130
+#: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:131
+#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:135
+#: classes/includes/class-wc-gateway-wirecard-sofort.php:134
+#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:148
+msgid "config_http_user_desc"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:136
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:183
+#: classes/includes/class-wc-gateway-wirecard-eps.php:139
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:145
+#: classes/includes/class-wc-gateway-wirecard-ideal.php:140
+#: classes/includes/class-wc-gateway-wirecard-masterpass.php:138
+#: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:137
+#: classes/includes/class-wc-gateway-wirecard-paypal.php:138
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:134
+#: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:135
+#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:139
+#: classes/includes/class-wc-gateway-wirecard-sofort.php:138
+#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:152
+msgid "config_http_password"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:138
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:185
+#: classes/includes/class-wc-gateway-wirecard-eps.php:141
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:147
+#: classes/includes/class-wc-gateway-wirecard-ideal.php:142
+#: classes/includes/class-wc-gateway-wirecard-masterpass.php:140
+#: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:139
+#: classes/includes/class-wc-gateway-wirecard-paypal.php:140
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:136
+#: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:137
+#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:141
+#: classes/includes/class-wc-gateway-wirecard-sofort.php:140
+#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:154
+msgid "config_http_password_desc"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:142
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:189
+#: classes/includes/class-wc-gateway-wirecard-eps.php:145
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:151
+#: classes/includes/class-wc-gateway-wirecard-ideal.php:146
+#: classes/includes/class-wc-gateway-wirecard-masterpass.php:144
+#: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:143
+#: classes/includes/class-wc-gateway-wirecard-paypal.php:149
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:140
+#: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:141
+#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:145
+#: classes/includes/class-wc-gateway-wirecard-sofort.php:144
+#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:158
+msgid "test_config"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:145
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:192
+#: classes/includes/class-wc-gateway-wirecard-eps.php:148
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:154
+#: classes/includes/class-wc-gateway-wirecard-ideal.php:149
+#: classes/includes/class-wc-gateway-wirecard-masterpass.php:147
+#: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:146
+#: classes/includes/class-wc-gateway-wirecard-paypal.php:152
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:143
+#: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:144
+#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:148
+#: classes/includes/class-wc-gateway-wirecard-sofort.php:147
+#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:161
+#: woocommerce-wirecard-payment-gateway.php:352
+msgid "test_credentials"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:148
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:195
+#: classes/includes/class-wc-gateway-wirecard-eps.php:151
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:157
+#: classes/includes/class-wc-gateway-wirecard-ideal.php:152
+#: classes/includes/class-wc-gateway-wirecard-masterpass.php:150
+#: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:149
+#: classes/includes/class-wc-gateway-wirecard-paypal.php:144
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:146
+#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:180
+#: classes/includes/class-wc-gateway-wirecard-sofort.php:150
+#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:164
+msgid "text_advanced"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:155
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:213
+#: classes/includes/class-wc-gateway-wirecard-eps.php:158
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:208
+#: classes/includes/class-wc-gateway-wirecard-ideal.php:159
+#: classes/includes/class-wc-gateway-wirecard-masterpass.php:168
+#: classes/includes/class-wc-gateway-wirecard-paypal.php:175
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:164
+#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:198
+#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:182
+msgid "config_descriptor_desc"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:156
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:214
+#: classes/includes/class-wc-gateway-wirecard-eps.php:159
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:209
+#: classes/includes/class-wc-gateway-wirecard-ideal.php:160
+#: classes/includes/class-wc-gateway-wirecard-masterpass.php:169
+#: classes/includes/class-wc-gateway-wirecard-paypal.php:176
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:165
+#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:199
+#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:183
+msgid "config_descriptor"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:162
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:220
+#: classes/includes/class-wc-gateway-wirecard-eps.php:165
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:215
+#: classes/includes/class-wc-gateway-wirecard-ideal.php:166
+#: classes/includes/class-wc-gateway-wirecard-masterpass.php:175
+#: classes/includes/class-wc-gateway-wirecard-paypal.php:182
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:171
+#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:205
+#: classes/includes/class-wc-gateway-wirecard-sofort.php:158
+#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:189
+msgid "config_additional_info_desc"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:163
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:221
+#: classes/includes/class-wc-gateway-wirecard-eps.php:166
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:216
+#: classes/includes/class-wc-gateway-wirecard-ideal.php:167
+#: classes/includes/class-wc-gateway-wirecard-masterpass.php:176
+#: classes/includes/class-wc-gateway-wirecard-paypal.php:183
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:172
+#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:206
+#: classes/includes/class-wc-gateway-wirecard-sofort.php:159
+#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:190
+msgid "config_additional_info"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:61
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:127
+msgid "heading_title_creditcard"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:62
+msgid "creditcard"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:63
+msgid "creditcard_desc"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:119
+msgid "enable_heading_title_creditcard"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:120
+msgid "config_status_desc_creditcard"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:142
+msgid "config_three_d_merchant_account_id"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:144
+msgid "config_three_d_merchant_account_id_desc"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:148
+msgid "config_three_d_merchant_secret"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:150
+msgid "config_three_d_merchant_secret_desc"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:154
+msgid "config_ssl_max_limit"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:156
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:162
+msgid "config_limit_desc"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:160
+msgid "config_three_d_min_limit"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:200
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:204
+#: classes/includes/class-wc-gateway-wirecard-masterpass.php:155
+#: classes/includes/class-wc-gateway-wirecard-masterpass.php:159
+#: classes/includes/class-wc-gateway-wirecard-paypal.php:155
+#: classes/includes/class-wc-gateway-wirecard-paypal.php:159
+#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:185
+#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:189
+#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:169
+#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:173
+msgid "config_payment_action"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:202
+#: classes/includes/class-wc-gateway-wirecard-masterpass.php:157
+#: classes/includes/class-wc-gateway-wirecard-paypal.php:157
+#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:187
+#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:171
+msgid "config_payment_action_desc"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:206
+#: classes/includes/class-wc-gateway-wirecard-masterpass.php:161
+#: classes/includes/class-wc-gateway-wirecard-paypal.php:161
+#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:191
+#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:175
+msgid "text_payment_action_reserve"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:207
+#: classes/includes/class-wc-gateway-wirecard-masterpass.php:162
+#: classes/includes/class-wc-gateway-wirecard-paypal.php:162
+#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:192
+#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:176
+msgid "text_payment_action_pay"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:227
+msgid "config_vault_desc"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:228
+msgid "enable_vault"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:356
+#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:244
+msgid "heading_creditcard_form"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:362
+msgid "vault_use_existing_text"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:377
+msgid "vault_use_new_text"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:403
+msgid "vault_save_text"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-eps.php:63
+#: classes/includes/class-wc-gateway-wirecard-eps.php:107
+msgid "heading_title_eps"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-eps.php:64
+msgid "eps"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-eps.php:65
+msgid "eps_desc"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-eps.php:99
+msgid "config_status_desc_eps"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-eps.php:100
+msgid "enable_heading_title_eps"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-eps.php:204
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:264
+#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:273
+msgid "bic"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:63
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:113
+msgid "heading_title_ratepayinvoice"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:64
+msgid "ratepayinvoice"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:65
+msgid "ratepayinvoice_desc"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:105
+msgid "config_status_desc_ratepayinvoice"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:106
+msgid "enable_heading_title_ratepayinvoice"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:164
+msgid "config_billing_shipping_desc"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:165
+msgid "config_billing_shipping"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:169
+msgid "config_billing_countries"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:171
+msgid "config_billing_countries_desc"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:178
+msgid "config_shipping_countries"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:180
+msgid "config_shipping_countries_desc"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:187
+msgid "config_allowed_currencies"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:189
+msgid "config_allowed_currencies_desc"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:196
+msgid "config_basket_min"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:197
+msgid "config_basket_min_desc"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:201
+msgid "config_basket_max"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:202
+msgid "config_basket_max_desc"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:424
+msgid "birthdate_input"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:436
+msgid "text_terms_accept"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:456
+msgid "ratepayinvoice_fields_error"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:471
+msgid "text_terms_notice"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-ideal.php:63
+#: classes/includes/class-wc-gateway-wirecard-ideal.php:108
+msgid "heading_title_ideal"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-ideal.php:64
+msgid "ideal"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-ideal.php:65
+msgid "ideal_desc"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-ideal.php:100
+msgid "config_status_desc_ideal"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-ideal.php:101
+msgid "enable_heading_title_ideal"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-masterpass.php:61
+#: classes/includes/class-wc-gateway-wirecard-masterpass.php:106
+msgid "heading_title_masterpass"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-masterpass.php:62
+msgid "masterpass"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-masterpass.php:63
+msgid "masterpass_desc"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-masterpass.php:98
+msgid "enable_heading_title_masterpass"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-masterpass.php:99
+msgid "config_status_desc_masterpass"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:60
+#: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:105
+msgid "heading_title_paybybankapp"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:61
+msgid "paybybankapp"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:62
+msgid "paybybankapp_desc"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:97
+msgid "config_status_desc_paybybankapp"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:98
+msgid "enable_heading_title_paybybankapp"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:154
+msgid "config_zapp_merchant_return_string"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:156
+msgid "config_zapp_merchant_return_string_desc"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-paypal.php:61
+#: classes/includes/class-wc-gateway-wirecard-paypal.php:106
+msgid "heading_title_paypal"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-paypal.php:62
+msgid "paypal"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-paypal.php:63
+msgid "paypal_desc"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-paypal.php:98
+msgid "config_status_desc_paypal"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-paypal.php:99
+msgid "enable_heading_title_paypal"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-paypal.php:168
+msgid "config_shopping_basket_desc"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-paypal.php:169
+msgid "config_shopping_basket"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:61
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:102
+msgid "heading_title_poi_pia"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:62
+msgid "poi_pia"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:63
+msgid "poi_pia_desc"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:94
+msgid "config_status_desc_poi_pia"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:95
+msgid "enable_heading_title_poi_pia"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:151
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:155
+msgid "config_payment_type"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:153
+msgid "config_payment_type_desc"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:157
+msgid "text_payment_type_poi"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:158
+msgid "text_payment_type_pia"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:260
+msgid "transfer_notice"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:262
+msgid "amount"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:263
+#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:266
+msgid "iban"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:265
+msgid "ptrid"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:60
+#: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:103
+msgid "heading_title_sepact"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:61
+msgid "sepact"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:62
+msgid "sepact_desc"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:95
+msgid "config_status_desc_sepact"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:96
+msgid "enable_heading_title_sepact"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:59
+#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:107
+msgid "heading_title_sepadd"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:60
+msgid "sepadd"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:61
+msgid "sepadd_desc"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:99
+msgid "config_status_desc_sepadd"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:100
+msgid "enable_heading_title_sepadd"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:151
+msgid "text_sepa_config"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:153
+msgid "text_sepadd_config_desc"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:156
+msgid "config_creditor_id"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:158
+msgid "config_creditor_id_desc"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:162
+msgid "config_creditor_name"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:164
+msgid "config_creditor_name_desc"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:168
+msgid "config_creditor_city"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:170
+msgid "config_creditor_city_desc"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:174
+msgid "config_mandate_text"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:177
+msgid "config_mandate_text_desc"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:212
+msgid "config_enable_bic_desc"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:213
+msgid "config_enable_bic"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:245
+msgid "text_confirm"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:246
+msgid "sepa_cancel"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:258
+msgid "first-name"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:262
+msgid "last-name"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:295
+msgid "sepa_fields_error"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-sofort.php:62
+#: classes/includes/class-wc-gateway-wirecard-sofort.php:106
+msgid "heading_title_sofortbanking"
+msgstr ""
+
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:63
 msgid "sofortbanking"
 msgstr ""
@@ -935,234 +1137,17 @@ msgstr ""
 msgid "sofortbanking_desc"
 msgstr ""
 
-#: classes/admin/class-wirecard-settings.php:242
-msgid "submit_button"
+#: classes/includes/class-wc-gateway-wirecard-sofort.php:98
+msgid "config_status_desc_sofortbanking"
 msgstr ""
 
-#: classes/includes/class-wc-wirecard-payment-gateway.php:680
-msgid "success_credentials"
+#: classes/includes/class-wc-gateway-wirecard-sofort.php:99
+msgid "enable_heading_title_sofortbanking"
 msgstr ""
 
-#: classes/admin/class-wirecard-settings.php:299
-msgid "success_email"
-msgstr ""
-
-#: classes/admin/class-wirecard-transaction-factory.php:339
-msgid "success_new_transaction"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-paypal.php:149
-#: classes/includes/class-wc-gateway-wirecard-ideal.php:146
-#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:144
-#: classes/includes/class-wc-gateway-wirecard-sofort.php:144
-#: classes/includes/class-wc-gateway-wirecard-masterpass.php:144
-#: classes/includes/class-wc-gateway-wirecard-poipia.php:141
-#: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:141
-#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:151
-#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:142
-#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:145
-#: classes/includes/class-wc-gateway-wirecard-creditcard.php:175
-msgid "test_config"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:145
-#: classes/includes/class-wc-gateway-wirecard-creditcard.php:178
-#: classes/includes/class-wc-gateway-wirecard-eps.php:149
-#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:154
-#: classes/includes/class-wc-gateway-wirecard-ideal.php:149
-#: classes/includes/class-wc-gateway-wirecard-masterpass.php:147
-#: classes/includes/class-wc-gateway-wirecard-paypal.php:152
-#: classes/includes/class-wc-gateway-wirecard-poipia.php:144
-#: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:144
-#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:148
-#: classes/includes/class-wc-gateway-wirecard-sofort.php:147
-#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:147
-#: woocommerce-wirecard-payment-gateway.php:301
-msgid "test_credentials"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:148
-#: classes/includes/class-wc-gateway-wirecard-creditcard.php:181
-#: classes/includes/class-wc-gateway-wirecard-eps.php:152
-#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:157
-#: classes/includes/class-wc-gateway-wirecard-ideal.php:152
-#: classes/includes/class-wc-gateway-wirecard-masterpass.php:150
-#: classes/includes/class-wc-gateway-wirecard-paypal.php:144
-#: classes/includes/class-wc-gateway-wirecard-poipia.php:147
-#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:180
-#: classes/includes/class-wc-gateway-wirecard-sofort.php:150
-#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:150
-msgid "text_advanced"
-msgstr ""
-
-#: woocommerce-wirecard-payment-gateway.php:236
-#: woocommerce-wirecard-payment-gateway.php:237
-#: classes/admin/class-wirecard-transaction-factory.php:350
-msgid "text_cancel_transaction"
-msgstr ""
-
-#: woocommerce-wirecard-payment-gateway.php:244
-#: woocommerce-wirecard-payment-gateway.php:245
-#: classes/admin/class-wirecard-transaction-factory.php:353
-msgid "text_capture_transaction"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:245
-msgid "text_confirm"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:119
-#: classes/includes/class-wc-gateway-wirecard-creditcard.php:152
-#: classes/includes/class-wc-gateway-wirecard-eps.php:123
-#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:128
-#: classes/includes/class-wc-gateway-wirecard-ideal.php:123
-#: classes/includes/class-wc-gateway-wirecard-masterpass.php:121
-#: classes/includes/class-wc-gateway-wirecard-paypal.php:121
-#: classes/includes/class-wc-gateway-wirecard-poipia.php:118
-#: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:118
-#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:122
-#: classes/includes/class-wc-gateway-wirecard-sofort.php:121
-#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:121
-msgid "text_credentials"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-paypal.php:123
-#: classes/includes/class-wc-gateway-wirecard-ideal.php:125
-#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:123
-#: classes/includes/class-wc-gateway-wirecard-sofort.php:123
-#: classes/includes/class-wc-gateway-wirecard-masterpass.php:123
-#: classes/includes/class-wc-gateway-wirecard-poipia.php:120
-#: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:120
-#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:130
-#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:121
-#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:124
-#: classes/includes/class-wc-gateway-wirecard-creditcard.php:154
-msgid "text_credentials_desc"
-msgstr ""
-
-#: classes/helper/class-credit-card-vault.php:163
-msgid "text_delete"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-paypal.php:96
-#: classes/includes/class-wc-gateway-wirecard-paypal.php:166
-#: classes/includes/class-wc-gateway-wirecard-paypal.php:173
-#: classes/includes/class-wc-gateway-wirecard-paypal.php:180
-#: classes/includes/class-wc-gateway-wirecard-ideal.php:98
-#: classes/includes/class-wc-gateway-wirecard-ideal.php:157
-#: classes/includes/class-wc-gateway-wirecard-ideal.php:164
-#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:96
-#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:166
-#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:173
-#: classes/includes/class-wc-gateway-wirecard-sofort.php:96
-#: classes/includes/class-wc-gateway-wirecard-sofort.php:155
-#: classes/includes/class-wc-gateway-wirecard-masterpass.php:96
-#: classes/includes/class-wc-gateway-wirecard-masterpass.php:166
-#: classes/includes/class-wc-gateway-wirecard-masterpass.php:173
-#: classes/includes/class-wc-gateway-wirecard-poipia.php:93
-#: classes/includes/class-wc-gateway-wirecard-poipia.php:163
-#: classes/includes/class-wc-gateway-wirecard-poipia.php:170
-#: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:93
-#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:103
-#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:162
-#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:206
-#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:213
-#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:94
-#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:153
-#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:160
-#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:97
-#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:196
-#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:203
-#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:210
-#: classes/includes/class-wc-gateway-wirecard-creditcard.php:103
-#: classes/includes/class-wc-gateway-wirecard-creditcard.php:197
-#: classes/includes/class-wc-gateway-wirecard-creditcard.php:204
-#: classes/includes/class-wc-gateway-wirecard-creditcard.php:211
-msgid "text_enable_disable"
-msgstr ""
-
-#: woocommerce-wirecard-payment-gateway.php:320
-msgid "text_go_to_plugins"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-creditcard.php:193
-#: classes/includes/class-wc-gateway-wirecard-masterpass.php:162
-#: classes/includes/class-wc-gateway-wirecard-paypal.php:162
-#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:192
-#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:162
-msgid "text_payment_action_pay"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-creditcard.php:192
-#: classes/includes/class-wc-gateway-wirecard-masterpass.php:161
-#: classes/includes/class-wc-gateway-wirecard-paypal.php:161
-#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:191
-#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:161
-msgid "text_payment_action_reserve"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-poipia.php:159
-msgid "text_payment_type_pia"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-poipia.php:158
-msgid "text_payment_type_poi"
-msgstr ""
-
-#: woocommerce-wirecard-payment-gateway.php:252
-#: woocommerce-wirecard-payment-gateway.php:253
-#: classes/admin/class-wirecard-transaction-factory.php:356
-msgid "text_refund_transaction"
-msgstr ""
-
-#: classes/admin/class-wirecard-transaction-factory.php:371
-msgid "text_response_data"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:153
-msgid "text_sepadd_config_desc"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:151
-msgid "text_sepa_config"
-msgstr ""
-
-#: classes/admin/class-wirecard-settings.php:98
-msgid "text_support"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:436
-msgid "text_terms_accept"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:471
-msgid "text_terms_notice"
-msgstr ""
-
-#: classes/admin/class-wirecard-transaction-factory.php:376
-msgid "text_total"
-msgstr ""
-
-#: classes/admin/class-wirecard-transaction-factory.php:339
-msgid "text_transaction"
-msgstr ""
-
-#: classes/admin/class-wirecard-transaction-factory.php:468
-msgid "text_transaction_details_1"
-msgstr ""
-
-#: classes/admin/class-wirecard-transaction-factory.php:471
-msgid "text_transaction_details_2"
-msgstr ""
-
-#: woocommerce-wirecard-payment-gateway.php:228
-#: woocommerce-wirecard-payment-gateway.php:229
-#: classes/admin/class-wirecard-transaction-factory.php:367
-msgid "title_payment_gateway"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-poipia.php:261
-msgid "transfer_notice"
+#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:58
+#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:120
+msgid "heading_title_upi"
 msgstr ""
 
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:59
@@ -1173,30 +1158,75 @@ msgstr ""
 msgid "upi_desc"
 msgstr ""
 
-#: classes/helper/class-credit-card-vault.php:156
-msgid "vault_account_number"
+#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:112
+msgid "config_status_desc_upi"
 msgstr ""
 
-#: classes/helper/class-credit-card-vault.php:157
-msgid "vault_delete_card_text"
+#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:113
+msgid "enable_heading_title_upi"
 msgstr ""
 
-#: classes/includes/class-wc-gateway-wirecard-creditcard.php:349
-msgid "vault_save_text"
+#: classes/includes/class-wc-wirecard-payment-gateway.php:213
+msgid "canceled_payment_process"
 msgstr ""
 
-#: classes/includes/class-wc-gateway-wirecard-creditcard.php:336
-msgid "vault_use_existing_text"
+#: classes/includes/class-wc-wirecard-payment-gateway.php:224
+#: classes/includes/class-wc-wirecard-payment-gateway.php:240
+#: classes/includes/class-wc-wirecard-payment-gateway.php:357
+msgid "order_error"
 msgstr ""
 
-#: classes/includes/class-wc-gateway-wirecard-creditcard.php:338
-msgid "vault_use_new_text"
+#: classes/includes/class-wc-wirecard-payment-gateway.php:436
+msgid "refund_processing_error"
 msgstr ""
 
-#. Author of the plugin
-msgid "Wirecard AG"
+#: classes/includes/class-wc-wirecard-payment-gateway.php:445
+#: classes/includes/class-wc-wirecard-payment-gateway.php:448
+msgid "refund_gateway_error"
 msgstr ""
 
-#. Plugin Name of the plugin
-msgid "Wirecard WooCommerce Extension"
+#: classes/includes/class-wc-wirecard-payment-gateway.php:549
+msgid "order_status_gateway_update"
+msgstr ""
+
+#: classes/includes/class-wc-wirecard-payment-gateway.php:660
+msgid "refund_online_error"
+msgstr ""
+
+#: classes/includes/class-wc-wirecard-payment-gateway.php:708
+msgid "success_credentials"
+msgstr ""
+
+#: classes/includes/class-wc-wirecard-payment-gateway.php:710
+msgid "error_credentials"
+msgstr ""
+
+#: classes/includes/class-wc-wirecard-payment-gateway.php:761
+msgid "payment_awaiting"
+msgstr ""
+
+#: woocommerce-wirecard-payment-gateway.php:142
+#: woocommerce-wirecard-payment-gateway.php:217
+msgid "order_status_authorized"
+msgstr ""
+
+#. translators:
+#: woocommerce-wirecard-payment-gateway.php:148
+msgid "order_status_authorized_count_single"
+msgid_plural "order_status_authorized_count_plural"
+msgstr[0] ""
+
+#: woocommerce-wirecard-payment-gateway.php:313
+#: woocommerce-wirecard-payment-gateway.php:314
+#: woocommerce-wirecard-payment-gateway.php:321
+#: woocommerce-wirecard-payment-gateway.php:322
+msgid "heading_title_support"
+msgstr ""
+
+#: woocommerce-wirecard-payment-gateway.php:372
+msgid "error_woocommerce_missing"
+msgstr ""
+
+#: woocommerce-wirecard-payment-gateway.php:373
+msgid "text_go_to_plugins"
 msgstr ""
