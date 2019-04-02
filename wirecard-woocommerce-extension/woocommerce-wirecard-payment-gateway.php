@@ -134,8 +134,7 @@ function wirecard_init_payment_gateway() {
 	add_action( 'admin_menu', 'wirecard_gateway_options_page' );
 	add_action( 'woocommerce_thankyou_poipia', array( new WC_Gateway_Wirecard_Poipia(), 'thankyou_page_poipia' ) );
 	add_action( 'woocommerce_receipt_wirecard_ee_creditcard', array( new WC_Gateway_Wirecard_Creditcard(), 'render_form' ) );
-	
-	
+
 	register_post_status(
 		'wc-authorization',
 		array(

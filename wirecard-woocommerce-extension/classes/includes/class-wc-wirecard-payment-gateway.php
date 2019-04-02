@@ -61,9 +61,9 @@ use Wirecard\PaymentSdk\TransactionService;
  */
 abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	const CHECK_PAYER_RESPONSE = 'check-payer-response';
-	const PAYMENT_ACTIONS = array(
-		'pay' => 'purchase',
-		'reserve' => 'authorization'
+	const PAYMENT_ACTIONS      = array(
+		'pay'     => 'purchase',
+		'reserve' => 'authorization',
 	);
 
 	/**
@@ -199,7 +199,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 *
 	 * @since 1.0.0
 	 */
-	public function return_request() {
+	public function return_request( $response = null ) {
 		$redirect_url = $this->get_return_url();
 		if ( ! array_key_exists( 'order-id', $_REQUEST ) ) {
 			header( 'Location:' . $redirect_url );
@@ -339,13 +339,18 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 *
 	 * @since 1.0.0
 	 */
-	public function execute_transaction( $transaction, $config, $operation, $order ) {
+	public function execute_transaction( $transaction, $config, $operation, $order, $request_values = null ) {
 		$logger              = new Logger();
 		$transaction_service = new TransactionService( $config, $logger );
 
 		try {
 			/** @var $response Response */
-			$response = $transaction_service->process( $transaction, $operation );
+			if ( $request_values ) {
+				$redirect = $this->create_redirect_url( $order, 'success', $this->type );
+				$response = $transaction_service->processJsResponse( $request_values, $redirect );
+			} else {
+				$response = $transaction_service->process( $transaction, $operation );
+			}
 		} catch ( \Exception $exception ) {
 			$logger->error( __METHOD__ . ': ' . get_class( $exception ) . ': ' . $exception->getMessage() . ' - ' . $operation );
 
@@ -357,9 +362,16 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 			);
 		}
 
-		$page_url = $order->get_checkout_payment_url( true );
-		$page_url = add_query_arg( 'key', $order->get_order_key(), $page_url );
-		$page_url = add_query_arg( 'order-pay', $order->get_order_number(), $page_url );
+		if ( $response instanceof SuccessResponse ) {
+			$page_url            = $this->get_return_url( $order );
+			$payment_method      = $response->getPaymentMethod();
+			$transaction_factory = new Wirecard_Transaction_Factory();
+
+			if ( ! $transaction_factory->get_transaction( $response->getTransactionId() ) ) {
+				$this->payment_on_hold( $order );
+				$this->update_payment_transaction( $order, $response, 'awaiting', $payment_method );
+			}
+		}
 
 		if ( $response instanceof InteractionResponse ) {
 			$page_url = $response->getRedirectUrl();
@@ -367,7 +379,9 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 			$data['url']         = $response->getUrl();
 			$data['method']      = $response->getMethod();
 			$data['form_fields'] = $response->getFormFields();
+
 			WC()->session->set( 'wirecard_post_data', $data );
+
 			$page_url = add_query_arg(
 				[ 'wc-api' => 'checkout_form_submit' ],
 				site_url( '/', is_ssl() ? 'https' : 'http' )

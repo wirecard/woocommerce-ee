@@ -164,3 +164,15 @@ function apply_filters( $string, $parameter, $option ) {
 function is_wp_error() {
 	return;
 }
+
+function wp_send_json_success($input) {
+	echo json_encode($input);
+}
+
+function wp_send_json_error($input) {
+	echo json_encode($input);
+}
+
+function wp_die() {
+	return;
+}
