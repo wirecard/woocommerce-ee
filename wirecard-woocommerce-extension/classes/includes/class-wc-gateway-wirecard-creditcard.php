@@ -104,6 +104,14 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 				'execute_payment',
 			)
 		);
+
+		add_action(
+			'woocommerce_api_submit_token_response',
+			array(
+				$this,
+				'execute_token_payment',
+			)
+		);
 	}
 
 	/**
@@ -342,7 +350,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 			'vault_url'        => $vault_save_url,
 			'vault_get_url'    => $vault_get_url,
 			'vault_delete_url' => $vault_delete_url,
-			'spinner'          => '<div class="spinner spinner-inline" style="display:inline-block; background: url(\'' . admin_url() . 'images/loading.gif\') no-repeat;"></div>',
+			'spinner'          => $this->get_spinner(),
 		);
 	}
 
@@ -355,61 +363,23 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	public function load_cc_template() {
 		$html = '<h2 class="credit-card-heading">' . __( 'heading_creditcard_form', 'wirecard-woocommerce-extension' ) . '</h2>';
 
-		if ( is_user_logged_in() ) {
-			if ( $this->get_option( 'cc_vault_enabled' ) == 'yes' && $this->has_cc_in_vault() ) {
-				$html .= '
-					<div id="open-vault-popup" class="wd-toggle-tab active">
-						<span class="dashicons dashicons-arrow-up"></span>' . __( 'vault_use_existing_text', 'wirecard-woocommerce-extension' ) . '
-					</div>
-					
-					<div id="wc_payment_method_wirecard_creditcard_vault" class="wd-tab-content">						
-						<div class="cards">
-							<div class="show-spinner">
-								<div class="spinner" style="background: url(\'' . admin_url() . 'images/loading.gif\') no-repeat;"></div>
-							</div>
-						</div>
-						
-						<button disabled id="vault-submit" class="wd-submit checkout-button button alt wc-forward">' . __( 'Pay now', 'woocommerce' ) . '</button>
-						<div class="clear"></div>
-					</div>
-				
-					<div id="open-new-card" class="wd-toggle-tab">
-						<span class="dashicons dashicons-arrow-down"></span>' . __( 'vault_use_new_text', 'wirecard-woocommerce-extension' ) . '
-					</div>
-				';
-			}
+		if ( is_user_logged_in()
+			&& $this->get_option( 'cc_vault_enabled' ) == 'yes'
+			&& $this->has_cc_in_vault()
+		) {
+			$html .= $this->get_vault_html();
 		}
 
-		$html .= '
-			<div id="wc_payment_method_wirecard_new_credit_card" class="wd-tab-content">
-				<div class="show-spinner">
-					<div class="spinner" style="background: url(\'' . admin_url() . 'images/loading.gif\') no-repeat;"></div>
-				</div>
-				
-				<form method="POST" id="wc_payment_method_wirecard_creditcard_response_form">
-					<input type="hidden" name="cc_nonce" value="' . wp_create_nonce() . '" />
-				</form>
-				
-				<div id="wc_payment_method_wirecard_creditcard_form"></div>
-		';
+		$html .= $this->get_creditcard_form_html();
 
-		if ( is_user_logged_in() ) {
-			if ( $this->get_option( 'cc_vault_enabled' ) == 'yes' ) {
-				$html .= '
-					<div class="save-later">
-						<label for="wirecard-store-card">
-						<input type="checkbox" id="wirecard-store-card" />
-						&nbsp;' .
-						__( 'vault_save_text', 'wirecard-woocommerce-extension' ) . '</label>
-					</div>
-				';
-			}
+		if (
+			is_user_logged_in()
+			&& $this->get_option( 'cc_vault_enabled' ) == 'yes'
+		) {
+			$html .= $this->get_save_for_later_html();
 		}
 
-		$html .= '
-				<button disabled id="seamless-submit" class="wd-submit checkout-button button alt wc-forward">' . __( 'Pay now', 'woocommerce' ) . '</button>
-			</div>
-		';
+		$html .= $this->get_creditcard_submit_html();
 
 		return $html;
 	}
@@ -440,19 +410,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 		$order_id            = WC()->session->get( 'wirecard_order_id' );
 		$config              = $this->create_payment_config();
 		$transaction_service = new TransactionService( $config );
-		$lang                = 'en';
-
-		try {
-			$supported_lang = json_decode( file_get_contents( $this->get_option( 'base_url' ) . '/engine/includes/i18n/languages/hpplanguages.json' ) );
-
-			if ( key_exists( substr( get_locale(), 0, 2 ), $supported_lang ) ) {
-				$lang = substr( get_locale(), 0, 2 );
-			} elseif ( key_exists( get_locale(), $supported_lang ) ) {
-				$lang = get_locale();
-			}
-		} catch ( Exception $e ) {
-			wp_send_json_error( $e->getMessage() );
-		}
+		$lang                = $this->determine_user_language();
 
 		$this->payment_action = $this->get_option( 'payment_action' );
 		$this->transaction    = new CreditCardTransaction();
@@ -493,7 +451,6 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	}
 
 	/**
-	 * @param int $order_id
 	 * @return void
 	 * @since 1.0.0
 	 */
@@ -503,6 +460,22 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 			$order_id = WC()->session->get( 'wirecard_order_id' );
 			$order    = wc_get_order( $order_id );
 
+			$this->payment_action = $this->get_option( 'payment_action' );
+
+			wp_send_json_success( $this->execute_transaction( $this->transaction, $config, $this->payment_action, $order, $_POST ) );
+			wp_die();
+		}
+	}
+
+	/**
+	 * @return void
+	 * @since 1.7.0
+	 */
+	public function execute_token_payment() {
+		if ( wp_verify_nonce( $_POST['cc_nonce'] ) ) {
+			$config   = $this->create_payment_config();
+			$order_id = WC()->session->get( 'wirecard_order_id' );
+			$order    = wc_get_order( $order_id );
 			$token_id = sanitize_text_field( $_POST['vault_token'] );
 
 			$this->payment_action = $this->get_option( 'payment_action' );
@@ -518,13 +491,8 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 
 				wp_send_json_success( $this->execute_transaction( $this->transaction, $config, $this->payment_action, $order ) );
 				wp_die();
-				return;
 			}
-
-			wp_send_json_success( $this->execute_transaction( $this->transaction, $config, $this->payment_action, $order, $_POST ) );
 		}
-
-		wp_die();
 	}
 
 	/**
@@ -656,5 +624,118 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 			return true;
 		}
 		return false;
+	}
+
+	/**
+	 * Determines the best language to use for the seamless credit card form.
+	 *
+	 * @return string
+	 * @since 1.7.0
+	 */
+	protected function determine_user_language() {
+		$lang = 'en';
+
+		try {
+			$supported_lang = json_decode( file_get_contents( $this->get_option( 'base_url' ) . '/engine/includes/i18n/languages/hpplanguages.json' ) );
+
+			if ( key_exists( substr( get_locale(), 0, 2 ), $supported_lang ) ) {
+				$lang = substr( get_locale(), 0, 2 );
+			} elseif ( key_exists( get_locale(), $supported_lang ) ) {
+				$lang = get_locale();
+			}
+		} catch ( Exception $e ) {
+			wp_send_json_error( $e->getMessage() );
+			wp_die();
+		}
+
+		return $lang;
+	}
+
+	/**
+	 * Gets a displayable spinner for the frontend
+	 *
+	 * @return string
+	 * @since 1.7.0
+	 */
+	protected function get_spinner() {
+		return '<div class="spinner spinner-inline" style="display:inline-block; background: url(\'' . admin_url() . 'images/loading.gif\') no-repeat;"></div>';
+	}
+
+	/**
+	 * Gets the HTML required to display the vault functionality.
+	 *
+	 * @return string
+	 * @since 1.7.0
+	 */
+	protected function get_vault_html() {
+		return '
+			<div id="open-vault-popup" class="wd-toggle-tab active">
+				<span class="dashicons dashicons-arrow-up"></span>' . __( 'vault_use_existing_text', 'wirecard-woocommerce-extension' ) . '
+			</div>
+			
+			<div id="wc_payment_method_wirecard_creditcard_vault" class="wd-tab-content">						
+				<div class="cards">
+					<div class="show-spinner">
+						<div class="spinner" style="background: url(\'' . admin_url() . 'images/loading.gif\') no-repeat;"></div>
+					</div>
+				</div>
+				
+				<button disabled id="vault-submit" class="wd-submit checkout-button button alt wc-forward">' . __( 'Pay now', 'woocommerce' ) . '</button>
+				<div class="clear"></div>
+			</div>
+		
+			<div id="open-new-card" class="wd-toggle-tab">
+				<span class="dashicons dashicons-arrow-down"></span>' . __( 'vault_use_new_text', 'wirecard-woocommerce-extension' ) . '
+			</div>
+		';
+	}
+
+	/**
+	 * Gets the HTML required to display the seamless credit card form.
+	 *
+	 * @return string
+	 * @since 1.7.0
+	 */
+	protected function get_creditcard_form_html() {
+		return '
+			<div id="wc_payment_method_wirecard_new_credit_card" class="wd-tab-content">
+				<div class="show-spinner">
+					<div class="spinner" style="background: url(\'' . admin_url() . 'images/loading.gif\') no-repeat;"></div>
+				</div>
+				
+				<form method="POST" id="wc_payment_method_wirecard_creditcard_response_form">
+					<input type="hidden" name="cc_nonce" value="' . wp_create_nonce() . '" />
+				</form>
+				
+				<div id="wc_payment_method_wirecard_creditcard_form"></div>
+		';
+	}
+
+	/**
+	 * Gets the submit button for the seamless credit card form.
+	 *
+	 * @return string
+	 * @since 1.7.0
+	 */
+	protected function get_creditcard_submit_html() {
+		return '
+				<button disabled id="seamless-submit" class="wd-submit checkout-button button alt wc-forward">' . __( 'Pay now', 'woocommerce' ) . '</button>
+			</div>
+		';
+	}
+
+	/**
+	 * @return string
+	 * @since 1.7.0
+	 */
+	protected function get_save_for_later_html() {
+		return '
+			<div class="save-later">
+				<label for="wirecard-store-card">
+				<input type="checkbox" id="wirecard-store-card" />
+				&nbsp;' .
+				__( 'vault_save_text', 'wirecard-woocommerce-extension' ) . '</label>
+			</div>
+		';
 	}
 }

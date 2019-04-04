@@ -117,6 +117,10 @@ function wp_enqueue_script( $string ) {
 	return;
 }
 
+function wp_dequeue_script( $string ) {
+	return;
+}
+
 function wp_enqueue_style( $string ) {
 	return;
 }

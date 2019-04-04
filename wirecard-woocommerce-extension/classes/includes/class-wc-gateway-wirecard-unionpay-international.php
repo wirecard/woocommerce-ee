@@ -29,7 +29,7 @@
  * Please do not use the plugin if you do not agree to these terms of use!
  */
 
-require_once __DIR__ . '/class-wc-wirecard-payment-gateway.php';
+require_once __DIR__ . '/class-wc-gateway-wirecard-creditcard.php';
 
 use Wirecard\PaymentSdk\Config\Config;
 use Wirecard\PaymentSdk\Config\PaymentMethodConfig;
@@ -44,7 +44,7 @@ use Wirecard\PaymentSdk\TransactionService;
  *
  * @since   1.1.0
  */
-class WC_Gateway_Wirecard_Unionpay_International extends WC_Wirecard_Payment_Gateway {
+class WC_Gateway_Wirecard_Unionpay_International extends WC_Gateway_Wirecard_Creditcard {
 
 	/**
 	 * WC_Gateway_Wirecard_Unionpay_International constructor.
@@ -199,12 +199,10 @@ class WC_Gateway_Wirecard_Unionpay_International extends WC_Wirecard_Payment_Gat
 	 * @since 1.1.5
 	 */
 	public function payment_scripts() {
-		$base_url    = $this->get_option( 'base_url' );
+		parent::payment_scripts();
+
 		$gateway_url = WIRECARD_EXTENSION_URL;
 
-		wp_register_style( 'jquery_ui_style', 'https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css', array(), null, false );
-		wp_register_script( 'jquery_ui', 'https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js', array(), null, false );
-		wp_register_script( 'page_loader', $base_url . '/engine/hpp/paymentPageLoader.js', array(), null, true );
 		wp_register_script( 'upi_js', $gateway_url . 'assets/js/unionpayinternational.js', array( 'jquery', 'page_loader' ), null, true );
 	}
 
@@ -240,7 +238,7 @@ class WC_Gateway_Wirecard_Unionpay_International extends WC_Wirecard_Payment_Gat
 	 * @since 1.7.0
 	 */
 	public function load_upi_template() {
-		$html = '
+		return '
 			<h2 class="credit-card-heading">' . __( 'heading_creditcard_form', 'wirecard-woocommerce-extension' ) . '</h2>
 			<div id="wc_payment_method_wirecard_upi" class="wd-tab-content">
 				<div class="show-spinner">
@@ -256,8 +254,6 @@ class WC_Gateway_Wirecard_Unionpay_International extends WC_Wirecard_Payment_Gat
 				<button disabled id="seamless-submit" class="wd-submit checkout-button button alt wc-forward">' . __( 'Pay now', 'woocommerce' ) . '</button>
 			</div>
 		';
-
-		return $html;
 	}
 
 	/**
@@ -266,11 +262,9 @@ class WC_Gateway_Wirecard_Unionpay_International extends WC_Wirecard_Payment_Gat
 	 * @since 1.1.0
 	 */
 	public function render_form() {
-		wp_enqueue_script( 'jquery' );
-		wp_enqueue_style( 'basic_style' );
-		wp_enqueue_script( 'jquery_ui' );
-		wp_enqueue_style( 'jquery_ui_style' );
-		wp_enqueue_script( 'page_loader' );
+		parent::render_form();
+		wp_dequeue_script( 'creditcard_js' );
+
 		wp_enqueue_script( 'upi_js' );
 		wp_localize_script( 'upi_js', 'upi_vars', $this->load_variables() );
 
@@ -286,24 +280,13 @@ class WC_Gateway_Wirecard_Unionpay_International extends WC_Wirecard_Payment_Gat
 		$order_id            = WC()->session->get( 'wirecard_order_id' );
 		$config              = $this->create_payment_config();
 		$transaction_service = new TransactionService( $config );
-		$lang                = 'en';
-
-		try {
-			$supported_lang = json_decode( file_get_contents( $this->get_option( 'base_url' ) . '/engine/includes/i18n/languages/hpplanguages.json' ) );
-
-			if ( key_exists( substr( get_locale(), 0, 2 ), $supported_lang ) ) {
-				$lang = substr( get_locale(), 0, 2 );
-			} elseif ( key_exists( get_locale(), $supported_lang ) ) {
-				$lang = get_locale();
-			}
-		} catch ( Exception $e ) {
-			wp_send_json_error( $e->getMessage() );
-		}
+		$lang                = $this->determine_user_language();
 
 		$this->payment_action = $this->get_option( 'payment_action' );
 		$this->transaction    = new UpiTransaction();
 
-		parent::process_payment( $order_id );
+		// This is not a static call, but refers to the method of the grandparent.
+		WC_Wirecard_Payment_Gateway::process_payment( $order_id );
 
 		$this->transaction->setTermUrl( $this->create_redirect_url( wc_get_order( $order_id ), 'success', $this->type ) );
 		$this->transaction->setConfig( $config->get( UpiTransaction::NAME ) );
@@ -317,43 +300,6 @@ class WC_Gateway_Wirecard_Unionpay_International extends WC_Wirecard_Payment_Gat
 		);
 
 		wp_die();
-	}
-
-	/**
-	 * Process payment gateway transactions
-	 *
-	 * @param int $order_id
-	 *
-	 * @return array
-	 *
-	 * @since 1.1.0
-	 */
-	public function process_payment( $order_id ) {
-		WC()->session->set( 'wirecard_order_id', $order_id );
-		$order = wc_get_order( $order_id );
-
-		return array(
-			'result'   => 'success',
-			'redirect' => $order->get_checkout_payment_url( true ),
-		);
-	}
-
-	/**
-	 * @param int $order_id
-	 * @return void
-	 * @since 1.0.0
-	 */
-	public function execute_payment() {
-		if ( wp_verify_nonce( $_POST['cc_nonce'] ) ) {
-			$config   = $this->create_payment_config();
-			$order_id = WC()->session->get( 'wirecard_order_id' );
-			$order    = wc_get_order( $order_id );
-
-			$this->payment_action = $this->get_option( 'payment_action' );
-
-			wp_send_json_success( $this->execute_transaction( $this->transaction, $config, $this->payment_action, $order, $_POST ) );
-			wp_die();
-		}
 	}
 
 	/**
