@@ -172,13 +172,13 @@ function submit_vault() {
 	request = {
 		'vault_token': token,
 		'cc_nonce': nonce.val(),
-		'action': 'submit_creditcard_response'
+		'action': 'submit_token_response'
 	};
 
 	return jQuery.ajax(
 		{
 			type: 'POST',
-			url: php_vars.submit_url,
+			url: php_vars.token_url,
 			cache: false,
 			data: request,
 			dataType: 'json',
@@ -321,6 +321,7 @@ function on_form_rendered() {
  * Initializes the vault interface as required.
  */
 function initialize_vault() {
+	new_card_content_area.hide();
 	togglers.on( 'click', toggle_tab );
 
 	get_credit_cards_from_vault()
@@ -335,8 +336,6 @@ function initialize_vault() {
  */
 function initialize_form() {
 	var vault_needs_to_be_initialized = togglers.length > 0;
-
-	console.log( vault_needs_to_be_initialized );
 
 	if ( vault_needs_to_be_initialized ) {
 		initialize_vault();

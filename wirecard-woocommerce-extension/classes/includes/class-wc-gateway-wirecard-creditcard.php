@@ -330,6 +330,10 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 			[ 'wc-api' => 'submit_creditcard_response' ],
 			site_url( '/', is_ssl() ? 'https' : 'http' )
 		);
+		$token_url        = add_query_arg(
+			[ 'wc-api' => 'submit_token_response' ],
+			site_url( '/', is_ssl() ? 'https' : 'http' )
+		);
 		$vault_save_url   = add_query_arg(
 			[ 'wc-api' => 'save_cc_to_vault' ],
 			site_url( '/', is_ssl() ? 'https' : 'http' )
@@ -346,6 +350,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 		return array(
 			'ajax_url'         => $page_url,
 			'submit_url'       => $submit_url,
+			'token_url'        => $token_url,
 			'base_url'         => $base_url,
 			'vault_url'        => $vault_save_url,
 			'vault_get_url'    => $vault_get_url,
@@ -390,11 +395,8 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	 * @since 1.0.0
 	 */
 	public function render_form() {
-		wp_enqueue_script( 'jquery' );
-		wp_enqueue_style( 'basic_style' );
-		wp_enqueue_script( 'jquery_ui' );
-		wp_enqueue_style( 'jquery_ui_style' );
-		wp_enqueue_script( 'page_loader' );
+		$this->enqueue_scripts();
+
 		wp_enqueue_script( 'credit_card_js' );
 		wp_localize_script( 'credit_card_js', 'php_vars', $this->load_variables() );
 
@@ -737,5 +739,18 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 				__( 'vault_save_text', 'wirecard-woocommerce-extension' ) . '</label>
 			</div>
 		';
+	}
+
+	/**
+	 * Loads all required scripts for the form rendering.
+	 *
+	 * @since 1.7.0
+	 */
+	protected function enqueue_scripts() {
+		wp_enqueue_script( 'jquery' );
+		wp_enqueue_style( 'basic_style' );
+		wp_enqueue_script( 'jquery_ui' );
+		wp_enqueue_style( 'jquery_ui_style' );
+		wp_enqueue_script( 'page_loader' );
 	}
 }

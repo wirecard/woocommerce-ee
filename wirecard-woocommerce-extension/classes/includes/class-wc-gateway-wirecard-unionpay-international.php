@@ -262,8 +262,7 @@ class WC_Gateway_Wirecard_Unionpay_International extends WC_Gateway_Wirecard_Cre
 	 * @since 1.1.0
 	 */
 	public function render_form() {
-		parent::render_form();
-		wp_dequeue_script( 'creditcard_js' );
+		$this->enqueue_scripts();
 
 		wp_enqueue_script( 'upi_js' );
 		wp_localize_script( 'upi_js', 'upi_vars', $this->load_variables() );
