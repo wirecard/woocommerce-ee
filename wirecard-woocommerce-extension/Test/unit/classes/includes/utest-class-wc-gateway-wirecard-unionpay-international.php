@@ -38,6 +38,7 @@ class WC_Gateway_Wirecard_Unionpay_International_Utest extends \PHPUnit_Framewor
 
 	public function setUp() {
 		$this->payment = new WC_Gateway_Wirecard_Unionpay_International();
+		$_POST['cc_nonce'] = 'test';
 	}
 
 	public function test_init_form_fields() {
@@ -46,8 +47,6 @@ class WC_Gateway_Wirecard_Unionpay_International_Utest extends \PHPUnit_Framewor
 	}
 
 	public function test_process_payment() {
-		$_POST['tokenId'] = 'token';
-
 		$this->assertTrue( is_array( $this->payment->process_payment( 12 ) ) );
 	}
 
@@ -71,7 +70,19 @@ class WC_Gateway_Wirecard_Unionpay_International_Utest extends \PHPUnit_Framewor
 		$this->assertEquals( $expected, $this->payment->process_capture( 12, 20 ) );
 	}
 
-	public function test_payment_fields() {
-		$this->assertTrue( $this->payment->payment_fields() );
+	public function test_execute_payment() {
+		ob_start();
+		$this->payment->execute_payment();
+		$contents = ob_get_clean();
+
+		$this->assertJson( $contents );
+	}
+
+	public function test_render_form() {
+		ob_start();
+		$this->payment->render_form();
+		$contents = ob_get_clean();
+
+		$this->assertStringStartsWith( '<h2 class="credit-card-heading">', trim( $contents ) );
 	}
 }

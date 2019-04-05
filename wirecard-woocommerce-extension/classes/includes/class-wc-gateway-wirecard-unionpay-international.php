@@ -29,7 +29,7 @@
  * Please do not use the plugin if you do not agree to these terms of use!
  */
 
-require_once __DIR__ . '/class-wc-wirecard-payment-gateway.php';
+require_once __DIR__ . '/class-wc-gateway-wirecard-creditcard.php';
 
 use Wirecard\PaymentSdk\Config\Config;
 use Wirecard\PaymentSdk\Config\PaymentMethodConfig;
@@ -44,7 +44,7 @@ use Wirecard\PaymentSdk\TransactionService;
  *
  * @since   1.1.0
  */
-class WC_Gateway_Wirecard_Unionpay_International extends WC_Wirecard_Payment_Gateway {
+class WC_Gateway_Wirecard_Unionpay_International extends WC_Gateway_Wirecard_Creditcard {
 
 	/**
 	 * WC_Gateway_Wirecard_Unionpay_International constructor.
@@ -58,7 +58,6 @@ class WC_Gateway_Wirecard_Unionpay_International extends WC_Wirecard_Payment_Gat
 		$this->method_title       = __( 'heading_title_upi', 'wirecard-woocommerce-extension' );
 		$this->method_name        = __( 'upi', 'wirecard-woocommerce-extension' );
 		$this->method_description = __( 'upi_desc', 'wirecard-woocommerce-extension' );
-		$this->has_fields         = true;
 
 		$this->supports = array(
 			'products',
@@ -82,7 +81,22 @@ class WC_Gateway_Wirecard_Unionpay_International extends WC_Wirecard_Payment_Gat
 		add_action( 'woocommerce_api_get_upi_request_data', array( $this, 'get_request_data_upi' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'payment_scripts' ), 999 );
 
+		$this->add_payment_gateway_actions();
+	}
+
+	/**
+	 * @since 1.7.0
+	 */
+	public function add_payment_gateway_actions() {
 		parent::add_payment_gateway_actions();
+
+		add_action(
+			'woocommerce_api_submit_upi_response',
+			array(
+				$this,
+				'execute_payment',
+			)
+		);
 	}
 
 	/**
@@ -185,13 +199,61 @@ class WC_Gateway_Wirecard_Unionpay_International extends WC_Wirecard_Payment_Gat
 	 * @since 1.1.5
 	 */
 	public function payment_scripts() {
-		$base_url    = $this->get_option( 'base_url' );
+		parent::payment_scripts();
+
 		$gateway_url = WIRECARD_EXTENSION_URL;
 
-		wp_register_style( 'jquery_ui_style', 'https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css', array(), null, false );
-		wp_register_script( 'jquery_ui', 'https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js', array(), null, false );
-		wp_register_script( 'page_loader', $base_url . '/engine/hpp/paymentPageLoader.js', array(), null, true );
 		wp_register_script( 'upi_js', $gateway_url . 'assets/js/unionpayinternational.js', array( 'jquery', 'page_loader' ), null, true );
+	}
+
+	/**
+	 * Load variables for credit card javascript
+	 *
+	 * @return array
+	 * @since 1.7.0
+	 */
+	public function load_variables() {
+		$submit_url = add_query_arg(
+			[ 'wc-api' => 'submit_upi_response' ],
+			site_url( '/', is_ssl() ? 'https' : 'http' )
+		);
+
+		$page_url = add_query_arg(
+			[ 'wc-api' => 'get_upi_request_data' ],
+			site_url( '/', is_ssl() ? 'https' : 'http' )
+		);
+
+		return array(
+			'ajax_url'   => $page_url,
+			'submit_url' => $submit_url,
+			'spinner'    => '<div class="spinner spinner-inline" style="display:inline-block; background: url(\'' . admin_url() . 'images/loading.gif\') no-repeat;"></div>',
+		);
+	}
+
+
+	/**
+	 * Load html for the template
+	 *
+	 * @return string
+	 * @since 1.7.0
+	 */
+	public function load_upi_template() {
+		return '
+			<h2 class="credit-card-heading">' . __( 'heading_creditcard_form', 'wirecard-woocommerce-extension' ) . '</h2>
+			<div id="wc_payment_method_wirecard_upi" class="wd-tab-content">
+				<div class="show-spinner">
+					<div class="spinner" style="background: url(\'' . admin_url() . 'images/loading.gif\') no-repeat;"></div>
+				</div>
+				
+				<form method="POST" id="wc_payment_method_wirecard_upi_response_form">
+					<input type="hidden" name="cc_nonce" value="' . wp_create_nonce() . '" />
+				</form>
+				
+				<div id="wc_payment_method_wirecard_upi_form"></div>
+
+				<button disabled id="seamless-submit" class="wd-submit checkout-button button alt wc-forward">' . __( 'Pay now', 'woocommerce' ) . '</button>
+			</div>
+		';
 	}
 
 	/**
@@ -199,28 +261,13 @@ class WC_Gateway_Wirecard_Unionpay_International extends WC_Wirecard_Payment_Gat
 	 *
 	 * @since 1.1.0
 	 */
-	public function payment_fields() {
-		$page_url = add_query_arg(
-			[ 'wc-api' => 'get_upi_request_data' ],
-			site_url( '/', is_ssl() ? 'https' : 'http' )
-		);
+	public function render_form() {
+		$this->enqueue_scripts();
 
-		$args = array(
-			'ajax_url' => $page_url,
-		);
-
-		wp_enqueue_script( 'jquery_ui' );
-		wp_enqueue_style( 'jquery_ui_style' );
-		wp_enqueue_script( 'page_loader' );
 		wp_enqueue_script( 'upi_js' );
-		wp_localize_script( 'upi_js', 'upi_vars', $args );
+		wp_localize_script( 'upi_js', 'upi_vars', $this->load_variables() );
 
-		$html = <<<HTML
-            <div id='wc_payment_method_wirecard_unionpayinternational_form'></div>
-HTML;
-
-		echo $html;
-		return true;
+		echo $this->load_upi_template();
 	}
 
 	/**
@@ -229,45 +276,29 @@ HTML;
 	 * @since 1.1.0
 	 */
 	public function get_request_data_upi() {
+		$order_id            = WC()->session->get( 'wirecard_order_id' );
 		$config              = $this->create_payment_config();
 		$transaction_service = new TransactionService( $config );
-		$lang                = 'en';
-		try {
-			$supported_lang = json_decode( file_get_contents( $this->get_option( 'base_url' ) . '/engine/includes/i18n/languages/hpplanguages.json' ) );
-			if ( key_exists( substr( get_locale(), 0, 2 ), $supported_lang ) ) {
-				$lang = substr( get_locale(), 0, 2 );
-			} elseif ( key_exists( get_locale(), $supported_lang ) ) {
-				$lang = get_locale();
-			}
-		} catch ( Exception $e ) {
-			wp_send_json_error( $e->getMessage() );
-		}
-		wp_send_json_success( $transaction_service->getDataForUpiUi( $lang, new Amount( 0, get_woocommerce_currency() ) ) );
-		wp_die();
-	}
-
-	/**
-	 * Process payment gateway transactions
-	 *
-	 * @param int $order_id
-	 *
-	 * @return array
-	 *
-	 * @since 1.1.0
-	 */
-	public function process_payment( $order_id ) {
-		$order = wc_get_order( $order_id );
+		$lang                = $this->determine_user_language();
 
 		$this->payment_action = $this->get_option( 'payment_action' );
-		$token                = sanitize_text_field( $_POST['tokenId'] );
+		$this->transaction    = new UpiTransaction();
 
-		$this->transaction = new UpiTransaction();
-		parent::process_payment( $order_id );
+		// This is not a static call, but refers to the method of the grandparent.
+		WC_Wirecard_Payment_Gateway::process_payment( $order_id );
 
-		$this->transaction->setTokenId( $token );
-		$this->transaction->setTermUrl( $this->create_redirect_url( $order, 'success', $this->type ) );
+		$this->transaction->setTermUrl( $this->create_redirect_url( wc_get_order( $order_id ), 'success', $this->type ) );
+		$this->transaction->setConfig( $config->get( UpiTransaction::NAME ) );
 
-		return $this->execute_transaction( $this->transaction, $this->config, $this->payment_action, $order );
+		wp_send_json_success(
+			$transaction_service->getCreditCardUiWithData(
+				$this->transaction,
+				self::PAYMENT_ACTIONS[ $this->payment_action ],
+				$lang
+			)
+		);
+
+		wp_die();
 	}
 
 	/**
@@ -356,15 +387,5 @@ HTML;
 		$config->add( $payment_config );
 
 		return $config;
-	}
-
-	/**
-	 * Submit a form with the data from the response
-	 *
-	 * @since 1.1.0
-	 */
-	public function callback() {
-		$callback = new Wirecard_Callback();
-		$callback->post_upi_form();
 	}
 }

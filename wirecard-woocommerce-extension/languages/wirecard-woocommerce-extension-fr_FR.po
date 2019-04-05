@@ -1193,3 +1193,8 @@ msgstr "Wirecard AG"
 #. Plugin Name of the plugin
 msgid "Wirecard WooCommerce Extension"
 msgstr "Extension WooCommerce Wirecard"
+
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:356
+#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:244
+msgid "heading_creditcard_form"
+msgstr ""

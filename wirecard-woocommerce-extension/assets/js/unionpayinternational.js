@@ -27,137 +27,168 @@
  * By installing the plugin into the shop system the customer agrees to these terms of use.
  * Please do not use the plugin if you do not agree to these terms of use!
  */
-var token         = null;
-var checkout_form = jQuery( "form.checkout" );
-var processing    = false;
-$                 = jQuery;
+
+/*
+ * Helper functions
+ */
+
+var nonce                  = jQuery( '#wc_payment_method_wirecard_upi_response_form input[name="cc_nonce"]' );
+var card_content_area  	   = jQuery( '#wc_payment_method_wirecard_upi' );
+var seamless_submit_button = jQuery( '#seamless-submit' );
+
 
 /**
- * Resize the unionpayinternational form when loaded
+ * Log any error that has occurred.
  *
- * @since 1.1.0
+ * @param data
+ * @since 1.7.0
  */
-function resizeUpiIframe() {
-	$( "#wc_payment_method_wirecard_unionpayinternational_form > iframe" ).height( 550 );
+function log_error( data ) {
+	console.error( 'An error occurred: ', data );
 }
 
-/**
- * Render the unionpayinternational form
- *
- * @since 1.1.0
+/*
+ * AJAX-based functions
  */
-function renderUpiForm( request_data ) {
-	/* global WirecardPaymentPage b:true */
-	WirecardPaymentPage.seamlessRenderForm(
+
+/**
+ * Gets the request data from the server.
+ *
+ * @returns mixed
+ * @since 1.7.0
+ */
+function get_credit_card_data() {
+	return jQuery.ajax(
 		{
-			requestData: request_data,
-			wrappingDivId: "wc_payment_method_wirecard_unionpayinternational_form",
-			onSuccess: resizeUpiIframe,
-			onError: function ( response ) {
-				console.error( response );
-			}
+			type: 'POST',
+			url: upi_vars.ajax_url,
+			cache: false,
+			data: {'action': 'get_upi_request_data'},
+			dataType: 'json',
 		}
 	);
 }
 
 /**
- * Get data required to render the form
+ * Submits the seamless response to the server
  *
- * @since 1.1.0
+ * @param {Object} response
+ * @returns mixed
+ * @since 1.7.0
  */
-function getUpiRequestData() {
-	if ( $( 'li.wc_payment_method > input[name=payment_method]:checked' ).val() === "wirecard_ee_unionpayinternational" ) {
-		$.ajax(
-			{
-				type: "POST",
-				/* global upi_vars b:true */
-				url: upi_vars.ajax_url,
-				data: { "action" : "get_upi_request_data" },
-				dataType: "json",
-				success: function (data) {
-					renderUpiForm( JSON.parse( data.data ) );
-				},
-				error: function (data) {
-					console.error( data );
-				}
-			}
-		);
-	}
-}
-
-/**
- * Add the tokenId to the submited form
- *
- * @since 1.1.0
- */
-function formSubmitUpiSuccessHandler( response ) {
-	token = response.token_id;
-	jQuery( "<input>" ).attr(
+function submit_credit_card_response( response ) {
+	return jQuery.ajax(
 		{
-			type: "hidden",
-			name: "tokenId",
-			id: "tokenId",
-			value: token
+			type: 'POST',
+			url: upi_vars.submit_url,
+			cache: false,
+			data: response,
+			dataType: 'json',
 		}
-	).appendTo( checkout_form );
-
-	checkout_form.submit();
+	);
 }
 
-jQuery( document ).ready(
-	function() {
-		checkout_form.on(
-			'change', // when payment selection changes
-			'input[name^="payment_method"]',
-			function () {
-				//this is to prevent double loading of cc form when germanized is installed
-				if (window.germanized == undefined ) {
-					getUpiRequestData();
-				}
-			}
-		).on(
-			'checkout_place_order', // when order is placed
-			placeUpiOrderEvent
-		);
-
-		// if the germanized plugin is installed this gets triggered on switching payment method as well
-		jQuery( document.body ).on(
-			'updated_checkout', // when checkout data gets updated so that we have the correct user data
-			getUpiRequestData
-		)
-	}
-);
-
-jQuery( document ).on(
-	"checkout_error",
-	"body",
-	getUpiRequestData
-);
+/*
+ * Seamless related functions
+ */
 
 /**
- * Submit the seamless form before order is placed
+ * Handle the results of the form submission.
  *
- * @since 1.1.0
+ * @since 1.7.0
  */
-function placeUpiOrderEvent() {
-	if ( $( 'li.wc_payment_method > input[name=payment_method]:checked' ).val() === "wirecard_ee_unionpayinternational"
-		&& processing === false ) {
-		processing = true;
-		if ( token ) {
-			return true;
-		} else {
-			/* global WirecardPaymentPage b:true */
-			WirecardPaymentPage.seamlessSubmitForm(
-				{
-					onSuccess: formSubmitUpiSuccessHandler,
-					onError: function ( response ) {
-						console.error( response );
-					},
-					wrappingDivId: "wc_payment_method_wirecard_unionpayinternational_form"
-				}
-			);
-			return false;
-		}
+function handle_submit_result( response ) {
+	var data = response.data;
+
+	if ( "error" === data.result ) {
+		document.location.reload();
+		return;
 	}
-	processing = false;
+
+	document.location = data.redirect;
+
 }
+
+/**
+ * Submit the data so we can do a proper transaction
+ *
+ * @param response
+ * @since 1.7.0
+ */
+function on_form_submitted( response ) {
+	response['action']   = 'submit_upi_response';
+	response['cc_nonce'] = nonce.val();
+
+	submit_credit_card_response( response )
+		.then( handle_submit_result )
+		.fail( log_error );
+}
+
+/**
+ * Renders the actual seamless form
+ *
+ * @since 1.7.0
+ */
+function render_form( response ) {
+	var request_data = JSON.parse( response.data );
+
+	WirecardPaymentPage.seamlessRenderForm(
+		{
+			requestData: request_data,
+			wrappingDivId: 'wc_payment_method_wirecard_upi_form',
+			onSuccess: on_form_rendered,
+			onError: log_error,
+		}
+	);
+}
+
+/**
+ * Resize the credit card form when loaded
+ *
+ * @since 1.0.0
+ */
+function on_form_rendered() {
+	seamless_submit_button.removeAttr( 'disabled' );
+	card_content_area.find( 'iframe' ).height( 470 );
+}
+
+/**
+ * Coordinates the necessary calls for making a successful credit card payment.
+ *
+ * @since 1.7.0
+ */
+function initialize_form() {
+	get_credit_card_data()
+		.then( render_form )
+		.fail( log_error )
+		.always(
+			function() {
+				jQuery( '.show-spinner' ).hide()
+			}
+		)
+}
+
+/**
+ * Submit the seamless form or token and handle the results.
+ *
+ * @since 1.7.0
+ */
+function submit_seamless_form() {
+	jQuery( this ).after( upi_vars.spinner );
+	jQuery( '.spinner' ).addClass( 'spinner-submit' );
+
+	WirecardPaymentPage.seamlessSubmitForm(
+		{
+			wrappingDivId: "wc_payment_method_wirecard_upi_form",
+			onSuccess: on_form_submitted,
+			onError: log_error
+		}
+	);
+}
+
+/*
+ * Integration code
+ */
+
+jQuery( document ).ready( initialize_form );
+seamless_submit_button.click( submit_seamless_form );

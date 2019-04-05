@@ -144,4 +144,8 @@ class WC_Order {
 	public function get_customer_id() {
 		return 1;
 	}
+	
+	public function get_checkout_payment_url() {
+		return 'http://example.com/checkout/receipt/123';
+	}
 }
