@@ -85,7 +85,7 @@ class Additional_Information {
 				( wc_get_price_including_tax( $product ) - wc_get_price_excluding_tax( $product ) ),
 				$this->get_tax_rate_from_tax_class_depending_on_country( $tax_country, $tax_class )
 			);
-			$sum      += number_format( wc_get_price_including_tax( $product ), wc_get_price_decimals() ) * $cart_item['quantity'];
+			$sum      += floatval( number_format( wc_get_price_including_tax( $product ), wc_get_price_decimals(), '.', '' ) ) * $cart_item['quantity'];
 		}
 		//Check if there is a rounding difference and if so add the difference to shipping
 		$shipping           = $cart->get_shipping_total();
@@ -116,7 +116,7 @@ class Additional_Information {
 		}
 
 		if ( $cart->get_total( 'total' ) - $sum > 0 ) {
-			$shipping += number_format( ( $cart->get_total( 'total' ) - $sum ), wc_get_price_decimals() );
+			$shipping += floatval( number_format( ( $cart->get_total( 'total' ) - $sum ), wc_get_price_decimals(), '.', '' ) );
 		}
 		if ( $shipping > 0 ) {
 			$basket = $this->set_shipping_item( $basket, $shipping, $cart->get_shipping_tax(), $shipping_tax_rate );
@@ -247,7 +247,9 @@ class Additional_Information {
 
 		$article_nr  = $product->get_id();
 		$description = wp_strip_all_tags( html_entity_decode( $product->get_short_description() ), true );
-		$amount      = new Amount( number_format( $item_unit_gross_amount, wc_get_price_decimals() ), get_woocommerce_currency() );
+
+		$formatted_amount = floatval( number_format( $item_unit_gross_amount, wc_get_price_decimals(), '.', '' ) );
+		$amount           = new Amount( $formatted_amount, get_woocommerce_currency() );
 
 		$item = new Item(
 			wp_strip_all_tags( html_entity_decode( $product->get_name() ), true ),
@@ -257,7 +259,7 @@ class Additional_Information {
 		$item->setDescription( $description );
 		$item->setArticleNumber( $article_nr );
 		$item->setTaxRate( floatval( number_format( $tax_rate, wc_get_price_decimals() ) ) );
-		$item->setTaxAmount( new Amount( wc_round_tax_total( $tax ), get_woocommerce_currency() ) );
+		$item->setTaxAmount( new Amount( floatval( wc_round_tax_total( $tax ) ), get_woocommerce_currency() ) );
 		$basket->add( $item );
 
 		return $basket;
@@ -274,7 +276,7 @@ class Additional_Information {
 	 * @since 1.4.0
 	 */
 	private function set_shipping_item( $basket, $shipping_total, $shipping_tax, $tax_rate ) {
-		$amount = floatval( number_format( $shipping_total + $shipping_tax, wc_get_price_decimals() ) );
+		$amount = floatval( number_format( $shipping_total + $shipping_tax, wc_get_price_decimals(), '.', '' ) );
 
 		$amount = new Amount( $amount, get_woocommerce_currency() );
 		$item   = new Item( 'Shipping', $amount, 1 );

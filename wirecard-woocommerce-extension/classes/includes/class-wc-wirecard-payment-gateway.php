@@ -623,7 +623,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 		);
 
 		$this->config = $this->create_payment_config();
-		
+
 		$formatted_total = number_format( $order->get_total(), wc_get_price_decimals(), '.', '' );
 		$amount          = new Amount( floatval( $formatted_total ), $order->get_currency() );
 
