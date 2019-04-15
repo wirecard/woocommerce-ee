@@ -177,7 +177,7 @@ class Additional_Information {
 	 */
 	public function create_account_holder( $order, $type, $date_of_birth = null ) {
 		$account_holder = new AccountHolder();
-		if ( self::SHIPPING == $type ) {
+		if ( self::SHIPPING === $type ) {
 			$account_holder->setAddress( $this->create_address_data( $order, $type ) );
 			$account_holder->setFirstName( $order->get_shipping_first_name() );
 			$account_holder->setLastName( $order->get_shipping_last_name() );
@@ -187,7 +187,7 @@ class Additional_Information {
 			$account_holder->setFirstName( $order->get_billing_first_name() );
 			$account_holder->setLastName( $order->get_billing_last_name() );
 			$account_holder->setPhone( $order->get_billing_phone() );
-			if ( null != $date_of_birth ) {
+			if ( null !== $date_of_birth ) {
 				$account_holder->setDateOfBirth( $date_of_birth );
 			}
 		}
@@ -206,7 +206,7 @@ class Additional_Information {
 	 * @since 1.0.0
 	 */
 	public function create_address_data( $order, $type ) {
-		if ( self::SHIPPING == $type ) {
+		if ( self::SHIPPING === $type ) {
 			$address = new Address( $order->get_shipping_country(), $order->get_shipping_city(), $order->get_shipping_address_1() );
 			$address->setPostalCode( $order->get_shipping_postcode() );
 			if ( strlen( $order->get_shipping_state() ) ) {
@@ -331,7 +331,7 @@ class Additional_Information {
 			}
 			if ( ! empty( $refund_basket ) ) {
 				foreach ( $refund_basket as $refund_item ) {
-					if ( $refund_item['product']->get_id() == $item['article-number'] ) {
+					if ( $refund_item['product']->get_id() === $item['article-number'] ) {
 						$items_total += $item['amount']['value'] * $refund_item['qty'];
 						$basket       = $this->set_item_from_response(
 							$basket,
@@ -358,7 +358,7 @@ class Additional_Information {
 		}
 
 		if ( ( ! empty( $refund_basket ) || $refunding_amount > 0 ) && $refunding_amount - $items_total > 0 ) {
-			if ( 0 == $refunding_amount - $items_total - $shipping['amount']['value'] ) {
+			if ( 0 === $refunding_amount - $items_total - $shipping['amount']['value'] ) {
 				$basket = $this->set_item_from_response(
 					$basket,
 					new Amount( $shipping['amount']['value'], $shipping['amount']['currency'] ),

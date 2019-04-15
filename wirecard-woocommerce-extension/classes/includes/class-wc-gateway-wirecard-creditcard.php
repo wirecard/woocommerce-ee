@@ -369,7 +369,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 		$html = '<h2 class="credit-card-heading">' . __( 'heading_creditcard_form', 'wirecard-woocommerce-extension' ) . '</h2>';
 
 		if ( is_user_logged_in()
-			&& $this->get_option( 'cc_vault_enabled' ) == 'yes'
+			&& $this->get_option( 'cc_vault_enabled' ) === 'yes'
 			&& $this->has_cc_in_vault()
 		) {
 			$html .= $this->get_vault_html();
@@ -379,7 +379,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 
 		if (
 			is_user_logged_in()
-			&& $this->get_option( 'cc_vault_enabled' ) == 'yes'
+			&& $this->get_option( 'cc_vault_enabled' ) === 'yes'
 		) {
 			$html .= $this->get_save_for_later_html();
 		}
@@ -584,7 +584,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	 * @since 1.1.0
 	 */
 	public function get_cc_from_vault() {
-		if ( $this->get_option( 'cc_vault_enabled' ) != 'yes' ) {
+		if ( $this->get_option( 'cc_vault_enabled' ) !== 'yes' ) {
 			wp_send_json_success( false );
 		}
 

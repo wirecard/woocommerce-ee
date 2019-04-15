@@ -400,7 +400,7 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 			$customer = $woocommerce->customer;
 			$cart     = $woocommerce->cart;
 
-			if ( ! in_array( get_woocommerce_currency(), $this->get_option( 'allowed_currencies' ) ) ||
+			if ( ! in_array( get_woocommerce_currency(), $this->get_option( 'allowed_currencies' ), true ) ||
 				! $this->validate_cart_amounts( floatval( $cart->get_total( 'total' ) ) ) ||
 				! $this->validate_cart_products( $cart ) ||
 				! $this->validate_billing_shipping_address( $customer ) ||
@@ -501,12 +501,12 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 	 * @since 1.1.0
 	 */
 	private function validate_countries( $customer ) {
-		if ( ! in_array( $customer->get_shipping_country(), $this->get_option( 'shipping_countries' ) ) &&
+		if ( ! in_array( $customer->get_shipping_country(), $this->get_option( 'shipping_countries' ), true ) &&
 		! empty( $customer->get_shipping_country() ) ) {
 			return false;
 		}
 
-		if ( ! in_array( $customer->get_billing_country(), $this->get_option( 'billing_countries' ) ) &&
+		if ( ! in_array( $customer->get_billing_country(), $this->get_option( 'billing_countries' ), true ) &&
 		! empty( $customer->get_billing_country() ) ) {
 			return false;
 		}
@@ -522,7 +522,7 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 	 * @since 1.1.0
 	 */
 	private function validate_billing_shipping_address( $customer ) {
-		if ( $this->get_option( 'billing_shipping_same' ) == 'yes' ) {
+		if ( $this->get_option( 'billing_shipping_same' ) === 'yes' ) {
 			$fields = array(
 				'first_name',
 				'last_name',
@@ -537,7 +537,7 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 				$billing  = 'get_billing_' . $field;
 				$shipping = 'get_shipping_' . $field;
 
-				if ( call_user_func( array( $customer, $billing ) ) != call_user_func( array( $customer, $shipping ) ) &&
+				if ( call_user_func( array( $customer, $billing ) ) !== call_user_func( array( $customer, $shipping ) ) &&
 					! empty( call_user_func( array( $customer, $shipping ) ) ) ) {
 					return false;
 				}
@@ -572,7 +572,7 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 	 * @since 1.1.0
 	 */
 	private function create_ratepay_script() {
-		if ( null == WC()->session->get( 'ratepay_device_ident' ) ) {
+		if ( null === WC()->session->get( 'ratepay_device_ident' ) ) {
 			WC()->session->set( 'ratepay_device_ident', $this->create_device_ident() );
 		}
 		$device_ident = WC()->session->get( 'ratepay_device_ident' );

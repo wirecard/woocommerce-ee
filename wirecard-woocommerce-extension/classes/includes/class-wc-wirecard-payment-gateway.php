@@ -209,7 +209,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 		$order_id       = $_REQUEST['order-id'];
 		$order          = new WC_Order( $order_id );
 
-		if ( 'cancel' == $_REQUEST['payment-state'] ) {
+		if ( 'cancel' === $_REQUEST['payment-state'] ) {
 			wc_add_notice( __( 'canceled_payment_process', 'wirecard-woocommerce-extension' ), 'notice' );
 			header( 'Location:' . $order->get_cancel_endpoint() );
 			die();
@@ -224,7 +224,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 				wc_add_notice( __( 'order_error', 'wirecard-woocommerce-extension' ), 'error' );
 				$redirect_url = $order->get_cancel_endpoint();
 			} else {
-				if ( 'wiretransfer' == $response->getPaymentMethod() ) {
+				if ( 'wiretransfer' === $response->getPaymentMethod() ) {
 					$response_data = $response->getData();
 					add_post_meta( $order->get_id(), 'pia-iban', $response_data['merchant-bank-account.0.iban'] );
 					add_post_meta( $order->get_id(), 'pia-bic', $response_data['merchant-bank-account.0.bic'] );
@@ -263,13 +263,13 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 			/** @var SuccessResponse $response */
 			$response = $notification_handler->handle_notification( $payment_method, $notification );
 			if ( $response ) {
-				if ( 'masterpass' == $response->getPaymentMethod() && (
-						\Wirecard\PaymentSdk\Transaction\Transaction::TYPE_DEBIT == $response->getTransactionType() ||
-						\Wirecard\PaymentSdk\Transaction\Transaction::TYPE_AUTHORIZATION == $response->getTransactionType() ) ) {
+				if ( 'masterpass' === $response->getPaymentMethod() && (
+						\Wirecard\PaymentSdk\Transaction\Transaction::TYPE_DEBIT === $response->getTransactionType() ||
+						\Wirecard\PaymentSdk\Transaction\Transaction::TYPE_AUTHORIZATION === $response->getTransactionType() ) ) {
 					return;
 				}
 
-				if ( self::CHECK_PAYER_RESPONSE == $response->getTransactionType() ) {
+				if ( self::CHECK_PAYER_RESPONSE === $response->getTransactionType() ) {
 					return;
 				}
 
@@ -559,7 +559,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 * @since 1.0.0
 	 */
 	public function can_capture( $type ) {
-		if ( in_array( $type, $this->capture ) ) {
+		if ( in_array( $type, $this->capture, true ) ) {
 			return true;
 		}
 
@@ -574,7 +574,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 * @since 1.0.0
 	 */
 	public function can_cancel( $type ) {
-		if ( in_array( $type, $this->cancel ) ) {
+		if ( in_array( $type, $this->cancel, true ) ) {
 			return true;
 		}
 
@@ -589,7 +589,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 * @since 1.0.0
 	 */
 	public function can_refund( $type ) {
-		if ( in_array( $type, $this->refund ) ) {
+		if ( in_array( $type, $this->refund, true ) ) {
 			return true;
 		}
 
@@ -636,11 +636,11 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 		$custom_fields = $this->create_version_fields( $custom_fields );
 		$this->transaction->setCustomFields( $custom_fields );
 
-		if ( $this->get_option( 'descriptor' ) == 'yes' ) {
+		if ( $this->get_option( 'descriptor' ) === 'yes' ) {
 			$this->transaction->setDescriptor( $this->additional_helper->create_descriptor( $order ) );
 		}
 
-		if ( $this->get_option( 'send_additional' ) == 'yes' ) {
+		if ( $this->get_option( 'send_additional' ) === 'yes' ) {
 			$this->transaction = $this->additional_helper->set_additional_information( $order, $this->transaction );
 		}
 	}
@@ -686,7 +686,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 * @return bool
 	 */
 	public function is_available() {
-		if ( $this->get_option( 'enabled' ) == 'yes' ) {
+		if ( $this->get_option( 'enabled' ) === 'yes' ) {
 			return true;
 		}
 		return false;
@@ -759,7 +759,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 * @since 1.3.0
 	 */
 	private function payment_on_hold( $order ) {
-		if ( ! $order->is_paid() && ( 'authorization' != $order->get_status() ) && ( 'processing' != $order->get_status() ) ) {
+		if ( ! $order->is_paid() && ( 'authorization' !== $order->get_status() ) && ( 'processing' !== $order->get_status() ) ) {
 			$order->update_status( 'on-hold', __( 'payment_awaiting', 'wirecard-woocommerce-extension' ) );
 		}
 	}
