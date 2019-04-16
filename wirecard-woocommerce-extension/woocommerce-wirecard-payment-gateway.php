@@ -364,7 +364,7 @@ function wirecard_add_support_chat() {
  * @since 1.1.0
  */
 function wirecard_check_if_woo_installed() {
-	if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) )
+	if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ), true )
 		|| array_key_exists( 'woocommerce/woocommerce.php', get_site_option( 'active_sitewide_plugins' ) ) ) {
 		return;
 	}

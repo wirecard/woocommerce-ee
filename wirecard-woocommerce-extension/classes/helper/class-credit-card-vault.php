@@ -76,7 +76,7 @@ class Credit_Card_Vault {
 		$cards = $this->get_cards_from_db( $user_id );
 		if ( ! empty( $cards ) ) {
 			foreach ( $cards as $card ) {
-				if ( $card->token == $token ) {
+				if ( $card->token === $token ) {
 					return;
 				}
 			}
@@ -103,7 +103,7 @@ class Credit_Card_Vault {
 	 */
 	public function get_cards_for_user( $user_id ) {
 		$cards = $this->get_cards_from_db( $user_id );
-		if ( false != $cards ) {
+		if ( false !== $cards ) {
 			return $this->fetch_template_data( $cards );
 		}
 
