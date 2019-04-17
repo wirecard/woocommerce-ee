@@ -1,5 +1,14 @@
 [
 {
+	"release": "1.6.4",
+	"shopsystem": "WooCommerce",
+	"tested": "3.5.7",
+	"compatibility": "3.3.4",
+	"changelog": [
+		"Synchronize language strings"
+	]
+},
+{
     "release": "1.6.3",
     "shopsystem": "WooCommerce",
     "tested": "3.5.4",
