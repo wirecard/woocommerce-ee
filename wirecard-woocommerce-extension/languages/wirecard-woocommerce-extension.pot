@@ -627,7 +627,6 @@ msgstr ""
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:369
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:242
-#, fuzzy
 msgid "heading_creditcard_form"
 msgstr ""
 
