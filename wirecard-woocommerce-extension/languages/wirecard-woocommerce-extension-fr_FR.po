@@ -363,7 +363,7 @@ msgstr "Action de paiement"
 msgid "config_payment_action_desc"
 msgstr "Sélectionnez « Acheter » pour enregistrer/facturer automatiquement votre commande ou « Autorisation » pour enregistrer/facturer manuellement."
 
-#: classes/includes/class-wc-gateway-wirecard-poipia.php:152
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:152
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:156
 msgid "config_payment_type"
 msgstr "Mode de paiement"
@@ -504,7 +504,7 @@ msgstr "Merchant Return URL"
 
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:157
 msgid "config_zapp_merchant_return_string_desc"
-msgstr "Merchant Return URL to redirect the Consumer from the mobile banking app to the merchant’s browser or App."
+msgstr "Merchant Return URL to redirect consumers from their mobile banking apps to your shop."
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:62
 msgid "creditcard"
@@ -625,6 +625,11 @@ msgstr "Désolé, mais il faut d’abord installer et activer l’extension WooC
 msgid "first-name"
 msgstr "Prénom"
 
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:369
+#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:242
+msgid "heading_creditcard_form"
+msgstr "Enter card details"
+
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:60
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:104
 msgid "heading_title_alipay_crossborder"
@@ -650,7 +655,7 @@ msgstr "Wirecard iDEAL"
 msgid "heading_title_masterpass"
 msgstr "Wirecard Masterpass"
 
-#: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:60
+#: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:60
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:106
 msgid "heading_title_paybybankapp"
 msgstr "Wirecard Pay by Bank app"
@@ -660,7 +665,7 @@ msgstr "Wirecard Pay by Bank app"
 msgid "heading_title_paypal"
 msgstr "Wirecard PayPal"
 
-#: classes/includes/class-wc-gateway-wirecard-poipia.php:61
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:61
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:103
 msgid "heading_title_poi_pia"
 msgstr "Wirecard Paiement sur facture / Paiement à l’avance"
@@ -804,7 +809,7 @@ msgstr "Pay by Bank app transactions via Wirecard Payment Processing Gateway."
 
 #. Description of the plugin
 msgid "Payment Gateway for WooCommerce"
-msgstr "Payment Gateway for WooCommerce"
+msgstr "Payment Processing Gateway for WooCommerce"
 
 #: classes/includes/class-wc-wirecard-payment-gateway.php:733
 msgid "payment_awaiting"
@@ -1086,11 +1091,11 @@ msgstr "Aller sur extensions"
 msgid "text_payment_action_pay"
 msgstr "Achat"
 
-#: classes/includes/class-wc-gateway-wirecard-creditcard.php:192
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:214
 #: classes/includes/class-wc-gateway-wirecard-masterpass.php:161
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:161
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:191
-#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:161
+#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:175
 msgid "text_payment_action_reserve"
 msgstr "Autorisation"
 

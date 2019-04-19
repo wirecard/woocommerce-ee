@@ -94,7 +94,7 @@ msgstr "Payment method Guaranteed Invoice is only displayed if the activated cur
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:126
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:126
 msgid "config_base_url"
-msgstr "Wirecard Server Address"
+msgstr "Wirecard Server Address (URL)"
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:126
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:159
@@ -109,7 +109,7 @@ msgstr "Wirecard Server Address"
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:128
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:128
 msgid "config_base_url_desc"
-msgstr "The Wirecard Server Address (e.g. https://api.wirecard.com)."
+msgstr "Wirecard Server Address (URL) (e.g. https://api.wirecard.com)."
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:201
 msgid "config_basket_max"
@@ -218,7 +218,7 @@ msgstr "If BIC is enabled, consumer must enter a BIC during checkout."
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:138
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:138
 msgid "config_http_password"
-msgstr "HTTP Password"
+msgstr "Password"
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:138
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:171
@@ -233,7 +233,7 @@ msgstr "HTTP Password"
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:140
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:140
 msgid "config_http_password_desc"
-msgstr "HTTP Password as provided in your Wirecard contract."
+msgstr "Password as provided in your Wirecard contract."
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:130
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:163
@@ -248,7 +248,7 @@ msgstr "HTTP Password as provided in your Wirecard contract."
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:132
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:132
 msgid "config_http_user"
-msgstr "HTTP User"
+msgstr "Username"
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:132
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:165
@@ -263,7 +263,7 @@ msgstr "HTTP User"
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:134
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:134
 msgid "config_http_user_desc"
-msgstr "HTTP User as provided in your Wirecard contract."
+msgstr "Username as provided in your Wirecard contract."
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:142
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:148
@@ -291,7 +291,7 @@ msgstr "This text appears on the SEPA Direct Debit Mandate page at the end of th
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:109
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:109
 msgid "config_merchant_account_id"
-msgstr "MAID"
+msgstr "Merchant Account ID (MAID)"
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:109
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:118
@@ -363,7 +363,7 @@ msgstr "Payment Action"
 msgid "config_payment_action_desc"
 msgstr "Select between \"Purchase\" to capture/invoice your order automatically or \"Authorization\" to capture/invoice manually."
 
-#: classes/includes/class-wc-gateway-wirecard-poipia.php:152
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:152
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:156
 msgid "config_payment_type"
 msgstr "Payment Type"
@@ -504,7 +504,7 @@ msgstr "Merchant Return URL"
 
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:157
 msgid "config_zapp_merchant_return_string_desc"
-msgstr "Merchant Return URL to redirect the Consumer from the mobile banking app to the merchant’s browser or App."
+msgstr "Merchant Return URL to redirect consumers from their mobile banking apps to your shop."
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:62
 msgid "creditcard"
@@ -625,6 +625,11 @@ msgstr "Sorry, but this plugin requires the Wirecard WooCommerce Extension to be
 msgid "first-name"
 msgstr "First Name"
 
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:369
+#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:242
+msgid "heading_creditcard_form"
+msgstr "Enter card details"
+
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:60
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:104
 msgid "heading_title_alipay_crossborder"
@@ -650,7 +655,7 @@ msgstr "Wirecard iDEAL"
 msgid "heading_title_masterpass"
 msgstr "Wirecard Masterpass"
 
-#: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:60
+#: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:60
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:106
 msgid "heading_title_paybybankapp"
 msgstr "Wirecard Pay by Bank app"
@@ -660,7 +665,7 @@ msgstr "Wirecard Pay by Bank app"
 msgid "heading_title_paypal"
 msgstr "Wirecard PayPal"
 
-#: classes/includes/class-wc-gateway-wirecard-poipia.php:61
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:61
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:103
 msgid "heading_title_poi_pia"
 msgstr "Wirecard Payment On Invoice / Payment In Advance"
@@ -811,7 +816,7 @@ msgstr "Pay by Bank app transactions via Wirecard Payment Processing Gateway."
 
 #. Description of the plugin
 msgid "Payment Gateway for WooCommerce"
-msgstr "Payment Gateway for WooCommerce"
+msgstr "Payment Processing Gateway for WooCommerce"
 
 #: classes/includes/class-wc-wirecard-payment-gateway.php:733
 msgid "payment_awaiting"
@@ -1093,11 +1098,11 @@ msgstr "Go to Extensions"
 msgid "text_payment_action_pay"
 msgstr "Purchase"
 
-#: classes/includes/class-wc-gateway-wirecard-creditcard.php:192
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:214
 #: classes/includes/class-wc-gateway-wirecard-masterpass.php:161
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:161
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:191
-#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:161
+#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:175
 msgid "text_payment_action_reserve"
 msgstr "Authorization"
 

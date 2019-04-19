@@ -372,7 +372,7 @@ msgstr "付款動作"
 msgid "config_payment_action_desc"
 msgstr "選擇「擷取」以自動擷取您的訂單/為您的訂單開具發票，或選擇「授權」以手動擷取/開具發票。"
 
-#: classes/includes/class-wc-gateway-wirecard-poipia.php:152
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:152
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:156
 msgid "config_payment_type"
 msgstr "付款類型"
@@ -515,7 +515,7 @@ msgstr "Merchant Return URL"
 
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:157
 msgid "config_zapp_merchant_return_string_desc"
-msgstr "Merchant Return URL to redirect the Consumer from the mobile banking app to the merchant’s browser or App."
+msgstr "Merchant Return URL to redirect consumers from their mobile banking apps to your shop."
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:62
 msgid "creditcard"
@@ -639,6 +639,11 @@ msgstr "抱歉，但此外掛程式要求安裝並啟動 WooCommerce 外掛程�
 msgid "first-name"
 msgstr "名"
 
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:369
+#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:242
+msgid "heading_creditcard_form"
+msgstr "Enter card details"
+
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:60
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:104
 msgid "heading_title_alipay_crossborder"
@@ -664,7 +669,7 @@ msgstr "Wirecard iDEAL"
 msgid "heading_title_masterpass"
 msgstr "Wirecard Masterpass"
 
-#: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:60
+#: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:60
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:106
 msgid "heading_title_paybybankapp"
 msgstr "Wirecard Pay by Bank app"
@@ -674,7 +679,7 @@ msgstr "Wirecard Pay by Bank app"
 msgid "heading_title_paypal"
 msgstr "Wirecard PayPal"
 
-#: classes/includes/class-wc-gateway-wirecard-poipia.php:61
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:61
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:103
 msgid "heading_title_poi_pia"
 msgstr "Wirecard 發票付款/預付款"
@@ -1108,11 +1113,11 @@ msgstr "移至外掛程式"
 msgid "text_payment_action_pay"
 msgstr "Purchase"
 
-#: classes/includes/class-wc-gateway-wirecard-creditcard.php:192
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:214
 #: classes/includes/class-wc-gateway-wirecard-masterpass.php:161
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:161
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:191
-#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:161
+#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:175
 msgid "text_payment_action_reserve"
 msgstr "Authorization"
 
