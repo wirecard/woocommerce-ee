@@ -37,9 +37,9 @@ class WC_Gateway_Wirecard_Creditcard_Utest extends \PHPUnit_Framework_TestCase {
 	private $credit_card;
 
 	public function setUp() {
-		$this->credit_card = new WC_Gateway_Wirecard_Creditcard();
-		$_POST['tokenId']  = 'test';
+		$this->credit_card = new WC_Gateway_Wirecard_Creditcard();;
 		$_POST['cc_nonce'] = 'test';
+		$_POST['vault_token'] = 'test';
 	}
 
 	public function test_init_form_fields() {
@@ -72,7 +72,29 @@ class WC_Gateway_Wirecard_Creditcard_Utest extends \PHPUnit_Framework_TestCase {
 		$this->assertNotNull( $this->credit_card->process_refund( 12, 50 ) );
 	}
 
-	public function test_payment_fields() {
-		$this->assertTrue( $this->credit_card->payment_fields() );
+	public function test_execute_payment() {
+		ob_start();
+		$this->credit_card->execute_payment();
+		$contents = ob_get_clean();
+
+		$this->assertJson( $contents );
+	}
+
+	public function test_execute_payment_without_token() {
+		$_POST['vault_token'] = null;
+
+		ob_start();
+		$this->credit_card->execute_payment();
+		$contents = ob_get_clean();
+
+		$this->assertJson( $contents );
+	}
+	
+	public function test_render_form() {
+		ob_start();
+		$this->credit_card->render_form();
+		$contents = ob_get_clean();
+
+		$this->assertStringStartsWith( '<h2 class="credit-card-heading">', $contents );
 	}
 }

@@ -60,8 +60,11 @@ use Wirecard\PaymentSdk\TransactionService;
  * @since   1.0.0
  */
 abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
-
 	const CHECK_PAYER_RESPONSE = 'check-payer-response';
+	const PAYMENT_ACTIONS      = array(
+		'pay'     => 'purchase',
+		'reserve' => 'authorization',
+	);
 
 	/**
 	 * Parent transaction types which support cancel operation
@@ -196,7 +199,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 *
 	 * @since 1.0.0
 	 */
-	public function return_request() {
+	public function return_request( $response = null ) {
 		$redirect_url = $this->get_return_url();
 		if ( ! array_key_exists( 'order-id', $_REQUEST ) ) {
 			header( 'Location:' . $redirect_url );
@@ -206,7 +209,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 		$order_id       = $_REQUEST['order-id'];
 		$order          = new WC_Order( $order_id );
 
-		if ( 'cancel' == $_REQUEST['payment-state'] ) {
+		if ( 'cancel' === $_REQUEST['payment-state'] ) {
 			wc_add_notice( __( 'canceled_payment_process', 'wirecard-woocommerce-extension' ), 'notice' );
 			header( 'Location:' . $order->get_cancel_endpoint() );
 			die();
@@ -221,7 +224,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 				wc_add_notice( __( 'order_error', 'wirecard-woocommerce-extension' ), 'error' );
 				$redirect_url = $order->get_cancel_endpoint();
 			} else {
-				if ( 'wiretransfer' == $response->getPaymentMethod() ) {
+				if ( 'wiretransfer' === $response->getPaymentMethod() ) {
 					$response_data = $response->getData();
 					add_post_meta( $order->get_id(), 'pia-iban', $response_data['merchant-bank-account.0.iban'] );
 					add_post_meta( $order->get_id(), 'pia-bic', $response_data['merchant-bank-account.0.bic'] );
@@ -260,13 +263,13 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 			/** @var SuccessResponse $response */
 			$response = $notification_handler->handle_notification( $payment_method, $notification );
 			if ( $response ) {
-				if ( 'masterpass' == $response->getPaymentMethod() && (
-						\Wirecard\PaymentSdk\Transaction\Transaction::TYPE_DEBIT == $response->getTransactionType() ||
-						\Wirecard\PaymentSdk\Transaction\Transaction::TYPE_AUTHORIZATION == $response->getTransactionType() ) ) {
+				if ( 'masterpass' === $response->getPaymentMethod() && (
+						\Wirecard\PaymentSdk\Transaction\Transaction::TYPE_DEBIT === $response->getTransactionType() ||
+						\Wirecard\PaymentSdk\Transaction\Transaction::TYPE_AUTHORIZATION === $response->getTransactionType() ) ) {
 					return;
 				}
 
-				if ( self::CHECK_PAYER_RESPONSE == $response->getTransactionType() ) {
+				if ( self::CHECK_PAYER_RESPONSE === $response->getTransactionType() ) {
 					return;
 				}
 
@@ -336,13 +339,19 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 *
 	 * @since 1.0.0
 	 */
-	public function execute_transaction( $transaction, $config, $operation, $order ) {
+	public function execute_transaction( $transaction, $config, $operation, $order, $request_values = null ) {
 		$logger              = new Logger();
 		$transaction_service = new TransactionService( $config, $logger );
 
 		try {
 			/** @var $response Response */
-			$response = $transaction_service->process( $transaction, $operation );
+			$process_credit_card_response = ! is_null( $request_values );
+			if ( $process_credit_card_response ) {
+				$redirect = $this->create_redirect_url( $order, 'success', $this->type );
+				$response = $transaction_service->processJsResponse( $request_values, $redirect );
+			} else {
+				$response = $transaction_service->process( $transaction, $operation );
+			}
 		} catch ( \Exception $exception ) {
 			$logger->error( __METHOD__ . ': ' . get_class( $exception ) . ': ' . $exception->getMessage() . ' - ' . $operation );
 
@@ -354,9 +363,16 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 			);
 		}
 
-		$page_url = $order->get_checkout_payment_url( true );
-		$page_url = add_query_arg( 'key', $order->get_order_key(), $page_url );
-		$page_url = add_query_arg( 'order-pay', $order->get_order_number(), $page_url );
+		if ( $response instanceof SuccessResponse ) {
+			$page_url            = $this->get_return_url( $order );
+			$payment_method      = $response->getPaymentMethod();
+			$transaction_factory = new Wirecard_Transaction_Factory();
+
+			if ( ! $transaction_factory->get_transaction( $response->getTransactionId() ) ) {
+				$this->payment_on_hold( $order );
+				$this->update_payment_transaction( $order, $response, 'awaiting', $payment_method );
+			}
+		}
 
 		if ( $response instanceof InteractionResponse ) {
 			$page_url = $response->getRedirectUrl();
@@ -364,7 +380,9 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 			$data['url']         = $response->getUrl();
 			$data['method']      = $response->getMethod();
 			$data['form_fields'] = $response->getFormFields();
+
 			WC()->session->set( 'wirecard_post_data', $data );
+
 			$page_url = add_query_arg(
 				[ 'wc-api' => 'checkout_form_submit' ],
 				site_url( '/', is_ssl() ? 'https' : 'http' )
@@ -541,7 +559,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 * @since 1.0.0
 	 */
 	public function can_capture( $type ) {
-		if ( in_array( $type, $this->capture ) ) {
+		if ( in_array( $type, $this->capture, true ) ) {
 			return true;
 		}
 
@@ -556,7 +574,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 * @since 1.0.0
 	 */
 	public function can_cancel( $type ) {
-		if ( in_array( $type, $this->cancel ) ) {
+		if ( in_array( $type, $this->cancel, true ) ) {
 			return true;
 		}
 
@@ -571,7 +589,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 * @since 1.0.0
 	 */
 	public function can_refund( $type ) {
-		if ( in_array( $type, $this->refund ) ) {
+		if ( in_array( $type, $this->refund, true ) ) {
 			return true;
 		}
 
@@ -605,7 +623,9 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 		);
 
 		$this->config = $this->create_payment_config();
-		$amount       = new Amount( number_format( $order->get_total(), wc_get_price_decimals() ), $order->get_currency() );
+
+		$formatted_total = number_format( $order->get_total(), wc_get_price_decimals(), '.', '' );
+		$amount          = new Amount( floatval( $formatted_total ), $order->get_currency() );
 
 		$this->transaction->setNotificationUrl( $this->create_notification_url( $order, $this->type ) );
 		$this->transaction->setRedirect( $redirect_urls );
@@ -616,11 +636,11 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 		$custom_fields = $this->create_version_fields( $custom_fields );
 		$this->transaction->setCustomFields( $custom_fields );
 
-		if ( $this->get_option( 'descriptor' ) == 'yes' ) {
+		if ( $this->get_option( 'descriptor' ) === 'yes' ) {
 			$this->transaction->setDescriptor( $this->additional_helper->create_descriptor( $order ) );
 		}
 
-		if ( $this->get_option( 'send_additional' ) == 'yes' ) {
+		if ( $this->get_option( 'send_additional' ) === 'yes' ) {
 			$this->transaction = $this->additional_helper->set_additional_information( $order, $this->transaction );
 		}
 	}
@@ -666,7 +686,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 * @return bool
 	 */
 	public function is_available() {
-		if ( $this->get_option( 'enabled' ) == 'yes' ) {
+		if ( $this->get_option( 'enabled' ) === 'yes' ) {
 			return true;
 		}
 		return false;
@@ -739,7 +759,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 * @since 1.3.0
 	 */
 	private function payment_on_hold( $order ) {
-		if ( ! $order->is_paid() && ( 'authorization' != $order->get_status() ) && ( 'processing' != $order->get_status() ) ) {
+		if ( ! $order->is_paid() && ( 'authorization' !== $order->get_status() ) && ( 'processing' !== $order->get_status() ) ) {
 			$order->update_status( 'on-hold', __( 'payment_awaiting', 'wirecard-woocommerce-extension' ) );
 		}
 	}

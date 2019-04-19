@@ -30,7 +30,15 @@
  */
 
 class WC_Session {
+	private $session = [];
+	
 	public function get( $id ) {
-		return 'string';
+		return array_key_exists($id, $this->session) 
+			? $this->session[$id]
+			: 'string';
+	}
+	
+	public function set( $id, $value ) {
+		$this->session[$id] = $value;
 	}
 }

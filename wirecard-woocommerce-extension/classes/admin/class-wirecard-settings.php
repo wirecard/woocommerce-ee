@@ -126,8 +126,8 @@ class Wirecard_Settings {
 		if ( $pages < 5 ) {
 			for ( $i = 0; $i < $pages; $i ++ ) {
 				$pagenr = $i + 1;
-				$active = ( $pagenr == $start ) ? ' active' : '';
-				$href   = ( $pagenr == $start ) ? 'javascript:void(0)' : "?page=wirecardpayment&transaction_start=$pagenr";
+				$active = ( $pagenr === $start ) ? ' active' : '';
+				$href   = ( $pagenr === $start ) ? 'javascript:void(0)' : "?page=wirecardpayment&transaction_start=$pagenr";
 				echo "<a class='button-primary$active' href='$href'>$pagenr</a>";
 			}
 		}
@@ -143,7 +143,7 @@ class Wirecard_Settings {
 				$stop = $pages;
 			}
 			for ( $i = 1; $i < $stop + 1; $i ++ ) {
-				$selected = ( $i == $start ) ? "selected='selected'" : '';
+				$selected = ( $i === $start ) ? "selected='selected'" : '';
 				echo "<option value='$i' $selected>$i</option>";
 			}
 			echo '</select>';

@@ -267,7 +267,7 @@ class WC_Gateway_Wirecard_Sepa_Direct_Debit extends WC_Wirecard_Payment_Gateway 
 				<input id="sepa_iban" class="input-text wc-sepa-input" type="text" name="sepa_iban">
 			</p>';
 
-		if ( $this->get_option( 'enable_bic' ) == 'yes' ) {
+		if ( $this->get_option( 'enable_bic' ) === 'yes' ) {
 			$html .= '
 			<p class="form-row form-row-wide validate-required">
 				<label for="sepa_bic">' . __( 'bic', 'wirecard-woocommerce-extension' ) . '</label>
@@ -291,7 +291,7 @@ class WC_Gateway_Wirecard_Sepa_Direct_Debit extends WC_Wirecard_Payment_Gateway 
 	public function process_payment( $order_id ) {
 		$order = wc_get_order( $order_id );
 		if ( ! wp_verify_nonce( $_POST['sepa_nonce'] ) || ! isset( $_POST['sepa_firstname'] ) || ! isset( $_POST['sepa_lastname'] ) || ! isset( $_POST['sepa_iban'] )
-			|| ( $this->get_option( 'enable_bic' ) == 'yes' && ! $_POST['sepa_bic'] ) ) {
+			|| ( $this->get_option( 'enable_bic' ) === 'yes' && ! $_POST['sepa_bic'] ) ) {
 			wc_add_notice( __( 'sepa_fields_error', 'wirecard-woocommerce-extension' ), 'error' );
 
 			return false;
@@ -308,7 +308,7 @@ class WC_Gateway_Wirecard_Sepa_Direct_Debit extends WC_Wirecard_Payment_Gateway 
 		$this->transaction->setAccountHolder( $account_holder );
 		$this->transaction->setIban( sanitize_text_field( $_POST['sepa_iban'] ) );
 
-		if ( $this->get_option( 'enable_bic' ) == 'yes' ) {
+		if ( $this->get_option( 'enable_bic' ) === 'yes' ) {
 			$this->transaction->setBic( sanitize_text_field( $_POST['sepa_bic'] ) );
 		}
 

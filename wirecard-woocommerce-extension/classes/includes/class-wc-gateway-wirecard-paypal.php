@@ -204,7 +204,7 @@ class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 
 		$this->payment_action = $this->get_option( 'payment_action' );
 
-		if ( $this->get_option( 'shopping_basket' ) == 'yes' ) {
+		if ( $this->get_option( 'shopping_basket' ) === 'yes' ) {
 			$basket = $this->additional_helper->create_shopping_basket( $this->transaction );
 			$this->transaction->setBasket( $basket );
 		}

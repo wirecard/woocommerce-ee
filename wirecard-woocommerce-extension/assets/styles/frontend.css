@@ -5,28 +5,31 @@
 	filter: alpha(opacity=70);
 	width: 16px;
 	height: 16px;
-	margin: 5px 5px 0;
+	margin: 5px auto 0;
+}
+
+.spinner-inline {
+	margin-left: 0.5rem;
+	margin-right: 0.5rem;
+	float: right;
+}
+
+.spinner-submit {
+	margin: 1rem;
 }
 
 .show-spinner {
 	width: 100%;
-	display: none;
 	padding: 10px;
 }
 
 .save-later {
-	display: none;
+	float: left;
 }
 
-#open-vault-popup,
-#open-new-card,
-.delete-from-vault {
+.wd-toggle-tab {
 	background-color: #f5f5f5;
 	padding: 10px;
-}
-
-.delete-from-vault {
-	text-align: center;
 }
 
 #open-vault-popup:hover,
@@ -41,6 +44,31 @@
 	margin-top: 3px;
 }
 
-#vault-table td, #vault-table th {
+.credit-card-heading {
+	margin-top: 0;
+	margin-bottom: 1em;
+}
+
+.wd-submit {
+	float: right;
+	margin-bottom: 2rem;
+}
+
+
+#vault-table td,
+#vault-table th {
 	padding: 5px;
+	vertical-align: middle;
+}
+
+.wd-card-selector {
+	text-align: center;
+}
+
+.wd-card-delete {
+	color: firebrick;
+}
+
+.wd-card-delete:hover {
+	text-decoration: underline;
 }

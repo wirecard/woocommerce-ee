@@ -151,7 +151,7 @@ class Wirecard_Transaction_Factory {
 			$action                = $response->getTransactionType();
 			$rest_amount           = $this->get_parent_rest_amount( $parent_transaction_id, $action );
 
-			if ( $rest_amount == $requested_amount ) {
+			if ( $rest_amount === $requested_amount ) {
 				$order->set_transaction_id( $response->getTransactionId() );
 				// update parent transaction to closed, no back-end ops possible anymore
 				$wpdb->update(
@@ -171,7 +171,7 @@ class Wirecard_Transaction_Factory {
 		$transaction_link = $this->get_transaction_link( $base_url, $response );
 		$transaction      = $this->get_transaction( $response->getTransactionId() );
 
-		if ( $transaction && ( 'awaiting' == $transaction->transaction_state ) ) {
+		if ( $transaction && ( 'awaiting' === $transaction->transaction_state ) ) {
 			$wpdb->update(
 				$this->table_name,
 				$this->set_transaction_parameters(
@@ -201,7 +201,7 @@ class Wirecard_Transaction_Factory {
 				)
 			);
 			// Do not reduce stock for follow-up transactions
-			if ( in_array( $response->getTransactionType(), $this->stock_reduction_types ) &&
+			if ( in_array( $response->getTransactionType(), $this->stock_reduction_types, true ) &&
 				! $this->active_germanized() ) {
 				// Reduce stock after successful transaction creation to avoid duplicated reduction
 				wc_reduce_stock_levels( $order->get_id() );
@@ -248,7 +248,7 @@ class Wirecard_Transaction_Factory {
 			foreach ( $this->fields_list as $field_key => $field_value ) {
 				echo '<td>';
 				if ( key_exists( $field_key, $row ) ) {
-					if ( 'transaction_id' == $field_key || ( 'parent_transaction_id' == $field_key && ! empty( $field_value ) ) ) {
+					if ( 'transaction_id' === $field_key || ( 'parent_transaction_id' === $field_key && ! empty( $field_value ) ) ) {
 						echo "<a href='?page=wirecardpayment&id={$row[ $field_key ]}'>" . $row[ $field_key ] . '</a>';
 					} else {
 						echo $row[ $field_key ];
@@ -387,19 +387,19 @@ class Wirecard_Transaction_Factory {
 								<br>
 								<div class="wc-order-data-row">
 									<?php
-									if ( $payment->can_cancel( $transaction->transaction_type ) && ! $transaction->closed && 'awaiting' != $transaction->transaction_state ) {
+									if ( $payment->can_cancel( $transaction->transaction_type ) && ! $transaction->closed && 'awaiting' !== $transaction->transaction_state ) {
 										echo "<a href='?page=wirecardpayment&id={$transaction->transaction_id}&action=cancel' class='button'>" . __( 'text_cancel_transaction', 'wirecard-woocommerce-extension' ) . '</a> ';
 									}
-									if ( $payment->can_capture( $transaction->transaction_type ) && ! $transaction->closed && 'awaiting' != $transaction->transaction_state ) {
+									if ( $payment->can_capture( $transaction->transaction_type ) && ! $transaction->closed && 'awaiting' !== $transaction->transaction_state ) {
 										echo "<a href='?page=wirecardpayment&id={$transaction->transaction_id}&action=capture' class='button'>" . __( 'text_capture_transaction', 'wirecard-woocommerce-extension' ) . '</a> ';
 									}
-									if ( $payment->can_refund( $transaction->transaction_type ) && ! $transaction->closed && 'awaiting' != $transaction->transaction_state ) {
+									if ( $payment->can_refund( $transaction->transaction_type ) && ! $transaction->closed && 'awaiting' !== $transaction->transaction_state ) {
 										echo "<a href='?page=wirecardpayment&id={$transaction->transaction_id}&action=refund' class='button'>" . __( 'text_refund_transaction', 'wirecard-woocommerce-extension' ) . '</a> ';
 									}
 									if ( $transaction->closed ) {
 										echo "<p class='add-items'>" . __( 'error_no_post_processing_operations', 'wirecard-woocommerce-extension' ) . '</p>';
 									}
-									if ( 'awaiting' == $transaction->transaction_state ) {
+									if ( 'awaiting' === $transaction->transaction_state ) {
 										echo "<p class='add-items'>"
 											. __( 'error_no_post_processing_operations_unconfirmed', 'wirecard-woocommerce-extension' ) . '</p>';
 									}

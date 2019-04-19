@@ -190,7 +190,7 @@ class WC_Gateway_Wirecard_Eps extends WC_Wirecard_Payment_Gateway {
 
 		$html = '';
 
-		if ( $this->get_option( 'send_additional' ) == 'yes' ) {
+		if ( $this->get_option( 'send_additional' ) === 'yes' ) {
 			wp_enqueue_script( 'device_fingerprint_js' );
 			$html .= '<noscript>
 				<iframe style="width: 100px; height: 100px; border: 0; position: absolute; top: -5000px;"
@@ -233,7 +233,7 @@ class WC_Gateway_Wirecard_Eps extends WC_Wirecard_Payment_Gateway {
 			$this->transaction->setBankAccount( $bank_account );
 		}
 
-		if ( $this->get_option( 'send_additional' ) == 'yes' ) {
+		if ( $this->get_option( 'send_additional' ) === 'yes' ) {
 			$device = new Device();
 			$device->setFingerprint( $_POST['fingerprint-session'] );
 			$this->transaction->setDevice( $device );

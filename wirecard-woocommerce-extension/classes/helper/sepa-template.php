@@ -52,7 +52,7 @@ $html = '
 						<i>' . __( 'debtor', 'wirecard-woocommerce-extension' ) . '</i><br />' .
 	__( 'debtor_acc_owner', 'wirecard-woocommerce-extension' ) . ': <span class="first_last_name"></span><br />' .
 	__( 'iban_input', 'wirecard-woocommerce-extension' ) . ': <span class="bank_iban"></span><br />';
-if ( ( $this->get_option( 'enable_bic' ) == 'yes' ) ) {
+if ( ( $this->get_option( 'enable_bic' ) === 'yes' ) ) {
 	$html .= __( 'bic_input', 'wirecard-woocommerce-extension' ) . ':<span class="bank_bic"></span><br />';
 }
 $html .= '</td>

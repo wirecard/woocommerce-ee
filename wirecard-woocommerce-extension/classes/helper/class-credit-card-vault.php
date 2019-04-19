@@ -76,7 +76,7 @@ class Credit_Card_Vault {
 		$cards = $this->get_cards_from_db( $user_id );
 		if ( ! empty( $cards ) ) {
 			foreach ( $cards as $card ) {
-				if ( $card->token == $token ) {
+				if ( $card->token === $token ) {
 					return;
 				}
 			}
@@ -103,7 +103,7 @@ class Credit_Card_Vault {
 	 */
 	public function get_cards_for_user( $user_id ) {
 		$cards = $this->get_cards_from_db( $user_id );
-		if ( false != $cards ) {
+		if ( false !== $cards ) {
 			return $this->fetch_template_data( $cards );
 		}
 
@@ -158,9 +158,9 @@ class Credit_Card_Vault {
 		</tr>';
 		foreach ( $cards as $card ) {
 			$html .= '<tr>
-				<td><input class="token" name="token" onclick="javascript:setToken()" type="radio" data-token="' . $card->token . '" /></td>
-				<td>' . $card->masked_pan . '</td>
-				<td><div class="delete-from-vault" onclick="javascript:deleteCard(' . $card->vault_id . ')">' . __( 'text_delete', 'wirecard-woocommerce-extension' ) . '</div></td>
+				<td class="wd-card-selector"><input onclick="javascript:on_token_selected(this)" class="token" name="token" type="radio" data-token="' . $card->token . '" /></td>
+				<td class="wd-card-number">' . $card->masked_pan . '</td>
+				<td class="wd-card-delete"><div class="delete-from-vault" onclick="javascript:delete_credit_card_from_vault_tab(this, ' . $card->vault_id . ')">' . __( 'text_delete', 'wirecard-woocommerce-extension' ) . '</div></td>
 			</tr>';
 		}
 		$html .= '</table>';

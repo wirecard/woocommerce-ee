@@ -90,7 +90,7 @@ class WC_Gateway_Wirecard_Additional_Information_Utest extends \PHPUnit_Framewor
 		$item->setTaxRate( 12 );
 		$item->setTaxAmount( new \Wirecard\PaymentSdk\Entity\Amount( 10, 'EUR' ) );
 		$basket->add( $item );
-		$item   = new \Wirecard\PaymentSdk\Entity\Item(
+		$item = new \Wirecard\PaymentSdk\Entity\Item(
 			'Voucher',
 			new \Wirecard\PaymentSdk\Entity\Amount( -14, 'EUR' ),
 			1

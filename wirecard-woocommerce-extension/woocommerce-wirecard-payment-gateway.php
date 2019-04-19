@@ -3,7 +3,7 @@
  * Plugin Name: Wirecard WooCommerce Extension
  * Plugin URI: https://github.com/wirecard/woocommerce-ee
  * Description: Payment Gateway for WooCommerce
- * Version: 1.6.2
+ * Version: 1.6.4
  * Author: Wirecard AG
  * Author URI: https://www.wirecard.com/
  * License: GPLv3
@@ -132,7 +132,9 @@ function wirecard_init_payment_gateway() {
 	add_action( 'admin_enqueue_scripts', 'backend_scripts', 999 );
 	add_action( 'woocommerce_settings_checkout', 'wirecard_add_support_chat', 0 );
 	add_action( 'admin_menu', 'wirecard_gateway_options_page' );
-	add_action( 'woocommerce_thankyou_wirecard_ee_poipia', array( new WC_Gateway_Wirecard_Poipia(), 'thankyou_page_poipia' ) );
+	add_action( 'woocommerce_thankyou_poipia', array( new WC_Gateway_Wirecard_Poipia(), 'thankyou_page_poipia' ) );
+	add_action( 'woocommerce_receipt_wirecard_ee_creditcard', array( new WC_Gateway_Wirecard_Creditcard(), 'render_form' ) );
+	add_action( 'woocommerce_receipt_wirecard_ee_unionpayinternational', array( new WC_Gateway_Wirecard_Unionpay_International(), 'render_form' ) );
 
 	register_post_status(
 		'wc-authorization',
@@ -362,7 +364,7 @@ function wirecard_add_support_chat() {
  * @since 1.1.0
  */
 function wirecard_check_if_woo_installed() {
-	if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) )
+	if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ), true )
 		|| array_key_exists( 'woocommerce/woocommerce.php', get_site_option( 'active_sitewide_plugins' ) ) ) {
 		return;
 	}
