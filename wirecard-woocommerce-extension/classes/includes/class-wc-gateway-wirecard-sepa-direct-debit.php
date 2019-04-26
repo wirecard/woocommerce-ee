@@ -382,7 +382,7 @@ class WC_Gateway_Wirecard_Sepa_Direct_Debit extends WC_Wirecard_Payment_Gateway 
 		$transaction = new SepaDirectDebitTransaction();
 		$transaction->setParentTransactionId( $order->get_transaction_id() );
 		if ( ! is_null( $amount ) ) {
-			$transaction->setAmount( new Amount( $amount, $order->get_currency() ) );
+			$transaction->setAmount( new Amount( floatval ( $amount ), $order->get_currency() ) );
 		}
 
 		return $transaction;
@@ -404,7 +404,7 @@ class WC_Gateway_Wirecard_Sepa_Direct_Debit extends WC_Wirecard_Payment_Gateway 
 		$transaction = new SepaDirectDebitTransaction();
 		$transaction->setParentTransactionId( $order->get_transaction_id() );
 		if ( ! is_null( $amount ) ) {
-			$transaction->setAmount( new Amount( $amount, $order->get_currency() ) );
+			$transaction->setAmount( new Amount( floatval ( $amount ), $order->get_currency() ) );
 		}
 
 		return $transaction;

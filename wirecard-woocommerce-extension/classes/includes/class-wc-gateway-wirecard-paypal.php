@@ -228,7 +228,7 @@ class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 		$transaction = new PayPalTransaction();
 		$transaction->setParentTransactionId( $order->get_transaction_id() );
 		if ( ! is_null( $amount ) ) {
-			$transaction->setAmount( new Amount( $amount, $order->get_currency() ) );
+			$transaction->setAmount( new Amount( floatval ( $amount ), $order->get_currency() ) );
 		}
 
 		return $transaction;
@@ -250,7 +250,7 @@ class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 		$transaction = new PayPalTransaction();
 		$transaction->setParentTransactionId( $order->get_transaction_id() );
 		if ( ! is_null( $amount ) ) {
-			$transaction->setAmount( new Amount( $amount, $order->get_currency() ) );
+			$transaction->setAmount( new Amount( floatval ( $amount ), $order->get_currency() ) );
 		}
 
 		return $transaction;
