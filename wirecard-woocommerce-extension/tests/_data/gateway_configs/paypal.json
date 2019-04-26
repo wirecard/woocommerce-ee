@@ -1,0 +1,14 @@
+{
+  "API-TEST": {
+    "base_url": "https://api-test.wirecard.com",
+    "http_user": "70000-APITEST-AP",
+    "http_pass": "qD2wzQ_hrc!8",
+	"merchant_account_id": "2a0e9351-24ed-4110-9a1b-fd0fee6bec26",		  
+	"secret": "dbc5a498-9a66-43b9-bf1d-a618dd399684", 
+	"enabled": "yes",
+	"title": "Wirecard PayPal",
+	"test_button": "Test",
+	"payment_action": "pay",
+	"send_additional": "no"
+  }
+}

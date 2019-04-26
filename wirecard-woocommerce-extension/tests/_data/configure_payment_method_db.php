@@ -40,26 +40,39 @@ if ( ! $gateway ) {
 // the default config defines valid keys for each payment method and is prefilled with API-TEST setup by default
 $defaultConfig = [
 	'creditcard' => [
-		'base_url'            => 'https://api-test.wirecard.com',
-		'http_user'           => '70000-APITEST-AP',
-		'http_pass'           => 'qD2wzQ_hrc!8',
-		'threed_maid'         => '508b8896-b37d-4614-845c-26bf8bf2c948',
-		'threed_secret'       => 'dbc5a498-9a66-43b9-bf1d-a618dd399684',
-		'merchant_account_id' => '53f2895a-e4de-4e82-a813-0d87a10e55e6',
-		'secret'              => 'dbc5a498-9a66-43b9-bf1d-a618dd399684',
-		'ssl_max_limit'       => 100,
-		'three_d_min_limit'   => 50,
+		'base_url'           				 => 'https://api-test.wirecard.com',
+		'http_user'           				 => '70000-APITEST-AP',
+		'http_pass'           				 => 'qD2wzQ_hrc!8',
+		'three_d_merchant_account_id'        => '508b8896-b37d-4614-845c-26bf8bf2c948',
+		'three_d_secret'       				 => 'dbc5a498-9a66-43b9-bf1d-a618dd399684',
+		'merchant_account_id' 				 => '53f2895a-e4de-4e82-a813-0d87a10e55e6',
+		'secret'              				 => 'dbc5a498-9a66-43b9-bf1d-a618dd399684',
+		'ssl_max_limit'      			 	 => 100,
+		'three_d_min_limit'   				 => 50,
 
-		'enabled'             => 'yes',
-		'title'               => 'Wirecard Credit Card',
-		'credentials'         => '',
-		'test_button'         => 'Test',
-		'advanced'            => '',
-		'payment_action'      => 'pay',
-		'descriptor'          => 'no',
-		'send_additional'     => 'yes',
-		'cc_vault_enabled'    => 'no',
+		'enabled'              				 => 'yes',
+		'title'                				 => 'Wirecard Credit Card',
+		'credentials'          				 => '',
+		'test_button'          				 => 'Test',
+		'advanced'             				 => '',
+		'payment_action'       				 => 'pay',
+		'descriptor'           				 => 'no',
+		'send_additional'      				 => 'yes',
+		'cc_vault_enabled'      			 => 'no',
 	],
+	'paypal' => [
+		'base_url'            				 => 'https://api-test.wirecard.com',
+		'http_user'           				 => '70000-APITEST-AP',
+		'http_pass'           				 => 'qD2wzQ_hrc!8',
+		'merchant_account_id' 				 => '2a0e9351-24ed-4110-9a1b-fd0fee6bec26',
+		'secret'              				 => 'dbc5a498-9a66-43b9-bf1d-a618dd399684',
+
+		'enabled'             				 => 'yes',
+		'title'               				 => 'Wirecard PayPal',
+		'test_button'         				 => 'Test',
+		'payment_action'      				 => 'pay',
+		'send_additional'     				 => 'no',
+	]
 ];
 
 // main script - read payment method from command line, build the config and write it into database
@@ -154,6 +167,18 @@ function updateWoocommerceEeDbConfig( $db_config, $payment_method ) {
 	$stmtInsert = $mysqli->prepare( "INSERT INTO $tableName (option_name, option_value, autoload) VALUES (?, ?, 'yes')" );
 	$stmtInsert->bind_param( 'ss', $creditCardSettingKey, $serializedConfig );
 	$stmtInsert->execute();
+	
+	$currency = "EUR";
+	$woocommerceCurrency = 'woocommerce_currency';
+	$stmtInsert = $mysqli->prepare( "UPDATE $tableName SET option_value = ? WHERE option_name = ?");
+	$stmtInsert->bind_param( 'ss', $currency, $woocommerceCurrency );
+	$stmtInsert->execute();
 
+	$defaultCountry = "AT";
+	$woocommerceDefaultCountry = 'woocommerce_default_country';
+	$stmtInsert = $mysqli->prepare( "UPDATE $tableName SET option_value = ? WHERE option_name = ?");
+	$stmtInsert->bind_param( 'ss', $defaultCountry, $woocommerceDefaultCountry );
+	$stmtInsert->execute();
+	
 	return true;
 }

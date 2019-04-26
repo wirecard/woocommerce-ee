@@ -8,11 +8,11 @@ Feature: checkCreditCard3DSFunctionalityHappyPath
     And I am on "Checkout" page
     And I fill fields with "Customer data"
     Then I see "Wirecard Credit Card"
-
-
+	And I click "Place order"
+  
   Scenario: try purchaseCheck
     Given I fill fields with "Valid Credit Card Data"
-    When I click "Place order"
+    When I click "Pay now"
     And I am redirected to "Verified" page
     And I enter "wirecard" in field "Password"
     And I click "Continue"

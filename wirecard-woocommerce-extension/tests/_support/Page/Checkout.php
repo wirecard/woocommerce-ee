@@ -58,12 +58,14 @@ class Checkout extends Base {
 		'Phone'                         => "//*[@id='billing_phone']",
 		'Email address'                 => "//*[@id='billing_email']",
 		'Place order'                   => "//*[@id='place_order']",
+		'Wirecard PayPal' 				=> "//*[@id='payment']/ul/li[2]",
 		'Credit Card First Name'        => "//*[@id='first_name']",
 		'Credit Card Last Name'         => "//*[@id='last_name']",
 		'Credit Card Card number'       => "//*[@id='account_number']",
 		'Credit Card CVV'               => "//*[@id='card_security_code']",
 		'Credit Card Valid until month' => "//*[@id='expiration_month_list']",
 		'Credit Card Valid until year'  => "//*[@id='expiration_year_list']",
+		'Pay now'						=> "//*[@id='seamless-submit']"
 	);
 
 	/**
@@ -101,7 +103,6 @@ class Checkout extends Base {
 		$I->wait( 2 );
 		$I->waitForElementVisible( $this->getElement( 'Email address' ) );
 		$I->fillField( $this->getElement( 'Email address' ), $data_field_values->email_address );
-
 	}
 	/**
 	 * Method fillCreditCardDetails
@@ -110,6 +111,7 @@ class Checkout extends Base {
 	public function fillCreditCardDetails() {
 		$I                 = $this->tester;
 		$data_field_values = $I->getDataFromDataFile( 'tests/_data/CardData.json' );
+		$I->wait(5);
 		$this->switchFrame();
 		$I->waitForElementVisible( $this->getElement( 'Credit Card Last Name' ) );
 		$I->fillField( $this->getElement( 'Credit Card Last Name' ), $data_field_values->last_name );

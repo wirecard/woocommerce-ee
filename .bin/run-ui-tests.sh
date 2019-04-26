@@ -33,4 +33,8 @@ done
 bash .bin/start-shopsystem.sh
 
 #run tests
-cd wirecard-woocommerce-extension && vendor/bin/codecept run acceptance --html --xml
+cd wirecard-woocommerce-extension && vendor/bin/codecept run acceptance checkCreditCard3DSFunctionalityHappyPath.feature --debug --html --xml
+
+if [[ ${GATEWAY} = "API-TEST" ]]; then
+	vendor/bin/codecept run acceptance checkPayPalFunctionalityHappyPath.feature --debug --html --xml
+fi
