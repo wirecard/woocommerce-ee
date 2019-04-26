@@ -210,7 +210,7 @@ class WC_Gateway_Wirecard_Poipia extends WC_Wirecard_Payment_Gateway {
 		$transaction = new PoiPiaTransaction();
 		$transaction->setParentTransactionId( $order->get_transaction_id() );
 		if ( ! is_null( $amount ) ) {
-			$transaction->setAmount( new Amount( $amount, $order->get_currency() ) );
+			$transaction->setAmount( new Amount( floatval ( $amount ), $order->get_currency() ) );
 		}
 
 		return $transaction;
@@ -263,6 +263,7 @@ class WC_Gateway_Wirecard_Poipia extends WC_Wirecard_Payment_Gateway {
 			$result      .= '<tr><td>' . __( 'iban', 'wirecard-woocommerce-extension' ) . '</td><td>' . $iban . '</td></tr>';
 			$result      .= '<tr><td>' . __( 'bic', 'wirecard-woocommerce-extension' ) . '</td><td>' . $bic . '</td></tr>';
 			$result      .= '<tr><td>' . __( 'ptrid', 'wirecard-woocommerce-extension' ) . '</td><td>' . $reference_id . '</td></tr>';
+			$result      .= '</table>';
 			echo $result;
 		}
 	}
