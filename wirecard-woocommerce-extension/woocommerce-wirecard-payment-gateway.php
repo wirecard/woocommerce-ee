@@ -132,7 +132,7 @@ function wirecard_init_payment_gateway() {
 	add_action( 'admin_enqueue_scripts', 'backend_scripts', 999 );
 	add_action( 'woocommerce_settings_checkout', 'wirecard_add_support_chat', 0 );
 	add_action( 'admin_menu', 'wirecard_gateway_options_page' );
-	add_action( 'woocommerce_thankyou_poipia', array( new WC_Gateway_Wirecard_Poipia(), 'thankyou_page_poipia' ) );
+	add_action( 'woocommerce_thankyou_wirecard_ee_poipia', array( new WC_Gateway_Wirecard_Poipia(), 'thankyou_page_poipia' ) );
 	add_action( 'woocommerce_receipt_wirecard_ee_creditcard', array( new WC_Gateway_Wirecard_Creditcard(), 'render_form' ) );
 	add_action( 'woocommerce_receipt_wirecard_ee_unionpayinternational', array( new WC_Gateway_Wirecard_Unionpay_International(), 'render_form' ) );
 
