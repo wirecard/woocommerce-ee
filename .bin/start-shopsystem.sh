@@ -9,7 +9,7 @@ WOOCOMMERCE_ADMIN_PASSWORD=password
 
 
 docker-compose build --build-arg WOOCOMMERCE_VERSION=3.5.1 --build-arg GATEWAY=${GATEWAY} webserver
-docker-compose up > /dev/null &
+docker-compose up -d
 # wordpress running on 9090
 
 while ! $(curl --output /dev/null --silent --head --fail "${NGROK_URL}/wp-admin/install.php"); do
