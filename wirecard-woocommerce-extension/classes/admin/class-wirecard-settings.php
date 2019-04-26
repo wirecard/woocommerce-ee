@@ -73,7 +73,7 @@ class Wirecard_Settings {
 				src="https://www.provusgroup.com/livezilla/script.php?id=936f87cd4ce16e1e60bea40b45b0596a">
 				</script>';
 		if ( isset( $_REQUEST['id'] ) ) {
-			$this->transaction_factory->show_post_processing_info( $_REQUEST['id'], $_REQUEST['action'] );
+			$this->transaction_factory->show_post_processing_info( $_REQUEST['id'], isset( $_REQUEST['action'] ) ? $_REQUEST['action'] : null );
 		} elseif ( isset( $_GET['transaction_start'] ) ) {
 			$this->show_dashboard( $_GET['transaction_start'] );
 		} else {
