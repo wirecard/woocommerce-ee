@@ -664,7 +664,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 		$this->config = $this->create_payment_config();
 		$this->transaction->setParentTransactionId( $order->get_transaction_id() );
 		if ( ! is_null( $amount ) ) {
-			$this->transaction->setAmount( new Amount( $amount, $order->get_currency() ) );
+			$this->transaction->setAmount( new Amount( floatval( $amount ), $order->get_currency() ) );
 		}
 
 		return $this->execute_refund( $this->transaction, $this->config, $order, $this->refund_action );
