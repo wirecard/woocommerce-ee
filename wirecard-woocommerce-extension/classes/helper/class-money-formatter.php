@@ -57,7 +57,7 @@ class Money_Formatter {
 	public function to_float( $amount ) {
 		$ret = $amount;
 		if ( is_string( $amount ) ) {
-			$ret               = (float)$amount;
+			$ret = (float) $amount;
 		}
 		return $ret;
 	}
