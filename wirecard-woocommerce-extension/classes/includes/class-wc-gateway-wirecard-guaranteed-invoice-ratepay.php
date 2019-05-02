@@ -281,7 +281,7 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 		$transaction->setBasket( $basket );
 
 		if ( ! is_null( $amount ) ) {
-			$transaction->setAmount( new Amount( floatval( $amount ), $order->get_currency() ) );
+			$transaction->setAmount( new Amount( $amount, $order->get_currency() ) );
 		}
 
 		return $transaction;
@@ -310,7 +310,7 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 		);
 
 		$transaction->setParentTransactionId( $order->get_transaction_id() );
-		$transaction->setAmount( new Amount( floatval( $amount ), $order->get_currency() ) );
+		$transaction->setAmount( new Amount( $amount, $order->get_currency() ) );
 		$transaction->setBasket( $basket );
 
 		return $transaction;
@@ -345,7 +345,7 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 		}
 		$this->transaction = new RatepayInvoiceTransaction();
 		$this->transaction->setParentTransactionId( $order->get_transaction_id() );
-		$this->transaction->setAmount( new Amount( floatval( $amount ), $order->get_currency() ) );
+		$this->transaction->setAmount( new Amount( $amount, $order->get_currency() ) );
 
 		$basket = $this->additional_helper->create_basket_from_parent_transaction(
 			$order,
