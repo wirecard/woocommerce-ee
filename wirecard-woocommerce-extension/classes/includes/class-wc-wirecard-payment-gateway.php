@@ -646,9 +646,9 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	}
 
 	/**
-	 * @param int    $order_id
-	 * @param null   $amount
-	 * @param string $reason
+	 * @param int        $order_id
+	 * @param float|null $amount
+	 * @param string     $reason
 	 *
 	 * @return bool|WP_Error
 	 *

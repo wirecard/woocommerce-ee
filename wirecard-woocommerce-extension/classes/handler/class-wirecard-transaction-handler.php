@@ -34,6 +34,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/handler/class-wirecard-handler.php' );
+require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/helper/class-money-formatter.php' );
 
 use Wirecard\PaymentSdk\Response\FailureResponse;
 use Wirecard\PaymentSdk\Response\SuccessResponse;
@@ -48,6 +49,19 @@ use Wirecard\PaymentSdk\TransactionService;
  * @since 1.0.0
  */
 class Wirecard_Transaction_Handler extends Wirecard_Handler {
+
+	/** @var Money_Formatter helper to format money amount from DB */
+	private $money_formatter;
+
+	/**
+	 * Wirecard_Transaction_Handler constructor.
+	 *
+	 * @since 1.6.5
+	 */
+	public function __construct() {
+		parent::__construct();
+		$this->money_formatter = new Money_Formatter();
+	}
 
 	/**
 	 * Cancel transaction via Payment Gateway
@@ -64,7 +78,8 @@ class Wirecard_Transaction_Handler extends Wirecard_Handler {
 		/** @var WC_Wirecard_Payment_Gateway $payment */
 		$payment     = $this->get_payment_method( $transaction_data->payment_method );
 		$config      = $payment->create_payment_config();
-		$transaction = $payment->process_cancel( $transaction_data->order_id, $transaction_data->amount );
+		$amount      = $this->money_formatter->to_float( $transaction_data->amount );
+		$transaction = $payment->process_cancel( $transaction_data->order_id, $amount );
 
 		$transaction_service = new TransactionService( $config, $this->logger );
 		try {
@@ -99,7 +114,8 @@ class Wirecard_Transaction_Handler extends Wirecard_Handler {
 		/** @var WC_Wirecard_Payment_Gateway $payment */
 		$payment     = $this->get_payment_method( $transaction_data->payment_method );
 		$config      = $payment->create_payment_config();
-		$transaction = $payment->process_capture( $transaction_data->order_id, $transaction_data->amount );
+		$amount      = $this->money_formatter->to_float( $transaction_data->amount );
+		$transaction = $payment->process_capture( $transaction_data->order_id, $amount );
 
 		$transaction_service = new TransactionService( $config, $this->logger );
 		try {
@@ -131,7 +147,8 @@ class Wirecard_Transaction_Handler extends Wirecard_Handler {
 	public function refund_transaction( $transaction_data ) {
 		/** @var WC_Wirecard_Payment_Gateway $payment */
 		$payment = $this->get_payment_method( $transaction_data->payment_method );
-		$return  = $payment->process_refund( $transaction_data->order_id, $transaction_data->amount );
+		$amount  = $this->money_formatter->to_float( $transaction_data->amount );
+		$return  = $payment->process_refund( $transaction_data->order_id, $amount );
 		if ( is_wp_error( $return ) ) {
 			return $return->get_error_message();
 		} else {
