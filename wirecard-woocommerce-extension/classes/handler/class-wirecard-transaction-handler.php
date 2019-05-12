@@ -121,7 +121,7 @@ class Wirecard_Transaction_Handler extends Wirecard_Handler {
 		$transaction = $payment->process_capture( $transaction_data->order_id, $amount );
 
 		$transaction_service = new TransactionService( $config, $this->logger );
-		$response = null;
+		$response            = null;
 		try {
 			/** @var Response $response */
 			$response = $transaction_service->process( $transaction, Operation::PAY );
