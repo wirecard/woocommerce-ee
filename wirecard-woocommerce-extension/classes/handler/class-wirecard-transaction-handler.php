@@ -37,6 +37,7 @@ require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/handler/class-wirecard-handl
 require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/helper/class-money-formatter.php' );
 
 use Wirecard\PaymentSdk\Response\FailureResponse;
+use Wirecard\PaymentSdk\Response\Response;
 use Wirecard\PaymentSdk\Response\SuccessResponse;
 use Wirecard\PaymentSdk\Transaction\Operation;
 use Wirecard\PaymentSdk\TransactionService;
@@ -82,8 +83,9 @@ class Wirecard_Transaction_Handler extends Wirecard_Handler {
 		$transaction = $payment->process_cancel( $transaction_data->order_id, $amount );
 
 		$transaction_service = new TransactionService( $config, $this->logger );
+		$response            = null;
 		try {
-			/** @var $response Response */
+			/** @var Response $response */
 			$response = $transaction_service->process( $transaction, Operation::CANCEL );
 		} catch ( \Exception $exception ) {
 			$this->logger->error( __METHOD__ . ':' . $exception->getMessage() );
@@ -98,6 +100,7 @@ class Wirecard_Transaction_Handler extends Wirecard_Handler {
 		if ( $response instanceof FailureResponse ) {
 			return __( 'error_transaction_cancel', 'woocommercer-gateway-wirecard' );
 		}
+		return '';
 	}
 
 	/**
@@ -118,8 +121,9 @@ class Wirecard_Transaction_Handler extends Wirecard_Handler {
 		$transaction = $payment->process_capture( $transaction_data->order_id, $amount );
 
 		$transaction_service = new TransactionService( $config, $this->logger );
+		$response = null;
 		try {
-			/** @var $response Response */
+			/** @var Response $response */
 			$response = $transaction_service->process( $transaction, Operation::PAY );
 		} catch ( \Exception $exception ) {
 			$this->logger->error( __METHOD__ . ':' . $exception->getMessage() );
@@ -133,6 +137,7 @@ class Wirecard_Transaction_Handler extends Wirecard_Handler {
 		if ( $response instanceof FailureResponse ) {
 			return __( 'error_transaction_capture', 'woocommercer-gateway-wirecard' );
 		}
+		return '';
 	}
 
 	/**
@@ -160,7 +165,7 @@ class Wirecard_Transaction_Handler extends Wirecard_Handler {
 	/**
 	 * Restock returned items (refund, cancel via Transactiontable)
 	 *
-	 * @param $order_id
+	 * @param int $order_id
 	 *
 	 * @since 1.3.1
 	 */

@@ -104,28 +104,28 @@ add_action( 'plugins_loaded', 'wirecard_init_payment_gateway' );
  * @since 1.0.0
  */
 function wirecard_init_payment_gateway() {
-	if ( ! class_exists( 'WC_PAYMENT_GATEWAY' ) ) {
+	if ( ! class_exists( 'WC_Payment_Gateway' ) ) {
 		global $error;
 		$error = new WP_Error( 'woocommerce', 'To use Wirecard WooCommerce Extension you need to install and activate the WooCommerce' );
 		echo '<div class="error notice"><p>' . $error->get_error_message() . '</p></div>';
 		return;
 	}
 
-	require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-wirecard-payment-gateway.php' );
-	require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-paypal.php' );
-	require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php' );
-	require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php' );
-	require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-creditcard.php' );
-	require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-ideal.php' );
-	require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-eps.php' );
-	require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-sofort.php' );
-	require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-poipia.php' );
-	require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php' );
-	require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php' );
-	require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-unionpay-international.php' );
-	require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-masterpass.php' );
-	require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php' );
-	require_once( WIRECARD_EXTENSION_BASEDIR . 'vendor/autoload.php' );
+	require_once WIRECARD_EXTENSION_BASEDIR . 'vendor/autoload.php';
+	require_once WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-wirecard-payment-gateway.php';
+	require_once WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-paypal.php';
+	require_once WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php';
+	require_once WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php';
+	require_once WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-creditcard.php';
+	require_once WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-ideal.php';
+	require_once WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-eps.php';
+	require_once WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-sofort.php';
+	require_once WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-poipia.php';
+	require_once WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php';
+	require_once WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php';
+	require_once WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-unionpay-international.php';
+	require_once WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-masterpass.php';
+	require_once WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php';
 
 	add_filter( 'woocommerce_payment_gateways', 'wirecard_add_payment_gateway', 0 );
 	add_filter( 'wc_order_statuses', 'wirecard_wc_order_statuses' );
@@ -153,7 +153,7 @@ function wirecard_init_payment_gateway() {
 /**
  * Add payment methods for wirecard payment gateway
  *
- * @param $methods
+ * @param array $methods
  *
  * @return array
  *
@@ -254,7 +254,7 @@ function wirecard_install_payment_gateway() {
  		PRIMARY KEY (tx_id)
 	)$collate;";
 
-	require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+	require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 	dbDelta( $sql );
 
 	$sql2 = "CREATE TABLE IF NOT EXISTS {$vault_table_name} (
@@ -273,7 +273,7 @@ function wirecard_install_payment_gateway() {
  * @since 1.0.0
  */
 function wirecard_gateway_options_page() {
-	require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/admin/class-wirecard-settings.php' );
+	require_once WIRECARD_EXTENSION_BASEDIR . 'classes/admin/class-wirecard-settings.php';
 
 	$admin = new Wirecard_Settings();
 	add_submenu_page(

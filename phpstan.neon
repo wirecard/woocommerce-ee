@@ -1,0 +1,29 @@
+includes:
+    - wirecard-woocommerce-extension/vendor/phpstan/phpstan/conf/bleedingEdge.neon
+    - wirecard-woocommerce-extension/vendor/szepeviktor/phpstan-wordpress/extension.neon
+parameters:
+    #level: max
+    level: 2
+    paths:
+        - %currentWorkingDirectory%/wirecard-woocommerce-extension/woocommerce-wirecard-payment-gateway.php
+        - %currentWorkingDirectory%/wirecard-woocommerce-extension/classes/
+    excludes_analyse:
+        - %currentWorkingDirectory%/wirecard-woocommerce-extension/classes/helper/sepa-template.php
+    autoload_files:
+        # Missing constants, function and class stubs
+        - %currentWorkingDirectory%/wirecard-woocommerce-extension/tests/phpstan/bootstrap.php
+        # Plugin stubs
+        - %currentWorkingDirectory%/wirecard-woocommerce-extension/tests/phpstan/woocommerce-stubs-3.6.1.php
+        # The plugin
+        - %currentWorkingDirectory%/wirecard-woocommerce-extension/woocommerce-wirecard-payment-gateway.php
+    autoload_directories:
+        - %currentWorkingDirectory%/wirecard-woocommerce-extension/classes/
+    ignoreErrors:
+        # Uses func_get_args()
+        - '#^Function apply_filters invoked with [34567] parameters, 2 required\.$#'
+        - '#^Function add_query_arg invoked with [123] parameters?, 0 required\.$#'
+#        # Level 5
+#        # https://core.trac.wordpress.org/ticket/43304
+#        - '/^Parameter #2 \$deprecated of function load_plugin_textdomain expects string, false given\.$/'
+        # TODO
+        - '#^Access to an undefined property \S+::\$method_name\.$#'

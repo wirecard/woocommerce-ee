@@ -111,7 +111,7 @@ class Wirecard_Settings {
 	 * Create pagination view
 	 *
 	 * @param int $start
-	 * @param stdClass $pages
+	 * @param int $pages
 	 *
 	 * @since 1.0.0
 	 */

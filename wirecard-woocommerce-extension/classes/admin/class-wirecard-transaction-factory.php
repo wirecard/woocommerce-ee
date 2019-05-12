@@ -312,7 +312,7 @@ class Wirecard_Transaction_Factory {
 	/**
 	 * Handling of post-processing actions
 	 *
-	 * @param $transaction_id
+	 * @param int $transaction_id
 	 * @param null|string $action
 	 *
 	 * @since 1.6.1
@@ -441,7 +441,7 @@ class Wirecard_Transaction_Factory {
 	/**
 	 * Create notice, success, error box in admin interface
 	 *
-	 * @param $message
+	 * @param string $message
 	 * @param string $severity
 	 *
 	 * @since 1.6.1

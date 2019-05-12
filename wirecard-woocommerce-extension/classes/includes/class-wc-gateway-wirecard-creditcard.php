@@ -603,7 +603,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	public function remove_cc_from_vault() {
 		$vault_id = sanitize_text_field( $_POST['vault_id'] );
 
-		if ( isset( $vault_id ) && $this->vault->delete_credit_card( $vault_id ) > 0 ) {
+		if ( ! empty( $vault_id ) && $this->vault->delete_credit_card( $vault_id ) > 0 ) {
 			$user = wp_get_current_user();
 			wp_send_json_success( $this->vault->get_cards_for_user( $user->ID ) );
 			wp_die();
