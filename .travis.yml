@@ -38,7 +38,7 @@ matrix:
     php: 7.1
     env: 
     - GATEWAY=API-TEST
-    - $SHOP_RELEASE_LATEST
+    - echo $SHOP_RELEASE_LATEST
     before_install:
     - travis_retry composer self-update
     install:
