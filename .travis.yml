@@ -23,17 +23,17 @@ matrix:
     if: type != cron AND env(PHRASEAPP_PULL) != '1'
 
   - stage: get-woocommerce-versions
-    if: type = cron
-      php: 7.2
-      install: skip
-      before_script: skip
-      script: bash .bin/get-woocommerce-versions.sh
-      after_script: skip
-      after_failure: skip
+    if: type != cron
+    php: 7.2
+    install: skip
+    before_script: skip
+    script: bash .bin/get-woocommerce-versions.sh
+    after_script: skip
+    after_failure: skip
       
   - &acceptance-test
     stage: acceptance-test
-    if: type = cron
+    if: type != cron
     php: 7.1
     env: 
     - GATEWAY=API-TEST
