@@ -34,11 +34,11 @@ matrix:
       
   - &acceptance-test
     stage: acceptance-test
-    if: type != cron AND $WOOCOMMERCE_VERSION_1
+    if: type != cron
     php: 7.1
     env: 
     - GATEWAY=API-TEST
-    - WOOCOMMERCE_VERSION=3.6.3
+    - env(WOOCOMMERCE_VERSION)
     before_install:
     - travis_retry composer self-update
     install:
