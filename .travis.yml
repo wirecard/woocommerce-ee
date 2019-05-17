@@ -5,6 +5,7 @@ language: php
 env:
   global:
   - COMPOSER_ARGS="--no-interaction"
+  - WOOCOMMERCE_RELEASES_FILE=${TRAVIS_BUILD_DIR}/.bin/shop-releases.txt
   - github_token:
       secure: "Iy/Plz3V++TKSQbz/A0x7ZhETSfcvbXxT4zKQh51W8fjBUlKKrQmDA1rICIjnfFs0bNAe6M2yQxxHgJKUJPBsi9Nk/Ynuk/I5lLK1jLL6THioGB6oKUyRBytlcVLZ+0lNqmV/jRKYdwEPI+jNduCk5GSjubSGMIWGNDcqAUiTu+oy3Gu9FS/auEGxim7UaZYC+MM+7ir0zD6w/0nuCaxalAeLahFz0g3QlXc7FB88SxH//lxzKDZh3U6XKyIEXGG8IQiCYaJRUqr9unzHDVbjOvNT6HWZQ4jGSfnCZTnp4aPfOrk1Ir334/4Cuy4xCP4iiuiRFHoxw++uknh77slUwRtZbrUlwoCbvT0V/GOQaN2HSjrTOc5n1/M0XsPRumbZ+I/4EoCnZUwNiBpWtVhrzSpE84+0BBj67gmStzca1sZMkts+oHnr5S6qajVY5ePY4Sn3rI/JbUJP501zexRHgqKY26a+Hqz9TAnNJqRKfm6ez5pSlXUKk4eCl7slgYuY8I="
 
@@ -21,28 +22,68 @@ matrix:
   - php: 7.2
     if: type != cron AND env(PHRASEAPP_PULL) != '1'
 
+  - stage: get-woocommerce-versions
+    if: type = cron
+      php: 7.2
+      install: skip
+      before_script: skip
+      script: bash .bin/get-woocommerce-versions.sh
+      after_script: skip
+      after_failure: skip
+      
   - &acceptance-test
     stage: acceptance-test
     if: type = cron
     php: 7.1
-    env: GATEWAY=API-TEST
+    env: 
+    - GATEWAY=API-TEST
+    - export SHOP_RELEASE=$(awk 'NR==1 {print; exit}' ${WOOCOMMERCE_RELEASES_FILE})
     before_install:
     - travis_retry composer self-update
     install:
+    - echo "Testing with Woocommerce version ${SHOP_RELEASE}" 
     - bash .bin/generate-release-package.sh test
     - travis_retry composer require --dev $COMPOSER_ARGS codeception/codeception:^2.5
     - travis_retry composer install $COMPOSER_ARGS
     - composer show
     script: bash .bin/run-ui-tests.sh
     after_script: skip
-    after_success:
-    - bash .bin/upload-logs-and-notify.sh
-    after_failure:
-    - bash .bin/upload-logs-and-notify.sh fail
+#    after_success:
+#    - bash .bin/upload-logs-and-notify.sh
+#    after_failure:
+#    - bash .bin/upload-logs-and-notify.sh fail
   - <<: *acceptance-test
-    env: GATEWAY=API-WDCEE-TEST
+    env:
+    - GATEWAY=API-TEST
+    - export SHOP_RELEASE=$(awk 'NR==2 {print; exit}' ${WOOCOMMERCE_RELEASES_FILE})
   - <<: *acceptance-test
-    env: GATEWAY=NOVA
+    env:
+    - GATEWAY=API-TEST
+    - export SHOP_RELEASE=$(awk 'NR==3 {print; exit}' ${WOOCOMMERCE_RELEASES_FILE})
+  - <<: *acceptance-test
+    env: 
+    - GATEWAY=API-WDCEE-TEST
+    - export SHOP_RELEASE=$(awk 'NR==1 {print; exit}' ${WOOCOMMERCE_RELEASES_FILE})
+  - <<: *acceptance-test
+    env:
+    - GATEWAY=API-WDCEE-TEST
+    - export SHOP_RELEASE=$(awk 'NR==2 {print; exit}' ${WOOCOMMERCE_RELEASES_FILE})
+  - <<: *acceptance-test
+    env:
+    - GATEWAY=API-WDCEE-TEST
+    - export SHOP_RELEASE=$(awk 'NR==3 {print; exit}' ${WOOCOMMERCE_RELEASES_FILE})
+  - <<: *acceptance-test
+    env: 
+    - GATEWAY=NOVA
+    - export SHOP_RELEASE=$(awk 'NR==1 {print; exit}' ${WOOCOMMERCE_RELEASES_FILE})
+  - <<: *acceptance-test
+    env:
+    - GATEWAY=NOVA
+    - export SHOP_RELEASE=$(awk 'NR==2 {print; exit}' ${WOOCOMMERCE_RELEASES_FILE})
+  - <<: *acceptance-test
+    env:
+    - GATEWAY=NOVA
+    - export SHOP_RELEASE=$(awk 'NR==3 {print; exit}' ${WOOCOMMERCE_RELEASES_FILE})
 
   - stage: phraseapp-pull
     if: type != cron AND env(PHRASEAPP_PULL) = '1'
@@ -122,5 +163,5 @@ notifications:
       - "%{repository}#%{build_number} (%{branch} : %{author}): %{message}"
       - "Change view : %{compare_url}"
       - "Build details : %{build_url}"
-    on_success: change
-    on_failure: change
+    on_success: never
+    on_failure: never

@@ -8,7 +8,7 @@ WOOCOMMERCE_ADMIN_USER=admin
 WOOCOMMERCE_ADMIN_PASSWORD=password
 
 
-docker-compose build --build-arg WOOCOMMERCE_VERSION=3.5.1 --build-arg GATEWAY=${GATEWAY} webserver
+docker-compose build --build-arg WOOCOMMERCE_VERSION=${SHOP_RELEASE} --build-arg GATEWAY=${GATEWAY} webserver
 docker-compose up -d
 # wordpress running on 9090
 
