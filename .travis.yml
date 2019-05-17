@@ -38,7 +38,7 @@ matrix:
     php: 7.1
     env: 
     - GATEWAY=API-TEST
-    - ${WOOCOMMERCE_VERSION}
+    - echo "${WOOCOMMERCE_VERSION}"
     before_install:
     - travis_retry composer self-update
     install:
