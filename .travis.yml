@@ -37,11 +37,11 @@ matrix:
     php: 7.1
     env: 
     - GATEWAY=API-TEST
-    - SHOP_RELEASE=$(awk 'NR==1 {print; exit}' ${WOOCOMMERCE_RELEASES_FILE})
+    - WOOCOMMERCE_VERSION=$(awk 'NR==1 {print; exit}' ${WOOCOMMERCE_RELEASES_FILE})
     before_install:
     - travis_retry composer self-update
     install:
-    - echo "Testing with Woocommerce version ${SHOP_RELEASE}" 
+    - echo "Testing with Woocommerce version ${WOOCOMMERCE_VERSION}" 
     - bash .bin/generate-release-package.sh test
     - travis_retry composer require --dev $COMPOSER_ARGS codeception/codeception:^2.5
     - travis_retry composer install $COMPOSER_ARGS
@@ -55,35 +55,35 @@ matrix:
   - <<: *acceptance-test
     env:
     - GATEWAY=API-TEST
-    - export SHOP_RELEASE=$(awk 'NR==2 {print; exit}' ${WOOCOMMERCE_RELEASES_FILE})
+    - WOOCOMMERCE_VERSION=$(awk 'NR==2 {print; exit}' ${WOOCOMMERCE_RELEASES_FILE})
   - <<: *acceptance-test
     env:
     - GATEWAY=API-TEST
-    - export SHOP_RELEASE=$(awk 'NR==3 {print; exit}' ${WOOCOMMERCE_RELEASES_FILE})
+    - WOOCOMMERCE_VERSION=$(awk 'NR==3 {print; exit}' ${WOOCOMMERCE_RELEASES_FILE})
   - <<: *acceptance-test
     env: 
     - GATEWAY=API-WDCEE-TEST
-    - export SHOP_RELEASE=$(awk 'NR==1 {print; exit}' ${WOOCOMMERCE_RELEASES_FILE})
+    - WOOCOMMERCE_VERSION=$(awk 'NR==1 {print; exit}' ${WOOCOMMERCE_RELEASES_FILE})
   - <<: *acceptance-test
     env:
     - GATEWAY=API-WDCEE-TEST
-    - export SHOP_RELEASE=$(awk 'NR==2 {print; exit}' ${WOOCOMMERCE_RELEASES_FILE})
+    - WOOCOMMERCE_VERSION=$(awk 'NR==2 {print; exit}' ${WOOCOMMERCE_RELEASES_FILE})
   - <<: *acceptance-test
     env:
     - GATEWAY=API-WDCEE-TEST
-    - export SHOP_RELEASE=$(awk 'NR==3 {print; exit}' ${WOOCOMMERCE_RELEASES_FILE})
+    - WOOCOMMERCE_VERSION=$(awk 'NR==3 {print; exit}' ${WOOCOMMERCE_RELEASES_FILE})
   - <<: *acceptance-test
     env: 
     - GATEWAY=NOVA
-    - export SHOP_RELEASE=$(awk 'NR==1 {print; exit}' ${WOOCOMMERCE_RELEASES_FILE})
+    - WOOCOMMERCE_VERSION=$(awk 'NR==1 {print; exit}' ${WOOCOMMERCE_RELEASES_FILE})
   - <<: *acceptance-test
     env:
     - GATEWAY=NOVA
-    - export SHOP_RELEASE=$(awk 'NR==2 {print; exit}' ${WOOCOMMERCE_RELEASES_FILE})
+    - WOOCOMMERCE_VERSION=$(awk 'NR==2 {print; exit}' ${WOOCOMMERCE_RELEASES_FILE})
   - <<: *acceptance-test
     env:
     - GATEWAY=NOVA
-    - export SHOP_RELEASE=$(awk 'NR==3 {print; exit}' ${WOOCOMMERCE_RELEASES_FILE})
+    - WOOCOMMERCE_VERSION=$(awk 'NR==3 {print; exit}' ${WOOCOMMERCE_RELEASES_FILE})
 
   - stage: phraseapp-pull
     if: type != cron AND env(PHRASEAPP_PULL) = '1'
