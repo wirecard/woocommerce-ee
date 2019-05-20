@@ -40,7 +40,8 @@ matrix:
     - travis_retry composer self-update
     - bash .bin/select-woocommerce-version.sh
     install:
-    - echo "Testing with Woocommerce version ${WOOCOMMERCE_VERSION}" 
+    - WOOCOMMERCE_VERSION=${WOOCOMMERCE_VERSION_1}
+    - echo "Testing with Woocommerce version $WOOCOMMERCE_VERSION" 
     - bash .bin/generate-release-package.sh test
     - travis_retry composer require --dev $COMPOSER_ARGS codeception/codeception:^2.5
     - travis_retry composer install $COMPOSER_ARGS
