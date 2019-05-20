@@ -40,7 +40,7 @@ matrix:
     - travis_retry composer self-update 
     - |  
       if [ "$WOOCOMMERCE_TESTED_VERSION" = "latest" ]; then 
-          WOOCOMMERCE_VERSION=$(awk 'NR==1 {print; exit}' "$WOOCOMMERCE_RELEASE_FILE"); 
+          WOOCOMMERCE_VERSION=`awk 'NR==1 {print; exit}' $WOOCOMMERCE_RELEASE_FILE`; 
       fi
     install:
     - echo "Testing with Woocommerce version ${WOOCOMMERCE_VERSION}" 
