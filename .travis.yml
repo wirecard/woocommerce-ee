@@ -24,7 +24,7 @@ matrix:
     if: type != cron
     php: 7.2
     install: skip
-    before_script: skip
+    before_script: bash .bin/select-woocommerce-version.sh
     script: bash .bin/get-woocommerce-versions.sh
     after_script: skip
     after_failure: skip
