@@ -24,7 +24,7 @@ matrix:
     if: type != cron
     php: 7.2
     install: skip
-    before_script: bash .bin/select-woocommerce-version.sh
+    before_script: skip
     script: bash .bin/get-woocommerce-versions.sh
     after_script: skip
     after_failure: skip
@@ -38,6 +38,7 @@ matrix:
     - WOOCOMMERCE_TESTED_VERSION=latest
     before_install:
     - travis_retry composer self-update
+    - bash .bin/select-woocommerce-version.sh
     install:
     - echo "Testing with Woocommerce version ${WOOCOMMERCE_VERSION}" 
     - bash .bin/generate-release-package.sh test
