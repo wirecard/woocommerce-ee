@@ -24,11 +24,6 @@ DATE_FOLDER=${GATEWAY_FOLDER}/${TODAY}
 
 if [ ! -d "${GATEWAY_FOLDER}" ]; then
 mkdir -p ${GATEWAY_FOLDER}
-#cd ${GATEWAY_FOLDER}
-#cat > DummyFile.txt
-#git add ${PROJECT_FOLDER}/DummyFile.txt
-#git commit -m "Create a new plugin folder"
-#git push -q https://${GITHUB_TOKEN}@github.com/wirecard/${REPO_NAME}.git master
 fi
 
 if [ ! -d "${DATE_FOLDER}" ]; then
