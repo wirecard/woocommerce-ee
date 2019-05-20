@@ -35,13 +35,9 @@ matrix:
     php: 7.1
     env: 
     - GATEWAY=API-TEST
-    - WOOCOMMERCE_TESTED_VERSION=latest
+    - WOOCOMMERCE_VERSION=$(awk 'NR==1 {print; exit}' ${WOOCOMMERCE_RELEASES_FILE})
     before_install:
     - travis_retry composer self-update 
-    - |  
-      if [ "$WOOCOMMERCE_TESTED_VERSION" = "latest" ]; then 
-          WOOCOMMERCE_VERSION=`awk 'NR==1 {print; exit}' $WOOCOMMERCE_RELEASE_FILE`; 
-      fi
     install:
     - echo "Testing with Woocommerce version ${WOOCOMMERCE_VERSION}" 
     - bash .bin/generate-release-package.sh test
@@ -50,18 +46,18 @@ matrix:
     - composer show
     script: bash .bin/run-ui-tests.sh
     after_script: skip
-#    after_success:
-#    - bash .bin/upload-logs-and-notify.sh
-#    after_failure:
-#    - bash .bin/upload-logs-and-notify.sh fail
+    after_success:
+    - bash .bin/upload-logs-and-notify.sh
+    after_failure:
+    - bash .bin/upload-logs-and-notify.sh fail
   - <<: *acceptance-test
     env:
     - GATEWAY=API-TEST
-    - WOOCOMMERCE_TESTED_VERSION=2
+    - WOOCOMMERCE_VERSION=$(awk 'NR==2 {print; exit}' ${WOOCOMMERCE_RELEASES_FILE})
   - <<: *acceptance-test
     env:
     - GATEWAY=API-TEST
-    - WOOCOMMERCE_TESTED_VERSION=3
+    - WOOCOMMERCE_VERSION=$(awk 'NR==3 {print; exit}' ${WOOCOMMERCE_RELEASES_FILE})
   - <<: *acceptance-test
     env: 
     - GATEWAY=API-WDCEE-TEST
@@ -165,5 +161,5 @@ notifications:
       - "%{repository}#%{build_number} (%{branch} : %{author}): %{message}"
       - "Change view : %{compare_url}"
       - "Build details : %{build_url}"
-    on_success: never
-    on_failure: never
+    on_success: change
+    on_failure: change
