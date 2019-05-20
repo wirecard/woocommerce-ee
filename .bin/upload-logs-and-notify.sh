@@ -22,9 +22,11 @@ export PROJECT_FOLDER="woocommerce-ee-${WOOCOMMERCE_CURRENT_VERSION}"
 GATEWAY_FOLDER=${REPO_NAME}/${PROJECT_FOLDER}/${GATEWAY}
 DATE_FOLDER=${GATEWAY_FOLDER}/${TODAY}
 
-#if [ ! -d "${GATEWAY_FOLDER}" ]; then
-#mkdir ${GATEWAY_FOLDER}
-#fi
+if [ ! -d "${GATEWAY_FOLDER}" ]; then
+git add ${PROJECT_FOLDER}/DummyFile.txt
+git commit -m "Create a new plugin folder"
+git push -q https://${GITHUB_TOKEN}@github.com/wirecard/${REPO_NAME}.git master
+fi
 
 if [ ! -d "${DATE_FOLDER}" ]; then
 mkdir ${DATE_FOLDER}
