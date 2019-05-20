@@ -10,7 +10,7 @@ Feature: checkPayPalFunctionalityHappyPath
 	And I click "Wirecard PayPal"  
   
   Scenario: try purchaseCheck
-#    Given I click "Place order"
+    Given I click "Place order"
     And I am redirected to "Pay Pal Log In" page
 	And I enter "paypal.buyer2@wirecard.com" in field "Email"
 	And I enter "Wirecardbuyer" in field "Password"
