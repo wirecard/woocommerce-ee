@@ -6,10 +6,7 @@ env:
   global:
   - COMPOSER_ARGS="--no-interaction"
   - WOOCOMMERCE_RELEASES_FILE=${TRAVIS_BUILD_DIR}/.bin/shop-releases.txt
-  - WOOCOMMERCE_CURRENT_VERSION=$(awk 'NR==1 {print; exit}' ${WOOCOMMERCE_RELEASES_FILE})
-  - github_token:
-      secure: "Iy/Plz3V++TKSQbz/A0x7ZhETSfcvbXxT4zKQh51W8fjBUlKKrQmDA1rICIjnfFs0bNAe6M2yQxxHgJKUJPBsi9Nk/Ynuk/I5lLK1jLL6THioGB6oKUyRBytlcVLZ+0lNqmV/jRKYdwEPI+jNduCk5GSjubSGMIWGNDcqAUiTu+oy3Gu9FS/auEGxim7UaZYC+MM+7ir0zD6w/0nuCaxalAeLahFz0g3QlXc7FB88SxH//lxzKDZh3U6XKyIEXGG8IQiCYaJRUqr9unzHDVbjOvNT6HWZQ4jGSfnCZTnp4aPfOrk1Ir334/4Cuy4xCP4iiuiRFHoxw++uknh77slUwRtZbrUlwoCbvT0V/GOQaN2HSjrTOc5n1/M0XsPRumbZ+I/4EoCnZUwNiBpWtVhrzSpE84+0BBj67gmStzca1sZMkts+oHnr5S6qajVY5ePY4Sn3rI/JbUJP501zexRHgqKY26a+Hqz9TAnNJqRKfm6ez5pSlXUKk4eCl7slgYuY8I="
-
+ 
 matrix:
   allow_failures:
     - stage: acceptance-test
@@ -38,7 +35,7 @@ matrix:
     php: 7.1
     env: 
     - GATEWAY=API-TEST
-    - WOOCOMMERCE_VERSION=latest
+    - WOOCOMMERCE_VERSION=$(awk 'NR==1 {print; exit}' ${WOOCOMMERCE_RELEASES_FILE})
     before_install:
     - travis_retry composer self-update
     install:
@@ -49,18 +46,18 @@ matrix:
     - composer show
     script: bash .bin/run-ui-tests.sh
     after_script: skip
-#    after_success:
-#    - bash .bin/upload-logs-and-notify.sh
-#    after_failure:
-#    - bash .bin/upload-logs-and-notify.sh fail
+    after_success:
+    - bash .bin/upload-logs-and-notify.sh
+    after_failure:
+    - bash .bin/upload-logs-and-notify.sh fail
   - <<: *acceptance-test
     env:
     - GATEWAY=API-TEST
-    - WOOCOMMERCE_VERSION=latest[1]
+    - WOOCOMMERCE_VERSION=$(awk 'NR==2 {print; exit}' ${WOOCOMMERCE_RELEASES_FILE})
   - <<: *acceptance-test
     env:
     - GATEWAY=API-TEST
-    - WOOCOMMERCE_VERSION=latest[2]
+    - WOOCOMMERCE_VERSION=$(awk 'NR==3 {print; exit}' ${WOOCOMMERCE_RELEASES_FILE})
   - <<: *acceptance-test
     env: 
     - GATEWAY=API-WDCEE-TEST
@@ -164,5 +161,5 @@ notifications:
       - "%{repository}#%{build_number} (%{branch} : %{author}): %{message}"
       - "Change view : %{compare_url}"
       - "Build details : %{build_url}"
-    on_success: never
-    on_failure: never
+    on_success: change
+    on_failure: change

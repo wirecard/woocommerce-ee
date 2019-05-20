@@ -17,7 +17,8 @@ git clone ${REPO_ADDRESS}
 #create folder with current date
 export TODAY=$(date +%Y-%m-%d)
 
-export PROJECT_FOLDER="woocommerce-ee"
+export WOOCOMMERCE_CURRENT_VERSION=${WOOCOMMERCE_VERSION}
+export PROJECT_FOLDER="woocommerce-ee-${WOOCOMMERCE_CURRENT_VERSION}"
 GATEWAY_FOLDER=${REPO_NAME}/${PROJECT_FOLDER}/${GATEWAY}
 DATE_FOLDER=${GATEWAY_FOLDER}/${TODAY}
 
@@ -47,5 +48,5 @@ export SCREENSHOT_COMMIT_HASH=$(git rev-parse --verify HEAD)
 if [[ $1 == 'fail' ]]; then
     cd ..
     #send slack notification
-    bash .bin/send-notify.sh
+#    bash .bin/send-notify.sh
 fi
