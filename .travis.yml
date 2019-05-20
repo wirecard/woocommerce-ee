@@ -38,7 +38,6 @@ matrix:
     - WOOCOMMERCE_TESTED_VERSION=latest
     before_install:
     - travis_retry composer self-update
-    - bash .bin/select-woocommerce-version.sh
     install:
     - if [[ $WOOCOMMERCE_TESTED_VERSION == "latest" ]]; 
       then WOOCOMMERCE_VERSION=$(awk 'NR==1 {print; exit}' $WOOCOMMERCE_RELEASE_FILE); 
