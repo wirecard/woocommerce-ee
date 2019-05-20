@@ -37,9 +37,10 @@ matrix:
     - GATEWAY=API-TEST
     - WOOCOMMERCE_TESTED_VERSION=latest
     before_install:
+    - |  
+        if [ "$WOOCOMMERCE_TESTED_VERSION" == "latest" ]; then export WOOCOMMERCE_VERSION=$(awk 'NR==1 {print; exit}' $WOOCOMMERCE_RELEASE_FILE); fi
     - travis_retry composer self-update
     install:
-    - if [ "$WOOCOMMERCE_TESTED_VERSION" == "latest" ]; then export WOOCOMMERCE_VERSION=$(awk 'NR==1 {print; exit}' $WOOCOMMERCE_RELEASE_FILE); fi 
     - echo "Testing with Woocommerce version ${WOOCOMMERCE_VERSION}" 
     - bash .bin/generate-release-package.sh test
     - travis_retry composer require --dev $COMPOSER_ARGS codeception/codeception:^2.5
