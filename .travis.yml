@@ -35,7 +35,7 @@ matrix:
     php: 7.1
     env: 
     - GATEWAY=API-TEST
-    - WOOCOMMERCE_VERSION=$(echo awk 'NR==1 {print; exit}' ${WOOCOMMERCE_RELEASES_FILE})
+    - WOOCOMMERCE_TESTED_VERSION=latest
     before_install:
     - travis_retry composer self-update
     install:
@@ -53,11 +53,11 @@ matrix:
   - <<: *acceptance-test
     env:
     - GATEWAY=API-TEST
-    - WOOCOMMERCE_VERSION=$(awk 'NR==2 {print; exit}' ${WOOCOMMERCE_RELEASES_FILE})
+    - WOOCOMMERCE_TESTED_VERSION=2
   - <<: *acceptance-test
     env:
     - GATEWAY=API-TEST
-    - WOOCOMMERCE_VERSION=$(awk 'NR==3 {print; exit}' ${WOOCOMMERCE_RELEASES_FILE})
+    - WOOCOMMERCE_TESTED_VERSION=3
   - <<: *acceptance-test
     env: 
     - GATEWAY=API-WDCEE-TEST
