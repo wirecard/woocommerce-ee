@@ -22,13 +22,13 @@ export PROJECT_FOLDER="woocommerce-ee-${WOOCOMMERCE_CURRENT_VERSION}"
 GATEWAY_FOLDER=${REPO_NAME}/${PROJECT_FOLDER}/${GATEWAY}
 DATE_FOLDER=${GATEWAY_FOLDER}/${TODAY}
 
-if [ ! -d "${GATEWAY_FOLDER}" ]; then
-mkdir ${GATEWAY_FOLDER}
-fi
-
-if [ ! -d "${DATE_FOLDER}" ]; then
-mkdir ${DATE_FOLDER}
-fi
+#if [ ! -d "${GATEWAY_FOLDER}" ]; then
+#mkdir ${GATEWAY_FOLDER}
+#fi
+#
+#if [ ! -d "${DATE_FOLDER}" ]; then
+#mkdir ${DATE_FOLDER}
+#fi
 
 #copy report files
 cp wirecard-woocommerce-extension/tests/_output/*.html ${DATE_FOLDER}
