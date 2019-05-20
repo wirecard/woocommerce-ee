@@ -25,7 +25,9 @@ matrix:
     php: 7.2
     install: skip
     before_script: skip
-    script: bash .bin/get-woocommerce-versions.sh
+    script: 
+    - bash .bin/get-woocommerce-versions.sh
+    - if [[ $WOOCOMMERCE_TESTED_VERSION == "latest" ]]; then WOOCOMMERCE_VERSION=$(awk 'NR==1 {print; exit}' $WOOCOMMERCE_RELEASE_FILE); fi
     after_script: skip
     after_failure: skip
       
@@ -39,9 +41,6 @@ matrix:
     before_install:
     - travis_retry composer self-update
     install:
-    - if [[ $WOOCOMMERCE_TESTED_VERSION == "latest" ]]; 
-      then WOOCOMMERCE_VERSION=$(awk 'NR==1 {print; exit}' $WOOCOMMERCE_RELEASE_FILE); 
-      fi  
     - echo "Testing with Woocommerce version ${WOOCOMMERCE_VERSION}" 
     - bash .bin/generate-release-package.sh test
     - travis_retry composer require --dev $COMPOSER_ARGS codeception/codeception:^2.5
