@@ -25,9 +25,7 @@ matrix:
     php: 7.2
     install: skip
     before_script: skip
-    script: 
-    - bash .bin/get-woocommerce-versions.sh
-    - if [[ $WOOCOMMERCE_TESTED_VERSION == "latest" ]]; then WOOCOMMERCE_VERSION=$(awk 'NR==1 {print; exit}' $WOOCOMMERCE_RELEASE_FILE); fi
+    script: bash .bin/get-woocommerce-versions.sh
     after_script: skip
     after_failure: skip
       
@@ -46,7 +44,10 @@ matrix:
     - travis_retry composer require --dev $COMPOSER_ARGS codeception/codeception:^2.5
     - travis_retry composer install $COMPOSER_ARGS
     - composer show
-    script: bash .bin/run-ui-tests.sh
+    script: 
+    - if [[ $WOOCOMMERCE_TESTED_VERSION == "latest" ]]; then WOOCOMMERCE_VERSION=$(awk 'NR==1 {print; exit}' $WOOCOMMERCE_RELEASE_FILE); fi 
+    - echo $WOOCOMMERCE_VERSION
+    - bash .bin/run-ui-tests.sh
     after_script: skip
 #    after_success:
 #    - bash .bin/upload-logs-and-notify.sh
