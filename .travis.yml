@@ -6,7 +6,6 @@ env:
   global:
   - COMPOSER_ARGS="--no-interaction"
   - WOOCOMMERCE_RELEASES_FILE=${TRAVIS_BUILD_DIR}/.bin/shop-releases.txt
-  - WOOCOMMERCE_VERSION=$(awk 'NR==1 {print; exit}' ${WOOCOMMERCE_RELEASES_FILE})
   - github_token:
       secure: "Iy/Plz3V++TKSQbz/A0x7ZhETSfcvbXxT4zKQh51W8fjBUlKKrQmDA1rICIjnfFs0bNAe6M2yQxxHgJKUJPBsi9Nk/Ynuk/I5lLK1jLL6THioGB6oKUyRBytlcVLZ+0lNqmV/jRKYdwEPI+jNduCk5GSjubSGMIWGNDcqAUiTu+oy3Gu9FS/auEGxim7UaZYC+MM+7ir0zD6w/0nuCaxalAeLahFz0g3QlXc7FB88SxH//lxzKDZh3U6XKyIEXGG8IQiCYaJRUqr9unzHDVbjOvNT6HWZQ4jGSfnCZTnp4aPfOrk1Ir334/4Cuy4xCP4iiuiRFHoxw++uknh77slUwRtZbrUlwoCbvT0V/GOQaN2HSjrTOc5n1/M0XsPRumbZ+I/4EoCnZUwNiBpWtVhrzSpE84+0BBj67gmStzca1sZMkts+oHnr5S6qajVY5ePY4Sn3rI/JbUJP501zexRHgqKY26a+Hqz9TAnNJqRKfm6ez5pSlXUKk4eCl7slgYuY8I="
 
@@ -38,7 +37,7 @@ matrix:
     php: 7.1
     env: 
     - GATEWAY=API-TEST
-    - ENV=$(if [ "$WOOCOMMERCE_VERSION" = 3.6.3 ]; then echo "1.1.1"; else echo "1.1.2"; fi)
+    - WOOCOMMERCE_VERSION=$(awk 'NR==2 {print; exit}' ${WOOCOMMERCE_RELEASES_FILE})
     before_install:
     - travis_retry composer self-update
     install:
