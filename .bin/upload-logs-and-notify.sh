@@ -22,6 +22,7 @@ export PROJECT_FOLDER="woocommerce-ee-${WOOCOMMERCE_CURRENT_VERSION}"
 GATEWAY_FOLDER=${REPO_NAME}/${PROJECT_FOLDER}/${GATEWAY}
 DATE_FOLDER=${GATEWAY_FOLDER}/${TODAY}
 
+# -p means, if any of these folders in path doesn't exist, create one
 if [ ! -d "${GATEWAY_FOLDER}" ]; then
 mkdir -p ${GATEWAY_FOLDER}
 fi
