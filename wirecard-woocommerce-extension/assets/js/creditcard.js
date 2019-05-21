@@ -297,7 +297,7 @@ function on_form_submitted( response ) {
  */
 function render_form( response ) {
 	var request_data = JSON.parse( response.data );
-	WirecardPaymentPage.seamlessRenderForm(
+	WPP.seamlessRender(
 		{
 			requestData: request_data,
 			wrappingDivId: 'wc_payment_method_wirecard_creditcard_form',
@@ -360,7 +360,7 @@ function submit_seamless_form() {
 	jQuery( this ).after( php_vars.spinner );
 	jQuery( '.spinner' ).addClass( 'spinner-submit' );
 
-	WirecardPaymentPage.seamlessSubmitForm(
+	WPP.seamlessSubmit(
 		{
 			wrappingDivId: "wc_payment_method_wirecard_creditcard_form",
 			onSuccess: on_form_submitted,

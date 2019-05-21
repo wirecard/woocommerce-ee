@@ -142,6 +142,12 @@ class WC_Gateway_Wirecard_Unionpay_International extends WC_Gateway_Wirecard_Cre
 				'description' => __( 'config_base_url_desc', 'wirecard-woocommerce-extension' ),
 				'default'     => 'https://api-test.wirecard.com',
 			),
+			'wpp_url'                    => array(
+				'title'       => __( 'config_wpp_url', 'wirecard-woocommerce-extension' ),
+				'type'        => 'text',
+				'description' => __( 'config_wpp_url_desc', 'wirecard-woocommerce-extension' ),
+				'default'     => 'https://wpp-test.wirecard.com',
+			),
 			'http_user'           => array(
 				'title'       => __( 'config_http_user', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
@@ -365,7 +371,10 @@ class WC_Gateway_Wirecard_Unionpay_International extends WC_Gateway_Wirecard_Cre
 
 	/**
 	 * Create payment method Configuration
-	 *
+	 * @param $base_url
+	 * @param $http_user
+	 * @param $http_pass
+	 * 
 	 * @return Config
 	 *
 	 * @since 1.1.0
