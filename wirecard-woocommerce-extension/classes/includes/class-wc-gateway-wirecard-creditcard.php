@@ -247,9 +247,9 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 
 	/**
 	 * Create payment method Configuration
-	 * @param $base_url
-	 * @param $http_user
-	 * @param $http_pass
+	 * @param string|null $base_url
+	 * @param string|null $http_user
+	 * @param string|null $http_pass
 	 *
 	 * @return Config
 	 *

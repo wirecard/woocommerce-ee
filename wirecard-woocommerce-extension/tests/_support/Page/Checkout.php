@@ -64,7 +64,7 @@ class Checkout extends Base {
 		'Credit Card Card number'      		 	=> "//*[@id='pp-cc-account-number']",
 		'Credit Card CVV'               		=> "//*[@id='pp-cc-cvv']",
 		'Credit Card Valid until month / year' 	=> "//*[@id='pp-cc-expiration-date']",
-		'Pay now'								=> "//*[@id='seamless-submit']"
+		'Pay now'								=> "//*[@id='seamless-submit']",
 	);
 
 	/**

@@ -371,9 +371,9 @@ class WC_Gateway_Wirecard_Unionpay_International extends WC_Gateway_Wirecard_Cre
 
 	/**
 	 * Create payment method Configuration
-	 * @param $base_url
-	 * @param $http_user
-	 * @param $http_pass
+	 * @param string|null $base_url
+	 * @param string|null $http_user
+	 * @param string|null $http_pass
 	 *
 	 * @return Config
 	 *
