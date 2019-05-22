@@ -181,7 +181,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 				'description' => __( 'config_base_url_desc', 'wirecard-woocommerce-extension' ),
 				'default'     => 'https://api-test.wirecard.com',
 			),
-			'wpp_url'                    => array(
+			'wpp_url'                     => array(
 				'title'       => __( 'config_wpp_url', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
 				'description' => __( 'config_wpp_url_desc', 'wirecard-woocommerce-extension' ),
@@ -250,7 +250,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	 * @param $base_url
 	 * @param $http_user
 	 * @param $http_pass
-	 * 
+	 *
 	 * @return Config
 	 *
 	 * @since 1.0.0
@@ -313,7 +313,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	 * @since 1.1.5
 	 */
 	public function payment_scripts() {
-		$wpp_url    = $this->get_option( 'wpp_url' );
+		$wpp_url     = $this->get_option( 'wpp_url' );
 		$gateway_url = WIRECARD_EXTENSION_URL;
 
 		wp_register_style( 'basic_style', $gateway_url . '/assets/styles/frontend.css', array(), null, false );
