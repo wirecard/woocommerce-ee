@@ -117,7 +117,7 @@ class Checkout extends Base {
 		$I->fillField( $this->getElement( 'Credit Card Card number' ), $data_field_values->card_number );
 		$I->fillField( $this->getElement( 'Credit Card CVV' ), $data_field_values->cvv );
 		$I->fillfield(
-			$this->getElement( "Valid until month / year" ),
+			$this->getElement( "Credit Card Valid until month / year" ),
 			$data_field_values->valid_until_month
 			.substr( $data_field_values->valid_until_year, -2 )
 		);
