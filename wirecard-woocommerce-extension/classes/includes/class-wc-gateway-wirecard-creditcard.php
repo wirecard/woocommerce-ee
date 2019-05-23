@@ -181,6 +181,12 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 				'description' => __( 'config_base_url_desc', 'wirecard-woocommerce-extension' ),
 				'default'     => 'https://api-test.wirecard.com',
 			),
+			'wpp_url'                     => array(
+				'title'       => __( 'config_wpp_url', 'wirecard-woocommerce-extension' ),
+				'type'        => 'text',
+				'description' => __( 'config_wpp_url_desc', 'wirecard-woocommerce-extension' ),
+				'default'     => 'https://wpp-test.wirecard.com',
+			),
 			'http_user'                   => array(
 				'title'       => __( 'config_http_user', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
@@ -241,6 +247,9 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 
 	/**
 	 * Create payment method Configuration
+	 * @param string|null $base_url
+	 * @param string|null $http_user
+	 * @param string|null $http_pass
 	 *
 	 * @return Config
 	 *
@@ -304,13 +313,13 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	 * @since 1.1.5
 	 */
 	public function payment_scripts() {
-		$base_url    = $this->get_option( 'base_url' );
+		$wpp_url     = $this->get_option( 'wpp_url' );
 		$gateway_url = WIRECARD_EXTENSION_URL;
 
 		wp_register_style( 'basic_style', $gateway_url . '/assets/styles/frontend.css', array(), null, false );
 		wp_register_style( 'jquery_ui_style', 'https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css', array(), null, false );
 		wp_register_script( 'jquery_ui', 'https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js', array(), null, false );
-		wp_register_script( 'page_loader', $base_url . '/engine/hpp/paymentPageLoader.js', array(), null, true );
+		wp_register_script( 'page_loader', $wpp_url . '/loader/paymentPage.js', array(), null, true );
 		wp_register_script( 'credit_card_js', $gateway_url . 'assets/js/creditcard.js', array( 'jquery', 'page_loader' ), null, true );
 	}
 

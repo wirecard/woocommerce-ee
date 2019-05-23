@@ -28,6 +28,8 @@
  * Please do not use the plugin if you do not agree to these terms of use!
  */
 
+/* globals WPP */
+
 /*
  * Helper functions
  */
@@ -297,7 +299,7 @@ function on_form_submitted( response ) {
  */
 function render_form( response ) {
 	var request_data = JSON.parse( response.data );
-	WirecardPaymentPage.seamlessRenderForm(
+	WPP.seamlessRender(
 		{
 			requestData: request_data,
 			wrappingDivId: 'wc_payment_method_wirecard_creditcard_form',
@@ -314,7 +316,7 @@ function render_form( response ) {
  */
 function on_form_rendered() {
 	seamless_submit_button.removeAttr( 'disabled' );
-	new_card_content_area.find( 'iframe' ).height( 470 );
+	new_card_content_area.find( 'iframe' ).height( 270 );
 }
 
 /**
@@ -360,7 +362,7 @@ function submit_seamless_form() {
 	jQuery( this ).after( php_vars.spinner );
 	jQuery( '.spinner' ).addClass( 'spinner-submit' );
 
-	WirecardPaymentPage.seamlessSubmitForm(
+	WPP.seamlessSubmit(
 		{
 			wrappingDivId: "wc_payment_method_wirecard_creditcard_form",
 			onSuccess: on_form_submitted,
