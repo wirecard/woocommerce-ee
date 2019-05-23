@@ -316,7 +316,7 @@ function render_form( response ) {
  */
 function on_form_rendered() {
 	seamless_submit_button.removeAttr( 'disabled' );
-	new_card_content_area.find( 'iframe' ).height( 470 );
+	new_card_content_area.find( 'iframe' ).height( 270 );
 }
 
 /**
