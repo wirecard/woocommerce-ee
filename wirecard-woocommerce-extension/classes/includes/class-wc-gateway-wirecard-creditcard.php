@@ -49,15 +49,7 @@ use Wirecard\PaymentSdk\TransactionService;
  */
 class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 
-	/**
-	 * string ERR_MSG_MIXED_CREDENTIALS
-	 * 
-	 * @since 2.0.0
-	 */
-	const ERR_MSG_MIXED_CREDENTIALS = 'warning_credit_card_url_mismatch';
-	
-	public static $configuration_validated = false;
-
+	/** @var Credit_Card_Vault $vault */
 	private $vault;
 
 	/**
@@ -92,9 +84,9 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 		$this->enabled = $this->get_option( 'enabled' );
 
 		$this->additional_helper = new Additional_Information();
-		
+
 		$woocommerce_update_options = 'woocommerce_update_options_payment_gateways_' . $this->id;
-		$action_helper	  			= new Action_Helper();
+		$action_helper              = new Action_Helper();
 
 		add_action( $woocommerce_update_options, array( $this, 'process_admin_options' ) );
 		add_action( 'woocommerce_api_get_credit_card_request_data', array( $this, 'get_request_data_credit_card' ) );
@@ -782,15 +774,16 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	/**
 	 * If the url configuration is mixed
 	 * add a notification for the admin
-	 * 
+	 *
 	 * @since 2.0.0
 	 */
 	public function validate_url_configuration() {
 		$admin_notifications = new Admin_Messages();
-		if (!$this->is_url_configuration_valid()) {
-			$admin_notifications->add_gateway_admin_notice__warning($this::ERR_MSG_MIXED_CREDENTIALS);
+		$message             = __( 'warning_credit_card_url_mismatch', 'wirecard-woocommerce-extension' );
+		if ( ! $this->is_url_configuration_valid() ) {
+			$admin_notifications->add_gateway_admin_notice__warning( $message );
 		}
-		
+
 		return;
 	}
 
@@ -799,41 +792,44 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	 * base_url and wpp_url both contain "test"        = valid
 	 * base_url and wpp_url both do not contain "test" = valid
 	 * only base_url or wpp_url contains "test"        = invalid
-	 * 
+	 *
 	 * The information is used to check the possibility
 	 * of a mixed configuration (production and test)
-	 * 
+	 *
 	 * @return bool
-	 * 
+	 *
 	 * @since 2.0.0
 	 */
 	protected function is_url_configuration_valid() {
-		$base_url = (string)$this->get_option( 'base_url' );;
-		$wpp_url  = (string)$this->get_option( 'wpp_url' );;
-		$needle   = 'test';
-		
-		$base_url_contains_test = $this->string_contains_substring($base_url, $needle);
-		$wpp_url_contains_test  = $this->string_contains_substring($wpp_url, $needle);
-		
-		if ($base_url_contains_test === $wpp_url_contains_test) {
+		$base_url = (string) $this->get_option( 'base_url' );
+
+		$wpp_url = (string) $this->get_option( 'wpp_url' );
+
+		$needle = 'test';
+
+		$base_url_contains_test = $this->string_contains_substring( $base_url, $needle );
+		$wpp_url_contains_test  = $this->string_contains_substring( $wpp_url, $needle );
+
+		if ( $base_url_contains_test === $wpp_url_contains_test ) {
 			return true;
 		}
-		
+
 		return false;
 	}
 
 	/**
 	 * @param string $string
 	 * @param string $needle
+	 *
 	 * @return bool
-	 * 
+	 *
 	 * @since 2.0.0
 	 */
-	protected function string_contains_substring($string, $needle) {
-		if (stripos($string, $needle) === false) {
+	protected function string_contains_substring( $string, $needle ) {
+		if ( stripos( $string, $needle ) === false ) {
 			return false;
 		}
-		
+
 		return true;
 	}
 }

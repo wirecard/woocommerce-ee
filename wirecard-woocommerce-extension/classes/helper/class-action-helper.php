@@ -31,16 +31,14 @@
 
 /**
  * Class Action_Helper
- * 
+ *
  * @since 2.0.0
  */
 class Action_Helper {
 
 	/**
 	 * Performs an add_action only once. Helpful for constructors where an action only
-	 * needs to be added once.
-	 *
-	 * @since 2.0.0
+	 * needs to be added once.   *
 	 *
 	 * @param string   $tag             The name of the action to hook the $function_to_add callback to.
 	 * @param callback $function_to_add The callback to be run when the filter is applied.
@@ -52,6 +50,8 @@ class Action_Helper {
 	 * @param int      $accepted_args   Optional. The number of arguments the function accepts. Default 1.
 	 *
 	 * @return true
+	 *
+	 * @since 2.0.0
 	 */
 	function add_action_once( $tag, $function_to_add, $priority = 10, $accepted_args = 1 ) {
 		global $_gateway_actions_extended;
@@ -60,13 +60,13 @@ class Action_Helper {
 			$_gateway_actions_extended = array();
 		}
 
-		$idxFunc = $function_to_add;
+		$idx_func = $function_to_add;
 		if ( is_array( $function_to_add ) ) {
-			$idxFunc[0] = get_class( $function_to_add[0] );
+			$idx_func[0] = get_class( $function_to_add[0] );
 		}
-		$idx = _wp_filter_build_unique_id( $tag, $idxFunc, $priority );
+		$idx = _wp_filter_build_unique_id( $tag, $idx_func, $priority );
 
-		if ( ! in_array( $idx, $_gateway_actions_extended ) ) {
+		if ( ! in_array( $idx, $_gateway_actions_extended, true ) ) {
 			add_action( $tag, $function_to_add, $priority, $accepted_args );
 		}
 

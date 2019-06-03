@@ -36,7 +36,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class Admin_Messages
  * Helper for admin notifications
- * 
+ *
  * @since 2.0.0
  */
 class Admin_Messages {
@@ -44,15 +44,13 @@ class Admin_Messages {
 	/**
 	 * Add admin notice warning
 	 *
-	 * @param $message
+	 * @param string $message_key
 	 *
 	 * @since 2.0.0
 	 */
-	public function add_gateway_admin_notice__warning($message) {
-		$class   = 'notice notice-warning is-dismissible';
-		$message = __($message);
+	public function add_gateway_admin_notice__warning( $message ) {
+		$class = 'notice notice-warning is-dismissible';
 
 		printf( '<div class="%1$s"><p>%2$s</p></div>', esc_attr( $class ), esc_html( $message ) );
-		//add_action( 'admin_notices', array( $this, 'add_gateway_admin_notice__warning' ) );
 	}
 }

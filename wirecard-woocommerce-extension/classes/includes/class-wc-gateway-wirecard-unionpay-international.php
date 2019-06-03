@@ -46,8 +46,6 @@ use Wirecard\PaymentSdk\TransactionService;
  */
 class WC_Gateway_Wirecard_Unionpay_International extends WC_Gateway_Wirecard_Creditcard {
 
-	public static $configuration_validated = false;
-	
 	/**
 	 * WC_Gateway_Wirecard_Unionpay_International constructor.
 	 *
@@ -81,7 +79,7 @@ class WC_Gateway_Wirecard_Unionpay_International extends WC_Gateway_Wirecard_Cre
 		$this->additional_helper = new Additional_Information();
 
 		$woocommerce_update_options = 'woocommerce_update_options_payment_gateways_' . $this->id;
-		$action_helper	  			= new Action_Helper();
+		$action_helper              = new Action_Helper();
 
 		add_action( $woocommerce_update_options, array( $this, 'process_admin_options' ) );
 		add_action( 'woocommerce_api_get_upi_request_data', array( $this, 'get_request_data_upi' ) );
