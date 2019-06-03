@@ -780,6 +780,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	public function validate_url_configuration() {
 		$admin_notifications = new Admin_Messages();
 		$message             = __( 'warning_credit_card_url_mismatch', 'wirecard-woocommerce-extension' );
+
 		if ( ! $this->is_url_configuration_valid() ) {
 			$admin_notifications->add_gateway_admin_notice__warning( $message );
 		}
