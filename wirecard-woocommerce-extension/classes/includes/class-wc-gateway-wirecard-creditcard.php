@@ -803,10 +803,8 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	 */
 	protected function is_url_configuration_valid() {
 		$base_url = (string) $this->get_option( 'base_url' );
-
-		$wpp_url = (string) $this->get_option( 'wpp_url' );
-
-		$needle = 'test';
+		$wpp_url  = (string) $this->get_option( 'wpp_url' );
+		$needle   = 'test';
 
 		$base_url_contains_test = $this->string_contains_substring( $base_url, $needle );
 		$wpp_url_contains_test  = $this->string_contains_substring( $wpp_url, $needle );
