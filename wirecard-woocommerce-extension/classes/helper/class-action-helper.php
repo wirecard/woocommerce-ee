@@ -38,7 +38,7 @@ class Action_Helper {
 
 	/**
 	 * Performs an add_action only once. Helpful for constructors where an action only
-	 * needs to be added once.   *
+	 * needs to be added once.
 	 *
 	 * @param string   $tag             The name of the action to hook the $function_to_add callback to.
 	 * @param callback $function_to_add The callback to be run when the filter is applied.

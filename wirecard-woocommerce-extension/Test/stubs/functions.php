@@ -180,3 +180,7 @@ function wp_send_json_error($input) {
 function wp_die() {
 	return;
 }
+
+function _wp_filter_build_unique_id( $tag, $function, $priority ) {
+	return $function . rand();
+}
