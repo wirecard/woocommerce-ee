@@ -44,7 +44,7 @@ class Admin_Messages {
 	/**
 	 * Add admin notice warning
 	 *
-	 * @param string $message_key
+	 * @param string $message
 	 *
 	 * @since 2.0.0
 	 */
