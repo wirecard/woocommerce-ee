@@ -49,6 +49,8 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 
 	private $vault;
 
+	private $template_helper;
+
 	/**
 	 * WC_Gateway_Wirecard_Creditcard constructor.
 	 *
@@ -62,6 +64,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 		$this->method_name        = __( 'creditcard', 'wirecard-woocommerce-extension' );
 		$this->method_description = __( 'creditcard_desc', 'wirecard-woocommerce-extension' );
 		$this->vault              = new Credit_Card_Vault();
+		$this->template_helper    = new Template_Helper();
 
 		$this->supports = array(
 			'products',
@@ -641,113 +644,79 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	 * Determines the best language to use for the seamless credit card form.
 	 *
 	 * @return string
+	 * @since 2.0.0 Exchange hpp with wpp languages
 	 * @since 1.7.0
 	 */
 	protected function determine_user_language() {
-		$lang = 'en';
+		$language = null;
+		//try {
+		//$converter = new WppVTwoConverter();
+		//$language = $converter->convert( get_locale() );
+		//} catch ( Exception $e ) {
+		//wp_send_json_error( $e->getMessage() );
+		//wp_die();
+		//}
+		//return $language;
 
-		try {
-			$supported_lang = json_decode( file_get_contents( $this->get_option( 'base_url' ) . '/engine/includes/i18n/languages/hpplanguages.json' ) );
-
-			if ( key_exists( substr( get_locale(), 0, 2 ), $supported_lang ) ) {
-				$lang = substr( get_locale(), 0, 2 );
-			} elseif ( key_exists( get_locale(), $supported_lang ) ) {
-				$lang = get_locale();
-			}
-		} catch ( Exception $e ) {
-			wp_send_json_error( $e->getMessage() );
-			wp_die();
-		}
-
-		return $lang;
+		return $language;
 	}
 
 	/**
 	 * Gets a displayable spinner for the frontend
 	 *
 	 * @return string
+	 *
+	 * @since 2.0.0 Move template out of class
 	 * @since 1.7.0
 	 */
 	protected function get_spinner() {
-		return '<div class="spinner spinner-inline" style="display:inline-block; background: url(\'' . admin_url() . 'images/loading.gif\') no-repeat;"></div>';
+		return $this->template_helper->get_template_as_string( 'spinner.php' );
 	}
 
 	/**
 	 * Gets the HTML required to display the vault functionality.
 	 *
 	 * @return string
+	 *
+	 * @since 2.0.0 Move template out of class
 	 * @since 1.7.0
 	 */
 	protected function get_vault_html() {
-		return '
-			<div id="open-vault-popup" class="wd-toggle-tab active">
-				<span class="dashicons dashicons-arrow-up"></span>' . __( 'vault_use_existing_text', 'wirecard-woocommerce-extension' ) . '
-			</div>
-			
-			<div id="wc_payment_method_wirecard_creditcard_vault" class="wd-tab-content">						
-				<div class="cards">
-					<div class="show-spinner">
-						<div class="spinner" style="background: url(\'' . admin_url() . 'images/loading.gif\') no-repeat;"></div>
-					</div>
-				</div>
-				
-				<button disabled id="vault-submit" class="wd-submit checkout-button button alt wc-forward">' . __( 'Pay now', 'woocommerce' ) . '</button>
-				<div class="clear"></div>
-			</div>
-		
-			<div id="open-new-card" class="wd-toggle-tab">
-				<span class="dashicons dashicons-arrow-down"></span>' . __( 'vault_use_new_text', 'wirecard-woocommerce-extension' ) . '
-			</div>
-		';
+		return $this->template_helper->get_template_as_string( 'credit-card-vault.php' );
 	}
 
 	/**
 	 * Gets the HTML required to display the seamless credit card form.
 	 *
 	 * @return string
+	 *
+	 * @since 2.0.0 Move template out of class
 	 * @since 1.7.0
 	 */
 	protected function get_creditcard_form_html() {
-		return '
-			<div id="wc_payment_method_wirecard_new_credit_card" class="wd-tab-content">
-				<div class="show-spinner">
-					<div class="spinner" style="background: url(\'' . admin_url() . 'images/loading.gif\') no-repeat;"></div>
-				</div>
-				
-				<form method="POST" id="wc_payment_method_wirecard_creditcard_response_form">
-					<input type="hidden" name="cc_nonce" value="' . wp_create_nonce() . '" />
-				</form>
-				
-				<div id="wc_payment_method_wirecard_creditcard_form"></div>
-		';
+		return $this->template_helper->get_template_as_string( 'credit-card-form.php' );
 	}
 
 	/**
 	 * Gets the submit button for the seamless credit card form.
 	 *
 	 * @return string
+	 *
+	 * @since 2.0.0 Move template out of class
 	 * @since 1.7.0
 	 */
 	protected function get_creditcard_submit_html() {
-		return '
-				<button disabled id="seamless-submit" class="wd-submit checkout-button button alt wc-forward">' . __( 'Pay now', 'woocommerce' ) . '</button>
-			</div>
-		';
+		return $this->template_helper->get_template_as_string( 'credit-card-submit.php' );
 	}
 
 	/**
 	 * @return string
+	 *
+	 * @since 2.0.0 Move template out of class
 	 * @since 1.7.0
 	 */
 	protected function get_save_for_later_html() {
-		return '
-			<div class="save-later">
-				<label for="wirecard-store-card">
-				<input type="checkbox" id="wirecard-store-card" />
-				&nbsp;' .
-				__( 'vault_save_text', 'wirecard-woocommerce-extension' ) . '</label>
-			</div>
-		';
+		return $this->template_helper->get_template_as_string( 'credit-card-save-for-later.php' );
 	}
 
 	/**
