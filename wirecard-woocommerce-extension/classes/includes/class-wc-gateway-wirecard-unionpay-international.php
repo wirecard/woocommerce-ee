@@ -226,7 +226,7 @@ class WC_Gateway_Wirecard_Unionpay_International extends WC_Gateway_Wirecard_Cre
 	 * @since 1.7.0
 	 */
 	public function load_upi_template() {
-		return $this->template_helper->get_template_as_string( 'upi-form' );
+		return $this->template_helper->get_template_as_string( 'upi-form.php' );
 	}
 
 	/**

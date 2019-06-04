@@ -364,7 +364,7 @@ function submit_seamless_form() {
 
 	WPP.seamlessSubmit(
 		{
-			wrappingDivId: "wc_payment_method_wirecard_creditcard_form",
+			wrappingDivId: 'wc_payment_method_wirecard_creditcard_form',
 			onSuccess: on_form_submitted,
 			onError: log_error
 		}

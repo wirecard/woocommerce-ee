@@ -52,12 +52,15 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 
 	/**
 	 * @var Template_Helper $template_helper
+	 *
+	 * @since 2.0.0
 	 */
 	protected $template_helper;
 
 	/**
 	 * WC_Gateway_Wirecard_Creditcard constructor.
 	 *
+	 * @since 2.0.0 Update constructor so it can be shared with upi
 	 * @since 1.0.0
 	 */
 	public function __construct() {
@@ -68,13 +71,14 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 		$this->capture           = array( 'authorization' );
 		$this->refund            = array( 'purchase', 'capture-authorization' );
 
+		$this->init();
+
 		$this->init_form_fields();
 		$this->init_settings();
 
 		$this->title   = $this->get_option( 'title' );
 		$this->enabled = $this->get_option( 'enabled' );
 
-		$this->init();
 
 		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'payment_scripts' ), 999 );
@@ -659,7 +663,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	 * @since 1.7.0
 	 */
 	protected function determine_user_language() {
-		$language = null;
+		$language = 'en';//null;
 		//try {
 		//$converter = new WppVTwoConverter();
 		//$language = $converter->convert( get_locale() );
