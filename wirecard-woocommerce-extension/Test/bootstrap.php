@@ -33,6 +33,7 @@ define( 'ABSPATH', true );
 define( 'WIRECARD_EXTENSION_BASEDIR', __DIR__ . '/../' );
 define( 'WIRECARD_EXTENSION_VERSION', '1.0.0' );
 define( 'WIRECARD_EXTENSION_URL', __DIR__ . '/../' );
+define( 'WIRECARD_EXTENSION_HELPER_DIR', WIRECARD_EXTENSION_BASEDIR . '/classes/helper/' );
 define( 'WIRECARD_EXTENSION_TEMPLATE_DIR', WIRECARD_EXTENSION_BASEDIR . '/templates/' );
 
 require_once __DIR__ . '/../vendor/autoload.php';

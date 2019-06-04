@@ -30,7 +30,8 @@
  */
 
 require_once __DIR__ . '/class-wc-wirecard-payment-gateway.php';
-require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/helper/class-credit-card-vault.php' );
+require_once( WIRECARD_EXTENSION_HELPER_DIR . 'class-credit-card-vault.php' );
+require_once( WIRECARD_EXTENSION_HELPER_DIR . 'class-template-helper.php' );
 
 use Wirecard\PaymentSdk\Config\Config;
 use Wirecard\PaymentSdk\Config\CreditCardConfig;
@@ -49,7 +50,10 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 
 	private $vault;
 
-	private $template_helper;
+	/**
+	 * @var Template_Helper $template_helper
+	 */
+	protected $template_helper;
 
 	/**
 	 * WC_Gateway_Wirecard_Creditcard constructor.
@@ -57,24 +61,12 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	 * @since 1.0.0
 	 */
 	public function __construct() {
-		$this->type               = 'creditcard';
-		$this->id                 = 'wirecard_ee_creditcard';
-		$this->icon               = WIRECARD_EXTENSION_URL . 'assets/images/creditcard.png';
-		$this->method_title       = __( 'heading_title_creditcard', 'wirecard-woocommerce-extension' );
-		$this->method_name        = __( 'creditcard', 'wirecard-woocommerce-extension' );
-		$this->method_description = __( 'creditcard_desc', 'wirecard-woocommerce-extension' );
-		$this->vault              = new Credit_Card_Vault();
-		$this->template_helper    = new Template_Helper();
-
-		$this->supports = array(
-			'products',
-			'refunds',
-		);
-
-		$this->cancel        = array( 'authorization' );
-		$this->capture       = array( 'authorization' );
-		$this->refund        = array( 'purchase', 'capture-authorization' );
-		$this->refund_action = 'refund';
+		$this->additional_helper = new Additional_Information();
+		$this->template_helper   = new Template_Helper();
+		$this->supports          = array( 'products', 'refunds' );
+		$this->cancel            = array( 'authorization' );
+		$this->capture           = array( 'authorization' );
+		$this->refund            = array( 'purchase', 'capture-authorization' );
 
 		$this->init_form_fields();
 		$this->init_settings();
@@ -82,16 +74,35 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 		$this->title   = $this->get_option( 'title' );
 		$this->enabled = $this->get_option( 'enabled' );
 
-		$this->additional_helper = new Additional_Information();
+		$this->init();
 
 		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
+		add_action( 'wp_enqueue_scripts', array( $this, 'payment_scripts' ), 999 );
+
+		$this->add_payment_gateway_actions();
+	}
+
+	/**
+	 * Called in constructor
+	 * Initializes the class
+	 *
+	 * @since 2.0.0
+	 */
+	protected function init() {
+		$this->type               = 'creditcard';
+		$this->id                 = 'wirecard_ee_creditcard';
+		$this->icon               = WIRECARD_EXTENSION_URL . 'assets/images/creditcard.png';
+		$this->method_title       = __( 'heading_title_creditcard', 'wirecard-woocommerce-extension' );
+		$this->method_name        = __( 'creditcard', 'wirecard-woocommerce-extension' );
+		$this->method_description = __( 'creditcard_desc', 'wirecard-woocommerce-extension' );
+		$this->vault              = new Credit_Card_Vault();
+
+		$this->refund_action = 'refund';
+
 		add_action( 'woocommerce_api_get_credit_card_request_data', array( $this, 'get_request_data_credit_card' ) );
 		add_action( 'woocommerce_api_save_cc_to_vault', array( $this, 'save_to_vault' ) );
 		add_action( 'woocommerce_api_get_cc_from_vault', array( $this, 'get_cc_from_vault' ) );
 		add_action( 'woocommerce_api_remove_cc_from_vault', array( $this, 'remove_cc_from_vault' ) );
-		add_action( 'wp_enqueue_scripts', array( $this, 'payment_scripts' ), 999 );
-
-		$this->add_payment_gateway_actions();
 	}
 
 	/**
