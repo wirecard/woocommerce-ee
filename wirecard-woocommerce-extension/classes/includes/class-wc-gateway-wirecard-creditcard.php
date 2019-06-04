@@ -79,7 +79,6 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 		$this->title   = $this->get_option( 'title' );
 		$this->enabled = $this->get_option( 'enabled' );
 
-
 		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'payment_scripts' ), 999 );
 
