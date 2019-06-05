@@ -31,7 +31,7 @@
 
 require_once __DIR__ . '/class-wc-wirecard-payment-gateway.php';
 require_once( WIRECARD_EXTENSION_HELPER_DIR . 'class-credit-card-vault.php' );
-require_once( WIRECARD_EXTENSION_HELPER_DIR . 'class-admin-messages.php' );
+require_once(WIRECARD_EXTENSION_HELPER_DIR . 'class-admin-message.php');
 require_once( WIRECARD_EXTENSION_HELPER_DIR . 'class-action-helper.php' );
 
 use Wirecard\PaymentSdk\Config\Config;
@@ -778,7 +778,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	 * @since 2.0.0
 	 */
 	public function validate_url_configuration() {
-		$admin_notifications = new Admin_Messages();
+		$admin_notifications = new Admin_Message();
 		$message             = __( 'warning_credit_card_url_mismatch', 'wirecard-woocommerce-extension' );
 
 		if ( ! $this->is_url_configuration_valid() ) {

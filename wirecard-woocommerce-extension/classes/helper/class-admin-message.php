@@ -34,12 +34,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Class Admin_Messages
+ * Class Admin_Message
  * Helper for admin notifications
  *
  * @since 2.0.0
  */
-class Admin_Messages {
+class Admin_Message {
 
 	/**
 	 * Add admin notice warning
