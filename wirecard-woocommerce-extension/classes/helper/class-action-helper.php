@@ -61,7 +61,7 @@ class Action_Helper {
 		}
 
 		$idx_func = $function_to_add;
-		if ( is_array( $function_to_add ) ) {
+		if ( is_array( $function_to_add ) && ! empty( $function_to_add ) ) {
 			$idx_func[0] = get_class( $function_to_add[0] );
 		}
 		$idx = _wp_filter_build_unique_id( $tag, $idx_func, $priority );

@@ -806,8 +806,10 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 		$wpp_url  = (string) $this->get_option( 'wpp_url' );
 		$needle   = 'test';
 
+		/** @var bool $base_url_contains_test */
 		$base_url_contains_test = $this->string_contains_substring( $base_url, $needle );
-		$wpp_url_contains_test  = $this->string_contains_substring( $wpp_url, $needle );
+		/** @var bool $wpp_url_contains_test */
+		$wpp_url_contains_test = $this->string_contains_substring( $wpp_url, $needle );
 
 		if ( $base_url_contains_test === $wpp_url_contains_test ) {
 			return true;
