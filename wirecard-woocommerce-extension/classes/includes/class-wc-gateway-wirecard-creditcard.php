@@ -32,12 +32,14 @@
 require_once __DIR__ . '/class-wc-wirecard-payment-gateway.php';
 require_once( WIRECARD_EXTENSION_HELPER_DIR . 'class-credit-card-vault.php' );
 require_once( WIRECARD_EXTENSION_HELPER_DIR . 'class-template-helper.php' );
+require_once( WIRECARD_EXTENSION_HELPER_DIR . 'class-logger.php' );
 
 use Wirecard\PaymentSdk\Config\Config;
 use Wirecard\PaymentSdk\Config\CreditCardConfig;
 use Wirecard\PaymentSdk\Entity\Amount;
 use Wirecard\PaymentSdk\Transaction\CreditCardTransaction;
 use Wirecard\PaymentSdk\TransactionService;
+use Wirecard\Converter\WppVTwoConverter;
 
 /**
  * Class WC_Gateway_Wirecard_CreditCard
@@ -58,12 +60,20 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	protected $template_helper;
 
 	/**
+	 * @var Logger $logger
+	 *
+	 * @since 2.0.0
+	 */
+	protected $logger;
+
+	/**
 	 * WC_Gateway_Wirecard_Creditcard constructor.
 	 *
 	 * @since 2.0.0 Update constructor so it can be shared with upi
 	 * @since 1.0.0
 	 */
 	public function __construct() {
+		$this->logger            = new Logger();
 		$this->additional_helper = new Additional_Information();
 		$this->template_helper   = new Template_Helper();
 		$this->supports          = array( 'products', 'refunds' );
@@ -655,22 +665,25 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	}
 
 	/**
-	 * Determines the best language to use for the seamless credit card form.
+	 * Determines the language to use for the seamless credit card form.
 	 *
 	 * @return string
+	 *
 	 * @since 2.0.0 Exchange hpp with wpp languages
 	 * @since 1.7.0
 	 */
 	protected function determine_user_language() {
-		$language = 'en';//null;
-		//try {
-		//$converter = new WppVTwoConverter();
-		//$language = $converter->convert( get_locale() );
-		//} catch ( Exception $e ) {
-		//wp_send_json_error( $e->getMessage() );
-		//wp_die();
-		//}
-		//return $language;
+		$locale    = str_replace( '_', '-', get_locale() );
+		$language  = null;
+		$converter = new WppVTwoConverter();
+
+		try {
+			$converter->init();
+			$language = $converter->convert( $locale );
+		} catch ( Exception $e ) {
+			$this->logger->error( $e->getMessage() );
+			wp_die();
+		}
 
 		return $language;
 	}
