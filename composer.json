@@ -10,7 +10,7 @@
     "wirecard/payment-sdk-php": "3.6.4",
     "php-http/guzzle6-adapter": "1.1.1",
     "wirecard/iso-paypal-converter": "^1.0",
-    "wirecard/io-converter": "dev-master"
+    "wirecard/io-converter": "^1.0"
   },
   "repositories":[
     {
