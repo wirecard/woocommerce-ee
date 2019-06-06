@@ -33,7 +33,7 @@ require_once __DIR__ . '/class-wc-wirecard-payment-gateway.php';
 require_once( WIRECARD_EXTENSION_HELPER_DIR . 'class-credit-card-vault.php' );
 require_once( WIRECARD_EXTENSION_HELPER_DIR . 'class-template-helper.php' );
 require_once( WIRECARD_EXTENSION_HELPER_DIR . 'class-logger.php' );
-require_once( WIRECARD_EXTENSION_HELPER_DIR . 'class-admin-message.php');
+require_once( WIRECARD_EXTENSION_HELPER_DIR . 'class-admin-message.php' );
 require_once( WIRECARD_EXTENSION_HELPER_DIR . 'class-action-helper.php' );
 
 use Wirecard\PaymentSdk\Config\Config;
