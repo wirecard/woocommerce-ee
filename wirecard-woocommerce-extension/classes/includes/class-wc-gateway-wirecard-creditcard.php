@@ -674,7 +674,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	 */
 	protected function determine_user_language() {
 		$locale    = str_replace( '_', '-', get_locale() );
-		$language  = null;
+		$language  = 'en';
 		$converter = new WppVTwoConverter();
 
 		try {
