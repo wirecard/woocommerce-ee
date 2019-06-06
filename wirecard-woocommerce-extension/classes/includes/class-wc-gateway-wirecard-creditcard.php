@@ -30,7 +30,9 @@
  */
 
 require_once __DIR__ . '/class-wc-wirecard-payment-gateway.php';
-require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/helper/class-credit-card-vault.php' );
+require_once( WIRECARD_EXTENSION_HELPER_DIR . 'class-credit-card-vault.php' );
+require_once(WIRECARD_EXTENSION_HELPER_DIR . 'class-admin-message.php');
+require_once( WIRECARD_EXTENSION_HELPER_DIR . 'class-action-helper.php' );
 
 use Wirecard\PaymentSdk\Config\Config;
 use Wirecard\PaymentSdk\Config\CreditCardConfig;
@@ -47,11 +49,13 @@ use Wirecard\PaymentSdk\TransactionService;
  */
 class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 
+	/** @var Credit_Card_Vault $vault */
 	private $vault;
 
 	/**
 	 * WC_Gateway_Wirecard_Creditcard constructor.
 	 *
+	 * @since 2.0.0 Added validate_url_configuration action.
 	 * @since 1.0.0
 	 */
 	public function __construct() {
@@ -81,12 +85,16 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 
 		$this->additional_helper = new Additional_Information();
 
-		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
+		$woocommerce_update_options = 'woocommerce_update_options_payment_gateways_' . $this->id;
+		$action_helper              = new Action_Helper();
+
+		add_action( $woocommerce_update_options, array( $this, 'process_admin_options' ) );
 		add_action( 'woocommerce_api_get_credit_card_request_data', array( $this, 'get_request_data_credit_card' ) );
 		add_action( 'woocommerce_api_save_cc_to_vault', array( $this, 'save_to_vault' ) );
 		add_action( 'woocommerce_api_get_cc_from_vault', array( $this, 'get_cc_from_vault' ) );
 		add_action( 'woocommerce_api_remove_cc_from_vault', array( $this, 'remove_cc_from_vault' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'payment_scripts' ), 999 );
+		$action_helper->add_action_once( $woocommerce_update_options, array( $this, 'validate_url_configuration' ) );
 
 		$this->add_payment_gateway_actions();
 	}
@@ -761,5 +769,68 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 		wp_enqueue_script( 'jquery_ui' );
 		wp_enqueue_style( 'jquery_ui_style' );
 		wp_enqueue_script( 'page_loader' );
+	}
+
+	/**
+	 * If the url configuration is mixed
+	 * add a notification for the admin
+	 *
+	 * @since 2.0.0
+	 */
+	public function validate_url_configuration() {
+		$admin_notifications = new Admin_Message();
+		$message             = __( 'warning_credit_card_url_mismatch', 'wirecard-woocommerce-extension' );
+
+		if ( ! $this->is_url_configuration_valid() ) {
+			$admin_notifications->add_gateway_admin_notice__warning( $message );
+		}
+
+		return;
+	}
+
+	/**
+	 * Scenarios checked in this method
+	 * base_url and wpp_url both contain "test"        = valid
+	 * base_url and wpp_url both do not contain "test" = valid
+	 * only base_url or wpp_url contains "test"        = invalid
+	 *
+	 * The information is used to check the possibility
+	 * of a mixed configuration (production and test)
+	 *
+	 * @return bool
+	 *
+	 * @since 2.0.0
+	 */
+	protected function is_url_configuration_valid() {
+		$base_url = (string) $this->get_option( 'base_url' );
+		$wpp_url  = (string) $this->get_option( 'wpp_url' );
+		$needle   = 'test';
+
+		/** @var bool $base_url_contains_test */
+		$base_url_contains_test = $this->string_contains_substring( $base_url, $needle );
+		/** @var bool $wpp_url_contains_test */
+		$wpp_url_contains_test = $this->string_contains_substring( $wpp_url, $needle );
+
+		if ( $base_url_contains_test === $wpp_url_contains_test ) {
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * @param string $string
+	 * @param string $needle
+	 *
+	 * @return bool
+	 *
+	 * @since 2.0.0
+	 */
+	protected function string_contains_substring( $string, $needle ) {
+		if ( stripos( $string, $needle ) === false ) {
+			return false;
+		}
+
+		return true;
 	}
 }

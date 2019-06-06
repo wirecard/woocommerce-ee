@@ -49,6 +49,7 @@ class WC_Gateway_Wirecard_Unionpay_International extends WC_Gateway_Wirecard_Cre
 	/**
 	 * WC_Gateway_Wirecard_Unionpay_International constructor.
 	 *
+	 * @since 2.0.0 Added validate_url_configuration action.
 	 * @since 1.1.0
 	 */
 	public function __construct() {
@@ -77,9 +78,13 @@ class WC_Gateway_Wirecard_Unionpay_International extends WC_Gateway_Wirecard_Cre
 
 		$this->additional_helper = new Additional_Information();
 
-		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
+		$woocommerce_update_options = 'woocommerce_update_options_payment_gateways_' . $this->id;
+		$action_helper              = new Action_Helper();
+
+		add_action( $woocommerce_update_options, array( $this, 'process_admin_options' ) );
 		add_action( 'woocommerce_api_get_upi_request_data', array( $this, 'get_request_data_upi' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'payment_scripts' ), 999 );
+		$action_helper->add_action_once( $woocommerce_update_options, array( $this, 'validate_url_configuration' ) );
 
 		$this->add_payment_gateway_actions();
 	}
