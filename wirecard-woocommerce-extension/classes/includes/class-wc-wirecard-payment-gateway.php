@@ -499,8 +499,14 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 */
 	public function update_payment_transaction( $order, $response, $transaction_state, $payment_method ) {
 		$transaction_factory = new Wirecard_Transaction_Factory();
+
+		// Normally you would use WooCommerce's get_option here but it seems to return values from
+		// different payment methods. This loads the options based on the passed payment method name.
+		$payment_method_option_name = sprintf( 'woocommerce_wirecard_ee_%s_settings', $payment_method );
+		$payment_method_options     = get_option( $payment_method_option_name );
+
 		//create table entry
-		$result = $transaction_factory->create_transaction( $order, $response, $this->get_option( 'base_url' ), $transaction_state, $payment_method );
+		$result = $transaction_factory->create_transaction( $order, $response, $payment_method_options['base_url'], $transaction_state, $payment_method );
 		if ( ! $result ) {
 			$logger = new WC_Logger();
 			$logger->debug( __METHOD__ . 'Transaction could not be saved in transaction table' );
