@@ -47,46 +47,21 @@ use Wirecard\PaymentSdk\TransactionService;
 class WC_Gateway_Wirecard_Unionpay_International extends WC_Gateway_Wirecard_Creditcard {
 
 	/**
-	 * WC_Gateway_Wirecard_Unionpay_International constructor.
+	 * Called in constructor
+	 * Initializes the class
 	 *
-	 * @since 2.0.0 Added validate_url_configuration action.
-	 * @since 1.1.0
+	 * @since 2.0.0
 	 */
-	public function __construct() {
+	protected function init() {
 		$this->type               = 'unionpayinternational';
 		$this->id                 = 'wirecard_ee_unionpayinternational';
 		$this->icon               = WIRECARD_EXTENSION_URL . 'assets/images/unionpayinternational.png';
 		$this->method_title       = __( 'heading_title_upi', 'wirecard-woocommerce-extension' );
 		$this->method_name        = __( 'upi', 'wirecard-woocommerce-extension' );
 		$this->method_description = __( 'upi_desc', 'wirecard-woocommerce-extension' );
+		$this->refund_action      = 'cancel';
 
-		$this->supports = array(
-			'products',
-			'refunds',
-		);
-
-		$this->cancel        = array( 'authorization' );
-		$this->capture       = array( 'authorization' );
-		$this->refund        = array( 'purchase', 'capture-authorization' );
-		$this->refund_action = 'cancel';
-
-		$this->init_form_fields();
-		$this->init_settings();
-
-		$this->title   = $this->get_option( 'title' );
-		$this->enabled = $this->get_option( 'enabled' );
-
-		$this->additional_helper = new Additional_Information();
-
-		$woocommerce_update_options = 'woocommerce_update_options_payment_gateways_' . $this->id;
-		$action_helper              = new Action_Helper();
-
-		add_action( $woocommerce_update_options, array( $this, 'process_admin_options' ) );
 		add_action( 'woocommerce_api_get_upi_request_data', array( $this, 'get_request_data_upi' ) );
-		add_action( 'wp_enqueue_scripts', array( $this, 'payment_scripts' ), 999 );
-		$action_helper->add_action_once( $woocommerce_update_options, array( $this, 'validate_url_configuration' ) );
-
-		$this->add_payment_gateway_actions();
 	}
 
 	/**
@@ -246,25 +221,12 @@ class WC_Gateway_Wirecard_Unionpay_International extends WC_Gateway_Wirecard_Cre
 	 * Load html for the template
 	 *
 	 * @return string
+	 *
+	 * @since 2.0.0 Move template out of class
 	 * @since 1.7.0
 	 */
 	public function load_upi_template() {
-		return '
-			<h2 class="credit-card-heading">' . __( 'heading_creditcard_form', 'wirecard-woocommerce-extension' ) . '</h2>
-			<div id="wc_payment_method_wirecard_upi" class="wd-tab-content">
-				<div class="show-spinner">
-					<div class="spinner" style="background: url(\'' . admin_url() . 'images/loading.gif\') no-repeat;"></div>
-				</div>
-				
-				<form method="POST" id="wc_payment_method_wirecard_upi_response_form">
-					<input type="hidden" name="cc_nonce" value="' . wp_create_nonce() . '" />
-				</form>
-				
-				<div id="wc_payment_method_wirecard_upi_form"></div>
-
-				<button disabled id="seamless-submit" class="wd-submit checkout-button button alt wc-forward">' . __( 'Pay now', 'woocommerce' ) . '</button>
-			</div>
-		';
+		return $this->template_helper->get_template_as_string( 'upi-form.php' );
 	}
 
 	/**
