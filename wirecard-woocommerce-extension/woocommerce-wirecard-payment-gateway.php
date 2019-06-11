@@ -224,6 +224,7 @@ function wirecard_wc_order_statuses( $order_statuses ) {
 /**
  * Create transaction table in activation process
  *
+ * @since 2.0.0 Add general_information_table
  * @since 1.0.0
  */
 function wirecard_install_payment_gateway() {
@@ -267,6 +268,10 @@ function wirecard_install_payment_gateway() {
  		PRIMARY KEY (vault_id)
  		)$collate;";
 	dbDelta( $sql2 );
+
+	require_once( WIRECARD_EXTENSION_HELPER_DIR . 'class-upgrade-helper.php' );
+	$upgrade_helper = new Upgrade_Helper();
+	$upgrade_helper->update_extension_version();
 }
 
 /**

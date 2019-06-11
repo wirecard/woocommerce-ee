@@ -33,6 +33,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+require_once( __DIR__ . '../../../woocommerce-wirecard-payment-gateway.php' );
+require_once( WIRECARD_EXTENSION_BASEDIR . 'vendor/autoload.php' );
+
+use Wirecard\BaseUrlMatcher\BaseUrlMatcherService;
+
 /**
  * Update wpp base_url
  * depending on base_url settings
@@ -42,7 +47,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 function wpp_v_two_upgrade() {
 	$base_url_key     = 'base_url';
 	$wpp_url_key      = 'wpp_url';
-	$base_url_matcher = new Wirecard\BaseUrlMatcher\BaseUrlMatcherService();
+	$base_url_matcher = new BaseUrlMatcherService();
 	$credit_card      = new WC_Gateway_Wirecard_Creditcard();
 	$union_pay        = new WC_Gateway_Wirecard_Unionpay_International();
 

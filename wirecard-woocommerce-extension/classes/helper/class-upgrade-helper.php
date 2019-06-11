@@ -43,8 +43,6 @@ require_once( WIRECARD_EXTENSION_HELPER_DIR . 'class-logger.php' );
  */
 class Upgrade_Helper {
 
-	/** @var string GENERAL_INFORMATION_ID */
-	const GENERAL_INFORMATION_ID = 'general_information_id';
 	/** @var string GENERAL_INFORMATION_COLUMN */
 	const GENERAL_INFORMATION_COLUMN = 'general_information';
 	/** @var string PREVIOUS_VERSION_KEY */
@@ -57,6 +55,10 @@ class Upgrade_Helper {
 	public $general_information_table;
 	/** @var Logger $logger */
 	public $logger;
+	/** @var string $general_information_table_id */
+	public $general_information_table_id;
+	/** @var $collation */
+	public $collation;
 
 	/**
 	 * Upgrade_Helper constructor.
@@ -66,9 +68,13 @@ class Upgrade_Helper {
 	public function __construct() {
 		global $wpdb;
 
-		$this->logger                    = new Logger();
-		$this->wpdb                      = $wpdb;
-		$this->general_information_table = $this->wpdb->prefix . 'wirecard_payment_general_information';
+		$this->logger                       = new Logger();
+		$this->wpdb                         = $wpdb;
+		$this->general_information_table    = $this->wpdb->prefix . 'wirecard_payment_general_information';
+		$this->general_information_table_id = $this->general_information_table . '_id';
+		if ( $this->wpdb->has_cap( 'collation' ) ) {
+			$this->collation = $this->wpdb->get_charset_collate();
+		}
 	}
 
 	/**
@@ -80,11 +86,10 @@ class Upgrade_Helper {
 		$general_information        = null;
 		$previous_extension_version = null;
 
-		if ( ! $this->general_information_conditions_met() ) {
-			$this->general_information_init();
-		}
+		$this->general_information_init();
 
 		$general_information = $this->get_extension_general_information();
+
 		if ( ! array_key_exists( self::CURRENT_VERSION_KEY, $general_information ) ) {
 			$general_information[ self::CURRENT_VERSION_KEY ] = WIRECARD_EXTENSION_VERSION;
 		}
@@ -130,24 +135,22 @@ class Upgrade_Helper {
 	 * or null if an error occurs
 	 *
 	 * @param null $type
-	 * @return array|mixed|null|object
+	 * @return array|mixed|object
 	 *
 	 * @since 2.0.0
 	 */
 	protected function get_extension_general_information( $type = null ) {
+		$general_information = array();
+		$column              = self::GENERAL_INFORMATION_COLUMN;
 		// Get latest entry in the extensions general information table
 		$general_information_query = $this->wpdb->prepare(
-			'SELECT %s FROM %s ORDER BY %s DESC LIMIT 1',
-			array(
-				self::GENERAL_INFORMATION_COLUMN,
-				$this->general_information_table,
-				self::GENERAL_INFORMATION_ID,
-			)
+			"SELECT `$column` FROM `$this->general_information_table` ORDER BY `$this->general_information_table_id` DESC LIMIT 1",
+			array()
 		);
 
 		// If table and column do not exist return null
 		if ( ! $this->general_information_conditions_met() ) {
-			return null;
+			return $general_information;
 		}
 
 		// Returns result as string or null
@@ -155,7 +158,7 @@ class Upgrade_Helper {
 
 		// If entry doesn't exist return null
 		if ( is_null( $general_information_result ) ) {
-			return null;
+			return $general_information;
 		}
 
 		// Json decode as array
@@ -166,7 +169,7 @@ class Upgrade_Helper {
 				__METHOD__ . ':' . 'general_information could not be decoded:'
 				. json_last_error_msg()
 			);
-			return null;
+			return array();
 		}
 
 		// If no type is set return whole array
@@ -238,7 +241,7 @@ class Upgrade_Helper {
 		);
 
 		// If table does not exist return false
-		if ( $this->wpdb->get_var( $table_query ) !== $this->general_information_table ) {
+		if ( $this->wpdb->query( $table_query ) === 0 ) {
 			return false;
 		}
 
@@ -254,9 +257,8 @@ class Upgrade_Helper {
 	 */
 	protected function general_information_column_exists() {
 		$column_query = $this->wpdb->prepare(
-			'SHOW COLUMNS FROM %s LIKE %s',
+			"SHOW COLUMNS FROM `$this->general_information_table` LIKE %s",
 			array(
-				$this->general_information_table,
 				self::GENERAL_INFORMATION_COLUMN,
 			)
 		);
@@ -276,27 +278,24 @@ class Upgrade_Helper {
 	 * @since 2.0.0
 	 */
 	protected function general_information_init() {
-		$this->create_table( $this->general_information_table );
+		$this->create_general_information_table();
 		$this->create_general_information_column();
 	}
 
 	/**
-	 * Create table according to the table name
-	 *
-	 * @param $table_name
+	 * Create general_information_table
 	 *
 	 * @since 2.0.0
 	 */
-	protected function create_table( $table_name ) {
-		$id                 = $table_name . '_id';
+	protected function create_general_information_table() {
 		$create_table_query = $this->wpdb->prepare(
-			'CREATE TABLE IF NOT EXISTS %s (%s INTEGER NOT NULL AUTO_INCREMENT, PRIMARY KEY (%s))',
-			array(
-				$table_name,
-				$id,
-				$id,
-			)
+			"CREATE TABLE `$this->general_information_table` (`$this->general_information_table_id` int UNSIGNED AUTO_INCREMENT PRIMARY KEY)$this->collation",
+			array()
 		);
+
+		if ( $this->general_information_table_exists() ) {
+			return;
+		}
 
 		$this->wpdb->query( $create_table_query );
 	}
@@ -308,12 +307,10 @@ class Upgrade_Helper {
 	 * @since 2.0.0
 	 */
 	protected function create_general_information_column() {
+		$column              = self::GENERAL_INFORMATION_COLUMN;
 		$create_column_query = $this->wpdb->prepare(
-			'ALTER TABLE %s ADD %s VARCHAR(max)',
-			array(
-				$this->general_information_table,
-				self::GENERAL_INFORMATION_COLUMN,
-			)
+			"ALTER TABLE `$this->general_information_table` ADD `$column` VARCHAR(255) NOT NULL AFTER `$this->general_information_table_id`",
+			array()
 		);
 
 		if ( $this->general_information_column_exists() ) {
