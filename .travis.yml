@@ -112,6 +112,7 @@ before_install:
   - export SNIFFS_DIR=/tmp/sniffs
   - git clone -b master --depth 1 https://github.com/squizlabs/PHP_CodeSniffer.git $PHPCS_DIR
   - git clone -b master --depth 1 https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards.git $SNIFFS_DIR
+  - $PHPCS_DIR/bin/phpcs --config-set installed_paths $SNIFFS_DIR
 
 install:
   - travis_retry composer require --dev $COMPOSER_ARGS satooshi/php-coveralls:^1.0
