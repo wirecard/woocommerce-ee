@@ -33,7 +33,7 @@
     "make-release-notes": "@php .bin/version-helper.php",
     "upload-coverage": "codacycoverage clover build/coverage/xml",
     "cs-check-configure": "phpcs --config-set installed_paths vendor/wp-coding-standards/wpcs",
-    "cs-check": "phpcs --standard=./phpcs.xml .",
+    "cs-check": "$PHPCS_DIR/bin/phpcs --config-set installed_paths $SNIFFS_DIR --standard=./phpcs.xml .",
     "cs-fix": "phpcbf --standard=./phpcs.xml .",
     "test": "phpunit --colors",
     "test-coverage": "phpunit --colors --coverage-clover build/coverage/xml"
