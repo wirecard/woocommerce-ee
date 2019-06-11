@@ -161,6 +161,14 @@ class Upgrade_Helper {
 		// Json decode as array
 		$general_information = json_decode( $general_information_result, true );
 
+		if ( json_last_error() !== JSON_ERROR_NONE ) {
+			$this->logger->error(
+				__METHOD__ . ':' . 'general_information could not be decoded:'
+				. json_last_error_msg()
+			);
+			return null;
+		}
+
 		// If no type is set return whole array
 		if ( is_null( $type ) ) {
 			return $general_information;
@@ -282,7 +290,7 @@ class Upgrade_Helper {
 	protected function create_table( $table_name ) {
 		$id                 = $table_name . '_id';
 		$create_table_query = $this->wpdb->prepare(
-			'CREATE TABLE IF NOT EXISTS %s (%s INTEGER NOT NULL, PRIMARY KEY (%s))',
+			'CREATE TABLE IF NOT EXISTS %s (%s INTEGER NOT NULL AUTO_INCREMENT, PRIMARY KEY (%s))',
 			array(
 				$table_name,
 				$id,
