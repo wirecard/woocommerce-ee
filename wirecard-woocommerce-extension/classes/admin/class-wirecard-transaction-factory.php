@@ -377,7 +377,7 @@ class Wirecard_Transaction_Factory {
 					<div class="inside">
 						<div class="panel-wrap woocommerce">
 							<div class="panel woocommerce-order-data">
-								<h2 class="woocommerce-order-data__heading"><?php echo __( 'text_transaction', 'wirecard-woocommerce-extension' ) . '' . $transaction->transaction_id; ?></h2>
+								<h2 class="woocommerce-order-data__heading"><?php echo __( 'text_transaction', 'wirecard-woocommerce-extension' ) . ': ' . $transaction->transaction_id; ?></h2>
 								<h3>
 									<?php echo $payment->method_name . ' ' . __( 'payment_suffix', 'wirecard-woocommerce-extension' ); ?>
 								</h3>

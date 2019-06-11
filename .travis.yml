@@ -5,9 +5,8 @@ language: php
 env:
   global:
   - COMPOSER_ARGS="--no-interaction"
-  - github_token:
-      secure: "Iy/Plz3V++TKSQbz/A0x7ZhETSfcvbXxT4zKQh51W8fjBUlKKrQmDA1rICIjnfFs0bNAe6M2yQxxHgJKUJPBsi9Nk/Ynuk/I5lLK1jLL6THioGB6oKUyRBytlcVLZ+0lNqmV/jRKYdwEPI+jNduCk5GSjubSGMIWGNDcqAUiTu+oy3Gu9FS/auEGxim7UaZYC+MM+7ir0zD6w/0nuCaxalAeLahFz0g3QlXc7FB88SxH//lxzKDZh3U6XKyIEXGG8IQiCYaJRUqr9unzHDVbjOvNT6HWZQ4jGSfnCZTnp4aPfOrk1Ir334/4Cuy4xCP4iiuiRFHoxw++uknh77slUwRtZbrUlwoCbvT0V/GOQaN2HSjrTOc5n1/M0XsPRumbZ+I/4EoCnZUwNiBpWtVhrzSpE84+0BBj67gmStzca1sZMkts+oHnr5S6qajVY5ePY4Sn3rI/JbUJP501zexRHgqKY26a+Hqz9TAnNJqRKfm6ez5pSlXUKk4eCl7slgYuY8I="
-
+  - WOOCOMMERCE_RELEASES_FILE=${TRAVIS_BUILD_DIR}/.bin/shop-releases.txt
+ 
 matrix:
   allow_failures:
     - stage: acceptance-test
@@ -18,17 +17,31 @@ matrix:
     if: type != cron AND env(PHRASEAPP_PULL) != '1'
   - php: 7.1
     if: type != cron AND env(PHRASEAPP_PULL) != '1'
+  - php: 7.2
+    if: type != cron AND env(PHRASEAPP_PULL) != '1'
 
+  - stage: get-woocommerce-versions
+    if: type = cron
+    php: 7.2
+    install: skip
+    before_script: skip
+    script: bash .bin/get-woocommerce-versions.sh
+    after_script: skip
+    after_failure: skip
+      
   - &acceptance-test
     stage: acceptance-test
     if: type = cron
-    php: 7.1
-    env: GATEWAY=API-TEST
+    php: 7.2
+    env: 
+    - GATEWAY=API-TEST
+    - WOOCOMMERCE_VERSION=$(awk 'NR==1 {print; exit}' ${WOOCOMMERCE_RELEASES_FILE})
     before_install:
-    - travis_retry composer self-update
+    - travis_retry composer self-update 
     install:
+    - echo "Testing with Woocommerce version ${WOOCOMMERCE_VERSION}" 
     - bash .bin/generate-release-package.sh test
-    - travis_retry composer require --dev $COMPOSER_ARGS codeception/codeception
+    - travis_retry composer require --dev $COMPOSER_ARGS codeception/codeception:^2.5
     - travis_retry composer install $COMPOSER_ARGS
     - composer show
     script: bash .bin/run-ui-tests.sh
@@ -38,9 +51,37 @@ matrix:
     after_failure:
     - bash .bin/upload-logs-and-notify.sh fail
   - <<: *acceptance-test
-    env: GATEWAY=API-WDCEE-TEST
+    env:
+    - GATEWAY=API-TEST
+    - WOOCOMMERCE_VERSION=$(awk 'NR==2 {print; exit}' ${WOOCOMMERCE_RELEASES_FILE})
   - <<: *acceptance-test
-    env: GATEWAY=NOVA
+    env:
+    - GATEWAY=API-TEST
+    - WOOCOMMERCE_VERSION=$(awk 'NR==3 {print; exit}' ${WOOCOMMERCE_RELEASES_FILE})
+  - <<: *acceptance-test
+    env: 
+    - GATEWAY=API-WDCEE-TEST
+    - WOOCOMMERCE_VERSION=$(awk 'NR==1 {print; exit}' ${WOOCOMMERCE_RELEASES_FILE})
+  - <<: *acceptance-test
+    env:
+    - GATEWAY=API-WDCEE-TEST
+    - WOOCOMMERCE_VERSION=$(awk 'NR==2 {print; exit}' ${WOOCOMMERCE_RELEASES_FILE})
+  - <<: *acceptance-test
+    env:
+    - GATEWAY=API-WDCEE-TEST
+    - WOOCOMMERCE_VERSION=$(awk 'NR==3 {print; exit}' ${WOOCOMMERCE_RELEASES_FILE})
+  - <<: *acceptance-test
+    env: 
+    - GATEWAY=NOVA
+    - WOOCOMMERCE_VERSION=$(awk 'NR==1 {print; exit}' ${WOOCOMMERCE_RELEASES_FILE})
+  - <<: *acceptance-test
+    env:
+    - GATEWAY=NOVA
+    - WOOCOMMERCE_VERSION=$(awk 'NR==2 {print; exit}' ${WOOCOMMERCE_RELEASES_FILE})
+  - <<: *acceptance-test
+    env:
+    - GATEWAY=NOVA
+    - WOOCOMMERCE_VERSION=$(awk 'NR==3 {print; exit}' ${WOOCOMMERCE_RELEASES_FILE})
 
   - stage: phraseapp-pull
     if: type != cron AND env(PHRASEAPP_PULL) = '1'
@@ -121,6 +162,31 @@ script:
 after_script:
   - travis_retry composer upload-coverage
   - bash .bin/generate-tag.sh
+
+before_deploy:
+  - export REPO_NAME=`echo $TRAVIS_REPO_SLUG | awk -F'/' '{print $2}'`
+  - export RELEASE_NOTES=$(composer make-release-notes)
+  - bash .bin/generate-wiki-notes.sh
+  - bash .bin/generate-readme-badge.sh
+  - bash .bin/generate-release-package.sh $TRAVIS_TAG
+
+deploy:
+  provider: releases
+  github_token: ${GITHUB_TOKEN}
+  api_key: ${GITHUB_TOKEN}
+  file: woocommerce-wirecard-ee.zip
+  name: "${REPO_NAME} ${TRAVIS_TAG}"
+  body: "${RELEASE_NOTES}"
+  skip_cleanup: true
+  on:
+    repo: ${TRAVIS_REPO_SLUG}
+    tags: true
+    
+after_deploy:
+  - export TMPDIR=/tmp/wirecard
+  - git clone -b master --depth 1 https://$WIRECARD_CEE_GITHUB_TOKEN@github.com/$DEPLOYMENT_PROJECT $TMPDIR
+  - cd $TMPDIR && travis_retry bundle install
+  - bin/rake trigger_build
 
 notifications:
   email: false

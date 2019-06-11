@@ -3,9 +3,6 @@ set -e # Exit with nonzero exit code if anything fails
 #get version
 export VERSION=`jq .[0].release SHOPVERSIONS`
 
-#start payment-sdk
-php -S localhost:8080 > /dev/null &
-
 # download and install ngrok
 curl -s https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip > ngrok.zip
 unzip ngrok.zip
@@ -33,4 +30,8 @@ done
 bash .bin/start-shopsystem.sh
 
 #run tests
-cd wirecard-woocommerce-extension && vendor/bin/codecept run acceptance --html --xml
+cd wirecard-woocommerce-extension && vendor/bin/codecept run acceptance checkCreditCard3DSFunctionalityHappyPath.feature --html --xml
+
+if [[ ${GATEWAY} = "API-TEST" ]]; then
+	vendor/bin/codecept run acceptance checkPayPalFunctionalityHappyPath.feature --html --xml
+fi

@@ -54,8 +54,8 @@ use Page\Product as ProductPage;
 use Page\Shop as ShopPage;
 use Page\OrderReceived as OrderReceivedPage;
 use Page\Verified as VerifiedPage;
-
-
+use Page\PayPalLogIn as PayPalLogInPage;
+use Page\PayPalReview as PayPalReviewPage;
 
 class AcceptanceTester extends \Codeception\Actor {
 
@@ -90,12 +90,19 @@ class AcceptanceTester extends \Codeception\Actor {
 				$page = new ShopPage( $this );
 				break;
 			case 'Verified':
-				$this->wait( 5 );
+				$this->wait( 10 );
 				$page = new VerifiedPage( $this );
 				break;
 			case 'Order Received':
-				$this->wait( 7 );
+				$this->wait( 15 );
 				$page = new OrderReceivedPage( $this );
+				break;
+			case 'Pay Pal Log In':
+				$page = new PayPalLogInPage( $this );
+				break;
+			case 'Pay Pal Review':
+				$this->wait( 10 );
+				$page = new PayPalReviewPage( $this );
 				break;
 			default:
 				$page = null;
@@ -185,4 +192,3 @@ class AcceptanceTester extends \Codeception\Actor {
 		$this->syncCookies();
 	}
 }
-

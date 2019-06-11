@@ -263,6 +263,7 @@ class WC_Gateway_Wirecard_Poipia extends WC_Wirecard_Payment_Gateway {
 			$result      .= '<tr><td>' . __( 'iban', 'wirecard-woocommerce-extension' ) . '</td><td>' . $iban . '</td></tr>';
 			$result      .= '<tr><td>' . __( 'bic', 'wirecard-woocommerce-extension' ) . '</td><td>' . $bic . '</td></tr>';
 			$result      .= '<tr><td>' . __( 'ptrid', 'wirecard-woocommerce-extension' ) . '</td><td>' . $reference_id . '</td></tr>';
+			$result      .= '</table>';
 			echo $result;
 		}
 	}

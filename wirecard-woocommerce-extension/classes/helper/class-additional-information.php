@@ -335,7 +335,7 @@ class Additional_Information {
 						$items_total += $item['amount']['value'] * $refund_item['qty'];
 						$basket       = $this->set_item_from_response(
 							$basket,
-							new Amount( $item['amount']['value'], $item['amount']['currency'] ),
+							new Amount( floatval( $item['amount']['value'] ), $item['amount']['currency'] ),
 							$item['name'],
 							$refund_item['qty'],
 							$item['description'],
@@ -347,7 +347,7 @@ class Additional_Information {
 			} elseif ( 0 === $refunding_amount ) {
 				$basket = $this->set_item_from_response(
 					$basket,
-					new Amount( $item['amount']['value'], $item['amount']['currency'] ),
+					new Amount( floatval( $item['amount']['value'] ), $item['amount']['currency'] ),
 					$item['name'],
 					$item['quantity'],
 					$item['description'],
@@ -412,6 +412,11 @@ class Additional_Information {
 				'tax_class' => $tax_classes,
 			)
 		);
+
+		if ( ! count( $tax_rates ) ) {
+			return 0;
+		}
+
 		return array_column( $tax_rates, 'rate' )[0];
 	}
 
