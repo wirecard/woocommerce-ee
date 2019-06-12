@@ -1,17 +1,17 @@
 <?php
 
-define ("REPO", getenv("TRAVIS_REPO_SLUG"));
-define ("REPO_NAME", explode("/", REPO)[1]);
-define ("SCRIPT_DIR", __DIR__);
-define ("WIKI_DIR", SCRIPT_DIR . "/../" . REPO_NAME . ".wiki");
-define ("WIKI_FILE", WIKI_DIR . "/Home.md");
-define ("README_FILE", SCRIPT_DIR . "/../README.md");
-define ("VERSION_FILE", SCRIPT_DIR . "/../SHOPVERSIONS");
-define ("TRAVIS_FILE", SCRIPT_DIR . "/../.travis.yml");
-define ("CHANGELOG_FILE", SCRIPT_DIR . "/../CHANGELOG.md");
+define( 'REPO', getenv( 'TRAVIS_REPO_SLUG' ) );
+define( 'REPO_NAME', explode( '/', REPO )[1] );
+define( 'SCRIPT_DIR', __DIR__ );
+define( 'WIKI_DIR', SCRIPT_DIR . '/../' . REPO_NAME . '.wiki' );
+define( 'WIKI_FILE', WIKI_DIR . '/Home.md' );
+define( 'README_FILE', SCRIPT_DIR . '/../README.md' );
+define( 'VERSION_FILE', SCRIPT_DIR . '/../SHOPVERSIONS' );
+define( 'TRAVIS_FILE', SCRIPT_DIR . '/../.travis.yml' );
+define( 'CHANGELOG_FILE', SCRIPT_DIR . '/../CHANGELOG.md' );
 
 // Update this if you're using a different shop system.
-require SCRIPT_DIR . "/../wirecard-woocommerce-extension/vendor/autoload.php";
+require SCRIPT_DIR . '/../wirecard-woocommerce-extension/vendor/autoload.php';
 
 use Symfony\Component\Yaml\Yaml;
 
@@ -21,8 +21,8 @@ use Symfony\Component\Yaml\Yaml;
  * @param $version
  * @return string
  */
-function prefixWithPhp($version) {
-    return "PHP " . number_format($version, 1);
+function prefixWithPhp( $version ) {
+	return 'PHP ' . number_format( $version, 1 );
 }
 
 /**
@@ -33,14 +33,14 @@ function prefixWithPhp($version) {
  * @param string $conjunction
  * @return string
  */
-function naturalLanguageJoin($list, $conjunction = 'and') {
-    $last = array_pop($list);
+function naturalLanguageJoin( $list, $conjunction = 'and' ) {
+	$last = array_pop( $list );
 
-    if ($list) {
-        return implode(', ', $list) . ' ' . $conjunction . ' ' . $last;
-    }
+	if ( $list ) {
+		return implode( ', ', $list ) . ' ' . $conjunction . ' ' . $last;
+	}
 
-    return $last;
+	return $last;
 }
 
 /**
@@ -49,8 +49,8 @@ function naturalLanguageJoin($list, $conjunction = 'and') {
  * @param $change
  * @return string
  */
-function generateChangelogLine($change) {
-    return "<li>{$change}</li>";
+function generateChangelogLine( $change ) {
+	return "<li>{$change}</li>";
 }
 
 /**
@@ -60,21 +60,64 @@ function generateChangelogLine($change) {
  * @param $phpVersions
  * @return array
  */
-function makeTextVersions($shopVersions, $phpVersions) {
-    $versionRange = $shopVersions["tested"];
-    $phpVersions = array_map("prefixWithPhp", $phpVersions);
-    $phpVersionString = naturalLanguageJoin($phpVersions);
+function makeTextVersions( $shopVersions, $phpVersions ) {
+	$versionRanges = [];
+	foreach ( $shopVersions['shopversions'] as $shopVersionObject ) {
+		$shopVersion  = (array) $shopVersionObject;
+		$versionRange = $shopVersion['tested'];
+		// We don't need a from-to range if the versions are the same.
+		if ( $shopVersion['compatibility'] !== $shopVersion['tested'] ) {
+			$versionRanges[ $shopVersion['name'] ] = $shopVersion['compatibility'] . ' - ' . $shopVersion['tested'];
+		}
+	}
+	$phpVersions      = array_map( 'prefixWithPhp', $phpVersions );
+	$phpVersionString = naturalLanguageJoin( $phpVersions );
 
-    // We don't need a from-to range if the versions are the same.
-    if ($shopVersions["compatibility"] !== $shopVersions["tested"]) {
-        $versionRange = $shopVersions["compatibility"] . " - " . $shopVersions["tested"];
-    }
-
-    return [
-        "versionRange" => $versionRange,
-        "phpVersionString" => $phpVersionString
-    ];
+	return [
+		'versionRanges'    => $versionRanges,
+		'phpVersionString' => $phpVersionString,
+	];
 }
+
+/**
+ * Generates the text with tested versions
+ *
+ * @param $shopVersions
+ * @param $phpVersions
+ * @return string
+ */
+function generateTestedVersionsString( $shopVersions, $phpVersions ) {
+	$testedVersions  = '';
+	$releaseVersions = makeTextVersions( $shopVersions, $phpVersions );
+
+	foreach ( $shopVersions['shopversions'] as $shopVersionObject ) {
+		$shopVersion     = (array) $shopVersionObject;
+		$testedVersions .= "{$shopVersion['name']} {$shopVersion['tested']}";
+		$testedVersions .= ( $shopVersionObject == end( $shopVersions['shopversions'] ) ) ? ' ' : ', ';
+	}
+	$testedVersions .= "with {$releaseVersions['phpVersionString']}</em><br>";
+
+	return $testedVersions;
+}
+
+/**
+ * Generates the text with compatibility versions
+ *
+ * @param $shopVersions
+ * @param $phpVersions
+ * @return string
+ */
+function generateCompatibilityVersionsString( $shopVersions, $phpVersions ) {
+	$compatibilityVersions = '';
+	$releaseVersions       = makeTextVersions( $shopVersions, $phpVersions );
+	foreach ( $releaseVersions['versionRanges'] as $releaseName => $releaseVersion ) {
+		$compatibilityVersions .= "{$releaseName} {$releaseVersion}";
+		$compatibilityVersions .= ( $releaseVersion == end( $releaseVersions['versionRanges'] ) ) ? ' ' : ', ';
+	}
+	$compatibilityVersions .= "with {$releaseVersions['phpVersionString']}</em><br>";
+	return $compatibilityVersions;
+}
+
 
 /**
  * Generates the text for the release notes on GitHub
@@ -83,14 +126,15 @@ function makeTextVersions($shopVersions, $phpVersions) {
  * @param $phpVersions
  * @return string
  */
-function generateReleaseVersions($shopVersions, $phpVersions) {
-    $releaseVersions = makeTextVersions($shopVersions, $phpVersions);
+function generateReleaseVersions( $shopVersions, $phpVersions ) {
 
-    $releaseNotes  = "<ul>" . join("", array_map("generateChangelogLine", $shopVersions['changelog'])) . "</ul>";
-    $releaseNotes .= "<em><strong>Tested version(s):</strong> {$shopVersions['shopsystem']} {$shopVersions['tested']} with {$releaseVersions['phpVersionString']}</em><br>";
-    $releaseNotes .= "<em><strong>Compatibility:</strong> {$shopVersions['shopsystem']} {$releaseVersions['versionRange']} with {$releaseVersions['phpVersionString']}</em>";
+	$releaseNotes  = '<ul>' . join( '', array_map( 'generateChangelogLine', $shopVersions['changelog'] ) ) . '</ul>';
+	$releaseNotes .= '<em><strong>Tested version(s):</strong> ';
+	$releaseNotes .= generateTestedVersionsString( $shopVersions, $phpVersions );
 
-    return $releaseNotes;
+	$releaseNotes .= '<em><strong>Compatibility:</strong> ';
+	$releaseNotes .= generateCompatibilityVersionsString( $shopVersions, $phpVersions );
+	return $releaseNotes;
 }
 
 /**
@@ -100,31 +144,33 @@ function generateReleaseVersions($shopVersions, $phpVersions) {
  * @param $shopVersions
  * @param $phpVersions
  */
-function generateWikiRelease($shopVersions, $phpVersions) {
-    if (!file_exists(WIKI_FILE )) {
-        fwrite(STDERR, "ERROR: Wiki files do not exist." . PHP_EOL);
-        exit(1);
-    }
+function generateWikiRelease( $shopVersions, $phpVersions ) {
+	if ( ! file_exists( WIKI_FILE ) ) {
+		fwrite( STDERR, 'ERROR: Wiki files do not exist.' . PHP_EOL );
+		exit( 1 );
+	}
 
-    $wikiPage = file_get_contents(WIKI_FILE);
-    $releaseDate = date("Y-m-d");
-    $releaseVersions = makeTextVersions($shopVersions, $phpVersions);
+	$wikiPage    = file_get_contents( WIKI_FILE );
+	$releaseDate = date( 'Y-m-d' );
 
-    // Matching all the replaceable table rows.
-    // The format is | **<string>** | <content> |
-    $testedRegex = "/^\|\s?\*.?Tested.*\|(.*)\|/mi";
-    $compatibilityRegex = "/^\|\s?\*.?Compatibility.*\|(.*)\|/mi";
-    $extVersionRegex = "/^\|\s?\*.?Extension.*\|(.*)\|/mi";
+	// Matching all the replaceable table rows.
+	// The format is | **<string>** | <content> |
+	$testedRegex        = '/^\|\s?\*.?Tested.*\|(.*)\|/mi';
+	$compatibilityRegex = '/^\|\s?\*.?Compatibility.*\|(.*)\|/mi';
+	$extVersionRegex    = '/^\|\s?\*.?Extension.*\|(.*)\|/mi';
 
-    $testedReplace = "| **Tested version(s):** | {$shopVersions['shopsystem']} {$shopVersions['tested']} with {$releaseVersions['phpVersionString']} |";
-    $compatibilityReplace = "| **Compatibility:** | {$shopVersions['shopsystem']} {$releaseVersions['versionRange']} with {$releaseVersions['phpVersionString']} |";
-    $extVersionReplace = "| **Extension version** | ![Release](https://img.shields.io/github/release/" . REPO . ".png?nolink \"Release\") ({$releaseDate}), [change log](https://github.com/" . REPO . "/releases) |";
+	$testedReplace        = '| **Tested version(s):** | ' . generateTestedVersionsString( $shopVersions, $phpVersions ) . ' |';
+	$compatibilityReplace = '| **Compatibility:** | ' . generateCompatibilityVersionsString(
+		$shopVersions,
+		$phpVersions
+	) . ' |';
+	$extVersionReplace    = '| **Extension version** | ![Release](https://img.shields.io/github/release/' . REPO . ".png?nolink \"Release\") ({$releaseDate}), [change log](https://github.com/" . REPO . '/releases) |';
 
-    $wikiPage = preg_replace($testedRegex, $testedReplace, $wikiPage);
-    $wikiPage = preg_replace($compatibilityRegex, $compatibilityReplace, $wikiPage);
-    $wikiPage = preg_replace($extVersionRegex, $extVersionReplace, $wikiPage);
+	$wikiPage = preg_replace( $testedRegex, $testedReplace, $wikiPage );
+	$wikiPage = preg_replace( $compatibilityRegex, $compatibilityReplace, $wikiPage );
+	$wikiPage = preg_replace( $extVersionRegex, $extVersionReplace, $wikiPage );
 
-    file_put_contents(WIKI_FILE, $wikiPage);
+	file_put_contents( WIKI_FILE, $wikiPage );
 }
 
 /**
@@ -133,24 +179,24 @@ function generateWikiRelease($shopVersions, $phpVersions) {
  *
  * @param $shopVersions
  */
-function generateReadmeReleaseBadge($shopVersions) {
-    if (!file_exists(README_FILE )) {
-        fwrite(STDERR, "ERROR: README file does not exist." . PHP_EOL);
-        exit(1);
-    }
+function generateReadmeReleaseBadge( $shopVersions ) {
+	if ( ! file_exists( README_FILE ) ) {
+		fwrite( STDERR, 'ERROR: README file does not exist.' . PHP_EOL );
+		exit( 1 );
+	}
 
-    $readmeContent = file_get_contents(README_FILE);
+	$readmeContent = file_get_contents( README_FILE );
 
-    $shopBadge = $shopVersions['shopsystem'] . " v" . $shopVersions['tested'];
-    $shopBadgeUrl = str_replace(" ", "-", $shopBadge);
-
-    // We're matching the image tag in Markdown. [![Shopsytem v1.2.3] ... ]
-    $badgeRegex = "/\[\!\[{$shopVersions['shopsystem']}.*\]/mi";
-    $badgeReplace = "[![{$shopBadge}](https://img.shields.io/badge/{$shopBadgeUrl}-green.svg)]";
-
-    $readmeContent = preg_replace($badgeRegex, $badgeReplace, $readmeContent);
-
-    file_put_contents(README_FILE, $readmeContent);
+	foreach ( $shopVersions['shopversions'] as $shopVersionObject ) {
+		$shopVersion = (array) $shopVersionObject;
+		$badge       = $shopVersion['name'] . ' v' . $shopVersion['tested'];
+		$badgeUrl    = str_replace( ' ', '-', $badge );
+		// We're matching the image tag in Markdown. [![Shopsytem v1.2.3] ... ]
+		$badgeRegex    = "/\[\!\[{$shopVersion['name']}.*\]/mi";
+		$badgeReplace  = "[![{$badge}](https://img.shields.io/badge/{$badgeUrl}-green.svg)]";
+		$readmeContent = preg_replace( $badgeRegex, $badgeReplace, $readmeContent );
+	}
+	file_put_contents( README_FILE, $readmeContent );
 }
 
 /**
@@ -160,63 +206,62 @@ function generateReadmeReleaseBadge($shopVersions) {
  * @return array
  */
 
-function parseVersionsFile($filePath) {
-    // Bail out if we don"t have defined shop versions and throw a loud error.
-    if (!file_exists($filePath)) {
-        fwrite(STDERR, "ERROR: No shop version file exists" . PHP_EOL);
-        exit(1);
-    }
+function parseVersionsFile( $filePath ) {
+	// Bail out if we don"t have defined shop versions and throw a loud error.
+	if ( ! file_exists( $filePath ) ) {
+		fwrite( STDERR, 'ERROR: No shop version file exists' . PHP_EOL );
+		exit( 1 );
+	}
 
-    // Load the file and parse json out of it
-    $json = json_decode(
-        file_get_contents(VERSION_FILE)
-    );
+	// Load the file and parse json out of it
+	$json = json_decode(
+		file_get_contents( VERSION_FILE )
+	);
 
-    // compare release versions
-    $cmp = function($a, $b) {
-        return version_compare($a->release, $b->release);
-    };
+	// compare release versions
+	$cmp = function( $a, $b ) {
+		return version_compare( $a->release, $b->release );
+	};
 
-    // if file contains an array of versions return the latest
-    if (is_array($json)) {
-        uasort($json, $cmp);
-        return (array)end($json);
-    } else {
-        return (array) $json;
-    }
+	// if file contains an array of versions return the latest
+	if ( is_array( $json ) ) {
+		uasort( $json, $cmp );
+		return (array) end( $json );
+	} else {
+		return (array) $json;
+	}
 }
 
-$shopVersions = parseVersionsFile(VERSION_FILE);
-
+$shopVersions = parseVersionsFile( VERSION_FILE );
 // Grab the Travis config for parsing the supported PHP versions
-$travisConfig = Yaml::parseFile(TRAVIS_FILE);
+$travisConfig = Yaml::parseFile( TRAVIS_FILE );
 $travisMatrix = $travisConfig['matrix'];
-$phpVersions = [];
-foreach  ($travisMatrix["include"] as $version){
-    if (!empty($version["php"])) {
-        if (!in_array($version["php"], $phpVersions)) {
-            array_push($phpVersions, $version["php"]);
-        }
-    }
+$phpVersions  = [];
+foreach ( $travisMatrix['include'] as $version ) {
+	if ( ! empty( $version['php'] ) ) {
+		if ( ! in_array( $version['php'], $phpVersions ) ) {
+			array_push( $phpVersions, $version['php'] );
+		}
+	}
 }
 
 // Get the arguments passed to the command line script.
-$options = getopt('wr');
+$options = getopt( 'wr' );
 
 // The indication of a command line argument being passed is an entry in the array with a "false" value.
 // So instead we check if the key exists in the array.
 
 // If we get -w passed, we're doing a wiki update.
-if (key_exists('w', $options)) {
-    generateWikiRelease($shopVersions, $phpVersions);
-    exit(0);
+if ( key_exists( 'w', $options ) ) {
+	generateWikiRelease( $shopVersions, $phpVersions );
+	exit( 0 );
 }
 
 // If -r is passed, that's for the badge in the README
-if (key_exists('r', $options)) {
-    generateReadmeReleaseBadge($shopVersions);
-    exit(0);
+if ( key_exists( 'r', $options ) ) {
+	generateReadmeReleaseBadge( $shopVersions );
+	exit( 0 );
 }
 
 // Otherwise just output the release notes, the rest will be handled by Travis
-echo generateReleaseVersions($shopVersions, $phpVersions);
+echo generateReleaseVersions( $shopVersions, $phpVersions );
