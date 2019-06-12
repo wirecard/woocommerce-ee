@@ -763,7 +763,7 @@ msgstr "Genehmigt <span class=\"count\">(%s)</span>"
 
 #. translators:
 #: woocommerce-wirecard-payment-gateway.php:105
-#, fuzzy
+
 msgid "order_status_authorized_count_single"
 msgid_plural "order_status_authorized_count_plural"
 msgstr[0] "Authorized <span class=\"count\">(%s)</span>"
