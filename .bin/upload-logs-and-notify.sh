@@ -17,12 +17,14 @@ git clone ${REPO_ADDRESS}
 #create folder with current date
 export TODAY=$(date +%Y-%m-%d)
 
-export PROJECT_FOLDER="woocommerce-ee"
+export WOOCOMMERCE_CURRENT_VERSION=${WOOCOMMERCE_VERSION}
+export PROJECT_FOLDER="woocommerce-ee-${WOOCOMMERCE_CURRENT_VERSION}"
 GATEWAY_FOLDER=${REPO_NAME}/${PROJECT_FOLDER}/${GATEWAY}
 DATE_FOLDER=${GATEWAY_FOLDER}/${TODAY}
 
+# -p means, if any of these folders in path doesn't exist, create one
 if [ ! -d "${GATEWAY_FOLDER}" ]; then
-mkdir ${GATEWAY_FOLDER}
+mkdir -p ${GATEWAY_FOLDER}
 fi
 
 if [ ! -d "${DATE_FOLDER}" ]; then

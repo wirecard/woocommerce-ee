@@ -6,9 +6,9 @@ export WOOCOMMERCE_DB_PORT=3306
 
 WOOCOMMERCE_ADMIN_USER=admin
 WOOCOMMERCE_ADMIN_PASSWORD=password
+export WOOCOMMERCE_VERSION_RELEASE=${WOOCOMMERCE_VERSION}
 
-
-docker-compose build --build-arg WOOCOMMERCE_VERSION=3.5.1 --build-arg GATEWAY=${GATEWAY} webserver
+docker-compose build --build-arg WOOCOMMERCE_VERSION=${WOOCOMMERCE_VERSION_RELEASE} --build-arg GATEWAY=${GATEWAY} webserver
 docker-compose up -d
 # wordpress running on 9090
 
