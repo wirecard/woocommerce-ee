@@ -464,7 +464,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 
 		$config->setShopInfo( 'WooCommerce', WC()->version );
 		$config->setPluginInfo(
-			'Wirecard_ElasticEngine',
+			WIRECARD_EXTENSION_PLUGIN_HEADER,
 			WIRECARD_EXTENSION_VERSION
 		);
 
