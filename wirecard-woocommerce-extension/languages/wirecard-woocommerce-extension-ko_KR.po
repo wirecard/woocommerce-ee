@@ -34,7 +34,7 @@ msgid "bic_input"
 msgstr "BIC"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:424
-#, fuzzy
+
 msgid "birthdate_input"
 msgstr "생년월일"
 
@@ -57,7 +57,7 @@ msgstr "결제 프로세스를 취소하셨습니다."
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:206
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:159
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:176
-#, fuzzy
+
 msgid "config_additional_info"
 msgstr "추가 정보 전송"
 
@@ -76,7 +76,7 @@ msgid "config_additional_info_desc"
 msgstr "사기로부터의 보호를 위해 추가적인 데이터가 전송될 것입니다. 이 추가적인 데이터에는 청구지 / 배송지 주소, 쇼핑 장바구니 및 서술자가 있습니다."
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:187
-#, fuzzy
+
 msgid "config_allowed_currencies"
 msgstr "허용된 통화"
 
@@ -96,7 +96,7 @@ msgstr "Guaranteed Invoice 결제방법은 활성 통화가 이 선택된 통화
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:127
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:126
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:126
-#, fuzzy
+
 msgid "config_base_url"
 msgstr "베이스 URL"
 
@@ -112,7 +112,7 @@ msgstr "베이스 URL"
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:129
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:128
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:128
-#, fuzzy
+
 msgid "config_base_url_desc"
 msgstr "Wirecard 베이스 URL. (예: https://api.wirecard.com)"
 
@@ -133,7 +133,7 @@ msgid "config_basket_min_desc"
 msgstr "Guaranteed Invoice 결제방법은 주문된 금액이 이 정의된 금액보다 더 큰 경우에만 표시됩니다. 기본 매장 통화 내 금액"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:169
-#, fuzzy
+
 msgid "config_billing_countries"
 msgstr "허용된 청구지 국가"
 
@@ -142,7 +142,7 @@ msgid "config_billing_countries_desc"
 msgstr "Guaranteed Invoice 결제방법은 소비자 배송지 국가가 이 선택된 국가들 중 하나에 동일한 경우에만 표시됩니다. \n\t\t\t\t사전 정의된 다음 국가들이 허용됩니다: AT, DE."
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:165
-#, fuzzy
+
 msgid "config_billing_shipping"
 msgstr "청구지/배송지 주소는 동일해야 합니다"
 
@@ -201,7 +201,7 @@ msgid "config_descriptor_desc"
 msgstr "금융 서비스 공급자에 의해 고객에게 발행된 은행 계좌내역서에 표시된 텍스트 전송"
 
 #: classes/admin/class-wirecard-settings.php:226
-#, fuzzy
+
 msgid "config_email"
 msgstr "사용자 이메일 주소"
 
@@ -298,7 +298,7 @@ msgstr "이 텍스트는 SEPA 자동 이체 위임 페이지의 첫 번째 문�
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:110
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:109
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:109
-#, fuzzy
+
 msgid "config_merchant_account_id"
 msgstr "상인 계정 ID"
 
@@ -382,7 +382,7 @@ msgid "config_payment_type_desc"
 msgstr "Choose \"Payment In Advance\" to display bank data after the checkout process, or \"Payment On Invoice\" to send bank data with the invoice."
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:178
-#, fuzzy
+
 msgid "config_shipping_countries"
 msgstr "허용된 배송지 국가"
 
@@ -455,7 +455,7 @@ msgid "config_status_desc_upi"
 msgstr "Unionpay International 결제방법 활성화"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:128
-#, fuzzy
+
 msgid "config_three_d_merchant_account_id"
 msgstr "3-D 보안 상인 계정 ID"
 
@@ -604,7 +604,7 @@ msgid "enable_heading_title_upi"
 msgstr "Wirecard Unionpay International 사용"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:214
-#, fuzzy
+
 msgid "enable_vault"
 msgstr "반복 결제 사용"
 
@@ -621,7 +621,7 @@ msgid "error_credentials"
 msgstr "테스트 실패함, 자격증명을 확인하십시오."
 
 #: classes/admin/class-wirecard-settings.php:301
-#, fuzzy
+
 msgid "error_email"
 msgstr "이메일 전송 중 오류가 발생했습니다"
 
@@ -637,7 +637,7 @@ msgstr "이 트랜잭션에 대해 사용할 수 있는 백엔드 작업이 없�
 #: classes/admin/class-wirecard-transaction-factory.php:411
 #: classes/admin/class-wirecard-transaction-factory.php:429
 #: classes/admin/class-wirecard-transaction-factory.php:447
-#, fuzzy
+
 msgid "error_no_transaction"
 msgstr "발견된 트랜잭션 없음"
 
@@ -696,7 +696,7 @@ msgstr "Wirecard 송장 결제 / 사전 결제"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:63
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:113
-#, fuzzy
+
 msgid "heading_title_ratepayinvoice"
 msgstr "Wirecard Guaranteed Invoice"
 
@@ -717,7 +717,7 @@ msgstr "Wirecard Sofort."
 
 #: woocommerce-wirecard-payment-gateway.php:268
 #: woocommerce-wirecard-payment-gateway.php:269
-#, fuzzy
+
 msgid "heading_title_support"
 msgstr "지원"
 
@@ -806,12 +806,12 @@ msgid "panel_order_number"
 msgstr "Order Number"
 
 #: classes/admin/class-wirecard-transaction-factory.php:109
-#, fuzzy
+
 msgid "panel_parent_transaction_id"
 msgstr "부모 트랜잭션 ID"
 
 #: classes/admin/class-wirecard-transaction-factory.php:115
-#, fuzzy
+
 msgid "panel_payment_method"
 msgstr "결제방법"
 
@@ -820,7 +820,7 @@ msgid "panel_transaction"
 msgstr "트랜잭션"
 
 #: classes/admin/class-wirecard-transaction-factory.php:118
-#, fuzzy
+
 msgid "panel_transaction_state"
 msgstr "트랜잭션 상태"
 
@@ -865,7 +865,7 @@ msgid "poi_pia_desc"
 msgstr "Wirecard 결제 처리 게이트웨이를 통한 송장 결제 / 사전 결제 트랜잭션"
 
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:266
-#, fuzzy
+
 msgid "ptrid"
 msgstr "제공자 트랜잭션 참조 ID"
 
@@ -972,7 +972,7 @@ msgid "success_credentials"
 msgstr "상인 구성이 성공적으로 테스트되었습니다."
 
 #: classes/admin/class-wirecard-settings.php:299
-#, fuzzy
+
 msgid "success_email"
 msgstr "이메일이 성공적으로 전송됨"
 
@@ -1007,7 +1007,7 @@ msgstr "테스트 구성"
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:147
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:147
 #: woocommerce-wirecard-payment-gateway.php:301
-#, fuzzy
+
 msgid "test_credentials"
 msgstr "테스트"
 
@@ -1146,7 +1146,7 @@ msgid "text_refund_transaction"
 msgstr "트랜잭션 환불"
 
 #: classes/admin/class-wirecard-transaction-factory.php:371
-#, fuzzy
+
 msgid "text_response_data"
 msgstr "응답 데이터"
 
@@ -1155,7 +1155,7 @@ msgid "text_sepadd_config_desc"
 msgstr "SEPA 자격증명 및 SEPA 자동 이체 위임 설정을 입력하십시오."
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:151
-#, fuzzy
+
 msgid "text_sepa_config"
 msgstr "SEPA 자격증명"
 
@@ -1164,7 +1164,7 @@ msgid "text_support"
 msgstr "Support"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:436
-#, fuzzy
+
 msgid "text_terms_accept"
 msgstr "I herewith confirm that I have read the <a href=\"https://www.wirecardbank.de/privacy-documents/datenschutzhinweis-fur-die-wirecard-zahlarten/\" target=\"_blank\">privacy notice</a> and <a target=\"_blank\" href=\"https://www.wirecardbank.de/privacy-documents/zusatzliche-geschaftsbedingungen-fur-wirecard-zahlarten/\">additional terms and conditions</a> for Wirecard payment types and that I accept their validity."
 
@@ -1211,7 +1211,7 @@ msgid "vault_account_number"
 msgstr "계좌번호"
 
 #: classes/helper/class-credit-card-vault.php:157
-#, fuzzy
+
 msgid "vault_delete_card_text"
 msgstr "카드 삭제"
 
@@ -1220,12 +1220,12 @@ msgid "vault_save_text"
 msgstr "이후 사용을 위해 저장"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:336
-#, fuzzy
+
 msgid "vault_use_existing_text"
 msgstr "저장된 신용카드 사용"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:338
-#, fuzzy
+
 msgid "vault_use_new_text"
 msgstr "새 신용카드 사용"
 

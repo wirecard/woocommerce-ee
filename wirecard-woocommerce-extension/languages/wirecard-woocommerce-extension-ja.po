@@ -34,7 +34,7 @@ msgid "bic_input"
 msgstr "BIC"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:424
-#, fuzzy
+
 msgid "birthdate_input"
 msgstr "誕生日"
 
@@ -57,7 +57,7 @@ msgstr "支払い処理が取り消されました。"
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:206
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:159
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:176
-#, fuzzy
+
 msgid "config_additional_info"
 msgstr "追加情報を送信する"
 
@@ -76,7 +76,7 @@ msgid "config_additional_info_desc"
 msgstr "詐欺防止のための追加データが送信されます。この追加データには、請求先 / 配送先の住所、買い物かご、および記述子が含まれます。"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:187
-#, fuzzy
+
 msgid "config_allowed_currencies"
 msgstr "許可されている通貨"
 
@@ -96,7 +96,7 @@ msgstr "有効な通貨がこれらの選択済み通貨のいずれかである
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:127
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:126
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:126
-#, fuzzy
+
 msgid "config_base_url"
 msgstr "ベース URL"
 
@@ -112,7 +112,7 @@ msgstr "ベース URL"
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:129
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:128
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:128
-#, fuzzy
+
 msgid "config_base_url_desc"
 msgstr "Wirecard ベース URL。(例: https://api.wirecard.com)"
 
@@ -133,7 +133,7 @@ msgid "config_basket_min_desc"
 msgstr "注文金額がここで定義されている金額を超えている場合、支払い方法として「保証済みインボイス」だけが表示されます。金額はデフォルトの店舗通貨で示されます"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:169
-#, fuzzy
+
 msgid "config_billing_countries"
 msgstr "許可されている請求先国"
 
@@ -142,7 +142,7 @@ msgid "config_billing_countries_desc"
 msgstr "消費者の発送先国がこれらの選択された国々のいずれかと一致する場合、保証付きインボイスの支払い方法だけが表示されます。\n\t\t\t\tあらかじめ許可されている国々は次の通りです: AT、DE。"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:165
-#, fuzzy
+
 msgid "config_billing_shipping"
 msgstr "請求先/発送先の住所は、同一でなければなりません"
 
@@ -201,7 +201,7 @@ msgid "config_descriptor_desc"
 msgstr "金融サービス プロバイダーが消費者に発行する取引明細書に表示されるテキストを送信します"
 
 #: classes/admin/class-wirecard-settings.php:226
-#, fuzzy
+
 msgid "config_email"
 msgstr "お客様のメール アドレス"
 
@@ -298,7 +298,7 @@ msgstr "このテキストは、SEPA ダイレクト デビット委託ページ
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:110
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:109
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:109
-#, fuzzy
+
 msgid "config_merchant_account_id"
 msgstr "販売者アカウント ID"
 
@@ -382,7 +382,7 @@ msgid "config_payment_type_desc"
 msgstr "Choose \"Payment In Advance\" to display bank data after the checkout process, or \"Payment On Invoice\" to send bank data with the invoice."
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:178
-#, fuzzy
+
 msgid "config_shipping_countries"
 msgstr "許可されている発送先国"
 
@@ -455,7 +455,7 @@ msgid "config_status_desc_upi"
 msgstr "支払い方法として UnionPay International を有効にします"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:128
-#, fuzzy
+
 msgid "config_three_d_merchant_account_id"
 msgstr "3-D セキュア販売者アカウント ID"
 
@@ -604,7 +604,7 @@ msgid "enable_heading_title_upi"
 msgstr "Wirecard UnionPay International を有効にする"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:214
-#, fuzzy
+
 msgid "enable_vault"
 msgstr "毎月の自動支払いを有効にする"
 
@@ -621,7 +621,7 @@ msgid "error_credentials"
 msgstr "テストが失敗しました。信用証明を確認してください。"
 
 #: classes/admin/class-wirecard-settings.php:301
-#, fuzzy
+
 msgid "error_email"
 msgstr "メールの配信中にエラーが発生しました"
 
@@ -637,7 +637,7 @@ msgstr "このトランザクションで利用可能なバックエンド操作
 #: classes/admin/class-wirecard-transaction-factory.php:411
 #: classes/admin/class-wirecard-transaction-factory.php:429
 #: classes/admin/class-wirecard-transaction-factory.php:447
-#, fuzzy
+
 msgid "error_no_transaction"
 msgstr "トランザクションが見つかりません"
 
@@ -696,7 +696,7 @@ msgstr "Wirecard のインボイスでの支払い / 事前支払い"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:63
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:113
-#, fuzzy
+
 msgid "heading_title_ratepayinvoice"
 msgstr "Wirecard 保証付きインボイス"
 
@@ -717,7 +717,7 @@ msgstr "Wirecard Sofort。"
 
 #: woocommerce-wirecard-payment-gateway.php:268
 #: woocommerce-wirecard-payment-gateway.php:269
-#, fuzzy
+
 msgid "heading_title_support"
 msgstr "サポート"
 
@@ -806,12 +806,12 @@ msgid "panel_order_number"
 msgstr "Order Number"
 
 #: classes/admin/class-wirecard-transaction-factory.php:109
-#, fuzzy
+
 msgid "panel_parent_transaction_id"
 msgstr "親トランザクション ID"
 
 #: classes/admin/class-wirecard-transaction-factory.php:115
-#, fuzzy
+
 msgid "panel_payment_method"
 msgstr "支払い方法"
 
@@ -864,7 +864,7 @@ msgid "poi_pia_desc"
 msgstr "Wirecard 支払い処理ゲートウェイ経由でのインボイスでの支払い / 事前支払い"
 
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:266
-#, fuzzy
+
 msgid "ptrid"
 msgstr "プロバイダーのトランザクション参照 ID"
 
@@ -971,7 +971,7 @@ msgid "success_credentials"
 msgstr "販売者構成のテストが成功しました。"
 
 #: classes/admin/class-wirecard-settings.php:299
-#, fuzzy
+
 msgid "success_email"
 msgstr "メールの送信に成功しました"
 
@@ -1006,7 +1006,7 @@ msgstr "テスト構成"
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:147
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:147
 #: woocommerce-wirecard-payment-gateway.php:301
-#, fuzzy
+
 msgid "test_credentials"
 msgstr "テスト"
 
@@ -1145,7 +1145,7 @@ msgid "text_refund_transaction"
 msgstr "トランザクションの返金"
 
 #: classes/admin/class-wirecard-transaction-factory.php:371
-#, fuzzy
+
 msgid "text_response_data"
 msgstr "応答データ"
 
@@ -1162,7 +1162,7 @@ msgid "text_support"
 msgstr "Support"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:436
-#, fuzzy
+
 msgid "text_terms_accept"
 msgstr "I herewith confirm that I have read the <a href=\"https://www.wirecardbank.de/privacy-documents/datenschutzhinweis-fur-die-wirecard-zahlarten/\" target=\"_blank\">privacy notice</a> and <a target=\"_blank\" href=\"https://www.wirecardbank.de/privacy-documents/zusatzliche-geschaftsbedingungen-fur-wirecard-zahlarten/\">additional terms and conditions</a> for Wirecard payment types and that I accept their validity."
 
@@ -1217,12 +1217,12 @@ msgid "vault_save_text"
 msgstr "後で使用するために保存する"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:336
-#, fuzzy
+
 msgid "vault_use_existing_text"
 msgstr "保存済みのクレジット カードを使用する"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:338
-#, fuzzy
+
 msgid "vault_use_new_text"
 msgstr "新しいクレジット カードを使用する"
 
