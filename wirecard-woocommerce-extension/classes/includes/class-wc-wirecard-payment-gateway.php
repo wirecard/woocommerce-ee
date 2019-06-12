@@ -464,7 +464,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 
 		$config->setShopInfo( 'WooCommerce', WC()->version );
 		$config->setPluginInfo(
-			WIRECARD_EXTENSION_PLUGIN_HEADER,
+			WIRECARD_EXTENSION_HEADER_PLUGIN_NAME,
 			WIRECARD_EXTENSION_VERSION
 		);
 
@@ -747,6 +747,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 		$custom_fields->add( new CustomField( 'phpVersion', phpversion() ) );
 		$custom_fields->add( new CustomField( 'multisite', is_multisite() ? 'multisite' : '' ) );
 		$custom_fields->add( new CustomField( 'pluginVersion', 'woocommerce-ee v' . WIRECARD_EXTENSION_VERSION ) );
+		$custom_fields->add( new CustomField( 'pluginName', WIRECARD_EXTENSION_HEADER_PLUGIN_NAME ));
 
 		return $custom_fields;
 	}
