@@ -184,3 +184,11 @@ function wp_die() {
 function _wp_filter_build_unique_id( $tag, $function, $priority ) {
 	return $tag . rand();
 }
+
+function esc_attr( $str ) {
+	return $str;
+}
+
+function esc_html ( $str ) {
+	return $str;
+}

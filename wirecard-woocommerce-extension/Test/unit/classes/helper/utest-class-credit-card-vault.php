@@ -29,7 +29,7 @@
  * Please do not use the plugin if you do not agree to these terms of use!
  */
 
-require_once __DIR__ . '/../../../../classes/helper/class-credit-card-vault.php';
+require_once WIRECARD_EXTENSION_HELPER_DIR . 'class-credit-card-vault.php';
 
 class WC_Gateway_Wirecard_Credit_Card_Vault_Utest extends \PHPUnit_Framework_TestCase {
 	private $credit_card_vault;

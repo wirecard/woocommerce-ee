@@ -29,7 +29,7 @@
  * Please do not use the plugin if you do not agree to these terms of use!
  */
 
-require_once __DIR__ . '/../../../../classes/helper/class-logger.php';
+require_once WIRECARD_EXTENSION_HELPER_DIR . 'class-logger.php';
 
 class WC_Gateway_Wirecard_Logger_Utest extends \PHPUnit_Framework_TestCase {
 	private $logger;
