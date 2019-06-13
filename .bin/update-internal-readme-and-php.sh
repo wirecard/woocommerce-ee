@@ -8,7 +8,7 @@ echo "Updating internal readme.txt file"
 composer make-internal-readme
 
 echo "Updating internal headers in .php file"
-composer make-internal-headers
+composer make-internal-php
 
 git add ${TAGRET_DIRECTORY}/readme.txt ${TAGRET_DIRECTORY}/woocommerce-wirecard-payment-gateway.php 
 git commit -m "[skip ci] Update readme.txt and woocommerce-wirecard-payment-gateway.php with latest versions"

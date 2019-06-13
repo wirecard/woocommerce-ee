@@ -8,6 +8,7 @@ define('WIKI_FILE', WIKI_DIR . '/Home.md');
 define('README_FILE', SCRIPT_DIR . '/../README.md');
 define('EXTENSION_DIR', SCRIPT_DIR . '/../wirecard-woocommerce-extension');
 define('INTERNAL_README_FILE', EXTENSION_DIR . '/readme.txt');
+define('INTERNAL_PHP_FILE', EXTENSION_DIR . '/woocommerce-wirecard-payment-gateway.php');
 define('VERSION_FILE', SCRIPT_DIR . '/../SHOPVERSIONS');
 define('TRAVIS_FILE', SCRIPT_DIR . '/../.travis.yml');
 define('CHANGELOG_FILE', SCRIPT_DIR . '/../CHANGELOG.md');
@@ -70,7 +71,7 @@ function makeTextVersions($shopVersions, $phpVersions)
     $versionRanges = [];
     foreach ($shopVersions['shopversions'] as $shopVersionObject) {
         $shopVersion  = (array) $shopVersionObject;
-        $versionRange = $shopVersion['tested'];
+        $versionRanges[$shopVersion['name']] = $shopVersion['tested'];
         // We don't need a from-to range if the versions are the same.
         if ($shopVersion['compatibility'] !== $shopVersion['tested']) {
             $versionRanges[ $shopVersion['name'] ] = $shopVersion['compatibility'] . ' - ' . $shopVersion['tested'];
@@ -211,6 +212,51 @@ function generateReadmeReleaseBadge($shopVersions)
 }
 
 /**
+ * Updates the given file with the version strings provided in @replaceMatrix
+ * (NOTE: This function directly manipulates the necessary file)
+ *
+ * @param $fileName
+ * @param $replaceMatrix
+ */
+
+function updateVersionInFile($fileName, $replaceMatrix)
+{
+    if (! file_exists($fileName)) {
+        fwrite(STDERR, "ERROR: {$fileName} file does not exist." . PHP_EOL);
+        exit(1);
+    }
+    $fileContent = file_get_contents($fileName);
+
+    foreach ($replaceMatrix as $replaceElementKey => $replaceElementValue) {
+        $replaceRegRegex = "/{$replaceElementKey}([0-9\.]{3,5})/";
+        $fileContent = preg_replace($replaceRegRegex, $replaceElementKey . $replaceElementValue, $fileContent);
+    }
+
+    file_put_contents($fileName, $fileContent);
+}
+
+
+/**
+ * Updates the internal woocommerce-wirecard-payment-gateway.php file with latest release version
+ * (NOTE: This function directly manipulates the necessary file)
+ *
+ * @param $shopVersions
+ * @param $phpVersions
+ */
+
+function updateInternalPhpFile($shopVersions)
+{
+    
+    $replaceMatrix = [
+        "Version: " => $shopVersions["release"],
+        "WIRECARD_EXTENSION_VERSION', '" => $shopVersions["release"]
+    ];
+
+    updateVersionInFile(INTERNAL_PHP_FILE, $replaceMatrix);
+}
+
+
+/**
  * Loads and parses the versions file.
  *
  * @param $filePath
@@ -249,16 +295,11 @@ function parseVersionsFile($filePath)
  * (NOTE: This function directly manipulates the necessary file)
  *
  * @param $shopVersions
+ * @param $phpVersions
  */
 function updateInternalReadme($shopVersions, $phpVersions)
 {
     
-    if (! file_exists(INTERNAL_README_FILE)) {
-        fwrite(STDERR, 'ERROR: README file does not exist.' . PHP_EOL);
-        exit(1);
-    }
-
-    $readmeContent = file_get_contents(INTERNAL_README_FILE);
     $shopVersionsArray = (array) $shopVersions["shopversions"];
     $platformArray = (array) $shopVersionsArray["platform"];
     sort($phpVersions);
@@ -269,12 +310,7 @@ function updateInternalReadme($shopVersions, $phpVersions)
         "Requires PHP: " => $phpVersions[0]
         ];
     
-    foreach ($replaceMatrix as $replaceElementKey => $replaceElementValue) {
-        $replaceRegRegex = "/{$replaceElementKey}([0-9\.]{3,5})/";
-        $readmeContent = preg_replace($replaceRegRegex, $replaceElementKey . $replaceElementValue, $readmeContent);
-    }
-    
-    file_put_contents(INTERNAL_README_FILE, $readmeContent);
+    updateVersionInFile(INTERNAL_README_FILE, $replaceMatrix);
 }
 
 
@@ -292,7 +328,7 @@ foreach ($travisMatrix['include'] as $version) {
 }
 
 // Get the arguments passed to the command line script.
-$options = getopt('wri');
+$options = getopt('wrip');
 
 // The indication of a command line argument being passed is an entry in the array with a "false" value.
 // So instead we check if the key exists in the array.
@@ -309,9 +345,15 @@ if (key_exists('r', $options)) {
     exit(0);
 }
 
-// If -wr is passed, that's for the badge in the README
+// If -i is passed, that's for the versions in readme.txt
 if (key_exists('i', $options)) {
     updateInternalReadme($shopVersions, $phpVersions);
+    exit(0);
+}
+
+// If -p is passed, that's for the versions in woocommerce-wirecard-payment-gateway.php
+if (key_exists('p', $options)) {
+    updateInternalPhpFile($shopVersions);
     exit(0);
 }
 
