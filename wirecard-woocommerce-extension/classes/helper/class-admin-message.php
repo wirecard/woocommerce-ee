@@ -41,6 +41,9 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class Admin_Message {
 
+	/** @var string CLASS_NOTICE_WARNING_DISMISSIBLE */
+	const CLASS_NOTICE_WARNING_DISMISSIBLE = 'notice notice-warning is-dismissible';
+
 	/**
 	 * Add admin notice warning
 	 *
@@ -49,8 +52,6 @@ class Admin_Message {
 	 * @since 2.0.0
 	 */
 	public function add_gateway_admin_notice__warning( $message ) {
-		$class = 'notice notice-warning is-dismissible';
-
-		printf( '<div class="%1$s"><p>%2$s</p></div>', esc_attr( $class ), esc_html( $message ) );
+		printf( '<div class="%1$s"><p>%2$s</p></div>', esc_attr( self::CLASS_NOTICE_WARNING_DISMISSIBLE ), esc_html( $message ) );
 	}
 }
