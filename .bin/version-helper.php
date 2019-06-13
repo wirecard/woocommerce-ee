@@ -127,7 +127,6 @@ function generateCompatibilityVersionsString($shopVersions, $phpVersions)
     return $compatibilityVersions;
 }
 
-
 /**
  * Generates the text for the release notes on GitHub
  *
@@ -235,7 +234,6 @@ function updateVersionInFile($fileName, $replaceMatrix)
     file_put_contents($fileName, $fileContent);
 }
 
-
 /**
  * Updates the internal woocommerce-wirecard-payment-gateway.php file with latest release version
  * (NOTE: This function directly manipulates the necessary file)
@@ -254,7 +252,6 @@ function updateInternalPhpFile($shopVersions)
 
     updateVersionInFile(INTERNAL_PHP_FILE, $replaceMatrix);
 }
-
 
 /**
  * Loads and parses the versions file.
