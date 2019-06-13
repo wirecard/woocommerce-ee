@@ -69,12 +69,13 @@ function generateChangelogLine($change)
 function makeTextVersions($shopVersions, $phpVersions)
 {
     $versionRanges = [];
-    foreach ($shopVersions['shopversions'] as $shopVersionObject) {
-        $shopVersion  = (array) $shopVersionObject;
-        $versionRanges[$shopVersion['name']] = $shopVersion['tested'];
+    foreach ($shopVersions['shopversions'] as $shopVersionInformationObject) {
+        $shopVersionInformation  = (array) $shopVersionInformationObject;
+        $versionRanges[$shopVersionInformation['name']] = $shopVersionInformation['tested'];
+        
         // We don't need a from-to range if the versions are the same.
-        if ($shopVersion['compatibility'] !== $shopVersion['tested']) {
-            $versionRanges[ $shopVersion['name'] ] = $shopVersion['compatibility'] . ' - ' . $shopVersion['tested'];
+        if ($shopVersionInformation['compatibility'] !== $shopVersionInformation['tested']) {
+            $versionRanges[ $shopVersionInformation['name'] ] = $shopVersionInformation['compatibility'] . ' - ' . $shopVersionInformation['tested'];
         }
     }
     $phpVersions      = array_map('prefixWithPhp', $phpVersions);
@@ -155,10 +156,7 @@ function generateReleaseVersions($shopVersions, $phpVersions)
  */
 function generateWikiRelease($shopVersions, $phpVersions)
 {
-    if (! file_exists(WIKI_FILE)) {
-        fwrite(STDERR, 'ERROR: Wiki files do not exist.' . PHP_EOL);
-        exit(1);
-    }
+    checkIfFileExists(WIKI_FILE);
 
     $wikiPage    = file_get_contents(WIKI_FILE);
     $releaseDate = date('Y-m-d');
@@ -191,10 +189,7 @@ function generateWikiRelease($shopVersions, $phpVersions)
  */
 function generateReadmeReleaseBadge($shopVersions)
 {
-    if (! file_exists(README_FILE)) {
-        fwrite(STDERR, 'ERROR: README file does not exist.' . PHP_EOL);
-        exit(1);
-    }
+    checkIfFileExists(README_FILE);
 
     $readmeContent = file_get_contents(README_FILE);
 
@@ -220,10 +215,8 @@ function generateReadmeReleaseBadge($shopVersions)
 
 function updateVersionInFile($fileName, $replaceMatrix)
 {
-    if (! file_exists($fileName)) {
-        fwrite(STDERR, "ERROR: {$fileName} file does not exist." . PHP_EOL);
-        exit(1);
-    }
+    checkIfFileExists($fileName);
+
     $fileContent = file_get_contents($fileName);
 
     foreach ($replaceMatrix as $replaceElementKey => $replaceElementValue) {
@@ -244,7 +237,6 @@ function updateVersionInFile($fileName, $replaceMatrix)
 
 function updateInternalPhpFile($shopVersions)
 {
-    
     $replaceMatrix = [
         "Version: " => $shopVersions["release"],
         "WIRECARD_EXTENSION_VERSION', '" => $shopVersions["release"]
@@ -262,11 +254,7 @@ function updateInternalPhpFile($shopVersions)
 
 function parseVersionsFile($filePath)
 {
-    // Bail out if we don"t have defined shop versions and throw a loud error.
-    if (! file_exists($filePath)) {
-        fwrite(STDERR, 'ERROR: No shop version file exists' . PHP_EOL);
-        exit(1);
-    }
+    checkIfFileExists($filePath);
 
     // Load the file and parse json out of it
     $json = json_decode(
@@ -282,9 +270,7 @@ function parseVersionsFile($filePath)
     if (is_array($json)) {
         uasort($json, $cmp);
         return (array) end($json);
-    } else {
-        return (array) $json;
-    }
+    } 
 }
 
 /**
@@ -296,7 +282,6 @@ function parseVersionsFile($filePath)
  */
 function updateInternalReadme($shopVersions, $phpVersions)
 {
-    
     $shopVersionsArray = (array) $shopVersions["shopversions"];
     $platformArray = (array) $shopVersionsArray["platform"];
     sort($phpVersions);
@@ -308,6 +293,20 @@ function updateInternalReadme($shopVersions, $phpVersions)
         ];
     
     updateVersionInFile(INTERNAL_README_FILE, $replaceMatrix);
+}
+
+/**
+ * Checks if file exists and exits the script if it's not the case
+ *
+ * @param $filename
+ */
+function checkIfFileExists($filename) 
+{
+	// Bail out if we don"t the requested file.
+	if (! file_exists($filename)) {
+		fwrite(STDERR, "ERROR: File {$filename} does not exist" . PHP_EOL);
+		exit(1);
+	}
 }
 
 
