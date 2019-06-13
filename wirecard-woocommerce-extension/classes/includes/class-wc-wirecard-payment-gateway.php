@@ -457,14 +457,14 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 *
 	 * @return Config
 	 *
-	 * @since 2.0.0 Update shop version to include the Wordpress version
+	 * @since 2.0.0 Update shop version to include the WordPress version
 	 *              Move plugin name to a global var
 	 * @since 1.0.0
 	 */
 	public function create_payment_config( $base_url = null, $http_user = null, $http_pass = null ) {
 		global $wp_version;
-		$config      = new Config( $base_url, $http_user, $http_pass );
-		$shop_version = sprintf('%s+Wordpress+%s', WC()->version, $wp_version);
+		$config       = new Config( $base_url, $http_user, $http_pass );
+		$shop_version = sprintf( '%s+WordPress+%s', WC()->version, $wp_version );
 
 		$config->setShopInfo( 'WooCommerce', $shop_version );
 		$config->setPluginInfo(
