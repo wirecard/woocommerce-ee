@@ -6,6 +6,8 @@ define('SCRIPT_DIR', __DIR__);
 define('WIKI_DIR', SCRIPT_DIR . '/../' . REPO_NAME . '.wiki');
 define('WIKI_FILE', WIKI_DIR . '/Home.md');
 define('README_FILE', SCRIPT_DIR . '/../README.md');
+define('EXTENSION_DIR', SCRIPT_DIR . '/../wirecard-woocommerce-extension');
+define('INTERNAL_README_FILE', EXTENSION_DIR . '/readme.txt');
 define('VERSION_FILE', SCRIPT_DIR . '/../SHOPVERSIONS');
 define('TRAVIS_FILE', SCRIPT_DIR . '/../.travis.yml');
 define('CHANGELOG_FILE', SCRIPT_DIR . '/../CHANGELOG.md');
@@ -242,6 +244,40 @@ function parseVersionsFile($filePath)
     }
 }
 
+/**
+ * Updates the internal readme.txt file with latest tested platform plugin and php versions
+ * (NOTE: This function directly manipulates the necessary file)
+ *
+ * @param $shopVersions
+ */
+function updateInternalReadme($shopVersions, $phpVersions)
+{
+    
+    if (! file_exists(INTERNAL_README_FILE)) {
+        fwrite(STDERR, 'ERROR: README file does not exist.' . PHP_EOL);
+        exit(1);
+    }
+
+    $readmeContent = file_get_contents(INTERNAL_README_FILE);
+    $shopVersionsArray = (array) $shopVersions["shopversions"];
+    $platformArray = (array) $shopVersionsArray["platform"];
+    sort($phpVersions);
+    
+    $replaceMatrix = [
+        "Stable tag: " => $shopVersions["release"],
+        "Tested up to: " => $platformArray["tested"],
+        "Requires PHP: " => $phpVersions[0]
+        ];
+    
+    foreach ($replaceMatrix as $replaceElementKey => $replaceElementValue) {
+        $replaceRegRegex = "/{$replaceElementKey}([0-9\.]{3,5})/";
+        $readmeContent = preg_replace($replaceRegRegex, $replaceElementKey . $replaceElementValue, $readmeContent);
+    }
+    
+    file_put_contents(INTERNAL_README_FILE, $readmeContent);
+}
+
+
 $shopVersions = parseVersionsFile(VERSION_FILE);
 // Grab the Travis config for parsing the supported PHP versions
 $travisConfig = Yaml::parseFile(TRAVIS_FILE);
@@ -256,7 +292,7 @@ foreach ($travisMatrix['include'] as $version) {
 }
 
 // Get the arguments passed to the command line script.
-$options = getopt('wr');
+$options = getopt('wri');
 
 // The indication of a command line argument being passed is an entry in the array with a "false" value.
 // So instead we check if the key exists in the array.
@@ -270,6 +306,12 @@ if (key_exists('w', $options)) {
 // If -r is passed, that's for the badge in the README
 if (key_exists('r', $options)) {
     generateReadmeReleaseBadge($shopVersions);
+    exit(0);
+}
+
+// If -wr is passed, that's for the badge in the README
+if (key_exists('i', $options)) {
+    updateInternalReadme($shopVersions, $phpVersions);
     exit(0);
 }
 
