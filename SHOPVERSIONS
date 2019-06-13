@@ -3,15 +3,15 @@
 	"release": "1.6.5",
 	"shopversions": {
 		"shopsystem": {
-			"name": "WooCommerce",		
-        	"tested": "3.6.2",
-        	"compatibility": "3.3.4"	
+			"name": "WooCommerce",
+			"tested": "3.6.2",
+			"compatibility": "3.3.4"
 			},
-		"platform": { 
+		"platform": {
 			"name": "Wordpress",
-            "tested": "5.1.1",
-            "compatibility": "5.0.3"
-            }
+			"tested": "5.1.1",
+			"compatibility": "5.0.3"
+			}
 	},	
 	"changelog": [
 	    "Add PHP7.2 support",
