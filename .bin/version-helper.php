@@ -135,13 +135,13 @@ function generateCompatibilityVersionsString($shopVersions, $phpVersions)
  */
 function generateReleaseVersions($shopVersions, $phpVersions)
 {
-
     $releaseNotes  = '<ul>' . join('', array_map('generateChangelogLine', $shopVersions['changelog'])) . '</ul>';
     $releaseNotes .= '<em><strong>Tested version(s):</strong> ';
     $releaseNotes .= generateTestedVersionsString($shopVersions, $phpVersions);
 
     $releaseNotes .= '<em><strong>Compatibility:</strong> ';
     $releaseNotes .= generateCompatibilityVersionsString($shopVersions, $phpVersions);
+    
     return $releaseNotes;
 }
 
