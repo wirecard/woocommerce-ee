@@ -457,12 +457,16 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 *
 	 * @return Config
 	 *
+	 * @since 2.0.0 Update shop version to include the Wordpress version
+	 *              Move plugin name to a global var
 	 * @since 1.0.0
 	 */
 	public function create_payment_config( $base_url = null, $http_user = null, $http_pass = null ) {
-		$config = new Config( $base_url, $http_user, $http_pass );
+		global $wp_version;
+		$config      = new Config( $base_url, $http_user, $http_pass );
+		$shop_version = sprintf('%s+Wordpress+%s', WC()->version, $wp_version);
 
-		$config->setShopInfo( 'WooCommerce', WC()->version );
+		$config->setShopInfo( 'WooCommerce', $shop_version );
 		$config->setPluginInfo(
 			WIRECARD_EXTENSION_HEADER_PLUGIN_NAME,
 			WIRECARD_EXTENSION_VERSION
@@ -633,7 +637,6 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 
 		$custom_fields = new CustomFieldCollection();
 		$custom_fields->add( new CustomField( 'orderId', $order_id ) );
-		$custom_fields = $this->create_version_fields( $custom_fields );
 		$this->transaction->setCustomFields( $custom_fields );
 
 		if ( $this->get_option( 'descriptor' ) === 'yes' ) {
@@ -731,25 +734,6 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 		$woocommerce .= 'v' . WC()->version;
 
 		return $shop . $woocommerce;
-	}
-
-	/**
-	 * Create CustomFields including version number PHP/Shop/Plugin
-	 *
-	 * @param CustomFieldCollection $custom_fields
-	 *
-	 * @return mixed
-	 *
-	 * @since 1.1.0
-	 */
-	private function create_version_fields( $custom_fields ) {
-		$custom_fields->add( new CustomField( 'shopVersion', $this->get_shop_version() ) );
-		$custom_fields->add( new CustomField( 'phpVersion', phpversion() ) );
-		$custom_fields->add( new CustomField( 'multisite', is_multisite() ? 'multisite' : '' ) );
-		$custom_fields->add( new CustomField( 'pluginVersion', 'woocommerce-ee v' . WIRECARD_EXTENSION_VERSION ) );
-		$custom_fields->add( new CustomField( 'pluginName', WIRECARD_EXTENSION_HEADER_PLUGIN_NAME ));
-
-		return $custom_fields;
 	}
 
 	/**
