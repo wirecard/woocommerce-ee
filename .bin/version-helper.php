@@ -69,8 +69,7 @@ function generateChangelogLine($change)
 function makeTextVersions($shopVersions, $phpVersions)
 {
     $versionRanges = [];
-    foreach ($shopVersions['shopversions'] as $shopVersionInformationObject) {
-        $shopVersionInformation  = (array) $shopVersionInformationObject;
+    foreach ($shopVersions['shopversions'] as $shopVersionInformation) {
         $versionRanges[$shopVersionInformation['name']] = $shopVersionInformation['tested'];
         
         // We don't need a from-to range if the versions are the same.
@@ -99,10 +98,9 @@ function generateTestedVersionsString($shopVersions, $phpVersions)
     $testedVersions  = '';
     $releaseVersions = makeTextVersions($shopVersions, $phpVersions);
 
-    foreach ($shopVersions['shopversions'] as $shopVersionObject) {
-        $shopVersion     = (array) $shopVersionObject;
-        $testedVersions .= "{$shopVersion['name']} {$shopVersion['tested']}";
-        $testedVersions .= ( $shopVersionObject == end($shopVersions['shopversions']) ) ? ' ' : ', ';
+    foreach ($shopVersions['shopversions'] as $shopVersionInformation) {
+        $testedVersions .= "{$shopVersionInformation['name']} {$shopVersionInformation['tested']}";
+        $testedVersions .= ( $shopVersionInformation == end($shopVersions['shopversions']) ) ? ' ' : ', ';
     }
     $testedVersions .= "with {$releaseVersions['phpVersionString']}</em><br>";
 
@@ -193,12 +191,11 @@ function generateReadmeReleaseBadge($shopVersions)
 
     $readmeContent = file_get_contents(README_FILE);
 
-    foreach ($shopVersions['shopversions'] as $shopVersionObject) {
-        $shopVersion = (array) $shopVersionObject;
-        $badge       = $shopVersion['name'] . ' v' . $shopVersion['tested'];
+    foreach ($shopVersions['shopversions'] as $shopVersionInformation) {
+        $badge       = $shopVersionInformation['name'] . ' v' . $shopVersionInformation['tested'];
         $badgeUrl    = str_replace(' ', '-', $badge);
         // We're matching the image tag in Markdown. [![Shopsytem v1.2.3] ... ]
-        $badgeRegex    = "/\[\!\[{$shopVersion['name']}.*\]/mi";
+        $badgeRegex    = "/\[\!\[{$shopVersionInformation['name']}.*\]/mi";
         $badgeReplace  = "[![{$badge}](https://img.shields.io/badge/{$badgeUrl}-green.svg)]";
         $readmeContent = preg_replace($badgeRegex, $badgeReplace, $readmeContent);
     }
@@ -257,13 +254,11 @@ function parseVersionsFile($filePath)
     checkIfFileExists($filePath);
 
     // Load the file and parse json out of it
-    $json = json_decode(
-        file_get_contents(VERSION_FILE)
-    );
+    $json = json_decode(file_get_contents(VERSION_FILE), true);
 
     // compare release versions
     $cmp = function ($a, $b) {
-        return version_compare($a->release, $b->release);
+    	return version_compare($a["release"], $b["release"]);
     };
 
     // if file contains an array of versions return the latest
@@ -282,13 +277,11 @@ function parseVersionsFile($filePath)
  */
 function updateInternalReadme($shopVersions, $phpVersions)
 {
-    $shopVersionsArray = (array) $shopVersions["shopversions"];
-    $platformArray = (array) $shopVersionsArray["platform"];
-    sort($phpVersions);
-    
+	sort($phpVersions);
+
     $replaceMatrix = [
         "Stable tag: " => $shopVersions["release"],
-        "Tested up to: " => $platformArray["tested"],
+        "Tested up to: " => $shopVersions["shopversions"]["platform"]["tested"],
         "Requires PHP: " => $phpVersions[0]
         ];
     
