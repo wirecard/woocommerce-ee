@@ -15,10 +15,9 @@ cp -r ${PLUGIN_DIR}/{assets,classes,languages,vendor,readme.txt,woocommerce-wire
 	${WORDPRESS_DIR}/${PLUGIN_DIR}/trunk
 
 mkdir ${RELEASE_DIR}
-cp -r ${PLUGIN_DIR}/{assets,classes,languages, vendor,readme.txt,woocommerce-wirecard-payment-gateway.php} ${RELEASE_DIR}
+cp -r ${PLUGIN_DIR}/{assets,classes,languages,vendor,readme.txt,woocommerce-wirecard-payment-gateway.php} ${RELEASE_DIR}
 
 cd ${WORDPRESS_DIR}
-svn add {PLUGIN_DIR}/tags/${VERSION}/*
-svn add {PLUGIN_DIR}/trunk/*
+svn add ${PLUGIN_DIR}/tags/${VERSION}/*
 svn commit -m "Add ${VERSION} release" --username "${WORDPRESS_USER}" --password "${WORDPRESS_PASSWORD}"
 echo "Successfully uploaded release to Wordpress"
