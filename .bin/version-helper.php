@@ -240,8 +240,8 @@ function updateVersionInFile($fileName, $replaceMatrix)
 function updateInternalPhpFile($shopVersions)
 {
     $replaceMatrix = [
-        "Version: " => $shopVersions["release"],
-        "WIRECARD_EXTENSION_VERSION', '" => $shopVersions["release"]
+        'Version: ' => $shopVersions['release'],
+        "WIRECARD_EXTENSION_VERSION', '" => $shopVersions['release']
     ];
 
     updateVersionInFile(INTERNAL_PHP_FILE, $replaceMatrix);
@@ -264,7 +264,7 @@ function parseVersionsFile($filePath)
 
     // compare release versions
     $cmp = function ($a, $b) {
-        return version_compare($a["release"], $b["release"]);
+        return version_compare($a['release'], $b['release']);
     };
 
     // if file contains an array of versions return the latest
@@ -287,9 +287,9 @@ function updateInternalReadme($shopVersions, $phpVersions)
     sort($phpVersions);
 
     $replaceMatrix = [
-        "Stable tag: " => $shopVersions["release"],
-        "Tested up to: " => $shopVersions["shopversions"]["platform"]["tested"],
-        "Requires PHP: " => $phpVersions[0]
+        'Stable tag: ' => $shopVersions['release'],
+        'Tested up to: ' => $shopVersions['shopversions']['platform']['tested'],
+        'Requires PHP: ' => $phpVersions[0]
         ];
     
     updateVersionInFile(INTERNAL_README_FILE, $replaceMatrix);
