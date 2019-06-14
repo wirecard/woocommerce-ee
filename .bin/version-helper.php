@@ -250,7 +250,7 @@ function updateInternalPhpFile($shopVersions)
 /**
  * Loads and parses the versions file.
  *
- * @param array $filePath
+ * @param string $filePath
  * @return array
  * @since 1.2.0
  */
@@ -303,7 +303,7 @@ function updateInternalReadme($shopVersions, $phpVersions)
  */
 function checkIfFileExists($filename)
 {
-    // Bail out if we don"t the requested file.
+    // Bail out if we don't the requested file.
     if (! file_exists($filename)) {
         fwrite(STDERR, "ERROR: File {$filename} does not exist" . PHP_EOL);
         exit(1);
