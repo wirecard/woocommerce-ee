@@ -20,5 +20,5 @@ cp -r ${PLUGIN_DIR}/{assets,classes,languages, vendor,readme.txt,woocommerce-wir
 cd ${WORDPRESS_DIR}
 svn add {PLUGIN_DIR}/tags/${VERSION}/*
 svn add {PLUGIN_DIR}/trunk/*
-#svn commit -m "Add ${VERSION} release" --username "${WORDPRESS_USER}" --password "${WORDPRESS_PASSWORD}"
+svn commit -m "Add ${VERSION} release" --username "${WORDPRESS_USER}" --password "${WORDPRESS_PASSWORD}"
 echo "Successfully uploaded release to Wordpress"
