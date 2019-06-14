@@ -21,8 +21,9 @@ use Symfony\Component\Yaml\Yaml;
 /**
  * Maps over the configured PHP versions and prefixes them
  *
- * @param $version
+ * @param  float $version
  * @return string
+ * @since 1.2.0
  */
 function prefixWithPhp($version)
 {
@@ -33,9 +34,10 @@ function prefixWithPhp($version)
  * Joins an array with commas and a conjunction before the last item
  * (e.g. "x, y and z")
  *
- * @param $list
+ * @param array $list
  * @param string $conjunction
  * @return string
+ * @since 1.2.0
  */
 function naturalLanguageJoin($list, $conjunction = 'and')
 {
@@ -51,8 +53,9 @@ function naturalLanguageJoin($list, $conjunction = 'and')
 /**
  * Wraps each line of the changelog in proper formatting.
  *
- * @param $change
+ * @param string $change
  * @return string
+ * @since 1.2.0
  */
 function generateChangelogLine($change)
 {
@@ -62,9 +65,10 @@ function generateChangelogLine($change)
 /**
  * Generates the necessary version string for the compatible shop versions and PHP versions.
  *
- * @param $shopVersions
- * @param $phpVersions
+ * @param array $shopVersions
+ * @param array $phpVersions
  * @return array
+ * @since 1.2.0
  */
 function makeTextVersions($shopVersions, $phpVersions)
 {
@@ -87,60 +91,52 @@ function makeTextVersions($shopVersions, $phpVersions)
 }
 
 /**
- * Generates the text with tested versions
+ * Generates the text with versions (tested or compatibility)
  *
- * @param $shopVersions
- * @param $phpVersions
+ * @param array $shopVersions
+ * @param array $phpVersions
+ * @param string $type
  * @return string
+ * @since 1.6.5
  */
-function generateTestedVersionsString($shopVersions, $phpVersions)
+function generateVersionsString($shopVersions, $phpVersions, $type)
 {
-    $testedVersions  = '';
+    $versionsString = '';
     $releaseVersions = makeTextVersions($shopVersions, $phpVersions);
 
-    foreach ($shopVersions['shopversions'] as $shopVersionInformation) {
-        $testedVersions .= "{$shopVersionInformation['name']} {$shopVersionInformation['tested']}";
-        $testedVersions .= ( $shopVersionInformation == end($shopVersions['shopversions']) ) ? ' ' : ', ';
+    if ($type == 'tested') {
+        foreach ($shopVersions['shopversions'] as $shopVersionInformation) {
+            $versionsString .= "{$shopVersionInformation['name']} {$shopVersionInformation['tested']}";
+            $versionsString .= ( $shopVersionInformation == end($shopVersions['shopversions']) ) ? ' ' : ', ';
+        }
+    } else {
+        foreach ($releaseVersions['versionRanges'] as $releaseName => $releaseVersion) {
+            $versionsString .= "{$releaseName} {$releaseVersion}";
+            $versionsString .= ( $releaseVersion == end($releaseVersions['versionRanges']) ) ? ' ' : ', ';
+        }
     }
-    $testedVersions .= "with {$releaseVersions['phpVersionString']}</em><br>";
 
-    return $testedVersions;
-}
+    $versionsString .= "with {$releaseVersions['phpVersionString']}</em><br>";
 
-/**
- * Generates the text with compatibility versions
- *
- * @param $shopVersions
- * @param $phpVersions
- * @return string
- */
-function generateCompatibilityVersionsString($shopVersions, $phpVersions)
-{
-    $compatibilityVersions = '';
-    $releaseVersions       = makeTextVersions($shopVersions, $phpVersions);
-    foreach ($releaseVersions['versionRanges'] as $releaseName => $releaseVersion) {
-        $compatibilityVersions .= "{$releaseName} {$releaseVersion}";
-        $compatibilityVersions .= ( $releaseVersion == end($releaseVersions['versionRanges']) ) ? ' ' : ', ';
-    }
-    $compatibilityVersions .= "with {$releaseVersions['phpVersionString']}</em><br>";
-    return $compatibilityVersions;
+    return $versionsString;
 }
 
 /**
  * Generates the text for the release notes on GitHub
  *
- * @param $shopVersions
- * @param $phpVersions
+ * @param array $shopVersions
+ * @param array $phpVersions
  * @return string
+ * @since 1.2.0
  */
 function generateReleaseVersions($shopVersions, $phpVersions)
 {
     $releaseNotes  = '<ul>' . join('', array_map('generateChangelogLine', $shopVersions['changelog'])) . '</ul>';
     $releaseNotes .= '<em><strong>Tested version(s):</strong> ';
-    $releaseNotes .= generateTestedVersionsString($shopVersions, $phpVersions);
+    $releaseNotes .= generateVersionsString($shopVersions, $phpVersions, 'tested');
 
     $releaseNotes .= '<em><strong>Compatibility:</strong> ';
-    $releaseNotes .= generateCompatibilityVersionsString($shopVersions, $phpVersions);
+    $releaseNotes .= generateVersionsString($shopVersions, $phpVersions, 'compatibility');
     
     return $releaseNotes;
 }
@@ -149,8 +145,9 @@ function generateReleaseVersions($shopVersions, $phpVersions)
  * Updates the compatibility versions and release date on the home page of the repository wiki
  * (NOTE: This function directly manipulates the necessary file)
  *
- * @param $shopVersions
- * @param $phpVersions
+ * @param array $shopVersions
+ * @param array $phpVersions
+ * @since 1.2.0
  */
 function generateWikiRelease($shopVersions, $phpVersions)
 {
@@ -183,7 +180,8 @@ function generateWikiRelease($shopVersions, $phpVersions)
  * Updates the README badge to use the latest shop version we're compatible with.
  * (NOTE: This function directly manipulates the necessary file)
  *
- * @param $shopVersions
+ * @param array $shopVersions
+ * @since 1.2.0
  */
 function generateReadmeReleaseBadge($shopVersions)
 {
@@ -199,6 +197,7 @@ function generateReadmeReleaseBadge($shopVersions)
         $badgeReplace  = "[![{$badge}](https://img.shields.io/badge/{$badgeUrl}-green.svg)]";
         $readmeContent = preg_replace($badgeRegex, $badgeReplace, $readmeContent);
     }
+    
     file_put_contents(README_FILE, $readmeContent);
 }
 
@@ -206,8 +205,9 @@ function generateReadmeReleaseBadge($shopVersions)
  * Updates the given file with the version strings provided in @replaceMatrix
  * (NOTE: This function directly manipulates the necessary file)
  *
- * @param $fileName
- * @param $replaceMatrix
+ * @param string $fileName
+ * @param array $replaceMatrix
+ * @since 1.6.5
  */
 
 function updateVersionInFile($fileName, $replaceMatrix)
@@ -218,7 +218,12 @@ function updateVersionInFile($fileName, $replaceMatrix)
 
     foreach ($replaceMatrix as $replaceElementKey => $replaceElementValue) {
         $replaceRegRegex = "/{$replaceElementKey}([0-9\.]{3,5})/";
-        $fileContent = preg_replace($replaceRegRegex, $replaceElementKey . $replaceElementValue, $fileContent);
+        
+        $fileContent     = preg_replace(
+            $replaceRegRegex,
+            $replaceElementKey . $replaceElementValue,
+            $fileContent
+        );
     }
 
     file_put_contents($fileName, $fileContent);
@@ -228,8 +233,8 @@ function updateVersionInFile($fileName, $replaceMatrix)
  * Updates the internal woocommerce-wirecard-payment-gateway.php file with latest release version
  * (NOTE: This function directly manipulates the necessary file)
  *
- * @param $shopVersions
- * @param $phpVersions
+ * @param array $shopVersions
+ * @since 1.6.5
  */
 
 function updateInternalPhpFile($shopVersions)
@@ -245,8 +250,9 @@ function updateInternalPhpFile($shopVersions)
 /**
  * Loads and parses the versions file.
  *
- * @param $filePath
+ * @param array $filePath
  * @return array
+ * @since 1.2.0
  */
 
 function parseVersionsFile($filePath)
@@ -258,26 +264,27 @@ function parseVersionsFile($filePath)
 
     // compare release versions
     $cmp = function ($a, $b) {
-    	return version_compare($a["release"], $b["release"]);
+        return version_compare($a["release"], $b["release"]);
     };
 
     // if file contains an array of versions return the latest
     if (is_array($json)) {
         uasort($json, $cmp);
         return (array) end($json);
-    } 
+    }
 }
 
 /**
  * Updates the internal readme.txt file with latest tested platform plugin and php versions
  * (NOTE: This function directly manipulates the necessary file)
  *
- * @param $shopVersions
- * @param $phpVersions
+ * @param array  $shopVersions
+ * @param array $phpVersions
+ * @since 1.6.5
  */
 function updateInternalReadme($shopVersions, $phpVersions)
 {
-	sort($phpVersions);
+    sort($phpVersions);
 
     $replaceMatrix = [
         "Stable tag: " => $shopVersions["release"],
@@ -291,15 +298,16 @@ function updateInternalReadme($shopVersions, $phpVersions)
 /**
  * Checks if file exists and exits the script if it's not the case
  *
- * @param $filename
+ * @param string $filename
+ * @since 1.6.5
  */
-function checkIfFileExists($filename) 
+function checkIfFileExists($filename)
 {
-	// Bail out if we don"t the requested file.
-	if (! file_exists($filename)) {
-		fwrite(STDERR, "ERROR: File {$filename} does not exist" . PHP_EOL);
-		exit(1);
-	}
+    // Bail out if we don"t the requested file.
+    if (! file_exists($filename)) {
+        fwrite(STDERR, "ERROR: File {$filename} does not exist" . PHP_EOL);
+        exit(1);
+    }
 }
 
 
