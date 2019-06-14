@@ -638,6 +638,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 		$custom_fields = new CustomFieldCollection();
 		$custom_fields->add( new CustomField( 'orderId', $order_id ) );
 		$custom_fields->add( new CustomField( 'multisite', is_multisite() ? 'multisite' : '' ) );
+		$custom_fields->add( new CustomField( 'phpVersion', phpversion() ) );
 		$this->transaction->setCustomFields( $custom_fields );
 
 		if ( $this->get_option( 'descriptor' ) === 'yes' ) {
