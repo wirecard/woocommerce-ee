@@ -18,6 +18,6 @@ mkdir ${RELEASE_DIR}
 cp -r ${PLUGIN_DIR}/{assets,classes,languages,vendor,readme.txt,woocommerce-wirecard-payment-gateway.php} ${RELEASE_DIR}
 
 cd ${WORDPRESS_DIR}
-svn add tags/${VERSION}/*
+svn add --parents tags/${VERSION}/*
 svn commit -m "Add ${VERSION} release" --username "${WORDPRESS_USER}" --password "${WORDPRESS_PASSWORD}"
 echo "Successfully uploaded release to Wordpress"
