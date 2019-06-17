@@ -125,6 +125,7 @@ matrix:
       - export RELEASE_NOTES=$(composer make-release-notes)
       - bash .bin/generate-wiki-notes.sh
       - bash .bin/generate-readme-badge.sh
+      - bash .bin/update-internal-readme-and-php.sh
       - bash .bin/generate-release-package.sh $TRAVIS_TAG
     deploy:
       provider: releases
@@ -138,6 +139,8 @@ matrix:
         repo: ${TRAVIS_REPO_SLUG}
         tags: true
     after_deploy: 
+#      svn checkout is not producing logs, not to oerload travis, so wait for 30 minutes till the checkout completes
+      - travis_wait 30 bash .bin/upload-to-marketplace.sh
       - export TMPDIR=/tmp/wirecard
       - git clone -b master --depth 1 https://$WIRECARD_CEE_GITHUB_TOKEN@github.com/$DEPLOYMENT_PROJECT $TMPDIR
       - cd $TMPDIR && travis_retry bundle install
