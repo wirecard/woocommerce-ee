@@ -1,5 +1,16 @@
 [
 {
+	"release": "1.6.6",
+	"shopsystem": "WooCommerce",
+	"tested": "3.6.5",
+	"compatibility": "3.3.4",
+	"changelog": [
+		"Add new translations for credit card user interface",
+		"Add identification header",
+		"Improved loading of configuration values for payment methods"
+	]
+},
+{
 	"release": "1.6.5",
 	"shopsystem": "WooCommerce",
 	"tested": "3.6.2",
