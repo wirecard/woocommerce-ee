@@ -140,7 +140,7 @@ matrix:
         tags: true
     after_deploy: 
 #      svn checkout is not producing logs, not to oerload travis, so wait for 30 minutes till the checkout completes
-      - travis_wait 30 bash .bin/upload-to-marketplace.sh
+      - travis_wait 60 bash .bin/upload-to-marketplace.sh
       - export TMPDIR=/tmp/wirecard
       - git clone -b master --depth 1 https://$WIRECARD_CEE_GITHUB_TOKEN@github.com/$DEPLOYMENT_PROJECT $TMPDIR
       - cd $TMPDIR && travis_retry bundle install
