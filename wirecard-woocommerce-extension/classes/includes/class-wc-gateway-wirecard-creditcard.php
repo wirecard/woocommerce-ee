@@ -72,7 +72,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	/**
 	 * WC_Gateway_Wirecard_Creditcard constructor.
 	 *
-	 * @since 2.0.0 Update constructor so it can be shared with upi
+	 * @since 2.0.0 Update constructor so it can be shared
 	 * @since 1.0.0
 	 */
 	public function __construct() {

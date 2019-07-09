@@ -79,7 +79,6 @@ class WC_Gateway_Wirecard_Pay_By_Bank_App extends WC_Wirecard_Payment_Gateway {
 		$this->additional_helper = new Additional_Information();
 
 		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
-		add_action( 'woocommerce_api_get_upi_request_data', array( $this, 'get_request_data_upi' ) );
 
 		parent::add_payment_gateway_actions();
 	}
