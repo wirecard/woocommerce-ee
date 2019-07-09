@@ -69,18 +69,18 @@ class Wirecard_Handler {
 	 */
 	public function __construct() {
 		$this->payment_methods = array(
-			'paypal'                => new WC_Gateway_Wirecard_Paypal(),
-			'creditcard'            => new WC_Gateway_Wirecard_Creditcard(),
-			'sepadirectdebit'       => new WC_Gateway_Wirecard_Sepa_Direct_Debit(),
-			'sepacredit'            => new WC_Gateway_Wirecard_Sepa_Credit_Transfer(),
-			'ideal'                 => new WC_Gateway_Wirecard_Ideal(),
-			'eps'                   => new WC_Gateway_Wirecard_Eps(),
-			'sofortbanking'         => new WC_Gateway_Wirecard_Sofort(),
-			'wiretransfer'          => new WC_Gateway_Wirecard_Poipia(),
-			'ratepay-invoice'       => new WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay(),
-			'alipay-xborder'        => new WC_Gateway_Wirecard_Alipay_Crossborder(),
-			'masterpass'            => new WC_Gateway_Wirecard_Masterpass(),
-			'zapp'                  => new WC_Gateway_Wirecard_Pay_By_Bank_App(),
+			'paypal'          => new WC_Gateway_Wirecard_Paypal(),
+			'creditcard'      => new WC_Gateway_Wirecard_Creditcard(),
+			'sepadirectdebit' => new WC_Gateway_Wirecard_Sepa_Direct_Debit(),
+			'sepacredit'      => new WC_Gateway_Wirecard_Sepa_Credit_Transfer(),
+			'ideal'           => new WC_Gateway_Wirecard_Ideal(),
+			'eps'             => new WC_Gateway_Wirecard_Eps(),
+			'sofortbanking'   => new WC_Gateway_Wirecard_Sofort(),
+			'wiretransfer'    => new WC_Gateway_Wirecard_Poipia(),
+			'ratepay-invoice' => new WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay(),
+			'alipay-xborder'  => new WC_Gateway_Wirecard_Alipay_Crossborder(),
+			'masterpass'      => new WC_Gateway_Wirecard_Masterpass(),
+			'zapp'            => new WC_Gateway_Wirecard_Pay_By_Bank_App(),
 		);
 
 		$this->logger = new Logger();
