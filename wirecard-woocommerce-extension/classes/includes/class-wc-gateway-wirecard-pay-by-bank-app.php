@@ -162,7 +162,7 @@ class WC_Gateway_Wirecard_Pay_By_Bank_App extends WC_Wirecard_Payment_Gateway {
 	 * Add Pay by Bank app fields
 	 *
 	 * @param string $key
-	 * @param string value
+	 * @param string $value
 	 *
 	 * @return CustomField
 	 *
@@ -200,7 +200,7 @@ class WC_Gateway_Wirecard_Pay_By_Bank_App extends WC_Wirecard_Payment_Gateway {
 
 		$custom_fields          = $this->transaction->getCustomFields();
 		$merchant_return_string = $this->get_option( 'merchant_return_string' );
-		if ( ! isset( $merchant_return_string ) || trim( $merchant_return_string ) === '' ) {
+		if ( trim( $merchant_return_string ) === '' ) {
 			$merchant_return_string = $this->create_redirect_url( $order, 'pending', $this->type );
 		}
 		$custom_fields->add( $this->createCustomField( 'zapp.in.MerchantRtnStrng', $merchant_return_string ) );

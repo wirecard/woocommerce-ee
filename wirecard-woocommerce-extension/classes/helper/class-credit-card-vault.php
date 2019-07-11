@@ -64,9 +64,9 @@ class Credit_Card_Vault {
 	/**
 	 * Save credit card data to db
 	 *
-	 * @param $user_id
-	 * @param $token
-	 * @param $pan
+	 * @param int $user_id
+	 * @param string $token
+	 * @param string $pan
 	 * @return int
 	 * @since 1.1.0
 	 */

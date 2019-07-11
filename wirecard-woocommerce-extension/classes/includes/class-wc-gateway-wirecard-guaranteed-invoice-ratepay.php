@@ -461,7 +461,7 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 	/**
 	 * Validates consent for sending data to Wirecard.
 	 *
-	 * @param $consent
+	 * @param string $consent
 	 * @return bool
 	 * @since 1.4.3
 	 */

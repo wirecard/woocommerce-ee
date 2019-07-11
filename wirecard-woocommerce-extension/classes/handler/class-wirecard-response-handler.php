@@ -52,12 +52,12 @@ class Wirecard_Response_Handler extends Wirecard_Handler {
 	/**
 	 * Handle response via transaction service
 	 *
-	 * @param $request
+	 * @param array $request
 	 *
 	 * @throws \InvalidArgumentException
 	 * @throws MalformedResponseException
 	 *
-	 * @return bool|Response|array
+	 * @return SuccessResponse|bool
 	 *
 	 * @since 1.0.0
 	 */
