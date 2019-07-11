@@ -78,7 +78,7 @@ function wirecard_extension_upgrade_hook() {
 	// must be called here
 	if ( ! $upgrade_helper->general_information_conditions_met() ) {
 		// Add wpp_url depending on the configured base_url
-		// for credit card and unionpay
+		// for credit card
 		wpp_v_two_upgrade();
 	}
 

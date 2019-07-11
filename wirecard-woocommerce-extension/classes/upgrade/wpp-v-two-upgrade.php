@@ -49,14 +49,9 @@ function wpp_v_two_upgrade() {
 	$wpp_url_key      = 'wpp_url';
 	$base_url_matcher = new BaseUrlMatcherService();
 	$credit_card      = new WC_Gateway_Wirecard_Creditcard();
-	$union_pay        = new WC_Gateway_Wirecard_Unionpay_International();
 
 	$credit_card_base_url = $credit_card->get_option( $base_url_key );
 	$credit_card_wpp_url  = $base_url_matcher::getWppUrl( $credit_card_base_url );
 
-	$union_pay_base_url = $union_pay->get_option( $base_url_key );
-	$union_pay_wpp_url  = $base_url_matcher::getWppUrl( $union_pay_base_url );
-
 	$credit_card->update_option( $wpp_url_key, $credit_card_wpp_url );
-	$union_pay->update_option( $wpp_url_key, $union_pay_wpp_url );
 }
