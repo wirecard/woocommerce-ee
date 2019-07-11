@@ -50,7 +50,7 @@ $html = '
 					</div>
 				</div>
 				
-				<button disabled id="vault-submit" class="wd-submit checkout-button button alt wc-forward">' . __( 'Pay now', 'woocommerce' ) . '</button>
+				<button disabled id="vault-submit" class="wd-submit checkout-button button alt wc-forward">' . __( 'Pay', 'woocommerce' ) . '</button>
 				<div class="clear"></div>
 			</div>
 		

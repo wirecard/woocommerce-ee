@@ -39,6 +39,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 $html = '
-				<button disabled id="seamless-submit" class="wd-submit checkout-button button alt wc-forward">' . __( 'Pay now', 'woocommerce' ) . '</button>
+				<button disabled id="seamless-submit" class="wd-submit checkout-button button alt wc-forward">' . __( 'Pay', 'woocommerce' ) . '</button>
 			</div>
 		';
