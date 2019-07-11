@@ -204,17 +204,17 @@ function addCreditCardsToVaultTab(cardResponse) {
 }
 
 /**
- * @param delete_trigger
+ * @param deleteTrigger
  * @param id
  */
-function deleteCreditCardFromVaultTab( delete_trigger, id ) {
+function deleteCreditCardFromVaultTab( deleteTrigger, id ) {
 	token = null;
 	vaultSubmitButton.attr( "disabled", "disabled" );
-	jQuery( delete_trigger ).append( php_vars.spinner );
+	jQuery( deleteTrigger ).append( php_vars.spinner );
 
 	deleteCreditCardFromVault( id )
 		.then( addCreditCardsToVaultTab )
-		.fail( logError )
+		.fail( logError );
 }
 
 function toggleTab() {
@@ -241,8 +241,8 @@ function toggleTab() {
 		.slideDown();
 }
 
-function onTokenSelected( token_field ) {
-	var selectedToken = jQuery( token_field ).data( "token" );
+function onTokenSelected( tokenField ) {
+	var selectedToken = jQuery( tokenField ).data( "token" );
 
 	if ( selectedToken ) {
 		token = selectedToken;
@@ -292,23 +292,6 @@ function onFormSubmitted( response ) {
 }
 
 /**
- * Renders the actual seamless form
- *
- * @since 1.7.0
- */
-function renderForm( response ) {
-	var requestData = JSON.parse( response.data );
-	WPP.seamlessRender(
-		{
-			requestData: requestData,
-			wrappingDivId: "wc_payment_method_wirecard_creditcard_form",
-			onSuccess: onFormRendered,
-			onError: logError,
-		}
-	);
-}
-
-/**
  * Resize the credit card form when loaded
  *
  * @since 1.0.0
@@ -316,6 +299,22 @@ function renderForm( response ) {
 function onFormRendered() {
 	seamlessSubmitButton.removeAttr( "disabled" );
 	newCardContentArea.find( "iframe" ).height( 270 );
+}
+
+/**
+ * Renders the actual seamless form
+ *
+ * @since 1.7.0
+ */
+function renderForm( response ) {
+	WPP.seamlessRender(
+		{
+			requestData: JSON.parse( response.data ),
+			wrappingDivId: "wc_payment_method_wirecard_creditcard_form",
+			onSuccess: onFormRendered,
+			onError: logError,
+		}
+	);
 }
 
 /**
@@ -347,7 +346,7 @@ function initializeForm() {
 		.fail( logError )
 		.always(
 			function() {
-				jQuery( ".show-spinner" ).hide()
+				jQuery( ".show-spinner" ).hide();
 			}
 		)
 }
