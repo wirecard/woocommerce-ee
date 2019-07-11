@@ -450,10 +450,6 @@ msgstr "Aktifkan metode pembayaran Debit Langsung SEPA"
 msgid "config_status_desc_sofortbanking"
 msgstr "Aktifkan metode pembayaran Sofort."
 
-#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:98
-msgid "config_status_desc_upi"
-msgstr "Aktifkan metode pembayaran Unionpay Internasional"
-
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:128
 
 msgid "config_three_d_merchant_account_id"
@@ -599,10 +595,6 @@ msgstr "Aktifkan SEPA Direct Debit Wirecard"
 msgid "enable_heading_title_sofortbanking"
 msgstr "Aktifkan Sofort. Wirecard"
 
-#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:99
-msgid "enable_heading_title_upi"
-msgstr "Aktifkan Unionpay Internasional Wirecard"
-
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:214
 
 msgid "enable_vault"
@@ -652,7 +644,7 @@ msgstr "Nama depan"
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:369
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:242
 msgid "heading_creditcard_form"
-msgstr "Enter card details"
+msgstr "Enter Card Details"
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:60
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:104
@@ -720,11 +712,6 @@ msgstr "Sofort. Wirecard"
 
 msgid "heading_title_support"
 msgstr "Dukungan"
-
-#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:58
-#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:106
-msgid "heading_title_upi"
-msgstr "Unionpay Internasional Wirecard"
 
 #. Plugin URI of the plugin
 msgid "https://github.com/wirecard/woocommerce-ee"
@@ -1196,14 +1183,6 @@ msgstr "Payment Gateway Wirecard"
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:261
 msgid "transfer_notice"
 msgstr "Harap transfer jumlah tersebut menggunakan data berikut ini:"
-
-#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:59
-msgid "upi"
-msgstr "Unionpay International"
-
-#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:60
-msgid "upi_desc"
-msgstr "Transaksi Unionpay Internasional melalui Payment Gateway Wirecard"
 
 #: classes/helper/class-credit-card-vault.php:156
 msgid "vault_account_number"

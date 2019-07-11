@@ -440,10 +440,6 @@ msgstr "Activate payment method SEPA Direct Debit to make it available for your 
 msgid "config_status_desc_sofortbanking"
 msgstr "Activate payment method Sofort. to make it available for your consumers."
 
-#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:98
-msgid "config_status_desc_upi"
-msgstr "Activate payment method UnionPay International to make it available for your consumers."
-
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:128
 msgid "config_three_d_merchant_account_id"
 msgstr "3-D Secure MAID"
@@ -588,10 +584,6 @@ msgstr "Uaktywnić Wirecard SEPA"
 msgid "enable_heading_title_sofortbanking"
 msgstr "Uaktywnić Wirecard Sofort."
 
-#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:99
-msgid "enable_heading_title_upi"
-msgstr "Uaktywnić Wirecard UnionPay International"
-
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:214
 msgid "enable_vault"
 msgstr "Uaktywnić płatności cykliczne"
@@ -638,7 +630,7 @@ msgstr "First Name"
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:369
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:242
 msgid "heading_creditcard_form"
-msgstr "Enter card details"
+msgstr "Enter Card Details"
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:60
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:104
@@ -704,11 +696,6 @@ msgstr "Wirecard Sofort."
 #: woocommerce-wirecard-payment-gateway.php:269
 msgid "heading_title_support"
 msgstr "Wirecard Support"
-
-#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:58
-#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:106
-msgid "heading_title_upi"
-msgstr "Wirecard UnionPay International"
 
 #. Plugin URI of the plugin
 msgid "https://github.com/wirecard/woocommerce-ee"
@@ -1181,14 +1168,6 @@ msgstr "Wirecard Payment Processing Gateway"
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:261
 msgid "transfer_notice"
 msgstr "Prosimy o przelew kwoty na następujące dane: "
-
-#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:59
-msgid "upi"
-msgstr "UnionPay International"
-
-#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:60
-msgid "upi_desc"
-msgstr "UnionPay International transactions via Wirecard Payment Processing Gateway."
 
 #: classes/helper/class-credit-card-vault.php:156
 msgid "vault_account_number"

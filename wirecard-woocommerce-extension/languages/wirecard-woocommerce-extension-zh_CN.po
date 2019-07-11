@@ -450,10 +450,6 @@ msgstr "激活 SEPA 直接借记付款方式"
 msgid "config_status_desc_sofortbanking"
 msgstr "激活 Sofort 付款方式。"
 
-#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:98
-msgid "config_status_desc_upi"
-msgstr "激活银联国际付款方式"
-
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:128
 
 msgid "config_three_d_merchant_account_id"
@@ -599,10 +595,6 @@ msgstr "启用 Wirecard SEPA"
 msgid "enable_heading_title_sofortbanking"
 msgstr "启用 Wirecard Sofort。"
 
-#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:99
-msgid "enable_heading_title_upi"
-msgstr "启用 Wirecard 银联国际"
-
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:214
 
 msgid "enable_vault"
@@ -652,7 +644,7 @@ msgstr "名"
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:369
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:242
 msgid "heading_creditcard_form"
-msgstr "Enter card details"
+msgstr "Enter Card Details"
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:60
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:104
@@ -720,11 +712,6 @@ msgstr "Wirecard Sofort。"
 
 msgid "heading_title_support"
 msgstr "支持"
-
-#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:58
-#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:106
-msgid "heading_title_upi"
-msgstr "Wirecard 银联国际"
 
 #. Plugin URI of the plugin
 msgid "https://github.com/wirecard/woocommerce-ee"
@@ -1196,14 +1183,6 @@ msgstr "Wirecard 支付网关"
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:261
 msgid "transfer_notice"
 msgstr "请使用以下数据转账："
-
-#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:59
-msgid "upi"
-msgstr "银联国际"
-
-#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:60
-msgid "upi_desc"
-msgstr "通过 Wirecard 支付处理网关进行银联国际交易"
 
 #: classes/helper/class-credit-card-vault.php:156
 msgid "vault_account_number"

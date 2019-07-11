@@ -450,10 +450,6 @@ msgstr "SEPA 자동 이체 결제방법 활성화"
 msgid "config_status_desc_sofortbanking"
 msgstr "Sofort 결제방법 활성화."
 
-#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:98
-msgid "config_status_desc_upi"
-msgstr "Unionpay International 결제방법 활성화"
-
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:128
 
 msgid "config_three_d_merchant_account_id"
@@ -599,10 +595,6 @@ msgstr "Wirecard SEPA Direct Debit 사용"
 msgid "enable_heading_title_sofortbanking"
 msgstr "Wirecard Sofort 사용."
 
-#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:99
-msgid "enable_heading_title_upi"
-msgstr "Wirecard Unionpay International 사용"
-
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:214
 
 msgid "enable_vault"
@@ -652,7 +644,7 @@ msgstr "이름"
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:369
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:242
 msgid "heading_creditcard_form"
-msgstr "Enter card details"
+msgstr "Enter Card Details"
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:60
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:104
@@ -720,11 +712,6 @@ msgstr "Wirecard Sofort."
 
 msgid "heading_title_support"
 msgstr "지원"
-
-#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:58
-#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:106
-msgid "heading_title_upi"
-msgstr "Wirecard Unionpay International"
 
 #. Plugin URI of the plugin
 msgid "https://github.com/wirecard/woocommerce-ee"
@@ -1197,14 +1184,6 @@ msgstr "Wirecard 결제 게이트웨이"
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:261
 msgid "transfer_notice"
 msgstr "다음 데이터를 이용하여 금액을 이체하십시오:"
-
-#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:59
-msgid "upi"
-msgstr "UnionPay International"
-
-#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:60
-msgid "upi_desc"
-msgstr "Wirecard 결제 처리 게이트웨이를 통한 Unionpay International 트랜잭션"
 
 #: classes/helper/class-credit-card-vault.php:156
 msgid "vault_account_number"

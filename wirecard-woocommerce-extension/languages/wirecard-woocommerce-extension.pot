@@ -440,10 +440,6 @@ msgstr ""
 msgid "config_status_desc_sofortbanking"
 msgstr ""
 
-#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:98
-msgid "config_status_desc_upi"
-msgstr ""
-
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:128
 msgid "config_three_d_merchant_account_id"
 msgstr ""
@@ -500,13 +496,11 @@ msgstr ""
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:219
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:126
-#, fuzzy
 msgid "config_wpp_url"
 msgstr ""
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:221
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:128
-#, fuzzy
 msgid "config_wpp_url_desc"
 msgstr ""
 
@@ -588,10 +582,6 @@ msgstr ""
 
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:99
 msgid "enable_heading_title_sofortbanking"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:99
-msgid "enable_heading_title_upi"
 msgstr ""
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:214
@@ -705,11 +695,6 @@ msgstr ""
 #: woocommerce-wirecard-payment-gateway.php:268
 #: woocommerce-wirecard-payment-gateway.php:269
 msgid "heading_title_support"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:58
-#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:106
-msgid "heading_title_upi"
 msgstr ""
 
 #. Plugin URI of the plugin
@@ -1183,14 +1168,6 @@ msgstr ""
 msgid "transfer_notice"
 msgstr ""
 
-#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:59
-msgid "upi"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:60
-msgid "upi_desc"
-msgstr ""
-
 #: classes/helper/class-credit-card-vault.php:156
 msgid "vault_account_number"
 msgstr ""
@@ -1212,7 +1189,6 @@ msgid "vault_use_new_text"
 msgstr ""
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:777
-#, fuzzy
 msgid "warning_credit_card_url_mismatch"
 msgstr ""
 
