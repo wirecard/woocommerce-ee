@@ -86,7 +86,7 @@ function saveCreditCardToVault( response ) {
 	return jQuery.ajax(
 		{
 			type: "POST",
-			url: php_vars.vault_url,
+			url: phpVars.vault_url,
 			data: request,
 			dataType: "json"
 		}
@@ -103,7 +103,7 @@ function getCreditCardsFromVault() {
 	return jQuery.ajax(
 		{
 			type: "GET",
-			url: php_vars.vault_get_url,
+			url: phpVars.vault_get_url,
 			data: { "action" : "get_cc_from_vault" },
 			dataType: "json",
 		}
@@ -120,7 +120,7 @@ function deleteCreditCardFromVault( id ) {
 	return jQuery.ajax(
 		{
 			type: "POST",
-			url: php_vars.vault_delete_url,
+			url: phpVars.vault_delete_url,
 			data: { "action" : "remove_cc_from_vault", "vault_id": id },
 			dataType: "json",
 		}
@@ -137,7 +137,7 @@ function getCreditCardData() {
 	return jQuery.ajax(
 		{
 			type: "POST",
-			url: php_vars.ajax_url,
+			url: phpVars.ajax_url,
 			cache: false,
 			data: {"action": "get_credit_card_request_data"},
 			dataType: "json",
@@ -156,7 +156,7 @@ function submitCreditCardResponse( response ) {
 	return jQuery.ajax(
 		{
 			type: "POST",
-			url: php_vars.submit_url,
+			url: phpVars.submit_url,
 			cache: false,
 			data: response,
 			dataType: "json",
@@ -180,7 +180,7 @@ function submitVault() {
 	return jQuery.ajax(
 		{
 			type: "POST",
-			url: php_vars.token_url,
+			url: phpVars.token_url,
 			cache: false,
 			data: request,
 			dataType: "json",
@@ -210,7 +210,7 @@ function addCreditCardsToVaultTab(cardResponse) {
 function deleteCreditCardFromVaultTab( deleteTrigger, id ) {
 	token = null;
 	vaultSubmitButton.attr( "disabled", "disabled" );
-	jQuery( deleteTrigger ).append( php_vars.spinner );
+	jQuery( deleteTrigger ).append( phpVars.spinner );
 
 	deleteCreditCardFromVault( id )
 		.then( addCreditCardsToVaultTab )
@@ -357,7 +357,7 @@ function initializeForm() {
  * @since 1.7.0
  */
 function submitSeamlessForm() {
-	jQuery( this ).after( php_vars.spinner );
+	jQuery( this ).after( phpVars.spinner );
 	jQuery( ".spinner" ).addClass( "spinner-submit" );
 
 	WPP.seamlessSubmit(
@@ -375,7 +375,7 @@ function submitSeamlessForm() {
  * @since 1.7.0
  */
 function submitVaultForm() {
-	jQuery( this ).after( php_vars.spinner );
+	jQuery( this ).after( phpVars.spinner );
 	jQuery( ".spinner" ).addClass( "spinner-submit" );
 
 	submitVault()

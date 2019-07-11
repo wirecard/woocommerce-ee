@@ -441,7 +441,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 		$this->enqueue_scripts();
 
 		wp_enqueue_script( 'credit_card_js' );
-		wp_localize_script( 'credit_card_js', 'php_vars', $this->load_variables() );
+		wp_localize_script( 'credit_card_js', 'phpVars', $this->load_variables() );
 
 		echo $this->load_cc_template();
 	}
