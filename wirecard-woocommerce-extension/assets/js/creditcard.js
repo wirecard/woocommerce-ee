@@ -29,6 +29,7 @@
  */
 
 /* globals WPP */
+/* globals phpVars */
 
 /*
  * Helper functions
