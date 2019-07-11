@@ -284,7 +284,6 @@ function on_form_submitted( response ) {
 	save_credit_card_to_vault( response )
 		.then(
 			function () {
-				console.log( "Submission" );
 				submit_credit_card_response( response )
 					.then( handle_submit_result )
 					.fail( log_error );
