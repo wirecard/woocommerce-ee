@@ -3,7 +3,7 @@
  * Plugin Name: Wirecard WooCommerce Extension
  * Plugin URI: https://github.com/wirecard/woocommerce-ee
  * Description: Payment Gateway for WooCommerce
- * Version: 1.6.5
+ * Version: 1.6.6
  * Author: Wirecard AG
  * Author URI: https://www.wirecard.com/
  * License: GPLv3
@@ -46,10 +46,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 define( 'WIRECARD_EXTENSION_NAME', 'Wirecard WooCommerce Extension' );
-define( 'WIRECARD_EXTENSION_VERSION', '1.6.5' );
+define( 'WIRECARD_EXTENSION_VERSION', '1.6.6' );
 define( 'WIRECARD_EXTENSION_BASEDIR', plugin_dir_path( __FILE__ ) );
 define( 'WIRECARD_EXTENSION_URL', plugin_dir_url( __FILE__ ) );
 define( 'WIRECARD_EXTENSION_LOCALE_FALLBACK', 'en_US' );
+define( 'WIRECARD_EXTENSION_HEADER_PLUGIN_NAME', 'woocommerce-ee+Wirecard' );
 define( 'WIRECARD_EXTENSION_HELPER_DIR', WIRECARD_EXTENSION_BASEDIR . '/classes/helper/' );
 define( 'WIRECARD_EXTENSION_TEMPLATE_DIR', WIRECARD_EXTENSION_BASEDIR . '/templates/' );
 
@@ -368,10 +369,24 @@ function wirecard_add_support_chat() {
  * @since 1.1.0
  */
 function wirecard_check_if_woo_installed() {
-	if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ), true )
-		|| array_key_exists( 'woocommerce/woocommerce.php', get_site_option( 'active_sitewide_plugins' ) ) ) {
-		return;
+	$woocommerce_pattern = '/^woocommerce[\-\.0-9]*\/woocommerce.php$/';
+
+	$active_plugins = apply_filters( 'active_plugins', get_option( 'active_plugins' ) );
+	foreach ( $active_plugins as $plugin_name ) {
+		if ( preg_match( $woocommerce_pattern, $plugin_name ) ) {
+			return;
+		}
 	}
+
+	$sitewide_plugins = get_site_option( 'active_sitewide_plugins' );
+	if ( is_array( $sitewide_plugins ) ) {
+		foreach ( $sitewide_plugins as $plugin_name ) {
+			if ( preg_match( $woocommerce_pattern, $plugin_name ) ) {
+				return;
+			}
+		}
+	}
+
 	wp_die(
 		__( 'error_woocommerce_missing', 'wirecard-woocommerce-extension' ) .
 		'<br><a href="' . admin_url( 'plugins.php' ) . '">' . __( 'text_go_to_plugins', 'wirecard-woocommerce-extension' ) . '</a>'

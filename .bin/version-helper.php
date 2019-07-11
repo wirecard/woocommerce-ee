@@ -1,5 +1,8 @@
 <?php
 
+error_reporting(0);
+ini_set('display_errors', 0);
+
 define('REPO', getenv('TRAVIS_REPO_SLUG'));
 define('REPO_NAME', explode('/', REPO)[1]);
 define('SCRIPT_DIR', __DIR__);

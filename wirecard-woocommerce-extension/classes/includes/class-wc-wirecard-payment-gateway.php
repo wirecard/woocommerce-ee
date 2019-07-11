@@ -457,14 +457,18 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 *
 	 * @return Config
 	 *
+	 * @since 2.0.0 Update shop version to include the WordPress version
+	 *              Move plugin name to a global var
 	 * @since 1.0.0
 	 */
 	public function create_payment_config( $base_url = null, $http_user = null, $http_pass = null ) {
-		$config = new Config( $base_url, $http_user, $http_pass );
+		global $wp_version;
+		$config       = new Config( $base_url, $http_user, $http_pass );
+		$shop_version = sprintf( '%s+WordPress+%s', WC()->version, $wp_version );
 
-		$config->setShopInfo( 'WooCommerce', WC()->version );
+		$config->setShopInfo( 'WooCommerce', $shop_version );
 		$config->setPluginInfo(
-			'Wirecard_ElasticEngine',
+			WIRECARD_EXTENSION_HEADER_PLUGIN_NAME,
 			WIRECARD_EXTENSION_VERSION
 		);
 
@@ -499,8 +503,14 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 */
 	public function update_payment_transaction( $order, $response, $transaction_state, $payment_method ) {
 		$transaction_factory = new Wirecard_Transaction_Factory();
+
+		// Normally you would use WooCommerce's get_option here but it seems to return values from
+		// different payment methods. This loads the options based on the passed payment method name.
+		$payment_method_option_name = sprintf( 'woocommerce_wirecard_ee_%s_settings', $payment_method );
+		$payment_method_options     = get_option( $payment_method_option_name );
+
 		//create table entry
-		$result = $transaction_factory->create_transaction( $order, $response, $this->get_option( 'base_url' ), $transaction_state, $payment_method );
+		$result = $transaction_factory->create_transaction( $order, $response, $payment_method_options['base_url'], $transaction_state, $payment_method );
 		if ( ! $result ) {
 			$logger = new WC_Logger();
 			$logger->debug( __METHOD__ . 'Transaction could not be saved in transaction table' );
@@ -633,7 +643,8 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 
 		$custom_fields = new CustomFieldCollection();
 		$custom_fields->add( new CustomField( 'orderId', $order_id ) );
-		$custom_fields = $this->create_version_fields( $custom_fields );
+		$custom_fields->add( new CustomField( 'multisite', is_multisite() ? 'multisite' : '' ) );
+		$custom_fields->add( new CustomField( 'phpVersion', phpversion() ) );
 		$this->transaction->setCustomFields( $custom_fields );
 
 		if ( $this->get_option( 'descriptor' ) === 'yes' ) {
@@ -731,24 +742,6 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 		$woocommerce .= 'v' . WC()->version;
 
 		return $shop . $woocommerce;
-	}
-
-	/**
-	 * Create CustomFields including version number PHP/Shop/Plugin
-	 *
-	 * @param CustomFieldCollection $custom_fields
-	 *
-	 * @return mixed
-	 *
-	 * @since 1.1.0
-	 */
-	private function create_version_fields( $custom_fields ) {
-		$custom_fields->add( new CustomField( 'shopVersion', $this->get_shop_version() ) );
-		$custom_fields->add( new CustomField( 'phpVersion', phpversion() ) );
-		$custom_fields->add( new CustomField( 'multisite', is_multisite() ? 'multisite' : '' ) );
-		$custom_fields->add( new CustomField( 'pluginVersion', 'woocommerce-ee v' . WIRECARD_EXTENSION_VERSION ) );
-
-		return $custom_fields;
 	}
 
 	/**
