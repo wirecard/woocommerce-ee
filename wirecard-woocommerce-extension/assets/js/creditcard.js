@@ -34,12 +34,12 @@
  * Helper functions
  */
 
-var token                  = null;
-var tabContent            = ".wd-tab-content";
-var nonce                  = jQuery( "#wc_payment_method_wirecard_creditcard_response_form input[name='cc_nonce']" );
-var togglers               = jQuery( ".wd-toggle-tab" );
-var contentAreas          = jQuery( tabContent );
-var newCardContentArea  = jQuery( "#wc_payment_method_wirecard_new_credit_card" );
+var token                = null;
+var tabContent           = ".wd-tab-content";
+var nonce                = jQuery( "#wc_payment_method_wirecard_creditcard_response_form input[name='cc_nonce']" );
+var togglers             = jQuery( ".wd-toggle-tab" );
+var contentAreas         = jQuery( tabContent );
+var newCardContentArea   = jQuery( "#wc_payment_method_wirecard_new_credit_card" );
 var vaultContentArea     = jQuery( "#wc_payment_method_wirecard_creditcard_vault" );
 var seamlessSubmitButton = jQuery( "#seamless-submit" );
 var vaultSubmitButton    = jQuery( "#vault-submit" );
@@ -67,9 +67,9 @@ function logError( data ) {
  * @since 1.7.0
  */
 function saveCreditCardToVault( response ) {
-	var deferred       = jQuery.Deferred();
+	var deferred      = jQuery.Deferred();
 	var vaultCheckbox = jQuery( "#wirecard-store-card" );
-	var request        = {
+	var request       = {
 		"action": "save_cc_to_vault",
 		"token": response.token_id,
 		"mask_pan": response.masked_account_number
