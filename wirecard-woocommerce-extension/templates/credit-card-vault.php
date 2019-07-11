@@ -29,37 +29,32 @@
  * Please do not use the plugin if you do not agree to these terms of use!
  */
 
-require_once WIRECARD_EXTENSION_HELPER_DIR . 'class-money-formatter.php';
-
-class WC_Gateway_Wirecard_Money_Formatter_Utest extends \PHPUnit_Framework_TestCase {
-
-	private $class_under_test;
-
-	public function setUp() {
-		$this->class_under_test = new Money_Formatter();
-	}
-
-	public function test_integer() {
-		$this->assertEquals( 124, $this->class_under_test->to_float( 124 ) );
-	}
-
-	public function test_double() {
-		$this->assertEquals( 123.4567, $this->class_under_test->to_float( 123.4567 ) );
-	}
-
-	public function test_negative_double() {
-		$this->assertEquals( -0.1, $this->class_under_test->to_float( -0.1 ) );
-	}
-
-	public function test_float_as_string() {
-		$this->assertEquals( 2.34, $this->class_under_test->to_float( "2.34" ) );
-	}
-
-	public function test_negative_float_as_string() {
-		$this->assertEquals( -1.32, $this->class_under_test->to_float( "-1.32" ) );
-	}
-
-	public function test_whitespaces() {
-		$this->assertEquals( 10.11, $this->class_under_test->to_float( "   10.11   " ) );
-	}
+/**
+ * Html template : Credit Card Vault
+ *
+ * @since 2.0.0
+ */
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
 }
+
+$html = '
+			<div id="open-vault-popup" class="wd-toggle-tab active">
+				<span class="dashicons dashicons-arrow-up"></span>' . __( 'vault_use_existing_text', 'wirecard-woocommerce-extension' ) . '
+			</div>
+			
+			<div id="wc_payment_method_wirecard_creditcard_vault" class="wd-tab-content">						
+				<div class="cards">
+					<div class="show-spinner">
+						<div class="spinner" style="background: url(\'' . admin_url() . 'images/loading.gif\') no-repeat;"></div>
+					</div>
+				</div>
+				
+				<button disabled id="vault-submit" class="wd-submit checkout-button button alt wc-forward">' . __( 'Pay now', 'woocommerce' ) . '</button>
+				<div class="clear"></div>
+			</div>
+		
+			<div id="open-new-card" class="wd-toggle-tab">
+				<span class="dashicons dashicons-arrow-down"></span>' . __( 'vault_use_new_text', 'wirecard-woocommerce-extension' ) . '
+			</div>
+		';

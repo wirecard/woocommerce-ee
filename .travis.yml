@@ -159,7 +159,6 @@ install:
   - composer show
 
 script:
-  - composer test-coverage
   - composer cs-check
 
 after_script:

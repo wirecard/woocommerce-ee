@@ -50,6 +50,8 @@ define( 'WIRECARD_EXTENSION_VERSION', '1.6.5' );
 define( 'WIRECARD_EXTENSION_BASEDIR', plugin_dir_path( __FILE__ ) );
 define( 'WIRECARD_EXTENSION_URL', plugin_dir_url( __FILE__ ) );
 define( 'WIRECARD_EXTENSION_LOCALE_FALLBACK', 'en_US' );
+define( 'WIRECARD_EXTENSION_HELPER_DIR', WIRECARD_EXTENSION_BASEDIR . '/classes/helper/' );
+define( 'WIRECARD_EXTENSION_TEMPLATE_DIR', WIRECARD_EXTENSION_BASEDIR . '/templates/' );
 
 /**
  * Action that is triggered when a textdomain is loaded.
@@ -122,7 +124,6 @@ function wirecard_init_payment_gateway() {
 	require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-poipia.php' );
 	require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php' );
 	require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php' );
-	require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-unionpay-international.php' );
 	require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-masterpass.php' );
 	require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php' );
 	require_once( WIRECARD_EXTENSION_BASEDIR . 'vendor/autoload.php' );
@@ -134,7 +135,6 @@ function wirecard_init_payment_gateway() {
 	add_action( 'admin_menu', 'wirecard_gateway_options_page' );
 	add_action( 'woocommerce_thankyou_wirecard_ee_poipia', array( new WC_Gateway_Wirecard_Poipia(), 'thankyou_page_poipia' ) );
 	add_action( 'woocommerce_receipt_wirecard_ee_creditcard', array( new WC_Gateway_Wirecard_Creditcard(), 'render_form' ) );
-	add_action( 'woocommerce_receipt_wirecard_ee_unionpayinternational', array( new WC_Gateway_Wirecard_Unionpay_International(), 'render_form' ) );
 
 	register_post_status(
 		'wc-authorization',
@@ -200,7 +200,6 @@ function wirecard_get_payments() {
 		'WC_Gateway_Wirecard_Sepa_Credit_Transfer'       => new WC_Gateway_Wirecard_Sepa_Credit_Transfer(),
 		'WC_Gateway_Wirecard_Sepa_Direct_Debit'          => new WC_Gateway_Wirecard_Sepa_Direct_Debit(),
 		'WC_Gateway_Wirecard_Sofort'                     => new WC_Gateway_Wirecard_Sofort(),
-		'WC_Gateway_Wirecard_Unionpay_International'     => new WC_Gateway_Wirecard_Unionpay_International(),
 	);
 }
 
@@ -222,6 +221,7 @@ function wirecard_wc_order_statuses( $order_statuses ) {
 /**
  * Create transaction table in activation process
  *
+ * @since 2.0.0 Add general_information_table
  * @since 1.0.0
  */
 function wirecard_install_payment_gateway() {
@@ -265,6 +265,10 @@ function wirecard_install_payment_gateway() {
  		PRIMARY KEY (vault_id)
  		)$collate;";
 	dbDelta( $sql2 );
+
+	require_once( WIRECARD_EXTENSION_HELPER_DIR . 'class-upgrade-helper.php' );
+	$upgrade_helper = new Upgrade_Helper();
+	$upgrade_helper->update_extension_version();
 }
 
 /**

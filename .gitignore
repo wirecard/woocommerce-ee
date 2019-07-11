@@ -5,3 +5,5 @@
 wirecard-woocommerce-extension/vendor/*
 composer.lock
 /wp-cli.phar
+.bin/phraseapp/env.rb
+Gemfile.lock

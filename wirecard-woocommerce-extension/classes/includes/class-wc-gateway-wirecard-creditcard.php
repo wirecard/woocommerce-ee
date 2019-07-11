@@ -30,13 +30,18 @@
  */
 
 require_once __DIR__ . '/class-wc-wirecard-payment-gateway.php';
-require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/helper/class-credit-card-vault.php' );
+require_once( WIRECARD_EXTENSION_HELPER_DIR . 'class-credit-card-vault.php' );
+require_once( WIRECARD_EXTENSION_HELPER_DIR . 'class-template-helper.php' );
+require_once( WIRECARD_EXTENSION_HELPER_DIR . 'class-logger.php' );
+require_once( WIRECARD_EXTENSION_HELPER_DIR . 'class-admin-message.php' );
+require_once( WIRECARD_EXTENSION_HELPER_DIR . 'class-action-helper.php' );
 
 use Wirecard\PaymentSdk\Config\Config;
 use Wirecard\PaymentSdk\Config\CreditCardConfig;
 use Wirecard\PaymentSdk\Entity\Amount;
 use Wirecard\PaymentSdk\Transaction\CreditCardTransaction;
 use Wirecard\PaymentSdk\TransactionService;
+use Wirecard\Converter\WppVTwoConverter;
 
 /**
  * Class WC_Gateway_Wirecard_CreditCard
@@ -47,14 +52,63 @@ use Wirecard\PaymentSdk\TransactionService;
  */
 class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 
+	/** @var Credit_Card_Vault $vault */
 	private $vault;
+
+	/**
+	 * @var Template_Helper $template_helper
+	 *
+	 * @since 2.0.0
+	 */
+	protected $template_helper;
+
+	/**
+	 * @var Logger $logger
+	 *
+	 * @since 2.0.0
+	 */
+	protected $logger;
 
 	/**
 	 * WC_Gateway_Wirecard_Creditcard constructor.
 	 *
+	 * @since 2.0.0 Update constructor so it can be shared
 	 * @since 1.0.0
 	 */
 	public function __construct() {
+		$this->logger            = new Logger();
+		$this->additional_helper = new Additional_Information();
+		$this->template_helper   = new Template_Helper();
+		$this->supports          = array( 'products', 'refunds' );
+		$this->cancel            = array( 'authorization' );
+		$this->capture           = array( 'authorization' );
+		$this->refund            = array( 'purchase', 'capture-authorization' );
+
+		$this->init();
+
+		$this->init_form_fields();
+		$this->init_settings();
+
+		$this->title   = $this->get_option( 'title' );
+		$this->enabled = $this->get_option( 'enabled' );
+
+		$woocommerce_update_options = 'woocommerce_update_options_payment_gateways_' . $this->id;
+		$action_helper              = new Action_Helper();
+
+		add_action( $woocommerce_update_options, array( $this, 'process_admin_options' ) );
+		add_action( 'wp_enqueue_scripts', array( $this, 'payment_scripts' ), 999 );
+		$action_helper->add_action_once( $woocommerce_update_options, array( $this, 'validate_url_configuration' ) );
+
+		$this->add_payment_gateway_actions();
+	}
+
+	/**
+	 * Called in constructor
+	 * Initializes the class
+	 *
+	 * @since 2.0.0
+	 */
+	protected function init() {
 		$this->type               = 'creditcard';
 		$this->id                 = 'wirecard_ee_creditcard';
 		$this->icon               = WIRECARD_EXTENSION_URL . 'assets/images/creditcard.png';
@@ -63,32 +117,12 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 		$this->method_description = __( 'creditcard_desc', 'wirecard-woocommerce-extension' );
 		$this->vault              = new Credit_Card_Vault();
 
-		$this->supports = array(
-			'products',
-			'refunds',
-		);
-
-		$this->cancel        = array( 'authorization' );
-		$this->capture       = array( 'authorization' );
-		$this->refund        = array( 'purchase', 'capture-authorization' );
 		$this->refund_action = 'refund';
 
-		$this->init_form_fields();
-		$this->init_settings();
-
-		$this->title   = $this->get_option( 'title' );
-		$this->enabled = $this->get_option( 'enabled' );
-
-		$this->additional_helper = new Additional_Information();
-
-		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
 		add_action( 'woocommerce_api_get_credit_card_request_data', array( $this, 'get_request_data_credit_card' ) );
 		add_action( 'woocommerce_api_save_cc_to_vault', array( $this, 'save_to_vault' ) );
 		add_action( 'woocommerce_api_get_cc_from_vault', array( $this, 'get_cc_from_vault' ) );
 		add_action( 'woocommerce_api_remove_cc_from_vault', array( $this, 'remove_cc_from_vault' ) );
-		add_action( 'wp_enqueue_scripts', array( $this, 'payment_scripts' ), 999 );
-
-		$this->add_payment_gateway_actions();
 	}
 
 	/**
@@ -181,6 +215,12 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 				'description' => __( 'config_base_url_desc', 'wirecard-woocommerce-extension' ),
 				'default'     => 'https://api-test.wirecard.com',
 			),
+			'wpp_url'                     => array(
+				'title'       => __( 'config_wpp_url', 'wirecard-woocommerce-extension' ),
+				'type'        => 'text',
+				'description' => __( 'config_wpp_url_desc', 'wirecard-woocommerce-extension' ),
+				'default'     => 'https://wpp-test.wirecard.com',
+			),
 			'http_user'                   => array(
 				'title'       => __( 'config_http_user', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
@@ -241,6 +281,9 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 
 	/**
 	 * Create payment method Configuration
+	 * @param string|null $base_url
+	 * @param string|null $http_user
+	 * @param string|null $http_pass
 	 *
 	 * @return Config
 	 *
@@ -304,13 +347,13 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	 * @since 1.1.5
 	 */
 	public function payment_scripts() {
-		$base_url    = $this->get_option( 'base_url' );
+		$wpp_url     = $this->get_option( 'wpp_url' );
 		$gateway_url = WIRECARD_EXTENSION_URL;
 
 		wp_register_style( 'basic_style', $gateway_url . '/assets/styles/frontend.css', array(), null, false );
 		wp_register_style( 'jquery_ui_style', 'https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css', array(), null, false );
 		wp_register_script( 'jquery_ui', 'https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js', array(), null, false );
-		wp_register_script( 'page_loader', $base_url . '/engine/hpp/paymentPageLoader.js', array(), null, true );
+		wp_register_script( 'page_loader', $wpp_url . '/loader/paymentPage.js', array(), null, true );
 		wp_register_script( 'credit_card_js', $gateway_url . 'assets/js/creditcard.js', array( 'jquery', 'page_loader' ), null, true );
 	}
 
@@ -629,116 +672,85 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	}
 
 	/**
-	 * Determines the best language to use for the seamless credit card form.
+	 * Determines the language to use for the seamless credit card form.
 	 *
 	 * @return string
+	 *
+	 * @since 2.0.0 Exchange hpp with wpp languages
 	 * @since 1.7.0
 	 */
 	protected function determine_user_language() {
-		$lang = 'en';
+		$locale    = str_replace( '_', '-', get_locale() );
+		$language  = 'en';
+		$converter = new WppVTwoConverter();
 
 		try {
-			$supported_lang = json_decode( file_get_contents( $this->get_option( 'base_url' ) . '/engine/includes/i18n/languages/hpplanguages.json' ) );
-
-			if ( key_exists( substr( get_locale(), 0, 2 ), $supported_lang ) ) {
-				$lang = substr( get_locale(), 0, 2 );
-			} elseif ( key_exists( get_locale(), $supported_lang ) ) {
-				$lang = get_locale();
-			}
+			$converter->init();
+			$language = $converter->convert( $locale );
 		} catch ( Exception $e ) {
-			wp_send_json_error( $e->getMessage() );
+			$this->logger->error( $e->getMessage() );
 			wp_die();
 		}
 
-		return $lang;
+		return $language;
 	}
 
 	/**
 	 * Gets a displayable spinner for the frontend
 	 *
 	 * @return string
+	 *
+	 * @since 2.0.0 Move template out of class
 	 * @since 1.7.0
 	 */
 	protected function get_spinner() {
-		return '<div class="spinner spinner-inline" style="display:inline-block; background: url(\'' . admin_url() . 'images/loading.gif\') no-repeat;"></div>';
+		return $this->template_helper->get_template_as_string( 'spinner.php' );
 	}
 
 	/**
 	 * Gets the HTML required to display the vault functionality.
 	 *
 	 * @return string
+	 *
+	 * @since 2.0.0 Move template out of class
 	 * @since 1.7.0
 	 */
 	protected function get_vault_html() {
-		return '
-			<div id="open-vault-popup" class="wd-toggle-tab active">
-				<span class="dashicons dashicons-arrow-up"></span>' . __( 'vault_use_existing_text', 'wirecard-woocommerce-extension' ) . '
-			</div>
-			
-			<div id="wc_payment_method_wirecard_creditcard_vault" class="wd-tab-content">						
-				<div class="cards">
-					<div class="show-spinner">
-						<div class="spinner" style="background: url(\'' . admin_url() . 'images/loading.gif\') no-repeat;"></div>
-					</div>
-				</div>
-				
-				<button disabled id="vault-submit" class="wd-submit checkout-button button alt wc-forward">' . __( 'Pay now', 'woocommerce' ) . '</button>
-				<div class="clear"></div>
-			</div>
-		
-			<div id="open-new-card" class="wd-toggle-tab">
-				<span class="dashicons dashicons-arrow-down"></span>' . __( 'vault_use_new_text', 'wirecard-woocommerce-extension' ) . '
-			</div>
-		';
+		return $this->template_helper->get_template_as_string( 'credit-card-vault.php' );
 	}
 
 	/**
 	 * Gets the HTML required to display the seamless credit card form.
 	 *
 	 * @return string
+	 *
+	 * @since 2.0.0 Move template out of class
 	 * @since 1.7.0
 	 */
 	protected function get_creditcard_form_html() {
-		return '
-			<div id="wc_payment_method_wirecard_new_credit_card" class="wd-tab-content">
-				<div class="show-spinner">
-					<div class="spinner" style="background: url(\'' . admin_url() . 'images/loading.gif\') no-repeat;"></div>
-				</div>
-				
-				<form method="POST" id="wc_payment_method_wirecard_creditcard_response_form">
-					<input type="hidden" name="cc_nonce" value="' . wp_create_nonce() . '" />
-				</form>
-				
-				<div id="wc_payment_method_wirecard_creditcard_form"></div>
-		';
+		return $this->template_helper->get_template_as_string( 'credit-card-form.php' );
 	}
 
 	/**
 	 * Gets the submit button for the seamless credit card form.
 	 *
 	 * @return string
+	 *
+	 * @since 2.0.0 Move template out of class
 	 * @since 1.7.0
 	 */
 	protected function get_creditcard_submit_html() {
-		return '
-				<button disabled id="seamless-submit" class="wd-submit checkout-button button alt wc-forward">' . __( 'Pay now', 'woocommerce' ) . '</button>
-			</div>
-		';
+		return $this->template_helper->get_template_as_string( 'credit-card-submit.php' );
 	}
 
 	/**
 	 * @return string
+	 *
+	 * @since 2.0.0 Move template out of class
 	 * @since 1.7.0
 	 */
 	protected function get_save_for_later_html() {
-		return '
-			<div class="save-later">
-				<label for="wirecard-store-card">
-				<input type="checkbox" id="wirecard-store-card" />
-				&nbsp;' .
-				__( 'vault_save_text', 'wirecard-woocommerce-extension' ) . '</label>
-			</div>
-		';
+		return $this->template_helper->get_template_as_string( 'credit-card-save-for-later.php' );
 	}
 
 	/**
@@ -752,5 +764,68 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 		wp_enqueue_script( 'jquery_ui' );
 		wp_enqueue_style( 'jquery_ui_style' );
 		wp_enqueue_script( 'page_loader' );
+	}
+
+	/**
+	 * If the url configuration is mixed
+	 * add a notification for the admin
+	 *
+	 * @since 2.0.0
+	 */
+	public function validate_url_configuration() {
+		$admin_notifications = new Admin_Message();
+		$message             = __( 'warning_credit_card_url_mismatch', 'wirecard-woocommerce-extension' );
+
+		if ( ! $this->is_url_configuration_valid() ) {
+			$admin_notifications->add_gateway_admin_notice__warning( $message );
+		}
+
+		return;
+	}
+
+	/**
+	 * Scenarios checked in this method
+	 * base_url and wpp_url both contain "test"        = valid
+	 * base_url and wpp_url both do not contain "test" = valid
+	 * only base_url or wpp_url contains "test"        = invalid
+	 *
+	 * The information is used to check the possibility
+	 * of a mixed configuration (production and test)
+	 *
+	 * @return bool
+	 *
+	 * @since 2.0.0
+	 */
+	protected function is_url_configuration_valid() {
+		$base_url = (string) $this->get_option( 'base_url' );
+		$wpp_url  = (string) $this->get_option( 'wpp_url' );
+		$needle   = 'test';
+
+		/** @var bool $base_url_contains_test */
+		$base_url_contains_test = $this->string_contains_substring( $base_url, $needle );
+		/** @var bool $wpp_url_contains_test */
+		$wpp_url_contains_test = $this->string_contains_substring( $wpp_url, $needle );
+
+		if ( $base_url_contains_test === $wpp_url_contains_test ) {
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * @param string $string
+	 * @param string $needle
+	 *
+	 * @return bool
+	 *
+	 * @since 2.0.0
+	 */
+	protected function string_contains_substring( $string, $needle ) {
+		if ( stripos( $string, $needle ) === false ) {
+			return false;
+		}
+
+		return true;
 	}
 }

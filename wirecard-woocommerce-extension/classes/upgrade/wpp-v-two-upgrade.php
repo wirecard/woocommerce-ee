@@ -29,37 +29,29 @@
  * Please do not use the plugin if you do not agree to these terms of use!
  */
 
-require_once WIRECARD_EXTENSION_HELPER_DIR . 'class-money-formatter.php';
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
-class WC_Gateway_Wirecard_Money_Formatter_Utest extends \PHPUnit_Framework_TestCase {
+require_once( __DIR__ . '../../../woocommerce-wirecard-payment-gateway.php' );
+require_once( WIRECARD_EXTENSION_BASEDIR . 'vendor/autoload.php' );
 
-	private $class_under_test;
+use Wirecard\BaseUrlMatcher\BaseUrlMatcherService;
 
-	public function setUp() {
-		$this->class_under_test = new Money_Formatter();
-	}
+/**
+ * Update wpp base_url
+ * depending on base_url settings
+ *
+ * @since 2.0.0
+ */
+function wpp_v_two_upgrade() {
+	$base_url_key     = 'base_url';
+	$wpp_url_key      = 'wpp_url';
+	$base_url_matcher = new BaseUrlMatcherService();
+	$credit_card      = new WC_Gateway_Wirecard_Creditcard();
 
-	public function test_integer() {
-		$this->assertEquals( 124, $this->class_under_test->to_float( 124 ) );
-	}
+	$credit_card_base_url = $credit_card->get_option( $base_url_key );
+	$credit_card_wpp_url  = $base_url_matcher::getWppUrl( $credit_card_base_url );
 
-	public function test_double() {
-		$this->assertEquals( 123.4567, $this->class_under_test->to_float( 123.4567 ) );
-	}
-
-	public function test_negative_double() {
-		$this->assertEquals( -0.1, $this->class_under_test->to_float( -0.1 ) );
-	}
-
-	public function test_float_as_string() {
-		$this->assertEquals( 2.34, $this->class_under_test->to_float( "2.34" ) );
-	}
-
-	public function test_negative_float_as_string() {
-		$this->assertEquals( -1.32, $this->class_under_test->to_float( "-1.32" ) );
-	}
-
-	public function test_whitespaces() {
-		$this->assertEquals( 10.11, $this->class_under_test->to_float( "   10.11   " ) );
-	}
+	$credit_card->update_option( $wpp_url_key, $credit_card_wpp_url );
 }

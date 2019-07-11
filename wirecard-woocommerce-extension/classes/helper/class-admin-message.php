@@ -29,37 +29,29 @@
  * Please do not use the plugin if you do not agree to these terms of use!
  */
 
-require_once WIRECARD_EXTENSION_HELPER_DIR . 'class-money-formatter.php';
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
-class WC_Gateway_Wirecard_Money_Formatter_Utest extends \PHPUnit_Framework_TestCase {
+/**
+ * Class Admin_Message
+ * Helper for admin notifications
+ *
+ * @since 2.0.0
+ */
+class Admin_Message {
 
-	private $class_under_test;
+	/** @var string CLASS_NOTICE_WARNING_DISMISSIBLE */
+	const CLASS_NOTICE_WARNING_DISMISSIBLE = 'notice notice-warning is-dismissible';
 
-	public function setUp() {
-		$this->class_under_test = new Money_Formatter();
-	}
-
-	public function test_integer() {
-		$this->assertEquals( 124, $this->class_under_test->to_float( 124 ) );
-	}
-
-	public function test_double() {
-		$this->assertEquals( 123.4567, $this->class_under_test->to_float( 123.4567 ) );
-	}
-
-	public function test_negative_double() {
-		$this->assertEquals( -0.1, $this->class_under_test->to_float( -0.1 ) );
-	}
-
-	public function test_float_as_string() {
-		$this->assertEquals( 2.34, $this->class_under_test->to_float( "2.34" ) );
-	}
-
-	public function test_negative_float_as_string() {
-		$this->assertEquals( -1.32, $this->class_under_test->to_float( "-1.32" ) );
-	}
-
-	public function test_whitespaces() {
-		$this->assertEquals( 10.11, $this->class_under_test->to_float( "   10.11   " ) );
+	/**
+	 * Add admin notice warning
+	 *
+	 * @param string $message
+	 *
+	 * @since 2.0.0
+	 */
+	public function add_gateway_admin_notice__warning( $message ) {
+		printf( '<div class="%1$s"><p>%2$s</p></div>', esc_attr( self::CLASS_NOTICE_WARNING_DISMISSIBLE ), esc_html( $message ) );
 	}
 }
