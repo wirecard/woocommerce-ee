@@ -2,9 +2,9 @@
 Contributors: Wirecard AG
 Tags: Wirecard, Credit Card, Alipay Cross-border, Guaranteed Invoice by Wirecard / Ratepay, iDEAL, eps-Überweisung, Masterpass, PayPal, Payment in Advance, Payment on Invoice, SEPA, Sofort., UnionPay International, e-commerce, payment, checkout, payment-methods, One-click-checkout, WooCommerce, PSP, payment-service
 Requires at least: 4.9
-Tested up to: 
+Tested up to: 5.2.2
 Requires PHP: 5.6
-Stable tag: 1.6.6
+Stable tag: 2.0.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -25,7 +25,6 @@ Wirecard WooCommerce Extension can be integrated into your shop system fast and 
 - PayPal
 - SEPA Direct Debit
 - Sofort.
-- UnionPay International
 - Pre-payment
 
 = Why Wirecard? =
@@ -69,4 +68,7 @@ Our general Terms of Use can be found on [Github](https://github.com/wirecard/wo
 4. Wirecard Transaction Detailview for Post-Processing Operations
 
 == Changelog ==
-- Add vouchers to cart
+- Implement WPPv2 Credit Card UI
+- Add WPPv2 language support
+- Remove UnionPay International
+- Implement general information database
