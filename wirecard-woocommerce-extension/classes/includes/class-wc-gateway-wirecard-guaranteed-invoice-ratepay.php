@@ -345,7 +345,7 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 		}
 		$this->transaction = new RatepayInvoiceTransaction();
 		$this->transaction->setParentTransactionId( $order->get_transaction_id() );
-		$this->transaction->setAmount( new Amount( $amount, $order->get_currency() ) );
+		$this->transaction->setAmount( new Amount( floatval( $amount ), $order->get_currency() ) );
 
 		$basket = $this->additional_helper->create_basket_from_parent_transaction(
 			$order,
