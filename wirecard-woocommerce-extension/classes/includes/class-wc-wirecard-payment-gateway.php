@@ -363,6 +363,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 			);
 		}
 
+		$page_url = '';
 		if ( $response instanceof SuccessResponse ) {
 			$page_url            = $this->get_return_url( $order );
 			$payment_method      = $response->getPaymentMethod();
@@ -373,8 +374,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 				$this->update_payment_transaction( $order, $response, 'awaiting', $payment_method );
 			}
 		}
-
-		$page_url = '';
+		
 		if ( $response instanceof InteractionResponse ) {
 			$page_url = $response->getRedirectUrl();
 		} elseif ( $response instanceof FormInteractionResponse ) {
