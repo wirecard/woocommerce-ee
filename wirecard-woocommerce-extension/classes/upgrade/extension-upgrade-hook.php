@@ -54,7 +54,7 @@ function wirecard_extension_upgrade_completed( $upgrader_object, $options ) {
 	if ( 'update' === $options['action'] && 'plugin' === $options['type'] && isset( $options['plugins'] ) ) {
 		// Iterate through the plugins being updated and check if ours is there
 		foreach ( $options['plugins'] as $plugin ) {
-			if ( $plugin === WIRECARD_EXTENSION_MAIN_FILE ) {
+			if ( WIRECARD_EXTENSION_MAIN_FILE === $plugin ) {
 				// Call upgrade hook
 				wirecard_extension_upgrade_hook();
 			}
