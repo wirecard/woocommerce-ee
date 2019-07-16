@@ -88,5 +88,3 @@ function wirecard_extension_upgrade_hook() {
 	// Update extension version on every upgrade/update
 	$upgrade_helper->update_extension_version();
 }
-
-add_action( 'upgrader_process_complete', 'wirecard_extension_upgrade_completed', 1, 2 );

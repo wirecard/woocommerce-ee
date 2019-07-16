@@ -392,3 +392,11 @@ function wirecard_check_if_woo_installed() {
 		'<br><a href="' . admin_url( 'plugins.php' ) . '">' . __( 'text_go_to_plugins', 'wirecard-woocommerce-extension' ) . '</a>'
 	);
 }
+
+/**
+ * Call upgrade hook
+ *
+ * @since 2.0.0
+ */
+require_once WIRECARD_EXTENSION_BASEDIR . 'classes/upgrade/extension-upgrade-hook.php';
+add_action( 'upgrader_process_complete', 'wirecard_extension_upgrade_completed', 1, 2 );
