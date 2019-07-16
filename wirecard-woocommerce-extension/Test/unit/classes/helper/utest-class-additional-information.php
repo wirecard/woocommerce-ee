@@ -29,7 +29,7 @@
  * Please do not use the plugin if you do not agree to these terms of use!
  */
 
-require_once __DIR__ . '/../../../../classes/helper/class-additional-information.php';
+require_once WIRECARD_EXTENSION_HELPER_DIR . 'class-additional-information.php';
 
 class WC_Gateway_Wirecard_Additional_Information_Utest extends \PHPUnit_Framework_TestCase {
 	/** @var Additional_Information*/

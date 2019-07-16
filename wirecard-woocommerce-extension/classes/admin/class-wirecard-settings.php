@@ -92,7 +92,7 @@ class Wirecard_Settings {
 		?>
 		<div class="wrap">
 			<hr class="wp-header-end">
-			<img src="<?php echo esc_url( plugins_url( 'wirecard-woocommerce-extension/assets/images/wirecard-logo.png' ) ); ?>">
+			<img src="https://www.wirecard.com/assets/media/Logos/wirecard_dark.svg" width="200">
 			<br/>
 			<br/>
 			<a class="button-primary" href="?page=wirecardsupport"><?php echo __( 'text_support', 'wirecard-woocommerce-extension' ); ?></a>
@@ -111,7 +111,7 @@ class Wirecard_Settings {
 	 * Create pagination view
 	 *
 	 * @param int $start
-	 * @param stdClass $pages
+	 * @param int $pages
 	 *
 	 * @since 1.0.0
 	 */
@@ -215,7 +215,7 @@ class Wirecard_Settings {
 		?>
 		<div class="wrap">
 			<hr class="wp-header-end">
-			<img src="<?php echo plugins_url( 'wirecard-woocommerce-extension/assets/images/wirecard-logo.png' ); ?>">
+			<img src="https://www.wirecard.com/assets/media/Logos/wirecard_dark.svg" width="200">
 			<br/>
 			<br/>
 			<form>

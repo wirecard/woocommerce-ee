@@ -28,19 +28,22 @@
  * Please do not use the plugin if you do not agree to these terms of use!
  */
 
+/* globals WPP */
+/* globals phpVars */
+
 /*
  * Helper functions
  */
 
-var token                  = null;
-var tab_content            = '.wd-tab-content';
-var nonce                  = jQuery( '#wc_payment_method_wirecard_creditcard_response_form input[name="cc_nonce"]' );
-var togglers               = jQuery( '.wd-toggle-tab' );
-var content_areas          = jQuery( tab_content );
-var new_card_content_area  = jQuery( '#wc_payment_method_wirecard_new_credit_card' );
-var vault_content_area     = jQuery( '#wc_payment_method_wirecard_creditcard_vault' );
-var seamless_submit_button = jQuery( '#seamless-submit' );
-var vault_submit_button    = jQuery( '#vault-submit' );
+var token                = null;
+var tabContent           = ".wd-tab-content";
+var nonce                = jQuery( "#wc_payment_method_wirecard_creditcard_response_form input[name='cc_nonce']" );
+var togglers             = jQuery( ".wd-toggle-tab" );
+var contentAreas         = jQuery( tabContent );
+var newCardContentArea   = jQuery( "#wc_payment_method_wirecard_new_credit_card" );
+var vaultContentArea     = jQuery( "#wc_payment_method_wirecard_creditcard_vault" );
+var seamlessSubmitButton = jQuery( "#seamless-submit" );
+var vaultSubmitButton    = jQuery( "#vault-submit" );
 
 
 /**
@@ -49,8 +52,8 @@ var vault_submit_button    = jQuery( '#vault-submit' );
  * @param data
  * @since 1.7.0
  */
-function log_error( data ) {
-	console.error( 'An error occurred: ', data );
+function logError( data ) {
+	console.error( "An error occurred: ", data );
 }
 
 /*
@@ -64,29 +67,29 @@ function log_error( data ) {
  * @returns mixed
  * @since 1.7.0
  */
-function save_credit_card_to_vault( response ) {
-	var deferred       = jQuery.Deferred();
-	var vault_checkbox = jQuery( "#wirecard-store-card" );
-	var request        = {
-		'action': 'save_cc_to_vault',
-		'token': response.token_id,
-		'mask_pan': response.masked_account_number
+function saveCreditCardToVault( response ) {
+	var deferred      = jQuery.Deferred();
+	var vaultCheckbox = jQuery( "#wirecard-store-card" );
+	var request       = {
+		"action": "save_cc_to_vault",
+		"token": response.token_id,
+		"mask_pan": response.masked_account_number
 	};
 
 	if ( "success" !== response.transaction_state ) {
 		return deferred.resolve();
 	}
 
-	if ( ! vault_checkbox.is( ':checked' ) ) {
+	if ( ! vaultCheckbox.is( ":checked" ) ) {
 		return deferred.resolve();
 	}
 
 	return jQuery.ajax(
 		{
-			type: 'POST',
-			url: php_vars.vault_url,
+			type: "POST",
+			url: phpVars.vault_url,
 			data: request,
-			dataType: 'json'
+			dataType: "json"
 		}
 	);
 }
@@ -97,11 +100,11 @@ function save_credit_card_to_vault( response ) {
  * @return mixed
  * @since 1.7.0
  */
-function get_credit_cards_from_vault() {
+function getCreditCardsFromVault() {
 	return jQuery.ajax(
 		{
 			type: "GET",
-			url: php_vars.vault_get_url,
+			url: phpVars.vault_get_url,
 			data: { "action" : "get_cc_from_vault" },
 			dataType: "json",
 		}
@@ -114,11 +117,11 @@ function get_credit_cards_from_vault() {
  * @param id
  * @since 1.1.0
  */
-function delete_credit_card_from_vault( id ) {
+function deleteCreditCardFromVault( id ) {
 	return jQuery.ajax(
 		{
 			type: "POST",
-			url: php_vars.vault_delete_url,
+			url: phpVars.vault_delete_url,
 			data: { "action" : "remove_cc_from_vault", "vault_id": id },
 			dataType: "json",
 		}
@@ -131,14 +134,14 @@ function delete_credit_card_from_vault( id ) {
  * @returns mixed
  * @since 1.7.0
  */
-function get_credit_card_data() {
+function getCreditCardData() {
 	return jQuery.ajax(
 		{
-			type: 'POST',
-			url: php_vars.ajax_url,
+			type: "POST",
+			url: phpVars.ajax_url,
 			cache: false,
-			data: {'action': 'get_credit_card_request_data'},
-			dataType: 'json',
+			data: {"action": "get_credit_card_request_data"},
+			dataType: "json",
 		}
 	);
 }
@@ -150,14 +153,14 @@ function get_credit_card_data() {
  * @returns mixed
  * @since 1.7.0
  */
-function submit_credit_card_response( response ) {
+function submitCreditCardResponse( response ) {
 	return jQuery.ajax(
 		{
-			type: 'POST',
-			url: php_vars.submit_url,
+			type: "POST",
+			url: phpVars.submit_url,
 			cache: false,
 			data: response,
-			dataType: 'json',
+			dataType: "json",
 		}
 	);
 }
@@ -168,20 +171,20 @@ function submit_credit_card_response( response ) {
  * @returns mixed
  * @since 1.7.0
  */
-function submit_vault() {
+function submitVault() {
 	request = {
-		'vault_token': token,
-		'cc_nonce': nonce.val(),
-		'action': 'submit_token_response'
+		"vault_token": token,
+		"cc_nonce": nonce.val(),
+		"action": "submit_token_response"
 	};
 
 	return jQuery.ajax(
 		{
-			type: 'POST',
-			url: php_vars.token_url,
+			type: "POST",
+			url: phpVars.token_url,
 			cache: false,
 			data: request,
-			dataType: 'json',
+			dataType: "json",
 		}
 	);
 }
@@ -193,58 +196,58 @@ function submit_vault() {
 /**
  * @param cardResponse
  */
-function add_credit_cards_to_vault_tab(cardResponse) {
+function addCreditCardsToVaultTab(cardResponse) {
 	var cards = cardResponse.data;
 
-	vault_content_area
-		.find( '.cards' )
+	vaultContentArea
+		.find( ".cards" )
 		.html( cards )
 }
 
 /**
- * @param delete_trigger
+ * @param deleteTrigger
  * @param id
  */
-function delete_credit_card_from_vault_tab( delete_trigger, id ) {
+function deleteCreditCardFromVaultTab( deleteTrigger, id ) {
 	token = null;
-	vault_submit_button.attr( 'disabled', 'disabled' );
-	jQuery( delete_trigger ).append( php_vars.spinner );
+	vaultSubmitButton.attr( "disabled", "disabled" );
+	jQuery( deleteTrigger ).append( phpVars.spinner );
 
-	delete_credit_card_from_vault( id )
-		.then( add_credit_cards_to_vault_tab )
-		.fail( log_error )
+	deleteCreditCardFromVault( id )
+		.then( addCreditCardsToVaultTab )
+		.fail( logError );
 }
 
-function toggle_tab() {
+function toggleTab() {
 	var $tab = jQuery( this );
 
-	if ( $tab.hasClass( 'active' ) ) {
+	if ( $tab.hasClass( "active" ) ) {
 		return;
 	}
 
 	togglers
-		.removeClass( 'active' )
-		.find( '.dashicons' )
-		.removeClass( 'dashicons-arrow-up' )
-		.addClass( 'dashicons-arrow-down' );
+		.removeClass( "active" )
+		.find( ".dashicons" )
+		.removeClass( "dashicons-arrow-up" )
+		.addClass( "dashicons-arrow-down" );
 
-	$tab.find( '.dashicons' )
-		.removeClass( 'dashicons-arrow-down' )
-		.addClass( 'dashicons-arrow-up' );
+	$tab.find( ".dashicons" )
+		.removeClass( "dashicons-arrow-down" )
+		.addClass( "dashicons-arrow-up" );
 
-	content_areas.slideUp();
+	contentAreas.slideUp();
 
-	$tab.addClass( 'active' )
-		.next( tab_content )
+	$tab.addClass( "active" )
+		.next( tabContent )
 		.slideDown();
 }
 
-function on_token_selected( token_field ) {
-	var selected_token = jQuery( token_field ).data( 'token' );
+function onTokenSelected( tokenField ) {
+	var selectedToken = jQuery( tokenField ).data( "token" );
 
-	if ( selected_token ) {
-		token = selected_token;
-		vault_submit_button.removeAttr( 'disabled' );
+	if ( selectedToken ) {
+		token = selectedToken;
+		vaultSubmitButton.removeAttr( "disabled" );
 	}
 }
 
@@ -257,7 +260,7 @@ function on_token_selected( token_field ) {
  *
  * @since 1.7.0
  */
-function handle_submit_result( response ) {
+function handleSubmitResult( response ) {
 	var data = response.data;
 
 	if ( "error" === data.result ) {
@@ -275,36 +278,18 @@ function handle_submit_result( response ) {
  * @param response
  * @since 1.7.0
  */
-function on_form_submitted( response ) {
-	response['action']   = 'submit_creditcard_response';
-	response['cc_nonce'] = nonce.val();
+function onFormSubmitted( response ) {
+	response["action"]   = "submit_creditcard_response";
+	response["cc_nonce"] = nonce.val();
 
-	save_credit_card_to_vault( response )
+	saveCreditCardToVault( response )
 		.then(
 			function () {
-				console.log( "Submission" );
-				submit_credit_card_response( response )
-					.then( handle_submit_result )
-					.fail( log_error );
+				submitCreditCardResponse( response )
+					.then( handleSubmitResult )
+					.fail( logError );
 			}
 		);
-}
-
-/**
- * Renders the actual seamless form
- *
- * @since 1.7.0
- */
-function render_form( response ) {
-	var request_data = JSON.parse( response.data );
-	WirecardPaymentPage.seamlessRenderForm(
-		{
-			requestData: request_data,
-			wrappingDivId: 'wc_payment_method_wirecard_creditcard_form',
-			onSuccess: on_form_rendered,
-			onError: log_error,
-		}
-	);
 }
 
 /**
@@ -312,21 +297,37 @@ function render_form( response ) {
  *
  * @since 1.0.0
  */
-function on_form_rendered() {
-	seamless_submit_button.removeAttr( 'disabled' );
-	new_card_content_area.find( 'iframe' ).height( 470 );
+function onFormRendered() {
+	seamlessSubmitButton.removeAttr( "disabled" );
+	newCardContentArea.find( "iframe" ).height( 270 );
+}
+
+/**
+ * Renders the actual seamless form
+ *
+ * @since 1.7.0
+ */
+function renderForm( response ) {
+	WPP.seamlessRender(
+		{
+			requestData: JSON.parse( response.data ),
+			wrappingDivId: "wc_payment_method_wirecard_creditcard_form",
+			onSuccess: onFormRendered,
+			onError: logError,
+		}
+	);
 }
 
 /**
  * Initializes the vault interface as required.
  */
-function initialize_vault() {
-	new_card_content_area.hide();
-	togglers.on( 'click', toggle_tab );
+function initializeVault() {
+	newCardContentArea.hide();
+	togglers.on( "click", toggleTab );
 
-	get_credit_cards_from_vault()
-		.then( add_credit_cards_to_vault_tab )
-		.fail( log_error );
+	getCreditCardsFromVault()
+		.then( addCreditCardsToVaultTab )
+		.fail( logError );
 }
 
 /**
@@ -334,19 +335,19 @@ function initialize_vault() {
  *
  * @since 1.7.0
  */
-function initialize_form() {
-	var vault_needs_to_be_initialized = togglers.length > 0;
+function initializeForm() {
+	var vaultNeedsToBeInitialized = togglers.length > 0;
 
-	if ( vault_needs_to_be_initialized ) {
-		initialize_vault();
+	if ( vaultNeedsToBeInitialized ) {
+		initializeVault();
 	}
 
-	get_credit_card_data()
-		.then( render_form )
-		.fail( log_error )
+	getCreditCardData()
+		.then( renderForm )
+		.fail( logError )
 		.always(
 			function() {
-				jQuery( '.show-spinner' ).hide()
+				jQuery( ".show-spinner" ).hide();
 			}
 		)
 }
@@ -356,15 +357,15 @@ function initialize_form() {
  *
  * @since 1.7.0
  */
-function submit_seamless_form() {
-	jQuery( this ).after( php_vars.spinner );
-	jQuery( '.spinner' ).addClass( 'spinner-submit' );
+function submitSeamlessForm() {
+	jQuery( this ).after( phpVars.spinner );
+	jQuery( ".spinner" ).addClass( "spinner-submit" );
 
-	WirecardPaymentPage.seamlessSubmitForm(
+	WPP.seamlessSubmit(
 		{
 			wrappingDivId: "wc_payment_method_wirecard_creditcard_form",
-			onSuccess: on_form_submitted,
-			onError: log_error
+			onSuccess: onFormSubmitted,
+			onError: logError
 		}
 	);
 }
@@ -374,19 +375,19 @@ function submit_seamless_form() {
  *
  * @since 1.7.0
  */
-function submit_vault_form() {
-	jQuery( this ).after( php_vars.spinner );
-	jQuery( '.spinner' ).addClass( 'spinner-submit' );
+function submitVaultForm() {
+	jQuery( this ).after( phpVars.spinner );
+	jQuery( ".spinner" ).addClass( "spinner-submit" );
 
-	submit_vault()
-		.then( handle_submit_result )
-		.fail( log_error );
+	submitVault()
+		.then( handleSubmitResult )
+		.fail( logError );
 }
 
 /*
  * Integration code
  */
 
-jQuery( document ).ready( initialize_form );
-seamless_submit_button.click( submit_seamless_form );
-vault_submit_button.click( submit_vault_form );
+jQuery( document ).ready( initializeForm );
+seamlessSubmitButton.click( submitSeamlessForm );
+vaultSubmitButton.click( submitVaultForm );

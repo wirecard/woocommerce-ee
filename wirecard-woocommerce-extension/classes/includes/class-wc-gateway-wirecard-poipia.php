@@ -33,7 +33,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-wirecard-payment-gateway.php' );
+require_once WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-wirecard-payment-gateway.php';
 
 use Wirecard\PaymentSdk\Config\Config;
 use Wirecard\PaymentSdk\Config\PaymentMethodConfig;
@@ -243,9 +243,7 @@ class WC_Gateway_Wirecard_Poipia extends WC_Wirecard_Payment_Gateway {
 	/**
 	 * Hook for poipia thankyou page text
 	 *
-	 * @param $order_id
-	 *
-	 * @return string|void
+	 * @param int $order_id
 	 *
 	 * @since 1.1.0
 	 */

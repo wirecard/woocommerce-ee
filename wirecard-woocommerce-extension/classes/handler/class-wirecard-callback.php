@@ -63,31 +63,4 @@ class Wirecard_Callback {
 		get_footer();
 		wp_die();
 	}
-
-	/**
-	 * Process 3ds redirect if necessary
-	 *
-	 * @since 1.1.0
-	 */
-	public function post_upi_form() {
-		$data = WC()->session->get( 'wirecard_post_data' );
-		WC()->session->__unset( 'wirecard_post_data' );
-		get_header();
-		$html  = '';
-		$html .= '
-			<link rel="stylesheet" href="' . plugins_url( 'wirecard-woocommerce-extension/assets/styles/loader.css' ) . '">
-			<div class="loader" style="display: flex; justify-content: center; font-size: 20px;"></div><div style="text-align: center;margin-bottom: 50px;">' .
-			__( 'redirect_text', 'wirecard-woocommerce-extension' ) . '
-			</div>';
-		$html .= '<form id="wirecard_callback_form" method="' . $data['method'] . '" action="' . $data['url'] . '">';
-		foreach ( $data['form_fields'] as $key => $value ) {
-			$html .= '<input type="hidden" name="' . $key . '" value="' . $value . '">';
-		}
-		$html .= '</form>';
-		$html .= '<script>document.getElementById("wirecard_callback_form").submit();</script>';
-
-		echo $html;
-		get_footer();
-		die();
-	}
 }

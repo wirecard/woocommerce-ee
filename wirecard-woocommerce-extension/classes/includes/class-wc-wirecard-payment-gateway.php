@@ -220,7 +220,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 			$transaction_factory = new Wirecard_Transaction_Factory();
 			$response            = $response_handler->handle_response( $_REQUEST );
 
-			if ( ! $response ) {
+			if ( ! $response instanceof Response ) {
 				wc_add_notice( __( 'order_error', 'wirecard-woocommerce-extension' ), 'error' );
 				$redirect_url = $order->get_cancel_endpoint();
 			} else {
@@ -344,7 +344,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 		$transaction_service = new TransactionService( $config, $logger );
 
 		try {
-			/** @var $response Response */
+			/** @var Response $response */
 			$process_credit_card_response = ! is_null( $request_values );
 			if ( $process_credit_card_response ) {
 				$redirect = $this->create_redirect_url( $order, 'success', $this->type );
@@ -363,6 +363,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 			);
 		}
 
+		$page_url = '';
 		if ( $response instanceof SuccessResponse ) {
 			$page_url            = $this->get_return_url( $order );
 			$payment_method      = $response->getPaymentMethod();
@@ -373,7 +374,6 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 				$this->update_payment_transaction( $order, $response, 'awaiting', $payment_method );
 			}
 		}
-
 		if ( $response instanceof InteractionResponse ) {
 			$page_url = $response->getRedirectUrl();
 		} elseif ( $response instanceof FormInteractionResponse ) {
@@ -428,7 +428,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 		$logger              = new Logger();
 		$transaction_service = new TransactionService( $config, $logger );
 		try {
-			/** @var $response Response */
+			/** @var Response $response */
 			$response = $transaction_service->process( $transaction, $operation );
 		} catch ( \Exception $exception ) {
 			$logger->error( __METHOD__ . ':' . $exception->getMessage() );
@@ -675,7 +675,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 		$this->config = $this->create_payment_config();
 		$this->transaction->setParentTransactionId( $order->get_transaction_id() );
 		if ( ! is_null( $amount ) ) {
-			$this->transaction->setAmount( new Amount( $amount, $order->get_currency() ) );
+			$this->transaction->setAmount( new Amount( floatval( $amount ), $order->get_currency() ) );
 		}
 
 		return $this->execute_refund( $this->transaction, $this->config, $order, $this->refund_action );

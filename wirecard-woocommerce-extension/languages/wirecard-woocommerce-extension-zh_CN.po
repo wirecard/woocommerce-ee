@@ -34,7 +34,7 @@ msgid "bic_input"
 msgstr "银行识别码"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:424
-#, fuzzy
+
 msgid "birthdate_input"
 msgstr "出生日期"
 
@@ -57,7 +57,7 @@ msgstr "您已取消付款过程。"
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:206
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:159
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:176
-#, fuzzy
+
 msgid "config_additional_info"
 msgstr "发送附加信息"
 
@@ -76,7 +76,7 @@ msgid "config_additional_info_desc"
 msgstr "将发送附加数据用于欺诈保护。这些附加数据包括账单/收货地址、购物篮和描述符。"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:187
-#, fuzzy
+
 msgid "config_allowed_currencies"
 msgstr "允许货币"
 
@@ -96,7 +96,7 @@ msgstr "仅当有效货币属于任一选定货币时，才会显示保证发票
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:127
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:126
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:126
-#, fuzzy
+
 msgid "config_base_url"
 msgstr "基准 URL"
 
@@ -112,7 +112,7 @@ msgstr "基准 URL"
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:129
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:128
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:128
-#, fuzzy
+
 msgid "config_base_url_desc"
 msgstr "Wirecard 基准 URL。（例如 https://api.wirecard.com）"
 
@@ -133,7 +133,7 @@ msgid "config_basket_min_desc"
 msgstr "仅当订单金额大于定义金额时，才会显示保证发票付款方式。默认商店货币金额"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:169
-#, fuzzy
+
 msgid "config_billing_countries"
 msgstr "可开票国家"
 
@@ -142,7 +142,7 @@ msgid "config_billing_countries_desc"
 msgstr "仅当消费者配送国家属于任一选定国家时，才会显示保证发票付款方式。\n\t\t\t\t预先确定了以下允许国家：奥地利、德国。"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:165
-#, fuzzy
+
 msgid "config_billing_shipping"
 msgstr "账单/收货地址必须相同"
 
@@ -201,7 +201,7 @@ msgid "config_descriptor_desc"
 msgstr "发送由金融服务供应商签发给消费者的银行对账单上显示的文本"
 
 #: classes/admin/class-wirecard-settings.php:226
-#, fuzzy
+
 msgid "config_email"
 msgstr "您的电子邮件地址"
 
@@ -298,21 +298,21 @@ msgstr "此文本显示在第一段末尾的 SEPA 直接借记授权页面上。
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:110
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:109
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:109
-#, fuzzy
+
 msgid "config_merchant_account_id"
 msgstr "商家账户 ID"
 
-#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:109
-#: classes/includes/class-wc-gateway-wirecard-creditcard.php:118
-#: classes/includes/class-wc-gateway-wirecard-eps.php:113
-#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:118
-#: classes/includes/class-wc-gateway-wirecard-ideal.php:113
-#: classes/includes/class-wc-gateway-wirecard-masterpass.php:111
-#: classes/includes/class-wc-gateway-wirecard-paypal.php:111
-#: classes/includes/class-wc-gateway-wirecard-poipia.php:108
-#: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:108
-#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:112
-#: classes/includes/class-wc-gateway-wirecard-sofort.php:111
+#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:109
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:118
+#: classes/includes/class-wc-gateway-wirecard-eps.php:113
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:118
+#: classes/includes/class-wc-gateway-wirecard-ideal.php:113
+#: classes/includes/class-wc-gateway-wirecard-masterpass.php:111
+#: classes/includes/class-wc-gateway-wirecard-paypal.php:111
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:108
+#: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:108
+#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:112
+#: classes/includes/class-wc-gateway-wirecard-sofort.php:111
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:111
 msgid "config_merchant_account_id_desc"
 msgstr "为您的商家账户分配的唯一标识符。"
@@ -332,17 +332,17 @@ msgstr "为您的商家账户分配的唯一标识符。"
 msgid "config_merchant_secret"
 msgstr "密钥"
 
-#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:115
-#: classes/includes/class-wc-gateway-wirecard-creditcard.php:124
-#: classes/includes/class-wc-gateway-wirecard-eps.php:119
-#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:124
-#: classes/includes/class-wc-gateway-wirecard-ideal.php:119
-#: classes/includes/class-wc-gateway-wirecard-masterpass.php:117
-#: classes/includes/class-wc-gateway-wirecard-paypal.php:117
-#: classes/includes/class-wc-gateway-wirecard-poipia.php:114
-#: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:114
-#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:118
-#: classes/includes/class-wc-gateway-wirecard-sofort.php:117
+#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:115
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:124
+#: classes/includes/class-wc-gateway-wirecard-eps.php:119
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:124
+#: classes/includes/class-wc-gateway-wirecard-ideal.php:119
+#: classes/includes/class-wc-gateway-wirecard-masterpass.php:117
+#: classes/includes/class-wc-gateway-wirecard-paypal.php:117
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:114
+#: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:114
+#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:118
+#: classes/includes/class-wc-gateway-wirecard-sofort.php:117
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:117
 msgid "config_merchant_secret_desc"
 msgstr "必须使用密钥以计算付款的数字签名。"
@@ -382,7 +382,7 @@ msgid "config_payment_type_desc"
 msgstr "Choose \"Payment In Advance\" to display bank data after the checkout process, or \"Payment On Invoice\" to send bank data with the invoice."
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:178
-#, fuzzy
+
 msgid "config_shipping_countries"
 msgstr "可配送国家"
 
@@ -450,12 +450,8 @@ msgstr "激活 SEPA 直接借记付款方式"
 msgid "config_status_desc_sofortbanking"
 msgstr "激活 Sofort 付款方式。"
 
-#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:98
-msgid "config_status_desc_upi"
-msgstr "激活银联国际付款方式"
-
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:128
-#, fuzzy
+
 msgid "config_three_d_merchant_account_id"
 msgstr "3-D 安全商家账户 ID"
 
@@ -508,6 +504,16 @@ msgstr "这可以控制消费者在结账时看到的名称。"
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:213
 msgid "config_vault_desc"
 msgstr "可以保存信用卡以备后用"
+
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:219
+#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:126
+msgid "config_wpp_url"
+msgstr "Wirecard Payment Page v2 Address (URL WPP v2)"
+
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:221
+#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:128
+msgid "config_wpp_url_desc"
+msgstr "Wirecard Payment Page v2 Address (URL WPP v2) (e.g. https://wpp.wirecard.com)."
 
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:155
 msgid "config_zapp_merchant_return_string"
@@ -589,12 +595,8 @@ msgstr "启用 Wirecard SEPA"
 msgid "enable_heading_title_sofortbanking"
 msgstr "启用 Wirecard Sofort。"
 
-#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:99
-msgid "enable_heading_title_upi"
-msgstr "启用 Wirecard 银联国际"
-
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:214
-#, fuzzy
+
 msgid "enable_vault"
 msgstr "启用定期付款"
 
@@ -611,7 +613,7 @@ msgid "error_credentials"
 msgstr "测试失败，请检查您的凭证。"
 
 #: classes/admin/class-wirecard-settings.php:301
-#, fuzzy
+
 msgid "error_email"
 msgstr "电子邮件发送出现错误"
 
@@ -627,7 +629,7 @@ msgstr "没有可用于此交易的后端操作，交易尚未确认。"
 #: classes/admin/class-wirecard-transaction-factory.php:411
 #: classes/admin/class-wirecard-transaction-factory.php:429
 #: classes/admin/class-wirecard-transaction-factory.php:447
-#, fuzzy
+
 msgid "error_no_transaction"
 msgstr "未找到交易"
 
@@ -642,7 +644,7 @@ msgstr "名"
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:369
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:242
 msgid "heading_creditcard_form"
-msgstr "Enter card details"
+msgstr "Enter Card Details"
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:60
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:104
@@ -686,7 +688,7 @@ msgstr "Wirecard 发票付款/提前付款"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:63
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:113
-#, fuzzy
+
 msgid "heading_title_ratepayinvoice"
 msgstr "Wirecard 保证发票"
 
@@ -707,14 +709,9 @@ msgstr "Wirecard Sofort。"
 
 #: woocommerce-wirecard-payment-gateway.php:268
 #: woocommerce-wirecard-payment-gateway.php:269
-#, fuzzy
+
 msgid "heading_title_support"
 msgstr "支持"
-
-#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:58
-#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:106
-msgid "heading_title_upi"
-msgstr "Wirecard 银联国际"
 
 #. Plugin URI of the plugin
 msgid "https://github.com/wirecard/woocommerce-ee"
@@ -796,12 +793,12 @@ msgid "panel_order_number"
 msgstr "Order Number"
 
 #: classes/admin/class-wirecard-transaction-factory.php:109
-#, fuzzy
+
 msgid "panel_parent_transaction_id"
 msgstr "父交易 ID"
 
 #: classes/admin/class-wirecard-transaction-factory.php:115
-#, fuzzy
+
 msgid "panel_payment_method"
 msgstr "付款方式"
 
@@ -810,7 +807,7 @@ msgid "panel_transaction"
 msgstr "交易"
 
 #: classes/admin/class-wirecard-transaction-factory.php:118
-#, fuzzy
+
 msgid "panel_transaction_state"
 msgstr "交易状态"
 
@@ -855,7 +852,7 @@ msgid "poi_pia_desc"
 msgstr "通过 Wirecard 支付处理网关进行发票付款/提前付款交易"
 
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:266
-#, fuzzy
+
 msgid "ptrid"
 msgstr "供应商交易参考 ID"
 
@@ -962,7 +959,7 @@ msgid "success_credentials"
 msgstr "商家配置已成功通过测试。"
 
 #: classes/admin/class-wirecard-settings.php:299
-#, fuzzy
+
 msgid "success_email"
 msgstr "电子邮件已发送成功"
 
@@ -997,7 +994,7 @@ msgstr "测试配置"
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:147
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:147
 #: woocommerce-wirecard-payment-gateway.php:301
-#, fuzzy
+
 msgid "test_credentials"
 msgstr "测试"
 
@@ -1136,7 +1133,7 @@ msgid "text_refund_transaction"
 msgstr "交易退款"
 
 #: classes/admin/class-wirecard-transaction-factory.php:371
-#, fuzzy
+
 msgid "text_response_data"
 msgstr "响应数据"
 
@@ -1153,7 +1150,7 @@ msgid "text_support"
 msgstr "Support"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:436
-#, fuzzy
+
 msgid "text_terms_accept"
 msgstr "I herewith confirm that I have read the <a href=\"https://www.wirecardbank.de/privacy-documents/datenschutzhinweis-fur-die-wirecard-zahlarten/\" target=\"_blank\">privacy notice</a> and <a target=\"_blank\" href=\"https://www.wirecardbank.de/privacy-documents/zusatzliche-geschaftsbedingungen-fur-wirecard-zahlarten/\">additional terms and conditions</a> for Wirecard payment types and that I accept their validity."
 
@@ -1187,14 +1184,6 @@ msgstr "Wirecard 支付网关"
 msgid "transfer_notice"
 msgstr "请使用以下数据转账："
 
-#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:59
-msgid "upi"
-msgstr "银联国际"
-
-#: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:60
-msgid "upi_desc"
-msgstr "通过 Wirecard 支付处理网关进行银联国际交易"
-
 #: classes/helper/class-credit-card-vault.php:156
 msgid "vault_account_number"
 msgstr "账号"
@@ -1208,14 +1197,18 @@ msgid "vault_save_text"
 msgstr "保存以备后用。"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:336
-#, fuzzy
+
 msgid "vault_use_existing_text"
 msgstr "使用保存的信用卡"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:338
-#, fuzzy
+
 msgid "vault_use_new_text"
 msgstr "使用新信用卡"
+
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:777
+msgid "warning_credit_card_url_mismatch"
+msgstr "Attention: Please check your credentials within the URL setting fields. You might have configured/combined a productive account with a test account."
 
 #. Author of the plugin
 msgid "Wirecard AG"

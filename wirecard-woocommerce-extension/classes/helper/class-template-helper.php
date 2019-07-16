@@ -28,38 +28,34 @@
  * By installing the plugin into the shop system the customer agrees to these terms of use.
  * Please do not use the plugin if you do not agree to these terms of use!
  */
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+/**
+ * Class Template_Helper
+ * Helper for templates
+ *
+ * @since 2.0.0
+ */
+class Template_Helper {
 
-require_once WIRECARD_EXTENSION_HELPER_DIR . 'class-money-formatter.php';
+	/**
+	 * Get template as string
+	 *
+	 * @param string $file_name
+	 *
+	 * @return string $html
+	 *
+	 * @since 2.0.0
+	 */
+	public function get_template_as_string( $file_name ) {
+		$html           = '';
+		$full_file_path = WIRECARD_EXTENSION_TEMPLATE_DIR . $file_name;
 
-class WC_Gateway_Wirecard_Money_Formatter_Utest extends \PHPUnit_Framework_TestCase {
+		if ( file_exists( $full_file_path ) ) {
+			require_once( $full_file_path );
+		}
 
-	private $class_under_test;
-
-	public function setUp() {
-		$this->class_under_test = new Money_Formatter();
-	}
-
-	public function test_integer() {
-		$this->assertEquals( 124, $this->class_under_test->to_float( 124 ) );
-	}
-
-	public function test_double() {
-		$this->assertEquals( 123.4567, $this->class_under_test->to_float( 123.4567 ) );
-	}
-
-	public function test_negative_double() {
-		$this->assertEquals( -0.1, $this->class_under_test->to_float( -0.1 ) );
-	}
-
-	public function test_float_as_string() {
-		$this->assertEquals( 2.34, $this->class_under_test->to_float( "2.34" ) );
-	}
-
-	public function test_negative_float_as_string() {
-		$this->assertEquals( -1.32, $this->class_under_test->to_float( "-1.32" ) );
-	}
-
-	public function test_whitespaces() {
-		$this->assertEquals( 10.11, $this->class_under_test->to_float( "   10.11   " ) );
+		return $html;
 	}
 }

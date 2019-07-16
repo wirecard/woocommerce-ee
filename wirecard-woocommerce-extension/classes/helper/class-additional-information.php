@@ -65,7 +65,7 @@ class Additional_Information {
 	public function create_shopping_basket( $transaction ) {
 		global $woocommerce;
 
-		/** @var $cart WC_Cart */
+		/** @var WC_Cart $cart */
 		$cart   = $woocommerce->cart;
 		$basket = new Basket();
 		$basket->setVersion( $transaction );
@@ -74,7 +74,7 @@ class Additional_Information {
 		$sum         = 0;
 
 		foreach ( $cart->get_cart() as $cart_item_key => $cart_item ) {
-			/** @var $product WC_Product */
+			/** @var WC_Product $product */
 			$product   = $cart_item['data'];
 			$tax_class = apply_filters( 'woocommerce_cart_item_tax', $product->get_tax_class(), $cart_item, $cart_item_key );
 			$basket    = $this->set_basket_item(
@@ -291,8 +291,8 @@ class Additional_Information {
 	/**
 	 * Maps WooCommerce state codes to ISO where necessary.
 	 *
-	 * @param $country
-	 * @param $state
+	 * @param string $country
+	 * @param string $state
 	 * @return string
 	 * @since 1.2.0
 	 */
@@ -312,9 +312,9 @@ class Additional_Information {
 	 *
 	 * @param WC_Order $order
 	 * @param \Wirecard\PaymentSdk\Config\Config $config
-	 * @param $payment_method
-	 * @param $refund_basket
-	 * @param $refunding_amount
+	 * @param string $payment_method
+	 * @param array $refund_basket
+	 * @param int $refunding_amount
 	 * @return Basket|WP_Error
 	 * @since 1.3.2
 	 */
@@ -387,19 +387,17 @@ class Additional_Information {
 		switch ( $tax_setting ) {
 			case 'billing':
 				return WC()->customer->get_billing_country();
-				break;
 			case 'shipping':
 				return WC()->customer->get_shipping_country();
-				break;
 			case 'base':
+			default:
 				return wc_get_base_location()['country'];
-				break;
 		}
 	}
 
 	/**
-	 * @param $country
-	 * @param $tax_classes
+	 * @param string $country
+	 * @param string $tax_classes
 	 *
 	 * @return float
 	 * @since 1.4.0

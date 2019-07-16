@@ -54,12 +54,12 @@ class Wirecard_Notification_Handler extends Wirecard_Handler {
 	 * Handle response via transaction service
 	 *
 	 * @param string $payment_method
-	 * @param        $payload
+	 * @param string $payload
 	 *
 	 * @throws \InvalidArgumentException
 	 * @throws MalformedResponseException
 	 *
-	 * @return boolean
+	 * @return SuccessResponse|boolean
 	 *
 	 * @since 1.0.0
 	 */
@@ -87,10 +87,10 @@ class Wirecard_Notification_Handler extends Wirecard_Handler {
 			foreach ( $response->getStatusCollection() as $status ) {
 				$this->logger->error( sprintf( __METHOD__ . ': Error occured: %s (%s) ', $status->getDescription(), $status->getCode() ) );
 			}
-
 			return false;
 		} else {
 			$this->logger->warning( __METHOD__ . ':' . 'Unexpected result object for notifications.' );
+			return false;
 		}
 	}
 }
