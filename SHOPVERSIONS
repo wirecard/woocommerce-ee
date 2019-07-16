@@ -14,8 +14,8 @@
     	}
     },	
 	"changelog": [
-		"Implement WPPv2 Credit Card UI",
-        "Add WPPv2 language support",
+		"Implement WPP v2 Credit Card UI",
+        "Add WPP v2 language support",
         "Remove Unionpay International",
         "Implement general information database"
 	]
