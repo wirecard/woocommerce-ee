@@ -50,12 +50,11 @@ require_once( 'wpp-v-two-upgrade.php' );
  * @since 2.0.0
  */
 function wirecard_extension_upgrade_completed( $upgrader_object, $options ) {
-	$wirecard_plugin = plugin_basename( __FILE__ );
 	// If an update has taken place and the updated type is plugins and the plugins element exists
 	if ( 'update' === $options['action'] && 'plugin' === $options['type'] && isset( $options['plugins'] ) ) {
 		// Iterate through the plugins being updated and check if ours is there
 		foreach ( $options['plugins'] as $plugin ) {
-			if ( $plugin === $wirecard_plugin ) {
+			if ( $plugin === WIRECARD_EXTENSION_MAIN_FILE ) {
 				// Call upgrade hook
 				wirecard_extension_upgrade_hook();
 			}

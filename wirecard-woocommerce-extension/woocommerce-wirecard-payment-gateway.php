@@ -53,6 +53,7 @@ define( 'WIRECARD_EXTENSION_LOCALE_FALLBACK', 'en_US' );
 define( 'WIRECARD_EXTENSION_HEADER_PLUGIN_NAME', 'woocommerce-ee+Wirecard' );
 define( 'WIRECARD_EXTENSION_HELPER_DIR', WIRECARD_EXTENSION_BASEDIR . '/classes/helper/' );
 define( 'WIRECARD_EXTENSION_TEMPLATE_DIR', WIRECARD_EXTENSION_BASEDIR . '/templates/' );
+define( 'WIRECARD_EXTENSION_MAIN_FILE', plugin_basename( __FILE__ ) );
 
 /**
  * Action that is triggered when a textdomain is loaded.
