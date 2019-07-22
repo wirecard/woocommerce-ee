@@ -109,12 +109,26 @@ class Checkout extends Base {
 		$I                 = $this->tester;
 		$data_field_values = $I->getDataFromDataFile( 'tests/_data/CardData.json' );
 		$I->wait(5);
-		$I->switchToIFrame( 'wirecard-integrated-payment-page-frame' );
+		$this->switchFrame();
 		$I->waitForElementVisible( $this->getElement( 'Credit Card Last Name' ) );
 		$I->fillField( $this->getElement( 'Credit Card Last Name' ), $data_field_values->last_name );
 		$I->fillField( $this->getElement( 'Credit Card Card number' ), $data_field_values->card_number );
 		$I->fillField( $this->getElement( 'Credit Card CVV' ), $data_field_values->cvv );
 		$I->fillField( $this->getElement( 'Credit Card Expiration Date' ), $data_field_values->expiration_date );
 		$I->switchToIFrame();
+	}
+
+	/**
+	 * Method switchFrame
+	 * @since   1.4.4
+	 */
+	public function switchFrame() {
+		// Switch to Credit Card UI frame	
+		$I = $this->tester;
+		//wait for Javascript to load iframe and it's contents	
+		$I->wait( 2 );
+		//get wirecard seemless frame name	
+		$wirecard_frame_name = $I->executeJS( 'return document.querySelector("#wirecard-integrated-payment-page-frame").getAttribute("name")' );
+		$I->switchToIFrame( "$wirecard_frame_name" );
 	}
 }
