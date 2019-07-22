@@ -97,4 +97,12 @@ class Base {
 	 */
 	public function fillCreditCardDetails() {;
 	}
+
+	/**
+	 * Method performPaypalLogin
+	 *
+	 * @since   2.0.0
+	 */
+	public function performPaypalLogin() {;
+	}
 }

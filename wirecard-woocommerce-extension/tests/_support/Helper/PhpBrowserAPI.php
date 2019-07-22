@@ -61,16 +61,13 @@ class PhpBrowserAPI extends \Codeception\Module {
 	/**
 	 * Method prepareCheckout
 	 *
-	 * @param PageObject $shopPage
 	 * @param PageObject $productPage
 	 *
 	 * @since   1.4.4
 	 */
-	public function prepareCheckout( $shopPage, $productPage ) {
-		//go to shop page
-		$this->phpBrowser->amOnPage( $shopPage->getURL() );
-		//chose a product and open product page
-		$this->phpBrowser->click( $shopPage->getElement( 'First Product in the Product List' ) );
+	public function prepareCheckout( $productPage ) {
+		//go to product page
+		$this->phpBrowser->amOnPage( $productPage->getURL() );
 		//choose a product to the cart 5 times
 		for ( $i = 0; $i <= 4; $i++ ) {
 			$this->phpBrowser->click( $productPage->getElement( 'Add to cart' ) );

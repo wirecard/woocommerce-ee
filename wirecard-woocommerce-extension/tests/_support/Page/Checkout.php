@@ -31,8 +31,6 @@
 
 namespace Page;
 
-use \Codeception\Util\Locator;
-
 class Checkout extends Base {
 
 	// include url of current page
@@ -47,24 +45,24 @@ class Checkout extends Base {
 	 * @since 1.4.4
 	 */
 	public $elements = array(
-		'First Name'                    		=> "//*[@id='billing_first_name']",
-		'Last Name'                     		=> "//*[@id='billing_last_name']",
-		'Country'                       		=> "//*[@id='select2-billing_country-container']",
-		'Country entry'                 		=> "//*[@class='select2-search__field']",
-		'Country entry selected'        		=> "//*[@class='select2-results']",
-		'Street address'                		=> "//*[@id='billing_address_1']",
-		'Town/City'                     		=> "//*[@id='billing_city']",
-		'Postcode'                      		=> "//*[@id='billing_postcode']",
-		'Phone'                         		=> "//*[@id='billing_phone']",
-		'Email address'                 		=> "//*[@id='billing_email']",
-		'Place order'                   		=> "//*[@id='place_order']",
-		'Wirecard PayPal' 						=> "//*[@id='payment']/ul/li[2]",
-		'Credit Card First Name'        		=> "//*[@id='pp-cc-first-name']",
-		'Credit Card Last Name'         		=> "//*[@id='pp-cc-last-name']",
-		'Credit Card Card number'      		 	=> "//*[@id='pp-cc-account-number']",
-		'Credit Card CVV'               		=> "//*[@id='pp-cc-cvv']",
-		'Credit Card Valid until month / year' 	=> "//*[@id='pp-cc-expiration-date']",
-		'Pay now'								=> "//*[@id='seamless-submit']",
+		'First Name'                    => "//*[@id='billing_first_name']",
+		'Last Name'                     => "//*[@id='billing_last_name']",
+		'Country'                       => "//*[@id='select2-billing_country-container']",
+		'Country entry'                 => "//*[@class='select2-search__field']",
+		'Country entry selected'        => "//*[@class='select2-results']",
+		'Street address'                => "//*[@id='billing_address_1']",
+		'Town/City'                     => "//*[@id='billing_city']",
+		'Postcode'                      => "//*[@id='billing_postcode']",
+		'Phone'                         => "//*[@id='billing_phone']",
+		'Email address'                 => "//*[@id='billing_email']",
+		'Place order'                   => "//*[@id='place_order']",
+		'Wirecard PayPal' 				=> "//*[@id='payment']/ul/li[2]",
+		'Credit Card First Name'        => "//*[@id='pp-cc-first-name']",
+		'Credit Card Last Name'         => "//*[@id='pp-cc-last-name']",
+		'Credit Card Card number'       => "//*[@id='pp-cc-account-number']",
+		'Credit Card CVV'               => "//*[@id='pp-cc-cvv']",
+		'Credit Card Expiration Date' 	=> "//*[@id='pp-cc-expiration-date']",
+		'Pay now'						=> "//*[@id='seamless-submit']"
 	);
 
 	/**
@@ -111,30 +109,12 @@ class Checkout extends Base {
 		$I                 = $this->tester;
 		$data_field_values = $I->getDataFromDataFile( 'tests/_data/CardData.json' );
 		$I->wait(5);
-		$this->switchFrame();
+		$I->switchToIFrame( 'wirecard-integrated-payment-page-frame' );
 		$I->waitForElementVisible( $this->getElement( 'Credit Card Last Name' ) );
 		$I->fillField( $this->getElement( 'Credit Card Last Name' ), $data_field_values->last_name );
 		$I->fillField( $this->getElement( 'Credit Card Card number' ), $data_field_values->card_number );
 		$I->fillField( $this->getElement( 'Credit Card CVV' ), $data_field_values->cvv );
-		$I->fillfield(
-			$this->getElement( "Credit Card Valid until month / year" ),
-			$data_field_values->valid_until_month
-			.substr( $data_field_values->valid_until_year, -2 )
-		);
+		$I->fillField( $this->getElement( 'Credit Card Expiration Date' ), $data_field_values->expiration_date );
 		$I->switchToIFrame();
-	}
-
-	/**
-	 * Method switchFrame
-	 * @since   1.4.4
-	 */
-	public function switchFrame() {
-		 // Switch to Credit Card UI frame
-		$I = $this->tester;
-		//wait for Javascript to load iframe and it's contents
-		$I->wait( 2 );
-		//get wirecard seemless frame name
-		$wirecard_frame_name = $I->executeJS( 'return document.querySelector("#wirecard-integrated-payment-page-frame").getAttribute("name")' );
-		$I->switchToIFrame( "$wirecard_frame_name" );
 	}
 }

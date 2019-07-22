@@ -38,7 +38,7 @@ class Product extends Base {
 	 * @since 1.4.4
 	 */
 	// include url of current page
-	public $URL = 'product/';
+	public $URL = 'product/album/';
 
 	/**
 	 * @var array

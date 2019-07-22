@@ -31,6 +31,8 @@
 
 namespace Page;
 
+use Facebook\WebDriver\Exception\TimeOutException;
+
 class PayPalLogIn extends Base {
 
 	// include url of current page
@@ -47,6 +49,31 @@ class PayPalLogIn extends Base {
 	public $elements = array(
 		'Email' => "//*[@id='email']",
 		'Password' => "//*[@id='password']",
+		'Next' => "//*[@id='btnNext']",
 		'Log In' => "//*[@id='btnLogin']"
 	);
+
+	/**
+	 * Method performPaypalLogin
+	 *
+	 * @since   2.0.0
+	 */
+	public function performPaypalLogin() 
+	{
+		$I = $this->tester;
+		$data_field_values = $I->getDataFromDataFile( 'tests/_data/PayPalData.json' );
+		$I->waitForElementVisible( $this->getElement( 'Email' ) );
+		$I->fillField($this->getElement( 'Email' ), $data_field_values->user_name);
+		try {
+			$I->waitForElementVisible( $this->getElement( 'Password' ) );
+		} catch ( TimeOutException $e ) {
+			$I->waitForElementVisible( $this->getElement( 'Next' ) );
+			$I->click( $this->getElement( 'Next' ) );
+
+		}
+		$I->waitForElementVisible( $this->getElement( 'Password' ) );
+		$I->fillField( $this->getElement( 'Password' ), $data_field_values->password );
+		$I->waitForElementVisible( $this->getElement( 'Log In' ) );
+		$I->click( $this->getElement( 'Log In' ) );
+	}
 }

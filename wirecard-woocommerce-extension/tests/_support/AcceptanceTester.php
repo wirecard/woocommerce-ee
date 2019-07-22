@@ -94,7 +94,7 @@ class AcceptanceTester extends \Codeception\Actor {
 				$page = new VerifiedPage( $this );
 				break;
 			case 'Order Received':
-				$this->wait( 15 );
+				$this->wait( 20 );
 				$page = new OrderReceivedPage( $this );
 				break;
 			case 'Pay Pal Log In':
@@ -185,10 +185,19 @@ class AcceptanceTester extends \Codeception\Actor {
 	 */
 	public function iPrepareCheckout() {
 		// Do choosing of product and adding it to the cart in PhpBrowser
-		$shopPage    = new ShopPage( $this );
 		$productPage = new ProductPage( $this );
-		$this->prepareCheckout( $shopPage, $productPage );
+		$this->prepareCheckout( $productPage );
 		//sync sessions between PhpBrowser and WebDriver
 		$this->syncCookies();
 	}
+
+	/**
+	 * @Given I login to Paypal
+	 * @since 2.0.0
+	 */
+	public function iLoginToPaypal()
+	{
+		$this->currentPage->performPaypalLogin();
+	}
+
 }
