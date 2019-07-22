@@ -14,7 +14,7 @@ modules:
          browser: chrome # 'chrome' or 'firefox'
          capabilities:
            'build': '%VERSION%'
-           'project': 'woocommerce-ee-%GATEWAY%'
+           'project': 'woocommerce-ee-%GATEWAY%-%WOOCOMMERCE_NUMBER%'
            'browserstack.user': '%BROWSERSTACK_USER%'
            'browserstack.key': '%BROWSERSTACK_ACCESS_KEY%'
      - \Helper\Acceptance

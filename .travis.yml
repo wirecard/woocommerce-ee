@@ -35,10 +35,11 @@ matrix:
     php: 7.2
     env: 
     - GATEWAY=API-TEST
-    - WOOCOMMERCE_VERSION=$(awk 'NR==1 {print; exit}' ${WOOCOMMERCE_RELEASES_FILE})
+    - WOOCOMMERCE_NUMBER=1
     before_install:
     - travis_retry composer self-update 
     install:
+    - export WOOCOMMERCE_VERSION=$(awk "NR==${WOOCOMMERCE_NUMBER} {print; exit}" ${WOOCOMMERCE_RELEASES_FILE})
     - echo "Testing with Woocommerce version ${WOOCOMMERCE_VERSION}" 
     - bash .bin/generate-release-package.sh test
     - travis_retry composer require --dev $COMPOSER_ARGS codeception/codeception:^2.5
@@ -53,35 +54,35 @@ matrix:
   - <<: *acceptance-test
     env:
     - GATEWAY=API-TEST
-    - WOOCOMMERCE_VERSION=$(awk 'NR==2 {print; exit}' ${WOOCOMMERCE_RELEASES_FILE})
+    - WOOCOMMERCE_NUMBER=2
   - <<: *acceptance-test
     env:
     - GATEWAY=API-TEST
-    - WOOCOMMERCE_VERSION=$(awk 'NR==3 {print; exit}' ${WOOCOMMERCE_RELEASES_FILE})
+    - WOOCOMMERCE_NUMBER=3
   - <<: *acceptance-test
     env: 
     - GATEWAY=API-WDCEE-TEST
-    - WOOCOMMERCE_VERSION=$(awk 'NR==1 {print; exit}' ${WOOCOMMERCE_RELEASES_FILE})
+    - WOOCOMMERCE_NUMBER=1
   - <<: *acceptance-test
     env:
     - GATEWAY=API-WDCEE-TEST
-    - WOOCOMMERCE_VERSION=$(awk 'NR==2 {print; exit}' ${WOOCOMMERCE_RELEASES_FILE})
+    - WOOCOMMERCE_NUMBER=2
   - <<: *acceptance-test
     env:
     - GATEWAY=API-WDCEE-TEST
-    - WOOCOMMERCE_VERSION=$(awk 'NR==3 {print; exit}' ${WOOCOMMERCE_RELEASES_FILE})
+    - WOOCOMMERCE_NUMBER=3
   - <<: *acceptance-test
     env: 
     - GATEWAY=NOVA
-    - WOOCOMMERCE_VERSION=$(awk 'NR==1 {print; exit}' ${WOOCOMMERCE_RELEASES_FILE})
+    - WOOCOMMERCE_NUMBER=1
   - <<: *acceptance-test
     env:
     - GATEWAY=NOVA
-    - WOOCOMMERCE_VERSION=$(awk 'NR==2 {print; exit}' ${WOOCOMMERCE_RELEASES_FILE})
+    - WOOCOMMERCE_NUMBER=2
   - <<: *acceptance-test
     env:
     - GATEWAY=NOVA
-    - WOOCOMMERCE_VERSION=$(awk 'NR==3 {print; exit}' ${WOOCOMMERCE_RELEASES_FILE})
+    - WOOCOMMERCE_NUMBER=3
 
   - stage: phraseapp-pull
     if: type != cron AND env(PHRASEAPP_PULL) = '1'
