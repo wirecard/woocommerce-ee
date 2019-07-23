@@ -43,10 +43,6 @@ ADD wirecard-woocommerce-extension/tests/_data/ /usr/src/wordpress/_data
 RUN cd /usr/src/wordpress/wp-content/plugins \
     && unzip /tmp/temp.zip \
     && chown -R www-data:www-data /usr/src/wordpress/wp-content/plugins/wirecard-woocommerce-extension 
-#    && php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
-#    && php composer-setup.php \
-#    && php -r "unlink('composer-setup.php');" \
-#    && php composer.phar install
 
 #Housekeep
 RUN rm -rf /var/lib/apt/lists/* \

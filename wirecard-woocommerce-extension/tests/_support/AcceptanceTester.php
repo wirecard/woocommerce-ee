@@ -200,5 +200,4 @@ class AcceptanceTester extends \Codeception\Actor {
 	{
 		$this->currentPage->performPaypalLogin();
 	}
-
 }
