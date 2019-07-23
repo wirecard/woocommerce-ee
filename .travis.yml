@@ -12,13 +12,13 @@ matrix:
     - stage: acceptance-test
   include:
   - php: 5.6
-    if: type = cron AND env(PHRASEAPP_PULL) != '1'
+    if: type != cron AND env(PHRASEAPP_PULL) != '1'
   - php: 7.0
-    if: type = cron AND env(PHRASEAPP_PULL) != '1'
+    if: type != cron AND env(PHRASEAPP_PULL) != '1'
   - php: 7.1
-    if: type = cron AND env(PHRASEAPP_PULL) != '1'
+    if: type != cron AND env(PHRASEAPP_PULL) != '1'
   - php: 7.2
-    if: type = cron AND env(PHRASEAPP_PULL) != '1'
+    if: type != cron AND env(PHRASEAPP_PULL) != '1'
 
   - stage: get-woocommerce-versions
     if: type = cron
@@ -31,7 +31,7 @@ matrix:
       
   - &acceptance-test
     stage: acceptance-test
-    if: type != cron
+    if: type = cron
     php: 7.2
     env: 
     - GATEWAY=API-TEST
@@ -46,11 +46,11 @@ matrix:
     - travis_retry composer install $COMPOSER_ARGS
     - composer show
     script: bash .bin/run-ui-tests.sh
-    after_script: skip
-    after_success: skip
-#    - bash .bin/upload-logs-and-notify.sh
+    after_script:
+    after_success:
+    - bash .bin/upload-logs-and-notify.sh
     after_failure: skip
-#    - bash .bin/upload-logs-and-notify.sh fail
+    - bash .bin/upload-logs-and-notify.sh fail
   - <<: *acceptance-test
     env:
     - GATEWAY=API-TEST
