@@ -10,7 +10,7 @@ Feature: CrediCard3DSPurchaseHappyPath
     Then I see "Wirecard Credit Card"
 	And I click "Place order"
 
-  @API-TEST @API-WDCEE-TEST @NOVA
+  @API-TEST @API-WDCEE-TEST
   Scenario: purchase
     Given I fill fields with "Valid Credit Card Data"
     When I click "Pay now"

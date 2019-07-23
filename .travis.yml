@@ -71,18 +71,6 @@ matrix:
     env:
     - GATEWAY=API-WDCEE-TEST
     - WOOCOMMERCE_NUMBER=3
-  - <<: *acceptance-test
-    env: 
-    - GATEWAY=NOVA
-    - WOOCOMMERCE_NUMBER=1
-  - <<: *acceptance-test
-    env:
-    - GATEWAY=NOVA
-    - WOOCOMMERCE_NUMBER=2
-  - <<: *acceptance-test
-    env:
-    - GATEWAY=NOVA
-    - WOOCOMMERCE_NUMBER=3
 
   - stage: phraseapp-pull
     if: type != cron AND env(PHRASEAPP_PULL) = '1'
