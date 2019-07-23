@@ -98,10 +98,11 @@ class AcceptanceTester extends \Codeception\Actor {
 				$page = new OrderReceivedPage( $this );
 				break;
 			case 'Pay Pal Log In':
+				$this->wait( 10 );
 				$page = new PayPalLogInPage( $this );
 				break;
 			case 'Pay Pal Review':
-				$this->wait( 10 );
+				$this->wait( 20 );
 				$page = new PayPalReviewPage( $this );
 				break;
 			default:

@@ -14,7 +14,7 @@ chmod +x $PWD/jq
 # Open ngrok tunnel
 $PWD/ngrok authtoken $NGROK_TOKEN
 TIMESTAMP=$(date +%s)
-$PWD/ngrok http 9090 -subdomain="${TIMESTAMP}-woo-${GATEWAY}" > /dev/null &
+$PWD/ngrok http 9090 -subdomain="${TIMESTAMP}-woo-${GATEWAY}-${WOOCOMMERCE_NUMBER}" > /dev/null &
 
 
 # extract the ngrok url
