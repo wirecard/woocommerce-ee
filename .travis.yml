@@ -46,10 +46,10 @@ matrix:
     - travis_retry composer install $COMPOSER_ARGS
     - composer show
     script: bash .bin/run-ui-tests.sh
-    after_script:
+    after_script: skip
     after_success:
     - bash .bin/upload-logs-and-notify.sh
-    after_failure: skip
+    after_failure:
     - bash .bin/upload-logs-and-notify.sh fail
   - <<: *acceptance-test
     env:
