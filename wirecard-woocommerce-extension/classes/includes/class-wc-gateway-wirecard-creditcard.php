@@ -42,6 +42,7 @@ use Wirecard\PaymentSdk\Entity\Amount;
 use Wirecard\PaymentSdk\Transaction\CreditCardTransaction;
 use Wirecard\PaymentSdk\TransactionService;
 use Wirecard\Converter\WppVTwoConverter;
+use Wirecard\PaymentSdk\Constant\ChallengeInd;
 
 /**
  * Class WC_Gateway_Wirecard_CreditCard
@@ -152,8 +153,11 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	 * Load form fields for configuration
 	 *
 	 * @since 1.0.0
+	 * @since 2.1.0 challenge_indicator config field
 	 */
 	public function init_form_fields() {
+		$challenge_indicators = $this->get_challenge_indicator_options();
+		
 		$this->form_fields = array(
 			'enabled'                     => array(
 				'title'       => __( 'text_enable_disable', 'wirecard-woocommerce-extension' ),
@@ -262,6 +266,15 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 				'label'       => __( 'config_descriptor', 'wirecard-woocommerce-extension' ),
 				'default'     => 'no',
 			),
+			'challenge_indicator'	=> array(
+				'title'          => __( 'config_challenge_indicator', 'wirecard-woocommerce-extension' ),
+				'type'           => 'select',
+				'description'    => __( 'config_challenge_indicator_desc', 'wirecard-woocommerce-extension' ),
+				'options'        => $challenge_indicators,
+				'default'        => __( 'config_challenge_no_preference', 'wirecard-woocommerce-extension' ),
+				'multiple'       => true,
+				'select_buttons' => true,
+			),
 			'send_additional'             => array(
 				'title'       => __( 'text_enable_disable', 'wirecard-woocommerce-extension' ),
 				'type'        => 'checkbox',
@@ -276,6 +289,20 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 				'label'       => __( 'enable_vault', 'wirecard-woocommerce-extension' ),
 				'default'     => 'no',
 			),
+		);
+	}
+
+	/**
+	 * Creates challenge indicator options for admin configuration
+	 * 
+	 * @return array
+	 * @since 2.1.0
+	 */
+	private function get_challenge_indicator_options() {
+		return array(
+			ChallengeInd::NO_PREFERENCE => __( 'config_challenge_no_preference', 'wirecard-woocommerce-extension' ),
+			ChallengeInd::NO_CHALLENGE => __( 'config_challenge_no_challenge', 'wirecard-woocommerce-extension' ),
+			ChallengeInd::CHALLENGE_THREED => __( 'config_challenge_challenge_threed', 'wirecard-woocommerce-extension' )
 		);
 	}
 
