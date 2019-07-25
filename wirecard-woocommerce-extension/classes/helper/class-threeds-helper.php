@@ -33,9 +33,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+require_once WIRECARD_EXTENSION_HELPER_DIR . 'class-user-data-helper.php';
+
 use Wirecard\PaymentSdk\Constant\AuthMethod;
 use Wirecard\PaymentSdk\Entity\AuthenticationInfo;
-use Wirecard\PaymentSdk\Entity\ThreeDSRequestor;
 
 /**
  * Class Three_DS_Helper
@@ -46,13 +47,26 @@ use Wirecard\PaymentSdk\Entity\ThreeDSRequestor;
  */
 class Three_DS_Helper {
 	
+	private $order;
+	
+	public function __construct( $order )
+	{
+		$this->order = $order;
+	}
+
+	/**
+	 * Not mandatory - temporary all mand.
+	 */
 	public function setMandatoryParams() {
-		
-		$three_ds_requestor = new ThreeDSRequestor();
 		$authentication_info = new AuthenticationInfo();
 		$authentication_info->setAuthMethod($this->get_authentication_method());
 		// no login timestamp available per default
 		$authentication_info->setAuthTimestamp(null);
+		
+		if ( is_user_logged_in() ) {
+			$user_data_helper = new User_Data_Helper( wp_get_current_user(), $this->order );
+			$card_holder = $user_data_helper->get_card_holder_data();
+		}
 	}
 
 	/**

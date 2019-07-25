@@ -33,9 +33,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-use Wirecard\PaymentSdk\Constant\AuthMethod;
 use Wirecard\PaymentSdk\Entity\AuthenticationInfo;
-use Wirecard\PaymentSdk\Entity\ThreeDSRequestor;
+use Wirecard\PaymentSdk\Entity\CardHolderAccount;
 
 /**
  * Class User_Data_Helper
@@ -54,32 +53,25 @@ class User_Data_Helper {
 	private $user;
 
 	/**
-	 * @var \Wirecard\PaymentSdk\Entity\CardHolderAccount
-	 */
-	private $card_holder;
-
-	/**
 	 * @var WC_Order
 	 */
 	private $current_order;
-	
-	private $current_shipping_address;
 	
 	public function __construct( $user, $order )
 	{
 		$this->user = $user;
 		$this->current_order = $order;
-		$this->current_shipping_address = $this->current_order->get_shipping_address_1();
 	}
 	
-	public function init_user_data() {
-		$this->card_holder = new \Wirecard\PaymentSdk\Entity\CardHolderAccount();
-		$this->card_holder->setCreationDate( $this->get_account_creation_date() );
-		$this->card_holder->setUpdateDate( $this->get_account_update_date() );
-		$this->card_holder->setShippingAddressFirstUse( $this->get_shipping_address_first_use() );
-		$this->card_holder->setAmountPurchasesLastSixMonths($this->get_successful_orders_last_six_months());
+	public function get_card_holder_data() {
+		$card_holder = new CardHolderAccount();
+		$card_holder->setCreationDate( $this->get_account_creation_date() );
+		$card_holder->setUpdateDate( $this->get_account_update_date() );
+		$card_holder->setShippingAddressFirstUse( $this->get_shipping_address_first_use() );
+		$card_holder->setAmountPurchasesLastSixMonths( $this->get_successful_orders_last_six_months() );
+		$card_holder->setMerchantCrmId( $this->user->ID );
 		
-		$logger = new Logger();
+		return $card_holder;
 	}
 
 	private function get_account_creation_date() {
@@ -109,7 +101,7 @@ class User_Data_Helper {
 			'limit'    => 1,
 			'orderby'  => 'date',
 			'order'    => 'ASC',
-			'shipping_address_1' => $this->current_shipping_address
+			'shipping_address_1' => $this->current_order->get_shipping_address_1()
 		);
 
 		/** @var array $orders */
