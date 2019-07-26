@@ -30,11 +30,12 @@
  */
 
 require_once __DIR__ . '/class-wc-wirecard-payment-gateway.php';
-require_once( WIRECARD_EXTENSION_HELPER_DIR . 'class-credit-card-vault.php' );
-require_once( WIRECARD_EXTENSION_HELPER_DIR . 'class-template-helper.php' );
-require_once( WIRECARD_EXTENSION_HELPER_DIR . 'class-logger.php' );
-require_once( WIRECARD_EXTENSION_HELPER_DIR . 'class-admin-message.php' );
-require_once( WIRECARD_EXTENSION_HELPER_DIR . 'class-action-helper.php' );
+require_once WIRECARD_EXTENSION_HELPER_DIR . 'class-credit-card-vault.php';
+require_once WIRECARD_EXTENSION_HELPER_DIR . 'class-template-helper.php';
+require_once WIRECARD_EXTENSION_HELPER_DIR . 'class-logger.php';
+require_once WIRECARD_EXTENSION_HELPER_DIR . 'class-admin-message.php';
+require_once WIRECARD_EXTENSION_HELPER_DIR . 'class-action-helper.php';
+require_once WIRECARD_EXTENSION_HELPER_DIR . 'class-three-ds-helper.php';
 
 use Wirecard\PaymentSdk\Config\Config;
 use Wirecard\PaymentSdk\Config\CreditCardConfig;
@@ -157,7 +158,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	 */
 	public function init_form_fields() {
 		$challenge_indicators = $this->get_challenge_indicator_options();
-		
+
 		$this->form_fields = array(
 			'enabled'                     => array(
 				'title'       => __( 'text_enable_disable', 'wirecard-woocommerce-extension' ),
@@ -266,7 +267,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 				'label'       => __( 'config_descriptor', 'wirecard-woocommerce-extension' ),
 				'default'     => 'no',
 			),
-			'challenge_indicator'	=> array(
+			'challenge_indicator'         => array(
 				'title'          => __( 'config_challenge_indicator', 'wirecard-woocommerce-extension' ),
 				'type'           => 'select',
 				'description'    => __( 'config_challenge_indicator_desc', 'wirecard-woocommerce-extension' ),
@@ -294,15 +295,15 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 
 	/**
 	 * Creates challenge indicator options for admin configuration
-	 * 
+	 *
 	 * @return array
 	 * @since 2.1.0
 	 */
 	private function get_challenge_indicator_options() {
 		return array(
-			ChallengeInd::NO_PREFERENCE => __( 'config_challenge_no_preference', 'wirecard-woocommerce-extension' ),
-			ChallengeInd::NO_CHALLENGE => __( 'config_challenge_no_challenge', 'wirecard-woocommerce-extension' ),
-			ChallengeInd::CHALLENGE_THREED => __( 'config_challenge_challenge_threed', 'wirecard-woocommerce-extension' )
+			ChallengeInd::NO_PREFERENCE    => __( 'config_challenge_no_preference', 'wirecard-woocommerce-extension' ),
+			ChallengeInd::NO_CHALLENGE     => __( 'config_challenge_no_challenge', 'wirecard-woocommerce-extension' ),
+			ChallengeInd::CHALLENGE_THREED => __( 'config_challenge_challenge_threed', 'wirecard-woocommerce-extension' ),
 		);
 	}
 
@@ -483,17 +484,19 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 		$config              = $this->create_payment_config();
 		$transaction_service = new TransactionService( $config );
 		$lang                = $this->determine_user_language();
+		$order               = wc_get_order( $order_id );
+		$challenge_ind       = $this->get_option( 'challenge_indicator' );
 
 		$this->payment_action = $this->get_option( 'payment_action' );
 		$this->transaction    = new CreditCardTransaction();
 
 		parent::process_payment( $order_id );
-		
-		$this->transaction->setTermUrl( $this->create_redirect_url( wc_get_order( $order_id ), 'success', $this->type ) );
+
+		$this->transaction->setTermUrl( $this->create_redirect_url( $order, 'success', $this->type ) );
 		$this->transaction->setConfig( $config->get( CreditCardTransaction::NAME ) );
-		
+
 		// Set 3DS fields within transaction
-		$three_ds_helper = new Three_DS_Helper( wc_get_order( $order_id ), $this->transaction );
+		$three_ds_helper   = new Three_DS_Helper( $order, $this->transaction, $challenge_ind );
 		$this->transaction = $three_ds_helper->get_three_ds_transaction();
 
 		wp_send_json_success(

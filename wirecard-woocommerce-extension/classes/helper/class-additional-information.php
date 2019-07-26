@@ -52,7 +52,7 @@ use Wirecard\PaymentSdk\Transaction\Transaction;
 class Additional_Information {
 
 	const SHIPPING = 'shipping';
-	
+
 	const BILLING = 'billing';
 
 	/**

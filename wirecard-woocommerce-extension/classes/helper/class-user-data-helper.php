@@ -46,7 +46,7 @@ use Wirecard\PaymentSdk\Entity\CardHolderAccount;
 class User_Data_Helper {
 
 	const UNLIMITED = -1;
-	
+
 	/**
 	 * @var WP_User
 	 */
@@ -61,18 +61,17 @@ class User_Data_Helper {
 	 * User_Data_Helper constructor.
 	 * @param WP_User $user
 	 * @param WC_Order $order
-	 * 
+	 *
 	 * @since 2.1.0
 	 */
-	public function __construct( $user, $order )
-	{
-		$this->user = $user;
+	public function __construct( $user, $order ) {
+		$this->user          = $user;
 		$this->current_order = $order;
 	}
 
 	/**
 	 * Get ThreeDS CardHolder Data
-	 * 
+	 *
 	 * @return CardHolderAccount
 	 * @since 2.1.0
 	 */
@@ -83,109 +82,109 @@ class User_Data_Helper {
 		$card_holder->setShippingAddressFirstUse( $this->get_shipping_address_first_use() );
 		$card_holder->setAmountPurchasesLastSixMonths( $this->get_successful_orders_last_six_months() );
 		$card_holder->setMerchantCrmId( $this->user->ID );
-		
+
 		return $card_holder;
 	}
 
 	/**
 	 * Get card holder account creation date - user registration date
-	 * 
+	 *
 	 * @return DateTime
 	 * @since 2.1.0
 	 */
 	private function get_account_creation_date() {
 		$date_time = new DateTime( $this->user->user_registered );
-		
+
 		return $date_time;
 	}
 
 	/**
 	 * Get card holder account update date
-	 * 
+	 *
 	 * @return DateTime
 	 * @since 2.1.0
 	 */
 	private function get_account_update_date() {
 		$update_date = get_user_meta( $this->user->ID, 'last_update', true );
-		$date_time = $this->convertTimestampToDateTime( $update_date );
-		
+		$date_time   = $this->convert_timestamp_to_date_time( $update_date );
+
 		return $date_time;
 	}
 
 	/**
 	 * Converts timestamp to DateTime formatted with 'Y-m-d\TH:i:s\Z'
-	 * 
+	 *
 	 * @param string $timestamp
 	 * @return DateTime
 	 * @since 2.1.0
 	 */
-	private function convertTimestampToDateTime( $timestamp ) {
+	private function convert_timestamp_to_date_time( $timestamp ) {
 		$date_time = new DateTime();
 		$date_time->format( AuthenticationInfo::DATE_FORMAT );
 		$date_time->setTimestamp( $timestamp );
-		
+
 		return $date_time;
 	}
 
 	/**
 	 * Get DateTime for first shipping address usage
-	 * 
+	 *
 	 * @return NULL|WC_DateTime
 	 * @since 2.1.0
 	 */
 	private function get_shipping_address_first_use() {
 		$arguments = array(
-			'customer' => $this->user->ID,
-			'limit'    => 1,
-			'orderby'  => 'date',
-			'order'    => 'ASC',
-			'shipping_address_1' => $this->current_order->get_shipping_address_1()
+			'customer'           => $this->user->ID,
+			'limit'              => 1,
+			'orderby'            => 'date',
+			'order'              => 'ASC',
+			'shipping_address_1' => $this->current_order->get_shipping_address_1(),
 		);
 
 		/** @var array $orders */
 		$orders = $this->get_order_array_with_args( $arguments );
-		
+
 		if ( empty( $orders ) ) {
 			return null;
 		}
 		/** @var WC_Order $first_order */
 		$first_order = $orders[0];
-		
+
 		return $first_order->get_date_created();
 	}
 
 	/**
 	 * Get successful purchased orders within last six months
-	 * 
+	 *
 	 * @return int
 	 * @since 2.1.0
 	 */
 	private function get_successful_orders_last_six_months() {
 		$arguments = array(
-			'customer' => $this->user->ID,
-			'limit'		=> self::UNLIMITED,
-			'status'	=> 'processing',
-			'date_after' => '6 months ago'
+			'customer'   => $this->user->ID,
+			'limit'      => self::UNLIMITED,
+			'status'     => 'processing',
+			'date_after' => '6 months ago',
 		);
-		
+
 		return count( $this->get_order_array_with_args( $arguments ) );
 	}
 
 	/**
 	 * Get array with wc order data according to arguments
 	 * Override paginate = false to avoid stdClass
-	 * 
+	 *
 	 * @param $args
 	 * @return array
 	 * @since 2.1.0
 	 */
 	private function get_order_array_with_args( $args ) {
 		$no_paginate = array(
-			'paginate'	=> false
+			'paginate' => false,
 		);
-		$args = array_merge( $no_paginate, $args );
-		$orders = wc_get_orders( $args );
-		
+		$args        = array_merge( $no_paginate, $args );
+		$orders      = wc_get_orders( $args );
+
 		return $orders;
 	}
 }
