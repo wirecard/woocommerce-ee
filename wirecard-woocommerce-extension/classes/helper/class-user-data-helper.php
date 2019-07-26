@@ -56,13 +56,26 @@ class User_Data_Helper {
 	 * @var WC_Order
 	 */
 	private $current_order;
-	
+
+	/**
+	 * User_Data_Helper constructor.
+	 * @param WP_User $user
+	 * @param WC_Order $order
+	 * 
+	 * @since 2.1.0
+	 */
 	public function __construct( $user, $order )
 	{
 		$this->user = $user;
 		$this->current_order = $order;
 	}
-	
+
+	/**
+	 * Get ThreeDS CardHolder Data
+	 * 
+	 * @return CardHolderAccount
+	 * @since 2.1.0
+	 */
 	public function get_card_holder_data() {
 		$card_holder = new CardHolderAccount();
 		$card_holder->setCreationDate( $this->get_account_creation_date() );
@@ -74,19 +87,38 @@ class User_Data_Helper {
 		return $card_holder;
 	}
 
+	/**
+	 * Get card holder account creation date - user registration date
+	 * 
+	 * @return DateTime
+	 * @since 2.1.0
+	 */
 	private function get_account_creation_date() {
 		$date_time = new DateTime( $this->user->user_registered );
 		
 		return $date_time;
 	}
 
+	/**
+	 * Get card holder account update date
+	 * 
+	 * @return DateTime
+	 * @since 2.1.0
+	 */
 	private function get_account_update_date() {
 		$update_date = get_user_meta( $this->user->ID, 'last_update', true );
 		$date_time = $this->convertTimestampToDateTime( $update_date );
 		
 		return $date_time;
 	}
-	
+
+	/**
+	 * Converts timestamp to DateTime formatted with 'Y-m-d\TH:i:s\Z'
+	 * 
+	 * @param string $timestamp
+	 * @return DateTime
+	 * @since 2.1.0
+	 */
 	private function convertTimestampToDateTime( $timestamp ) {
 		$date_time = new DateTime();
 		$date_time->format( AuthenticationInfo::DATE_FORMAT );
@@ -94,7 +126,13 @@ class User_Data_Helper {
 		
 		return $date_time;
 	}
-	
+
+	/**
+	 * Get DateTime for first shipping address usage
+	 * 
+	 * @return NULL|WC_DateTime
+	 * @since 2.1.0
+	 */
 	private function get_shipping_address_first_use() {
 		$arguments = array(
 			'customer' => $this->user->ID,
@@ -105,7 +143,7 @@ class User_Data_Helper {
 		);
 
 		/** @var array $orders */
-		$orders = $this->get_orders_with_args( $arguments );
+		$orders = $this->get_order_array_with_args( $arguments );
 		
 		if ( empty( $orders ) ) {
 			return null;
@@ -115,7 +153,13 @@ class User_Data_Helper {
 		
 		return $first_order->get_date_created();
 	}
-	
+
+	/**
+	 * Get successful purchased orders within last six months
+	 * 
+	 * @return int
+	 * @since 2.1.0
+	 */
 	private function get_successful_orders_last_six_months() {
 		$arguments = array(
 			'customer' => $this->user->ID,
@@ -124,10 +168,22 @@ class User_Data_Helper {
 			'date_after' => '6 months ago'
 		);
 		
-		return count( $this->get_orders_with_args( $arguments ) );
+		return count( $this->get_order_array_with_args( $arguments ) );
 	}
-	
-	private function get_orders_with_args( $args ) {
+
+	/**
+	 * Get array with wc order data according to arguments
+	 * Override paginate = false to avoid stdClass
+	 * 
+	 * @param $args
+	 * @return array
+	 * @since 2.1.0
+	 */
+	private function get_order_array_with_args( $args ) {
+		$no_paginate = array(
+			'paginate'	=> false
+		);
+		$args = array_merge( $no_paginate, $args );
 		$orders = wc_get_orders( $args );
 		
 		return $orders;
