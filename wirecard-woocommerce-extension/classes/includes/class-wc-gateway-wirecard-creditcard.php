@@ -488,9 +488,13 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 		$this->transaction    = new CreditCardTransaction();
 
 		parent::process_payment( $order_id );
-
+		
 		$this->transaction->setTermUrl( $this->create_redirect_url( wc_get_order( $order_id ), 'success', $this->type ) );
 		$this->transaction->setConfig( $config->get( CreditCardTransaction::NAME ) );
+		
+		// Set 3DS fields within transaction
+		$three_ds_helper = new Three_DS_Helper( wc_get_order( $order_id ), $this->transaction );
+		$this->transaction = $three_ds_helper->get_three_ds_transaction();
 
 		wp_send_json_success(
 			$transaction_service->getCreditCardUiWithData(
