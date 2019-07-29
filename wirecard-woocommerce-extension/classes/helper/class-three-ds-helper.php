@@ -35,6 +35,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 require_once WIRECARD_EXTENSION_HELPER_DIR . 'class-user-data-helper.php';
 require_once WIRECARD_EXTENSION_BASEDIR . 'classes/helper/class-additional-information.php';
+require_once WIRECARD_EXTENSION_HELPER_DIR . 'class-credit-card-vault.php';
 
 use Wirecard\PaymentSdk\Constant\AuthMethod;
 use Wirecard\PaymentSdk\Constant\ChallengeInd;
@@ -67,6 +68,16 @@ class Three_DS_Helper {
 	private $challenge_ind;
 
 	/**
+	 * @var Additional_Information
+	 */
+	private $additional_helper;
+
+	/**
+	 * @var User_Data_Helper
+	 */
+	private $user_data_helper;
+
+	/**
 	 * Three_DS_Helper constructor.
 	 * @param WC_Order $order
 	 * @param Transaction $transaction
@@ -77,6 +88,18 @@ class Three_DS_Helper {
 		$this->order         = $order;
 		$this->transaction   = $transaction;
 		$this->challenge_ind = $challenge_ind;
+		
+		$this->init();
+	}
+
+	/**
+	 * Initialize helpers for credit card fields
+	 * 
+	 * @since 2.1.0
+	 */
+	public function init() {
+		$this->additional_helper = new Additional_Information();
+		$this->user_data_helper = new User_Data_Helper( wp_get_current_user(), $this->order );
 	}
 
 	/**
@@ -86,7 +109,8 @@ class Three_DS_Helper {
 	 * @since 2.1.0
 	 */
 	public function get_three_ds_transaction() {
-		$this->add_three_ds_parameters();
+		$this->add_three_ds_requestor();
+		$this->add_authenticated_user_data();
 		$this->add_card_holder_data();
 
 		return $this->transaction;
@@ -108,11 +132,11 @@ class Three_DS_Helper {
 	}
 
 	/**
-	 * Add authentication info and card holder data to transaction
+	 * Add 3DS Requestor including Authentication Info
 	 *
 	 * @since 2.1.0
 	 */
-	private function add_three_ds_parameters() {
+	private function add_three_ds_requestor() {
 		$requestor           = new ThreeDSRequestor();
 		$authentication_info = new AuthenticationInfo();
 		$authentication_info->setAuthMethod( $this->get_authentication_method() );
@@ -122,10 +146,16 @@ class Three_DS_Helper {
 		$requestor->setChallengeInd( $this->challenge_ind );
 
 		$this->transaction->setThreeDSRequestor( $requestor );
+	}
 
+	/**
+	 * Add Card Holder data for logged-in user
+	 * 
+	 * @since 2.1.0
+	 */
+	private function add_authenticated_user_data() {
 		if ( is_user_logged_in() ) {
-			$user_data_helper = new User_Data_Helper( wp_get_current_user(), $this->order );
-			$card_holder      = $user_data_helper->get_card_holder_data();
+			$card_holder      = $this->user_data_helper->get_card_holder_data();
 
 			$this->transaction->setCardHolderAccount( $card_holder );
 		}
@@ -137,9 +167,8 @@ class Three_DS_Helper {
 	 * @since 2.1.0
 	 */
 	private function add_card_holder_data() {
-		$additional_helper = new Additional_Information();
-		$account_holder    = $additional_helper->create_account_holder( $this->order, Additional_Information::BILLING );
-		$shipping_account  = $additional_helper->create_account_holder( $this->order, Additional_Information::SHIPPING );
+		$account_holder    = $this->additional_helper->create_account_holder( $this->order, Additional_Information::BILLING );
+		$shipping_account  = $this->additional_helper->create_account_holder( $this->order, Additional_Information::SHIPPING );
 
 		$this->transaction->setAccountHolder( $account_holder );
 		$this->transaction->setShipping( $shipping_account );

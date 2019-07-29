@@ -153,8 +153,8 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	/**
 	 * Load form fields for configuration
 	 *
-	 * @since 1.0.0
 	 * @since 2.1.0 challenge_indicator config field
+	 * @since 1.0.0
 	 */
 	public function init_form_fields() {
 		$challenge_indicators = $this->get_challenge_indicator_options();

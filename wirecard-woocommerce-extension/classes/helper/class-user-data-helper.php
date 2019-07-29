@@ -33,6 +33,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+require_once WIRECARD_EXTENSION_HELPER_DIR . 'class-credit-card-vault.php';
+
 use Wirecard\PaymentSdk\Entity\AuthenticationInfo;
 use Wirecard\PaymentSdk\Entity\CardHolderAccount;
 
@@ -84,6 +86,12 @@ class User_Data_Helper {
 		$card_holder->setMerchantCrmId( $this->user->ID );
 
 		return $card_holder;
+	}
+	
+	public function get_card_information() {
+		$vault = new Credit_Card_Vault();
+		$cards = $vault->get_cards_for_user( $this->user->ID );
+		//creation date does not exist
 	}
 
 	/**

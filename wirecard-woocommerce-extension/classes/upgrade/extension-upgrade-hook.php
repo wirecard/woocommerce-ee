@@ -37,7 +37,8 @@ require_once( WIRECARD_EXTENSION_HELPER_DIR . 'class-upgrade-helper.php' );
 require_once( WIRECARD_EXTENSION_HELPER_DIR . 'class-logger.php' );
 
 // Add required upgrades here
-require_once( 'wpp-v-two-upgrade.php' );
+require_once 'wpp-v-two-upgrade.php';
+require_once  'vault-upgrade.php';
 
 /**
  * wirecard_extension_upgrade_completed
@@ -66,6 +67,7 @@ function wirecard_extension_upgrade_completed( $upgrader_object, $options ) {
  * wirecard_extension_upgrade_hook
  * Only called if this plugin was updated
  *
+ * @since 2.1.0 vault_timestamp_upgrade()
  * @since 2.0.0
  */
 function wirecard_extension_upgrade_hook() {
@@ -80,6 +82,8 @@ function wirecard_extension_upgrade_hook() {
 		// for credit card
 		wpp_v_two_upgrade();
 	}
+	// Add timestamps to vault table, if not already existent
+	vault_timestamp_upgrade();
 
 	// If other things should happen on upgrade
 	// add the method calls here
