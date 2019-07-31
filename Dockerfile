@@ -37,12 +37,12 @@ RUN if [ "$WOOCOMMERCE_VERSION" != "0" ]; then \
     ; fi
 
 #get woocommerce-wirecard-ee package into the docker image
-ADD woocommerce-wirecard-ee.zip /tmp/temp.zip
+ADD woocommerce-credit-agricole-ee.zip /tmp/temp.zip
 ADD wirecard-woocommerce-extension/tests/_data/ /usr/src/wordpress/_data
 
 RUN cd /usr/src/wordpress/wp-content/plugins \
     && unzip /tmp/temp.zip \
-    && chown -R www-data:www-data /usr/src/wordpress/wp-content/plugins/wirecard-woocommerce-extension 
+    && chown -R www-data:www-data /usr/src/wordpress/wp-content/plugins/credit-agricole-woocommerce-extension 
 
 #Housekeep
 RUN rm -rf /var/lib/apt/lists/* \
