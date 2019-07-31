@@ -42,7 +42,7 @@ ADD wirecard-woocommerce-extension/tests/_data/ /usr/src/wordpress/_data
 
 RUN cd /usr/src/wordpress/wp-content/plugins \
     && unzip /tmp/temp.zip \
-    && chown -R www-data:www-data /usr/src/wordpress/wp-content/plugins/credit-agricole-woocommerce-extension 
+    && chown -R www-data:www-data /usr/src/wordpress/wp-content/plugins/wirecard-woocommerce-extension 
 
 #Housekeep
 RUN rm -rf /var/lib/apt/lists/* \
