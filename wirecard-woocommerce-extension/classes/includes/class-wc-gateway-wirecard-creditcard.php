@@ -508,13 +508,13 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 
 	/**
 	 * Set 3DS fields for transaction
-	 * 
+	 *
 	 * @param WC_Order $order
 	 * @param string $token_id
 	 * @since 2.1.0
 	 */
 	private function set_three_ds_transaction_fields( $order, $token_id = null ) {
-		$challenge_ind       = $this->get_option( 'challenge_indicator' );
+		$challenge_ind = $this->get_option( 'challenge_indicator' );
 
 		// Set 3DS fields within transaction
 		$three_ds_helper   = new Three_DS_Helper( $order, $this->transaction, $challenge_ind, $token_id );

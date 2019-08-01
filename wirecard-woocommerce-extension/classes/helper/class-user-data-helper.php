@@ -75,20 +75,24 @@ class User_Data_Helper {
 	public function __construct( $user, $order, $token_id ) {
 		$this->user          = $user;
 		$this->current_order = $order;
-		$this->token_id		 = $token_id;
+		$this->token_id      = $token_id;
 	}
 
 	/**
 	 * @return DateTime|null|string
 	 */
 	public function get_card_creation_date() {
-		if ( null === $this->token_id ) {
-			return new DateTime();
+		$card_creation_date = null;
+
+		if ( null !== $this->token_id ) {
+			$vault              = new Credit_Card_Vault();
+			$card_creation_date = $vault->get_card_creation_for_user( $this->user->ID, $this->token_id );
 		}
-		$vault = new Credit_Card_Vault();
-		$card_creation_date = $vault->get_card_creation_for_user( $this->user->ID, $this->token_id );
-		
-		return $card_creation_date;
+		if ( $card_creation_date instanceof DateTime ) {
+			return $card_creation_date;
+		}
+
+		return new DateTime();
 	}
 
 	/**
@@ -149,9 +153,9 @@ class User_Data_Helper {
 		/** @var array $orders */
 		$orders = $this->get_order_array_with_args( $arguments );
 		/** @var WC_Order $first_order */
-		$first_order = reset($orders);
+		$first_order = reset( $orders );
 		if ( $first_order ) {
-			
+
 			return $first_order->get_date_created();
 		}
 
@@ -177,19 +181,19 @@ class User_Data_Helper {
 
 	/**
 	 * Get user ID
-	 * 
+	 *
 	 * @return int
 	 * @since 2.1.0
 	 */
 	public function get_user_id() {
-		
+
 		return $this->user->ID;
 	}
 
 	/**
 	 * Get delivery mail address
 	 * temp send billing mail address because there is no dedicated mail address for electronic/virtual goods
-	 * 
+	 *
 	 * @return string | null
 	 * @since 2.1.0
 	 */
@@ -197,22 +201,22 @@ class User_Data_Helper {
 		if ( ! empty( $this->current_order->get_billing_email() ) ) {
 			return $this->current_order->get_billing_email();
 		}
-		
+
 		return null;
 	}
 
 	/**
 	 * Checks if one of the products within current order was bought before
-	 * 
+	 *
 	 * @return bool
 	 * @since 2.1.0
 	 */
 	public function is_reordered_items() {
 		/** @var WC_Order_Item[] $products */
 		$order_items = $this->current_order->get_items();
-		
+
 		/** @var WC_Order_Item $item */
-		foreach ($order_items as $item) {
+		foreach ( $order_items as $item ) {
 			if ( 'line_item' !== $item->get_type() ) {
 				continue;
 			}
@@ -222,7 +226,7 @@ class User_Data_Helper {
 				return RiskInfoReorder::REORDERED;
 			}
 		}
-		
+
 		return RiskInfoReorder::FIRST_TIME_ORDERED;
 	}
 

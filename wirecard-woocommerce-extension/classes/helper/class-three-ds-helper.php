@@ -42,6 +42,7 @@ use Wirecard\PaymentSdk\Entity\AccountInfo;
 use Wirecard\PaymentSdk\Transaction\Transaction;
 use Wirecard\PaymentSdk\Entity\AccountHolder;
 use Wirecard\PaymentSdk\Entity\RiskInfo;
+use Wirecard\PaymentSdk\Constant\IsoTransactionType;
 
 /**
  * Class Three_DS_Helper
@@ -94,38 +95,41 @@ class Three_DS_Helper {
 		$this->order         = $order;
 		$this->transaction   = $transaction;
 		$this->challenge_ind = $challenge_ind;
-		$this->token_id		 = $token_id;
-		
+		$this->token_id      = $token_id;
+
 		$this->init();
 	}
 
 	/**
 	 * Initialize helpers for credit card fields
-	 * 
+	 *
 	 * @since 2.1.0
 	 */
 	public function init() {
 		$this->additional_helper = new Additional_Information();
-		$this->user_data_helper = new User_Data_Helper( wp_get_current_user(), $this->order, $this->token_id );
+		$this->user_data_helper  = new User_Data_Helper( wp_get_current_user(), $this->order, $this->token_id );
 	}
 
 	/**
 	 * Init 3DS fields and return filled transaction
-	 * includes AccountHolder with AccountInfo, Shipping and RiskInfo
+	 * includes AccountHolder with AccountInfo, Shipping, IsoTransactionType and RiskInfo
 	 *
 	 * @return Transaction
 	 * @since 2.1.0
 	 */
 	public function get_three_ds_transaction() {
 		$shipping_account = $this->get_shipping_account();
-		$card_holder = $this->get_card_holder_account();
-		$account_info = $this->get_account_info();
-		
-		$card_holder->setAccountInfo( $account_info );
-		$card_holder->setMerchantCrmId( $this->get_merchant_crm_id() );
-		
-		$this->transaction->setAccountHolder( $card_holder );
+		$account_holder   = $this->get_card_holder_account();
+		$account_info     = $this->get_account_info();
+		$risk_info        = $this->get_risk_info();
+
+		$account_holder->setAccountInfo( $account_info );
+		$account_holder->setMerchantCrmId( $this->get_merchant_crm_id() );
+
+		$this->transaction->setAccountHolder( $account_holder );
 		$this->transaction->setShipping( $shipping_account );
+		$this->transaction->setRiskInfo( $risk_info );
+		$this->transaction->setIsoTransactionType( IsoTransactionType::GOODS_SERVICE_PURCHASE );
 
 		return $this->transaction;
 	}
@@ -141,7 +145,7 @@ class Three_DS_Helper {
 
 		return $shipping_account;
 	}
-	
+
 	/**
 	 * Get AccountHolder with pre-filled billing data
 	 *
@@ -153,7 +157,7 @@ class Three_DS_Helper {
 
 		return $card_holder_account;
 	}
-	
+
 	/**
 	 * Create AccountInfo with all available data
 	 *
@@ -163,7 +167,7 @@ class Three_DS_Helper {
 	private function get_account_info() {
 		$account_info = new AccountInfo();
 		$account_info->setAuthMethod( $this->get_authentication_method() );
-		// no login timestamp available per default
+		// No login timestamp available per default (only date - therefor usage of NOW)
 		$account_info->setAuthTimestamp( null );
 		$account_info->setChallengeInd( $this->challenge_ind );
 		// Add specific AccountInfo data for authenticated user
@@ -174,22 +178,19 @@ class Three_DS_Helper {
 
 	/**
 	 * Create RiskInfo with all available data
-	 * 
+	 *
 	 * @return RiskInfo
 	 * @since 2.1.0
 	 */
 	private function get_risk_info() {
 		$risk_info = new RiskInfo();
-		
-		//$risk_info->setAvailability();
+
 		$risk_info->setDeliveryEmailAddress( $this->user_data_helper->get_delivery_mail() );
-		//$risk_info->setDeliveryTimeFrame();
-		//$risk_info->setPreOrderDate();
 		$risk_info->setReorderItems( $this->user_data_helper->is_reordered_items() );
-		
+
 		return $risk_info;
 	}
-	
+
 	/**
 	 * Determines if user is logged in or if guest checkout is used
 	 * Maps AuthMethod values for user checkout and guest checkout
@@ -204,10 +205,10 @@ class Three_DS_Helper {
 
 		return AuthMethod::GUEST_CHECKOUT;
 	}
-	
+
 	/**
 	 * Add AccountInfo data for logged-in user
-	 * 
+	 *
 	 * @param AccountInfo $account_info
 	 * @return AccountInfo
 	 * @since 2.1.0
@@ -220,10 +221,10 @@ class Three_DS_Helper {
 			$account_info->setCardCreationDate( $this->user_data_helper->get_card_creation_date() );
 			$account_info->setAmountPurchasesLastSixMonths( $this->user_data_helper->get_successful_orders_last_six_months() );
 		}
-		
+
 		return $account_info;
 	}
-	
+
 	/**
 	 * Get merchant crm id from user id
 	 *

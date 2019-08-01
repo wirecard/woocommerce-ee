@@ -41,7 +41,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 function vault_timestamp_upgrade() {
 	global $wpdb;
 	$vault_table_name = $wpdb->base_prefix . 'wirecard_payment_gateway_vault';
-	
+
 	if ( check_existing_column( 'created', $vault_table_name ) ) {
 		$wpdb->query( "ALTER TABLE $vault_table_name ADD created DATETIME NOT NULL default CURRENT_TIMESTAMP" );
 	}
@@ -53,18 +53,18 @@ function vault_timestamp_upgrade() {
 
 /**
  * Check if column already exist within given table
- * 
+ *
  * @param string $column_name
  * @param string $table_name
  * @return bool
- * 
+ *
  * @since 2.1.0
  */
 function check_existing_column( $column_name, $table_name ) {
 	global $wpdb;
-	
-	$prepared_statement = $wpdb->prepare( "SELECT %s FROM %s", $column_name, $table_name );
-	$column_exists = $wpdb->get_col( $prepared_statement );
-	
+
+	$prepared_statement = $wpdb->prepare( 'SELECT %s FROM %s', $column_name, $table_name );
+	$column_exists      = $wpdb->get_col( $prepared_statement );
+
 	return empty( $column_exists );
 }
