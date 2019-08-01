@@ -95,6 +95,30 @@ class Credit_Card_Vault {
 	}
 
 	/**
+	 * Get creation date of used card token
+	 * 
+	 * @param $user_id
+	 * @param $token_id
+	 * @return bool|DateTime
+	 * @since 2.1.0
+	 */
+	public function get_card_creation_for_user( $user_id, $token_id ) {
+		global $wpdb;
+		
+		$format = 'Y-m-d H:i:s';
+		$logger = new Logger();
+		$logger->error('before prepare statement');
+		$creation_date = $wpdb->get_var( $wpdb->prepare( 
+			"SELECT created FROM {$wpdb->prefix}wirecard_payment_gateway_vault WHERE user_id = %s AND token = %s", 
+			$user_id, 
+			$token_id 
+		) );
+		
+		$date = DateTime::createFromFormat( $format, $creation_date );
+		return $date;
+	}
+
+	/**
 	 * Get all credit cards for a user
 	 *
 	 * @param int $user_id

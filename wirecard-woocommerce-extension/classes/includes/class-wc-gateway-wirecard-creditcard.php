@@ -272,7 +272,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 				'type'           => 'select',
 				'description'    => __( 'config_challenge_indicator_desc', 'wirecard-woocommerce-extension' ),
 				'options'        => $challenge_indicators,
-				'default'        => __( 'config_challenge_no_preference', 'wirecard-woocommerce-extension' ),
+				'default'        => ChallengeInd::NO_PREFERENCE,
 				'multiple'       => true,
 				'select_buttons' => true,
 			),
@@ -485,7 +485,6 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 		$transaction_service = new TransactionService( $config );
 		$lang                = $this->determine_user_language();
 		$order               = wc_get_order( $order_id );
-		$challenge_ind       = $this->get_option( 'challenge_indicator' );
 
 		$this->payment_action = $this->get_option( 'payment_action' );
 		$this->transaction    = new CreditCardTransaction();
@@ -494,10 +493,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 
 		$this->transaction->setTermUrl( $this->create_redirect_url( $order, 'success', $this->type ) );
 		$this->transaction->setConfig( $config->get( CreditCardTransaction::NAME ) );
-
-		// Set 3DS fields within transaction
-		$three_ds_helper   = new Three_DS_Helper( $order, $this->transaction, $challenge_ind );
-		$this->transaction = $three_ds_helper->get_three_ds_transaction();
+		$this->set_three_ds_transaction_fields( $order );
 
 		wp_send_json_success(
 			$transaction_service->getCreditCardUiWithData(
@@ -508,6 +504,21 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 		);
 
 		wp_die();
+	}
+
+	/**
+	 * Set 3DS fields for transaction
+	 * 
+	 * @param WC_Order $order
+	 * @param string $token_id
+	 * @since 2.1.0
+	 */
+	private function set_three_ds_transaction_fields( $order, $token_id = null ) {
+		$challenge_ind       = $this->get_option( 'challenge_indicator' );
+
+		// Set 3DS fields within transaction
+		$three_ds_helper   = new Three_DS_Helper( $order, $this->transaction, $challenge_ind, $token_id );
+		$this->transaction = $three_ds_helper->get_three_ds_transaction();
 	}
 
 	/**
@@ -567,6 +578,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 				$this->transaction->setTokenId( $token_id );
 				$this->transaction->setTermUrl( $this->create_redirect_url( $order, 'success', $this->type ) );
 				$this->transaction->setConfig( $config->get( CreditCardTransaction::NAME ) );
+				$this->set_three_ds_transaction_fields( $order, $token_id );
 
 				wp_send_json_success( $this->execute_transaction( $this->transaction, $config, $this->payment_action, $order ) );
 				wp_die();

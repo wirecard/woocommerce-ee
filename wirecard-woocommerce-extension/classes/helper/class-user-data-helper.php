@@ -35,8 +35,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 require_once WIRECARD_EXTENSION_HELPER_DIR . 'class-credit-card-vault.php';
 
-use Wirecard\PaymentSdk\Entity\AuthenticationInfo;
-use Wirecard\PaymentSdk\Entity\CardHolderAccount;
+use Wirecard\PaymentSdk\Entity\AccountInfo;
+use Wirecard\PaymentSdk\Constant\RiskInfoReorder;
 
 /**
  * Class User_Data_Helper
@@ -60,38 +60,35 @@ class User_Data_Helper {
 	private $current_order;
 
 	/**
+	 * @var string|null
+	 */
+	private $token_id;
+
+	/**
 	 * User_Data_Helper constructor.
 	 * @param WP_User $user
 	 * @param WC_Order $order
+	 * @param string|null $token_id
 	 *
 	 * @since 2.1.0
 	 */
-	public function __construct( $user, $order ) {
+	public function __construct( $user, $order, $token_id ) {
 		$this->user          = $user;
 		$this->current_order = $order;
+		$this->token_id		 = $token_id;
 	}
 
 	/**
-	 * Get ThreeDS CardHolder Data
-	 *
-	 * @return CardHolderAccount
-	 * @since 2.1.0
+	 * @return DateTime|null|string
 	 */
-	public function get_card_holder_data() {
-		$card_holder = new CardHolderAccount();
-		$card_holder->setCreationDate( $this->get_account_creation_date() );
-		$card_holder->setUpdateDate( $this->get_account_update_date() );
-		$card_holder->setShippingAddressFirstUse( $this->get_shipping_address_first_use() );
-		$card_holder->setAmountPurchasesLastSixMonths( $this->get_successful_orders_last_six_months() );
-		$card_holder->setMerchantCrmId( $this->user->ID );
-
-		return $card_holder;
-	}
-	
-	public function get_card_information() {
+	public function get_card_creation_date() {
+		if ( null === $this->token_id ) {
+			return new DateTime();
+		}
 		$vault = new Credit_Card_Vault();
-		$cards = $vault->get_cards_for_user( $this->user->ID );
-		//creation date does not exist
+		$card_creation_date = $vault->get_card_creation_for_user( $this->user->ID, $this->token_id );
+		
+		return $card_creation_date;
 	}
 
 	/**
@@ -100,7 +97,7 @@ class User_Data_Helper {
 	 * @return DateTime
 	 * @since 2.1.0
 	 */
-	private function get_account_creation_date() {
+	public function get_account_creation_date() {
 		$date_time = new DateTime( $this->user->user_registered );
 
 		return $date_time;
@@ -112,7 +109,7 @@ class User_Data_Helper {
 	 * @return DateTime
 	 * @since 2.1.0
 	 */
-	private function get_account_update_date() {
+	public function get_account_update_date() {
 		$update_date = get_user_meta( $this->user->ID, 'last_update', true );
 		$date_time   = $this->convert_timestamp_to_date_time( $update_date );
 
@@ -120,7 +117,7 @@ class User_Data_Helper {
 	}
 
 	/**
-	 * Converts timestamp to DateTime formatted with 'Y-m-d\TH:i:s\Z'
+	 * Converts timestamp to DateTime formatted with 'Y-m-d'
 	 *
 	 * @param string $timestamp
 	 * @return DateTime
@@ -128,7 +125,7 @@ class User_Data_Helper {
 	 */
 	private function convert_timestamp_to_date_time( $timestamp ) {
 		$date_time = new DateTime();
-		$date_time->format( AuthenticationInfo::DATE_FORMAT );
+		$date_time->format( AccountInfo::DATE_FORMAT );
 		$date_time->setTimestamp( $timestamp );
 
 		return $date_time;
@@ -140,7 +137,7 @@ class User_Data_Helper {
 	 * @return NULL|WC_DateTime
 	 * @since 2.1.0
 	 */
-	private function get_shipping_address_first_use() {
+	public function get_shipping_address_first_use() {
 		$arguments = array(
 			'customer'           => $this->user->ID,
 			'limit'              => 1,
@@ -151,14 +148,14 @@ class User_Data_Helper {
 
 		/** @var array $orders */
 		$orders = $this->get_order_array_with_args( $arguments );
-
-		if ( empty( $orders ) ) {
-			return null;
-		}
 		/** @var WC_Order $first_order */
-		$first_order = $orders[0];
+		$first_order = reset($orders);
+		if ( $first_order ) {
+			
+			return $first_order->get_date_created();
+		}
 
-		return $first_order->get_date_created();
+		return null;
 	}
 
 	/**
@@ -167,7 +164,7 @@ class User_Data_Helper {
 	 * @return int
 	 * @since 2.1.0
 	 */
-	private function get_successful_orders_last_six_months() {
+	public function get_successful_orders_last_six_months() {
 		$arguments = array(
 			'customer'   => $this->user->ID,
 			'limit'      => self::UNLIMITED,
@@ -176,6 +173,57 @@ class User_Data_Helper {
 		);
 
 		return count( $this->get_order_array_with_args( $arguments ) );
+	}
+
+	/**
+	 * Get user ID
+	 * 
+	 * @return int
+	 * @since 2.1.0
+	 */
+	public function get_user_id() {
+		
+		return $this->user->ID;
+	}
+
+	/**
+	 * Get delivery mail address
+	 * temp send billing mail address because there is no dedicated mail address for electronic/virtual goods
+	 * 
+	 * @return string | null
+	 * @since 2.1.0
+	 */
+	public function get_delivery_mail() {
+		if ( ! empty( $this->current_order->get_billing_email() ) ) {
+			return $this->current_order->get_billing_email();
+		}
+		
+		return null;
+	}
+
+	/**
+	 * Checks if one of the products within current order was bought before
+	 * 
+	 * @return bool
+	 * @since 2.1.0
+	 */
+	public function is_reordered_items() {
+		/** @var WC_Order_Item[] $products */
+		$order_items = $this->current_order->get_items();
+		
+		/** @var WC_Order_Item $item */
+		foreach ($order_items as $item) {
+			if ( 'line_item' !== $item->get_type() ) {
+				continue;
+			}
+			/** @var WC_Order_Item_Product $item */
+			$reordered = wc_customer_bought_product( $this->user->user_email, $this->user->ID, $item->get_product_id() );
+			if ( $reordered ) {
+				return RiskInfoReorder::REORDERED;
+			}
+		}
+		
+		return RiskInfoReorder::FIRST_TIME_ORDERED;
 	}
 
 	/**

@@ -38,10 +38,10 @@ require_once WIRECARD_EXTENSION_BASEDIR . 'classes/helper/class-additional-infor
 require_once WIRECARD_EXTENSION_HELPER_DIR . 'class-credit-card-vault.php';
 
 use Wirecard\PaymentSdk\Constant\AuthMethod;
-use Wirecard\PaymentSdk\Constant\ChallengeInd;
-use Wirecard\PaymentSdk\Entity\AuthenticationInfo;
+use Wirecard\PaymentSdk\Entity\AccountInfo;
 use Wirecard\PaymentSdk\Transaction\Transaction;
-use Wirecard\PaymentSdk\Entity\ThreeDSRequestor;
+use Wirecard\PaymentSdk\Entity\AccountHolder;
+use Wirecard\PaymentSdk\Entity\RiskInfo;
 
 /**
  * Class Three_DS_Helper
@@ -63,9 +63,14 @@ class Three_DS_Helper {
 	private $transaction;
 
 	/**
-	 * @var ChallengeInd
+	 * @var string
 	 */
 	private $challenge_ind;
+
+	/**
+	 * @var string|null
+	 */
+	private $token_id;
 
 	/**
 	 * @var Additional_Information
@@ -81,13 +86,15 @@ class Three_DS_Helper {
 	 * Three_DS_Helper constructor.
 	 * @param WC_Order $order
 	 * @param Transaction $transaction
-	 * @param ChallengeInd $challenge_ind
+	 * @param string $challenge_ind
+	 * @param string|null $token_id
 	 * @since 2.1.0
 	 */
-	public function __construct( $order, $transaction, $challenge_ind ) {
+	public function __construct( $order, $transaction, $challenge_ind, $token_id ) {
 		$this->order         = $order;
 		$this->transaction   = $transaction;
 		$this->challenge_ind = $challenge_ind;
+		$this->token_id		 = $token_id;
 		
 		$this->init();
 	}
@@ -99,23 +106,90 @@ class Three_DS_Helper {
 	 */
 	public function init() {
 		$this->additional_helper = new Additional_Information();
-		$this->user_data_helper = new User_Data_Helper( wp_get_current_user(), $this->order );
+		$this->user_data_helper = new User_Data_Helper( wp_get_current_user(), $this->order, $this->token_id );
 	}
 
 	/**
 	 * Init 3DS fields and return filled transaction
+	 * includes AccountHolder with AccountInfo, Shipping and RiskInfo
 	 *
 	 * @return Transaction
 	 * @since 2.1.0
 	 */
 	public function get_three_ds_transaction() {
-		$this->add_three_ds_requestor();
-		$this->add_authenticated_user_data();
-		$this->add_card_holder_data();
+		$shipping_account = $this->get_shipping_account();
+		$card_holder = $this->get_card_holder_account();
+		$account_info = $this->get_account_info();
+		
+		$card_holder->setAccountInfo( $account_info );
+		$card_holder->setMerchantCrmId( $this->get_merchant_crm_id() );
+		
+		$this->transaction->setAccountHolder( $card_holder );
+		$this->transaction->setShipping( $shipping_account );
 
 		return $this->transaction;
 	}
 
+	/**
+	 * Get Shipping with pre-filled shipping data
+	 *
+	 * @return AccountHolder
+	 * @since 2.1.0
+	 */
+	private function get_shipping_account() {
+		$shipping_account = $this->additional_helper->create_account_holder( $this->order, Additional_Information::SHIPPING );
+
+		return $shipping_account;
+	}
+	
+	/**
+	 * Get AccountHolder with pre-filled billing data
+	 *
+	 * @return AccountHolder
+	 * @since 2.1.0
+	 */
+	private function get_card_holder_account() {
+		$card_holder_account = $this->additional_helper->create_account_holder( $this->order, Additional_Information::BILLING );
+
+		return $card_holder_account;
+	}
+	
+	/**
+	 * Create AccountInfo with all available data
+	 *
+	 * @return AccountInfo
+	 * @since 2.1.0
+	 */
+	private function get_account_info() {
+		$account_info = new AccountInfo();
+		$account_info->setAuthMethod( $this->get_authentication_method() );
+		// no login timestamp available per default
+		$account_info->setAuthTimestamp( null );
+		$account_info->setChallengeInd( $this->challenge_ind );
+		// Add specific AccountInfo data for authenticated user
+		$account_info = $this->add_authenticated_user_data( $account_info );
+
+		return $account_info;
+	}
+
+	/**
+	 * Create RiskInfo with all available data
+	 * 
+	 * @return RiskInfo
+	 * @since 2.1.0
+	 */
+	private function get_risk_info() {
+		$risk_info = new RiskInfo();
+		
+		//$risk_info->setAvailability();
+		$risk_info->setDeliveryEmailAddress( $this->user_data_helper->get_delivery_mail() );
+		//$risk_info->setDeliveryTimeFrame();
+		//$risk_info->setPreOrderDate();
+		$risk_info->setReorderItems( $this->user_data_helper->is_reordered_items() );
+		
+		return $risk_info;
+	}
+	
 	/**
 	 * Determines if user is logged in or if guest checkout is used
 	 * Maps AuthMethod values for user checkout and guest checkout
@@ -130,47 +204,38 @@ class Three_DS_Helper {
 
 		return AuthMethod::GUEST_CHECKOUT;
 	}
-
+	
 	/**
-	 * Add 3DS Requestor including Authentication Info
-	 *
-	 * @since 2.1.0
-	 */
-	private function add_three_ds_requestor() {
-		$requestor           = new ThreeDSRequestor();
-		$authentication_info = new AuthenticationInfo();
-		$authentication_info->setAuthMethod( $this->get_authentication_method() );
-		// no login timestamp available per default
-		$authentication_info->setAuthTimestamp( null );
-		$requestor->setAuthenticationInfo( $authentication_info );
-		$requestor->setChallengeInd( $this->challenge_ind );
-
-		$this->transaction->setThreeDSRequestor( $requestor );
-	}
-
-	/**
-	 * Add Card Holder data for logged-in user
+	 * Add AccountInfo data for logged-in user
 	 * 
+	 * @param AccountInfo $account_info
+	 * @return AccountInfo
 	 * @since 2.1.0
 	 */
-	private function add_authenticated_user_data() {
+	private function add_authenticated_user_data( $account_info ) {
 		if ( is_user_logged_in() ) {
-			$card_holder      = $this->user_data_helper->get_card_holder_data();
-
-			$this->transaction->setCardHolderAccount( $card_holder );
+			$account_info->setCreationDate( $this->user_data_helper->get_account_creation_date() );
+			$account_info->setUpdateDate( $this->user_data_helper->get_account_update_date() );
+			$account_info->setShippingAddressFirstUse( $this->user_data_helper->get_shipping_address_first_use() );
+			$account_info->setCardCreationDate( $this->user_data_helper->get_card_creation_date() );
+			$account_info->setAmountPurchasesLastSixMonths( $this->user_data_helper->get_successful_orders_last_six_months() );
 		}
+		
+		return $account_info;
 	}
-
+	
 	/**
-	 * Add account holder data to transaction
+	 * Get merchant crm id from user id
 	 *
+	 * @return string | null
 	 * @since 2.1.0
 	 */
-	private function add_card_holder_data() {
-		$account_holder    = $this->additional_helper->create_account_holder( $this->order, Additional_Information::BILLING );
-		$shipping_account  = $this->additional_helper->create_account_holder( $this->order, Additional_Information::SHIPPING );
+	private function get_merchant_crm_id() {
+		if ( is_user_logged_in() ) {
 
-		$this->transaction->setAccountHolder( $account_holder );
-		$this->transaction->setShipping( $shipping_account );
+			return (string) $this->user_data_helper->get_user_id();
+		}
+
+		return null;
 	}
 }

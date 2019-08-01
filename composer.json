@@ -7,7 +7,7 @@
   "require": {
     "php": ">=5.6",
     "symfony/options-resolver": "^3",
-    "wirecard/payment-sdk-php": "dev-RC-3.8.0",
+    "wirecard/payment-sdk-php": "dev-TPWDCEE-4515-threeds",
     "php-http/guzzle6-adapter": "1.1.1",
     "wirecard/iso-paypal-converter": "^1.0",
     "wirecard/io-converter": "^1.0",
