@@ -107,7 +107,7 @@ class Three_DS_Helper {
 	 */
 	public function init() {
 		$this->additional_helper = new Additional_Information();
-		$this->user_data_helper  = new User_Data_Helper( wp_get_current_user(), $this->order, $this->token_id );
+		$this->user_data_helper  = new User_Data_Helper( wp_get_current_user(), $this->order, $this->challenge_ind, $this->token_id );
 	}
 
 	/**
@@ -215,6 +215,8 @@ class Three_DS_Helper {
 	 */
 	private function add_authenticated_user_data( $account_info ) {
 		if ( is_user_logged_in() ) {
+			// challenge indicator will be overwritten for new token
+			$account_info->setChallengeInd( $this->user_data_helper->get_challenge_indicator() );
 			$account_info->setCreationDate( $this->user_data_helper->get_account_creation_date() );
 			$account_info->setUpdateDate( $this->user_data_helper->get_account_update_date() );
 			$account_info->setShippingAddressFirstUse( $this->user_data_helper->get_shipping_address_first_use() );

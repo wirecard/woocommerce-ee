@@ -41,6 +41,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Credit_Card_Vault {
 
 	/**
+	 * @const string CREATED
+	 */
+	const CREATED = 'created';
+
+	/**
+	 * @const string VAULT_ID
+	 */
+	const VAULT_ID = 'vault_id';
+
+	/**
 	 * Vault table name in database
 	 *
 	 * @since  1.1.0
@@ -103,19 +113,57 @@ class Credit_Card_Vault {
 	 * @since 2.1.0
 	 */
 	public function get_card_creation_for_user( $user_id, $token_id ) {
+		$format = 'Y-m-d H:i:s';
+
+		$creation_date = $this->get_column_for_token_and_user( self::CREATED, $user_id, $token_id );
+		if ( is_null( $creation_date ) ) {
+			return new DateTime();
+		}
+		$date = DateTime::createFromFormat( $format, $creation_date );
+
+		return $date;
+	}
+
+	/**
+	 * Check if token_id for user already exists
+	 *
+	 * @param int $user_id
+	 * @param string $token_id
+	 * @return bool
+	 * @since 2.1.0
+	 */
+	public function is_existing_token_for_user( $user_id, $token_id ) {
+		$token_exists = $this->get_column_for_token_and_user( self::VAULT_ID, $user_id, $token_id );
+
+		if ( is_null( $token_exists ) ) {
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * Get entry for specific column by token and user_id
+	 *
+	 * @param string $column
+	 * @param int $user_id
+	 * @param string $token_id
+	 * @return null|string
+	 * @since 2.1.0
+	 */
+	private function get_column_for_token_and_user( $column, $user_id, $token_id ) {
 		global $wpdb;
 
-		$format        = 'Y-m-d';
-		$creation_date = $wpdb->get_var(
+		$token_var = $wpdb->get_var(
 			$wpdb->prepare(
-				"SELECT created FROM {$wpdb->prefix}wirecard_payment_gateway_vault WHERE user_id = %s AND token = %s",
+				"SELECT %s FROM {$wpdb->prefix}wirecard_payment_gateway_vault WHERE user_id = %s AND token = %s",
+				$column,
 				$user_id,
 				$token_id
 			)
 		);
 
-		$date = DateTime::createFromFormat( $format, $creation_date );
-		return $date;
+		return $token_var;
 	}
 
 	/**
