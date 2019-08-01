@@ -156,8 +156,7 @@ class Credit_Card_Vault {
 
 		$token_var = $wpdb->get_var(
 			$wpdb->prepare(
-				"SELECT %s FROM {$wpdb->prefix}wirecard_payment_gateway_vault WHERE user_id = %s AND token = %s",
-				$column,
+				"SELECT {$column} FROM {$wpdb->prefix}wirecard_payment_gateway_vault WHERE user_id = %s AND token = %s",
 				$user_id,
 				$token_id
 			)

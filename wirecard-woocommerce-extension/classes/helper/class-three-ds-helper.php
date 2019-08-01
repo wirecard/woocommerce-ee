@@ -124,7 +124,7 @@ class Three_DS_Helper {
 		$risk_info        = $this->get_risk_info();
 
 		$account_holder->setAccountInfo( $account_info );
-		$account_holder->setMerchantCrmId( $this->get_merchant_crm_id() );
+		$account_holder->setCrmId( $this->get_merchant_crm_id() );
 
 		$this->transaction->setAccountHolder( $account_holder );
 		$this->transaction->setShipping( $shipping_account );
