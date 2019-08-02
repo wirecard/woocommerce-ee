@@ -150,6 +150,26 @@ msgstr "請求先/発送先の住所は、同一でなければなりません"
 msgid "config_billing_shipping_desc"
 msgstr "有効にすると、請求先/発送先の住所が同一の場合、保証付きインボイスの支払い方法だけが表示されます"
 
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:306
+msgid "config_challenge_challenge_threed"
+msgstr "Challenge requested"
+
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:271
+msgid "config_challenge_indicator"
+msgstr "Challenge Indicator"
+
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:273
+msgid "config_challenge_indicator_desc"
+msgstr "Indicates whether a challenge is  requested for this transaction."
+
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:305
+msgid "config_challenge_no_challenge"
+msgstr "No challenge requested"
+
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:304
+msgid "config_challenge_no_preference"
+msgstr "No preference"
+
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:168
 msgid "config_creditor_city"
 msgstr "債権者の居住する市"

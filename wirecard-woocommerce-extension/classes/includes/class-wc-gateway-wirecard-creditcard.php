@@ -260,13 +260,6 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 					'pay'     => __( 'text_payment_action_pay', 'wirecard-woocommerce-extension' ),
 				),
 			),
-			'descriptor'                  => array(
-				'title'       => __( 'text_enable_disable', 'wirecard-woocommerce-extension' ),
-				'type'        => 'checkbox',
-				'description' => __( 'config_descriptor_desc', 'wirecard-woocommerce-extension' ),
-				'label'       => __( 'config_descriptor', 'wirecard-woocommerce-extension' ),
-				'default'     => 'no',
-			),
 			'challenge_indicator'         => array(
 				'title'          => __( 'config_challenge_indicator', 'wirecard-woocommerce-extension' ),
 				'type'           => 'select',
@@ -275,6 +268,13 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 				'default'        => ChallengeInd::NO_PREFERENCE,
 				'multiple'       => true,
 				'select_buttons' => true,
+			),
+			'descriptor'                  => array(
+				'title'       => __( 'text_enable_disable', 'wirecard-woocommerce-extension' ),
+				'type'        => 'checkbox',
+				'description' => __( 'config_descriptor_desc', 'wirecard-woocommerce-extension' ),
+				'label'       => __( 'config_descriptor', 'wirecard-woocommerce-extension' ),
+				'default'     => 'no',
 			),
 			'send_additional'             => array(
 				'title'       => __( 'text_enable_disable', 'wirecard-woocommerce-extension' ),

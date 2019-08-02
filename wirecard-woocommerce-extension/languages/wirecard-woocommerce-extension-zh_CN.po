@@ -150,6 +150,26 @@ msgstr "账单/收货地址必须相同"
 msgid "config_billing_shipping_desc"
 msgstr "如已激活，则仅在账单/收货地址相同时才会显示保证发票付款方式"
 
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:306
+msgid "config_challenge_challenge_threed"
+msgstr "Challenge requested"
+
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:271
+msgid "config_challenge_indicator"
+msgstr "Challenge Indicator"
+
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:273
+msgid "config_challenge_indicator_desc"
+msgstr "Indicates whether a challenge is  requested for this transaction."
+
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:305
+msgid "config_challenge_no_challenge"
+msgstr "No challenge requested"
+
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:304
+msgid "config_challenge_no_preference"
+msgstr "No preference"
+
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:168
 msgid "config_creditor_city"
 msgstr "债权人所处城市"
