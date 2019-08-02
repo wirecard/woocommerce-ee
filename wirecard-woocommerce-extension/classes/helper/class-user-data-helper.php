@@ -87,15 +87,29 @@ class User_Data_Helper {
 	}
 
 	/**
-	 * @return DateTime|null|string
+	 * Get card creation date for token usage or now for non-one-click-checkout
+	 *
+	 * @return DateTime
+	 * @since 2.1.0
 	 */
 	public function get_card_creation_date() {
-		$card_creation_date = null;
-
 		if ( null !== $this->token_id ) {
-			$vault              = new Credit_Card_Vault();
-			$card_creation_date = $vault->get_card_creation_for_user( $this->user->ID, $this->token_id );
+			return $this->get_token_creation_date();
 		}
+
+		return new DateTime();
+	}
+
+	/**
+	 * Get token creation date for user
+	 *
+	 * @return bool|DateTime
+	 * @since 2.1.0
+	 */
+	private function get_token_creation_date() {
+		$vault              = new Credit_Card_Vault();
+		$card_creation_date = $vault->get_card_creation_for_user( $this->user->ID, $this->token_id );
+
 		if ( $card_creation_date instanceof DateTime ) {
 			return $card_creation_date;
 		}
@@ -146,7 +160,7 @@ class User_Data_Helper {
 	/**
 	 * Get DateTime for first shipping address usage
 	 *
-	 * @return NULL|WC_DateTime
+	 * @return WC_DateTime|DateTime
 	 * @since 2.1.0
 	 */
 	public function get_shipping_address_first_use() {
@@ -167,7 +181,7 @@ class User_Data_Helper {
 			return $first_order->get_date_created();
 		}
 
-		return null;
+		return new DateTime();
 	}
 
 	/**
