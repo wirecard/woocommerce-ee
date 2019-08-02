@@ -45,7 +45,7 @@ function vault_timestamp_upgrade() {
 
 /**
  * Add timestamp column to vault table for specified name
- * 
+ *
  * @param string $name
  * @since 2.1.0
  */
