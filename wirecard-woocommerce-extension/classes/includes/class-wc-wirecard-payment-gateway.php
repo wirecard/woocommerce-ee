@@ -346,7 +346,6 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 		try {
 			/** @var Response $response */
 			$process_credit_card_response = $request_values;
-			//TODO: Check for syntax from before - $process_credit_card_response = ! is_null( $request_values );
 			if ( isset( $process_credit_card_response ) ) {
 				$redirect = $this->create_redirect_url( $order, 'success', $this->type );
 				$response = $transaction_service->processJsResponse( $request_values, $redirect );

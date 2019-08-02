@@ -171,20 +171,32 @@ class User_Data_Helper {
 	}
 
 	/**
-	 * Get successful purchased orders within last six months
+	 * Get successful orders within last six months
+	 * Successful order status includes:
+	 *  - processing (purchase/debit) - standard WC Order State
+	 *  - completed - standard WC Order State for shipped orders
+	 *  - refunded - standard WC Order State for refunded orders (still successful)
+	 *  - cancelled - standard WC Order State for cancelled order (still successful)
+	 *  - authorization - Wirecard Order State for authorized/reserved payments
 	 *
 	 * @return int
 	 * @since 2.1.0
 	 */
 	public function get_successful_orders_last_six_months() {
-		$arguments = array(
-			'customer'   => $this->user->ID,
-			'limit'      => self::UNLIMITED,
-			'status'     => 'processing',
-			'date_after' => '6 months ago',
-		);
+		$states      = array( 'processing', 'completed', 'refunded', 'cancelled', 'authorization' );
+		$order_count = 0;
+		foreach ( $states as $status ) {
+			$arguments    = array(
+				'customer'   => $this->user->ID,
+				'limit'      => self::UNLIMITED,
+				'status'     => $status,
+				'date_after' => '6 months ago',
+			);
+			$orders       = $this->get_order_array_with_args( $arguments );
+			$order_count += count( $orders );
+		}
 
-		return count( $this->get_order_array_with_args( $arguments ) );
+		return $order_count;
 	}
 
 	/**
