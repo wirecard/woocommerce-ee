@@ -18,6 +18,6 @@ mkdir ${RELEASE_DIR}
 rsync -r --exclude-from="${BLACKLIST_FILE}" ${PLUGIN_DIR} ${RELEASE_DIR}
 
 cd ${WORDPRESS_DIR}
-svn add --parents tags/${VERSION}/*
+svn add * --force
 svn commit -m "Add ${VERSION} release" --username "${WORDPRESS_USER}" --password "${WORDPRESS_PASSWORD}"
 echo "Successfully uploaded release to Wordpress"
