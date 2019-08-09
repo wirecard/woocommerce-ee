@@ -13,9 +13,9 @@ mkdir ${WORDPRESS_DIR}
 svn checkout https://plugins.svn.wordpress.org/wirecard-woocommerce-extension \
 	--username "${WORDPRESS_USER}" --password "${WORDPRESS_PASSWORD}"  -q ${WORDPRESS_DIR}
 
-rsync -r --exclude-from="${BLACKLIST_FILE}" ${PLUGIN_DIR} ${WORDPRESS_DIR}/trunk
+rsync -r --exclude-from="${BLACKLIST_FILE}" ${PLUGIN_DIR}/* ${WORDPRESS_DIR}/trunk
 mkdir ${RELEASE_DIR}
-rsync -r --exclude-from="${BLACKLIST_FILE}" ${PLUGIN_DIR} ${RELEASE_DIR}
+rsync -r --exclude-from="${BLACKLIST_FILE}" ${PLUGIN_DIR}/* ${RELEASE_DIR}
 
 cd ${WORDPRESS_DIR}
 svn add * --force
