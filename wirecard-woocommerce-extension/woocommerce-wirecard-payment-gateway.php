@@ -129,6 +129,7 @@ function wirecard_init_payment_gateway() {
 	require_once WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php';
 	require_once WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-masterpass.php';
 	require_once WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php';
+	require_once WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-giropay.php';
 
 	add_filter( 'woocommerce_payment_gateways', 'wirecard_add_payment_gateway', 0 );
 	add_filter( 'wc_order_statuses', 'wirecard_wc_order_statuses' );
@@ -202,6 +203,7 @@ function wirecard_get_payments() {
 		'WC_Gateway_Wirecard_Sepa_Credit_Transfer'       => new WC_Gateway_Wirecard_Sepa_Credit_Transfer(),
 		'WC_Gateway_Wirecard_Sepa_Direct_Debit'          => new WC_Gateway_Wirecard_Sepa_Direct_Debit(),
 		'WC_Gateway_Wirecard_Sofort'                     => new WC_Gateway_Wirecard_Sofort(),
+		'WC_Gateway_Wirecard_Giropay'                     => new WC_Gateway_Wirecard_Giropay(),
 	);
 }
 
