@@ -264,22 +264,7 @@ class User_Data_Helper {
 	 * @since 2.1.0
 	 */
 	public function get_reordered_info() {
-		$risk_info_reorder = RiskInfoReorder::FIRST_TIME_ORDERED;
-		if ( $this->is_reordered_line_item() ) {
-			$risk_info_reorder = RiskInfoReorder::REORDERED;
-		}
-
-		return $risk_info_reorder;
-	}
-
-	/**
-	 * Checks if one of the products within current order was bought before
-	 *
-	 * @return bool
-	 * @since 2.1.0
-	 */
-	private function is_reordered_line_item() {
-		$reordered = false;
+		$reordered = RiskInfoReorder::FIRST_TIME_ORDERED;
 		/** @var WC_Order_Item[] $products */
 		$order_items = $this->current_order->get_items();
 		/** @var WC_Order_Item $item */
@@ -287,7 +272,7 @@ class User_Data_Helper {
 			if ( $item->is_type( 'line_item' )
 				&& wc_customer_bought_product( $this->user->user_email, $this->user->ID, $item->get_product_id() )
 			) {
-				$reordered = true;
+				$reordered = RiskInfoReorder::REORDERED;
 			}
 		}
 
