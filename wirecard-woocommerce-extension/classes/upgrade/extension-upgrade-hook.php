@@ -38,7 +38,7 @@ require_once( WIRECARD_EXTENSION_HELPER_DIR . 'class-logger.php' );
 
 // Add required upgrades here
 require_once 'wpp-v-two-upgrade.php';
-require_once  'vault-upgrade.php';
+require_once 'vault-upgrade.php';
 
 /**
  * wirecard_extension_upgrade_completed

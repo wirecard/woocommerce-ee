@@ -39,8 +39,8 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @since 2.1.0
  */
 function vault_timestamp_upgrade() {
-	add_vault_timestamp( 'created' );
-	add_vault_timestamp( 'modified' );
+	add_vault_timestamp_column( 'created' );
+	add_vault_timestamp_column( 'modified' );
 }
 
 /**
@@ -49,7 +49,7 @@ function vault_timestamp_upgrade() {
  * @param string $name
  * @since 2.1.0
  */
-function add_vault_timestamp( $name ) {
+function add_vault_timestamp_column( $name ) {
 	global $wpdb;
 	$vault_table_name = $wpdb->base_prefix . 'wirecard_payment_gateway_vault';
 
