@@ -234,11 +234,11 @@ class Three_DS_Helper {
 	 * @since 2.1.0
 	 */
 	private function get_merchant_crm_id() {
+		$merchant_crm_id = null;
 		if ( is_user_logged_in() ) {
-
-			return (string) $this->user_data_helper->get_user_id();
+			$merchant_crm_id = (string) $this->user_data_helper->get_user_id();
 		}
 
-		return null;
+		return $merchant_crm_id;
 	}
 }

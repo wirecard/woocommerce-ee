@@ -50,6 +50,8 @@ class User_Data_Helper {
 
 	const UNLIMITED = -1;
 
+	const SUCCESS_ORDER_STATES = array( 'processing', 'completed', 'refunded', 'cancelled', 'authorization' );
+
 	/**
 	 * @var WP_User
 	 */
@@ -93,11 +95,12 @@ class User_Data_Helper {
 	 * @since 2.1.0
 	 */
 	public function get_card_creation_date() {
+		$creation_date = new DateTime();
 		if ( null !== $this->token_id ) {
-			return $this->get_token_creation_date();
+			$creation_date = $this->get_token_creation_date();
 		}
 
-		return new DateTime();
+		return $creation_date;
 	}
 
 	/**
@@ -109,12 +112,11 @@ class User_Data_Helper {
 	private function get_token_creation_date() {
 		$vault              = new Credit_Card_Vault();
 		$card_creation_date = $vault->get_card_creation_for_user( $this->user->ID, $this->token_id );
-
-		if ( $card_creation_date instanceof DateTime ) {
-			return $card_creation_date;
+		if ( ! $card_creation_date instanceof DateTime ) {
+			$card_creation_date = new DateTime();
 		}
 
-		return new DateTime();
+		return $card_creation_date;
 	}
 
 	/**
@@ -150,9 +152,8 @@ class User_Data_Helper {
 	 * @since 2.1.0
 	 */
 	private function convert_timestamp_to_date_time( $timestamp ) {
-		$date_time = new DateTime();
+		$date_time = new DateTime( '@' . $timestamp );
 		$date_time->format( AccountInfo::DATE_FORMAT );
-		$date_time->setTimestamp( $timestamp );
 
 		return $date_time;
 	}
@@ -175,13 +176,13 @@ class User_Data_Helper {
 		/** @var array $orders */
 		$orders = $this->get_order_array_with_args( $arguments );
 		/** @var WC_Order $first_order */
-		$first_order = reset( $orders );
+		$first_order    = reset( $orders );
+		$first_use_date = new DateTime();
 		if ( $first_order ) {
-
-			return $first_order->get_date_created();
+			$first_use_date = $first_order->get_date_created();
 		}
 
-		return new DateTime();
+		return $first_use_date;
 	}
 
 	/**
@@ -197,9 +198,8 @@ class User_Data_Helper {
 	 * @since 2.1.0
 	 */
 	public function get_successful_orders_last_six_months() {
-		$states      = array( 'processing', 'completed', 'refunded', 'cancelled', 'authorization' );
 		$order_count = 0;
-		foreach ( $states as $status ) {
+		foreach ( self::SUCCESS_ORDER_STATES as $status ) {
 			$arguments    = array(
 				'customer'   => $this->user->ID,
 				'limit'      => self::UNLIMITED,
@@ -220,7 +220,6 @@ class User_Data_Helper {
 	 * @since 2.1.0
 	 */
 	public function get_user_id() {
-
 		return $this->user->ID;
 	}
 
@@ -233,16 +232,13 @@ class User_Data_Helper {
 	 * @since 2.1.0
 	 */
 	public function get_challenge_indicator() {
-		if ( is_null( $this->token_id ) ) {
-			return $this->challenge_ind;
+		$challenge_ind = ChallengeInd::CHALLENGE_MANDATE;
+		$vault         = new Credit_Card_Vault();
+		if ( is_null( $this->token_id ) || $vault->is_existing_token_for_user( $this->user->ID, $this->token_id ) ) {
+			$challenge_ind = $this->challenge_ind;
 		}
 
-		$vault = new Credit_Card_Vault();
-		if ( $vault->is_existing_token_for_user( $this->user->ID, $this->token_id ) ) {
-			return $this->challenge_ind;
-		}
-
-		return ChallengeInd::CHALLENGE_MANDATE;
+		return $challenge_ind;
 	}
 
 	/**
@@ -253,11 +249,12 @@ class User_Data_Helper {
 	 * @since 2.1.0
 	 */
 	public function get_delivery_mail() {
+		$delivery_mail = null;
 		if ( ! empty( $this->current_order->get_billing_email() ) ) {
-			return $this->current_order->get_billing_email();
+			$delivery_mail = $this->current_order->get_billing_email();
 		}
 
-		return null;
+		return $delivery_mail;
 	}
 
 	/**
