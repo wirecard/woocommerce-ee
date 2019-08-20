@@ -58,13 +58,13 @@ function logError( data ) {
 
 /**
  * Display error message after failure submit and hide processing spinner
- * 
+ *
  * @param data
  * @since 2.0.3
  */
 function onSubmitError( data ) {
-	jQuery('#wd-cc-submit-spinner').css("display","none");
-	if ("transaction_state" in data){
+	jQuery( '#wd-cc-submit-spinner' ).css( "display","none" );
+	if ("transaction_state" in data) {
 		getCreditCardData()
 			.then( renderForm )
 			.fail( logError )
@@ -73,7 +73,7 @@ function onSubmitError( data ) {
 					jQuery( ".show-spinner" ).hide();
 				}
 			)
-		jQuery('#wd-creditcard-messagecontainer').css("display","block");
+		jQuery( "#wd-creditcard-messagecontainer" ).css( "display","block" );
 	}
 	logError( data );
 }
@@ -200,7 +200,7 @@ function submitVault() {
 		"cc_nonce": nonce.val(),
 		"action": "submit_token_response"
 	};
-	jQuery('#vault-submit').prop('disabled', true);
+	jQuery( "#vault-submit" ).prop( "disabled", true );
 
 	return jQuery.ajax(
 		{
@@ -382,7 +382,7 @@ function initializeForm() {
  * @since 1.7.0
  */
 function submitSeamlessForm() {
-	jQuery('#wd-cc-submit-spinner').css("display","block");
+	jQuery( "#wd-cc-submit-spinner" ).css( "display","block" );
 	jQuery( this ).blur();
 
 	WPP.seamlessSubmit(

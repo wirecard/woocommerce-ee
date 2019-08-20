@@ -1,5 +1,23 @@
 [
 {
+	"release": "2.0.3",
+	"shopversions": {
+    	"shopsystem": {
+    		"name": "WooCommerce",
+    		"tested": "3.6.5",
+    		"compatibility": "3.3.4"
+    	},
+    	"platform": {
+    		"name": "Wordpress",
+    		"tested": "5.2.2",
+    		"compatibility": "5.0.3"
+    	}
+    },	
+	"changelog": [
+		"Add Credit Card error handling on form submit"
+	]
+},
+{
 	"release": "2.0.2",
 	"shopversions": {
     	"shopsystem": {
