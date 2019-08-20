@@ -1,5 +1,42 @@
 [
 {
+	"release": "2.0.2",
+	"shopversions": {
+    	"shopsystem": {
+    		"name": "WooCommerce",
+    		"tested": "3.6.5",
+    		"compatibility": "3.3.4"
+    	},
+    	"platform": {
+    		"name": "Wordpress",
+    		"tested": "5.2.2",
+    		"compatibility": "5.0.3"
+    	}
+    },	
+	"changelog": [
+		"Fix seamless Credit Card form issue"
+	]
+},
+{
+	"release": "2.0.1",
+	"shopversions": {
+    	"shopsystem": {
+    		"name": "WooCommerce",
+    		"tested": "3.6.5",
+    		"compatibility": "3.3.4"
+    	},
+    	"platform": {
+    		"name": "Wordpress",
+    		"tested": "5.2.2",
+    		"compatibility": "5.0.3"
+    	}
+    },	
+	"changelog": [
+		"Fix language support for formal german",
+        "Update language error handling"
+	]
+},
+{
 	"release": "2.0.0",
 	"shopversions": {
     	"shopsystem": {
