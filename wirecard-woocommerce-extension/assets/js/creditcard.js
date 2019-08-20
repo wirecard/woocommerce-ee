@@ -200,6 +200,7 @@ function submitVault() {
 		"cc_nonce": nonce.val(),
 		"action": "submit_token_response"
 	};
+	jQuery('#vault-submit').prop('disabled', true);
 
 	return jQuery.ajax(
 		{
