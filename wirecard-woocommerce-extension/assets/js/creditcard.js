@@ -56,6 +56,73 @@ function logError( data ) {
 	console.error( "An error occurred: ", data );
 }
 
+/**
+ * Gets the request data from the server.
+ *
+ * @returns mixed
+ * @since 1.7.0
+ */
+function getCreditCardData() {
+	return jQuery.ajax(
+		{
+			type: "POST",
+			url: phpVars.ajax_url,
+			cache: false,
+			data: {"action": "get_credit_card_request_data"},
+			dataType: "json",
+		}
+	);
+}
+
+/**
+ * Resize the credit card form when loaded
+ *
+ * @since 1.0.0
+ */
+function onFormRendered() {
+	seamlessSubmitButton.removeAttr( "disabled" );
+	newCardContentArea.find( "iframe" ).height( 270 );
+}
+
+/**
+ * Renders the actual seamless form
+ *
+ * @since 1.7.0
+ */
+function renderForm( response ) {
+	WPP.seamlessRender(
+		{
+			requestData: JSON.parse( response.data ),
+			wrappingDivId: "wc_payment_method_wirecard_creditcard_form",
+			onSuccess: onFormRendered,
+			onError: logError,
+		}
+	);
+}
+
+/**
+ * Display error message after failure submit and hide processing spinner
+ *
+ * @param data
+ * @since 2.0.3
+ */
+function onSubmitError( data ) {
+	jQuery( "#wd-cc-submit-spinner" ).css( "display","none" );
+	if ("transaction_state" in data) {
+		getCreditCardData()
+			.then( renderForm )
+			.fail( logError )
+			.always(
+				function() {
+					jQuery( ".show-spinner" ).hide();
+				}
+			)
+		jQuery( "#wd-creditcard-messagecontainer" ).css( "display","block" );
+	}
+	logError( data );
+}
+
+
 /*
  * AJAX-based functions
  */
@@ -129,24 +196,6 @@ function deleteCreditCardFromVault( id ) {
 }
 
 /**
- * Gets the request data from the server.
- *
- * @returns mixed
- * @since 1.7.0
- */
-function getCreditCardData() {
-	return jQuery.ajax(
-		{
-			type: "POST",
-			url: phpVars.ajax_url,
-			cache: false,
-			data: {"action": "get_credit_card_request_data"},
-			dataType: "json",
-		}
-	);
-}
-
-/**
  * Submits the seamless response to the server
  *
  * @param {Object} response
@@ -177,6 +226,7 @@ function submitVault() {
 		"cc_nonce": nonce.val(),
 		"action": "submit_token_response"
 	};
+	jQuery( "#vault-submit" ).prop( "disabled", true );
 
 	return jQuery.ajax(
 		{
@@ -293,32 +343,6 @@ function onFormSubmitted( response ) {
 }
 
 /**
- * Resize the credit card form when loaded
- *
- * @since 1.0.0
- */
-function onFormRendered() {
-	seamlessSubmitButton.removeAttr( "disabled" );
-	newCardContentArea.find( "iframe" ).height( 270 );
-}
-
-/**
- * Renders the actual seamless form
- *
- * @since 1.7.0
- */
-function renderForm( response ) {
-	WPP.seamlessRender(
-		{
-			requestData: JSON.parse( response.data ),
-			wrappingDivId: "wc_payment_method_wirecard_creditcard_form",
-			onSuccess: onFormRendered,
-			onError: logError,
-		}
-	);
-}
-
-/**
  * Initializes the vault interface as required.
  */
 function initializeVault() {
@@ -358,14 +382,14 @@ function initializeForm() {
  * @since 1.7.0
  */
 function submitSeamlessForm() {
-	jQuery( this ).after( phpVars.spinner );
-	jQuery( ".spinner" ).addClass( "spinner-submit" );
+	jQuery( "#wd-cc-submit-spinner" ).css( "display","block" );
+	jQuery( this ).blur();
 
 	WPP.seamlessSubmit(
 		{
 			wrappingDivId: "wc_payment_method_wirecard_creditcard_form",
 			onSuccess: onFormSubmitted,
-			onError: logError
+			onError: onSubmitError
 		}
 	);
 }
