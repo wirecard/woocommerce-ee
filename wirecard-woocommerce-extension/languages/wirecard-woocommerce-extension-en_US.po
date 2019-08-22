@@ -13,7 +13,7 @@ msgstr "Alipay Cross-border"
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:62
 msgid "alipay_crossborder_desc"
-msgstr "Alipay Cross-border transactions via Wirecard Payment Processing Gateway."
+msgstr "Alipay Cross-border transactions via Wirecard Payment Gateway."
 
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:263
 msgid "amount"
@@ -142,6 +142,26 @@ msgstr "Identical Billing/Shipping Address"
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:164
 msgid "config_billing_shipping_desc"
 msgstr "If activated, payment method Guaranteed Invoice is only displayed if billing/shipping address are identical."
+
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:306
+msgid "config_challenge_challenge_threed"
+msgstr "Challenge requested"
+
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:271
+msgid "config_challenge_indicator"
+msgstr "Challenge Indicator"
+
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:273
+msgid "config_challenge_indicator_desc"
+msgstr "Indicates whether a challenge is  requested for this transaction."
+
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:305
+msgid "config_challenge_no_challenge"
+msgstr "No challenge requested"
+
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:304
+msgid "config_challenge_no_preference"
+msgstr "No preference"
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:168
 msgid "config_creditor_city"
@@ -518,7 +538,7 @@ msgstr "Credit Card"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:63
 msgid "creditcard_desc"
-msgstr "Credit Card transactions via Wirecard Payment Processing Gateway."
+msgstr "Credit Card transactions via Wirecard Payment Gateway."
 
 #: classes/helper/sepa-template.php:38
 msgid "creditor"
@@ -594,7 +614,7 @@ msgstr "eps-Überweisung"
 
 #: classes/includes/class-wc-gateway-wirecard-eps.php:64
 msgid "eps_desc"
-msgstr "eps-Überweisung transactions via Wirecard Payment Processing Gateway."
+msgstr "eps-Überweisung transactions via Wirecard Payment Gateway."
 
 #: classes/includes/class-wc-wirecard-payment-gateway.php:682
 msgid "error_credentials"
@@ -603,6 +623,10 @@ msgstr "Test failed, please check your credentials."
 #: classes/admin/class-wirecard-settings.php:301
 msgid "error_email"
 msgstr "Email delivery error."
+
+#: templates/credit-card-form.php:45
+msgid "error_malformed_creditcard_request"
+msgstr "Oops! Something went wrong. Please check your credit card data and try again."
 
 #: classes/admin/class-wirecard-transaction-factory.php:359
 msgid "error_no_post_processing_operations"
@@ -720,7 +744,7 @@ msgstr "iDEAL"
 
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:65
 msgid "ideal_desc"
-msgstr "iDEAL transactions via Wirecard Payment Processing Gateway."
+msgstr "iDEAL transactions via Wirecard Payment Gateway."
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:262
 msgid "last-name"
@@ -732,7 +756,7 @@ msgstr "Masterpass"
 
 #: classes/includes/class-wc-gateway-wirecard-masterpass.php:63
 msgid "masterpass_desc"
-msgstr "Masterpass transactions via Wirecard Payment Processing Gateway."
+msgstr "Masterpass transactions via Wirecard Payment Gateway."
 
 #: classes/includes/class-wc-wirecard-payment-gateway.php:212
 #: classes/includes/class-wc-wirecard-payment-gateway.php:228
@@ -750,7 +774,6 @@ msgstr "Authorized <span class=\"count\">(%s)</span>"
 
 #. translators:
 #: woocommerce-wirecard-payment-gateway.php:105
-
 msgid "order_status_authorized_count_single"
 msgid_plural "order_status_authorized_count_plural"
 msgstr[0] ""
@@ -758,7 +781,7 @@ msgstr[1] ""
 
 #: classes/includes/class-wc-wirecard-payment-gateway.php:521
 msgid "order_status_gateway_update"
-msgstr "Update order status via Wirecard Payment Processing Gateway."
+msgstr "Update order status via Wirecard Payment Gateway."
 
 #: classes/admin/class-wirecard-settings.php:119
 msgid "pagination_back"
@@ -810,7 +833,7 @@ msgstr "Pay by Bank app"
 
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:62
 msgid "paybybankapp_desc"
-msgstr "Pay by Bank app transactions via Wirecard Payment Processing Gateway."
+msgstr "Pay by Bank app transactions via Wirecard Payment Gateway."
 
 #. Description of the plugin
 msgid "Payment Gateway for WooCommerce"
@@ -830,7 +853,7 @@ msgstr "PayPal"
 
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:63
 msgid "paypal_desc"
-msgstr "PayPal transactions via Wirecard Payment Processing Gateway."
+msgstr "PayPal transactions via Wirecard Payment Gateway."
 
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:62
 msgid "poi_pia"
@@ -838,7 +861,7 @@ msgstr "Payment On Invoice / Payment In Advance"
 
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:63
 msgid "poi_pia_desc"
-msgstr "Payment On Invoice / Payment In Advance transactions via Wirecard Payment Processing Gateway."
+msgstr "Payment On Invoice / Payment In Advance transactions via Wirecard Payment Gateway."
 
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:266
 msgid "ptrid"
@@ -850,7 +873,7 @@ msgstr "Guaranteed Invoice"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:65
 msgid "ratepayinvoice_desc"
-msgstr "Guaranteed Invoice transactions via Wirecard Payment Processing Gateway."
+msgstr "Guaranteed Invoice transactions via Wirecard Payment Gateway."
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:456
 msgid "ratepayinvoice_fields_error"
@@ -864,7 +887,7 @@ msgstr "You are being redirected. Please wait."
 #: classes/includes/class-wc-wirecard-payment-gateway.php:418
 #: classes/includes/class-wc-wirecard-payment-gateway.php:421
 msgid "refund_gateway_error"
-msgstr "Refund via Wirecard Payment Processing Gateway failed."
+msgstr "Refund via Wirecard Payment Gateway failed."
 
 #: classes/includes/class-wc-wirecard-payment-gateway.php:632
 msgid "refund_online_error"
@@ -884,7 +907,7 @@ msgstr "SEPA Credit Transfer"
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:62
 msgid "sepact_desc"
-msgstr "SEPA Credit Transfer transactions via Wirecard Payment Processing Gateway."
+msgstr "SEPA Credit Transfer transactions via Wirecard Payment Gateway."
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:60
 msgid "sepadd"
@@ -892,7 +915,7 @@ msgstr "SEPA Direct Debit"
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:61
 msgid "sepadd_desc"
-msgstr "SEPA Direct Debit transactions via Wirecard Payment Processing Gateway."
+msgstr "SEPA Direct Debit transactions via Wirecard Payment Gateway."
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:246
 msgid "sepa_cancel"
@@ -936,7 +959,7 @@ msgstr "Sofort."
 
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:64
 msgid "sofortbanking_desc"
-msgstr "Sofort. transactions via Wirecard Payment Processing Gateway."
+msgstr "Sofort. transactions via Wirecard Payment Gateway."
 
 #: classes/admin/class-wirecard-settings.php:242
 msgid "submit_button"
@@ -1162,7 +1185,7 @@ msgstr "here"
 #: woocommerce-wirecard-payment-gateway.php:229
 #: classes/admin/class-wirecard-transaction-factory.php:367
 msgid "title_payment_gateway"
-msgstr "Wirecard Payment Processing Gateway"
+msgstr "Wirecard Payment Gateway"
 
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:261
 msgid "transfer_notice"
