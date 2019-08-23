@@ -63,11 +63,6 @@ class User_Data_Helper {
 	private $current_order;
 
 	/**
-	 * @var string
-	 */
-	private $challenge_ind;
-
-	/**
 	 * @var string|null
 	 */
 	private $token_id;
@@ -76,15 +71,13 @@ class User_Data_Helper {
 	 * User_Data_Helper constructor.
 	 * @param WP_User $user
 	 * @param WC_Order $order
-	 * @param string $challenge_ind
 	 * @param string|null $token_id
 	 *
 	 * @since 2.1.0
 	 */
-	public function __construct( $user, $order, $challenge_ind, $token_id ) {
+	public function __construct( $user, $order, $token_id ) {
 		$this->user          = $user;
 		$this->current_order = $order;
-		$this->challenge_ind = $challenge_ind;
 		$this->token_id      = $token_id;
 	}
 
@@ -221,24 +214,6 @@ class User_Data_Helper {
 	 */
 	public function get_user_id() {
 		return $this->user->ID;
-	}
-
-	/**
-	 * Get challenge indicator depending on existing token
-	 *   04  - for new one-click-checkout token
-	 *   predefined indicator from settings for existing token and non-one-click-checkout
-	 *
-	 * @return string
-	 * @since 2.1.0
-	 */
-	public function get_challenge_indicator() {
-		$challenge_ind = ChallengeInd::CHALLENGE_MANDATE;
-		$vault         = new Credit_Card_Vault();
-		if ( is_null( $this->token_id ) || $vault->is_existing_token_for_user( $this->user->ID, $this->token_id ) ) {
-			$challenge_ind = $this->challenge_ind;
-		}
-
-		return $challenge_ind;
 	}
 
 	/**
