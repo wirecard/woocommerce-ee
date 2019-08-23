@@ -144,27 +144,22 @@ msgid "config_billing_shipping_desc"
 msgstr ""
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:306
-#, fuzzy
 msgid "config_challenge_challenge_threed"
 msgstr ""
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:271
-#, fuzzy
 msgid "config_challenge_indicator"
 msgstr ""
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:273
-#, fuzzy
 msgid "config_challenge_indicator_desc"
 msgstr ""
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:305
-#, fuzzy
 msgid "config_challenge_no_challenge"
 msgstr ""
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:304
-#, fuzzy
 msgid "config_challenge_no_preference"
 msgstr ""
 
@@ -629,6 +624,10 @@ msgstr ""
 msgid "error_email"
 msgstr ""
 
+#: templates/credit-card-form.php:45
+msgid "error_malformed_creditcard_request"
+msgstr ""
+
 #: classes/admin/class-wirecard-transaction-factory.php:359
 msgid "error_no_post_processing_operations"
 msgstr ""
@@ -775,7 +774,6 @@ msgstr ""
 
 #. translators:
 #: woocommerce-wirecard-payment-gateway.php:105
-#, fuzzy
 msgid "order_status_authorized_count_single"
 msgid_plural "order_status_authorized_count_plural"
 msgstr[0] ""

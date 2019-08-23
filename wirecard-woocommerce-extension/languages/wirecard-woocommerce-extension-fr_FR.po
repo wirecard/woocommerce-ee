@@ -12,6 +12,7 @@ msgid "alipay_crossborder"
 msgstr "Alipay Cross-border"
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:62
+
 msgid "alipay_crossborder_desc"
 msgstr "Transactions Alipay Cross-border via la passerelle de paiement Wirecard."
 
@@ -537,6 +538,7 @@ msgid "creditcard"
 msgstr "Carte de crédit"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:63
+
 msgid "creditcard_desc"
 msgstr "Transactions Carte de crédit via la passerelle de paiement Wirecard."
 
@@ -613,6 +615,7 @@ msgid "eps"
 msgstr "Virement eps"
 
 #: classes/includes/class-wc-gateway-wirecard-eps.php:64
+
 msgid "eps_desc"
 msgstr "Transactions Virement eps via la passerelle de paiement Wirecard."
 
@@ -623,6 +626,10 @@ msgstr "Le test a échoué, vérifiez vos informations d’identification."
 #: classes/admin/class-wirecard-settings.php:301
 msgid "error_email"
 msgstr "Message d’erreur de distribution de l’e-mail."
+
+#: templates/credit-card-form.php:45
+msgid "error_malformed_creditcard_request"
+msgstr "Oops! Something went wrong. Please check your credit card data and try again."
 
 #: classes/admin/class-wirecard-transaction-factory.php:359
 msgid "error_no_post_processing_operations"
@@ -739,6 +746,7 @@ msgid "ideal"
 msgstr "iDEAL"
 
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:65
+
 msgid "ideal_desc"
 msgstr "Transactions iDEAL via la passerelle de paiement Wirecard."
 
@@ -751,6 +759,7 @@ msgid "masterpass"
 msgstr "Masterpass"
 
 #: classes/includes/class-wc-gateway-wirecard-masterpass.php:63
+
 msgid "masterpass_desc"
 msgstr "Transactions Masterpass via la passerelle de paiement Wirecard."
 
@@ -769,6 +778,7 @@ msgid "order_status_authorized_count_plural"
 msgstr "Autorisé <span class=\"count\">(%s)</span>"
 
 #: classes/includes/class-wc-wirecard-payment-gateway.php:521
+
 msgid "order_status_gateway_update"
 msgstr "Mettre à jour le statut de la commande via la passerelle de paiement Wirecard."
 
@@ -822,7 +832,7 @@ msgstr "Pay by Bank app"
 
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:62
 msgid "paybybankapp_desc"
-msgstr "Pay by Bank app transactions via Wirecard Payment Processing Gateway."
+msgstr "Pay by Bank app transactions via Wirecard Payment Gateway."
 
 #. Description of the plugin
 msgid "Payment Gateway for WooCommerce"
@@ -841,6 +851,7 @@ msgid "paypal"
 msgstr "PayPal"
 
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:63
+
 msgid "paypal_desc"
 msgstr "Transactions PayPal via la passerelle de paiement Wirecard."
 
@@ -849,6 +860,7 @@ msgid "poi_pia"
 msgstr "Paiement sur facture / Paiement à l’avance"
 
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:63
+
 msgid "poi_pia_desc"
 msgstr "Transactions Paiement sur facture / Paiement à l’avance via la passerelle de paiement Wirecard."
 
@@ -861,6 +873,7 @@ msgid "ratepayinvoice"
 msgstr "Facture avec garantie de paiement"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:65
+
 msgid "ratepayinvoice_desc"
 msgstr "Transactions Facture avec garantie de paiement via la passerelle de paiement Wirecard."
 
@@ -875,6 +888,7 @@ msgstr "Vous êtes redirigé. Veuillez patienter."
 
 #: classes/includes/class-wc-wirecard-payment-gateway.php:418
 #: classes/includes/class-wc-wirecard-payment-gateway.php:421
+
 msgid "refund_gateway_error"
 msgstr "Échec du remboursement via la passerelle de paiement Wirecard."
 
@@ -895,6 +909,7 @@ msgid "sepact"
 msgstr "Virement SEPA"
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:62
+
 msgid "sepact_desc"
 msgstr "Transactions Virement SEPA via la passerelle de paiement Wirecard."
 
@@ -903,6 +918,7 @@ msgid "sepadd"
 msgstr "Prélèvement SEPA"
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:61
+
 msgid "sepadd_desc"
 msgstr "Transactions Prélèvement SEPA via la passerelle de paiement Wirecard."
 
@@ -947,6 +963,7 @@ msgid "sofortbanking"
 msgstr "Sofort."
 
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:64
+
 msgid "sofortbanking_desc"
 msgstr "Transactions Sofort. via la passerelle de paiement Wirecard."
 
@@ -1173,6 +1190,7 @@ msgstr "ici"
 #: woocommerce-wirecard-payment-gateway.php:228
 #: woocommerce-wirecard-payment-gateway.php:229
 #: classes/admin/class-wirecard-transaction-factory.php:367
+
 msgid "title_payment_gateway"
 msgstr "Passerelle de paiement Wirecard"
 
