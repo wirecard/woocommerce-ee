@@ -34,7 +34,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 require_once WIRECARD_EXTENSION_HELPER_DIR . 'class-user-data-helper.php';
-require_once WIRECARD_EXTENSION_BASEDIR . 'classes/helper/class-additional-information.php';
+require_once WIRECARD_EXTENSION_HELPER_DIR . 'class-additional-information.php';
 require_once WIRECARD_EXTENSION_HELPER_DIR . 'class-credit-card-vault.php';
 
 use Wirecard\PaymentSdk\Constant\AuthMethod;

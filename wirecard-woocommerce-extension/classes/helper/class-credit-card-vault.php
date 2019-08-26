@@ -115,11 +115,11 @@ class Credit_Card_Vault {
 	public function get_card_creation_for_user( $user_id, $token_id ) {
 		$format = 'Y-m-d H:i:s';
 
+		$date          = new DateTime();
 		$creation_date = $this->get_column_for_token_and_user( self::CREATED, $user_id, $token_id );
-		if ( is_null( $creation_date ) ) {
-			return new DateTime();
+		if ( ! is_null( $creation_date ) ) {
+			$date = DateTime::createFromFormat( $format, $creation_date );
 		}
-		$date = DateTime::createFromFormat( $format, $creation_date );
 
 		return $date;
 	}
@@ -133,13 +133,14 @@ class Credit_Card_Vault {
 	 * @since 2.1.0
 	 */
 	public function is_existing_token_for_user( $user_id, $token_id ) {
+		$is_existing  = true;
 		$token_exists = $this->get_column_for_token_and_user( self::VAULT_ID, $user_id, $token_id );
 
 		if ( is_null( $token_exists ) ) {
-			return false;
+			$is_existing = false;
 		}
 
-		return true;
+		return $is_existing;
 	}
 
 	/**
