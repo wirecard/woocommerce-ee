@@ -676,11 +676,13 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	 *
 	 * @return string
 	 *
+	 * @since 2.0.1 Only take first set of language code to avoid issues with de_DE_formal
 	 * @since 2.0.0 Exchange hpp with wpp languages
 	 * @since 1.7.0
 	 */
 	protected function determine_user_language() {
-		$locale    = str_replace( '_', '-', get_locale() );
+		$locale    = explode( '_', get_locale() );
+		$locale    = reset( $locale );
 		$language  = 'en';
 		$converter = new WppVTwoConverter();
 
@@ -689,7 +691,8 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 			$language = $converter->convert( $locale );
 		} catch ( Exception $e ) {
 			$this->logger->error( $e->getMessage() );
-			wp_die();
+			// Return fallback in errorcase
+			return $language;
 		}
 
 		return $language;

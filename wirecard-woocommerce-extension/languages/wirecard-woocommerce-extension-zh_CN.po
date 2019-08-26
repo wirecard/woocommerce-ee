@@ -12,6 +12,7 @@ msgid "alipay_crossborder"
 msgstr "支付宝跨境"
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:62
+
 msgid "alipay_crossborder_desc"
 msgstr "Alipay Crossborder transactions via Wirecard Payment Processing Gateway"
 
@@ -149,6 +150,26 @@ msgstr "账单/收货地址必须相同"
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:164
 msgid "config_billing_shipping_desc"
 msgstr "如已激活，则仅在账单/收货地址相同时才会显示保证发票付款方式"
+
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:306
+msgid "config_challenge_challenge_threed"
+msgstr "Challenge requested"
+
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:271
+msgid "config_challenge_indicator"
+msgstr "Challenge Indicator"
+
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:273
+msgid "config_challenge_indicator_desc"
+msgstr "Indicates whether a challenge is  requested for this transaction."
+
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:305
+msgid "config_challenge_no_challenge"
+msgstr "No challenge requested"
+
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:304
+msgid "config_challenge_no_preference"
+msgstr "No preference"
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:168
 msgid "config_creditor_city"
@@ -528,6 +549,7 @@ msgid "creditcard"
 msgstr "Credit Card"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:63
+
 msgid "creditcard_desc"
 msgstr "Credit Card transactions via Wirecard Payment Processing Gateway"
 
@@ -606,7 +628,7 @@ msgstr "eps-Überweisung"
 
 #: classes/includes/class-wc-gateway-wirecard-eps.php:64
 msgid "eps_desc"
-msgstr "eps-Überweisung transactions via Wirecard Payment Processing Gateway."
+msgstr "eps-Überweisung transactions via Wirecard Payment Gateway."
 
 #: classes/includes/class-wc-wirecard-payment-gateway.php:682
 msgid "error_credentials"
@@ -616,6 +638,10 @@ msgstr "测试失败，请检查您的凭证。"
 
 msgid "error_email"
 msgstr "电子邮件发送出现错误"
+
+#: templates/credit-card-form.php:45
+msgid "error_malformed_creditcard_request"
+msgstr "Oops! Something went wrong. Please check your credit card data and try again."
 
 #: classes/admin/class-wirecard-transaction-factory.php:359
 msgid "error_no_post_processing_operations"
@@ -735,6 +761,7 @@ msgid "ideal"
 msgstr "iDEAL"
 
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:65
+
 msgid "ideal_desc"
 msgstr "通过 Wirecard 支付处理网关进行 iDEAL 交易"
 
@@ -747,6 +774,7 @@ msgid "masterpass"
 msgstr "Masterpass"
 
 #: classes/includes/class-wc-gateway-wirecard-masterpass.php:63
+
 msgid "masterpass_desc"
 msgstr "通过 Wirecard 支付处理网关进行 Masterpass 交易"
 
@@ -765,6 +793,7 @@ msgid "order_status_authorized_count_plural"
 msgstr "Authorized <span class=\"count\">(%s)</span>"
 
 #: classes/includes/class-wc-wirecard-payment-gateway.php:521
+
 msgid "order_status_gateway_update"
 msgstr "通过 Wirecard 支付处理网关更新订单状态。"
 
@@ -821,7 +850,7 @@ msgstr "Pay by Bank app"
 
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:62
 msgid "paybybankapp_desc"
-msgstr "Pay by Bank app transactions via Wirecard Payment Processing Gateway."
+msgstr "Pay by Bank app transactions via Wirecard Payment Gateway."
 
 #. Description of the plugin
 msgid "Payment Gateway for WooCommerce"
@@ -840,6 +869,7 @@ msgid "paypal"
 msgstr "PayPal"
 
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:63
+
 msgid "paypal_desc"
 msgstr "通过 Wirecard 支付处理网关进行 PayPal 交易"
 
@@ -848,6 +878,7 @@ msgid "poi_pia"
 msgstr "发票付款/提前付款"
 
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:63
+
 msgid "poi_pia_desc"
 msgstr "通过 Wirecard 支付处理网关进行发票付款/提前付款交易"
 
@@ -861,6 +892,7 @@ msgid "ratepayinvoice"
 msgstr "保证发票"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:65
+
 msgid "ratepayinvoice_desc"
 msgstr "通过 Wirecard 支付处理网关进行保证发票交易"
 
@@ -875,6 +907,7 @@ msgstr "您正在重定向。请稍候"
 
 #: classes/includes/class-wc-wirecard-payment-gateway.php:418
 #: classes/includes/class-wc-wirecard-payment-gateway.php:421
+
 msgid "refund_gateway_error"
 msgstr "通过 Wirecard 支付处理网关进行的退款失败。"
 
@@ -895,6 +928,7 @@ msgid "sepact"
 msgstr "SEPA Credit Transfer"
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:62
+
 msgid "sepact_desc"
 msgstr "通过 Wirecard 支付处理网关进行 SEPA Credit Transfer 交易"
 
@@ -903,6 +937,7 @@ msgid "sepadd"
 msgstr "SEPA Direct Debit"
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:61
+
 msgid "sepadd_desc"
 msgstr "通过 Wirecard 支付处理网关进行 SEPA 交易"
 
@@ -947,6 +982,7 @@ msgid "sofortbanking"
 msgstr "Sofort。"
 
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:64
+
 msgid "sofortbanking_desc"
 msgstr "通过 Wirecard 支付处理网关进行 Sofort 交易"
 
@@ -1177,6 +1213,7 @@ msgstr "here"
 #: woocommerce-wirecard-payment-gateway.php:228
 #: woocommerce-wirecard-payment-gateway.php:229
 #: classes/admin/class-wirecard-transaction-factory.php:367
+
 msgid "title_payment_gateway"
 msgstr "Wirecard 支付网关"
 

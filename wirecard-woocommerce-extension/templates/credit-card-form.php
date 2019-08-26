@@ -40,6 +40,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $html = '
 			<div id="wc_payment_method_wirecard_new_credit_card" class="wd-tab-content">
+				<div id="wd-creditcard-messagecontainer" class="woocommerce-NoticeGroup woocommerce-NoticeGroup-checkout" style="display: none;">
+				<ul class="woocommerce-error" role="alert"><li id="wd-creditcard-error-message">' .
+				__( 'error_malformed_creditcard_request', 'wirecard-woocommerce-extension' ) .
+				'</li></ul></div>
 				<div class="show-spinner">
 					<div class="spinner" style="background: url(\'' . admin_url() . 'images/loading.gif\') no-repeat;"></div>
 				</div>
