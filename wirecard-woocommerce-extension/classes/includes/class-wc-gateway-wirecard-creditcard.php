@@ -56,6 +56,12 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	private $vault;
 
 	/**
+	 * @var bool $force_three_d
+	 * @since 2.1.0
+	 */
+	private $force_three_d;
+
+	/**
 	 * @var Template_Helper $template_helper
 	 *
 	 * @since 2.0.0
@@ -290,6 +296,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	 * @since 1.0.0
 	 */
 	public function create_payment_config( $base_url = null, $http_user = null, $http_pass = null ) {
+		$this->force_three_d = false;
 		if ( is_null( $base_url ) ) {
 			$base_url  = $this->get_option( 'base_url' );
 			$http_user = $this->get_option( 'http_user' );
@@ -301,8 +308,9 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 		$secret              = $this->get_option( 'secret' );
 
 		if ( '' === $merchant_account_id ) {
-			$merchant_account_id = $this->get_option( 'three_d_merchant_account_id' );
-			$secret              = $this->get_option( 'three_d_secret' );
+			$this->force_three_d = true;
+			$merchant_account_id = null;
+			$secret              = null;
 		}
 		$payment_config = new CreditCardConfig( $merchant_account_id, $secret );
 
@@ -313,32 +321,45 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 			);
 		}
 
-		$woocommerce_currency = $this->get_option( 'woocommerce_currency' );
-		if ( ! strlen( $woocommerce_currency ) ) {
-			$woocommerce_currency = get_woocommerce_currency();
-		}
-
-		if ( $this->get_option( 'ssl_max_limit' ) !== '' ) {
-			$payment_config->addSslMaxLimit(
-				new Amount(
-					floatval( $this->get_option( 'ssl_max_limit' ) ),
-					$woocommerce_currency
-				)
-			);
-		}
-
-		if ( $this->get_option( 'three_d_min_limit' ) !== '' ) {
-			$payment_config->addThreeDMinLimit(
-				new Amount(
-					floatval( $this->get_option( 'three_d_min_limit' ) ),
-					$woocommerce_currency
-				)
-			);
-		}
-
+		$this->setLimitsBasedOnMaidConfig( $payment_config );
 		$config->add( $payment_config );
 
 		return $config;
+	}
+
+	/**
+	 * Set payment config limits based on admin settings and existing non-3d maid and 3d maid
+	 *
+	 * @param CreditCardConfig $payment_config
+	 * @since 2.0.4
+	 */
+	private function setLimitsBasedOnMaidConfig( $payment_config ) {
+		if ( $this->get_option( 'three_d_merchant_account_id' ) !== ''
+			&& $this->get_option( 'merchant_account_id' ) !== ''
+		) {
+			$woocommerce_currency = $this->get_option( 'woocommerce_currency' );
+			if ( ! strlen( $woocommerce_currency ) ) {
+				$woocommerce_currency = get_woocommerce_currency();
+			}
+
+			if ( $this->get_option( 'ssl_max_limit' ) !== '' ) {
+				$payment_config->addSslMaxLimit(
+					new Amount(
+						floatval( $this->get_option( 'ssl_max_limit' ) ),
+						$woocommerce_currency
+					)
+				);
+			}
+
+			if ( $this->get_option( 'three_d_min_limit' ) !== '' ) {
+				$payment_config->addThreeDMinLimit(
+					new Amount(
+						floatval( $this->get_option( 'three_d_min_limit' ) ),
+						$woocommerce_currency
+					)
+				);
+			}
+		}
 	}
 
 	/**
@@ -462,6 +483,10 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 
 		parent::process_payment( $order_id );
 
+		// Only set ThreeD here if no Non-3D maid is provided to keep maid logic from sdk
+		if ( $this->force_three_d ) {
+			$this->transaction->setThreeD( $this->force_three_d );
+		}
 		$this->transaction->setTermUrl( $this->create_redirect_url( wc_get_order( $order_id ), 'success', $this->type ) );
 		$this->transaction->setConfig( $config->get( CreditCardTransaction::NAME ) );
 
