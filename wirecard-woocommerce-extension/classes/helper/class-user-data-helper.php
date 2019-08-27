@@ -234,7 +234,8 @@ class User_Data_Helper {
 
 	/**
 	 * Returns correct risk reorder information for current order products
-	 *
+	 * TODO: clarify if full order or only product has to be reordered
+	 * 
 	 * @return string
 	 * @since 2.1.0
 	 */
@@ -242,7 +243,7 @@ class User_Data_Helper {
 		$reordered = RiskInfoReorder::FIRST_TIME_ORDERED;
 		/** @var WC_Order_Item[] $products */
 		$order_items = $this->current_order->get_items();
-		/** @var WC_Order_Item $item */
+		/** @var WC_Order_Item_Product $item */
 		foreach ( $order_items as $item ) {
 			if ( $item->is_type( 'line_item' )
 				&& wc_customer_bought_product( $this->user->user_email, $this->user->ID, $item->get_product_id() )

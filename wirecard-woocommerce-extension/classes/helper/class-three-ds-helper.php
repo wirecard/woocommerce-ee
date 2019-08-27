@@ -186,7 +186,7 @@ class Three_DS_Helper {
 		$risk_info = new RiskInfo();
 
 		$risk_info->setDeliveryEmailAddress( $this->user_data_helper->get_delivery_mail() );
-		$risk_info->setReorderItems( $this->user_data_helper->get_reordered_info() );
+		// get reordered info via user_data_helper
 
 		return $risk_info;
 	}
