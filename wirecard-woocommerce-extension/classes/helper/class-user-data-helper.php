@@ -235,7 +235,7 @@ class User_Data_Helper {
 	/**
 	 * Returns correct risk reorder information for current order products
 	 * TODO: clarify if full order or only product has to be reordered
-	 * 
+	 *
 	 * @return string
 	 * @since 2.1.0
 	 */
