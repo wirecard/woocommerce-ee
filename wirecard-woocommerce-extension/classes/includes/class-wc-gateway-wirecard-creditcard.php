@@ -312,7 +312,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 			$three_d_secret
 		);
 
-		if ( isset( $merchant_account_id ) && isset( $three_d_merchant_account_id ) ) {
+		if ( ! empty( $merchant_account_id ) && ! empty( $three_d_merchant_account_id ) ) {
 			$this->set_payment_config_three_d_limits( $payment_config );
 		}
 
@@ -332,7 +332,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	 * @since 2.0.4
 	 */
 	protected function initialize_config( $base_url, $http_user, $http_pass ) {
-		if ( ! isset( $base_url ) || ! isset( $http_user ) || ! isset( $http_pass ) ) {
+		if ( empty( $base_url ) || empty( $http_user ) || empty( $http_pass ) ) {
 			$base_url  = $this->get_option( 'base_url' );
 			$http_user = $this->get_option( 'http_user' );
 			$http_pass = $this->get_option( 'http_pass' );
@@ -357,11 +357,11 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 		$three_d_merchant_account_id,
 		$three_d_secret
 	) {
-		if ( isset( $merchant_account_id ) && isset( $secret ) ) {
+		if ( ! empty( $merchant_account_id ) && ! empty( $secret ) ) {
 			$payment_config->setSSLCredentials( $merchant_account_id, $secret );
 		}
 
-		if ( isset( $three_d_merchant_account_id ) && isset( $three_d_secret ) ) {
+		if ( ! empty( $three_d_merchant_account_id ) && ! empty( $three_d_secret ) ) {
 			$payment_config->setThreeDCredentials( $three_d_merchant_account_id, $three_d_secret );
 		}
 	}
@@ -379,7 +379,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 			$woocommerce_currency = get_woocommerce_currency();
 		}
 
-		if ( isset( $ssl_max_limit ) ) {
+		if ( ! empty( $ssl_max_limit ) ) {
 			$payment_config->addSslMaxLimit(
 				new Amount(
 					floatval( $ssl_max_limit ),
@@ -388,7 +388,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 			);
 		}
 
-		if ( isset( $three_d_min_limit ) ) {
+		if ( ! empty( $three_d_min_limit ) ) {
 			$payment_config->addThreeDMinLimit(
 				new Amount(
 					floatval( $this->get_option( 'three_d_min_limit' ) ),
