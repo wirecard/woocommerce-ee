@@ -406,7 +406,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	 */
 	protected function set_force_three_d( $merchant_account_id, $three_d_merchant_account_id ) {
 		$force_three_d = false;
-		if ( ! isset( $merchant_account_id ) && isset( $three_d_merchant_account_id ) ) {
+		if ( empty( $merchant_account_id ) && ! empty( $three_d_merchant_account_id ) ) {
 			$force_three_d = true;
 		}
 
