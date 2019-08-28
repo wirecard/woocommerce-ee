@@ -72,9 +72,6 @@ class WC_Gateway_Wirecard_Giropay extends WC_Wirecard_Payment_Gateway
 			'products',
 			'refunds',
 		);
-		
-		$this->refund = array( 'debit' );
-		$this->refund_action  = 'credit';
 
 		$this->payment_action = 'pay';
 
@@ -276,24 +273,5 @@ class WC_Gateway_Wirecard_Giropay extends WC_Wirecard_Payment_Gateway
 		$config->add($payment_config);
 
 		return $config;
-	}
-
-	/**
-	 * Create transaction for refund
-	 *
-	 * @param int        $order_id
-	 * @param float|null $amount
-	 * @param string     $reason
-	 *
-	 * @return bool|SepaCreditTransferTransaction|WP_Error
-	 *
-	 * @since 1.1.0
-	 * @throws Exception
-	 */
-	public function process_refund( $order_id, $amount = null, $reason = '' ) 
-	{
-		$sepa_payment = new WC_Gateway_Wirecard_Sepa_Credit_Transfer();
-
-		return $sepa_payment->process_refund( $order_id, $amount, $reason );
 	}
 }
