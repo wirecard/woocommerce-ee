@@ -59,7 +59,7 @@ class WC_Gateway_Wirecard_Giropay extends WC_Wirecard_Payment_Gateway {
 	 * @since 1.5.0
 	 */
 	public function __construct() {
-		 $this->type              = 'giropay';
+		$this->type               = 'giropay';
 		$this->id                 = 'wirecard_ee_giropay';
 		$this->icon               = WIRECARD_EXTENSION_URL . 'assets/images/giropay.png';
 		$this->method_title       = __( 'heading_title_giropay', 'wirecard-woocommerce-extension' );
@@ -177,7 +177,7 @@ class WC_Gateway_Wirecard_Giropay extends WC_Wirecard_Payment_Gateway {
 	 * @since 1.5.0
 	 */
 	public function payment_scripts() {
-		 $this->fps_session_id = $this->generate_fps_session_id( 'merchant_account_id' );
+		$this->fps_session_id = $this->generate_fps_session_id( 'merchant_account_id' );
 		wp_register_script( 'device_fingerprint_js', 'https://h.wirecard.com/fp/tags.js?org_id=6xxznhva&session_id=' . $this->fps_session_id, array(), null, true );
 	}
 

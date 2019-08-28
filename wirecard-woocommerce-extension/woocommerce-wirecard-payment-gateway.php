@@ -203,7 +203,7 @@ function wirecard_get_payments() {
 		'WC_Gateway_Wirecard_Sepa_Credit_Transfer'       => new WC_Gateway_Wirecard_Sepa_Credit_Transfer(),
 		'WC_Gateway_Wirecard_Sepa_Direct_Debit'          => new WC_Gateway_Wirecard_Sepa_Direct_Debit(),
 		'WC_Gateway_Wirecard_Sofort'                     => new WC_Gateway_Wirecard_Sofort(),
-		'WC_Gateway_Wirecard_Giropay'                     => new WC_Gateway_Wirecard_Giropay(),
+		'WC_Gateway_Wirecard_Giropay'                    => new WC_Gateway_Wirecard_Giropay(),
 	);
 }
 
