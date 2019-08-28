@@ -12,6 +12,7 @@ msgid "alipay_crossborder"
 msgstr "Alipay Cross-border"
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:62
+
 msgid "alipay_crossborder_desc"
 msgstr "Alipay Crossborder transactions via Wirecard Payment Processing Gateway"
 
@@ -149,6 +150,26 @@ msgstr "Alamat pengiriman tagihan/barang harus sama"
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:164
 msgid "config_billing_shipping_desc"
 msgstr "Jika diaktifkan, metode pembayaran Faktur Bergaransi hanya akan ditampilkan jika alamat pengiriman Tagihan/Barang sama"
+
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:306
+msgid "config_challenge_challenge_threed"
+msgstr "Challenge requested"
+
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:271
+msgid "config_challenge_indicator"
+msgstr "Challenge Indicator"
+
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:273
+msgid "config_challenge_indicator_desc"
+msgstr "Indicates whether a challenge is  requested for this transaction."
+
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:305
+msgid "config_challenge_no_challenge"
+msgstr "No challenge requested"
+
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:304
+msgid "config_challenge_no_preference"
+msgstr "No preference"
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:168
 msgid "config_creditor_city"
@@ -528,6 +549,7 @@ msgid "creditcard"
 msgstr "Credit Card"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:63
+
 msgid "creditcard_desc"
 msgstr "Credit Card transactions via Wirecard Payment Processing Gateway"
 
@@ -606,7 +628,7 @@ msgstr "eps-Überweisung"
 
 #: classes/includes/class-wc-gateway-wirecard-eps.php:64
 msgid "eps_desc"
-msgstr "eps-Überweisung transactions via Wirecard Payment Processing Gateway."
+msgstr "eps-Überweisung transactions via Wirecard Payment Gateway."
 
 #: classes/includes/class-wc-wirecard-payment-gateway.php:682
 msgid "error_credentials"
@@ -616,6 +638,10 @@ msgstr "Tes gagal, harap cek kredensial Anda."
 
 msgid "error_email"
 msgstr "Terjadi kesalahan saat mengirim e-mail"
+
+#: templates/credit-card-form.php:45
+msgid "error_malformed_creditcard_request"
+msgstr "Oops! Something went wrong. Please check your credit card data and try again."
 
 #: classes/admin/class-wirecard-transaction-factory.php:359
 msgid "error_no_post_processing_operations"
@@ -735,6 +761,7 @@ msgid "ideal"
 msgstr "iDEAL"
 
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:65
+
 msgid "ideal_desc"
 msgstr "Transaksi iDEAL melalui Payment Gateway Wirecard"
 
@@ -747,6 +774,7 @@ msgid "masterpass"
 msgstr "Masterpass"
 
 #: classes/includes/class-wc-gateway-wirecard-masterpass.php:63
+
 msgid "masterpass_desc"
 msgstr "Transaksi Masterpass melalui Payment Gateway Wirecard"
 
@@ -765,6 +793,7 @@ msgid "order_status_authorized_count_plural"
 msgstr "Sah<span class=\"count\">(%s)</span>"
 
 #: classes/includes/class-wc-wirecard-payment-gateway.php:521
+
 msgid "order_status_gateway_update"
 msgstr "Perbarui status pemesanan melalui Payment Gateway Wirecard."
 
@@ -820,7 +849,7 @@ msgstr "Pay by Bank app"
 
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:62
 msgid "paybybankapp_desc"
-msgstr "Pay by Bank app transactions via Wirecard Payment Processing Gateway."
+msgstr "Pay by Bank app transactions via Wirecard Payment Gateway."
 
 #. Description of the plugin
 msgid "Payment Gateway for WooCommerce"
@@ -839,6 +868,7 @@ msgid "paypal"
 msgstr "PayPal"
 
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:63
+
 msgid "paypal_desc"
 msgstr "Transaksi PayPal melalui Gerbang Pemrosesan Pembayaran Wirecard"
 
@@ -847,6 +877,7 @@ msgid "poi_pia"
 msgstr "Pembayaran Berdasarkan Faktur/Pembayaran di Muka"
 
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:63
+
 msgid "poi_pia_desc"
 msgstr "Transaksi Pembayaran Berdasarkan Faktur/Pembayaran di Muka melalui Payment Gateway Wirecard"
 
@@ -860,6 +891,7 @@ msgid "ratepayinvoice"
 msgstr "Faktur Bergaransi"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:65
+
 msgid "ratepayinvoice_desc"
 msgstr "Transaksi Faktur Bergaransi melalui Payment Gateway Wirecard"
 
@@ -874,6 +906,7 @@ msgstr "Koneksi Anda sedang dialihkan, harap menunggu"
 
 #: classes/includes/class-wc-wirecard-payment-gateway.php:418
 #: classes/includes/class-wc-wirecard-payment-gateway.php:421
+
 msgid "refund_gateway_error"
 msgstr "Pengembalian dana melalui Payment Gateway Wirecard gagal."
 
@@ -894,6 +927,7 @@ msgid "sepact"
 msgstr "SEPA Credit Transfer"
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:62
+
 msgid "sepact_desc"
 msgstr "Transaksi SEPA Credit Transfer melalui Payment Gateway Wirecard"
 
@@ -902,6 +936,7 @@ msgid "sepadd"
 msgstr "SEPA Direct Debit"
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:61
+
 msgid "sepadd_desc"
 msgstr "Transaksi SEPA melalui Payment Gateway Wirecard"
 
@@ -946,6 +981,7 @@ msgid "sofortbanking"
 msgstr "Sofort."
 
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:64
+
 msgid "sofortbanking_desc"
 msgstr "Transaksi Sofort. melalui Payment Gateway Wirecard"
 
@@ -1177,6 +1213,7 @@ msgstr "here"
 #: woocommerce-wirecard-payment-gateway.php:228
 #: woocommerce-wirecard-payment-gateway.php:229
 #: classes/admin/class-wirecard-transaction-factory.php:367
+
 msgid "title_payment_gateway"
 msgstr "Payment Gateway Wirecard"
 

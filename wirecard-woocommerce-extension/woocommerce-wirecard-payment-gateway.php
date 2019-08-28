@@ -3,7 +3,7 @@
  * Plugin Name: Wirecard WooCommerce Extension
  * Plugin URI: https://github.com/wirecard/woocommerce-ee
  * Description: Payment Gateway for WooCommerce
- * Version: 2.0.2
+ * Version: 2.1.0
  * Author: Wirecard AG
  * Author URI: https://www.wirecard.com/
  * License: GPLv3
@@ -46,7 +46,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 define( 'WIRECARD_EXTENSION_NAME', 'Wirecard WooCommerce Extension' );
-define( 'WIRECARD_EXTENSION_VERSION', '2.0.2' );
+define( 'WIRECARD_EXTENSION_VERSION', '2.1.0' );
 define( 'WIRECARD_EXTENSION_BASEDIR', plugin_dir_path( __FILE__ ) );
 define( 'WIRECARD_EXTENSION_URL', plugin_dir_url( __FILE__ ) );
 define( 'WIRECARD_EXTENSION_LOCALE_FALLBACK', 'en_US' );
@@ -225,6 +225,7 @@ function wirecard_wc_order_statuses( $order_statuses ) {
 /**
  * Create transaction table in activation process
  *
+ * @since 2.1.0 Add created and modified timestamp for vault
  * @since 2.0.0 Add general_information_table
  * @since 1.0.0
  */
@@ -266,6 +267,8 @@ function wirecard_install_payment_gateway() {
  		user_id int(10) NOT NULL,
  		token varchar(20) NOT NULL,
  		masked_pan varchar(30) NOT NULL,
+		created DATETIME NOT NULL default CURRENT_TIMESTAMP,
+		modified DATETIME NOT NULL default CURRENT_TIMESTAMP,
  		PRIMARY KEY (vault_id)
  		)$collate;";
 	dbDelta( $sql2 );

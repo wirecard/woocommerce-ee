@@ -29,17 +29,46 @@
  * Please do not use the plugin if you do not agree to these terms of use!
  */
 
-/**
- * Html template : Credit Card Submit Button
- *
- * @since 2.0.0
- */
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$html = '
-				<button disabled id="seamless-submit" class="wd-submit checkout-button button alt wc-forward">' . __( 'Pay', 'woocommerce' ) . '</button>
-				<div id="wd-cc-submit-spinner" class="spinner spinner-inline spinner-submit" style="display: none; background: url(\'' . admin_url() . 'images/loading.gif\') no-repeat;"></div>
-			</div>
-		';
+/**
+ * Update vault table with timestamps created and modified
+ *
+ * @since 2.1.0
+ */
+function vault_timestamp_upgrade() {
+	add_vault_timestamp_column( 'created' );
+	add_vault_timestamp_column( 'modified' );
+}
+
+/**
+ * Add timestamp column to vault table for specified name
+ *
+ * @param string $name
+ * @since 2.1.0
+ */
+function add_vault_timestamp_column( $name ) {
+	global $wpdb;
+	$vault_table_name = $wpdb->base_prefix . 'wirecard_payment_gateway_vault';
+
+	if ( ! check_existing_column( $name, $vault_table_name ) ) {
+		$wpdb->query( "ALTER TABLE $vault_table_name ADD $name DATETIME NOT NULL default CURRENT_TIMESTAMP" );
+	}
+}
+/**
+ * Check if column already exist within given table
+ *
+ * @param string $column_name
+ * @param string $table_name
+ * @return bool True if column already exists
+ *
+ * @since 2.1.0
+ */
+function check_existing_column( $column_name, $table_name ) {
+	global $wpdb;
+	$results = $wpdb->get_col( 'DESC ' . $table_name, 0 );
+
+	return in_array( $column_name, $results, true );
+}

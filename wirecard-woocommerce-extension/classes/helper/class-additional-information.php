@@ -53,6 +53,8 @@ class Additional_Information {
 
 	const SHIPPING = 'shipping';
 
+	const BILLING = 'billing';
+
 	/**
 	 * Create basket items and shipping item
 	 *
