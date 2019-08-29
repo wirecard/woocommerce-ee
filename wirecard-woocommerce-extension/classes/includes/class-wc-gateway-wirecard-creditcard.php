@@ -321,7 +321,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	 *
 	 * @return Config
 	 *
-	 * @since 2.0.4 Add forced three d check
+	 * @since 2.1.1 Add forced three d check
 	 * @since 1.0.0
 	 */
 	public function create_payment_config( $base_url = null, $http_user = null, $http_pass = null ) {
@@ -357,7 +357,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	 *
 	 * @return Config
 	 *
-	 * @since 2.0.4
+	 * @since 2.1.1
 	 */
 	protected function initialize_config( $base_url, $http_user, $http_pass ) {
 		if ( empty( $base_url ) || empty( $http_user ) || empty( $http_pass ) ) {
@@ -376,7 +376,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	 * @param $three_d_merchant_account_id
 	 * @param $three_d_secret
 	 *
-	 * @since 2.0.4
+	 * @since 2.1.1
 	 */
 	protected function set_payment_config_maids(
 		$payment_config,
@@ -397,7 +397,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	/**
 	 * @param CreditCardConfig $payment_config
 	 *
-	 * @since 2.0.4
+	 * @since 2.1.1
 	 */
 	protected function set_payment_config_three_d_limits( $payment_config ) {
 		$ssl_max_limit        = $this->get_option( 'ssl_max_limit' );
@@ -430,7 +430,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	 * @param string $merchant_account_id
 	 * @param string $three_d_merchant_account_id
 	 *
-	 * @since 2.0.4
+	 * @since 2.1.1
 	 */
 	protected function set_force_three_d( $merchant_account_id, $three_d_merchant_account_id ) {
 		$force_three_d = false;
