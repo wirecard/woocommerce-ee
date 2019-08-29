@@ -56,7 +56,7 @@ class WC_Gateway_Wirecard_Giropay extends WC_Wirecard_Payment_Gateway {
 	/**
 	 * WC_Gateway_Wirecard_Giropay constructor.
 	 *
-	 * @since 1.5.0
+	 * @since 2.2.0
 	 */
 	public function __construct() {
 		$this->type               = 'giropay';
@@ -91,7 +91,7 @@ class WC_Gateway_Wirecard_Giropay extends WC_Wirecard_Payment_Gateway {
 	/**
 	 * Load form fields for configuration
 	 *
-	 * @since 1.5.0
+	 * @since 2.2.0
 	 */
 	public function init_form_fields() {
 		$this->form_fields = [
@@ -172,21 +172,11 @@ class WC_Gateway_Wirecard_Giropay extends WC_Wirecard_Payment_Gateway {
 	}
 
 	/**
-	 * Load basic scripts
-	 *
-	 * @since 1.5.0
-	 */
-	public function payment_scripts() {
-		$this->fps_session_id = $this->generate_fps_session_id( 'merchant_account_id' );
-		wp_register_script( 'device_fingerprint_js', 'https://h.wirecard.com/fp/tags.js?org_id=6xxznhva&session_id=' . $this->fps_session_id, array(), null, true );
-	}
-
-	/**
 	 * Add payment fields to payment method
 	 *
 	 * @return bool
 	 *
-	 * @since 1.5.0
+	 * @since 2.2.0
 	 */
 	public function payment_fields() {
 		$html = '';
@@ -215,9 +205,9 @@ class WC_Gateway_Wirecard_Giropay extends WC_Wirecard_Payment_Gateway {
 	 *
 	 * @param int $order_id
 	 *
-	 * @return array
+	 * @return array|bool
 	 *
-	 * @since 1.5.0
+	 * @since 2.2.0
 	 */
 	public function process_payment( $order_id ) {
 		if ( ! wp_verify_nonce( $_POST['giropay_nonce'] ) ) {
@@ -234,12 +224,6 @@ class WC_Gateway_Wirecard_Giropay extends WC_Wirecard_Payment_Gateway {
 			$this->transaction->setBankAccount( $bank_account );
 		}
 
-		if ( $this->get_option( 'send_additional' ) === 'yes' ) {
-			$device = new Device();
-			$device->setFingerprint( $_POST['fingerprint-session'] );
-			$this->transaction->setDevice( $device );
-		}
-
 		return $this->execute_transaction( $this->transaction, $this->config, $this->payment_action, $order );
 	}
 
@@ -252,7 +236,7 @@ class WC_Gateway_Wirecard_Giropay extends WC_Wirecard_Payment_Gateway {
 	 *
 	 * @return Config
 	 *
-	 * @since 1.5.0
+	 * @since 2.2.0
 	 */
 	public function create_payment_config( $base_url = null, $http_user = null, $http_pass = null ) {
 		if ( is_null( $base_url ) ) {
