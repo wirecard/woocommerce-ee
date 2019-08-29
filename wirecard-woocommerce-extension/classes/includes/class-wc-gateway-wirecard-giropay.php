@@ -48,7 +48,7 @@ use Wirecard\PaymentSdk\Transaction\SepaCreditTransferTransaction;
  *
  * @extends WC_Wirecard_Payment_Gateway
  *
- * @since 1.5.0
+ * @since 2.2.0
  */
 class WC_Gateway_Wirecard_Giropay extends WC_Wirecard_Payment_Gateway {
 
