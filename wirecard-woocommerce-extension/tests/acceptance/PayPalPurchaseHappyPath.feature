@@ -6,8 +6,8 @@ Feature: PayPalPurchaseHappyPath
   Background:
 	Given I activate "pay pal" payment action "pay" in configuration
 	And I prepare pay pal checkout
-    And I am on "Checkout" page
-    And I fill fields with "Customer data"
+    When I am on "Checkout" page
+    Then I fill fields with "Customer data"
 	And I click "Wirecard PayPal"
 	
   @API-TEST

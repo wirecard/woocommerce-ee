@@ -6,7 +6,7 @@ Feature: CreditCard3DSPurchaseHappyPath
   Background:
 	Given I activate "credit card" payment action "pay" in configuration
 	And I prepare credit card checkout "3DS"
-    And I am on "Checkout" page
+    When I am on "Checkout" page
     And I fill fields with "Customer data"
     Then I see "Wirecard Credit Card"
 	And I click "Place order"
