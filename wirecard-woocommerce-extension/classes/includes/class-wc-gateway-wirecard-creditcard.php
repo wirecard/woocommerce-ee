@@ -293,73 +293,124 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	 *
 	 * @return Config
 	 *
+	 * @since 2.0.4 Add forced three d check
 	 * @since 1.0.0
 	 */
 	public function create_payment_config( $base_url = null, $http_user = null, $http_pass = null ) {
-		$this->force_three_d = false;
-		if ( is_null( $base_url ) ) {
-			$base_url  = $this->get_option( 'base_url' );
-			$http_user = $this->get_option( 'http_user' );
-			$http_pass = $this->get_option( 'http_pass' );
+		$config                      = $this->initialize_config( $base_url, $http_user, $http_pass );
+		$payment_config              = new CreditCardConfig();
+		$merchant_account_id         = $this->get_option( 'merchant_account_id' );
+		$secret                      = $this->get_option( 'secret' );
+		$three_d_merchant_account_id = $this->get_option( 'three_d_merchant_account_id' );
+		$three_d_secret              = $this->get_option( 'three_d_secret' );
+
+		$this->set_payment_config_maids(
+			$payment_config,
+			$merchant_account_id,
+			$secret,
+			$three_d_merchant_account_id,
+			$three_d_secret
+		);
+
+		if ( ! empty( $merchant_account_id ) && ! empty( $three_d_merchant_account_id ) ) {
+			$this->set_payment_config_three_d_limits( $payment_config );
 		}
 
-		$config              = parent::create_payment_config( $base_url, $http_user, $http_pass );
-		$merchant_account_id = $this->get_option( 'merchant_account_id' );
-		$secret              = $this->get_option( 'secret' );
-
-		if ( '' === $merchant_account_id ) {
-			$this->force_three_d = true;
-			$merchant_account_id = null;
-			$secret              = null;
-		}
-		$payment_config = new CreditCardConfig( $merchant_account_id, $secret );
-
-		if ( $this->get_option( 'three_d_merchant_account_id' ) !== '' ) {
-			$payment_config->setThreeDCredentials(
-				$this->get_option( 'three_d_merchant_account_id' ),
-				$this->get_option( 'three_d_secret' )
-			);
-		}
-
-		$this->setLimitsBasedOnMaidConfig( $payment_config );
+		$this->set_force_three_d( $merchant_account_id, $three_d_merchant_account_id );
 		$config->add( $payment_config );
 
 		return $config;
 	}
 
 	/**
-	 * Set payment config limits based on admin settings and existing non-3d maid and 3d maid
+	 * @param string $base_url
+	 * @param string $http_user
+	 * @param string $http_pass
 	 *
-	 * @param CreditCardConfig $payment_config
+	 * @return Config
+	 *
 	 * @since 2.0.4
 	 */
-	private function setLimitsBasedOnMaidConfig( $payment_config ) {
-		if ( $this->get_option( 'three_d_merchant_account_id' ) !== ''
-			&& $this->get_option( 'merchant_account_id' ) !== ''
-		) {
-			$woocommerce_currency = $this->get_option( 'woocommerce_currency' );
-			if ( ! strlen( $woocommerce_currency ) ) {
-				$woocommerce_currency = get_woocommerce_currency();
-			}
-
-			if ( $this->get_option( 'ssl_max_limit' ) !== '' ) {
-				$payment_config->addSslMaxLimit(
-					new Amount(
-						floatval( $this->get_option( 'ssl_max_limit' ) ),
-						$woocommerce_currency
-					)
-				);
-			}
-
-			if ( $this->get_option( 'three_d_min_limit' ) !== '' ) {
-				$payment_config->addThreeDMinLimit(
-					new Amount(
-						floatval( $this->get_option( 'three_d_min_limit' ) ),
-						$woocommerce_currency
-					)
-				);
-			}
+	protected function initialize_config( $base_url, $http_user, $http_pass ) {
+		if ( empty( $base_url ) || empty( $http_user ) || empty( $http_pass ) ) {
+			$base_url  = $this->get_option( 'base_url' );
+			$http_user = $this->get_option( 'http_user' );
+			$http_pass = $this->get_option( 'http_pass' );
 		}
+
+		return parent::create_payment_config( $base_url, $http_user, $http_pass );
+	}
+
+	/**
+	 * @param CreditCardConfig $payment_config
+	 * @param $merchant_account_id
+	 * @param $secret
+	 * @param $three_d_merchant_account_id
+	 * @param $three_d_secret
+	 *
+	 * @since 2.0.4
+	 */
+	protected function set_payment_config_maids(
+		$payment_config,
+		$merchant_account_id,
+		$secret,
+		$three_d_merchant_account_id,
+		$three_d_secret
+	) {
+		if ( ! empty( $merchant_account_id ) && ! empty( $secret ) ) {
+			$payment_config->setSSLCredentials( $merchant_account_id, $secret );
+		}
+
+		if ( ! empty( $three_d_merchant_account_id ) && ! empty( $three_d_secret ) ) {
+			$payment_config->setThreeDCredentials( $three_d_merchant_account_id, $three_d_secret );
+		}
+	}
+
+	/**
+	 * @param CreditCardConfig $payment_config
+	 *
+	 * @since 2.0.4
+	 */
+	protected function set_payment_config_three_d_limits( $payment_config ) {
+		$ssl_max_limit        = $this->get_option( 'ssl_max_limit' );
+		$three_d_min_limit    = $this->get_option( 'three_d_min_limit' );
+		$woocommerce_currency = $this->get_option( 'woocommerce_currency' );
+		if ( ! strlen( $woocommerce_currency ) ) {
+			$woocommerce_currency = get_woocommerce_currency();
+		}
+
+		if ( ! empty( $ssl_max_limit ) ) {
+			$payment_config->addSslMaxLimit(
+				new Amount(
+					floatval( $ssl_max_limit ),
+					$woocommerce_currency
+				)
+			);
+		}
+
+		if ( ! empty( $three_d_min_limit ) ) {
+			$payment_config->addThreeDMinLimit(
+				new Amount(
+					floatval( $this->get_option( 'three_d_min_limit' ) ),
+					$woocommerce_currency
+				)
+			);
+		}
+	}
+
+	/**
+	 * @param string $merchant_account_id
+	 * @param string $three_d_merchant_account_id
+	 *
+	 * @since 2.0.4
+	 */
+	protected function set_force_three_d( $merchant_account_id, $three_d_merchant_account_id ) {
+		$force_three_d = false;
+		if ( empty( $merchant_account_id ) && ! empty( $three_d_merchant_account_id ) ) {
+			$force_three_d = true;
+		}
+
+		$this->force_three_d = $force_three_d;
 	}
 
 	/**
