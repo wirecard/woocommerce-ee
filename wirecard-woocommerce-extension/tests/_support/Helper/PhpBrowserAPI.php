@@ -71,13 +71,9 @@ class PhpBrowserAPI extends \Codeception\Module {
 		$this->phpBrowser->amOnPage( $productPage->getURL() );
 		$this->phpBrowser->click( $productPage->getElement( 'Add to cart' ) );
 
-		if ( strpos( $type, 'PayPal' ) !== false ) {
-			$this->phpBrowser->click( $productPage->getElement( 'Add to cart' ) );
-		}
-
 		if ( strpos($type, 'Non3DS') === false ) {
 			// choose a product to the cart 5 times
-			for ( $i = 0; $i <= 4; $i++ ) {
+			for ( $i = 0; $i <= 3; $i++ ) {
 				$this->phpBrowser->click( $productPage->getElement( 'Add to cart' ) );
 			}
 		}

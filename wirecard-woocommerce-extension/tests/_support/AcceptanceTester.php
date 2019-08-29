@@ -211,24 +211,27 @@ class AcceptanceTester extends \Codeception\Actor {
 	 * @Given I prepare credit card checkout :type
 	 * @since 2.0.3
 	 */
-	public function iPrepareCreditCardCheckout( $type ) {
-		// Do choosing of product and adding it to the cart in PhpBrowser
-		$productPage = new ProductPage( $this );
-		$this->prepareCheckout( $productPage, $type );
-		//sync sessions between PhpBrowser and WebDriver
-		$this->syncCookies();
+	public function iPrepareCreditCardCheckout( $type ) 
+	{
+		$this->prepareGenericCheckout( $type );
 	}
 
 	/**
 	 * @Given I prepare pay pal checkout
 	 * @since 2.0.3
 	 */
-	public function iPreparePayPalCheckout() {
+	public function iPreparePayPalCheckout() 
+	{
+		$this->prepareGenericCheckout( 'PayPal' );
+	}
+	
+	private function prepareGenericCheckout( $type='' ) 
+	{
 		$productPage = new ProductPage( $this );
-		$this->prepareCheckout( $productPage, 'PayPal' );
+		$this->prepareCheckout( $productPage, $type );
 		$this->syncCookies();
 	}
-
+	
 	/**
 	 * @Given I login to Paypal
 	 * @since 2.0.0
