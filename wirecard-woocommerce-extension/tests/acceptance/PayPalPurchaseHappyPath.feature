@@ -4,7 +4,8 @@ Feature: PayPalPurchaseHappyPath
   And to see that transaction was successful
 
   Background:
-    Given I prepare checkout
+	Given I activate "pay pal" payment action "pay" in configuration
+	And I prepare pay pal checkout
     And I am on "Checkout" page
     And I fill fields with "Customer data"
 	And I click "Wirecard PayPal"
@@ -18,3 +19,4 @@ Feature: PayPalPurchaseHappyPath
 	And I click "Pay Now"
 	Then I am redirected to "Order Received" page
     And I see "Order received"
+	And I see "pay pal" "purchase" in transaction table

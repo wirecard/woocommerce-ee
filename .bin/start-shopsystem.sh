@@ -42,12 +42,12 @@ docker exec ${WOOCOMMERCE_CONTAINER_NAME} wp wc tool run install_pages --user=ad
 docker exec --env WOOCOMMERCE_DB_PASSWORD=${WOOCOMMERCE_DB_PASSWORD} \
         --env WOOCOMMERCE_DB_PORT=${WOOCOMMERCE_DB_PORT} \
         --env GATEWAY=${GATEWAY} \
-        ${WOOCOMMERCE_CONTAINER_NAME} bash -c "cd /var/www/html/_data/ && php configure_payment_method_db.php creditcard"
+        ${WOOCOMMERCE_CONTAINER_NAME} bash -c "cd /var/www/html/_data/ && php configure_payment_method_db.php creditcard pay"
 
 #configure pay pal payment method if gateway is equal to API-TEST
 if [[ ${GATEWAY} = "API-TEST" ]]; then
 	docker exec --env WOOCOMMERCE_DB_PASSWORD=${WOOCOMMERCE_DB_PASSWORD} \
 			--env WOOCOMMERCE_DB_PORT=${WOOCOMMERCE_DB_PORT} \
 			--env GATEWAY=${GATEWAY} \
-			${WOOCOMMERCE_CONTAINER_NAME} bash -c "cd /var/www/html/_data/ && php configure_payment_method_db.php paypal"
+			${WOOCOMMERCE_CONTAINER_NAME} bash -c "cd /var/www/html/_data/ && php configure_payment_method_db.php paypal pay"
 fi

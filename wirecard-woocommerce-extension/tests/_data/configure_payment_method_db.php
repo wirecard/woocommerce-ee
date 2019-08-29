@@ -76,24 +76,43 @@ $defaultConfig = [
 	]
 ];
 
+$supportedPaymentActionsPerPaymentMethod = [
+	'creditcard' => ['pay', 'reserve'],
+	'paypal' => ['pay', 'reserve']
+];
+
 // main script - read payment method from command line, build the config and write it into database
-if ( count( $argv ) < 2 ) {
+if ( count( $argv ) < 3 ) {
 	$supportedPaymentMethods = implode( "\n  ", array_keys( $GLOBALS['defaultConfig'] ) );
+	$supportedPaymentActions = '';
+	foreach ( $GLOBALS['defaultConfig'] as $key => $value ) {
+		$supportedPaymentActions .= $supportedPaymentActions . "\n  "
+			. $key . ': ' . implode( ",  ", $supportedPaymentActionsPerPaymentMethod[$key] );
+	}
+
 	echo <<<END_USAGE
 Usage: php configure_payment_method_db.php <paymentmethod>
 
 Supported payment methods:
   $supportedPaymentMethods
+Supported operations:
+  $supportedPaymentActions
 
 
 END_USAGE;
 	exit( 1 );
 }
 $paymentMethod = trim( $argv[1] );
+$paymentAction = trim( $argv[2] );
 
-$dbConfig = buildConfigByPaymentMethod( $paymentMethod, $gateway );
+$dbConfig = buildConfigByPaymentMethod( $paymentMethod, $paymentAction, $gateway );
 if ( empty( $dbConfig ) ) {
 	echo "Payment method $paymentMethod is not supported\n";
+	exit( 1 );
+}
+
+if ( !in_array( $paymentAction, $supportedPaymentActionsPerPaymentMethod[$paymentMethod] ) ) {
+	echo "Payment action $paymentAction is not supported\n";
 	exit( 1 );
 }
 
@@ -102,18 +121,20 @@ updateWoocommerceEeDbConfig( $dbConfig, $paymentMethod );
 /**
  * Method buildConfigByPaymentMethod
  * @param string $paymentMethod
+ * @param string $paymentAction
  * @param string $gateway
  * @return array
  *
  * @since   1.4.4
  */
 
-function buildConfigByPaymentMethod( $paymentMethod, $gateway ) {
+function buildConfigByPaymentMethod( $paymentMethod, $paymentAction, $gateway ) {
 	if ( ! array_key_exists( $paymentMethod, $GLOBALS['defaultConfig'] ) ) {
 		return null;
 	}
 	$config = $GLOBALS['defaultConfig'][ $paymentMethod ];
 
+	$config['payment_action'] = $paymentAction;
 	$jsonFile = GATEWAY_CONFIG_PATH . DIRECTORY_SEPARATOR . $paymentMethod . '.json';
 	if ( file_exists( $jsonFile ) ) {
 		$jsonData = json_decode( file_get_contents( $jsonFile ) );
@@ -126,6 +147,7 @@ function buildConfigByPaymentMethod( $paymentMethod, $gateway ) {
 			}
 		}
 	}
+	$config['payment_action'] = $paymentAction;
 	return $config;
 }
 
@@ -168,7 +190,7 @@ function updateWoocommerceEeDbConfig( $db_config, $payment_method ) {
 	$stmtInsert = $mysqli->prepare( "INSERT INTO $tableName (option_name, option_value, autoload) VALUES (?, ?, 'yes')" );
 	$stmtInsert->bind_param( 'ss', $creditCardSettingKey, $serializedConfig );
 	$stmtInsert->execute();
-	
+
 	$currency = "EUR";
 	$woocommerceCurrency = 'woocommerce_currency';
 	$stmtInsert = $mysqli->prepare( "UPDATE $tableName SET option_value = ? WHERE option_name = ?");
@@ -180,6 +202,6 @@ function updateWoocommerceEeDbConfig( $db_config, $payment_method ) {
 	$stmtInsert = $mysqli->prepare( "UPDATE $tableName SET option_value = ? WHERE option_name = ?");
 	$stmtInsert->bind_param( 'ss', $defaultCountry, $woocommerceDefaultCountry );
 	$stmtInsert->execute();
-	
+
 	return true;
 }
