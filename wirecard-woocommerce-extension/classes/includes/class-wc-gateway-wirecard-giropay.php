@@ -180,16 +180,6 @@ class WC_Gateway_Wirecard_Giropay extends WC_Wirecard_Payment_Gateway {
 	 */
 	public function payment_fields() {
 		$html = '';
-
-		if ( $this->get_option( 'send_additional' ) === 'yes' ) {
-			wp_enqueue_script( 'device_fingerprint_js' );
-			$html .= '<noscript>
-				<iframe style="width: 100px; height: 100px; border: 0; position: absolute; top: -5000px;"
-                    src="https://h.wirecard.com/tags?org_id=6xxznhva&session_id=' . $this->fps_session_id . '"></iframe>
-				</noscript>';
-			$html .= '<input type="hidden" value="' . htmlspecialchars( $this->fps_session_id ) . '" id="input-fingerprint-session" name="fingerprint-session"/>' . "\n";
-		}
-
 		$html .= '<input type="hidden" name="giropay_nonce" value="' . wp_create_nonce() . '" />
 			<p class="form-row form-row-wide">
 				<label for="giropay_bic">' . __( 'bic', 'wirecard-woocommerce-extension' ) . '</label>
