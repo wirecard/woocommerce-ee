@@ -148,7 +148,7 @@ install:
   - composer show
 
 script:
-  - composer cs-check
+  - $PHPCS_DIR/bin/phpcs --standard=./phpcs.xml .
 
 after_script:
   - travis_retry composer upload-coverage
