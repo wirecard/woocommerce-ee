@@ -19,8 +19,8 @@ modules:
            'browserstack.key': '%BROWSERSTACK_ACCESS_KEY%'
      - \Helper\Acceptance
      - \Helper\DbHelper
-         - Asserts
-         - Db:
+     - Asserts
+     - Db:
          dsn: 'mysql:host=localhost:3307;dbname=wordpress'
          user: 'root'
          password: 'example'
