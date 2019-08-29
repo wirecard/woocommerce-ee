@@ -83,9 +83,9 @@ $supportedPaymentActionsPerPaymentMethod = [
 
 // main script - read payment method from command line, build the config and write it into database
 if ( count( $argv ) < 3 ) {
-	$supportedPaymentMethods = implode( "\n  ", array_keys( $GLOBALS['defaultConfig'] ) );
+	$supportedPaymentMethods = implode( "\n  ", array_keys( $defaultConfig ) );
 	$supportedPaymentActions = '';
-	foreach ( $GLOBALS['defaultConfig'] as $key => $value ) {
+	foreach ( $defaultConfig as $key => $value ) {
 		$supportedPaymentActions .= $supportedPaymentActions . "\n  "
 			. $key . ': ' . implode( ",  ", $supportedPaymentActionsPerPaymentMethod[$key] );
 	}
@@ -129,10 +129,12 @@ updateWoocommerceEeDbConfig( $dbConfig, $paymentMethod );
  */
 
 function buildConfigByPaymentMethod( $paymentMethod, $paymentAction, $gateway ) {
-	if ( ! array_key_exists( $paymentMethod, $GLOBALS['defaultConfig'] ) ) {
+	global $defaultConfig;
+	
+	if ( ! array_key_exists( $paymentMethod, $defaultConfig ) ) {
 		return null;
 	}
-	$config = $GLOBALS['defaultConfig'][ $paymentMethod ];
+	$config = $defaultConfig[ $paymentMethod ];
 
 	$config['payment_action'] = $paymentAction;
 	$jsonFile = GATEWAY_CONFIG_PATH . DIRECTORY_SEPARATOR . $paymentMethod . '.json';
