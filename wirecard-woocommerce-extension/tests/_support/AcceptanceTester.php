@@ -68,6 +68,33 @@ class AcceptanceTester extends \Codeception\Actor {
 	private $currentPage;
 
 	/**
+	 * @var array
+	 * @since 2.0.3
+	 */
+	private $mappedPaymentActions = [
+		'credit card' => [
+			'config' => [
+				'reserve' => 'reserve',
+				'pay' => 'pay',
+			],
+			'tx_table' => [
+				'authorization' => 'authorization',
+				'purchase' => 'purchase'
+			]
+		],
+		'pay pal' => [
+			'config' => [
+				'reserve' => 'reserve',
+				'pay' => 'pay',
+			],
+			'tx_table' => [
+				'authorization' => 'authorization',
+				'purchase' => 'debit'
+			]
+		]
+	];
+
+	/**
 	 * Method selectPage
 	 *
 	 * @param string $name
@@ -139,7 +166,7 @@ class AcceptanceTester extends \Codeception\Actor {
 	 * @since 1.4.4
 	 */
 	public function iClick( $object ) {
-		 $this->waitForElementVisible( $this->getPageElement( $object ) );
+		$this->waitForElementVisible( $this->getPageElement( $object ) );
 		$this->waitForElementClickable( $this->getPageElement( $object ) );
 		$this->click( $this->getPageElement( $object ) );
 	}
@@ -177,21 +204,34 @@ class AcceptanceTester extends \Codeception\Actor {
 	 * @since 1.4.4
 	 */
 	public function iSee( $text ) {
-		 $this->see( $text );
+		$this->see( $text );
 	}
 
 	/**
-	 * @Given I prepare checkout
-	 * @since 1.4.4
+	 * @Given I prepare credit card checkout :type
+	 * @since 2.0.3
 	 */
-	public function iPrepareCheckout() {
-		// Do choosing of product and adding it to the cart in PhpBrowser
-		$productPage = new ProductPage( $this );
-		$this->prepareCheckout( $productPage );
-		//sync sessions between PhpBrowser and WebDriver
-		$this->syncCookies();
+	public function iPrepareCreditCardCheckout( $type ) 
+	{
+		$this->prepareGenericCheckout( $type );
 	}
 
+	/**
+	 * @Given I prepare pay pal checkout
+	 * @since 2.0.3
+	 */
+	public function iPreparePayPalCheckout() 
+	{
+		$this->prepareGenericCheckout( 'PayPal' );
+	}
+	
+	private function prepareGenericCheckout( $type='' ) 
+	{
+		$productPage = new ProductPage( $this );
+		$this->prepareCheckout( $productPage, $type );
+		$this->syncCookies();
+	}
+	
 	/**
 	 * @Given I login to Paypal
 	 * @since 2.0.0
@@ -199,5 +239,36 @@ class AcceptanceTester extends \Codeception\Actor {
 	public function iLoginToPaypal()
 	{
 		$this->currentPage->performPaypalLogin();
+	}
+
+	/**
+	 * @Given I activate :card payment action :paymentAction in configuration
+	 * @param string $card
+	 * @param string $paymentAction
+	 * @since 2.0.3
+	 */
+	public function iActivatePaymentActionInConfiguration( $card, $paymentAction )
+	{
+		$this->updateInDatabase(
+			'wp_options',
+			['option_value' => $this->mappedPaymentActions[$card]['config'][$paymentAction]],
+			['option_name' => 'payment_action']
+		);
+	}
+	/**
+	 * @Then I see :card :paymentAction in transaction table
+	 * @param string $card
+	 * @param string $paymentAction
+	 * @since 2.0.3
+	 */
+	public function iSeeInTransactionTable( $card, $paymentAction )
+	{
+		$this->seeInDatabase(
+			'wp_wirecard_payment_gateway_tx',
+			['transaction_type' => $this->mappedPaymentActions[$card]['tx_table'][$paymentAction]]
+		);
+		//check that last transaction in the table is the one under test
+		$transactionTypes = $this->getColumnFromDatabaseNoCriteria( 'wp_wirecard_payment_gateway_tx', 'transaction_type' );
+		$this->assertEquals( end( $transactionTypes ), $this->mappedPaymentActions[$card]['tx_table'][$paymentAction] );
 	}
 }

@@ -47,7 +47,7 @@ class PhpBrowserAPI extends \Codeception\Module {
 	private $phpBrowser;
 
 	public function _initialize() {
-		 // we initialize PhpBrowser here
+		// we initialize PhpBrowser here
 		$this->phpBrowser = new PhpBrowser(
 			$this->moduleContainer,
 			[
@@ -62,15 +62,20 @@ class PhpBrowserAPI extends \Codeception\Module {
 	 * Method prepareCheckout
 	 *
 	 * @param PageObject $productPage
+	 * @param string $type
 	 *
-	 * @since   1.4.4
+	 * @since 2.0.3
 	 */
-	public function prepareCheckout( $productPage ) {
+	public function prepareCheckout( $productPage, $type ) {
 		//go to product page
 		$this->phpBrowser->amOnPage( $productPage->getURL() );
-		//choose a product to the cart 5 times
-		for ( $i = 0; $i <= 4; $i++ ) {
-			$this->phpBrowser->click( $productPage->getElement( 'Add to cart' ) );
+		$this->phpBrowser->click( $productPage->getElement( 'Add to cart' ) );
+
+		if ( strpos($type, 'Non3DS') === false ) {
+			// choose a product to the cart 5 times
+			for ( $i = 0; $i <= 3; $i++ ) {
+				$this->phpBrowser->click( $productPage->getElement( 'Add to cart' ) );
+			}
 		}
 	}
 
@@ -79,7 +84,7 @@ class PhpBrowserAPI extends \Codeception\Module {
 	 * @since   1.4.4
 	 */
 	public function syncCookies() {
-		 // open page in PhpBrowser
+		// open page in PhpBrowser
 		$this->phpBrowser->amOnPage( '/' );
 		$webdriver = $this->getModule( 'WebDriver' );
 		// open page in WebDriver
