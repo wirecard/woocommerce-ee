@@ -178,7 +178,7 @@ class WC_Gateway_Wirecard_Giropay extends WC_Wirecard_Payment_Gateway {
 	 * @since 2.2.0
 	 */
 	public function payment_fields() {
-		$html = '';
+		$html  = '';
 		$html .= '<input type="hidden" name="giropay_nonce" value="' . wp_create_nonce() . '" />
 			<p class="form-row form-row-wide">
 				<label for="giropay_bic">' . __( 'bic', 'wirecard-woocommerce-extension' ) . '</label>
