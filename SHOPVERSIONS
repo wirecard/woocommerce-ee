@@ -1,5 +1,23 @@
 [
 {
+	"release": "2.1.1",
+	"shopversions": {
+    	"shopsystem": {
+    		"name": "WooCommerce",
+    		"tested": "3.6.5",
+    		"compatibility": "3.3.4"
+    	},
+    	"platform": {
+    		"name": "Wordpress",
+    		"tested": "5.2.2",
+    		"compatibility": "5.0.3"
+    	}
+    },	
+	"changelog": [
+		"Process 3D transactions for empty non-3D maid setup"
+	]
+},
+{
 	"release": "2.1.0",
 	"shopversions": {
     	"shopsystem": {
