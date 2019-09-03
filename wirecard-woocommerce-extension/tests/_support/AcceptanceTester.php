@@ -247,7 +247,7 @@ class AcceptanceTester extends \Codeception\Actor {
 			$jsonData = json_decode( file_get_contents( $gatewayConfiguration ) );
 			if ( ! empty( $jsonData ) && ! empty( $jsonData->$gateway ) ) {
 				$array = get_object_vars( $jsonData->$gateway );
-				foreach ( $array as $key => $data ) {
+				foreach ( array_keys( $array ) as $key ) {
 					if ($key === $gatewayConfigurationRow) {
 						$array[$key] = $paymentAction;
 					}
