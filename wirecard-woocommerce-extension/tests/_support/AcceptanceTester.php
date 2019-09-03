@@ -56,13 +56,14 @@ use Page\OrderReceived as OrderReceivedPage;
 use Page\Verified as VerifiedPage;
 use Page\PayPalLogIn as PayPalLogInPage;
 use Page\PayPalReview as PayPalReviewPage;
+use Page\GiropayPayment as GiropayPayment;
 
 class AcceptanceTester extends \Codeception\Actor {
 
 	use _generated\AcceptanceTesterActions;
 
 	/**
-	 * @var string
+	 * @var Base
 	 * @since 1.4.4
 	 */
 	private $currentPage;
@@ -131,6 +132,10 @@ class AcceptanceTester extends \Codeception\Actor {
 			case 'Pay Pal Review':
 				$this->wait( 20 );
 				$page = new PayPalReviewPage( $this );
+				break;
+			case 'Giropay Payment':
+				$this->wait( 5 );
+				$page = new GiropayPayment( $this );
 				break;
 			default:
 				$page = null;
@@ -217,12 +222,12 @@ class AcceptanceTester extends \Codeception\Actor {
 	}
 
 	/**
-	 * @Given I prepare pay pal checkout
+	 * @Given I prepare checkout
 	 * @since 2.0.3
 	 */
-	public function iPreparePayPalCheckout() 
+	public function iPrepareCheckout() 
 	{
-		$this->prepareGenericCheckout( 'PayPal' );
+		$this->prepareGenericCheckout();
 	}
 	
 	private function prepareGenericCheckout( $type='' ) 
@@ -271,4 +276,14 @@ class AcceptanceTester extends \Codeception\Actor {
 		$transactionTypes = $this->getColumnFromDatabaseNoCriteria( 'wp_wirecard_payment_gateway_tx', 'transaction_type' );
 		$this->assertEquals( end( $transactionTypes ), $this->mappedPaymentActions[$card]['tx_table'][$paymentAction] );
 	}
+
+	/**
+	 * @Given I fill BIC
+	 * @since 2.2.0
+	 */
+	public function iFillBIC()
+	{
+		$this->currentPage->fillBIC();
+	}
+
 }

@@ -105,4 +105,21 @@ class Base {
 	 */
 	public function performPaypalLogin() {;
 	}
+
+	/**
+	 * Method fillBIC
+	 *
+	 * @since   2.2.0
+	 */
+	public function fillBIC() {
+	}
+
+	/**
+	 * Method fillGiropayPaymentDetails
+	 *
+	 * @since   2.2.0
+	 */
+	public function fillGiropayPaymentDetails() {
+	}
+	
 }
