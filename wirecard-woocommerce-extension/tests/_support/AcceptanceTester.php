@@ -72,20 +72,18 @@ class AcceptanceTester extends \Codeception\Actor {
 	 * @since 2.0.3
 	 */
 	private $mappedPaymentActions = [
-		'credit card' => [
+		'creditcard' => [
 			'config' => [
-				'reserve' => 'reserve',
-				'pay' => 'pay',
+				'row' => 'payment_action'
 			],
 			'tx_table' => [
 				'authorization' => 'authorization',
 				'purchase' => 'purchase'
 			]
 		],
-		'pay pal' => [
+		'paypal' => [
 			'config' => [
-				'reserve' => 'reserve',
-				'pay' => 'pay',
+				'row' => 'payment_action'
 			],
 			'tx_table' => [
 				'authorization' => 'authorization',
@@ -231,7 +229,34 @@ class AcceptanceTester extends \Codeception\Actor {
 		$this->prepareCheckout( $productPage, $type );
 		$this->syncCookies();
 	}
-	
+
+	/**
+	 * @param string $card
+	 * @param string $paymentAction
+	 * @since 2.0.3
+	 */
+	public function buildConfig( $paymentAction, $card )
+	{
+		if ( !defined( 'GATEWAY_CONFIG' ) ) define( 'GATEWAY_CONFIG', '/tests/_data/gateway_configs' );
+		$gatewayConfiguration = getcwd() .  GATEWAY_CONFIG . DIRECTORY_SEPARATOR . $card . '.json';
+
+		$gateway = getenv( 'GATEWAY' );
+		$gatewayConfigurationRow = $this->mappedPaymentActions[$card]['config']['row'];
+
+		if ( file_exists( $gatewayConfiguration ) ) {
+			$jsonData = json_decode( file_get_contents( $gatewayConfiguration ) );
+			if ( ! empty( $jsonData ) && ! empty( $jsonData->$gateway ) ) {
+				$array = get_object_vars( $jsonData->$gateway );
+				foreach ( $array as $key => $data ) {
+					if ($key === $gatewayConfigurationRow) {
+						$array[$key] = $paymentAction;
+					}
+				}
+			}
+		}
+		return serialize($array);
+	}
+
 	/**
 	 * @Given I login to Paypal
 	 * @since 2.0.0
@@ -251,10 +276,11 @@ class AcceptanceTester extends \Codeception\Actor {
 	{
 		$this->updateInDatabase(
 			'wp_options',
-			['option_value' => $this->mappedPaymentActions[$card]['config'][$paymentAction]],
-			['option_name' => 'payment_action']
+			['option_value' => $this->buildConfig( $paymentAction, $card )],
+			['option_name' => 'woocommerce_wirecard_ee_'.$card.'_settings']
 		);
 	}
+
 	/**
 	 * @Then I see :card :paymentAction in transaction table
 	 * @param string $card
