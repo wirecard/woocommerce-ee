@@ -56,7 +56,7 @@ class Checkout extends Base {
 		'Phone'                         => "//*[@id='billing_phone']",
 		'Email address'                 => "//*[@id='billing_email']",
 		'Place order'                   => "//*[@id='place_order']",
-		'Wirecard PayPal' 				=> "//*[@id='payment']/ul/li[2]",
+		'Wirecard PayPal' 				=> "//*[@id='payment']/ul/li[contains(@class, 'paypal')]",
 		'Credit Card First Name'        => "//*[@id='pp-cc-first-name']",
 		'Credit Card Last Name'         => "//*[@id='pp-cc-last-name']",
 		'Credit Card Card number'       => "//*[@id='pp-cc-account-number']",
