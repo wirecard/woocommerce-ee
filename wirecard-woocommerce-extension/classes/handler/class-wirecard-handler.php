@@ -81,6 +81,7 @@ class Wirecard_Handler {
 			'alipay-xborder'  => new WC_Gateway_Wirecard_Alipay_Crossborder(),
 			'masterpass'      => new WC_Gateway_Wirecard_Masterpass(),
 			'zapp'            => new WC_Gateway_Wirecard_Pay_By_Bank_App(),
+			'giropay'         => new WC_Gateway_Wirecard_Giropay(),
 		);
 
 		$this->logger = new Logger();
