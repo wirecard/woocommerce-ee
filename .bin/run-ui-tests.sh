@@ -30,6 +30,6 @@ done
 bash .bin/start-shopsystem.sh
 
 #run tests
-cd wirecard-woocommerce-extension && vendor/bin/codecept run acceptance -g "${GATEWAY}" --html --xml
+cd wirecard-woocommerce-extension && vendor/bin/codecept run acceptance -g "${GATEWAY}" --steps -vvv
 
 
