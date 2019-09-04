@@ -146,7 +146,6 @@ class Checkout extends Base {
 		$I = $this->tester;
 		/** @var object $dataField */
 		$dataField = $I->getDataFromDataFile( 'tests/_data/GiropayData.json' );
-		$I->wait(2);
 		$I->waitForElementVisible($this->getElement('Giropay BIC'));
 		$I->fillField($this->getElement('Giropay BIC'), $dataField->giropay_bic);
 	}

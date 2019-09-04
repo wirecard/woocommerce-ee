@@ -50,4 +50,9 @@ if [[ ${GATEWAY} = "API-TEST" ]]; then
 			--env WOOCOMMERCE_DB_PORT=${WOOCOMMERCE_DB_PORT} \
 			--env GATEWAY=${GATEWAY} \
 			${WOOCOMMERCE_CONTAINER_NAME} bash -c "cd /var/www/html/_data/ && php configure_payment_method_db.php paypal pay"
+			
+	docker exec --env WOOCOMMERCE_DB_PASSWORD=${WOOCOMMERCE_DB_PASSWORD} \
+			--env WOOCOMMERCE_DB_PORT=${WOOCOMMERCE_DB_PORT} \
+			--env GATEWAY=${GATEWAY} \
+			${WOOCOMMERCE_CONTAINER_NAME} bash -c "cd /var/www/html/_data/ && php configure_payment_method_db.php giropay pay"
 fi

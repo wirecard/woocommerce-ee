@@ -56,7 +56,7 @@ use Page\OrderReceived as OrderReceivedPage;
 use Page\Verified as VerifiedPage;
 use Page\PayPalLogIn as PayPalLogInPage;
 use Page\PayPalReview as PayPalReviewPage;
-use Page\GiropayPayment as GiropayPayment;
+use Page\GiropayPayment as GiropayPaymentPage;
 
 class AcceptanceTester extends \Codeception\Actor {
 
@@ -135,7 +135,7 @@ class AcceptanceTester extends \Codeception\Actor {
 				break;
 			case 'Giropay Payment':
 				$this->wait( 5 );
-				$page = new GiropayPayment( $this );
+				$page = new GiropayPaymentPage( $this );
 				break;
 			default:
 				$page = null;
