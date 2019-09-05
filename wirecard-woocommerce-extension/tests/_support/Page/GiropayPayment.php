@@ -29,63 +29,40 @@
  * Please do not use the plugin if you do not agree to these terms of use!
  */
 
-namespace Helper;
+namespace Page;
 
-// here you can define custom actions
-// all public methods declared in helper class will be available in $I
 
-use Codeception\Lib\Generator\PageObject;
-use Codeception\Module;
-use Page\Base;
-use Exception;
 
-class Acceptance extends Module {
-
+class GiropayPayment extends Base {
+	
+	/**
+	 * @var string
+	 * @since 2.2.0
+	 */
+	public $URL = 'ShopSystem/bank/BankEntry';
 
 	/**
-	 * Method getDataFromDataFile
-	 * @param string $fileName
-	 * @return string
-	 *
-	 * @throws Exception
-	 * @since   1.4.4
+	 * @var array
+	 * @since 2.2.0
 	 */
-	public static function getDataFromDataFile( $fileName ) {
-		// decode the JSON feed
-		$json_data = json_decode( file_get_contents( $fileName ) );
-		if ( ! $json_data ) {
-			$error = error_get_last();
-			throw new Exception('Failed to get customer data from tests/_data/CustomerData.json. Error was: ' . $error['message']);
-		} else {
-			return $json_data;
-		}
-	}
+	public $elements = [
+		'sc' 			=> "//input[@type='text' and @name='sc']",
+		'extensionSc'   => "//input[@type='text' and @name='extensionSc']",
+		'customerName1' => "//input[@type='text' and @name='customerName1']",
+		'customerIBAN'  => "//input[@type='text' and @name='customerIBAN']",
+		'Absenden' 		=> "//input[@type='submit']"
+	];
 
 	/**
-	 * Method fillFieldsWithData
-	 *
-	 * @param string $dataType
-	 * @param PageObject|Base $page
-	 *
-	 * @since   1.4.4
+	 * Method performGiropayPayment
+	 * @since 2.2.0
 	 */
-	public static function fillFieldsWithData( $dataType, $page ) {
-		if ( strpos( $dataType, 'Customer' ) !== false ) {
-			$page->fillBillingDetails();
-		} elseif ( strpos( $dataType, 'Credit Card' ) !== false ) {
-			$page->fillCreditCardDetails();
-		} elseif ( strpos( $dataType, 'Giropay Data' ) !== false ) {
-			$page->fillGiropayPaymentDetails();
-		}
-	}
-
-	/**
-	 * Method fillBic
-	 * @param PageObject|Base $page
-	 * 
-	 * @since   2.2.0
-	 */
-	public function fillBic($page) {
-		$page->fillBic();
+	public function fillGiropayPaymentDetails()
+	{
+		$I = $this->tester;
+		/** @var object $dataFields */
+		$dataFields = $I->getDataFromDataFile( 'tests/_data/GiropayData.json' );
+		$I->fillField($this->getElement( 'sc' ), $dataFields->sc);
+		$I->fillField( $this->getElement( 'extensionSc' ), $dataFields->extensionSc );
 	}
 }
