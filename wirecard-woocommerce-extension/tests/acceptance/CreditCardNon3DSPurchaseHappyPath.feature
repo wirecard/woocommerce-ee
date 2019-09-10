@@ -4,7 +4,7 @@ Feature: CreditCardNon3DSPurchaseHappyPath
   And to see that transaction was successful
 
   Background:
-	Given I activate "credit card" payment action "pay" in configuration
+	Given I activate "creditcard" payment action "pay" in configuration
     And I prepare credit card checkout "Non3DS"
     When I am on "Checkout" page
     And I fill fields with "Customer data"
@@ -17,4 +17,4 @@ Feature: CreditCardNon3DSPurchaseHappyPath
     When I click "Pay now"
     Then I am redirected to "Order Received" page
     And I see "Order received"
-	And I see "credit card" "purchase" in transaction table
+	And I see "creditcard" "purchase" in transaction table
