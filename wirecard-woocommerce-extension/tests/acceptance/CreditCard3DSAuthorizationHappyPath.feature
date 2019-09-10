@@ -1,6 +1,6 @@
 Feature: CreditCard3DSAuthorizationHappyPath
   As a guest  user
-  I want to make am authorization with a Credit Card 3DS
+  I want to make an authorization with a Credit Card 3DS
   And to see that authorization was successful
 
   Background:
