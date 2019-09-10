@@ -567,7 +567,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 		if ( $this->force_three_d ) {
 			$this->transaction->setThreeD( $this->force_three_d );
 		}
-		$this->transaction->setTermUrl( $this->create_redirect_url( $order, 'success', $this->type ) );
+		
 		$this->transaction->setConfig( $config->get( CreditCardTransaction::NAME ) );
 		$this->set_three_ds_transaction_fields( $order );
 
@@ -652,7 +652,6 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 				parent::process_payment( $order_id );
 
 				$this->transaction->setTokenId( $token_id );
-				$this->transaction->setTermUrl( $this->create_redirect_url( $order, 'success', $this->type ) );
 				$this->transaction->setConfig( $config->get( CreditCardTransaction::NAME ) );
 				$this->set_three_ds_transaction_fields( $order, $token_id );
 
