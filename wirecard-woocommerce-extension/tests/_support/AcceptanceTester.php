@@ -73,20 +73,18 @@ class AcceptanceTester extends \Codeception\Actor {
 	 * @since 2.0.3
 	 */
 	private $mappedPaymentActions = [
-		'credit card' => [
+		'creditcard' => [
 			'config' => [
-				'reserve' => 'reserve',
-				'pay' => 'pay',
+				'row' => 'payment_action'
 			],
 			'tx_table' => [
 				'authorization' => 'authorization',
 				'purchase' => 'purchase'
 			]
 		],
-		'pay pal' => [
+		'paypal' => [
 			'config' => [
-				'reserve' => 'reserve',
-				'pay' => 'pay',
+				'row' => 'payment_action'
 			],
 			'tx_table' => [
 				'authorization' => 'authorization',
@@ -236,7 +234,35 @@ class AcceptanceTester extends \Codeception\Actor {
 		$this->prepareCheckout( $productPage, $type );
 		$this->syncCookies();
 	}
-	
+
+	/**
+	 * @param string $paymentMethod
+	 * @param string $paymentAction
+	 * @return string
+	 * @since 2.0.3
+	 */
+	public function buildConfig( $paymentAction, $paymentMethod )
+	{
+		if ( !defined( 'GATEWAY_CONFIG' ) ) define( 'GATEWAY_CONFIG', '/tests/_data/gateway_configs' );
+		$gatewayConfiguration = getcwd() .  GATEWAY_CONFIG . DIRECTORY_SEPARATOR . $paymentMethod . '.json';
+
+		$gateway = getenv( 'GATEWAY' );
+		$gatewayConfigurationRow = $this->mappedPaymentActions[$paymentMethod]['config']['row'];
+
+		if ( file_exists( $gatewayConfiguration ) ) {
+			$jsonData = json_decode( file_get_contents( $gatewayConfiguration ) );
+			if ( ! empty( $jsonData ) && ! empty( $jsonData->$gateway ) ) {
+				$array = get_object_vars( $jsonData->$gateway );
+				foreach ( array_keys( $array ) as $key ) {
+					if ($key === $gatewayConfigurationRow) {
+						$array[$key] = $paymentAction;
+					}
+				}
+			}
+		}
+		return serialize($array);
+	}
+
 	/**
 	 * @Given I login to Paypal
 	 * @since 2.0.0
@@ -247,34 +273,35 @@ class AcceptanceTester extends \Codeception\Actor {
 	}
 
 	/**
-	 * @Given I activate :card payment action :paymentAction in configuration
-	 * @param string $card
+	 * @Given I activate :paymentMethod payment action :paymentAction in configuration
+	 * @param string $paymentMethod
 	 * @param string $paymentAction
 	 * @since 2.0.3
 	 */
-	public function iActivatePaymentActionInConfiguration( $card, $paymentAction )
+	public function iActivatePaymentActionInConfiguration( $paymentMethod, $paymentAction )
 	{
 		$this->updateInDatabase(
 			'wp_options',
-			['option_value' => $this->mappedPaymentActions[$card]['config'][$paymentAction]],
-			['option_name' => 'payment_action']
+			['option_value' => $this->buildConfig( $paymentAction, $paymentMethod )],
+			['option_name' => 'woocommerce_wirecard_ee_'.$paymentMethod.'_settings']
 		);
 	}
+
 	/**
-	 * @Then I see :card :paymentAction in transaction table
-	 * @param string $card
+	 * @Then I see :paymentMethod :paymentAction in transaction table
+	 * @param string $paymentMethod
 	 * @param string $paymentAction
 	 * @since 2.0.3
 	 */
-	public function iSeeInTransactionTable( $card, $paymentAction )
+	public function iSeeInTransactionTable( $paymentMethod, $paymentAction )
 	{
 		$this->seeInDatabase(
 			'wp_wirecard_payment_gateway_tx',
-			['transaction_type' => $this->mappedPaymentActions[$card]['tx_table'][$paymentAction]]
+			['transaction_type' => $this->mappedPaymentActions[$paymentMethod]['tx_table'][$paymentAction]]
 		);
 		//check that last transaction in the table is the one under test
 		$transactionTypes = $this->getColumnFromDatabaseNoCriteria( 'wp_wirecard_payment_gateway_tx', 'transaction_type' );
-		$this->assertEquals( end( $transactionTypes ), $this->mappedPaymentActions[$card]['tx_table'][$paymentAction] );
+		$this->assertEquals( end( $transactionTypes ), $this->mappedPaymentActions[$paymentMethod]['tx_table'][$paymentAction] );
 	}
 
 	/**

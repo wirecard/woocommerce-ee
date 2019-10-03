@@ -111,14 +111,14 @@ class Checkout extends Base {
 	 */
 	public function fillCreditCardDetails() {
 		$I                 = $this->tester;
-		$data_field_values = $I->getDataFromDataFile( 'tests/_data/CardData.json' );
+		$data_field_values = $I->getDataFromDataFile( 'tests/_data/PaymentMethodData.json' );
 		$I->wait(5);
 		$this->switchFrame();
 		$I->waitForElementVisible( $this->getElement( 'Credit Card Last Name' ) );
-		$I->fillField( $this->getElement( 'Credit Card Last Name' ), $data_field_values->last_name );
-		$I->fillField( $this->getElement( 'Credit Card Card number' ), $data_field_values->card_number );
-		$I->fillField( $this->getElement( 'Credit Card CVV' ), $data_field_values->cvv );
-		$I->fillField( $this->getElement( 'Credit Card Expiration Date' ), $data_field_values->expiration_date );
+		$I->fillField( $this->getElement( 'Credit Card Last Name' ), $data_field_values->creditcard->last_name );
+		$I->fillField( $this->getElement( 'Credit Card Card number' ), $data_field_values->creditcard->card_number );
+		$I->fillField( $this->getElement( 'Credit Card CVV' ), $data_field_values->creditcard->cvv );
+		$I->fillField( $this->getElement( 'Credit Card Expiration Date' ), $data_field_values->creditcard->expiration_date );
 		$I->switchToIFrame();
 	}
 
