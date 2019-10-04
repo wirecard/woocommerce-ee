@@ -55,7 +55,13 @@ $( document ).ready(
 								alert( data.data );
 							},
 							error: function (data) {
-								alert( data.data );
+								// This occurs if the PHP script dies. So the error message is hardcoded
+								// Usually it is an invalid url that gets called
+								let msg = "An undefined error occured!";
+								if ( data.status === 500 ) {
+									msg = base_url + " is invalid!";
+								}
+								alert( msg + " Test failed, please check your credentials." );
 							}
 						}
 					);
