@@ -52,7 +52,7 @@ class PhpBrowserAPI extends \Codeception\Module {
 			$this->moduleContainer,
 			[
 				'url'  => $this->config['url'],
-				'auth' => [ $this->config['user'], $this->config['password'] ],
+				'auth' => [ '', '' ],
 			]
 		);
 		$this->phpBrowser->_initialize();

@@ -6,20 +6,23 @@ env:
   global:
   - COMPOSER_ARGS="--no-interaction"
   - WOOCOMMERCE_RELEASES_FILE=${TRAVIS_BUILD_DIR}/.bin/shop-releases.txt
- 
+  - SHOP_SYSTEM_UPDATE_COMMIT="Update latest shop releases"
+  - MANUAL_UITEST_TRIGGER_COMMIT="Test my build"
+  - PATCH_RELEASE="patch"
+  - MINOR_RELEASE="minor"
+  - MAJOR_RELEASE="major"
+
 matrix:
-  allow_failures:
-    - stage: acceptance-test
   include:
   - php: 5.6
-    if: type != cron AND env(PHRASEAPP_PULL) != '1'
+    if: type != cron AND env(PHRASEAPP_PULL) != '1' AND commit_message !~ env(SHOP_SYSTEM_UPDATE_COMMIT) AND commit_message !~ env(MANUAL_UITEST_TRIGGER_COMMIT)
   - php: 7.0
-    if: type != cron AND env(PHRASEAPP_PULL) != '1'
+    if: type != cron AND env(PHRASEAPP_PULL) != '1' AND commit_message !~ env(SHOP_SYSTEM_UPDATE_COMMIT) AND commit_message !~ env(MANUAL_UITEST_TRIGGER_COMMIT)
   - php: 7.1
-    if: type != cron AND env(PHRASEAPP_PULL) != '1'
+    if: type != cron AND env(PHRASEAPP_PULL) != '1' AND commit_message !~ env(SHOP_SYSTEM_UPDATE_COMMIT) AND commit_message !~ env(MANUAL_UITEST_TRIGGER_COMMIT)
   - php: 7.2
-    if: type != cron AND env(PHRASEAPP_PULL) != '1'
-
+    if: type != cron AND env(PHRASEAPP_PULL) != '1' AND commit_message !~ env(SHOP_SYSTEM_UPDATE_COMMIT) AND commit_message !~ env(MANUAL_UITEST_TRIGGER_COMMIT)
+  
   - stage: get-woocommerce-versions
     if: type = cron
     php: 7.2
@@ -28,20 +31,25 @@ matrix:
     script: bash .bin/get-woocommerce-versions.sh
     after_script: skip
     after_failure: skip
-      
+  
   - &acceptance-test
     stage: acceptance-test
-    if: type = cron
+    #   run this stage on pull request if head branch name contains one of these words (patch, major, minor)
+    #   or when build triggered ad-hoc with special commit message
+    #   tests will use extension version = branch which originated pull request
+    #   or branch which was defined in ad-hoc trigger in Travis UI
+    if: (type = pull_request AND (head_branch =~ env(PATCH_RELEASE) OR head_branch =~ env(MINOR_RELEASE) OR head_branch =~ env(MAJOR_RELEASE))) OR (commit_message =~ env(MANUAL_UITEST_TRIGGER_COMMIT))
     php: 7.2
-    env: 
+    env:
     - GATEWAY=API-TEST
     - WOOCOMMERCE_NUMBER=1
     before_install:
-    - travis_retry composer self-update 
+    - travis_retry composer self-update
     install:
     - export WOOCOMMERCE_VERSION=$(awk "NR==${WOOCOMMERCE_NUMBER} {print; exit}" ${WOOCOMMERCE_RELEASES_FILE})
-    - echo "Testing with Woocommerce version ${WOOCOMMERCE_VERSION}" 
-    - bash .bin/generate-release-package.sh
+    - export LATEST_RELEASED_SHOP_EXTENSION_VERSION=`jq .[0].release ${TRAVIS_BUILD_DIR}/SHOPVERSIONS | tr -d '"'`
+    - echo "Testing with Woocommerce version ${WOOCOMMERCE_VERSION}"
+    - if [[ ${LATEST_EXTENSION_RELEASE}  == "1" ]]; then wget -q https://github.com/wirecard/woocommerce-ee/releases/download/${LATEST_RELEASED_SHOP_EXTENSION_VERSION}/woocommerce-wirecard-ee.zip; else bash .bin/generate-release-package.sh ;fi
     - travis_retry composer require --dev $COMPOSER_ARGS codeception/codeception:^2.5
     - travis_retry composer install $COMPOSER_ARGS
     - composer show
@@ -51,27 +59,57 @@ matrix:
     - bash .bin/upload-logs-and-notify.sh
     after_failure:
     - bash .bin/upload-logs-and-notify.sh fail
+    
+    # run this stage on pull request if head branch name contains major (on major release)
+    # tests will use branch which originated pull request
   - <<: *acceptance-test
+    if: type = pull_request AND head_branch =~ env(MAJOR_RELEASE)
     env:
     - GATEWAY=API-TEST
     - WOOCOMMERCE_NUMBER=2
+  
+  # run this stage on pull request if head branch name contains major (on major release)
+  # tests will use branch which originated pull request
   - <<: *acceptance-test
+    if: type = pull_request AND head_branch =~ env(MAJOR_RELEASE)
     env:
     - GATEWAY=API-TEST
     - WOOCOMMERCE_NUMBER=3
+  
+  # run this stage when shop system updated with latest shop extension release version
+  # tests will use tip of master branch
   - <<: *acceptance-test
-    env: 
-    - GATEWAY=API-WDCEE-TEST
+    if: commit_message =~ env(SHOP_SYSTEM_UPDATE_COMMIT)
+    env:
+    - GATEWAY=API-TEST
     - WOOCOMMERCE_NUMBER=1
+    # if this stage fails, it will not fail the whole build
+    - ALLOW_FAIL=1
+  
+  # run this stage when shop system updated with latest shop extension release version
+  # tests will use latest released extension version
   - <<: *acceptance-test
+    if: commit_message =~ env(SHOP_SYSTEM_UPDATE_COMMIT)
     env:
-    - GATEWAY=API-WDCEE-TEST
-    - WOOCOMMERCE_NUMBER=2
-  - <<: *acceptance-test
+    - GATEWAY=API-TEST
+    - WOOCOMMERCE_NUMBER=1
+    - LATEST_EXTENSION_RELEASE=1
+    # if this stage fails, it will not fail the whole build
+    - ALLOW_FAIL=1
+  
+  allow_failures:
+  - stage: acceptance-test
     env:
-    - GATEWAY=API-WDCEE-TEST
-    - WOOCOMMERCE_NUMBER=3
-
+    - GATEWAY=API-TEST
+    - WOOCOMMERCE_NUMBER=1
+    - ALLOW_FAIL=1
+  - stage: acceptance-test
+    env:
+    - GATEWAY=API-TEST
+    - WOOCOMMERCE_NUMBER=1
+    - LATEST_EXTENSION_RELEASE=1
+    - ALLOW_FAIL=1
+  
   - stage: phraseapp-pull
     if: type != cron AND env(PHRASEAPP_PULL) = '1'
     language: ruby
@@ -83,7 +121,7 @@ matrix:
     script:
     - .bin/rake phraseapp:ci_update
     after_script: skip
-
+  
   - stage: phraseapp-check-if-in-sync
     if: type = pull_request
     language: ruby
@@ -102,20 +140,20 @@ matrix:
     php: 7.1
     before_install: skip
     install:
-      - travis_retry composer install $COMPOSER_ARGS
-      - rvm install 2.5.3
-      - travis_retry gem install bundler -v 2.0.1
+    - travis_retry composer install $COMPOSER_ARGS
+    - rvm install 2.5.3
+    - travis_retry gem install bundler -v 2.0.1
     after_install: skip
     before_script: skip
     script: skip
     after_script: skip
     before_deploy:
-      - export REPO_NAME=`echo $TRAVIS_REPO_SLUG | awk -F'/' '{print $2}'`
-      - export RELEASE_NOTES=$(composer make-release-notes)
-      - bash .bin/generate-wiki-notes.sh
-      - bash .bin/generate-readme-badge.sh
-      - bash .bin/update-internal-readme-and-php.sh
-      - bash .bin/generate-release-package.sh $TRAVIS_TAG
+    - export REPO_NAME=`echo $TRAVIS_REPO_SLUG | awk -F'/' '{print $2}'`
+    - export RELEASE_NOTES=$(composer make-release-notes)
+    - bash .bin/generate-wiki-notes.sh
+    - bash .bin/generate-readme-badge.sh
+    - bash .bin/update-internal-readme-and-php.sh
+    - bash .bin/generate-release-package.sh $TRAVIS_TAG
     deploy:
       provider: releases
       github_token: ${GITHUB_TOKEN}
@@ -127,32 +165,32 @@ matrix:
       on:
         repo: ${TRAVIS_REPO_SLUG}
         tags: true
-    after_deploy: 
-#      svn checkout is not producing logs, not to oerload travis, so wait for 30 minutes till the checkout completes
-      - travis_wait 60 bash .bin/upload-to-marketplace.sh
-      - export TMPDIR=/tmp/wirecard
-      - git clone -b master --depth 1 https://$WIRECARD_CEE_GITHUB_TOKEN@github.com/$DEPLOYMENT_PROJECT $TMPDIR
-      - cd $TMPDIR && travis_retry bundle install
-      - bin/rake trigger_build
+    after_deploy:
+    #      svn checkout is not producing logs, not to oerload travis, so wait for 30 minutes till the checkout completes
+    - travis_wait 60 bash .bin/upload-to-marketplace.sh
+    - export TMPDIR=/tmp/wirecard
+    - git clone -b master --depth 1 https://$WIRECARD_CEE_GITHUB_TOKEN@github.com/$DEPLOYMENT_PROJECT $TMPDIR
+    - cd $TMPDIR && travis_retry bundle install
+    - bin/rake trigger_build
 
 before_install:
-  - export PHPCS_DIR=/tmp/phpcs
-  - export SNIFFS_DIR=/tmp/sniffs
-  - git clone -b master --depth 1 https://github.com/squizlabs/PHP_CodeSniffer.git $PHPCS_DIR
-  - git clone -b master --depth 1 https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards.git $SNIFFS_DIR
-  - $PHPCS_DIR/bin/phpcs --config-set installed_paths $SNIFFS_DIR
+- export PHPCS_DIR=/tmp/phpcs
+- export SNIFFS_DIR=/tmp/sniffs
+- git clone -b master --depth 1 https://github.com/squizlabs/PHP_CodeSniffer.git $PHPCS_DIR
+- git clone -b master --depth 1 https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards.git $SNIFFS_DIR
+- $PHPCS_DIR/bin/phpcs --config-set installed_paths $SNIFFS_DIR
 
 install:
-  - travis_retry composer require --dev $COMPOSER_ARGS satooshi/php-coveralls:^1.0
-  - travis_retry composer install $COMPOSER_ARGS
-  - composer show
+- travis_retry composer require --dev $COMPOSER_ARGS satooshi/php-coveralls:^1.0
+- travis_retry composer install $COMPOSER_ARGS
+- composer show
 
 script:
-  - $PHPCS_DIR/bin/phpcs --standard=./phpcs.xml .
+- $PHPCS_DIR/bin/phpcs --standard=./phpcs.xml .
 
 after_script:
-  - travis_retry composer upload-coverage
-  - bash .bin/generate-tag.sh
+- travis_retry composer upload-coverage
+- bash .bin/generate-tag.sh
 
 notifications:
   email: false
@@ -160,8 +198,8 @@ notifications:
     rooms:
       secure: YI7sUrfMyKyJD60kElGkO7yBDkGEh+069yS8bFAIDUST7s48J+dDP/r2G9dN9oQwhs9hvNjpNytpZDPys838T+Z0mNtFZ9Wu022hV3MpbKUuMl7L9P0MQQmxjg4bKyKK3Hl9tPrZ3UsKRlwIUmRGGYQ7cjs4zumorqs19YsB3X+WnnxAmmYB3kHQYfNKgVnmcG2QHJyx5KaLZ0EsWynSHXkYb8bVCtdlbQFNnpChvGHPprZrHAszLCYnlU7AEZGdbuk17oIfXO9Wjuu1GV8iJ2VgKkTCzW4FBC5eHJyZezojPFUm1I5tvdihRZuyBekVGOF23J6pvHLqPx77clT+/Vn6T+UMDuh1INZ0LKt4UOU42oEDKGblWZx2VYWcHwfEK+ckJWZkT9EBfg/CMenJly2tbtBj6++XNvxgGEDn6XqKIEatcb7X/aiy4f8BPXa3/pzgZAlvzZbGGqHFNZPAlgcXBBXgbaC7VvMhvi6Z5AG5ylKzPS5GCD95ozPC+cGv0234TBJus5oZck4qNiT53IUQ7Ta+OGVB0Mea105VAoQI0I7YcgaqW6c4h2YTmnuuQsIzAwPOrJ5TAinj8Z8mZ9C11tEcNF3Pgy1tOoG/YLurhOJm7v1ebotRb/DIeSHU8RfNatnDSSky4YS6Y8k2pQthdC9m7m2f2mJYuGdLjlM=
     template:
-      - "%{repository}#%{build_number} (%{branch} : %{author}): %{message}"
-      - "Change view : %{compare_url}"
-      - "Build details : %{build_url}"
+    - "%{repository}#%{build_number} (%{branch} : %{author}): %{message}"
+    - "Change view : %{compare_url}"
+    - "Build details : %{build_url}"
     on_success: change
     on_failure: change

@@ -1,7 +1,7 @@
 #!/bin/bash
 PREVIEW_LINK='https://raw.githack.com/wirecard/reports'
 REPORT_FILE='report.html'
-#choose slack channel depending on the gateway
+# choose slack channel depending on the gateway
 if [[ ${GATEWAY} = "NOVA" ]]; then
   CHANNEL='shs-ui-nova'
 elif [[ ${GATEWAY} = "API-WDCEE-TEST" ]]; then
@@ -14,7 +14,7 @@ elif [[  ${GATEWAY} = "SECURE-TEST-SG" ]]; then
    CHANNEL='shs-ui-secure-test-sg'
 fi
 
-#send information about the build
+# send information about the build
 curl -X POST -H 'Content-type: application/json' \
     --data "{'text': 'Build Failed. Woocommerce version: ${WOOCOMMERCE_VERSION}\n
     Build URL : ${TRAVIS_JOB_WEB_URL}\n
@@ -29,8 +29,8 @@ curl -X POST -H 'Content-type: application/json' --data "{
         {
             'fallback': 'Failed test data',
             'text': 'There are failed tests.
-             Test report: ${PREVIEW_LINK}/${SCREENSHOT_COMMIT_HASH}/${PROJECT_FOLDER}/${GATEWAY}/${TODAY}/${REPORT_FILE} .
-             All screenshots can be found  ${REPO_LINK}/tree/${SCREENSHOT_COMMIT_HASH}/${PROJECT_FOLDER}/${GATEWAY}/${TODAY} .',
+             Test report: ${PREVIEW_LINK}/${SCREENSHOT_COMMIT_HASH}/${RELATIVE_REPORTS_LOCATION}/${REPORT_FILE} .
+             All screenshots can be found  ${REPO_LINK}/tree/${SCREENSHOT_COMMIT_HASH}/${RELATIVE_REPORTS_LOCATION} .',
             'color': '#764FA5'
         }
     ], 'channel': '${CHANNEL}'

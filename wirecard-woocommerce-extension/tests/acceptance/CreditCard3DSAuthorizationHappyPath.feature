@@ -11,7 +11,7 @@ Feature: CreditCard3DSAuthorizationHappyPath
     Then I see "Wirecard Credit Card"
 	And I click "Place order"
 
-  @API-TEST @API-WDCEE-TEST
+  @patch @minor @major
   Scenario: authorize
     Given I fill fields with "Valid Credit Card Data"
     When I click "Pay now"

@@ -11,40 +11,52 @@ RANDOM_VALUE=$[ ( RANDOM % 30 ) * ${WOOCOMMERCE_NUMBER} + 1 ]
 echo "Sleeping for: ${RANDOM_VALUE}"
 sleep ${RANDOM_VALUE}s
 
-#clone the repository where the screenshot should be uploaded
+# clone the repository where the screenshot should be uploaded
 git clone ${REPO_ADDRESS}
 
-#create folder with current date
+# get current date to create a folder
 export TODAY=$(date +%Y-%m-%d)
 
-export WOOCOMMERCE_CURRENT_VERSION=${WOOCOMMERCE_VERSION}
 export PROJECT_FOLDER="woocommerce-ee-${WOOCOMMERCE_CURRENT_VERSION}"
-GATEWAY_FOLDER=${REPO_NAME}/${PROJECT_FOLDER}/${GATEWAY}
-DATE_FOLDER=${GATEWAY_FOLDER}/${TODAY}
-
-# -p means, if any of these folders in path doesn't exist, create one
-if [ ! -d "${GATEWAY_FOLDER}" ]; then
-mkdir -p ${GATEWAY_FOLDER}
+if [ ! -d "${REPO_NAME}/${PROJECT_FOLDER}/${GATEWAY}" ]; then
+mkdir -p ${REPO_NAME}/${PROJECT_FOLDER}/${GATEWAY}
 fi
 
-if [ ! -d "${DATE_FOLDER}" ]; then
-mkdir ${DATE_FOLDER}
+if [ ! -d "${REPO_NAME}/${PROJECT_FOLDER}/${GATEWAY}/${TODAY}" ]; then
+mkdir ${REPO_NAME}/${PROJECT_FOLDER}/${GATEWAY}/${TODAY}
 fi
 
-#copy report files
-cp wirecard-woocommerce-extension/tests/_output/*.html ${DATE_FOLDER}
-cp wirecard-woocommerce-extension/tests/_output/*.xml ${DATE_FOLDER}
+export BRANCH_FOLDER=${TRAVIS_BRANCH}
+
+# if tests triggered by PR, use different Travis variable to get branch name
+if [ ${TRAVIS_PULL_REQUEST} != "false" ]; then
+    export BRANCH_FOLDER="${TRAVIS_PULL_REQUEST_BRANCH}"
+# if we were testing latest released extension version
+elif [ "${LATEST_EXTENSION_RELEASE}" == "1" ]; then
+    export BRANCH_FOLDER="Release-${LATEST_RELEASED_SHOP_EXTENSION_VERSION}"
+fi
+
+export RELATIVE_REPORTS_LOCATION=${PROJECT_FOLDER}/${GATEWAY}/${TODAY}/${BRANCH_FOLDER}
+
+if [ ! -d "${REPO_NAME}/${RELATIVE_REPORTS_LOCATION}" ]; then
+    mkdir ${REPO_NAME}/${RELATIVE_REPORTS_LOCATION}
+fi
+
+
+# copy report files
+cp wirecard-woocommerce-extension/tests/_output/*.html ${REPO_NAME}/${RELATIVE_REPORTS_LOCATION}
+cp wirecard-woocommerce-extension/tests/_output/*.xml ${REPO_NAME}/${RELATIVE_REPORTS_LOCATION}
 if [[ $1 == 'fail' ]]; then
-    cp wirecard-woocommerce-extension/tests/_output/*.fail.png ${DATE_FOLDER}
+    cp wirecard-woocommerce-extension/tests/_output/*.fail.png ${REPO_NAME}/${RELATIVE_REPORTS_LOCATION}
 fi
 
 cd ${REPO_NAME}
-#push report files to the repository
+# push report files to the repository
 git add ${PROJECT_FOLDER}/${GATEWAY}/${TODAY}/*
 git commit -m "Add failed test screenshots from ${TRAVIS_BUILD_WEB_URL}"
 git push -q https://${GITHUB_TOKEN}@github.com/wirecard/${REPO_NAME}.git master
 
-#save commit hash
+# save commit hash
 export SCREENSHOT_COMMIT_HASH=$(git rev-parse --verify HEAD)
 if [[ $1 == 'fail' ]]; then
     cd ..

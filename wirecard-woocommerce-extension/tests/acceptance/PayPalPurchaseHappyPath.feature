@@ -9,8 +9,8 @@ Feature: PayPalPurchaseHappyPath
     When I am on "Checkout" page
     Then I fill fields with "Customer data"
 	And I click "Wirecard PayPal"
-	
-  @API-TEST
+
+  @patch @minor @major
   Scenario: purchase
     Given I click "Place order"
     And I am redirected to "Pay Pal Log In" page

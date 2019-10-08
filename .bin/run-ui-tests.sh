@@ -1,11 +1,9 @@
 #!/bin/bash
 set -e # Exit with nonzero exit code if anything fails
-#get version
-export VERSION=`jq .[0].release SHOPVERSIONS`
 
 # download and install ngrok
 curl -s https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip > ngrok.zip
-unzip ngrok.zip
+unzip -q ngrok.zip
 chmod +x $PWD/ngrok
 # Download json parser for determining ngrok tunnel
 curl -sO http://stedolan.github.io/jq/download/linux64/jq
@@ -26,8 +24,18 @@ while [ ! ${NGROK_URL} ] || [ ${NGROK_URL} = 'null' ];  do
     sleep 1
 done
 
-#start shopsystem and demoshop
+# start shopsystem and demoshop
 bash .bin/start-shopsystem.sh
 
-#run tests
-cd wirecard-woocommerce-extension && vendor/bin/codecept run acceptance -g "${GATEWAY}" --html --xml
+# find out test group to be run
+if [[ $GIT_BRANCH =~ "${PATCH_RELEASE}" ]]; then
+   TEST_GROUP="${PATCH_RELEASE}"
+elif [[ $GIT_BRANCH =~ "${MINOR_RELEASE}" ]]; then
+   TEST_GROUP="${MINOR_RELEASE}"
+# run all tests in nothing else specified
+else
+   TEST_GROUP="${MAJOR_RELEASE}"
+fi
+
+# run tests
+cd wirecard-woocommerce-extension && vendor/bin/codecept run acceptance -g "${TEST_GROUP}" --html --xml
