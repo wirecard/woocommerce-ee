@@ -7,23 +7,23 @@
 actor: AcceptanceTester
 modules:
   enabled:
-     - WebDriver:
-         host: 'hub-cloud.browserstack.com'
-         port: 80
-         url: '%NGROK_URL%'
-         browser: chrome # 'chrome' or 'firefox'
-         capabilities:
-           'build': '%VERSION%'
-           'project': 'woocommerce-ee-%GATEWAY%-%WOOCOMMERCE_NUMBER%'
-           'browserstack.user': '%BROWSERSTACK_USER%'
-           'browserstack.key': '%BROWSERSTACK_ACCESS_KEY%'
-     - \Helper\Acceptance
-     - \Helper\DbHelper
-     - Asserts
-     - Db:
-         dsn: 'mysql:host=localhost:3307;dbname=wordpress'
-         user: 'root'
-         password: 'example'
-         waitlock: 10
-     - \Helper\PhpBrowserAPI:
-        url: '%NGROK_URL%'
+  - WebDriver:
+      host: 'hub-cloud.browserstack.com'
+      port: 80
+      url: '%NGROK_URL%'
+      browser: chrome # 'chrome' or 'firefox'
+      capabilities:
+        'build': '%LATEST_RELEASED_SHOP_EXTENSION_VERSION%'
+        'project': 'woocommerce-ee-%GATEWAY%-%WOOCOMMERCE_NUMBER%-%LATEST_EXTENSION_RELEASE%'
+        'browserstack.user': '%BROWSERSTACK_USER%'
+        'browserstack.key': '%BROWSERSTACK_ACCESS_KEY%'
+  - \Helper\Acceptance
+  - \Helper\DbHelper
+  - Asserts
+  - Db:
+      dsn: 'mysql:host=localhost:3307;dbname=wordpress'
+      user: 'root'
+      password: 'example'
+      waitlock: 10
+  - \Helper\PhpBrowserAPI:
+      url: '%NGROK_URL%'
