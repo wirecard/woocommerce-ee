@@ -3,7 +3,7 @@
  * Plugin Name: Wirecard WooCommerce Extension
  * Plugin URI: https://github.com/wirecard/woocommerce-ee
  * Description: Payment Gateway for WooCommerce
- * Version: 2.1.1
+ * Version: 2.2.0
  * Author: Wirecard AG
  * Author URI: https://www.wirecard.com/
  * License: GPLv3
@@ -46,7 +46,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 define( 'WIRECARD_EXTENSION_NAME', 'Wirecard WooCommerce Extension' );
-define( 'WIRECARD_EXTENSION_VERSION', '2.1.1' );
+define( 'WIRECARD_EXTENSION_VERSION', '2.2.0' );
 define( 'WIRECARD_EXTENSION_BASEDIR', plugin_dir_path( __FILE__ ) );
 define( 'WIRECARD_EXTENSION_URL', plugin_dir_url( __FILE__ ) );
 define( 'WIRECARD_EXTENSION_LOCALE_FALLBACK', 'en_US' );
@@ -194,16 +194,16 @@ function wirecard_get_payments() {
 		'WC_Gateway_Wirecard_Creditcard'                 => new WC_Gateway_Wirecard_Creditcard(),
 		'WC_Gateway_Wirecard_Alipay_Crossborder'         => new WC_Gateway_Wirecard_Alipay_Crossborder(),
 		'WC_Gateway_Wirecard_Eps'                        => new WC_Gateway_Wirecard_Eps(),
+		'WC_Gateway_Wirecard_Giropay'                    => new WC_Gateway_Wirecard_Giropay(),
 		'WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay' => new WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay(),
 		'WC_Gateway_Wirecard_Ideal'                      => new WC_Gateway_Wirecard_Ideal(),
 		'WC_Gateway_Wirecard_Masterpass'                 => new WC_Gateway_Wirecard_Masterpass(),
 		'WC_Gateway_Wirecard_Pay_By_Bank_App'            => new WC_Gateway_Wirecard_Pay_By_Bank_App(),
-		'WC_Gateway_Wirecard_Poipia'                     => new WC_Gateway_Wirecard_Poipia(),
 		'WC_Gateway_Wirecard_Paypal'                     => new WC_Gateway_Wirecard_Paypal(),
+		'WC_Gateway_Wirecard_Poipia'                     => new WC_Gateway_Wirecard_Poipia(),
 		'WC_Gateway_Wirecard_Sepa_Credit_Transfer'       => new WC_Gateway_Wirecard_Sepa_Credit_Transfer(),
 		'WC_Gateway_Wirecard_Sepa_Direct_Debit'          => new WC_Gateway_Wirecard_Sepa_Direct_Debit(),
 		'WC_Gateway_Wirecard_Sofort'                     => new WC_Gateway_Wirecard_Sofort(),
-		'WC_Gateway_Wirecard_Giropay'                    => new WC_Gateway_Wirecard_Giropay(),
 	);
 }
 

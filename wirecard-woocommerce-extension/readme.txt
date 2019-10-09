@@ -2,9 +2,9 @@
 Contributors: Wirecard AG
 Tags: Wirecard, Credit Card, Alipay Cross-border, Guaranteed Invoice by Wirecard / Ratepay, iDEAL, eps-Überweisung, Masterpass, PayPal, Payment in Advance, Payment on Invoice, SEPA, Sofort., UnionPay International, e-commerce, payment, checkout, payment-methods, One-click-checkout, WooCommerce, PSP, payment-service
 Requires at least: 4.9
-Tested up to: 5.2.2
+Tested up to: 5.2.3
 Requires PHP: 5.6
-Stable tag: 2.1.1
+Stable tag: 2.2.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -18,6 +18,7 @@ Wirecard WooCommerce Extension can be integrated into your shop system fast and 
 - Alipay Cross-border
 - iDEAL
 - eps-Überweisung
+- giropay
 - Purchase on account
 - Purchase on account with guaranteed payment via Wirecard
 - Masterpass
@@ -68,4 +69,5 @@ Our general Terms of Use can be found on [Github](https://github.com/wirecard/wo
 4. Wirecard Transaction Detailview for Post-Processing Operations
 
 == Changelog ==
-- Process 3D transactions for empty non-3D maid setup
+- Add giropay payment method
+- Improve test credentials button error handling
