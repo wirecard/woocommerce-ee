@@ -4,13 +4,13 @@ language: php
 
 env:
   global:
-  - COMPOSER_ARGS="--no-interaction"
-  - WOOCOMMERCE_RELEASES_FILE=${TRAVIS_BUILD_DIR}/.bin/shop-releases.txt
-  - SHOP_SYSTEM_UPDATE_COMMIT="Update latest shop releases"
-  - MANUAL_UITEST_TRIGGER_COMMIT="Test my build"
-  - PATCH_RELEASE="patch"
-  - MINOR_RELEASE="minor"
-  - MAJOR_RELEASE="major"
+    - COMPOSER_ARGS="--no-interaction"
+    - WOOCOMMERCE_RELEASES_FILE=${TRAVIS_BUILD_DIR}/.bin/shop-releases.txt
+    - SHOP_SYSTEM_UPDATE_COMMIT="Update latest shop releases"
+    - MANUAL_UITEST_TRIGGER_COMMIT="Test my build"
+    - PATCH_RELEASE="patch"
+    - MINOR_RELEASE="minor"
+    - MAJOR_RELEASE="major"
 
 matrix:
   # these stages are allowed to fail
@@ -174,23 +174,23 @@ matrix:
     - bin/rake trigger_build
 
 before_install:
-- export PHPCS_DIR=/tmp/phpcs
-- export SNIFFS_DIR=/tmp/sniffs
-- git clone -b master --depth 1 https://github.com/squizlabs/PHP_CodeSniffer.git $PHPCS_DIR
-- git clone -b master --depth 1 https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards.git $SNIFFS_DIR
-- $PHPCS_DIR/bin/phpcs --config-set installed_paths $SNIFFS_DIR
+  - export PHPCS_DIR=/tmp/phpcs
+  - export SNIFFS_DIR=/tmp/sniffs
+  - git clone -b master --depth 1 https://github.com/squizlabs/PHP_CodeSniffer.git $PHPCS_DIR
+  - git clone -b master --depth 1 https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards.git $SNIFFS_DIR
+  - $PHPCS_DIR/bin/phpcs --config-set installed_paths $SNIFFS_DIR
 
 install:
-- travis_retry composer require --dev $COMPOSER_ARGS satooshi/php-coveralls:^1.0
-- travis_retry composer install $COMPOSER_ARGS
-- composer show
+  - travis_retry composer require --dev $COMPOSER_ARGS satooshi/php-coveralls:^1.0
+  - travis_retry composer install $COMPOSER_ARGS
+  - composer show
 
 script:
-- $PHPCS_DIR/bin/phpcs --standard=./phpcs.xml .
+  - $PHPCS_DIR/bin/phpcs --standard=./phpcs.xml .
 
 after_script:
-- travis_retry composer upload-coverage
-- bash .bin/generate-tag.sh
+  - travis_retry composer upload-coverage
+  - bash .bin/generate-tag.sh
 
 notifications:
   email: false
