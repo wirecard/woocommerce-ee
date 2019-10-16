@@ -140,12 +140,17 @@ class Upgrade_Helper {
 	 * @since 2.0.0
 	 */
 	protected function get_extension_general_information( $type = null ) {
-		$general_information = array();
-		$column              = self::GENERAL_INFORMATION_COLUMN;
+		$general_information              = array();
+		$column                           = self::GENERAL_INFORMATION_COLUMN;
+		$general_information_query_params = [
+			$column,
+			$this->general_information_table,
+			$this->general_information_table_id
+		];
 		// Get latest entry in the extensions general information table
 		$general_information_query = $this->wpdb->prepare(
-			"SELECT `$column` FROM `$this->general_information_table` ORDER BY `$this->general_information_table_id` DESC LIMIT 1",
-			array()
+			"SELECT `%s` FROM `%s` ORDER BY `%s` DESC LIMIT 1",
+			$general_information_query_params
 		);
 
 		// If table and column do not exist return null
@@ -288,9 +293,14 @@ class Upgrade_Helper {
 	 * @since 2.0.0
 	 */
 	protected function create_general_information_table() {
+		$create_table_query_params = [
+			$this->general_information_table,
+			$this->general_information_table_id,
+			$this->collation
+		];
 		$create_table_query = $this->wpdb->prepare(
-			"CREATE TABLE `$this->general_information_table` (`$this->general_information_table_id` int UNSIGNED AUTO_INCREMENT PRIMARY KEY)$this->collation",
-			array()
+			"CREATE TABLE `%s` (`%s` int UNSIGNED AUTO_INCREMENT PRIMARY KEY)%s",
+			$create_table_query_params
 		);
 
 		if ( $this->general_information_table_exists() ) {
@@ -307,10 +317,15 @@ class Upgrade_Helper {
 	 * @since 2.0.0
 	 */
 	protected function create_general_information_column() {
-		$column              = self::GENERAL_INFORMATION_COLUMN;
+		$column                     = self::GENERAL_INFORMATION_COLUMN;
+		$create_column_query_params = [
+			$this->general_information_table,
+			$column,
+			$this->general_information_table_id
+		];
 		$create_column_query = $this->wpdb->prepare(
-			"ALTER TABLE `$this->general_information_table` ADD `$column` VARCHAR(255) NOT NULL AFTER `$this->general_information_table_id`",
-			array()
+			"ALTER TABLE `%s` ADD `%s` VARCHAR(255) NOT NULL AFTER `%s`",
+			$create_column_query_params
 		);
 
 		if ( $this->general_information_column_exists() ) {
