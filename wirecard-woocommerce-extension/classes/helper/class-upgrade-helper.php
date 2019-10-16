@@ -143,7 +143,7 @@ class Upgrade_Helper {
 		$general_information = array();
 		// Get latest entry in the extensions general information table
 		$general_information_query = sprintf(
-			"SELECT `%s` FROM `%s` ORDER BY `%s` DESC LIMIT 1",
+			'SELECT `%s` FROM `%s` ORDER BY `%s` DESC LIMIT 1',
 			self::GENERAL_INFORMATION_COLUMN,
 			$this->general_information_table,
 			$this->general_information_table_id
@@ -289,7 +289,7 @@ class Upgrade_Helper {
 	 */
 	protected function create_general_information_table() {
 		$create_table_query = sprintf(
-			"CREATE TABLE `%s` (`%s` int UNSIGNED AUTO_INCREMENT PRIMARY KEY)%s",
+			'CREATE TABLE `%s` (`%s` int UNSIGNED AUTO_INCREMENT PRIMARY KEY)%s',
 			$this->general_information_table,
 			$this->general_information_table_id,
 			$this->collation
@@ -310,7 +310,7 @@ class Upgrade_Helper {
 	 */
 	protected function create_general_information_column() {
 		$create_column_query = sprintf(
-			"ALTER TABLE `%s` ADD `%s` VARCHAR(255) NOT NULL AFTER `%s`",
+			'ALTER TABLE `%s` ADD `%s` VARCHAR(255) NOT NULL AFTER `%s`',
 			$this->general_information_table,
 			self::GENERAL_INFORMATION_COLUMN,
 			$this->general_information_table_id
