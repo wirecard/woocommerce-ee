@@ -73,12 +73,25 @@ $defaultConfig = [
 		'test_button'         				 => 'Test',
 		'payment_action'      				 => 'pay',
 		'send_additional'     				 => 'no',
+	],
+	'giropay' => [
+		'base_url'            				 => 'https://api-test.wirecard.com',
+		'http_user'           				 => '16390-testing',
+		'http_pass'           				 => '3!3013=D3fD8X7',
+		'merchant_account_id' 				 => '9b4b0e5f-1bc8-422e-be42-d0bad2eadabc',
+		'secret'              				 => '0c8c6f3a-1534-4fa1-99d9-d1c644d43709',
+		'enabled'             				 => 'yes',
+		'title'               				 => 'Wirecard Giropay',
+		'test_button'         				 => 'Test',
+		'payment_action'      				 => 'pay',
+		'send_additional'     				 => 'no',
 	]
 ];
 
 $supportedPaymentActionsPerPaymentMethod = [
 	'creditcard' => ['pay', 'reserve'],
-	'paypal' => ['pay', 'reserve']
+	'paypal' => ['pay', 'reserve'],
+	'giropay' => ['pay']
 ];
 
 // main script - read payment method from command line, build the config and write it into database

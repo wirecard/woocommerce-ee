@@ -31,6 +31,8 @@
 
 namespace Page;
 
+use Exception;
+
 class Checkout extends Base {
 
 	// include url of current page
@@ -62,7 +64,9 @@ class Checkout extends Base {
 		'Credit Card Card number'       => "//*[@id='pp-cc-account-number']",
 		'Credit Card CVV'               => "//*[@id='pp-cc-cvv']",
 		'Credit Card Expiration Date' 	=> "//*[@id='pp-cc-expiration-date']",
-		'Pay now'						=> "//*[@id='seamless-submit']"
+		'Pay now'						=> "//*[@id='seamless-submit']",
+		'Wirecard Giropay' 				=> "//*[@id='payment']/ul/li[contains(@class, 'giropay')]",
+		'Giropay BIC' 					=> "//*[@id='giropay_bic']",
 	);
 
 	/**
@@ -130,5 +134,19 @@ class Checkout extends Base {
 		//get wirecard seemless frame name	
 		$wirecard_frame_name = $I->executeJS( 'return document.querySelector("#wirecard-integrated-payment-page-frame").getAttribute("name")' );
 		$I->switchToIFrame( "$wirecard_frame_name" );
+	}
+
+	/**
+	 * Method fillBIC
+	 * @throws Exception
+	 * @since 2.2.0
+	 */
+	public function fillBIC()
+	{
+		$I = $this->tester;
+		/** @var object $dataField */
+		$dataField = $I->getDataFromDataFile( 'tests/_data/GiropayData.json' );
+		$I->waitForElementVisible($this->getElement('Giropay BIC'));
+		$I->fillField($this->getElement('Giropay BIC'), $dataField->giropay_bic);
 	}
 }

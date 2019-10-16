@@ -35,8 +35,11 @@ namespace Helper;
 // all public methods declared in helper class will be available in $I
 
 use Codeception\Lib\Generator\PageObject;
+use Codeception\Module;
+use Page\Base;
+use Exception;
 
-class Acceptance extends \Codeception\Module {
+class Acceptance extends Module {
 
 
 	/**
@@ -44,6 +47,7 @@ class Acceptance extends \Codeception\Module {
 	 * @param string $fileName
 	 * @return string
 	 *
+	 * @throws Exception
 	 * @since   1.4.4
 	 */
 	public static function getDataFromDataFile( $fileName ) {
@@ -51,7 +55,7 @@ class Acceptance extends \Codeception\Module {
 		$json_data = json_decode( file_get_contents( $fileName ) );
 		if ( ! $json_data ) {
 			$error = error_get_last();
-			echo 'Failed to get customer data from tests/_data/CustomerData.json. Error was: ' . $error['message'];
+			throw new Exception('Failed to get customer data from tests/_data/CustomerData.json. Error was: ' . $error['message']);
 		} else {
 			return $json_data;
 		}
@@ -61,7 +65,7 @@ class Acceptance extends \Codeception\Module {
 	 * Method fillFieldsWithData
 	 *
 	 * @param string $dataType
-	 * @param PageObject $page
+	 * @param PageObject|Base $page
 	 *
 	 * @since   1.4.4
 	 */
@@ -70,6 +74,18 @@ class Acceptance extends \Codeception\Module {
 			$page->fillBillingDetails();
 		} elseif ( strpos( $dataType, 'Credit Card' ) !== false ) {
 			$page->fillCreditCardDetails();
+		} elseif ( strpos( $dataType, 'Giropay Data' ) !== false ) {
+			$page->fillGiropayPaymentDetails();
 		}
+	}
+
+	/**
+	 * Method fillBic
+	 * @param PageObject|Base $page
+	 * 
+	 * @since   2.2.0
+	 */
+	public function fillBic($page) {
+		$page->fillBic();
 	}
 }
