@@ -27,6 +27,12 @@ done
 # start shopsystem and demoshop
 bash .bin/start-shopsystem.sh
 
+export GIT_BRANCH=${TRAVIS_BRANCH}
+
+# if tests triggered by PR, use different Travis variable to get branch name
+if [ ${TRAVIS_PULL_REQUEST} != "false" ]; then
+    export $GIT_BRANCH="${TRAVIS_PULL_REQUEST_BRANCH}"
+
 # find out test group to be run
 if [[ $GIT_BRANCH =~ "${PATCH_RELEASE}" ]]; then
    TEST_GROUP="${PATCH_RELEASE}"
