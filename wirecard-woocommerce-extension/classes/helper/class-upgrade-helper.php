@@ -140,19 +140,14 @@ class Upgrade_Helper {
 	 * @since 2.0.0
 	 */
 	protected function get_extension_general_information( $type = null ) {
-		$general_information              = array();
-		$column                           = self::GENERAL_INFORMATION_COLUMN;
-		$general_information_query_params = [
-			$column,
+		$general_information = array();
+		// Get latest entry in the extensions general information table
+		$general_information_query = sprintf(
+			"SELECT `%s` FROM `%s` ORDER BY `%s` DESC LIMIT 1",
+			self::GENERAL_INFORMATION_COLUMN,
 			$this->general_information_table,
 			$this->general_information_table_id
-		];
-		// Get latest entry in the extensions general information table
-		$general_information_query = $this->wpdb->prepare(
-			"SELECT `%s` FROM `%s` ORDER BY `%s` DESC LIMIT 1",
-			$general_information_query_params
 		);
-
 		// If table and column do not exist return null
 		if ( ! $this->general_information_conditions_met() ) {
 			return $general_information;
@@ -293,14 +288,11 @@ class Upgrade_Helper {
 	 * @since 2.0.0
 	 */
 	protected function create_general_information_table() {
-		$create_table_query_params = [
+		$create_table_query = sprintf(
+			"CREATE TABLE `%s` (`%s` int UNSIGNED AUTO_INCREMENT PRIMARY KEY)%s",
 			$this->general_information_table,
 			$this->general_information_table_id,
 			$this->collation
-		];
-		$create_table_query = $this->wpdb->prepare(
-			"CREATE TABLE `%s` (`%s` int UNSIGNED AUTO_INCREMENT PRIMARY KEY)%s",
-			$create_table_query_params
 		);
 
 		if ( $this->general_information_table_exists() ) {
@@ -317,15 +309,11 @@ class Upgrade_Helper {
 	 * @since 2.0.0
 	 */
 	protected function create_general_information_column() {
-		$column                     = self::GENERAL_INFORMATION_COLUMN;
-		$create_column_query_params = [
-			$this->general_information_table,
-			$column,
-			$this->general_information_table_id
-		];
-		$create_column_query = $this->wpdb->prepare(
+		$create_column_query = sprintf(
 			"ALTER TABLE `%s` ADD `%s` VARCHAR(255) NOT NULL AFTER `%s`",
-			$create_column_query_params
+			$this->general_information_table,
+			self::GENERAL_INFORMATION_COLUMN,
+			$this->general_information_table_id
 		);
 
 		if ( $this->general_information_column_exists() ) {
