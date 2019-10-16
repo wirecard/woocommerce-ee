@@ -313,17 +313,17 @@ msgstr ""
 msgid "config_merchant_account_id"
 msgstr ""
 
-#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:109
-#: classes/includes/class-wc-gateway-wirecard-creditcard.php:118
-#: classes/includes/class-wc-gateway-wirecard-eps.php:113
-#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:118
-#: classes/includes/class-wc-gateway-wirecard-ideal.php:113
-#: classes/includes/class-wc-gateway-wirecard-masterpass.php:111
-#: classes/includes/class-wc-gateway-wirecard-paypal.php:111
-#: classes/includes/class-wc-gateway-wirecard-poipia.php:108
-#: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:108
-#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:112
-#: classes/includes/class-wc-gateway-wirecard-sofort.php:111
+#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:109
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:118
+#: classes/includes/class-wc-gateway-wirecard-eps.php:113
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:118
+#: classes/includes/class-wc-gateway-wirecard-ideal.php:113
+#: classes/includes/class-wc-gateway-wirecard-masterpass.php:111
+#: classes/includes/class-wc-gateway-wirecard-paypal.php:111
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:108
+#: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:108
+#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:112
+#: classes/includes/class-wc-gateway-wirecard-sofort.php:111
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:111
 msgid "config_merchant_account_id_desc"
 msgstr ""
@@ -343,17 +343,17 @@ msgstr ""
 msgid "config_merchant_secret"
 msgstr ""
 
-#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:115
-#: classes/includes/class-wc-gateway-wirecard-creditcard.php:124
-#: classes/includes/class-wc-gateway-wirecard-eps.php:119
-#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:124
-#: classes/includes/class-wc-gateway-wirecard-ideal.php:119
-#: classes/includes/class-wc-gateway-wirecard-masterpass.php:117
-#: classes/includes/class-wc-gateway-wirecard-paypal.php:117
-#: classes/includes/class-wc-gateway-wirecard-poipia.php:114
-#: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:114
-#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:118
-#: classes/includes/class-wc-gateway-wirecard-sofort.php:117
+#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:115
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:124
+#: classes/includes/class-wc-gateway-wirecard-eps.php:119
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:124
+#: classes/includes/class-wc-gateway-wirecard-ideal.php:119
+#: classes/includes/class-wc-gateway-wirecard-masterpass.php:117
+#: classes/includes/class-wc-gateway-wirecard-paypal.php:117
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:114
+#: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:114
+#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:118
+#: classes/includes/class-wc-gateway-wirecard-sofort.php:117
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:117
 msgid "config_merchant_secret_desc"
 msgstr ""
@@ -383,7 +383,7 @@ msgstr ""
 msgid "config_payment_action_desc"
 msgstr ""
 
-#: classes/includes/class-wc-gateway-wirecard-poipia.php:152
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:152
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:156
 msgid "config_payment_type"
 msgstr ""
@@ -422,6 +422,11 @@ msgstr ""
 
 #: classes/includes/class-wc-gateway-wirecard-eps.php:97
 msgid "config_status_desc_eps"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-giropay.php:100
+#, fuzzy
+msgid "config_status_desc_giropay"
 msgstr ""
 
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:100
@@ -514,12 +519,12 @@ msgstr ""
 msgid "config_vault_desc"
 msgstr ""
 
-#: classes/includes/class-wc-gateway-wirecard-creditcard.php:219
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:219
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:126
 msgid "config_wpp_url"
 msgstr ""
 
-#: classes/includes/class-wc-gateway-wirecard-creditcard.php:221
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:221
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:128
 msgid "config_wpp_url_desc"
 msgstr ""
@@ -566,6 +571,11 @@ msgstr ""
 
 #: classes/includes/class-wc-gateway-wirecard-eps.php:98
 msgid "enable_heading_title_eps"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-giropay.php:101
+#, fuzzy
+msgid "enable_heading_title_giropay"
 msgstr ""
 
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:101
@@ -651,6 +661,16 @@ msgstr ""
 msgid "first-name"
 msgstr ""
 
+#: classes/includes/class-wc-gateway-wirecard-giropay.php:66
+#, fuzzy
+msgid "giropay"
+msgstr ""
+
+#: classes/includes/class-wc-gateway-wirecard-giropay.php:67
+#, fuzzy
+msgid "giropay_desc"
+msgstr ""
+
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:369
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:242
 msgid "heading_creditcard_form"
@@ -671,6 +691,11 @@ msgstr ""
 msgid "heading_title_eps"
 msgstr ""
 
+#: classes/includes/class-wc-gateway-wirecard-giropay.php:65
+#: classes/includes/class-wc-gateway-wirecard-giropay.php:108
+msgid "heading_title_giropay"
+msgstr ""
+
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:63
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:108
 msgid "heading_title_ideal"
@@ -681,7 +706,7 @@ msgstr ""
 msgid "heading_title_masterpass"
 msgstr ""
 
-#: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:60
+#: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:60
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:106
 msgid "heading_title_paybybankapp"
 msgstr ""
@@ -691,7 +716,7 @@ msgstr ""
 msgid "heading_title_paypal"
 msgstr ""
 
-#: classes/includes/class-wc-gateway-wirecard-poipia.php:61
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:61
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:103
 msgid "heading_title_poi_pia"
 msgstr ""

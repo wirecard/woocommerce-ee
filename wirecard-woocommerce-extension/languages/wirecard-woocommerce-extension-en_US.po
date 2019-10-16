@@ -313,17 +313,17 @@ msgstr "This text appears on the SEPA Direct Debit Mandate page at the end of th
 msgid "config_merchant_account_id"
 msgstr "Merchant Account ID (MAID)"
 
-#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:109
-#: classes/includes/class-wc-gateway-wirecard-creditcard.php:118
-#: classes/includes/class-wc-gateway-wirecard-eps.php:113
-#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:118
-#: classes/includes/class-wc-gateway-wirecard-ideal.php:113
-#: classes/includes/class-wc-gateway-wirecard-masterpass.php:111
-#: classes/includes/class-wc-gateway-wirecard-paypal.php:111
-#: classes/includes/class-wc-gateway-wirecard-poipia.php:108
-#: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:108
-#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:112
-#: classes/includes/class-wc-gateway-wirecard-sofort.php:111
+#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:109
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:118
+#: classes/includes/class-wc-gateway-wirecard-eps.php:113
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:118
+#: classes/includes/class-wc-gateway-wirecard-ideal.php:113
+#: classes/includes/class-wc-gateway-wirecard-masterpass.php:111
+#: classes/includes/class-wc-gateway-wirecard-paypal.php:111
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:108
+#: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:108
+#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:112
+#: classes/includes/class-wc-gateway-wirecard-sofort.php:111
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:111
 msgid "config_merchant_account_id_desc"
 msgstr "Unique identifier assigned to your merchant account."
@@ -343,17 +343,17 @@ msgstr "Unique identifier assigned to your merchant account."
 msgid "config_merchant_secret"
 msgstr "Secret Key"
 
-#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:115
-#: classes/includes/class-wc-gateway-wirecard-creditcard.php:124
-#: classes/includes/class-wc-gateway-wirecard-eps.php:119
-#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:124
-#: classes/includes/class-wc-gateway-wirecard-ideal.php:119
-#: classes/includes/class-wc-gateway-wirecard-masterpass.php:117
-#: classes/includes/class-wc-gateway-wirecard-paypal.php:117
-#: classes/includes/class-wc-gateway-wirecard-poipia.php:114
-#: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:114
-#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:118
-#: classes/includes/class-wc-gateway-wirecard-sofort.php:117
+#: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:115
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:124
+#: classes/includes/class-wc-gateway-wirecard-eps.php:119
+#: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:124
+#: classes/includes/class-wc-gateway-wirecard-ideal.php:119
+#: classes/includes/class-wc-gateway-wirecard-masterpass.php:117
+#: classes/includes/class-wc-gateway-wirecard-paypal.php:117
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:114
+#: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:114
+#: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:118
+#: classes/includes/class-wc-gateway-wirecard-sofort.php:117
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:117
 msgid "config_merchant_secret_desc"
 msgstr "Secret Key is mandatory to calculate the Digital Signature for payments."
@@ -383,7 +383,7 @@ msgstr "Payment Action"
 msgid "config_payment_action_desc"
 msgstr "Select between \"Purchase\" to capture/invoice your order automatically or \"Authorization\" to capture/invoice manually."
 
-#: classes/includes/class-wc-gateway-wirecard-poipia.php:152
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:152
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:156
 msgid "config_payment_type"
 msgstr "Payment Type"
@@ -423,6 +423,11 @@ msgstr "Activate payment method Credit Card to make it available for your consum
 #: classes/includes/class-wc-gateway-wirecard-eps.php:97
 msgid "config_status_desc_eps"
 msgstr "Activate payment method eps-Überweisung to make it available for your consumers."
+
+#: classes/includes/class-wc-gateway-wirecard-giropay.php:100
+
+msgid "config_status_desc_giropay"
+msgstr "Activate payment method giropay to make it available for your consumers."
 
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:100
 msgid "config_status_desc_ideal"
@@ -514,12 +519,12 @@ msgstr "Payment method name as displayed for the consumer during checkout."
 msgid "config_vault_desc"
 msgstr "Credit Card details are saved for later use."
 
-#: classes/includes/class-wc-gateway-wirecard-creditcard.php:219
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:219
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:126
 msgid "config_wpp_url"
 msgstr "Wirecard Payment Page v2 Address (URL WPP v2)"
 
-#: classes/includes/class-wc-gateway-wirecard-creditcard.php:221
+#: classes/includes/class-wc-gateway-wirecard-creditcard.php:221
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:128
 msgid "config_wpp_url_desc"
 msgstr "Wirecard Payment Page v2 Address (URL WPP v2) (e.g. https://wpp.wirecard.com)."
@@ -567,6 +572,11 @@ msgstr "Enable Wirecard Credit Card"
 #: classes/includes/class-wc-gateway-wirecard-eps.php:98
 msgid "enable_heading_title_eps"
 msgstr "Enable Wirecard eps-Überweisung"
+
+#: classes/includes/class-wc-gateway-wirecard-giropay.php:101
+
+msgid "enable_heading_title_giropay"
+msgstr "Enable Wirecard giropay"
 
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:101
 msgid "enable_heading_title_ideal"
@@ -651,6 +661,16 @@ msgstr "Sorry, but this plugin requires the Wirecard WooCommerce Extension to be
 msgid "first-name"
 msgstr "First Name"
 
+#: classes/includes/class-wc-gateway-wirecard-giropay.php:66
+
+msgid "giropay"
+msgstr "giropay"
+
+#: classes/includes/class-wc-gateway-wirecard-giropay.php:67
+
+msgid "giropay_desc"
+msgstr "giropay transactions via Wirecard Payment Gateway."
+
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:369
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:242
 msgid "heading_creditcard_form"
@@ -671,6 +691,11 @@ msgstr "Wirecard Credit Card"
 msgid "heading_title_eps"
 msgstr "Wirecard eps-Überweisung"
 
+#: classes/includes/class-wc-gateway-wirecard-giropay.php:65
+#: classes/includes/class-wc-gateway-wirecard-giropay.php:108
+msgid "heading_title_giropay"
+msgstr "Wirecard giropay"
+
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:63
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:108
 msgid "heading_title_ideal"
@@ -681,7 +706,7 @@ msgstr "Wirecard iDEAL"
 msgid "heading_title_masterpass"
 msgstr "Wirecard Masterpass"
 
-#: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:60
+#: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:60
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:106
 msgid "heading_title_paybybankapp"
 msgstr "Wirecard Pay by Bank app"
@@ -691,7 +716,7 @@ msgstr "Wirecard Pay by Bank app"
 msgid "heading_title_paypal"
 msgstr "Wirecard PayPal"
 
-#: classes/includes/class-wc-gateway-wirecard-poipia.php:61
+#: classes/includes/class-wc-gateway-wirecard-poipia.php:61
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:103
 msgid "heading_title_poi_pia"
 msgstr "Wirecard Payment On Invoice / Payment In Advance"

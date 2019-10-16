@@ -1,5 +1,24 @@
 [
 {
+	"release": "2.2.0",
+	"shopversions": {
+    	"shopsystem": {
+    		"name": "WooCommerce",
+    		"tested": "3.7.0",
+    		"compatibility": "3.3.4"
+    	},
+    	"platform": {
+    		"name": "Wordpress",
+    		"tested": "5.2.3",
+    		"compatibility": "5.0.3"
+    	}
+    },	
+	"changelog": [
+		"Add giropay payment method",
+		"Improve test credentials button error handling"
+	]
+},
+{
 	"release": "2.1.1",
 	"shopversions": {
     	"shopsystem": {
