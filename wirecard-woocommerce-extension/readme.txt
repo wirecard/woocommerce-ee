@@ -1,6 +1,6 @@
 === Wirecard WooCommerce Extension ===
 Contributors: wirecard
-Tags: Wirecard, Credit Card, Alipay Cross-border, Guaranteed Invoice by Wirecard / Ratepay, iDEAL, eps-Überweisung, PayPal, Payment in Advance, Payment on Invoice, SEPA, Sofort., UnionPay International, e-commerce, payment, checkout, payment-methods, One-click-checkout, WooCommerce, PSP, payment-service
+Tags: checkout, e-commerce, ecommerce, wirecard, woocommerce, extension, payment, payment-page, credit-card, ideal, alipay, eps, paypal, sepa, sofort, payment-in-advance, mastercard, visa, american-express, discover, maestro, china, china-payment
 Requires at least: 4.9
 Tested up to: 5.2.3
 Requires PHP: 5.6
@@ -19,17 +19,18 @@ Wirecard WooCommerce Extension can be integrated into your shop system fast and 
 - iDEAL
 - eps-Überweisung
 - giropay
-- Purchase on account
-- Purchase on account with guaranteed payment via Wirecard
+- Guaranteed Direct Debit
+- Guaranteed Invoice by Wirecard
 - Pay By Bank app
 - PayPal
 - SEPA Direct Debit
 - Sofort.
-- Pre-payment
+- Payment in Advance
 
 = Why Wirecard? =
-With Wirecard WooCommerce Extension, you get far more than a payment system – you get a complete payment package that you can integrate quickly and easily into your shop system. All the main payment methods as well as the latest international payment types are supported. They run dynamically in the checkout process and with the greatest ease of use. At the same time, Wirecard payment offers the highest security standards and value-added digital services. What’s more, you can customise the Wirecard payment system through the user interface of your shop system.
+Wirecard is one of the world's fastest-growing digital platforms in the area of financial commerce. The company offers both businesses and consumers a constantly growing ecosystem of value-added services for innovative digital payments: online, mobile, and at the point of sale.
 
+With Wirecard WooCommerce Extension, you get far more than a payment system – you get a complete payment package that you can integrate quickly and easily into your shop system. All the main payment methods as well as the latest international payment types are supported. They run dynamically in the checkout process and with the greatest ease of use. At the same time, Wirecard payment offers the highest security standards and value-added digital services. What’s more, you can customize the Wirecard payment system through the user interface of your shop system.
 
 = International payment methods =
 By offering the latest alternative payment methods, Wirecard WooCommerce Extension opens up additional and promising market opportunities for merchants. For example, thanks to the inclusion of the Chinese payment method Alipay Cross-Border, merchants can cater to the needs of Chinese tourists in particular, who make up the biggest group of tourists in Europe. All those who use this Wirecard payment extension in their shop system therefore enjoy a clear competitive advantage.
@@ -68,7 +69,7 @@ Our general Terms of Use can be found on [Github](https://github.com/wirecard/wo
 4. Wirecard Transaction Detailview for Post-Processing Operations
 
 == List of contributors on Github ==
-- On this [link](https://github.com/wirecard/woocommerce-ee/graphs/contributors) you can see the list of developers who helped to develop this plugin.
+Follow this [link](https://github.com/wirecard/woocommerce-ee/graphs/contributors) to see the team responsible for the development of this extension.
 
 == Changelog ==
 - Add giropay payment method
