@@ -68,6 +68,17 @@ Our general Terms of Use can be found on [Github](https://github.com/wirecard/wo
 3. Wirecard Payment Gateway Transactions
 4. Wirecard Transaction Detailview for Post-Processing Operations
 
+== List of supported languages ==
+- English
+- German
+- French
+- Indonesian
+- Japanese
+- Korean
+- Polish
+- Chinese (China)
+- Chinese (Taiwan)
+
 == List of contributors on Github ==
 Follow this [link](https://github.com/wirecard/woocommerce-ee/graphs/contributors) to see the team responsible for the development of this extension.
 
