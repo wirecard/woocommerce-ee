@@ -1,6 +1,6 @@
 === Wirecard WooCommerce Extension ===
 Contributors: wirecard
-Tags: checkout, e-commerce, ecommerce, wirecard, woocommerce, extension, payment, payment-page, credit-card, ideal, alipay, eps, paypal, sepa, sofort, payment-in-advance, mastercard, visa, american-express, discover, maestro, china, china-payment
+Tags: credit-card, paypal, china-payment, sofort, alipay, ideal, eps, sepa, payment-in-advance, mastercard, visa, american-express, discover, maestro, checkout, e-commerce, ecommerce, payment, payment-page, china, woocommerce, wirecard, extension
 Requires at least: 4.9
 Tested up to: 5.2.3
 Requires PHP: 5.6
@@ -8,13 +8,13 @@ Stable tag: 2.2.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
-Payment Gateway for WooCommerce.
+Wirecard Payment Gateway for WooCommerce.
 
 == Description ==
 Wirecard WooCommerce Extension can be integrated into your shop system fast and easily. As well as covering all the main payment systems, it can be used for alternative payment types, such as Alipay Cross-Border and UnionPay International.
 
 = Payment methods: =
-- Credit and debit cards (American Express, Diners Club, Discover, Maestro, Mastercard, Visa and many more)
+- Credit and debit cards (American Express, Diners Club, Discover, Mastercard, Visa and many more)
 - Alipay Cross-border
 - iDEAL
 - eps-Überweisung
@@ -40,12 +40,12 @@ In addition to the payment methods provided, the Wirecard WooCommerce Extension 
 
 == Features: ==
 
-- Installation, update and deactivation of the extension in the WordPress back end
-- Configuration of the extension within the WordPress back end
+- Installation, update and deactivation of the extension in the WordPress backend
+- Configuration of the extension within the WordPress backend
 - Seamless integration of credit cards with and without 3D Secure (if required, only authorisation of the payment)
 - One-click checkout with credit cards
 - Direct payment processing via an interface for optimal user-friendliness in the checkout process
-- Display of all transactions in the shop system with the option of performing postings, cancellations and refunds directly in the shop system
+- Display of all transactions in the shop system with the option of performing cancellations and refunds directly in the shop system
 - State-of-the-art risk management and fraud prevention with Wirecard Fraud Prevention Suite (FPS)
 - Open-source code for flexible customisation, optimal exchange and to ensure that your shop system is always up to date
 
