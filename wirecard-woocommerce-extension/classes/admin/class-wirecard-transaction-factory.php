@@ -343,8 +343,8 @@ class Wirecard_Transaction_Factory {
 		}
 
 		if ( $message instanceof SuccessResponse ) {
-			$severity = 'updated';
-			$message  = __( 'success_new_transaction', 'wirecard-woocommerce-extension' ) . ' <a href="?page=wirecardpayment&id=' . $message->getTransactionId() . '">' . $message->getTransactionId() . '</a>';
+			$severity    = 'updated';
+			$message     = __( 'success_new_transaction', 'wirecard-woocommerce-extension' ) . ' <a href="?page=wirecardpayment&id=' . $message->getTransactionId() . '">' . $message->getTransactionId() . '</a>';
 			$transaction = $this->get_transaction( $transaction_id );
 		}
 
