@@ -67,7 +67,6 @@ class WC_Gateway_Wirecard_Eps extends WC_Wirecard_Payment_Gateway {
 
 		$this->supports = array(
 			'products',
-			'refunds',
 		);
 
 		$this->payment_action = 'pay';
@@ -265,5 +264,15 @@ class WC_Gateway_Wirecard_Eps extends WC_Wirecard_Payment_Gateway {
 		$config->add( $payment_config );
 
 		return $config;
+	}
+
+	/**
+	 * @param WC_Order $order
+	 * @return bool
+	 * @since 3.0.0
+	 */
+	public function can_refund_order($order)
+	{
+		return false;
 	}
 }
