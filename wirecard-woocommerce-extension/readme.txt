@@ -14,18 +14,19 @@ Wirecard Payment Gateway for WooCommerce.
 Wirecard WooCommerce Extension can be integrated into your shop system fast and easily. As well as covering all the main payment systems, it can be used for alternative payment types, such as Alipay Cross-Border and UnionPay International.
 
 = Payment methods: =
-- Credit and debit cards (American Express, Diners Club, Discover, Mastercard, Visa and many more)
+- Credit Card
 - Alipay Cross-border
-- iDEAL
 - eps-Überweisung
 - giropay
-- Guaranteed Direct Debit
 - Guaranteed Invoice by Wirecard
-- Pay By Bank app
+- iDEAL
+- Pay by Bank app
+- Payment In Advance
+- Payment On Invoice
 - PayPal
+- SEPA Credit Transfer
 - SEPA Direct Debit
 - Sofort.
-- Payment in Advance
 
 = Why Wirecard? =
 Wirecard is one of the world's fastest-growing digital platforms in the area of financial commerce. The company offers both businesses and consumers a constantly growing ecosystem of value-added services for innovative digital payments: online, mobile, and at the point of sale.
