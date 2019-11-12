@@ -526,7 +526,7 @@ class Wirecard_Transaction_Factory {
 	 *
 	 * @since 3.0.0
 	 */
-	public function reduce_stock( $response, $order ) {
+	private function reduce_stock( $response, $order ) {
 		// Do not reduce stock for follow-up transactions
 		if ( in_array( $response->getTransactionType(), $this->stock_reduction_types, true ) &&
 			! $this->active_germanized() ) {
