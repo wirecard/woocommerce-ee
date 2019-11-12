@@ -12,7 +12,7 @@ env:
     - MINOR_RELEASE="minor"
     - MAJOR_RELEASE="major"
     - WOOCOMMERCE_COMPATIBILITY_FILE=${TRAVIS_BUILD_DIR}/.bin/new-compatible-shop-releases.txt
-
+    - WORDPRESS_CODING_STANDARDS_TAG=2.1.1
 matrix:
   # these stages are allowed to fail
   allow_failures:
@@ -183,7 +183,7 @@ before_install:
   - export PHPCS_DIR=/tmp/phpcs
   - export SNIFFS_DIR=/tmp/sniffs
   - git clone -b master --depth 1 https://github.com/squizlabs/PHP_CodeSniffer.git $PHPCS_DIR
-  - git clone -b master --depth 1 https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards.git $SNIFFS_DIR
+  - git clone -b ${WORDPRESS_CODING_STANDARDS_TAG} --depth 1 https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards.git $SNIFFS_DIR
   - $PHPCS_DIR/bin/phpcs --config-set installed_paths $SNIFFS_DIR
 
 install:
