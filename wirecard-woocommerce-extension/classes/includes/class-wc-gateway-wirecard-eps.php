@@ -64,7 +64,7 @@ class WC_Gateway_Wirecard_Eps extends WC_Wirecard_Payment_Gateway {
 		$this->method_name        = __( 'eps', 'wirecard-woocommerce-extension' );
 		$this->method_description = __( 'eps_desc', 'wirecard-woocommerce-extension' );
 		$this->has_fields         = true;
-		$this->supports 	      = array( 'products' );
+		$this->supports           = array( 'products' );
 		$this->payment_action     = 'pay';
 
 		$this->init_form_fields();
@@ -267,8 +267,7 @@ class WC_Gateway_Wirecard_Eps extends WC_Wirecard_Payment_Gateway {
 	 * @return bool
 	 * @since 3.0.0
 	 */
-	public function can_refund_order($order)
-	{
+	public function can_refund_order( $order ) {
 		return false;
 	}
 }
