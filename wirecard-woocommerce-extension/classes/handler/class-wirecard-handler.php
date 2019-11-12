@@ -79,7 +79,6 @@ class Wirecard_Handler {
 			'wiretransfer'    => new WC_Gateway_Wirecard_Poipia(),
 			'ratepay-invoice' => new WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay(),
 			'alipay-xborder'  => new WC_Gateway_Wirecard_Alipay_Crossborder(),
-			'masterpass'      => new WC_Gateway_Wirecard_Masterpass(),
 			'zapp'            => new WC_Gateway_Wirecard_Pay_By_Bank_App(),
 			'giropay'         => new WC_Gateway_Wirecard_Giropay(),
 		);
