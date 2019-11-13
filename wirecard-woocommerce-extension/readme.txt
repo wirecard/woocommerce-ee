@@ -86,4 +86,5 @@ Follow this [link](https://github.com/wirecard/woocommerce-ee/graphs/contributor
 == Changelog ==
 - Fix refund via Transactiontable for Guaranteed Invoice
 - Disable online refund via Order Management for iDEAL and Sofort.
+- Prevent double refund via Transactiontable
 - Remove payment method Masterpass
