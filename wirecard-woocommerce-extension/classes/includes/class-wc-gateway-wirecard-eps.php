@@ -265,6 +265,7 @@ class WC_Gateway_Wirecard_Eps extends WC_Wirecard_Payment_Gateway {
 	/**
 	 * @param WC_Order $order
 	 * @return bool
+	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
 	 * @since 3.0.0
 	 */
 	public function can_refund_order( $order ) {

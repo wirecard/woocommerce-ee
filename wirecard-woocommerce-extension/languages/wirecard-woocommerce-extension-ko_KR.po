@@ -52,6 +52,7 @@ msgstr "결제 프로세스를 취소하셨습니다."
 #: classes/includes/class-wc-gateway-wirecard-eps.php:167
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:216
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:167
+#: classes/includes/class-wc-gateway-wirecard-masterpass.php:176
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:183
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:173
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:206
@@ -66,6 +67,7 @@ msgstr "추가 정보 전송"
 #: classes/includes/class-wc-gateway-wirecard-eps.php:166
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:215
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:166
+#: classes/includes/class-wc-gateway-wirecard-masterpass.php:175
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:182
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:172
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:205
@@ -88,6 +90,7 @@ msgstr "Guaranteed Invoice 결제방법은 활성 통화가 이 선택된 통화
 #: classes/includes/class-wc-gateway-wirecard-eps.php:128
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:133
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:128
+#: classes/includes/class-wc-gateway-wirecard-masterpass.php:126
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:126
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:123
 #: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:123
@@ -103,6 +106,7 @@ msgstr "베이스 URL"
 #: classes/includes/class-wc-gateway-wirecard-eps.php:130
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:135
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:130
+#: classes/includes/class-wc-gateway-wirecard-masterpass.php:128
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:128
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:125
 #: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:125
@@ -149,23 +153,23 @@ msgstr "활성화하면 청구지/배송지 주소가 동일한 경우 Guarantee
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:306
 msgid "config_challenge_challenge_threed"
-msgstr "Challenge requested"
+msgstr "이의 제기 요청함"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:271
 msgid "config_challenge_indicator"
-msgstr "Challenge Indicator"
+msgstr "이의 제기 표시"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:273
 msgid "config_challenge_indicator_desc"
-msgstr "Indicates whether a challenge is  requested for this transaction."
+msgstr "이 트랜잭션에 대한 이의가 제기되었는지 여부를 나타냅니다."
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:305
 msgid "config_challenge_no_challenge"
-msgstr "No challenge requested"
+msgstr "이의 제기가 요청되지 않음"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:304
 msgid "config_challenge_no_preference"
-msgstr "No preference"
+msgstr "설정 없음"
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:168
 msgid "config_creditor_city"
@@ -196,6 +200,7 @@ msgstr "SEPA는 SEPA 자동 이체 위임 페이지에 표시할 채권자 이�
 #: classes/includes/class-wc-gateway-wirecard-eps.php:160
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:209
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:160
+#: classes/includes/class-wc-gateway-wirecard-masterpass.php:169
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:176
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:166
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:199
@@ -208,6 +213,7 @@ msgstr "서술자"
 #: classes/includes/class-wc-gateway-wirecard-eps.php:159
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:208
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:159
+#: classes/includes/class-wc-gateway-wirecard-masterpass.php:168
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:175
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:165
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:198
@@ -233,6 +239,7 @@ msgstr "BIC가 사용 설정되면, 고객이 체크아웃할 때 BIC를 입력�
 #: classes/includes/class-wc-gateway-wirecard-eps.php:140
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:145
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:140
+#: classes/includes/class-wc-gateway-wirecard-masterpass.php:138
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:138
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:135
 #: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:135
@@ -247,6 +254,7 @@ msgstr "HTTP 비밀번호"
 #: classes/includes/class-wc-gateway-wirecard-eps.php:142
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:147
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:142
+#: classes/includes/class-wc-gateway-wirecard-masterpass.php:140
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:140
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:137
 #: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:137
@@ -261,6 +269,7 @@ msgstr "Wirecard 연락처 내에 있는 http 비밀번호"
 #: classes/includes/class-wc-gateway-wirecard-eps.php:134
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:139
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:134
+#: classes/includes/class-wc-gateway-wirecard-masterpass.php:132
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:132
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:129
 #: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:129
@@ -275,6 +284,7 @@ msgstr "HTTP 사용자"
 #: classes/includes/class-wc-gateway-wirecard-eps.php:136
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:141
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:136
+#: classes/includes/class-wc-gateway-wirecard-masterpass.php:134
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:134
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:131
 #: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:131
@@ -302,6 +312,7 @@ msgstr "이 텍스트는 SEPA 자동 이체 위임 페이지의 첫 번째 문�
 #: classes/includes/class-wc-gateway-wirecard-eps.php:111
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:116
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:111
+#: classes/includes/class-wc-gateway-wirecard-masterpass.php:109
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:109
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:106
 #: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:106
@@ -317,6 +328,7 @@ msgstr "상인 계정 ID"
 #: classes/includes/class-wc-gateway-wirecard-eps.php:113
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:118
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:113
+#: classes/includes/class-wc-gateway-wirecard-masterpass.php:111
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:111
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:108
 #: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:108
@@ -331,6 +343,7 @@ msgstr "상인 계정에 지정된 고유 식별자."
 #: classes/includes/class-wc-gateway-wirecard-eps.php:117
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:122
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:117
+#: classes/includes/class-wc-gateway-wirecard-masterpass.php:115
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:115
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:112
 #: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:112
@@ -345,6 +358,7 @@ msgstr "비밀 키"
 #: classes/includes/class-wc-gateway-wirecard-eps.php:119
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:124
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:119
+#: classes/includes/class-wc-gateway-wirecard-masterpass.php:117
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:117
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:114
 #: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:114
@@ -360,6 +374,8 @@ msgstr "사용자 메시지"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:186
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:190
+#: classes/includes/class-wc-gateway-wirecard-masterpass.php:155
+#: classes/includes/class-wc-gateway-wirecard-masterpass.php:159
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:155
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:159
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:185
@@ -370,6 +386,7 @@ msgid "config_payment_action"
 msgstr "결제 동작"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:188
+#: classes/includes/class-wc-gateway-wirecard-masterpass.php:157
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:157
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:187
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:157
@@ -383,7 +400,7 @@ msgstr "결제 유형"
 
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:154
 msgid "config_payment_type_desc"
-msgstr "Choose \"Payment In Advance\" to display bank data after the checkout process, or \"Payment On Invoice\" to send bank data with the invoice."
+msgstr "\"사전 결제\"를 선택하여 체크아웃 프로세스 이후 은행 데이터를 표시하거나 \"송장 결제\"를 선택하여 송장과 함께 은행 데이터를 보내십시오."
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:178
 
@@ -416,7 +433,7 @@ msgstr "신용카드 결제방법 활성화"
 
 #: classes/includes/class-wc-gateway-wirecard-eps.php:97
 msgid "config_status_desc_eps"
-msgstr "Activate payment method eps-Überweisung to make it available for your consumers."
+msgstr "eps-Überweisung 결제 방법을 활성화하여 고객이 이용할 수 있게 하십시오."
 
 #: classes/includes/class-wc-gateway-wirecard-giropay.php:100
 msgid "config_status_desc_giropay"
@@ -428,7 +445,7 @@ msgstr "iDEAL 결제방법 활성화"
 
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:98
 msgid "config_status_desc_paybybankapp"
-msgstr "Activate payment method Pay by Bank app to make it available for your consumers."
+msgstr "Pay by Bank app 결제 방법을 활성화하여 고객이 이용할 수 있게 하십시오."
 
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:98
 msgid "config_status_desc_paypal"
@@ -480,6 +497,7 @@ msgstr "3-D 보안 최소. 한계"
 #: classes/includes/class-wc-gateway-wirecard-eps.php:105
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:110
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:105
+#: classes/includes/class-wc-gateway-wirecard-masterpass.php:103
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:103
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:100
 #: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:100
@@ -494,6 +512,7 @@ msgstr "제목"
 #: classes/includes/class-wc-gateway-wirecard-eps.php:107
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:112
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:107
+#: classes/includes/class-wc-gateway-wirecard-masterpass.php:105
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:105
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:102
 #: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:102
@@ -510,20 +529,20 @@ msgstr "신용카드는 이후 사용을 위해 저장할 수 있습니다"
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:219
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:126
 msgid "config_wpp_url"
-msgstr "Wirecard Payment Page v2 Address (URL WPP v2)"
+msgstr "Wirecard Payment Page v2 주소(URL WPP v2)"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:221
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:128
 msgid "config_wpp_url_desc"
-msgstr "Wirecard Payment Page v2 Address (URL WPP v2) (e.g. https://wpp.wirecard.com)."
+msgstr "Wirecard Payment Page v2 주소(URL WPP v2) (예: https://wpp.wirecard.com)."
 
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:155
 msgid "config_zapp_merchant_return_string"
-msgstr "Merchant Return URL"
+msgstr "머천트 복귀 URL"
 
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:157
 msgid "config_zapp_merchant_return_string_desc"
-msgstr "Merchant Return URL to redirect consumers from their mobile banking apps to your shop."
+msgstr "고객을 휴대전화 은행 앱에서 상점으로 돌려보내는 머천트 복귀 URL"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:62
 msgid "creditcard"
@@ -560,7 +579,7 @@ msgstr "Wirecard 신용카드 사용"
 
 #: classes/includes/class-wc-gateway-wirecard-eps.php:98
 msgid "enable_heading_title_eps"
-msgstr "Enable Wirecard eps-Überweisung"
+msgstr "Wirecard eps-Überweisung 활성화"
 
 #: classes/includes/class-wc-gateway-wirecard-giropay.php:101
 msgid "enable_heading_title_giropay"
@@ -572,7 +591,7 @@ msgstr "Wirecard iDEAL 사용"
 
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:99
 msgid "enable_heading_title_paybybankapp"
-msgstr "Enable Wirecard Pay by Bank app"
+msgstr "Wirecard Pay by Bank app 활성화"
 
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:99
 msgid "enable_heading_title_paypal"
@@ -609,7 +628,7 @@ msgstr "eps-Überweisung"
 
 #: classes/includes/class-wc-gateway-wirecard-eps.php:64
 msgid "eps_desc"
-msgstr "eps-Überweisung transactions via Wirecard Payment Gateway."
+msgstr "Wirecard 결제 게이트웨이를 통한 eps-Überweisung 트랜잭션 "
 
 #: classes/includes/class-wc-wirecard-payment-gateway.php:682
 msgid "error_credentials"
@@ -622,7 +641,7 @@ msgstr "이메일 전송 중 오류가 발생했습니다"
 
 #: templates/credit-card-form.php:45
 msgid "error_malformed_creditcard_request"
-msgstr "Oops! Something went wrong. Please check your credit card data and try again."
+msgstr "이런! 문제가 생겼습니다. 신용카드 데이터를 확인하고 다시 시도하십시오."
 
 #: classes/admin/class-wirecard-transaction-factory.php:359
 msgid "error_no_post_processing_operations"
@@ -641,6 +660,7 @@ msgid "error_no_transaction"
 msgstr "발견된 트랜잭션 없음"
 
 #: woocommerce-wirecard-payment-gateway.php:319
+
 msgid "error_woocommerce_missing"
 msgstr "죄송하지만 이 플러그인을 사용하려면 WooCommerce 플러그인을 설치하고 활성화해야 합니다."
 
@@ -659,7 +679,7 @@ msgstr "giropay transactions via Wirecard Payment Gateway."
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:369
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:242
 msgid "heading_creditcard_form"
-msgstr "Enter Card Details"
+msgstr "카드 세부정보를 입력하십시오"
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:60
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:104
@@ -770,7 +790,13 @@ msgid "order_status_authorized"
 msgstr "승인됨"
 
 msgid "order_status_authorized_count_plural"
-msgstr "Authorized <span class=\"count\">(%s)</span>"
+msgstr "승인됨 <span class=\"count\">(%s)</span>"
+
+#. translators:
+#: woocommerce-wirecard-payment-gateway.php:105
+msgid "order_status_authorized_count_single"
+msgid_plural "order_status_authorized_count_plural"
+msgstr[0] ""
 
 #: classes/includes/class-wc-wirecard-payment-gateway.php:521
 
@@ -830,7 +856,7 @@ msgstr "Pay by Bank app"
 
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:62
 msgid "paybybankapp_desc"
-msgstr "Pay by Bank app transactions via Wirecard Payment Gateway."
+msgstr "Wirecard 결제 게이트웨이를 통한 Pay by Bank app 트랜잭션 "
 
 #. Description of the plugin
 msgid "Payment Gateway for WooCommerce"
@@ -897,7 +923,7 @@ msgstr "지금 가능한 온라인 환불 없음."
 
 #: classes/helper/class-additional-information.php:349
 msgid "refund_partial_shipping_error"
-msgstr "You can refund shipping fees only in full; partial refund of shipping fees is not possible."
+msgstr "쇼핑 금액은 전액 환불만 가능하며 쇼핑 금액의 일부 환불은 불가능합니다."
 
 #: classes/includes/class-wc-wirecard-payment-gateway.php:409
 msgid "refund_processing_error"
@@ -987,6 +1013,7 @@ msgstr "처리 후 작업이 성공하였습니다. 새로운 트랜잭션이 �
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:146
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:144
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:144
+#: classes/includes/class-wc-gateway-wirecard-masterpass.php:144
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:141
 #: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:141
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:151
@@ -1001,6 +1028,7 @@ msgstr "테스트 구성"
 #: classes/includes/class-wc-gateway-wirecard-eps.php:149
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:154
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:149
+#: classes/includes/class-wc-gateway-wirecard-masterpass.php:147
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:152
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:144
 #: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:144
@@ -1017,6 +1045,7 @@ msgstr "테스트"
 #: classes/includes/class-wc-gateway-wirecard-eps.php:152
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:157
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:152
+#: classes/includes/class-wc-gateway-wirecard-masterpass.php:150
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:144
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:147
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:180
@@ -1046,6 +1075,7 @@ msgstr "Confirm"
 #: classes/includes/class-wc-gateway-wirecard-eps.php:123
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:128
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:123
+#: classes/includes/class-wc-gateway-wirecard-masterpass.php:121
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:121
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:118
 #: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:118
@@ -1059,6 +1089,7 @@ msgstr "자격인증"
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:125
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:123
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:123
+#: classes/includes/class-wc-gateway-wirecard-masterpass.php:123
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:120
 #: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:120
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:130
@@ -1084,6 +1115,9 @@ msgstr "삭제"
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:173
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:96
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:155
+#: classes/includes/class-wc-gateway-wirecard-masterpass.php:96
+#: classes/includes/class-wc-gateway-wirecard-masterpass.php:166
+#: classes/includes/class-wc-gateway-wirecard-masterpass.php:173
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:93
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:163
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:170
@@ -1111,6 +1145,7 @@ msgid "text_go_to_plugins"
 msgstr "플러그인으로 이동"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:193
+#: classes/includes/class-wc-gateway-wirecard-masterpass.php:162
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:162
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:192
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:162
@@ -1118,6 +1153,7 @@ msgid "text_payment_action_pay"
 msgstr "Purchase"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:214
+#: classes/includes/class-wc-gateway-wirecard-masterpass.php:161
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:161
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:191
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:175
@@ -1163,7 +1199,7 @@ msgstr "I herewith confirm that I have read the <a href=\"https://www.wirecardba
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:471
 msgid "text_terms_notice"
-msgstr "You must agree to the privacy notice and additional terms of Wirecard payment methods."
+msgstr "개인정보 통지와 추가 Wirecard 결제 방법 약관에 동의하셔야 합니다."
 
 #: classes/admin/class-wirecard-transaction-factory.php:376
 msgid "text_total"
@@ -1217,7 +1253,7 @@ msgstr "새 신용카드 사용"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:777
 msgid "warning_credit_card_url_mismatch"
-msgstr "Attention: Please check your credentials within the URL setting fields. You might have configured/combined a productive account with a test account."
+msgstr "주의: URL 설정 필드에서 귀하의 로그인 정보를 확인해주십시오. 귀하는 시험용 계정과 실제 사용 계정을 구성/조합하였을 수도 있습니다."
 
 #. Author of the plugin
 msgid "Wirecard AG"
