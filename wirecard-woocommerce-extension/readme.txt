@@ -57,7 +57,7 @@ The fully documented installation guide can be found on [Github](https://github.
 
 To make it easier to integrate our extension and correct possible malfunctions, our extension uses an external plugin provided by LiveZilla GmbH, Ekkehardstraße 10, 78224 Singen, Germany for the handling of support inquiries via a Support Chat.
 All core functions, as well as data protection regulations of this plugin can be viewed at [www.livezilla.net](https://www.livezilla.net).
-This plugin is hosted by a subsidiary of the Wirecard Group, Wirecard Romania S.A., Vasile Milea 2H, Sector 6, 061344 Bucharest, Romania and is implemented via the following [link](http://www.provusgroup.com/livezilla/script.php?id=936f87cd4ce16e1e60bea40b45b0596a) in our extension.
+This plugin is hosted by a subsidiary of the Wirecard Group, Wirecard Romania S.A., Vasile Milea 2H, Sector 6, 061344 Bucharest, Romania and is implemented via the following [link](https://www.provusgroup.com/livezilla/script.php?id=936f87cd4ce16e1e60bea40b45b0596a) in our extension.
 
 == Terms of Use for Wirecard Plugins ==
 
