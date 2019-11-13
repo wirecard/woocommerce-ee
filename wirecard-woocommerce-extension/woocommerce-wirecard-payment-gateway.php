@@ -10,6 +10,8 @@
  * License URI: https://www.gnu.org/licenses/gpl-3.0.html
  * Text Domain: wirecard-woocommerce-extension
  * Domain Path: /languages
+ * WC requires at least: 3.3.4
+ * WC tested up to: 3.7.0
  *
  * Shop System Plugins - Terms of Use
  *
