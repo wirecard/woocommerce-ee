@@ -333,7 +333,7 @@ class Additional_Information {
 			}
 			if ( ! empty( $refund_basket ) ) {
 				foreach ( $refund_basket as $refund_item ) {
-					if ( $refund_item['product']->get_id() === $item['article-number'] ) {
+					if ( $refund_item['product']->get_id() === intval( $item['article-number'] ) ) {
 						$items_total += $item['amount']['value'] * $refund_item['qty'];
 						$basket       = $this->set_item_from_response(
 							$basket,

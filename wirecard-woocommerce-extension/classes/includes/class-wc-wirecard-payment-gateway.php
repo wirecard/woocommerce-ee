@@ -263,11 +263,6 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 			/** @var SuccessResponse $response */
 			$response = $notification_handler->handle_notification( $payment_method, $notification );
 			if ( $response ) {
-				if ( 'masterpass' === $response->getPaymentMethod() && (
-						\Wirecard\PaymentSdk\Transaction\Transaction::TYPE_DEBIT === $response->getTransactionType() ||
-						\Wirecard\PaymentSdk\Transaction\Transaction::TYPE_AUTHORIZATION === $response->getTransactionType() ) ) {
-					return;
-				}
 
 				if ( self::CHECK_PAYER_RESPONSE === $response->getTransactionType() ) {
 					return;

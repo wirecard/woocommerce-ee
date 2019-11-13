@@ -142,47 +142,23 @@ class Wirecard_Transaction_Factory {
 	public function create_transaction( $order, $response, $base_url, $transaction_state, $payment_method ) {
 		global $wpdb;
 		$requested_amount      = $response->getData()['requested-amount'];
-		$parent_transaction_id = '';
-		$parent_transaction    = $this->get_transaction( $response->getParentTransactionId() );
-
-		//set parent_transaction_id only if there is an existing parent entry in database
-		if ( $parent_transaction ) {
-			$parent_transaction_id = $response->getParentTransactionId();
-			$action                = $response->getTransactionType();
-			$rest_amount           = $this->get_parent_rest_amount( $parent_transaction_id, $action );
-
-			if ( $rest_amount === $requested_amount ) {
-				$order->set_transaction_id( $response->getTransactionId() );
-				// update parent transaction to closed, no back-end ops possible anymore
-				$wpdb->update(
-					$this->table_name,
-					array(
-						'closed'            => '1',
-						'transaction_state' => 'closed',
-					),
-					array(
-						'transaction_id' => $parent_transaction_id,
-					)
-				);
-			}
-		} else {
-			$order->set_transaction_id( $response->getTransactionId() );
-		}
-		$transaction_link = $this->get_transaction_link( $base_url, $response );
-		$transaction      = $this->get_transaction( $response->getTransactionId() );
+		$parent_transaction_id = $this->update_parent_transaction( $response, $order );
+		$transaction_link      = $this->get_transaction_link( $base_url, $response );
+		$transaction           = $this->get_transaction( $response->getTransactionId() );
+		$parameters            = $this->set_transaction_parameters(
+			$response,
+			$parent_transaction_id,
+			$payment_method,
+			$transaction_state,
+			$order,
+			$transaction_link,
+			$requested_amount
+		);
 
 		if ( $transaction && ( 'awaiting' === $transaction->transaction_state ) ) {
 			$wpdb->update(
 				$this->table_name,
-				$this->set_transaction_parameters(
-					$response,
-					$parent_transaction_id,
-					$payment_method,
-					$transaction_state,
-					$order,
-					$transaction_link,
-					$requested_amount
-				),
+				$parameters,
 				array(
 					'transaction_id' => $response->getTransactionId(),
 				)
@@ -190,22 +166,9 @@ class Wirecard_Transaction_Factory {
 		} elseif ( ! $transaction ) {
 			$wpdb->insert(
 				$this->table_name,
-				$this->set_transaction_parameters(
-					$response,
-					$parent_transaction_id,
-					$payment_method,
-					$transaction_state,
-					$order,
-					$transaction_link,
-					$requested_amount
-				)
+				$parameters
 			);
-			// Do not reduce stock for follow-up transactions
-			if ( in_array( $response->getTransactionType(), $this->stock_reduction_types, true ) &&
-				! $this->active_germanized() ) {
-				// Reduce stock after successful transaction creation to avoid duplicated reduction
-				wc_reduce_stock_levels( $order->get_id() );
-			}
+			$this->reduce_stock( $response, $order );
 		}
 
 		return $wpdb->insert_id;
@@ -343,8 +306,9 @@ class Wirecard_Transaction_Factory {
 		}
 
 		if ( $message instanceof SuccessResponse ) {
-			$severity = 'updated';
-			$message  = __( 'success_new_transaction', 'wirecard-woocommerce-extension' ) . ' <a href="?page=wirecardpayment&id=' . $message->getTransactionId() . '">' . $message->getTransactionId() . '</a>';
+			$severity    = 'updated';
+			$message     = __( 'success_new_transaction', 'wirecard-woocommerce-extension' ) . ' <a href="?page=wirecardpayment&id=' . $message->getTransactionId() . '">' . $message->getTransactionId() . '</a>';
+			$transaction = $this->get_transaction( $transaction_id );
 		}
 
 		$this->show_transaction( $transaction, $message, $severity );
@@ -510,6 +474,65 @@ class Wirecard_Transaction_Factory {
 			'response'              => wp_json_encode( $response->getData() ),
 			'transaction_link'      => $transaction_link,
 		);
+	}
+
+	/**
+	 * Update parent transaction in database
+	 *
+	 * @param SuccessResponse $response
+	 * @param WC_Order $order
+	 *
+	 * @return string
+	 *
+	 * @throws WC_Data_Exception
+	 * @since 3.0.0
+	 */
+	private function update_parent_transaction( $response, $order ) {
+		global $wpdb;
+		$requested_amount   = $response->getData()['requested-amount'];
+		$action             = $response->getTransactionType();
+		$parent_transaction = $this->get_transaction( $response->getParentTransactionId() );
+		if ( $parent_transaction ) {
+			$parent_transaction_id = $response->getParentTransactionId();
+			$rest_amount           = $this->get_parent_rest_amount( $parent_transaction_id, $action );
+			if ( $rest_amount === $requested_amount ) {
+				$order->set_transaction_id( $response->getTransactionId() );
+				// update parent transaction to closed, no back-end ops possible anymore
+				$wpdb->update(
+					$this->table_name,
+					array(
+						'closed'            => '1',
+						'transaction_state' => 'closed',
+					),
+					array(
+						'transaction_id' => $parent_transaction_id,
+					)
+				);
+			}
+			return $parent_transaction_id;
+		} else {
+			$order->set_transaction_id( $response->getTransactionId() );
+		}
+		return '';
+	}
+
+	/**
+	 * Reduce stock
+	 *
+	 * @param SuccessResponse $response
+	 * @param WC_Order $order
+	 *
+	 * @return void
+	 *
+	 * @since 3.0.0
+	 */
+	private function reduce_stock( $response, $order ) {
+		// Do not reduce stock for follow-up transactions
+		if ( in_array( $response->getTransactionType(), $this->stock_reduction_types, true ) &&
+			! $this->active_germanized() ) {
+			// Reduce stock after successful transaction creation to avoid duplicated reduction
+			wc_reduce_stock_levels( $order->get_id() );
+		}
 	}
 
 	/**
