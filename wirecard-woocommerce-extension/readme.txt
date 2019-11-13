@@ -4,7 +4,7 @@ Tags: credit-card, paypal, china-payment, sofort, alipay, ideal, eps, sepa, paym
 Requires at least: 4.9
 Tested up to: 5.2.3
 Requires PHP: 5.6
-Stable tag: 2.2.0
+Stable tag: 3.0.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -43,12 +43,12 @@ In addition to the payment methods provided, the Wirecard WooCommerce Extension 
 
 - Installation, update and deactivation of the extension in the WordPress backend
 - Configuration of the extension within the WordPress backend
-- Seamless integration of credit cards with and without 3D Secure (if required, only authorisation of the payment)
+- Seamless integration of credit cards with and without 3D Secure (if required, only authorization of the payment)
 - One-click checkout with credit cards
 - Direct payment processing via an interface for optimal user-friendliness in the checkout process
 - Display of all transactions in the shop system with the option of performing cancellations and refunds directly in the shop system
 - State-of-the-art risk management and fraud prevention with Wirecard Fraud Prevention Suite (FPS)
-- Open-source code for flexible customisation, optimal exchange and to ensure that your shop system is always up to date
+- Open-source code for flexible customization, optimal exchange and to ensure that your shop system is always up to date
 
 == Installation ==
 The fully documented installation guide can be found on [Github](https://github.com/wirecard/woocommerce-ee/wiki/Installation)
