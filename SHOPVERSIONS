@@ -1,5 +1,25 @@
 [
 {
+	"release": "3.0.0",
+	"shopversions": {
+    	"shopsystem": {
+    		"name": "WooCommerce",
+    		"tested": "3.7.0",
+    		"compatibility": "3.3.4"
+    	},
+    	"platform": {
+    		"name": "Wordpress",
+    		"tested": "5.2.3",
+    		"compatibility": "5.0.3"
+    	}
+    },	
+	"changelog": [
+		"Fix refund via Transactiontable for Guaranteed Invoice",
+		"Disable online refund via Order Management for iDEAL and Sofort.",
+		"Remove payment method Masterpass"
+	]
+},
+{
 	"release": "2.2.0",
 	"shopversions": {
     	"shopsystem": {

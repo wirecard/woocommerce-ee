@@ -84,5 +84,6 @@ Our general Terms of Use can be found on [Github](https://github.com/wirecard/wo
 Follow this [link](https://github.com/wirecard/woocommerce-ee/graphs/contributors) to see the team responsible for the development of this extension.
 
 == Changelog ==
-- Add giropay payment method
-- Improve test credentials button error handling
+- Fix refund via Transactiontable for Guaranteed Invoice
+- Disable online refund via Order Management for iDEAL and Sofort.
+- Remove payment method Masterpass
