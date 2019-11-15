@@ -61,8 +61,6 @@ matrix:
     before_install:
     - travis_retry composer self-update
     install:
-    - find . -name compatible-shop-releases.txt
-    - find . -name new-compatible-shop-releases.txt
     # check if files are same or not
     - cmp --silent ${WOOCOMMERCE_RELEASES_FILE} ${WOOCOMMERCE_COMPATIBILITY_FILE} && export COMPATIBILITY_CHECK=0 || export COMPATIBILITY_CHECK=1
     # check from which file to take versions
