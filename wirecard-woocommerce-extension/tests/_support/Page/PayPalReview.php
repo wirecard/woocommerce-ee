@@ -38,13 +38,14 @@ class PayPalReview extends Base {
 	 * @var string
 	 * @since 1.4.4
 	 */
-	public $URL = 'review';
+	public $URL = 'checkout';
 
 	/**
 	 * @var array
 	 * @since 1.4.4
 	 */
 	public $elements = array(
-		'Pay Now' => "//*[@id='confirmButtonTop']"
+		'Pay Now' => "//*[@id='confirmButtonTop']",
+		'Continue' => "//*[@class='btn full confirmButton continueButton']"
 	);
 }
