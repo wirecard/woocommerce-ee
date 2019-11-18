@@ -5,7 +5,7 @@ Feature: PayPalPurchaseHappyPath
 
   Background:
 	Given I activate "paypal" payment action "pay" in configuration
-	And I prepare pay pal checkout
+	And I prepare checkout
     When I am on "Checkout" page
     Then I fill fields with "Customer data"
 	And I click "Wirecard PayPal"
@@ -16,6 +16,7 @@ Feature: PayPalPurchaseHappyPath
     And I am redirected to "Pay Pal Log In" page
     And I login to Paypal
 	When I am redirected to "Pay Pal Review" page
+	And I click "Continue"
 	And I click "Pay Now"
 	Then I am redirected to "Order Received" page
     And I see "Order received"
