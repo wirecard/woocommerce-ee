@@ -9,8 +9,8 @@ Feature: GiropayPurchaseHappyPath
 	And I fill fields with "Customer data"
 	And I click "Wirecard Giropay"
 	And I fill BIC
-
-	@API-TEST
+	
+  @major
   Scenario: purchase
 	Given I click "Place order"
 	And I am redirected to "Giropay Payment" page

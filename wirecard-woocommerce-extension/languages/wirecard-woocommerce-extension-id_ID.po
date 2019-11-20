@@ -153,23 +153,23 @@ msgstr "Jika diaktifkan, metode pembayaran Faktur Bergaransi hanya akan ditampil
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:306
 msgid "config_challenge_challenge_threed"
-msgstr "Challenge requested"
+msgstr "Pertanyaan tantangan diminta"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:271
 msgid "config_challenge_indicator"
-msgstr "Challenge Indicator"
+msgstr "Indikator Pertanyaan Tantangan"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:273
 msgid "config_challenge_indicator_desc"
-msgstr "Indicates whether a challenge is  requested for this transaction."
+msgstr "Menunjukkan apakah suatu pertanyaan tantangan diminta untuk transaksi ini."
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:305
 msgid "config_challenge_no_challenge"
-msgstr "No challenge requested"
+msgstr "Pertanyaan tantangan tidak diminta"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:304
 msgid "config_challenge_no_preference"
-msgstr "No preference"
+msgstr "Tidak ada preferensi"
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:168
 msgid "config_creditor_city"
@@ -400,7 +400,7 @@ msgstr "Jenis Pembayaran"
 
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:154
 msgid "config_payment_type_desc"
-msgstr "Choose \"Payment In Advance\" to display bank data after the checkout process, or \"Payment On Invoice\" to send bank data with the invoice."
+msgstr "Pilih \"Pembayaran di Muka\" untuk menampilkan data bank setelah proses checkout, atau \"Pembayaran Berdasarkan Faktur\" untuk mengirimkan data bank beserta faktur."
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:178
 
@@ -433,7 +433,7 @@ msgstr "Aktifkan metode pembayaran Kartu Kredit"
 
 #: classes/includes/class-wc-gateway-wirecard-eps.php:97
 msgid "config_status_desc_eps"
-msgstr "Activate payment method eps-Überweisung to make it available for your consumers."
+msgstr "Aktifkan metode pembayaran eps-Überweisung untuk menyediakannya kepada pelanggan Anda."
 
 #: classes/includes/class-wc-gateway-wirecard-giropay.php:100
 msgid "config_status_desc_giropay"
@@ -443,13 +443,9 @@ msgstr "Activate payment method giropay to make it available for your consumers.
 msgid "config_status_desc_ideal"
 msgstr "Aktifkan metode pembayaran iDEAL"
 
-#: classes/includes/class-wc-gateway-wirecard-masterpass.php:99
-msgid "config_status_desc_masterpass"
-msgstr "Aktifkan metode pembayaran Masterpass"
-
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:98
 msgid "config_status_desc_paybybankapp"
-msgstr "Activate payment method Pay by Bank app to make it available for your consumers."
+msgstr "Aktifkan metode pembayaran Pay by Bank app untuk menyediakannya kepada pelanggan Anda."
 
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:98
 msgid "config_status_desc_paypal"
@@ -533,20 +529,20 @@ msgstr "Kartu Kredit dapat disimpan untuk digunakan kembali di kemudian hari tan
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:219
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:126
 msgid "config_wpp_url"
-msgstr "Wirecard Payment Page v2 Address (URL WPP v2)"
+msgstr "Alamat Wirecard Payment Page v2 (URL WPP v2)"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:221
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:128
 msgid "config_wpp_url_desc"
-msgstr "Wirecard Payment Page v2 Address (URL WPP v2) (e.g. https://wpp.wirecard.com)."
+msgstr "Alamat Wirecard Payment Page v2  (URL WPP v2) (misalnya https://wpp.wirecard.com)."
 
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:155
 msgid "config_zapp_merchant_return_string"
-msgstr "Merchant Return URL"
+msgstr "URL Pengalihan Merchant"
 
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:157
 msgid "config_zapp_merchant_return_string_desc"
-msgstr "Merchant Return URL to redirect consumers from their mobile banking apps to your shop."
+msgstr "URL Pengalihan Merchant untuk mengarahkan konsumen dari aplikasi mobile banking ke toko Anda."
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:62
 msgid "creditcard"
@@ -583,7 +579,7 @@ msgstr "Aktifkan Kartu Kredit Wirecard"
 
 #: classes/includes/class-wc-gateway-wirecard-eps.php:98
 msgid "enable_heading_title_eps"
-msgstr "Enable Wirecard eps-Überweisung"
+msgstr "Aktifkan Wirecard eps-Überweisung"
 
 #: classes/includes/class-wc-gateway-wirecard-giropay.php:101
 msgid "enable_heading_title_giropay"
@@ -593,13 +589,9 @@ msgstr "Enable Wirecard giropay"
 msgid "enable_heading_title_ideal"
 msgstr "Aktifkan iDEAL Wirecard"
 
-#: classes/includes/class-wc-gateway-wirecard-masterpass.php:98
-msgid "enable_heading_title_masterpass"
-msgstr "Aktifkan Masterpass Wirecard"
-
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:99
 msgid "enable_heading_title_paybybankapp"
-msgstr "Enable Wirecard Pay by Bank app"
+msgstr "Aktifkan Wirecard Pay by Bank app"
 
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:99
 msgid "enable_heading_title_paypal"
@@ -636,7 +628,7 @@ msgstr "eps-Überweisung"
 
 #: classes/includes/class-wc-gateway-wirecard-eps.php:64
 msgid "eps_desc"
-msgstr "eps-Überweisung transactions via Wirecard Payment Gateway."
+msgstr "Transaksi eps-Überweisung melalui Gerbang Pembayaran Wirecard."
 
 #: classes/includes/class-wc-wirecard-payment-gateway.php:682
 msgid "error_credentials"
@@ -649,7 +641,7 @@ msgstr "Terjadi kesalahan saat mengirim e-mail"
 
 #: templates/credit-card-form.php:45
 msgid "error_malformed_creditcard_request"
-msgstr "Oops! Something went wrong. Please check your credit card data and try again."
+msgstr "Ups! Ada yang salah. Periksa data kartu kredit Anda dan coba lagi."
 
 #: classes/admin/class-wirecard-transaction-factory.php:359
 msgid "error_no_post_processing_operations"
@@ -668,6 +660,7 @@ msgid "error_no_transaction"
 msgstr "Transaksi tidak ditemukan"
 
 #: woocommerce-wirecard-payment-gateway.php:319
+
 msgid "error_woocommerce_missing"
 msgstr "Maaf, untuk menjalankan plugin ini, Plugin WooCommerce harus diinstal dan aktif."
 
@@ -686,7 +679,7 @@ msgstr "giropay transactions via Wirecard Payment Gateway."
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:369
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:242
 msgid "heading_creditcard_form"
-msgstr "Enter Card Details"
+msgstr "Masukkan Rincian Kartu"
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:60
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:104
@@ -712,11 +705,6 @@ msgstr "giropay Wirecard"
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:108
 msgid "heading_title_ideal"
 msgstr "iDEAL Wirecard"
-
-#: classes/includes/class-wc-gateway-wirecard-masterpass.php:61
-#: classes/includes/class-wc-gateway-wirecard-masterpass.php:106
-msgid "heading_title_masterpass"
-msgstr "Wirecard Masterpass"
 
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:60
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:106
@@ -790,15 +778,6 @@ msgstr "Transaksi iDEAL melalui Payment Gateway Wirecard"
 msgid "last-name"
 msgstr "Nama belakang"
 
-#: classes/includes/class-wc-gateway-wirecard-masterpass.php:62
-msgid "masterpass"
-msgstr "Masterpass"
-
-#: classes/includes/class-wc-gateway-wirecard-masterpass.php:63
-
-msgid "masterpass_desc"
-msgstr "Transaksi Masterpass melalui Payment Gateway Wirecard"
-
 #: classes/includes/class-wc-wirecard-payment-gateway.php:212
 #: classes/includes/class-wc-wirecard-payment-gateway.php:228
 #: classes/includes/class-wc-wirecard-payment-gateway.php:340
@@ -812,6 +791,12 @@ msgstr "Sah"
 
 msgid "order_status_authorized_count_plural"
 msgstr "Sah<span class=\"count\">(%s)</span>"
+
+#. translators:
+#: woocommerce-wirecard-payment-gateway.php:105
+msgid "order_status_authorized_count_single"
+msgid_plural "order_status_authorized_count_plural"
+msgstr[0] ""
 
 #: classes/includes/class-wc-wirecard-payment-gateway.php:521
 
@@ -870,7 +855,7 @@ msgstr "Pay by Bank app"
 
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:62
 msgid "paybybankapp_desc"
-msgstr "Pay by Bank app transactions via Wirecard Payment Gateway."
+msgstr "Transaksi Pay by Bank app melalui Gerbang Pembayaran Wirecard."
 
 #. Description of the plugin
 msgid "Payment Gateway for WooCommerce"
@@ -937,7 +922,7 @@ msgstr "Pengembalian dana online saat ini tidak tersedia."
 
 #: classes/helper/class-additional-information.php:349
 msgid "refund_partial_shipping_error"
-msgstr "You can refund shipping fees only in full; partial refund of shipping fees is not possible."
+msgstr "Anda hanya bisa mengembalikan biaya pengiriman secara penuh; pengembalian biaya pengiriman secara parsial tidak bisa dilakukan."
 
 #: classes/includes/class-wc-wirecard-payment-gateway.php:409
 msgid "refund_processing_error"
@@ -1213,7 +1198,7 @@ msgstr "I herewith confirm that I have read the <a href=\"https://www.wirecardba
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:471
 msgid "text_terms_notice"
-msgstr "You must agree to the privacy notice and additional terms of Wirecard payment methods."
+msgstr "Anda harus menyetujui pemberitahuan privasi dan persyaratan tambahan dari metode pembayaran Wirecard."
 
 #: classes/admin/class-wirecard-transaction-factory.php:376
 msgid "text_total"
@@ -1266,7 +1251,7 @@ msgstr "Gunakan Kartu Kredit baru"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:777
 msgid "warning_credit_card_url_mismatch"
-msgstr "Attention: Please check your credentials within the URL setting fields. You might have configured/combined a productive account with a test account."
+msgstr "Perhatian: Periksa kredensial Anda dalam kolom pengaturan URL. Anda mungkin telah mengonfigurasi/menggabungkan akun produktif dengan akun pengujian."
 
 #. Author of the plugin
 msgid "Wirecard AG"

@@ -433,10 +433,6 @@ msgstr "Activate payment method giropay to make it available for your consumers.
 msgid "config_status_desc_ideal"
 msgstr "iDEAL aktivieren, um dieses Zahlungsmittel beim Checkout anzubieten."
 
-#: classes/includes/class-wc-gateway-wirecard-masterpass.php:99
-msgid "config_status_desc_masterpass"
-msgstr "Masterpass aktivieren, um dieses Zahlungsmittel beim Checkout anzubieten."
-
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:98
 msgid "config_status_desc_paybybankapp"
 msgstr "Activate payment method Pay by Bank app to make it available for your consumers."
@@ -582,10 +578,6 @@ msgstr "Enable Wirecard giropay"
 msgid "enable_heading_title_ideal"
 msgstr "Wirecard iDEAL aktivieren"
 
-#: classes/includes/class-wc-gateway-wirecard-masterpass.php:98
-msgid "enable_heading_title_masterpass"
-msgstr "Wirecard Masterpass aktivieren"
-
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:99
 msgid "enable_heading_title_paybybankapp"
 msgstr "Enable Wirecard Pay by Bank app"
@@ -656,7 +648,7 @@ msgstr "Es wurde keine Transaktion gefunden."
 
 #: woocommerce-wirecard-payment-gateway.php:319
 msgid "error_woocommerce_missing"
-msgstr "Für die Verwendung dieses Plugins müssen Sie zuerst die Wirecard WooCommerce Extension installieren und aktivieren."
+msgstr "Für die Verwendung dieses Plugins müssen Sie zuerst die WooCommerce Extension installieren und aktivieren."
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:258
 msgid "first-name"
@@ -700,11 +692,6 @@ msgstr "Wirecard giropay"
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:108
 msgid "heading_title_ideal"
 msgstr "Wirecard iDEAL"
-
-#: classes/includes/class-wc-gateway-wirecard-masterpass.php:61
-#: classes/includes/class-wc-gateway-wirecard-masterpass.php:106
-msgid "heading_title_masterpass"
-msgstr "Wirecard Masterpass"
 
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:60
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:106
@@ -775,15 +762,6 @@ msgstr "\"iDEAL\"-Transaktionen via Wirecard Payment Processing Gateway."
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:262
 msgid "last-name"
 msgstr "Nachname"
-
-#: classes/includes/class-wc-gateway-wirecard-masterpass.php:62
-msgid "masterpass"
-msgstr "Masterpass"
-
-#: classes/includes/class-wc-gateway-wirecard-masterpass.php:63
-
-msgid "masterpass_desc"
-msgstr "\"Masterpass\"-Transaktionen via Wirecard Payment Processing Gateway."
 
 #: classes/includes/class-wc-wirecard-payment-gateway.php:212
 #: classes/includes/class-wc-wirecard-payment-gateway.php:228

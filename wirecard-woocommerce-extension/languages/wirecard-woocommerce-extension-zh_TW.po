@@ -443,10 +443,6 @@ msgstr "Activate payment method giropay to make it available for your consumers.
 msgid "config_status_desc_ideal"
 msgstr "啟動 iDEAL 付款方式"
 
-#: classes/includes/class-wc-gateway-wirecard-masterpass.php:99
-msgid "config_status_desc_masterpass"
-msgstr "啟動 Masterpass 付款方式"
-
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:98
 msgid "config_status_desc_paybybankapp"
 msgstr "Activate payment method Pay by Bank app to make it available for your consumers."
@@ -593,10 +589,6 @@ msgstr "Enable Wirecard giropay"
 msgid "enable_heading_title_ideal"
 msgstr "啟用 Wirecard iDEAL"
 
-#: classes/includes/class-wc-gateway-wirecard-masterpass.php:98
-msgid "enable_heading_title_masterpass"
-msgstr "啟用 Wirecard Masterpass"
-
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:99
 msgid "enable_heading_title_paybybankapp"
 msgstr "Enable Wirecard Pay by Bank app"
@@ -668,6 +660,7 @@ msgid "error_no_transaction"
 msgstr "找不到交易"
 
 #: woocommerce-wirecard-payment-gateway.php:319
+
 msgid "error_woocommerce_missing"
 msgstr "抱歉，但此外掛程式要求安裝並啟動 WooCommerce 外掛程式。"
 
@@ -712,11 +705,6 @@ msgstr "Wirecard Giropay"
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:108
 msgid "heading_title_ideal"
 msgstr "Wirecard iDEAL"
-
-#: classes/includes/class-wc-gateway-wirecard-masterpass.php:61
-#: classes/includes/class-wc-gateway-wirecard-masterpass.php:106
-msgid "heading_title_masterpass"
-msgstr "Wirecard Masterpass"
 
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:60
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:106
@@ -789,15 +777,6 @@ msgstr "透過 Wirecard Payment Processing Gateway 進行 iDEAL 交易"
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:262
 msgid "last-name"
 msgstr "姓"
-
-#: classes/includes/class-wc-gateway-wirecard-masterpass.php:62
-msgid "masterpass"
-msgstr "Masterpass"
-
-#: classes/includes/class-wc-gateway-wirecard-masterpass.php:63
-
-msgid "masterpass_desc"
-msgstr "透過 Wirecard Payment Processing Gateway 進行 Masterpass 交易"
 
 #: classes/includes/class-wc-wirecard-payment-gateway.php:212
 #: classes/includes/class-wc-wirecard-payment-gateway.php:228

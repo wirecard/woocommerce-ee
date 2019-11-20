@@ -66,13 +66,8 @@ class WC_Gateway_Wirecard_Giropay extends WC_Wirecard_Payment_Gateway {
 		$this->method_name        = __( 'giropay', 'wirecard-woocommerce-extension' );
 		$this->method_description = __( 'giropay_desc', 'wirecard-woocommerce-extension' );
 		$this->has_fields         = true;
-
-		$this->supports = array(
-			'products',
-			'refunds',
-		);
-
-		$this->payment_action = 'pay';
+		$this->supports           = array( 'products' );
+		$this->payment_action     = 'pay';
 
 		$this->init_form_fields();
 		$this->init_settings();
@@ -239,5 +234,15 @@ class WC_Gateway_Wirecard_Giropay extends WC_Wirecard_Payment_Gateway {
 		$config->add( $payment_config );
 
 		return $config;
+	}
+
+	/**
+	 * @param WC_Order $order
+	 * @return bool
+	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+	 * @since 3.0.0
+	 */
+	public function can_refund_order( $order ) {
+		return false;
 	}
 }

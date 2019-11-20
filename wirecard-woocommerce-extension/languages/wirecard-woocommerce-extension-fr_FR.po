@@ -146,23 +146,23 @@ msgstr "Si ce champ est activé, l’écran Mode de paiement Facture avec garant
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:306
 msgid "config_challenge_challenge_threed"
-msgstr "Challenge requested"
+msgstr "Défi demandé"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:271
 msgid "config_challenge_indicator"
-msgstr "Challenge Indicator"
+msgstr "Indicateur de défi"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:273
 msgid "config_challenge_indicator_desc"
-msgstr "Indicates whether a challenge is  requested for this transaction."
+msgstr "Indique si un défi est demandé pour cette transaction."
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:305
 msgid "config_challenge_no_challenge"
-msgstr "No challenge requested"
+msgstr "Aucun défi demandé"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:304
 msgid "config_challenge_no_preference"
-msgstr "No preference"
+msgstr "Pas de préférence"
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:168
 msgid "config_creditor_city"
@@ -433,13 +433,9 @@ msgstr "Activate payment method giropay to make it available for your consumers.
 msgid "config_status_desc_ideal"
 msgstr "Activer le mode de paiement iDEAL pour qu’il soit disponible pour vos clients."
 
-#: classes/includes/class-wc-gateway-wirecard-masterpass.php:99
-msgid "config_status_desc_masterpass"
-msgstr "Activer le mode de paiement Masterpass pour qu’il soit disponible pour vos clients."
-
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:98
 msgid "config_status_desc_paybybankapp"
-msgstr "Activate payment method Pay by Bank app to make it available for your consumers."
+msgstr "Activer le mode de paiement Pay by Bank app pour qu’il soit disponible pour vos consommateurs."
 
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:98
 msgid "config_status_desc_paypal"
@@ -531,11 +527,11 @@ msgstr "Wirecard Payment Page v2 Adresse (URL WPP v2) (ex. https://wpp.wirecard.
 
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:155
 msgid "config_zapp_merchant_return_string"
-msgstr "Merchant Return URL"
+msgstr "URL de retour du site marchand"
 
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:157
 msgid "config_zapp_merchant_return_string_desc"
-msgstr "Merchant Return URL to redirect consumers from their mobile banking apps to your shop."
+msgstr "L’URL de retour du site marchand redirige les consommateurs vers votre boutique à partir de leurs applications de services bancaires mobiles."
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:62
 msgid "creditcard"
@@ -582,13 +578,9 @@ msgstr "Enable Wirecard giropay"
 msgid "enable_heading_title_ideal"
 msgstr "Activer Wirecard iDEAL"
 
-#: classes/includes/class-wc-gateway-wirecard-masterpass.php:98
-msgid "enable_heading_title_masterpass"
-msgstr "Activer Wirecard Masterpass"
-
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:99
 msgid "enable_heading_title_paybybankapp"
-msgstr "Enable Wirecard Pay by Bank app"
+msgstr "Activez Wirecard Pay by Bank app"
 
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:99
 msgid "enable_heading_title_paypal"
@@ -637,7 +629,7 @@ msgstr "Message d’erreur de distribution de l’e-mail."
 
 #: templates/credit-card-form.php:45
 msgid "error_malformed_creditcard_request"
-msgstr "Oops! Something went wrong. Please check your credit card data and try again."
+msgstr "Oups ! Une erreur est survenue. Veuillez vérifier vos données de carte de crédit et réessayer."
 
 #: classes/admin/class-wirecard-transaction-factory.php:359
 msgid "error_no_post_processing_operations"
@@ -656,7 +648,7 @@ msgstr "Aucune transaction trouvée."
 
 #: woocommerce-wirecard-payment-gateway.php:319
 msgid "error_woocommerce_missing"
-msgstr "Désolé, mais il faut d’abord installer et activer l’extension WooCommerce Wirecard pour ce plugin."
+msgstr "Désolé, mais il faut d’abord installer et activer l’extension WooCommerce pour ce plugin."
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:258
 msgid "first-name"
@@ -699,11 +691,6 @@ msgstr "Wirecard giropay"
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:108
 msgid "heading_title_ideal"
 msgstr "Wirecard iDEAL"
-
-#: classes/includes/class-wc-gateway-wirecard-masterpass.php:61
-#: classes/includes/class-wc-gateway-wirecard-masterpass.php:106
-msgid "heading_title_masterpass"
-msgstr "Wirecard Masterpass"
 
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:60
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:106
@@ -775,15 +762,6 @@ msgstr "Transactions iDEAL via la passerelle de paiement Wirecard."
 msgid "last-name"
 msgstr "Nom de famille"
 
-#: classes/includes/class-wc-gateway-wirecard-masterpass.php:62
-msgid "masterpass"
-msgstr "Masterpass"
-
-#: classes/includes/class-wc-gateway-wirecard-masterpass.php:63
-
-msgid "masterpass_desc"
-msgstr "Transactions Masterpass via la passerelle de paiement Wirecard."
-
 #: classes/includes/class-wc-wirecard-payment-gateway.php:212
 #: classes/includes/class-wc-wirecard-payment-gateway.php:228
 #: classes/includes/class-wc-wirecard-payment-gateway.php:340
@@ -797,6 +775,13 @@ msgstr "Autorisé"
 
 msgid "order_status_authorized_count_plural"
 msgstr "Autorisé <span class=\"count\">(%s)</span>"
+
+#. translators:
+#: woocommerce-wirecard-payment-gateway.php:105
+msgid "order_status_authorized_count_single"
+msgid_plural "order_status_authorized_count_plural"
+msgstr[0] ""
+msgstr[1] ""
 
 #: classes/includes/class-wc-wirecard-payment-gateway.php:521
 
@@ -853,11 +838,11 @@ msgstr "Pay by Bank app"
 
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:62
 msgid "paybybankapp_desc"
-msgstr "Pay by Bank app transactions via Wirecard Payment Gateway."
+msgstr "Transactions Pay by Bank app via la passerelle de paiement Wirecard."
 
 #. Description of the plugin
 msgid "Payment Gateway for WooCommerce"
-msgstr "Payment Processing Gateway for WooCommerce"
+msgstr "Passerelle de paiement pour WooCommerce"
 
 #: classes/includes/class-wc-wirecard-payment-gateway.php:733
 msgid "payment_awaiting"

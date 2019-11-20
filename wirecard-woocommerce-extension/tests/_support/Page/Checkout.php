@@ -59,6 +59,7 @@ class Checkout extends Base {
 		'Email address'                 => "//*[@id='billing_email']",
 		'Place order'                   => "//*[@id='place_order']",
 		'Wirecard PayPal' 				=> "//*[@id='payment']/ul/li[contains(@class, 'paypal')]",
+		'Credit Card Form'              => "//*[@id='wc_payment_method_wirecard_new_credit_card']",
 		'Credit Card First Name'        => "//*[@id='pp-cc-first-name']",
 		'Credit Card Last Name'         => "//*[@id='pp-cc-last-name']",
 		'Credit Card Card number'       => "//*[@id='pp-cc-account-number']",
@@ -112,9 +113,18 @@ class Checkout extends Base {
 	public function fillCreditCardDetails() {
 		$I                 = $this->tester;
 		$data_field_values = $I->getDataFromDataFile( 'tests/_data/PaymentMethodData.json' );
-		$I->wait(5);
-		$this->switchFrame();
-		$I->waitForElementVisible( $this->getElement( 'Credit Card Last Name' ) );
+		$I->waitForElementVisible($this->getElement( 'Credit Card Form' ));
+		$I->scrollTo( $this->getElement( 'Credit Card Form' ));
+		try {
+			$I->wait(10);
+			$this->switchFrame();
+			$I->waitForElementVisible( $this->getElement( 'Credit Card Last Name' ) );
+		} catch (Exception $e) {
+			$I->switchToIFrame();
+			$I->wait(15);
+			$this->switchFrame();
+			$I->waitForElementVisible( $this->getElement( 'Credit Card Last Name' ), 60 );
+		}
 		$I->fillField( $this->getElement( 'Credit Card Last Name' ), $data_field_values->creditcard->last_name );
 		$I->fillField( $this->getElement( 'Credit Card Card number' ), $data_field_values->creditcard->card_number );
 		$I->fillField( $this->getElement( 'Credit Card CVV' ), $data_field_values->creditcard->cvv );

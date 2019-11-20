@@ -153,23 +153,23 @@ msgstr "有効にすると、請求先/発送先の住所が同一の場合、�
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:306
 msgid "config_challenge_challenge_threed"
-msgstr "Challenge requested"
+msgstr "リクエストされたチャレンジ"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:271
 msgid "config_challenge_indicator"
-msgstr "Challenge Indicator"
+msgstr "チャレンジ指標"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:273
 msgid "config_challenge_indicator_desc"
-msgstr "Indicates whether a challenge is  requested for this transaction."
+msgstr "この取引でチャレンジがリクエストされているかを示します。"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:305
 msgid "config_challenge_no_challenge"
-msgstr "No challenge requested"
+msgstr "チャレンジがリクエストされていない"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:304
 msgid "config_challenge_no_preference"
-msgstr "No preference"
+msgstr "どちらでもよい"
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:168
 msgid "config_creditor_city"
@@ -400,7 +400,7 @@ msgstr "支払いの種類"
 
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:154
 msgid "config_payment_type_desc"
-msgstr "Choose \"Payment In Advance\" to display bank data after the checkout process, or \"Payment On Invoice\" to send bank data with the invoice."
+msgstr "「前払い」を選択して注文処理の後に銀行データを表示する、または「請求書払い」を選択して請求書とともに銀行データを送信します。"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:178
 
@@ -433,7 +433,7 @@ msgstr "クレジット カードの支払い方法を有効にします"
 
 #: classes/includes/class-wc-gateway-wirecard-eps.php:97
 msgid "config_status_desc_eps"
-msgstr "Activate payment method eps-Überweisung to make it available for your consumers."
+msgstr "購入者が使用できるように支払方法のeps-Überweisungを有効にします。"
 
 #: classes/includes/class-wc-gateway-wirecard-giropay.php:100
 msgid "config_status_desc_giropay"
@@ -443,13 +443,9 @@ msgstr "Activate payment method giropay to make it available for your consumers.
 msgid "config_status_desc_ideal"
 msgstr "支払い方法として iDEAL を有効にする"
 
-#: classes/includes/class-wc-gateway-wirecard-masterpass.php:99
-msgid "config_status_desc_masterpass"
-msgstr "支払い方法として Masterpass を有効にする"
-
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:98
 msgid "config_status_desc_paybybankapp"
-msgstr "Activate payment method Pay by Bank app to make it available for your consumers."
+msgstr "購入者が使用できるように支払方法のPay by Bank appを有効にします。"
 
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:98
 msgid "config_status_desc_paypal"
@@ -533,20 +529,20 @@ msgstr "クレジット カードを保存しておけば、次回からはク�
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:219
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:126
 msgid "config_wpp_url"
-msgstr "Wirecard Payment Page v2 Address (URL WPP v2)"
+msgstr "WirecardのPayment Page v2アドレス（URL WPP v2）"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:221
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:128
 msgid "config_wpp_url_desc"
-msgstr "Wirecard Payment Page v2 Address (URL WPP v2) (e.g. https://wpp.wirecard.com)."
+msgstr "WirecardのPayment Page v2アドレス（URL WPP v2）（https://wpp.wirecard.comなど）。"
 
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:155
 msgid "config_zapp_merchant_return_string"
-msgstr "Merchant Return URL"
+msgstr "マーチャントリターンURL"
 
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:157
 msgid "config_zapp_merchant_return_string_desc"
-msgstr "Merchant Return URL to redirect consumers from their mobile banking apps to your shop."
+msgstr "モバイルバンキングアプリから自分のショップに購入者をリダイレクトするマーチャントリターンURL。"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:62
 msgid "creditcard"
@@ -583,7 +579,7 @@ msgstr "Wirecard クレジットカードを有効にする"
 
 #: classes/includes/class-wc-gateway-wirecard-eps.php:98
 msgid "enable_heading_title_eps"
-msgstr "Enable Wirecard eps-Überweisung"
+msgstr "Wirecard eps-Überweisungを有効化する"
 
 #: classes/includes/class-wc-gateway-wirecard-giropay.php:101
 msgid "enable_heading_title_giropay"
@@ -593,13 +589,9 @@ msgstr "Enable Wirecard giropay"
 msgid "enable_heading_title_ideal"
 msgstr "Wirecard iDEAL を有効にする"
 
-#: classes/includes/class-wc-gateway-wirecard-masterpass.php:98
-msgid "enable_heading_title_masterpass"
-msgstr "Wirecard Masterpass を有効にする"
-
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:99
 msgid "enable_heading_title_paybybankapp"
-msgstr "Enable Wirecard Pay by Bank app"
+msgstr "Wirecard Pay by Bank appを有効化する"
 
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:99
 msgid "enable_heading_title_paypal"
@@ -636,7 +628,7 @@ msgstr "eps-Überweisung"
 
 #: classes/includes/class-wc-gateway-wirecard-eps.php:64
 msgid "eps_desc"
-msgstr "eps-Überweisung transactions via Wirecard Payment Gateway."
+msgstr "Wirecard決済ゲートウェイによるeps-Überweisung取引"
 
 #: classes/includes/class-wc-wirecard-payment-gateway.php:682
 msgid "error_credentials"
@@ -649,7 +641,7 @@ msgstr "メールの配信中にエラーが発生しました"
 
 #: templates/credit-card-form.php:45
 msgid "error_malformed_creditcard_request"
-msgstr "Oops! Something went wrong. Please check your credit card data and try again."
+msgstr "申し訳ありません。問題があります。クレジットカードのデータを確認して再試行してください。"
 
 #: classes/admin/class-wirecard-transaction-factory.php:359
 msgid "error_no_post_processing_operations"
@@ -668,6 +660,7 @@ msgid "error_no_transaction"
 msgstr "トランザクションが見つかりません"
 
 #: woocommerce-wirecard-payment-gateway.php:319
+
 msgid "error_woocommerce_missing"
 msgstr "申し訳ありません。このプラグインには WooCommerce プラグインが必要です。"
 
@@ -686,7 +679,7 @@ msgstr "giropay transactions via Wirecard Payment Gateway."
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:369
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:242
 msgid "heading_creditcard_form"
-msgstr "Enter Card Details"
+msgstr "カードの詳細を入力する"
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:60
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:104
@@ -712,11 +705,6 @@ msgstr "Wirecard Giropay"
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:108
 msgid "heading_title_ideal"
 msgstr "Wirecard iDEAL"
-
-#: classes/includes/class-wc-gateway-wirecard-masterpass.php:61
-#: classes/includes/class-wc-gateway-wirecard-masterpass.php:106
-msgid "heading_title_masterpass"
-msgstr "Wirecard Masterpass"
 
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:60
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:106
@@ -790,15 +778,6 @@ msgstr "Wirecard 支払い処理ゲートウェイ経由での iDEAL トラン�
 msgid "last-name"
 msgstr "氏"
 
-#: classes/includes/class-wc-gateway-wirecard-masterpass.php:62
-msgid "masterpass"
-msgstr "Masterpass"
-
-#: classes/includes/class-wc-gateway-wirecard-masterpass.php:63
-
-msgid "masterpass_desc"
-msgstr "Wirecard 支払い処理ゲートウェイ経由での Masterpass トランザクション"
-
 #: classes/includes/class-wc-wirecard-payment-gateway.php:212
 #: classes/includes/class-wc-wirecard-payment-gateway.php:228
 #: classes/includes/class-wc-wirecard-payment-gateway.php:340
@@ -811,7 +790,13 @@ msgid "order_status_authorized"
 msgstr "承認済み"
 
 msgid "order_status_authorized_count_plural"
-msgstr "Authorized <span class=\"count\">(%s)</span>"
+msgstr "承認済み <span class=\"count\">(%s)</span>"
+
+#. translators:
+#: woocommerce-wirecard-payment-gateway.php:105
+msgid "order_status_authorized_count_single"
+msgid_plural "order_status_authorized_count_plural"
+msgstr[0] ""
 
 #: classes/includes/class-wc-wirecard-payment-gateway.php:521
 
@@ -870,7 +855,7 @@ msgstr "Pay by Bank app"
 
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:62
 msgid "paybybankapp_desc"
-msgstr "Pay by Bank app transactions via Wirecard Payment Gateway."
+msgstr "Wirecard決済ゲートウェイによるPay by Bank app取引"
 
 #. Description of the plugin
 msgid "Payment Gateway for WooCommerce"
@@ -937,7 +922,7 @@ msgstr "現在、オンラインでの返金はできません。"
 
 #: classes/helper/class-additional-information.php:349
 msgid "refund_partial_shipping_error"
-msgstr "You can refund shipping fees only in full; partial refund of shipping fees is not possible."
+msgstr "送料の一部を返金することはできないため、送料は全額でのみ返金できます。"
 
 #: classes/includes/class-wc-wirecard-payment-gateway.php:409
 msgid "refund_processing_error"
@@ -1212,7 +1197,7 @@ msgstr "I herewith confirm that I have read the <a href=\"https://www.wirecardba
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:471
 msgid "text_terms_notice"
-msgstr "You must agree to the privacy notice and additional terms of Wirecard payment methods."
+msgstr "プライバシー通知に同意し、Wirecard支払方法に関する追加の条件に同意する必要があります。"
 
 #: classes/admin/class-wirecard-transaction-factory.php:376
 msgid "text_total"
@@ -1265,7 +1250,7 @@ msgstr "新しいクレジット カードを使用する"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:777
 msgid "warning_credit_card_url_mismatch"
-msgstr "Attention: Please check your credentials within the URL setting fields. You might have configured/combined a productive account with a test account."
+msgstr "注意：URLの設定フィールドにある資格証明書を確認してください。利用アカウントにテスト用アカウントを設定している、または組み合わせている可能性があります。"
 
 #. Author of the plugin
 msgid "Wirecard AG"

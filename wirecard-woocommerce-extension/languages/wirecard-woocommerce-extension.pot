@@ -433,10 +433,6 @@ msgstr ""
 msgid "config_status_desc_ideal"
 msgstr ""
 
-#: classes/includes/class-wc-gateway-wirecard-masterpass.php:99
-msgid "config_status_desc_masterpass"
-msgstr ""
-
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:98
 msgid "config_status_desc_paybybankapp"
 msgstr ""
@@ -582,10 +578,6 @@ msgstr ""
 msgid "enable_heading_title_ideal"
 msgstr ""
 
-#: classes/includes/class-wc-gateway-wirecard-masterpass.php:98
-msgid "enable_heading_title_masterpass"
-msgstr ""
-
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:99
 msgid "enable_heading_title_paybybankapp"
 msgstr ""
@@ -701,11 +693,6 @@ msgstr ""
 msgid "heading_title_ideal"
 msgstr ""
 
-#: classes/includes/class-wc-gateway-wirecard-masterpass.php:61
-#: classes/includes/class-wc-gateway-wirecard-masterpass.php:106
-msgid "heading_title_masterpass"
-msgstr ""
-
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:60
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:106
 msgid "heading_title_paybybankapp"
@@ -773,14 +760,6 @@ msgstr ""
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:262
 msgid "last-name"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-masterpass.php:62
-msgid "masterpass"
-msgstr ""
-
-#: classes/includes/class-wc-gateway-wirecard-masterpass.php:63
-msgid "masterpass_desc"
 msgstr ""
 
 #: classes/includes/class-wc-wirecard-payment-gateway.php:212
