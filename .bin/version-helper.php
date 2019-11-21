@@ -316,7 +316,13 @@ function checkIfFileExists($filename)
 
 $shopVersions = parseVersionsFile(VERSION_FILE);
 // Grab the Travis config for parsing the supported PHP versions
-$travisConfig = Yaml::parseFile(TRAVIS_FILE);
+try {
+	$travisConfig = Yaml::parseFile(TRAVIS_FILE);
+} catch (\Exception $e) {
+	echo "Caught exception in .travis.yml file: " . $e->getMessage() . "\n";
+} catch (\Throwable $e) {
+	echo "Caught throwable in .travis.yml file: " . $e->getMessage() . "\n";
+}
 $travisMatrix = $travisConfig['matrix'];
 $phpVersions  = [];
 foreach ($travisMatrix['include'] as $version) {
