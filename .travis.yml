@@ -56,28 +56,28 @@ matrix:
     if: (type = pull_request AND (head_branch =~ env(PATCH_RELEASE) OR head_branch =~ env(MINOR_RELEASE) OR head_branch =~ env(MAJOR_RELEASE))) OR (commit_message =~ env(MANUAL_UITEST_TRIGGER_COMMIT))
     php: 7.2
     env:
-    - GATEWAY=API-TEST
-    - WOOCOMMERCE_NUMBER=1
+      - GATEWAY=API-TEST
+      - WOOCOMMERCE_NUMBER=1
     before_install:
-    - travis_retry composer self-update
+      - travis_retry composer self-update
     install:
-    # check if files are same or not
-    - cmp --silent ${WOOCOMMERCE_RELEASES_FILE} ${WOOCOMMERCE_COMPATIBILITY_FILE} && export COMPATIBILITY_CHECK=0 || export COMPATIBILITY_CHECK=1
-    # check from which file to take versions
-    - if [[ ${COMPATIBILITY_CHECK}  == "0" ]]; then export WOOCOMMERCE_VERSION=$(awk "NR==${WOOCOMMERCE_NUMBER} {print; exit}" ${WOOCOMMERCE_RELEASES_FILE}); else export WOOCOMMERCE_VERSION=$(awk "NR==${WOOCOMMERCE_NUMBER} {print; exit}" ${WOOCOMMERCE_COMPATIBILITY_FILE}); fi
-    - export LATEST_RELEASED_SHOP_EXTENSION_VERSION=`jq .[0].release ${TRAVIS_BUILD_DIR}/SHOPVERSIONS | tr -d '"'`
-    - echo "Testing with Woocommerce version ${WOOCOMMERCE_VERSION}"
-    - if [[ ${LATEST_EXTENSION_RELEASE}  == "1" ]]; then wget -q https://github.com/wirecard/woocommerce-ee/releases/download/${LATEST_RELEASED_SHOP_EXTENSION_VERSION}/woocommerce-wirecard-ee.zip; else bash .bin/generate-release-package.sh ;fi
-    - travis_retry composer require --dev $COMPOSER_ARGS codeception/codeception:^2.5
-    - travis_retry composer install $COMPOSER_ARGS
-    - composer show
+      # check if files are same or not
+      - cmp --silent ${WOOCOMMERCE_RELEASES_FILE} ${WOOCOMMERCE_COMPATIBILITY_FILE} && export COMPATIBILITY_CHECK=0 || export COMPATIBILITY_CHECK=1
+      # check from which file to take versions
+      - if [[ ${COMPATIBILITY_CHECK}  == "0" ]]; then export WOOCOMMERCE_VERSION=$(awk "NR==${WOOCOMMERCE_NUMBER} {print; exit}" ${WOOCOMMERCE_RELEASES_FILE}); else export WOOCOMMERCE_VERSION=$(awk "NR==${WOOCOMMERCE_NUMBER} {print; exit}" ${WOOCOMMERCE_COMPATIBILITY_FILE}); fi
+      - export LATEST_RELEASED_SHOP_EXTENSION_VERSION=`jq .[0].release ${TRAVIS_BUILD_DIR}/SHOPVERSIONS | tr -d '"'`
+      - echo "Testing with Woocommerce version ${WOOCOMMERCE_VERSION}"
+      - if [[ ${LATEST_EXTENSION_RELEASE}  == "1" ]]; then wget -q https://github.com/wirecard/woocommerce-ee/releases/download/${LATEST_RELEASED_SHOP_EXTENSION_VERSION}/woocommerce-wirecard-ee.zip; else bash .bin/generate-release-package.sh ;fi
+      - travis_retry composer require --dev $COMPOSER_ARGS codeception/codeception:^2.5
+      - travis_retry composer install $COMPOSER_ARGS
+      - composer show
     script: bash .bin/run-ui-tests.sh
     after_script: skip
     after_success:
-    - bash .bin/upload-logs-and-notify.sh
-    - bash .bin/update-shop-release-versions.sh
+      - bash .bin/upload-logs-and-notify.sh
+      - bash .bin/update-shop-release-versions.sh
     after_failure:
-    - bash .bin/upload-logs-and-notify.sh fail
+      - bash .bin/upload-logs-and-notify.sh fail
     
     # run this stage on pull request if head branch name contains major (on major release)
     # tests will use branch which originated pull request
@@ -149,7 +149,6 @@ matrix:
     - travis_retry composer install $COMPOSER_ARGS
     - rvm install 2.5.3
     - travis_retry gem install bundler -v 2.0.1
-    after_install: skip
     before_script: skip
     script: skip
     after_script: skip

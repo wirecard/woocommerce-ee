@@ -316,7 +316,15 @@ function checkIfFileExists($filename)
 
 $shopVersions = parseVersionsFile(VERSION_FILE);
 // Grab the Travis config for parsing the supported PHP versions
-$travisConfig = Yaml::parseFile(TRAVIS_FILE);
+try {
+	$travisConfig = Yaml::parseFile(TRAVIS_FILE);
+} catch (\Exception $e) {
+	fwrite(STDERR, "ERROR: In file ". TRAVIS_FILE .": " . $e->getMessage() . PHP_EOL);
+	exit(1);
+} catch (\Throwable $e) {
+	fwrite(STDERR, "ERROR: In file ". TRAVIS_FILE .": " . $e->getMessage() . PHP_EOL);
+	exit(1);
+}
 $travisMatrix = $travisConfig['matrix'];
 $phpVersions  = [];
 foreach ($travisMatrix['include'] as $version) {
