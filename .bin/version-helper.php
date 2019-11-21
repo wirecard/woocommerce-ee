@@ -319,9 +319,11 @@ $shopVersions = parseVersionsFile(VERSION_FILE);
 try {
 	$travisConfig = Yaml::parseFile(TRAVIS_FILE);
 } catch (\Exception $e) {
-	echo "Caught exception in .travis.yml file: " . $e->getMessage() . "\n";
+	fwrite(STDERR, "ERROR: In file ". TRAVIS_FILE .": " . $e->getMessage() . PHP_EOL);
+	exit(1);
 } catch (\Throwable $e) {
-	echo "Caught throwable in .travis.yml file: " . $e->getMessage() . "\n";
+	fwrite(STDERR, "ERROR: In file ". TRAVIS_FILE .": " . $e->getMessage() . PHP_EOL);
+	exit(1);
 }
 $travisMatrix = $travisConfig['matrix'];
 $phpVersions  = [];
