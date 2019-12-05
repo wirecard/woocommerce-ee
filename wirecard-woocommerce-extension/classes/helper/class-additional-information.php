@@ -252,7 +252,7 @@ class Additional_Information {
 
 		if ( null !== $tax_amount ) {
 			$item->setTaxAmount(
-				$this->build_formatted_amount( $tax_amount, $currency )
+				$this->create_formatted_amount( $tax_amount, $currency )
 			);
 		}
 		
@@ -272,7 +272,7 @@ class Additional_Information {
 	protected function create_basket_item( $name, $amount, $quantity, $currency = null ) {
 		return new Item(
 			Method_Helper::string_format_wc( $name ),
-			$this->build_formatted_amount( $amount, $currency ),
+			$this->create_formatted_amount( $amount, $currency ),
 			$quantity
 		);
 	}
@@ -285,7 +285,7 @@ class Additional_Information {
 	 *
 	 * @since 3.1.0
 	 */
-	protected function build_formatted_amount( $amount, $currency = null ) {
+	protected function create_formatted_amount($amount, $currency = null ) {
 		if ( null === $currency ) {
 			$currency = get_woocommerce_currency();
 		}
@@ -309,12 +309,32 @@ class Additional_Information {
 	 *
 	 * @since 3.1.0
 	 */
-	protected function build_base_item( $name, $amount, $quantity, $description, $article_number, $tax_rate, $tax_amount = null, $currency = null )
+	protected function build_basket_item($name, $amount, $quantity, $description, $article_number, $tax_rate, $tax_amount = null, $currency = null )
 	{
 		$item = $this->create_basket_item( $name, $amount, $quantity );
 		$item = $this->populate_basket_item( $item, $description, $article_number, $tax_rate, $tax_amount, $currency );
 		
 		return $item;
+	}
+
+	/**
+	 * @param array $item
+	 *
+	 * @return Item
+	 *
+	 * @since 3.1.0
+	 */
+	protected function build_basket_item_from_array( $item ) {
+		return $this->build_basket_item(
+			$item['name'],
+			$item['amount']['value'],
+			$item['quantity'],
+			$item['description'],
+			$item['article-number'],
+			$item['tax-rate'],
+			null,
+			$item['amount']['currency']
+		);
 	}
 
 	/**
@@ -332,7 +352,7 @@ class Additional_Information {
 	private function set_basket_item( $basket, $product, $quantity, $total, $tax, $tax_rate ) {
 		$item_unit_gross_amount = $total + $tax;
 		
-		$item = $this->build_base_item(
+		$item = $this->build_basket_item(
 			$product->get_name(),
 			$item_unit_gross_amount,
 			$quantity,
@@ -361,7 +381,7 @@ class Additional_Information {
 		$shipping_key = 'Shipping';
 		$amount       = $shipping_total + $shipping_tax;
 		
-		$item = $this->build_base_item(
+		$item = $this->build_basket_item(
 			$shipping_key,
 			$amount,
 			1,
@@ -393,19 +413,6 @@ class Additional_Information {
 
 		return $state;
 	}
-	
-	protected function build_item_from_array( $item ) {
-		return $this->build_base_item(
-			$item['name'],
-			$item['amount']['value'],
-			$item['quantity'],
-			$item['description'],
-			$item['article-number'],
-			$item['tax-rate'],
-			null,
-			$item['amount']['currency']
-		);
-	}
 
 	/**
 	 * Creates a basket that is equivalent to the parent transaction
@@ -435,13 +442,13 @@ class Additional_Information {
 						$items_total += $item['amount']['value'] * $refund_item['qty'];
 						$item['quantity'] = $refund_item['qty'];
 						$basket->add(
-							$this->build_item_from_array( $item )
+							$this->build_basket_item_from_array( $item )
 						);
 					}
 				}
 			} elseif ( 0 === $refunding_amount ) {
 				$basket->add(
-					$this->build_item_from_array( $item )
+					$this->build_basket_item_from_array( $item )
 				);
 			}
 		}
@@ -449,7 +456,7 @@ class Additional_Information {
 		if ( ( ! empty( $refund_basket ) || $refunding_amount > 0 ) && $refunding_amount - $items_total > 0 ) {
 			if ( 0 === $refunding_amount - $items_total - $shipping['amount']['value'] ) {
 				$basket->add(
-					$this->build_item_from_array($shipping)
+					$this->build_basket_item_from_array($shipping)
 				);
 			} else {
 				return new WP_Error( 'error', __( 'refund_partial_shipping_error', 'wirecard-woocommerce-extension' ) );
