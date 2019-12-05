@@ -239,19 +239,20 @@ class Additional_Information {
 	 * @param string $article_nr
 	 * @param float $tax_rate
 	 * @param null|float $tax_amount
+	 * @param null|string $currency
 	 *
 	 * @return Item
 	 *
 	 * @since 3.1.0
 	 */
-	protected function populate_basket_item($item, $description, $article_nr, $tax_rate, $tax_amount = null ) {
+	protected function populate_basket_item($item, $description, $article_nr, $tax_rate, $tax_amount = null, $currency = null ) {
 		$item->setDescription( Method_Helper::string_format_wc( $description ) );
 		$item->setArticleNumber ( $article_nr );
 		$item->setTaxRate( Method_Helper::number_format_wc($tax_rate) );
 
 		if ( null !== $tax_amount ) {
 			$item->setTaxAmount(
-				$this->build_formatted_amount( $tax_amount )
+				$this->build_formatted_amount( $tax_amount, $currency )
 			);
 		}
 		
@@ -262,15 +263,16 @@ class Additional_Information {
 	 * @param string $name
 	 * @param float $amount
 	 * @param int $quantity
+	 * @param null|string $currency
 	 *
 	 * @return Item
 	 *
 	 * @since 3.1.0
 	 */
-	protected function create_basket_item( $name, $amount, $quantity ) {
+	protected function create_basket_item( $name, $amount, $quantity, $currency = null ) {
 		return new Item(
 			Method_Helper::string_format_wc( $name ),
-			$this->build_formatted_amount( $amount ),
+			$this->build_formatted_amount( $amount, $currency ),
 			$quantity
 		);
 	}
@@ -294,6 +296,28 @@ class Additional_Information {
 	}
 
 	/**
+	 * @param string $name
+	 * @param float $amount
+	 * @param int $quantity
+	 * @param string $description
+	 * @param string $article_number
+	 * @param float $tax_rate
+	 * @param null|float $tax_amount
+	 * @param null|string $currency
+	 *
+	 * @return Item
+	 *
+	 * @since 3.1.0
+	 */
+	protected function build_base_item( $name, $amount, $quantity, $description, $article_number, $tax_rate, $tax_amount = null, $currency = null )
+	{
+		$item = $this->create_basket_item( $name, $amount, $quantity );
+		$item = $this->populate_basket_item( $item, $description, $article_number, $tax_rate, $tax_amount, $currency );
+		
+		return $item;
+	}
+
+	/**
 	 * Set an Item to basket
 	 *
 	 * @param Basket $basket
@@ -307,15 +331,11 @@ class Additional_Information {
 	 */
 	private function set_basket_item( $basket, $product, $quantity, $total, $tax, $tax_rate ) {
 		$item_unit_gross_amount = $total + $tax;
-
-		$item = $this->create_basket_item(
+		
+		$item = $this->build_base_item(
 			$product->get_name(),
 			$item_unit_gross_amount,
-			$quantity
-		);
-		
-		$item = $this->populate_basket_item(
-			$item,
+			$quantity,
 			$product->get_short_description(),
 			$product->get_id(),
 			$tax_rate,
@@ -340,8 +360,15 @@ class Additional_Information {
 	private function set_shipping_item( $basket, $shipping_total, $shipping_tax, $tax_rate ) {
 		$shipping_key = 'Shipping';
 		$amount       = $shipping_total + $shipping_tax;
-		$item         = $this->create_basket_item( $shipping_key, $amount, 1 );
-		$item         = $this->populate_basket_item( $item, $shipping_key, $shipping_key, $tax_rate );
+		
+		$item = $this->build_base_item(
+			$shipping_key,
+			$amount,
+			1,
+			$shipping_key,
+			$shipping_key,
+			$tax_rate
+		);
 
 		$basket->add( $item );
 
