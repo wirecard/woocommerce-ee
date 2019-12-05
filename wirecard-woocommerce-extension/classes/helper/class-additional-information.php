@@ -309,7 +309,7 @@ class Additional_Information {
 	 *
 	 * @since 3.1.0
 	 */
-	protected function build_basket_item($name, $amount, $quantity, $description, $article_number, $tax_rate, $tax_amount = null, $currency = null )
+	protected function build_basket_item( $name, $amount, $quantity, $description, $article_number, $tax_rate, $tax_amount = null, $currency = null )
 	{
 		// TODO: move basket logic into separate class
 		$item = $this->create_basket_item( $name, $amount, $quantity );
@@ -458,7 +458,7 @@ class Additional_Information {
 		if ( ( ! empty( $refund_basket ) || $refunding_amount > 0 ) && $refunding_amount - $items_total > 0 ) {
 			if ( 0 === $refunding_amount - $items_total - $shipping['amount']['value'] ) {
 				$basket->add(
-					$this->build_basket_item_from_array($shipping)
+					$this->build_basket_item_from_array( $shipping )
 				);
 			} else {
 				return new WP_Error( 'error', __( 'refund_partial_shipping_error', 'wirecard-woocommerce-extension' ) );
