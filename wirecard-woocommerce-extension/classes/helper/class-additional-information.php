@@ -311,6 +311,7 @@ class Additional_Information {
 	 */
 	protected function build_basket_item($name, $amount, $quantity, $description, $article_number, $tax_rate, $tax_amount = null, $currency = null )
 	{
+		// TODO: move basket logic into separate class
 		$item = $this->create_basket_item( $name, $amount, $quantity );
 		$item = $this->populate_basket_item( $item, $description, $article_number, $tax_rate, $tax_amount, $currency );
 		
@@ -432,6 +433,7 @@ class Additional_Information {
 		$items_total         = 0;
 		$shipping            = 0;
 
+		// TODO: only call build_basket_item_from_array once, always use $item, remove calc logic from method call
 		foreach ( $parent_transaction['payment']['order-items']['order-item'] as $item ) {
 			if ( 'Shipping' === $item['name'] ) {
 				$shipping = $item;
