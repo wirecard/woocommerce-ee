@@ -393,6 +393,19 @@ class Additional_Information {
 
 		return $state;
 	}
+	
+	protected function build_item_from_array( $item ) {
+		return $this->build_base_item(
+			$item['name'],
+			$item['amount']['value'],
+			$item['quantity'],
+			$item['description'],
+			$item['article-number'],
+			$item['tax-rate'],
+			null,
+			$item['amount']['currency']
+		);
+	}
 
 	/**
 	 * Creates a basket that is equivalent to the parent transaction
@@ -420,40 +433,23 @@ class Additional_Information {
 				foreach ( $refund_basket as $refund_item ) {
 					if ( $refund_item['product']->get_id() === $item['article-number'] ) {
 						$items_total += $item['amount']['value'] * $refund_item['qty'];
-						$basket       = $this->set_item_from_response(
-							$basket,
-							new Amount( floatval( $item['amount']['value'] ), $item['amount']['currency'] ),
-							$item['name'],
-							$refund_item['qty'],
-							$item['description'],
-							$item['article-number'],
-							$item['tax-rate']
+						$item['quantity'] = $refund_item['qty'];
+						$basket->add(
+							$this->build_item_from_array( $item )
 						);
 					}
 				}
 			} elseif ( 0 === $refunding_amount ) {
-				$basket = $this->set_item_from_response(
-					$basket,
-					new Amount( floatval( $item['amount']['value'] ), $item['amount']['currency'] ),
-					$item['name'],
-					$item['quantity'],
-					$item['description'],
-					$item['article-number'],
-					$item['tax-rate']
+				$basket->add(
+					$this->build_item_from_array( $item )
 				);
 			}
 		}
 
 		if ( ( ! empty( $refund_basket ) || $refunding_amount > 0 ) && $refunding_amount - $items_total > 0 ) {
 			if ( 0 === $refunding_amount - $items_total - $shipping['amount']['value'] ) {
-				$basket = $this->set_item_from_response(
-					$basket,
-					new Amount( $shipping['amount']['value'], $shipping['amount']['currency'] ),
-					$shipping['name'],
-					$shipping['quantity'],
-					$shipping['description'],
-					$shipping['article-number'],
-					$shipping['tax-rate']
+				$basket->add(
+					$this->build_item_from_array($shipping)
 				);
 			} else {
 				return new WP_Error( 'error', __( 'refund_partial_shipping_error', 'wirecard-woocommerce-extension' ) );
