@@ -503,27 +503,6 @@ class Additional_Information {
 
 	/**
 	 * @param Basket $basket
-	 * @param Amount $amount
-	 * @param string $name
-	 * @param int $quantity
-	 * @param string $description
-	 * @param string $item_number
-	 * @param float $tax_rate
-	 *
-	 * @return Basket
-	 * @since 1.4.0
-	 */
-	private function set_item_from_response( $basket, $amount, $name, $quantity, $description, $item_number, $tax_rate ) {
-		$basket_item = new Item( $name, $amount, $quantity );
-		$basket_item->setDescription( $description );
-		$basket_item->setArticleNumber( $item_number );
-		$basket_item->setTaxRate( $tax_rate );
-
-		return $basket->add( $basket_item );
-	}
-
-	/**
-	 * @param Basket $basket
 	 * @param float $voucher_total
 	 * @param float $voucher_tax
 	 *
