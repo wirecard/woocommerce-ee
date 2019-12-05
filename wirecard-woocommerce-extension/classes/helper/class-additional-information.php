@@ -233,6 +233,59 @@ class Additional_Information {
 	}
 
 	/**
+	 * @param Item $item
+	 * @param string $description
+	 * @param string $article_nr
+	 * @param float $tax_rate
+	 * @param null|float $tax_amount
+	 *
+	 * @return Item
+	 *
+	 * @since 3.1.0
+	 */
+	protected function enrich_basket_item($item, $description, $article_nr, $tax_rate, $tax_amount = null ) {
+		$item->setDescription( $description );
+		$item->setArticleNumber ( $article_nr );
+		$item->setTaxRate( (float) number_format( $tax_rate, wc_get_price_decimals() ) );
+		if ( null !== $tax_amount ) {
+			$item->setTaxAmount( $tax_amount );
+		}
+		
+		return $item;
+	}
+
+	/**
+	 * @param string $name
+	 * @param float $amount
+	 * @param int $quantity
+	 *
+	 * @return Item
+	 *
+	 * @since 3.1.0
+	 */
+	protected function build_basket_item( $name, $amount, $quantity ) {
+		return new Item(
+			wp_strip_all_tags( html_entity_decode( $name ), true),
+			$amount,
+			$quantity
+		);
+	}
+
+	/**
+	 * @param float $amount
+	 *
+	 * @return Amount
+	 *
+	 * @since 3.1.0
+	 */
+	protected function build_formatted_amount( $amount ) {
+		return new Amount(
+			(float) number_format( $amount, wc_get_price_decimals(), '.', '' ),
+			get_woocommerce_currency()
+		);
+	}
+
+	/**
 	 * Set an Item to basket
 	 *
 	 * @param Basket $basket
@@ -258,10 +311,14 @@ class Additional_Information {
 			$amount,
 			$quantity
 		);
-		$item->setDescription( $description );
-		$item->setArticleNumber( $article_nr );
-		$item->setTaxRate( floatval( number_format( $tax_rate, wc_get_price_decimals() ) ) );
-		$item->setTaxAmount( new Amount( floatval( wc_round_tax_total( $tax ) ), get_woocommerce_currency() ) );
+		$item = $this->enrich_basket_item(
+			$item,
+			$description,
+			$article_nr,
+			$tax_rate,
+			new Amount( (float) $tax, get_woocommerce_currency() )
+		);
+
 		$basket->add( $item );
 
 		return $basket;
@@ -278,13 +335,18 @@ class Additional_Information {
 	 * @since 1.4.0
 	 */
 	private function set_shipping_item( $basket, $shipping_total, $shipping_tax, $tax_rate ) {
+		$shipping_key = 'Shipping';
 		$amount = floatval( number_format( $shipping_total + $shipping_tax, wc_get_price_decimals(), '.', '' ) );
 
 		$amount = new Amount( $amount, get_woocommerce_currency() );
-		$item   = new Item( 'Shipping', $amount, 1 );
-		$item->setDescription( 'Shipping' );
-		$item->setArticleNumber( 'Shipping' );
-		$item->setTaxRate( floatval( number_format( $tax_rate, wc_get_price_decimals() ) ) );
+		$item   = new Item( $shipping_key, $amount, 1 );
+		$item   = $this->enrich_basket_item(
+			$item,
+			$shipping_key,
+			$shipping_key,
+			$tax_rate
+		);
+
 		$basket->add( $item );
 
 		return $basket;
@@ -333,7 +395,7 @@ class Additional_Information {
 			}
 			if ( ! empty( $refund_basket ) ) {
 				foreach ( $refund_basket as $refund_item ) {
-					if ( $refund_item['product']->get_id() === intval( $item['article-number'] ) ) {
+					if ( $refund_item['product']->get_id() === $item['article-number'] ) {
 						$items_total += $item['amount']['value'] * $refund_item['qty'];
 						$basket       = $this->set_item_from_response(
 							$basket,
