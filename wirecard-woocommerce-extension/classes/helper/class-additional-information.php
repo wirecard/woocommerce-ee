@@ -277,15 +277,19 @@ class Additional_Information {
 
 	/**
 	 * @param float $amount
+	 * @param null|string $currency
 	 *
 	 * @return Amount
 	 *
 	 * @since 3.1.0
 	 */
-	protected function build_formatted_amount( $amount ) {
+	protected function build_formatted_amount( $amount, $currency = null ) {
+		if ( null === $currency ) {
+			$currency = get_woocommerce_currency();
+		}
 		return new Amount(
 			Method_Helper::number_format_wc( $amount ),
-			get_woocommerce_currency()
+			$currency
 		);
 	}
 
@@ -441,9 +445,9 @@ class Additional_Information {
 		$tax_setting = get_option( 'woocommerce_tax_based_on' );
 
 		switch ( $tax_setting ) {
-			case 'billing':
+			case self::BILLING:
 				return WC()->customer->get_billing_country();
-			case 'shipping':
+			case self::SHIPPING:
 				return WC()->customer->get_shipping_country();
 			case 'base':
 			default:
