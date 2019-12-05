@@ -245,7 +245,7 @@ class Additional_Information {
 	 *
 	 * @since 3.1.0
 	 */
-	protected function populate_basket_item($item, $description, $article_nr, $tax_rate, $tax_amount = null, $currency = null ) {
+	protected function populate_basket_item( $item, $description, $article_nr, $tax_rate, $tax_amount = null, $currency = null ) {
 		$item->setDescription( Method_Helper::string_format_wc( $description ) );
 		$item->setArticleNumber ( $article_nr );
 		$item->setTaxRate( Method_Helper::number_format_wc($tax_rate) );
