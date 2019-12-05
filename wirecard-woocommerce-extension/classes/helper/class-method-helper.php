@@ -37,4 +37,8 @@ class Method_Helper {
 	public static function number_format_wc( $amount ) {
 		return (float) number_format( $amount, wc_get_price_decimals(), '.', '' );
 	}
+	
+	public static function string_format_wc( $string ) {
+		return (string) wp_strip_all_tags( html_entity_decode( $string ), true );
+	}
 }
