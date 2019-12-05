@@ -34,6 +34,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-wirecard-payment-gateway.php' );
+require_once( WIRECARD_EXTENSION_HELPER_DIR . 'class-method-helper.php' );
 
 use Wirecard\PaymentSdk\Entity\AccountHolder;
 use Wirecard\PaymentSdk\Entity\Address;
@@ -237,7 +238,7 @@ class Additional_Information {
 	 * @param string $description
 	 * @param string $article_nr
 	 * @param float $tax_rate
-	 * @param null|float $tax_amount
+	 * @param null|Amount $tax_amount
 	 *
 	 * @return Item
 	 *
@@ -246,7 +247,7 @@ class Additional_Information {
 	protected function enrich_basket_item($item, $description, $article_nr, $tax_rate, $tax_amount = null ) {
 		$item->setDescription( $description );
 		$item->setArticleNumber ( $article_nr );
-		$item->setTaxRate( (float) number_format( $tax_rate, wc_get_price_decimals() ) );
+		$item->setTaxRate( Method_Helper::number_format_wc($tax_rate) );
 		if ( null !== $tax_amount ) {
 			$item->setTaxAmount( $tax_amount );
 		}
@@ -266,7 +267,7 @@ class Additional_Information {
 	protected function build_basket_item( $name, $amount, $quantity ) {
 		return new Item(
 			wp_strip_all_tags( html_entity_decode( $name ), true),
-			$amount,
+			$this->build_formatted_amount( $amount ),
 			$quantity
 		);
 	}
@@ -280,7 +281,7 @@ class Additional_Information {
 	 */
 	protected function build_formatted_amount( $amount ) {
 		return new Amount(
-			(float) number_format( $amount, wc_get_price_decimals(), '.', '' ),
+			Method_Helper::number_format_wc( $amount ),
 			get_woocommerce_currency()
 		);
 	}
@@ -303,20 +304,14 @@ class Additional_Information {
 		$article_nr  = $product->get_id();
 		$description = wp_strip_all_tags( html_entity_decode( $product->get_short_description() ), true );
 
-		$formatted_amount = floatval( number_format( $item_unit_gross_amount, wc_get_price_decimals(), '.', '' ) );
-		$amount           = new Amount( $formatted_amount, get_woocommerce_currency() );
-
-		$item = new Item(
-			wp_strip_all_tags( html_entity_decode( $product->get_name() ), true ),
-			$amount,
-			$quantity
-		);
+		$amount = $this->build_formatted_amount( $item_unit_gross_amount );
+		$item = $this->build_basket_item( $product->get_name(), $amount, $quantity );
 		$item = $this->enrich_basket_item(
 			$item,
 			$description,
 			$article_nr,
 			$tax_rate,
-			new Amount( (float) $tax, get_woocommerce_currency() )
+			$this->build_formatted_amount( $tax )
 		);
 
 		$basket->add( $item );
