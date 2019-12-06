@@ -329,7 +329,7 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 	public function process_refund( $order_id, $amount = null, $reason = '' ) {
 		/** @var WC_Order $order */
 		$order         = wc_get_order( $order_id );
-		$refund_basket = [];
+		$refund_basket = array();
 		$config        = $this->create_payment_config();
 
 		if ( $order->get_total() > $amount ) {

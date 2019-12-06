@@ -466,27 +466,27 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	public function load_variables() {
 		$base_url         = site_url( '/', is_ssl() ? 'https' : 'http' );
 		$page_url         = add_query_arg(
-			[ 'wc-api' => 'get_credit_card_request_data' ],
+			array( 'wc-api' => 'get_credit_card_request_data' ),
 			site_url( '/', is_ssl() ? 'https' : 'http' )
 		);
 		$submit_url       = add_query_arg(
-			[ 'wc-api' => 'submit_creditcard_response' ],
+			array( 'wc-api' => 'submit_creditcard_response' ),
 			site_url( '/', is_ssl() ? 'https' : 'http' )
 		);
 		$token_url        = add_query_arg(
-			[ 'wc-api' => 'submit_token_response' ],
+			array( 'wc-api' => 'submit_token_response' ),
 			site_url( '/', is_ssl() ? 'https' : 'http' )
 		);
 		$vault_save_url   = add_query_arg(
-			[ 'wc-api' => 'save_cc_to_vault' ],
+			array( 'wc-api' => 'save_cc_to_vault' ),
 			site_url( '/', is_ssl() ? 'https' : 'http' )
 		);
 		$vault_get_url    = add_query_arg(
-			[ 'wc-api' => 'get_cc_from_vault' ],
+			array( 'wc-api' => 'get_cc_from_vault' ),
 			site_url( '/', is_ssl() ? 'https' : 'http' )
 		);
 		$vault_delete_url = add_query_arg(
-			[ 'wc-api' => 'remove_cc_from_vault' ],
+			array( 'wc-api' => 'remove_cc_from_vault' ),
 			site_url( '/', is_ssl() ? 'https' : 'http' )
 		);
 

@@ -247,15 +247,15 @@ class Additional_Information {
 	 */
 	protected function populate_basket_item( $item, $description, $article_nr, $tax_rate, $tax_amount = null, $currency = null ) {
 		$item->setDescription( Method_Helper::string_format_wc( $description ) );
-		$item->setArticleNumber ( $article_nr );
-		$item->setTaxRate( Method_Helper::number_format_wc($tax_rate) );
+		$item->setArticleNumber( $article_nr );
+		$item->setTaxRate( Method_Helper::number_format_wc( $tax_rate ) );
 
 		if ( null !== $tax_amount ) {
 			$item->setTaxAmount(
 				$this->create_formatted_amount( $tax_amount, $currency )
 			);
 		}
-		
+
 		return $item;
 	}
 
@@ -285,7 +285,7 @@ class Additional_Information {
 	 *
 	 * @since 3.1.0
 	 */
-	protected function create_formatted_amount($amount, $currency = null ) {
+	protected function create_formatted_amount( $amount, $currency = null ) {
 		if ( null === $currency ) {
 			$currency = get_woocommerce_currency();
 		}
@@ -309,12 +309,11 @@ class Additional_Information {
 	 *
 	 * @since 3.1.0
 	 */
-	protected function build_basket_item( $name, $amount, $quantity, $description, $article_number, $tax_rate, $tax_amount = null, $currency = null )
-	{
+	protected function build_basket_item( $name, $amount, $quantity, $description, $article_number, $tax_rate, $tax_amount = null, $currency = null ) {
 		// TODO: move basket logic into separate class
 		$item = $this->create_basket_item( $name, $amount, $quantity );
 		$item = $this->populate_basket_item( $item, $description, $article_number, $tax_rate, $tax_amount, $currency );
-		
+
 		return $item;
 	}
 
@@ -352,7 +351,7 @@ class Additional_Information {
 	 */
 	private function set_basket_item( $basket, $product, $quantity, $total, $tax, $tax_rate ) {
 		$item_unit_gross_amount = $total + $tax;
-		
+
 		$item = $this->build_basket_item(
 			$product->get_name(),
 			$item_unit_gross_amount,
@@ -381,7 +380,7 @@ class Additional_Information {
 	private function set_shipping_item( $basket, $shipping_total, $shipping_tax, $tax_rate ) {
 		$shipping_key = 'Shipping';
 		$amount       = $shipping_total + $shipping_tax;
-		
+
 		$item = $this->build_basket_item(
 			$shipping_key,
 			$amount,
@@ -426,7 +425,7 @@ class Additional_Information {
 	 * @return Basket|WP_Error
 	 * @since 1.3.2
 	 */
-	public function create_basket_from_parent_transaction( $order, $config, $payment_method, $refund_basket = [], $refunding_amount = 0 ) {
+	public function create_basket_from_parent_transaction( $order, $config, $payment_method, $refund_basket = array(), $refunding_amount = 0 ) {
 		$basket              = new Basket();
 		$transaction_service = new \Wirecard\PaymentSdk\TransactionService( $config );
 		$parent_transaction  = $transaction_service->getTransactionByTransactionId( $order->get_transaction_id(), $payment_method );
@@ -441,7 +440,7 @@ class Additional_Information {
 			if ( ! empty( $refund_basket ) ) {
 				foreach ( $refund_basket as $refund_item ) {
 					if ( $refund_item['product']->get_id() === $item['article-number'] ) {
-						$items_total += $item['amount']['value'] * $refund_item['qty'];
+						$items_total     += $item['amount']['value'] * $refund_item['qty'];
 						$item['quantity'] = $refund_item['qty'];
 						$basket->add(
 							$this->build_basket_item_from_array( $item )
