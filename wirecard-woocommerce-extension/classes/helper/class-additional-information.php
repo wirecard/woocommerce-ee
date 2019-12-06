@@ -55,6 +55,8 @@ class Additional_Information {
 	const SHIPPING = 'shipping';
 
 	const BILLING = 'billing';
+	
+	const BASE = 'base';
 
 	/**
 	 * Create basket items and shipping item
@@ -157,8 +159,8 @@ class Additional_Information {
 	 */
 	public function set_additional_information( $order, $transaction ) {
 		$transaction->setDescriptor( $this->create_descriptor( $order ) );
-		$transaction->setAccountHolder( $this->create_account_holder( $order, 'billing' ) );
-		$transaction->setShipping( $this->create_account_holder( $order, 'shipping' ) );
+		$transaction->setAccountHolder( $this->create_account_holder( $order, self::BILLING ) );
+		$transaction->setShipping( $this->create_account_holder( $order, self::SHIPPING ) );
 		$transaction->setOrderNumber( $order->get_order_number() );
 		$transaction->setBasket( $this->create_shopping_basket( $transaction ) );
 		$transaction->setIpAddress( $order->get_customer_ip_address() );
@@ -310,7 +312,7 @@ class Additional_Information {
 	 * @since 3.1.0
 	 */
 	protected function build_basket_item( $name, $amount, $quantity, $description, $article_number, $tax_rate, $tax_amount = null, $currency = null ) {
-		// TODO: move basket logic into separate class
+		// TODO: move basket logic into separate class TPWDCEE-5675
 		$item = $this->create_basket_item( $name, $amount, $quantity );
 		$item = $this->populate_basket_item( $item, $description, $article_number, $tax_rate, $tax_amount, $currency );
 
@@ -432,7 +434,6 @@ class Additional_Information {
 		$items_total         = 0;
 		$shipping            = 0;
 
-		// TODO: only call build_basket_item_from_array once, always use $item, remove calc logic from method call
 		foreach ( $parent_transaction['payment']['order-items']['order-item'] as $item ) {
 			if ( 'Shipping' === $item['name'] ) {
 				$shipping = $item;
@@ -480,7 +481,7 @@ class Additional_Information {
 				return WC()->customer->get_billing_country();
 			case self::SHIPPING:
 				return WC()->customer->get_shipping_country();
-			case 'base':
+			case self::BASE:
 			default:
 				return wc_get_base_location()['country'];
 		}
