@@ -55,7 +55,7 @@ class Additional_Information {
 	const SHIPPING = 'shipping';
 
 	const BILLING = 'billing';
-	
+
 	const BASE = 'base';
 
 	/**
