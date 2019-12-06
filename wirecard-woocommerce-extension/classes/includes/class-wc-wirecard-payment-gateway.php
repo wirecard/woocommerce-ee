@@ -380,7 +380,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 			WC()->session->set( 'wirecard_post_data', $data );
 
 			$page_url = add_query_arg(
-				[ 'wc-api' => 'checkout_form_submit' ],
+				array( 'wc-api' => 'checkout_form_submit' ),
 				site_url( '/', is_ssl() ? 'https' : 'http' )
 			);
 		}

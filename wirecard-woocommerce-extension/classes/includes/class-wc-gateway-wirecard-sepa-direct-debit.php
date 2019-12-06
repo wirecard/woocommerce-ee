@@ -236,7 +236,7 @@ class WC_Gateway_Wirecard_Sepa_Direct_Debit extends WC_Wirecard_Payment_Gateway 
 	 */
 	public function payment_fields() {
 		$page_url = add_query_arg(
-			[ 'wc-api' => 'get_sepa_mandate' ],
+			array( 'wc-api' => 'get_sepa_mandate' ),
 			site_url( '/', is_ssl() ? 'https' : 'http' )
 		);
 
