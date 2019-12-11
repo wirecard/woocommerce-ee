@@ -35,6 +35,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-wirecard-payment-gateway.php' );
 require_once( WIRECARD_EXTENSION_HELPER_DIR . 'class-method-helper.php' );
+require_once( WIRECARD_EXTENSION_HELPER_DIR . 'class-basket-item-helper.php' );
 
 use Wirecard\PaymentSdk\Entity\AccountHolder;
 use Wirecard\PaymentSdk\Entity\Address;
@@ -57,6 +58,13 @@ class Additional_Information {
 	const BILLING = 'billing';
 
 	const BASE = 'base';
+	
+	protected $basket_item_helper;
+	
+	public function __construct()
+	{
+		$this->basket_item_helper = new Basket_Item_Helper();
+	}
 
 	/**
 	 * Create basket items and shipping item
@@ -236,98 +244,14 @@ class Additional_Information {
 	}
 
 	/**
-	 * @param Item $item
-	 * @param string $description
-	 * @param string $article_nr
-	 * @param float $tax_rate
-	 * @param null|float $tax_amount
-	 * @param null|string $currency
-	 *
-	 * @return Item
-	 *
-	 * @since 3.1.0
-	 */
-	protected function populate_basket_item( $item, $description, $article_nr, $tax_rate, $tax_amount = null, $currency = null ) {
-		$item->setDescription( Method_Helper::string_format_wc( $description ) );
-		$item->setArticleNumber( $article_nr );
-		$item->setTaxRate( Method_Helper::number_format_wc( $tax_rate ) );
-
-		if ( null !== $tax_amount ) {
-			$item->setTaxAmount(
-				$this->create_formatted_amount( $tax_amount, $currency )
-			);
-		}
-
-		return $item;
-	}
-
-	/**
-	 * @param string $name
-	 * @param float $amount
-	 * @param int $quantity
-	 * @param null|string $currency
-	 *
-	 * @return Item
-	 *
-	 * @since 3.1.0
-	 */
-	protected function create_basket_item( $name, $amount, $quantity, $currency = null ) {
-		return new Item(
-			Method_Helper::string_format_wc( $name ),
-			$this->create_formatted_amount( $amount, $currency ),
-			$quantity
-		);
-	}
-
-	/**
-	 * @param float $amount
-	 * @param null|string $currency
-	 *
-	 * @return Amount
-	 *
-	 * @since 3.1.0
-	 */
-	protected function create_formatted_amount( $amount, $currency = null ) {
-		if ( null === $currency ) {
-			$currency = get_woocommerce_currency();
-		}
-		return new Amount(
-			Method_Helper::number_format_wc( $amount ),
-			$currency
-		);
-	}
-
-	/**
-	 * @param string $name
-	 * @param float $amount
-	 * @param int $quantity
-	 * @param string $description
-	 * @param string $article_number
-	 * @param float $tax_rate
-	 * @param null|float $tax_amount
-	 * @param null|string $currency
-	 *
-	 * @return Item
-	 *
-	 * @since 3.1.0
-	 */
-	protected function build_basket_item( $name, $amount, $quantity, $description, $article_number, $tax_rate, $tax_amount = null, $currency = null ) {
-		// TODO: move basket logic into separate class TPWDCEE-5675
-		$item = $this->create_basket_item( $name, $amount, $quantity );
-		$item = $this->populate_basket_item( $item, $description, $article_number, $tax_rate, $tax_amount, $currency );
-
-		return $item;
-	}
-
-	/**
 	 * @param array $item
 	 *
 	 * @return Item
 	 *
 	 * @since 3.1.0
 	 */
-	protected function build_basket_item_from_array( $item ) {
-		return $this->build_basket_item(
+	private function build_basket_item_from_array( $item ) {
+		return $this->basket_item_helper->build_basket_item(
 			$item['name'],
 			$item['amount']['value'],
 			$item['quantity'],
@@ -354,7 +278,7 @@ class Additional_Information {
 	private function set_basket_item( $basket, $product, $quantity, $total, $tax, $tax_rate ) {
 		$item_unit_gross_amount = $total + $tax;
 
-		$item = $this->build_basket_item(
+		$item = $this->basket_item_helper->build_basket_item(
 			$product->get_name(),
 			$item_unit_gross_amount,
 			$quantity,
@@ -383,7 +307,7 @@ class Additional_Information {
 		$shipping_key = 'Shipping';
 		$amount       = $shipping_total + $shipping_tax;
 
-		$item = $this->build_basket_item(
+		$item = $this->basket_item_helper->build_basket_item(
 			$shipping_key,
 			$amount,
 			1,
@@ -519,12 +443,18 @@ class Additional_Information {
 	 * @since 1.6.2
 	 */
 	private function set_voucher_item( $basket, $voucher_total, $voucher_tax ) {
-		$amount = floatval( number_format( $voucher_total + $voucher_tax, wc_get_price_decimals() ) );
+		$voucher_key = 'Voucher';
+		$amount = (($voucher_total + $voucher_tax) * -1);
 
-		$amount = new Amount( $amount * -1, get_woocommerce_currency() );
-		$item   = new Item( 'Voucher', $amount, 1 );
-		$item->setDescription( 'Voucher' );
-		$item->setArticleNumber( 'Voucher' );
+		$item = $this->basket_item_helper->build_basket_item(
+			$voucher_key,
+			$amount,
+			1,
+			$voucher_key,
+			$voucher_key,
+			$voucher_tax
+		);
+		
 		$basket->add( $item );
 
 		return $basket;
