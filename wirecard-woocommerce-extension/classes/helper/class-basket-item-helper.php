@@ -90,7 +90,7 @@ class Basket_Item_Helper {
 		$item->setArticleNumber( $article_nr );
 		$item->setTaxRate( Method_Helper::number_format_wc( $tax_rate ) );
 
-		if ( $this->isTaxAmount( $tax_amount ) ) {
+		if ( $this->is_tax_amount( $tax_amount ) ) {
 			$item->setTaxAmount(
 				$this->create_formatted_amount( $tax_amount, $currency )
 			);
@@ -144,7 +144,7 @@ class Basket_Item_Helper {
 	 *
 	 * @since 3.1.0
 	 */
-	private function isTaxAmount( $tax_amount ) {
+	private function is_tax_amount( $tax_amount ) {
 		return null !== $tax_amount;
 	}
 }
