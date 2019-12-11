@@ -151,7 +151,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 			'woocommerce_api_submit_token_response',
 			array(
 				$this,
-				'execute_token_payment',
+				'execute_payment',
 			)
 		);
 	}
@@ -567,9 +567,16 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 		if ( $this->force_three_d ) {
 			$this->transaction->setThreeD( $this->force_three_d );
 		}
-		$this->transaction->setTermUrl( $this->create_redirect_url( $order, 'success', $this->type ) );
 		$this->transaction->setConfig( $config->get( CreditCardTransaction::NAME ) );
-		$this->set_three_ds_transaction_fields( $order );
+		
+		// Add token_id if oneclick vaulted card used
+		$token_id = sanitize_text_field( $_POST['vault_token'] );
+		if ( $token_id ) {
+			$this->transaction->setTokenId($token_id);
+		} else {
+			$token_id = null;
+		}
+		$this->set_three_ds_transaction_fields($order, $token_id);
 
 		wp_send_json_success(
 			$transaction_service->getCreditCardUiWithData(
@@ -630,35 +637,6 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 
 			wp_send_json_success( $this->execute_transaction( $this->transaction, $config, $this->payment_action, $order, $_POST ) );
 			wp_die();
-		}
-	}
-
-	/**
-	 * @return void
-	 * @since 1.7.0
-	 */
-	public function execute_token_payment() {
-		if ( wp_verify_nonce( $_POST['cc_nonce'] ) ) {
-			$config   = $this->create_payment_config();
-			$order_id = WC()->session->get( 'wirecard_order_id' );
-			$order    = wc_get_order( $order_id );
-			$token_id = sanitize_text_field( $_POST['vault_token'] );
-
-			$this->payment_action = $this->get_option( 'payment_action' );
-
-			if ( $token_id ) {
-				$this->transaction = new CreditCardTransaction();
-
-				parent::process_payment( $order_id );
-
-				$this->transaction->setTokenId( $token_id );
-				$this->transaction->setTermUrl( $this->create_redirect_url( $order, 'success', $this->type ) );
-				$this->transaction->setConfig( $config->get( CreditCardTransaction::NAME ) );
-				$this->set_three_ds_transaction_fields( $order, $token_id );
-
-				wp_send_json_success( $this->execute_transaction( $this->transaction, $config, $this->payment_action, $order ) );
-				wp_die();
-			}
 		}
 	}
 
