@@ -146,14 +146,6 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 				'execute_payment',
 			)
 		);
-
-		add_action(
-			'woocommerce_api_submit_token_response',
-			array(
-				$this,
-				'execute_payment',
-			)
-		);
 	}
 
 	/**
