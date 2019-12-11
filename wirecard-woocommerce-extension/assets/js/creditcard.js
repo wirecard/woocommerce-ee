@@ -62,13 +62,16 @@ function logError( data ) {
  * @returns mixed
  * @since 1.7.0
  */
-function getCreditCardData() {
+function getCreditCardData( selected_token = null ) {
 	return jQuery.ajax(
 		{
 			type: "POST",
 			url: phpVars.ajax_url,
 			cache: false,
-			data: {"action": "get_credit_card_request_data"},
+			data: {
+				"action": "get_credit_card_request_data",
+				"vault_token": selected_token
+			},
 			dataType: "json",
 		}
 	);
@@ -82,6 +85,14 @@ function getCreditCardData() {
 function onFormRendered() {
 	seamlessSubmitButton.removeAttr( "disabled" );
 	newCardContentArea.find( "iframe" ).height( 270 );
+
+
+	// wait till renderForm resolves
+	if ( token ) {
+		toggleTab();
+		newCardContentArea.show();
+		vaultContentArea.hide();
+	}
 }
 
 /**
@@ -98,6 +109,7 @@ function renderForm( response ) {
 			onError: logError,
 		}
 	);
+	
 }
 
 /**
@@ -221,22 +233,14 @@ function submitCreditCardResponse( response ) {
  * @since 1.7.0
  */
 function submitVault() {
-	request = {
-		"vault_token": token,
-		"cc_nonce": nonce.val(),
-		"action": "submit_token_response"
-	};
-	jQuery( "#vault-submit" ).prop( "disabled", true );
-
-	return jQuery.ajax(
-		{
-			type: "POST",
-			url: phpVars.token_url,
-			cache: false,
-			data: request,
-			dataType: "json",
-		}
-	);
+	getCreditCardData( token )
+		.then( renderForm )
+		.fail( logError )
+		.always(
+			function() {
+				jQuery( ".spinner" ).hide();
+			}
+		);
 }
 
 /*
