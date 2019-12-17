@@ -285,6 +285,7 @@ class Wirecard_Transaction_Factory {
 		$severity = 'error';
 
 		$transaction = $this->get_transaction( $transaction_id );
+		$order = wc_get_order( $transaction->order_id );
 		if ( ! $transaction ) {
 			$message = __( 'error_no_transaction', 'wirecard-woocommerce-extension' );
 			$this->print_admin_notice( $message, $severity );
@@ -306,6 +307,7 @@ class Wirecard_Transaction_Factory {
 		}
 
 		if ( $message instanceof SuccessResponse ) {
+			$this->update_parent_transaction($message,$order);
 			$severity    = 'updated';
 			$message     = __( 'success_new_transaction', 'wirecard-woocommerce-extension' ) . ' <a href="?page=wirecardpayment&id=' . $message->getTransactionId() . '">' . $message->getTransactionId() . '</a>';
 			$transaction = $this->get_transaction( $transaction_id );
@@ -479,6 +481,29 @@ class Wirecard_Transaction_Factory {
 	/**
 	 * Update parent transaction in database
 	 *
+	 * @param string $parent_transaction_id
+	 *
+	 * @return string
+	 *
+	 */
+	private function close_parent_transaction($parent_transaction_id){
+		global $wpdb;
+		$wpdb->update(
+			$this->table_name,
+			array(
+				'closed'            => '1',
+				'transaction_state' => 'closed',
+			),
+			array(
+				'transaction_id' => $parent_transaction_id,
+			)
+		);
+		return '';
+	}
+
+	/**
+	 * Update parent transaction in database
+	 *
 	 * @param SuccessResponse $response
 	 * @param WC_Order $order
 	 *
@@ -488,26 +513,16 @@ class Wirecard_Transaction_Factory {
 	 * @since 3.0.0
 	 */
 	private function update_parent_transaction( $response, $order ) {
-		global $wpdb;
 		$requested_amount   = $response->getData()['requested-amount'];
 		$action             = $response->getTransactionType();
 		$parent_transaction = $this->get_transaction( $response->getParentTransactionId() );
 		if ( $parent_transaction ) {
 			$parent_transaction_id = $response->getParentTransactionId();
 			$rest_amount           = $this->get_parent_rest_amount( $parent_transaction_id, $action );
-			if ( $rest_amount === $requested_amount ) {
+			if ( ($rest_amount === $requested_amount)||($rest_amount === 0) ) {
 				$order->set_transaction_id( $response->getTransactionId() );
 				// update parent transaction to closed, no back-end ops possible anymore
-				$wpdb->update(
-					$this->table_name,
-					array(
-						'closed'            => '1',
-						'transaction_state' => 'closed',
-					),
-					array(
-						'transaction_id' => $parent_transaction_id,
-					)
-				);
+				$this->close_parent_transaction($parent_transaction_id);
 			}
 			return $parent_transaction_id;
 		} else {
