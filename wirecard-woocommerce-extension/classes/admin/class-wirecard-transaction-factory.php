@@ -311,8 +311,7 @@ class Wirecard_Transaction_Factory {
 			$severity    = 'updated';
 			$message     = __( 'success_new_transaction', 'wirecard-woocommerce-extension' ) . ' <a href="?page=wirecardpayment&id=' . $message->getTransactionId() . '">' . $message->getTransactionId() . '</a>';
 			$transaction = $this->get_transaction( $transaction_id );
-		}
-
+		}       
 		$this->show_transaction( $transaction, $message, $severity );
 	}
 
@@ -479,27 +478,38 @@ class Wirecard_Transaction_Factory {
 	}
 
 	/**
-	 * Update parent transaction in database
+	 * Close parent transaction in database
 	 *
-	 * @param string $parent_transaction_id
+	 * @param SuccessResponse $response
+	 * @param WC_Order $order
 	 *
 	 * @return string
 	 *
+	 * @throws WC_Data_Exception
+	 *
+	 * @since 3.3.0
 	 */
-	private function close_parent_transaction($parent_transaction_id){
-		global $wpdb;
-		$wpdb->update(
-			$this->table_name,
-			array(
-				'closed'            => '1',
-				'transaction_state' => 'closed',
-			),
-			array(
-				'transaction_id' => $parent_transaction_id,
-			)
-		);
-		return '';
-	}
+	private function close_parent_transaction($response, $order){
+        global $wpdb;
+        $requested_amount   = $response->getData()['requested-amount'];
+        $action             = $response->getTransactionType();
+        $parent_transaction_id = $response->getParentTransactionId();
+        $rest_amount           = $this->get_parent_rest_amount( $parent_transaction_id, $action );
+        if ( ($rest_amount === $requested_amount)||($rest_amount === 0) ) {
+			$order->set_transaction_id( $response->getTransactionId() );
+			$wpdb->update(
+				$this->table_name,
+				array(
+					'closed'            => '1',
+					'transaction_state' => 'closed',
+				),
+				array(
+					'transaction_id' => $parent_transaction_id,
+				)
+			);
+		}
+        return $parent_transaction_id;
+    }
 
 	/**
 	 * Update parent transaction in database
@@ -513,18 +523,9 @@ class Wirecard_Transaction_Factory {
 	 * @since 3.0.0
 	 */
 	private function update_parent_transaction( $response, $order ) {
-		$requested_amount   = $response->getData()['requested-amount'];
-		$action             = $response->getTransactionType();
 		$parent_transaction = $this->get_transaction( $response->getParentTransactionId() );
 		if ( $parent_transaction ) {
-			$parent_transaction_id = $response->getParentTransactionId();
-			$rest_amount           = $this->get_parent_rest_amount( $parent_transaction_id, $action );
-			if ( ($rest_amount === $requested_amount)||($rest_amount === 0) ) {
-				$order->set_transaction_id( $response->getTransactionId() );
-				// update parent transaction to closed, no back-end ops possible anymore
-				$this->close_parent_transaction($parent_transaction_id);
-			}
-			return $parent_transaction_id;
+			return $this->close_parent_transaction($response, $order);
 		} else {
 			$order->set_transaction_id( $response->getTransactionId() );
 		}

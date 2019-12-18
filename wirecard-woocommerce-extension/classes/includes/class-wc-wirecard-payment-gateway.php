@@ -540,7 +540,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 			case 'credit':
 			case 'void-capture':
 			case 'void-purchase':
-				if ( $order->get_total() > $transaction_amount ) {
+				if ( ($order->get_total() > $transaction_amount )&&($order->get_remaining_refund_amount()!= 0)) {
 					$state = 'processing';
 				} else {
 					$state = 'refunded';
