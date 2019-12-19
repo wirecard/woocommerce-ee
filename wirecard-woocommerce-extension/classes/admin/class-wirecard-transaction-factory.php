@@ -129,11 +129,11 @@ class Wirecard_Transaction_Factory {
 	/**
 	 * Create new transaction entry in database
 	 *
-	 * @param WC_Order        $order
+	 * @param WC_Order $order
 	 * @param SuccessResponse $response
-	 * @param string          $base_url
-	 * @param string          $transaction_state
-	 * @param string          $payment_method
+	 * @param string $base_url
+	 * @param string $transaction_state
+	 * @param string $payment_method
 	 *
 	 * @return int
 	 *
@@ -177,11 +177,11 @@ class Wirecard_Transaction_Factory {
 	/**
 	 * Get transaction html table for overview beginning from $start to $stop
 	 *
-	 * @since 1.0.0
-	 *
 	 * @param int $page
 	 *
 	 * @return int $row_count
+	 * @since 1.0.0
+	 *
 	 */
 	public function get_rows( $page = 1 ) {
 		global $wpdb;
@@ -269,6 +269,7 @@ class Wirecard_Transaction_Factory {
 				$rest -= $transaction->amount;
 			}
 		}
+
 		return $rest;
 	}
 
@@ -285,10 +286,11 @@ class Wirecard_Transaction_Factory {
 		$severity = 'error';
 
 		$transaction = $this->get_transaction( $transaction_id );
-		$order = wc_get_order( $transaction->order_id );
+		$order       = wc_get_order( $transaction->order_id );
 		if ( ! $transaction ) {
 			$message = __( 'error_no_transaction', 'wirecard-woocommerce-extension' );
 			$this->print_admin_notice( $message, $severity );
+
 			return;
 		}
 
@@ -307,7 +309,7 @@ class Wirecard_Transaction_Factory {
 		}
 
 		if ( $message instanceof SuccessResponse ) {
-			$this->update_parent_transaction($message,$order);
+			$this->update_parent_transaction( $message, $order );
 			$severity    = 'updated';
 			$message     = __( 'success_new_transaction', 'wirecard-woocommerce-extension' ) . ' <a href="?page=wirecardpayment&id=' . $message->getTransactionId() . '">' . $message->getTransactionId() . '</a>';
 			$transaction = $this->get_transaction( $transaction_id );
@@ -330,7 +332,8 @@ class Wirecard_Transaction_Factory {
 
 		$response_data = json_decode( $transaction->response );
 		?>
-		<link rel='stylesheet' href='<?php echo plugins_url( 'wirecard-woocommerce-extension/assets/styles/admin.css' ); ?>'>
+		<link rel='stylesheet'
+		      href='<?php echo plugins_url( 'wirecard-woocommerce-extension/assets/styles/admin.css' ); ?>'>
 		<div class="wrap">
 			<?php
 			if ( isset( $message ) ) {
@@ -348,7 +351,8 @@ class Wirecard_Transaction_Factory {
 								</h3>
 								<div><?php echo $transaction->transaction_link; ?></div>
 								<br>
-								<div class="transaction-type type-authorization"><?php echo $transaction->transaction_type; ?></div>
+								<div
+									class="transaction-type type-authorization"><?php echo $transaction->transaction_type; ?></div>
 								<br>
 								<div class="wc-order-data-row">
 									<?php
@@ -366,11 +370,12 @@ class Wirecard_Transaction_Factory {
 									}
 									if ( 'awaiting' === $transaction->transaction_state ) {
 										echo "<p class='add-items'>"
-											. __( 'error_no_post_processing_operations_unconfirmed', 'wirecard-woocommerce-extension' ) . '</p>';
+										     . __( 'error_no_post_processing_operations_unconfirmed', 'wirecard-woocommerce-extension' ) . '</p>';
 									}
 									?>
 									<p class="add-items">
-										<a href="?page=wirecardpayment"><?php echo __( 'title_payment_gateway', 'wirecard-woocommerce-extension' ); ?></a> <!---->
+										<a href="?page=wirecardpayment"><?php echo __( 'title_payment_gateway', 'wirecard-woocommerce-extension' ); ?></a>
+										<!---->
 									</p>
 								</div>
 								<hr>
@@ -419,7 +424,7 @@ class Wirecard_Transaction_Factory {
 	/**
 	 * Create transaction link for detailed information
 	 *
-	 * @param string                                $base_url
+	 * @param string $base_url
 	 * @param Wirecard\PaymentSdk\Response\Response $response
 	 *
 	 * @return string
@@ -443,12 +448,12 @@ class Wirecard_Transaction_Factory {
 	 * Set parameters for the transaction
 	 *
 	 * @param SuccessResponse $response
-	 * @param string          $parent_transaction_id
-	 * @param string          $payment_method
-	 * @param string          $transaction_state
-	 * @param WC_Order        $order
-	 * @param string          $transaction_link
-	 * @param float           $amount
+	 * @param string $parent_transaction_id
+	 * @param string $payment_method
+	 * @param string $transaction_state
+	 * @param WC_Order $order
+	 * @param string $transaction_link
+	 * @param float $amount
 	 *
 	 * @return array
 	 *
@@ -488,11 +493,12 @@ class Wirecard_Transaction_Factory {
 	 *
 	 * @since 3.3.0
 	 */
-	private function set_transaction_state($state){
+	private function set_transaction_state( $state ) {
 		$transaction_state = 'closed';
-		if($state === '0') {
+		if ( $state === '0' ) {
 			$transaction_state = 'success';
 		}
+
 		return $transaction_state;
 	}
 
@@ -509,14 +515,14 @@ class Wirecard_Transaction_Factory {
 	 *
 	 * @since 3.3.0
 	 */
-	private function update_parent_transaction_state($response, $order, $state){
+	private function update_parent_transaction_state( $response, $order, $state ) {
 		global $wpdb;
-		$requested_amount   = $response->getData()['requested-amount'];
-		$action             = $response->getTransactionType();
+		$requested_amount      = $response->getData()['requested-amount'];
+		$action                = $response->getTransactionType();
 		$parent_transaction_id = $response->getParentTransactionId();
 		$rest_amount           = $this->get_parent_rest_amount( $parent_transaction_id, $action );
-		$transaction_state = $this->set_transaction_state($state);
-		if ( ($rest_amount === $requested_amount)||($rest_amount === 0) ) {
+		$transaction_state     = $this->set_transaction_state( $state );
+		if ( ( $rest_amount === $requested_amount ) || ( $rest_amount === 0 ) ) {
 			$order->set_transaction_id( $response->getTransactionId() );
 			$wpdb->update(
 				$this->table_name,
@@ -529,6 +535,7 @@ class Wirecard_Transaction_Factory {
 				)
 			);
 		}
+
 		return $parent_transaction_id;
 	}
 
@@ -546,15 +553,15 @@ class Wirecard_Transaction_Factory {
 	private function update_parent_transaction( $response, $order ) {
 		$parent_transaction = $this->get_transaction( $response->getParentTransactionId() );
 		if ( $parent_transaction ) {
-			if($response instanceof SuccessResponse){
-				return $this->update_parent_transaction_state($response, $order,'1');
-			}
-			else {
-				return $this->update_parent_transaction_state($response, $order,'0');
+			if ( $response instanceof SuccessResponse ) {
+				return $this->update_parent_transaction_state( $response, $order, '1' );
+			} else {
+				return $this->update_parent_transaction_state( $response, $order, '0' );
 			}
 		} else {
 			$order->set_transaction_id( $response->getTransactionId() );
 		}
+
 		return '';
 	}
 
@@ -571,7 +578,7 @@ class Wirecard_Transaction_Factory {
 	private function reduce_stock( $response, $order ) {
 		// Do not reduce stock for follow-up transactions
 		if ( in_array( $response->getTransactionType(), $this->stock_reduction_types, true ) &&
-			! $this->active_germanized() ) {
+		     ! $this->active_germanized() ) {
 			// Reduce stock after successful transaction creation to avoid duplicated reduction
 			wc_reduce_stock_levels( $order->get_id() );
 		}
@@ -591,6 +598,7 @@ class Wirecard_Transaction_Factory {
 		if ( is_plugin_active( 'woocommerce-germanized/woocommerce-germanized.php' ) ) {
 			return true;
 		}
+
 		return false;
 	}
 }
