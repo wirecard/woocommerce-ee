@@ -61,7 +61,7 @@ use Wirecard\PaymentSdk\TransactionService;
  */
 abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	const CHECK_PAYER_RESPONSE = 'check-payer-response';
-	const PAYMENT_ACTIONS = array(
+	const PAYMENT_ACTIONS      = array(
 		'pay'     => 'purchase',
 		'reserve' => 'authorization',
 	);
@@ -732,9 +732,9 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	private function get_shop_version() {
 		global $wp_version;
 
-		$shop        = 'WordPress ';
+		$shop         = 'WordPress ';
 		$shop        .= 'v' . $wp_version;
-		$woocommerce = ' WooCommerce ';
+		$woocommerce  = ' WooCommerce ';
 		$woocommerce .= 'v' . WC()->version;
 
 		return $shop . $woocommerce;

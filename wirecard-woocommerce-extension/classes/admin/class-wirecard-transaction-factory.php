@@ -332,8 +332,7 @@ class Wirecard_Transaction_Factory {
 
 		$response_data = json_decode( $transaction->response );
 		?>
-		<link rel='stylesheet'
-		      href='<?php echo plugins_url( 'wirecard-woocommerce-extension/assets/styles/admin.css' ); ?>'>
+		<link rel='stylesheet' href='<?php echo plugins_url( 'wirecard-woocommerce-extension/assets/styles/admin.css' ); ?>'>
 		<div class="wrap">
 			<?php
 			if ( isset( $message ) ) {
@@ -369,8 +368,7 @@ class Wirecard_Transaction_Factory {
 										echo "<p class='add-items'>" . __( 'error_no_post_processing_operations', 'wirecard-woocommerce-extension' ) . '</p>';
 									}
 									if ( 'awaiting' === $transaction->transaction_state ) {
-										echo "<p class='add-items'>"
-										     . __( 'error_no_post_processing_operations_unconfirmed', 'wirecard-woocommerce-extension' ) . '</p>';
+										echo "<p class='add-items'>" . __( 'error_no_post_processing_operations_unconfirmed', 'wirecard-woocommerce-extension' ) . '</p>';
 									}
 									?>
 									<p class="add-items">
@@ -498,7 +496,6 @@ class Wirecard_Transaction_Factory {
 		if ( $state === '0' ) {
 			$transaction_state = 'success';
 		}
-
 		return $transaction_state;
 	}
 
@@ -577,8 +574,7 @@ class Wirecard_Transaction_Factory {
 	 */
 	private function reduce_stock( $response, $order ) {
 		// Do not reduce stock for follow-up transactions
-		if ( in_array( $response->getTransactionType(), $this->stock_reduction_types, true ) &&
-		     ! $this->active_germanized() ) {
+		if ( in_array( $response->getTransactionType(), $this->stock_reduction_types, true ) && ! $this->active_germanized() ) {
 			// Reduce stock after successful transaction creation to avoid duplicated reduction
 			wc_reduce_stock_levels( $order->get_id() );
 		}
