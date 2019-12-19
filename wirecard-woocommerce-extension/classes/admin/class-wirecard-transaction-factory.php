@@ -311,7 +311,7 @@ class Wirecard_Transaction_Factory {
 			$severity    = 'updated';
 			$message     = __( 'success_new_transaction', 'wirecard-woocommerce-extension' ) . ' <a href="?page=wirecardpayment&id=' . $message->getTransactionId() . '">' . $message->getTransactionId() . '</a>';
 			$transaction = $this->get_transaction( $transaction_id );
-		}       
+		}
 		$this->show_transaction( $transaction, $message, $severity );
 	}
 
@@ -478,10 +478,9 @@ class Wirecard_Transaction_Factory {
 	}
 
 	/**
-	 * Close parent transaction in database
+	 * Set the tansaction state based on the state value
 	 *
-	 * @param SuccessResponse $response
-	 * @param WC_Order $order
+	 * @param string $state
 	 *
 	 * @return string
 	 *
@@ -489,30 +488,52 @@ class Wirecard_Transaction_Factory {
 	 *
 	 * @since 3.3.0
 	 */
-	private function close_parent_transaction($response, $order){
-        global $wpdb;
-        $requested_amount   = $response->getData()['requested-amount'];
-        $action             = $response->getTransactionType();
-        $parent_transaction_id = $response->getParentTransactionId();
-        $rest_amount           = $this->get_parent_rest_amount( $parent_transaction_id, $action );
-        if ( ($rest_amount === $requested_amount)||($rest_amount === 0) ) {
+	private function set_transaction_state($state){
+		$transaction_state = 'closed';
+		if($state === '0') {
+			$transaction_state = 'success';
+		}
+		return $transaction_state;
+	}
+
+	/**
+	 * Update parent transaction state in database
+	 *
+	 * @param SuccessResponse $response
+	 * @param WC_Order $order
+	 * @param string $state
+	 *
+	 * @return string
+	 *
+	 * @throws WC_Data_Exception
+	 *
+	 * @since 3.3.0
+	 */
+	private function update_parent_transaction_state($response, $order, $state){
+		global $wpdb;
+		$requested_amount   = $response->getData()['requested-amount'];
+		$action             = $response->getTransactionType();
+		$parent_transaction_id = $response->getParentTransactionId();
+		$rest_amount           = $this->get_parent_rest_amount( $parent_transaction_id, $action );
+		$transaction_state = $this->set_transaction_state($state);
+		if ( ($rest_amount === $requested_amount)||($rest_amount === 0) ) {
 			$order->set_transaction_id( $response->getTransactionId() );
 			$wpdb->update(
 				$this->table_name,
 				array(
-					'closed'            => '1',
-					'transaction_state' => 'closed',
+					'closed'            => $state,
+					'transaction_state' => $transaction_state,
 				),
 				array(
 					'transaction_id' => $parent_transaction_id,
 				)
 			);
 		}
-        return $parent_transaction_id;
-    }
+		return $parent_transaction_id;
+	}
 
 	/**
-	 * Update parent transaction in database
+	 * Update parent transaction
 	 *
 	 * @param SuccessResponse $response
 	 * @param WC_Order $order
@@ -525,7 +546,12 @@ class Wirecard_Transaction_Factory {
 	private function update_parent_transaction( $response, $order ) {
 		$parent_transaction = $this->get_transaction( $response->getParentTransactionId() );
 		if ( $parent_transaction ) {
-			return $this->close_parent_transaction($response, $order);
+			if($response instanceof SuccessResponse){
+				return $this->update_parent_transaction_state($response, $order,'1');
+			}
+			else {
+				return $this->update_parent_transaction_state($response, $order,'0');
+			}
 		} else {
 			$order->set_transaction_id( $response->getTransactionId() );
 		}
