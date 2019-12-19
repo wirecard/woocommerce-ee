@@ -519,7 +519,7 @@ class Wirecard_Transaction_Factory {
 		$parent_transaction_id = $response->getParentTransactionId();
 		$rest_amount           = $this->get_parent_rest_amount( $parent_transaction_id, $action );
 		$transaction_state     = $this->set_transaction_state( $state );
-		if ( ( $rest_amount === $requested_amount ) || ( $rest_amount === 0 ) ) {
+		if ( ( $rest_amount === $requested_amount ) || ( 0 === $rest_amount ) ) {
 			$order->set_transaction_id( $response->getTransactionId() );
 			$wpdb->update(
 				$this->table_name,
