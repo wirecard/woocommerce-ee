@@ -493,7 +493,7 @@ class Wirecard_Transaction_Factory {
 	 */
 	private function set_transaction_state( $state ) {
 		$transaction_state = 'closed';
-		if ( $state === '0' ) {
+		if ( '0' === $state ) {
 			$transaction_state = 'success';
 		}
 		return $transaction_state;
