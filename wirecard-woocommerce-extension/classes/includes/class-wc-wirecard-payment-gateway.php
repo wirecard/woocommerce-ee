@@ -211,6 +211,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 
 		if ( 'cancel' === $_REQUEST['payment-state'] ) {
 			wc_add_notice( __( 'canceled_payment_process', 'wirecard-woocommerce-extension' ), 'notice' );
+			$order->update_status( 'cancelled', __( 'order_status_gateway_update', 'wirecard-woocommerce-extension' ) );
 			header( 'Location:' . $order->get_cancel_endpoint() );
 			die();
 		}
