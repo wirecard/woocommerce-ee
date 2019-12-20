@@ -223,7 +223,6 @@ class WC_Gateway_Wirecard_Sepa_Direct_Debit extends WC_Wirecard_Payment_Gateway 
 	 */
 	public function payment_scripts() {
 		$gateway_url = WIRECARD_EXTENSION_URL;
-		
 		wp_register_style( 'basic_style', $gateway_url . '/assets/styles/frontend.css', array(), null, false );
 		wp_register_style( 'jquery_ui_style', 'https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css', array(), null, false );
 		wp_register_script( 'jquery_ui', 'https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js', array(), null, false );
