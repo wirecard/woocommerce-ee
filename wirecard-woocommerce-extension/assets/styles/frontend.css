@@ -72,3 +72,10 @@
 .wd-card-delete:hover {
 	text-decoration: underline;
 }
+
+div.ui-widget-overlay {
+	z-index: 100;
+	opacity: 0.5;
+	filter: Alpha(Opacity=50);
+	background-color: black;
+}
