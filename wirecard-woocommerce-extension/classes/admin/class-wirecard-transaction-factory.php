@@ -534,7 +534,7 @@ class Wirecard_Transaction_Factory {
 	 */
 	private function update_parent_transaction_state( $response, $order, $state ) {
 		global $wpdb;
-		$requested_amount      = $response->getRequestedAmount();
+		$requested_amount      = $response->getData()['requested-amount'];
 		$action                = $response->getTransactionType();
 		$parent_transaction_id = $response->getParentTransactionId();
 		$rest_amount           = $this->get_parent_rest_amount( $parent_transaction_id, $action );
