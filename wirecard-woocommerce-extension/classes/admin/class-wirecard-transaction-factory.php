@@ -49,6 +49,26 @@ use Wirecard\PaymentSdk\Response\SuccessResponse;
 class Wirecard_Transaction_Factory {
 
 	/**
+	 * @const string TRANSACTION_CLOSED
+	 */
+	const TRANSACTION_CLOSED = 'closed';
+
+	/**
+	 * @const string TRANSACTION_SUCCESS
+	 */
+	const TRANSACTION_SUCCESS = 'success';
+
+	/**
+	 * @const string TRANSACTION_STATE_SUCCESS
+	 */
+	const TRANSACTION_STATE_SUCCESS = '0';
+
+	/**
+	 * @const string TRANSACTION_STATE_CLOSED
+	 */
+	const TRANSACTION_STATE_CLOSED = '1';
+
+	/**
 	 * Transaction table name in database
 	 *
 	 * @since  1.0.0
@@ -489,12 +509,12 @@ class Wirecard_Transaction_Factory {
 	 *
 	 * @throws WC_Data_Exception
 	 *
-	 * @since 3.3.0
+	 * @since 3.1.0
 	 */
 	private function set_transaction_state( $state ) {
-		$transaction_state = 'closed';
-		if ( '0' === $state ) {
-			$transaction_state = 'success';
+		$transaction_state = self::TRANSACTION_CLOSED;
+		if ( self::TRANSACTION_STATE_SUCCESS === $state ) {
+			$transaction_state = self::TRANSACTION_SUCCESS;
 		}
 		return $transaction_state;
 	}
@@ -510,11 +530,11 @@ class Wirecard_Transaction_Factory {
 	 *
 	 * @throws WC_Data_Exception
 	 *
-	 * @since 3.3.0
+	 * @since 3.1.0
 	 */
 	private function update_parent_transaction_state( $response, $order, $state ) {
 		global $wpdb;
-		$requested_amount      = $response->getData()['requested-amount'];
+		$requested_amount      = $response->getRequestedAmount();
 		$action                = $response->getTransactionType();
 		$parent_transaction_id = $response->getParentTransactionId();
 		$rest_amount           = $this->get_parent_rest_amount( $parent_transaction_id, $action );
@@ -551,9 +571,10 @@ class Wirecard_Transaction_Factory {
 		$parent_transaction = $this->get_transaction( $response->getParentTransactionId() );
 		if ( $parent_transaction ) {
 			if ( $response instanceof SuccessResponse ) {
-				return $this->update_parent_transaction_state( $response, $order, '1' );
+				return $this->update_parent_transaction_state( $response, $order, self::TRANSACTION_STATE_CLOSED );
 			} else {
-				return $this->update_parent_transaction_state( $response, $order, '0' );
+				// Update parent transaction state from closed to success if notification response is error
+				return $this->update_parent_transaction_state( $response, $order, self::TRANSACTION_STATE_SUCCESS );
 			}
 		} else {
 			$order->set_transaction_id( $response->getTransactionId() );
