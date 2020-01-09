@@ -1,5 +1,25 @@
 [
 {
+	"release": "3.0.1",
+	"shopversions": {
+    	"shopsystem": {
+    		"name": "WooCommerce",
+    		"tested": "3.8.0",
+    		"compatibility": "3.3.4"
+    	},
+    	"platform": {
+    		"name": "Wordpress",
+    		"tested": "5.3",
+    		"compatibility": "5.0.3"
+    	}
+    },	
+	"changelog": [
+		"Improve handling of cancel and capture buttons in transaction view",
+		"Set canceled PayPal payments to the correct order state to prevent stock issues",
+		"Improve presentation of SEPA mandate"
+	]
+},
+{
 	"release": "3.0.0",
 	"shopversions": {
     	"shopsystem": {

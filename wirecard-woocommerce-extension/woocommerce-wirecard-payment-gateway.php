@@ -3,7 +3,7 @@
  * Plugin Name: Wirecard WooCommerce Extension
  * Plugin URI: https://github.com/wirecard/woocommerce-ee
  * Description: Payment Gateway for WooCommerce
- * Version: 3.0.0
+ * Version: 3.0.1
  * Author: Wirecard AG
  * Author URI: https://www.wirecard.com/
  * License: GPLv3
@@ -11,7 +11,7 @@
  * Text Domain: wirecard-woocommerce-extension
  * Domain Path: /languages
  * WC requires at least: 3.3.4
- * WC tested up to: 3.7.0
+ * WC tested up to: 3.8.0
  *
  * Shop System Plugins - Terms of Use
  *
@@ -48,7 +48,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 define( 'WIRECARD_EXTENSION_NAME', 'Wirecard WooCommerce Extension' );
-define( 'WIRECARD_EXTENSION_VERSION', '3.0.0' );
+define( 'WIRECARD_EXTENSION_VERSION', '3.0.1' );
 define( 'WIRECARD_EXTENSION_BASEDIR', plugin_dir_path( __FILE__ ) );
 define( 'WIRECARD_EXTENSION_URL', plugin_dir_url( __FILE__ ) );
 define( 'WIRECARD_EXTENSION_LOCALE_FALLBACK', 'en_US' );
