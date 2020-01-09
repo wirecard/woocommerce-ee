@@ -14,7 +14,9 @@
     	}
     },	
 	"changelog": [
-		
+		"Improve handling of cancel and capture buttons in transaction view",
+		"Set canceled PayPal payments to the correct order state to prevent stock issues",
+		"Improve presentation of SEPA mandate"
 	]
 },
 {
