@@ -46,25 +46,6 @@ var seamlessSubmitButton = jQuery( "#seamless-submit" );
 var vaultSubmitButton    = jQuery( "#vault-submit" );
 
 
-var Constants = {
-	IFRAME_HEIGHT_DESKTOP: 410,
-	IFRAME_HEIGHT_MOBILE: 390,
-	IFRAME_HEIGHT_CUTOFF: 992,
-
-	MODAL_ID: "#wirecard-ccvault-modal",
-	IFRAME_ID: "#wirecard-integrated-payment-page-frame",
-	CONTAINER_ID: "payment-processing-gateway-credit-card-form",
-	PAYMENT_FORM_ID: "form[action*=\"creditcard\"]",
-	CREDITCARD_RADIO_ID: "input[name=\"payment-option\"][data-module-name=\"wd-creditcard\"]",
-	USE_CARD_BUTTON_ID: "button[data-tokenid]",
-	DELETE_CARD_BUTTON_ID: "button[data-cardid]",
-	STORED_CARD_BUTTON_ID: "#stored-card",
-	SAVE_CARD_CHECKMARK_ID: "#wirecard-store-card",
-	CARD_LIST_ID: "#wd-card-list",
-	CARD_SPINNER_ID: "#card-spinner"
-};
-
-
 /**
  * Log any error that has occurred.
  *
