@@ -42,7 +42,7 @@ function __( $text, $domain = 'default' ) {
 }
 
 function wc_get_base_location() {
-	return array("country" => "Austria");
+	return array('country' => 'Austria');
 }
 
 function add_action( $tag, $function_to_add, $priority = 10, $accepted_args = 1 ) {
