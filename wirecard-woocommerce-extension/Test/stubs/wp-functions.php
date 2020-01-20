@@ -44,9 +44,9 @@ function plugin_dir_url( $file )
 	return dirname( $file ) . '/';
 }
 
-function plugin_basename()
+function plugin_basename( $file )
 {
-	return 'wirecard-woocommerce-extension';
+	return dirname( $file );
 }
 
 function wp_json_encode() {
