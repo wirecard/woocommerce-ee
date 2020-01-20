@@ -36,17 +36,17 @@ $wpdb = new WPDB();
 
 function plugin_dir_path( $file )
 {
-	return dirname( $file );
+	return dirname( $file ) . DIRECTORY_SEPARATOR;
 }
 
 function plugin_dir_url( $file )
 {
-	return dirname( $file );
+	return dirname( $file ) . DIRECTORY_SEPARATOR;
 }
 
 function plugin_basename( $file )
 {
-	return dirname( $file );
+	return dirname( $file ) . DIRECTORY_SEPARATOR;
 }
 
 function wp_json_encode() {
