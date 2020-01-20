@@ -39,7 +39,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 $html = '
-			<div id="wc_payment_method_wirecard_new_credit_card" class="wd-tab-content">
+			<div id="wc_payment_method_wirecard_new_credit_card">
 				<div id="wd-creditcard-messagecontainer" class="woocommerce-NoticeGroup woocommerce-NoticeGroup-checkout" style="display: none;">
 				<ul class="woocommerce-error" role="alert"><li id="wd-creditcard-error-message">' .
 				__( 'error_malformed_creditcard_request', 'wirecard-woocommerce-extension' ) .

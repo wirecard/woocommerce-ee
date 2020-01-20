@@ -54,15 +54,19 @@
 	margin-bottom: 2rem;
 }
 
+#vault-table {
+	border: none;
+}
 
 #vault-table td,
 #vault-table th {
 	padding: 5px;
 	vertical-align: middle;
+	border: none;
 }
 
 .wd-card-selector {
-	text-align: center;
+	text-align: right;
 }
 
 .wd-card-delete {

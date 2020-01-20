@@ -36,14 +36,10 @@
  */
 
 var token                = null;
-var tabContent           = ".wd-tab-content";
 var nonce                = jQuery( "#wc_payment_method_wirecard_creditcard_response_form input[name='cc_nonce']" );
-var togglers             = jQuery( ".wd-toggle-tab" );
-var contentAreas         = jQuery( tabContent );
 var newCardContentArea   = jQuery( "#wc_payment_method_wirecard_new_credit_card" );
 var vaultContentArea     = jQuery( "#wc_payment_method_wirecard_creditcard_vault" );
 var seamlessSubmitButton = jQuery( "#seamless-submit" );
-var vaultSubmitButton    = jQuery( "#vault-submit" );
 
 
 var Constants = {
@@ -104,14 +100,6 @@ function getCreditCardData( selected_token = null ) {
 function onFormRendered() {
 	seamlessSubmitButton.removeAttr( "disabled" );
 	newCardContentArea.find( "iframe" ).height( 270 );
-
-
-	// wait till renderForm resolves
-	if ( token ) {
-		toggleTab();
-		newCardContentArea.show();
-		vaultContentArea.hide();
-	}
 }
 
 /**
@@ -283,7 +271,6 @@ function addCreditCardsToVaultTab(cardResponse) {
  */
 function deleteCreditCardFromVaultTab( deleteTrigger, id ) {
 	token = null;
-	vaultSubmitButton.attr( "disabled", "disabled" );
 	jQuery( deleteTrigger ).append( phpVars.spinner );
 
 	deleteCreditCardFromVault( id )
@@ -291,36 +278,11 @@ function deleteCreditCardFromVaultTab( deleteTrigger, id ) {
 		.fail( logError );
 }
 
-function toggleTab() {
-	var $tab = jQuery( this );
-
-	if ( $tab.hasClass( "active" ) ) {
-		return;
-	}
-
-	togglers
-		.removeClass( "active" )
-		.find( ".dashicons" )
-		.removeClass( "dashicons-arrow-up" )
-		.addClass( "dashicons-arrow-down" );
-
-	$tab.find( ".dashicons" )
-		.removeClass( "dashicons-arrow-down" )
-		.addClass( "dashicons-arrow-up" );
-
-	contentAreas.slideUp();
-
-	$tab.addClass( "active" )
-		.next( tabContent )
-		.slideDown();
-}
-
 function onTokenSelected( tokenField ) {
 	var selectedToken = jQuery( tokenField ).data( "token" );
 
 	if ( selectedToken ) {
 		token = selectedToken;
-		vaultSubmitButton.removeAttr( "disabled" );
 	}
 }
 
@@ -369,9 +331,6 @@ function onFormSubmitted( response ) {
  * Initializes the vault interface as required.
  */
 function initializeVault() {
-	newCardContentArea.hide();
-	togglers.on( "click", toggleTab );
-
 	getCreditCardsFromVault()
 		.then( addCreditCardsToVaultTab )
 		.fail( logError );
@@ -383,9 +342,8 @@ function initializeVault() {
  * @since 1.7.0
  */
 function initializeForm() {
-	var vaultNeedsToBeInitialized = togglers.length > 0;
-
-	if ( vaultNeedsToBeInitialized ) {
+	let hasSavedTokens = document.getElementById("wc_payment_method_wirecard_creditcard_vault");
+	if ( hasSavedTokens ) {
 		initializeVault();
 	}
 
@@ -437,4 +395,3 @@ function submitVaultForm() {
 
 jQuery( document ).ready( initializeForm );
 seamlessSubmitButton.click( submitSeamlessForm );
-vaultSubmitButton.click( submitVaultForm );

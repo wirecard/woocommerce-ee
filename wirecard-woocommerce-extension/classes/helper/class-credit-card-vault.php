@@ -222,12 +222,7 @@ class Credit_Card_Vault {
 	 * @since 1.1.0
 	 */
 	private function fetch_template_data( $cards ) {
-		$html = '<table id="vault-table">
-		<tr>
-			<th></th>
-			<th>' . __( 'vault_account_number', 'wirecard-woocommerce-extension' ) . '</th>
-			<th>' . __( 'vault_delete_card_text', 'wirecard-woocommerce-extension' ) . '</th>
-		</tr>';
+		$html = '<table id="vault-table">';
 		foreach ( $cards as $card ) {
 			$html .= '<tr>
 				<td class="wd-card-selector"><input onclick="javascript:onTokenSelected(this)" class="token" name="token" type="radio" data-token="' . $card->token . '" /></td>
