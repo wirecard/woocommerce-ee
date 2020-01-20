@@ -36,12 +36,12 @@ $wpdb = new WPDB();
 
 function plugin_dir_path( $file )
 {
-	return dirname( $file ) . '/../';
+	return dirname( $file );
 }
 
 function plugin_dir_url( $file )
 {
-	return dirname( $file ) . '/';
+	return dirname( $file );
 }
 
 function plugin_basename( $file )
