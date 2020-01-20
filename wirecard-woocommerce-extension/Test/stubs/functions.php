@@ -45,6 +45,15 @@ function wc_get_base_location() {
 	return array('country' => 'Austria');
 }
 
+function load_plugin_textdomain( $domain, $deprecated = false, $plugin_rel_path = false ) {
+	return true;
+}
+
+function register_activation_hook( $file, $function ) {
+	$file = plugin_basename( $file );
+	add_action( 'activate_' . $file, $function );
+}
+
 function add_action( $tag, $function_to_add, $priority = 10, $accepted_args = 1 ) {
 	return;
 }
