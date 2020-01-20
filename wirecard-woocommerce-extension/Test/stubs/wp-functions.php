@@ -29,14 +29,14 @@
  * Please do not use the plugin if you do not agree to these terms of use!
  */
 
-function plugin_dir_path()
+function plugin_dir_path( $file )
 {
-	return __DIR__ . '/../../';
+	return dirname( $file ) . DIRECTORY_SEPARATOR . '/../../';
 }
 
-function plugin_dir_url()
+function plugin_dir_url( $file )
 {
-	return __DIR__ . '/../';
+	return dirname( $file ) . DIRECTORY_SEPARATOR . '/../';
 }
 
 function plugin_basename()
