@@ -39,22 +39,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 $html = '
-			<div id="open-vault-popup" class="wd-toggle-tab active">
-				<span class="dashicons dashicons-arrow-up"></span>' . __( 'vault_use_existing_text', 'wirecard-woocommerce-extension' ) . '
-			</div>
-			
-			<div id="wc_payment_method_wirecard_creditcard_vault" class="wd-tab-content">						
+			<div id="wc_payment_method_wirecard_creditcard_vault">	
+				<h2>' . __( 'vault_use_existing_text', 'wirecard-woocommerce-extension' ) . '</h2>					
 				<div class="cards">
 					<div class="show-spinner">
 						<div class="spinner" style="background: url(\'' . admin_url() . 'images/loading.gif\') no-repeat;"></div>
 					</div>
 				</div>
-				
-				<button disabled id="vault-submit" class="wd-submit checkout-button button alt wc-forward">' . __( 'Pay', 'woocommerce' ) . '</button>
 				<div class="clear"></div>
-			</div>
-		
-			<div id="open-new-card" class="wd-toggle-tab">
-				<span class="dashicons dashicons-arrow-down"></span>' . __( 'vault_use_new_text', 'wirecard-woocommerce-extension' ) . '
 			</div>
 		';
