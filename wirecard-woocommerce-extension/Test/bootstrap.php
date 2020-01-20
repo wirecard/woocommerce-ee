@@ -32,7 +32,7 @@
 define( 'ABSPATH', true );
 
 require_once __DIR__ . '/stubs/wp-functions.php';
-require_once __DIR__ . '/../woocommerce-wirecard-definitions.php';
+require_once __DIR__ . '/../constants/woocommerce-wirecard-definitions.php';
 require_once __DIR__ . '/../vendor/autoload.php';
 
 //stub objects
