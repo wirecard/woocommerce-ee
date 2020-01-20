@@ -29,6 +29,11 @@
  * Please do not use the plugin if you do not agree to these terms of use!
  */
 
+require_once __DIR__ . '/wpdb.php';
+
+global $wpdb;
+$wpdb = new WPDB();
+
 function plugin_dir_path( $file )
 {
 	return dirname( $file ) . '/../';
@@ -39,7 +44,7 @@ function plugin_dir_url( $file )
 	return dirname( $file ) . '/';
 }
 
-function plugin_basename()
+function plugin_basename( $file )
 {
 	return 'wirecard-woocommerce-extension';
 }
