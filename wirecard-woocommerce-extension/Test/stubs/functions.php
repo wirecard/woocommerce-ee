@@ -113,35 +113,7 @@ function WC() {
 	return new WC();
 }
 
-function wp_json_encode() {
-	return 'json';
-}
-
-function is_multisite() {
-	return false;
-}
-
-function wp_unslash( $string ) {
-	return $string;
-}
-
-function wp_enqueue_script( $string ) {
-	return;
-}
-
-function wp_dequeue_script( $string ) {
-	return;
-}
-
-function wp_enqueue_style( $string ) {
-	return;
-}
-
 function admin_url() {
-	return;
-}
-
-function wp_localize_script( $name, $var_name, $var ) {
 	return;
 }
 
@@ -153,20 +125,8 @@ function is_user_logged_in() {
 	return true;
 }
 
-function wp_verify_nonce() {
-	return true;
-}
-
-function wp_create_nonce() {
-	return 'nonce';
-}
-
 function wc_reduce_stock_levels( $order ) {
 	return $order;
-}
-
-function wp_strip_all_tags( $string ) {
-	return $string;
 }
 
 function get_option( $option ) {
@@ -175,26 +135,6 @@ function get_option( $option ) {
 
 function apply_filters( $string, $parameter, $option ) {
 	return $string;
-}
-
-function is_wp_error() {
-	return;
-}
-
-function wp_send_json_success($input) {
-	echo json_encode($input);
-}
-
-function wp_send_json_error($input) {
-	echo json_encode($input);
-}
-
-function wp_die() {
-	return;
-}
-
-function _wp_filter_build_unique_id( $tag, $function, $priority ) {
-	return $tag . rand();
 }
 
 function esc_attr( $str ) {
