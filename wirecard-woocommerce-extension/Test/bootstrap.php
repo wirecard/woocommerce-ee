@@ -31,11 +31,9 @@
 
 define( 'ABSPATH', true );
 
-require_once __DIR__ . '/stubs/wp-functions.php';
-require_once __DIR__ . '/../constants/woocommerce-wirecard-definitions.php';
 require_once __DIR__ . '/../vendor/autoload.php';
-
 //stub objects
+require_once __DIR__ . '/stubs/wp-functions.php';
 require_once __DIR__ . '/stubs/wc-payment-gateway.php';
 require_once __DIR__ . '/stubs/wc-functions.php';
 require_once __DIR__ . '/stubs/wc-settings-api.php';
@@ -50,6 +48,7 @@ require_once __DIR__ . '/stubs/wc.php';
 require_once __DIR__ . '/stubs/wc-session.php';
 require_once __DIR__ . '/stubs/wc-customer.php';
 require_once __DIR__ . '/stubs/wc-tax.php';
+require_once __DIR__ . '/../constants/woocommerce-wirecard-definitions.php';
 
 //payment methods
 require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-paypal.php' );
