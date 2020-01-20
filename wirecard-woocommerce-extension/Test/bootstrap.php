@@ -37,7 +37,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 //stub objects
 require_once __DIR__ . '/stubs/wc-payment-gateway.php';
-require_once __DIR__ . '/stubs/functions.php';
+require_once __DIR__ . '/stubs/wc-functions.php';
 require_once __DIR__ . '/stubs/wc-settings-api.php';
 require_once __DIR__ . '/stubs/wc-order.php';
 require_once __DIR__ . '/stubs/wc-log-levels.php';
