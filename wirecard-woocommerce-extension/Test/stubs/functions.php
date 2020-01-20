@@ -45,7 +45,7 @@ function wc_get_base_location() {
 	return array('country' => 'Austria');
 }
 
-function load_plugin_textdomain( $domain, $deprecated = false, $plugin_rel_path = false ) {
+function load_plugin_textdomain() {
 	return true;
 }
 
