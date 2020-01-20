@@ -204,3 +204,18 @@ function esc_attr( $str ) {
 function esc_html ( $str ) {
 	return $str;
 }
+
+function plugin_dir_path( $file )
+{
+	return dirname( $file ) . '/../../';
+}
+
+function plugin_dir_url( $file )
+{
+	return dirname( $file ) . '/../';
+}
+
+function plugin_basename()
+{
+	return 'wirecard-woocommerce-extension';
+}
