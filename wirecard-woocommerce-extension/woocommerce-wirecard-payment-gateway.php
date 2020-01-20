@@ -47,7 +47,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-require_once __DIR__ . '/woocommerce-wirecard-definitions.php';
+require_once __DIR__ . '/constants/woocommerce-wirecard-definitions.php';
 
 /**
  * Action that is triggered when a textdomain is loaded.
