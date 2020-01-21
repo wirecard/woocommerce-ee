@@ -61,18 +61,30 @@ function wp_unslash( $string ) {
 	return $string;
 }
 
+/**
+ * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+ */
 function wp_enqueue_script( $string ) {
 	return;
 }
 
+/**
+ * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+ */
 function wp_dequeue_script( $string ) {
 	return;
 }
 
+/**
+ * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+ */
 function wp_enqueue_style( $string ) {
 	return;
 }
 
+/**
+ * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+ */
 function wp_localize_script( $name, $var_name, $var ) {
 	return;
 }
@@ -105,6 +117,9 @@ function wp_die() {
 	return;
 }
 
+/**
+ * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+ */
 function _wp_filter_build_unique_id( $tag, $function, $priority ) {
 	return $tag . rand();
 }
@@ -113,6 +128,9 @@ function register_activation_hook( $file, $function ) {
 	add_action( 'activate_' . plugin_basename( $file ), $function );
 }
 
+/**
+ * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+ */
 function add_action( $tag, $function_to_add, $priority = 10, $accepted_args = 1 ) {
 	return;
 }
