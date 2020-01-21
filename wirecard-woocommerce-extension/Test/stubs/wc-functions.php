@@ -37,51 +37,17 @@ function __( $text, $domain = 'default' ) {
 }
 
 function wc_get_base_location() {
-	return array('country' => 'Austria');
-}
-
-function load_plugin_textdomain() {
-	return true;
-}
-
-function register_activation_hook( $file, $function ) {
-	add_action( 'activate_' . plugin_basename( $file ), $function );
-}
-
-function add_action( $tag, $function_to_add, $priority = 10, $accepted_args = 1 ) {
-	return;
+	return array(
+		'country' => 'Austria'
+	);
 }
 
 function wc_get_order() {
 	return new WC_Order();
 }
 
-function add_query_arg( $arguments ) {
-	$url = 'my-base-url.com';
-	foreach ( $arguments as $key => $value ) {
-		$url .= '&' . $key . '=' . $value;
-	}
-	return $url;
-}
-
-function site_url() {
-	return;
-}
-
-function is_ssl() {
-	return false;
-}
-
 function wc_add_notice( $message, $type ) {
 
-}
-
-function get_bloginfo() {
-	return 'name';
-}
-
-function get_woocommerce_currencies() {
-	return array();
 }
 
 function wc_get_price_including_tax( $product ) {
@@ -100,42 +66,18 @@ function wc_round_tax_total( $amount ) {
 	return number_format( $amount, 2 );
 }
 
-function get_woocommerce_currency() {
-	return 'EUR';
+function wc_reduce_stock_levels( $order ) {
+	return $order;
 }
 
 function WC() {
 	return new WC();
 }
 
-function admin_url() {
-	return;
+function get_woocommerce_currencies() {
+	return array();
 }
 
-function sanitize_text_field( $string ) {
-	return $string;
-}
-
-function is_user_logged_in() {
-	return true;
-}
-
-function wc_reduce_stock_levels( $order ) {
-	return $order;
-}
-
-function get_option( $option ) {
-	return $option;
-}
-
-function apply_filters( $string, $parameter, $option ) {
-	return $string;
-}
-
-function esc_attr( $str ) {
-	return $str;
-}
-
-function esc_html ( $str ) {
-	return $str;
+function get_woocommerce_currency() {
+	return 'EUR';
 }
