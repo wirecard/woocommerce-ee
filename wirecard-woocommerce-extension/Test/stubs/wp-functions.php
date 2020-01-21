@@ -108,3 +108,63 @@ function wp_die() {
 function _wp_filter_build_unique_id( $tag, $function, $priority ) {
 	return $tag . rand();
 }
+
+function register_activation_hook( $file, $function ) {
+	add_action( 'activate_' . plugin_basename( $file ), $function );
+}
+
+function add_action( $tag, $function_to_add, $priority = 10, $accepted_args = 1 ) {
+	return;
+}
+
+function get_bloginfo() {
+	return 'name';
+}
+
+function admin_url() {
+	return;
+}
+
+function site_url() {
+	return;
+}
+
+function is_ssl() {
+	return false;
+}
+
+function sanitize_text_field( $string ) {
+	return $string;
+}
+
+function is_user_logged_in() {
+	return true;
+}
+
+function get_option( $option ) {
+	return $option;
+}
+
+function apply_filters( $string, $parameter, $option ) {
+	return $string;
+}
+
+function add_query_arg( $arguments ) {
+	$url = 'my-base-url.com';
+	foreach ( $arguments as $key => $value ) {
+		$url .= '&' . $key . '=' . $value;
+	}
+	return $url;
+}
+
+function esc_attr( $str ) {
+	return $str;
+}
+
+function esc_html ( $str ) {
+	return $str;
+}
+
+function load_plugin_textdomain() {
+	return true;
+}
