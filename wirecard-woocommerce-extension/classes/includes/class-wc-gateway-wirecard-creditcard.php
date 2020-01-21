@@ -545,6 +545,9 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	 * @since 1.0.0
 	 */
 	public function get_request_data_credit_card() {
+		$input = json_decode(file_get_contents('php://input'), true);
+		$token_id = sanitize_text_field($input['vault_token']);
+		
 		$order_id            = WC()->session->get( 'wirecard_order_id' );
 		$config              = $this->create_payment_config();
 		$transaction_service = new TransactionService( $config );
@@ -563,12 +566,10 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 		$this->transaction->setConfig( $config->get( CreditCardTransaction::NAME ) );
 		
 		// Add token_id if oneclick vaulted card used
-		$token_id = sanitize_text_field( $_POST['vault_token'] );
 		if ( $token_id ) {
 			$this->transaction->setTokenId($token_id);
-		} else {
-			$token_id = null;
-		}
+		} 
+		
 		$this->set_three_ds_transaction_fields($order, $token_id);
 
 		wp_send_json_success(
@@ -701,8 +702,9 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	 * @since 1.1.0
 	 */
 	public function save_to_vault() {
-		$token    = sanitize_text_field( $_POST['token'] );
-		$mask_pan = sanitize_text_field( $_POST['mask_pan'] );
+		$input = json_decode(file_get_contents('php://input'), true);
+		$token    = sanitize_text_field( $input['token'] );
+		$mask_pan = sanitize_text_field( $input['mask_pan'] );
 		/** @var WP_User $user */
 		$user = wp_get_current_user();
 
