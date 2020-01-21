@@ -32,6 +32,10 @@
 global $woocommerce;
 $woocommerce = new stdClass();
 
+/**
+ * @SuppressWarnings(PHPMD.ShortMethodName)
+ * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+ */
 function __( $text, $domain = 'default' ) {
 	return $text;
 }
@@ -46,10 +50,16 @@ function wc_get_order() {
 	return new WC_Order();
 }
 
+/**
+ * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+ */
 function wc_add_notice( $message, $type ) {
 
 }
 
+/**
+ * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+ */
 function wc_get_price_including_tax( $product ) {
 	return 20.0;
 }
@@ -58,6 +68,9 @@ function wc_get_price_decimals() {
 	return 2;
 }
 
+/**
+ * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+ */
 function wc_get_price_excluding_tax( $product ) {
 	return 10.0;
 }
@@ -70,6 +83,9 @@ function wc_reduce_stock_levels( $order ) {
 	return $order;
 }
 
+/**
+ * @SuppressWarnings(PHPMD.ShortMethodName)
+ */
 function WC() {
 	return new WC();
 }

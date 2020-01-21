@@ -163,6 +163,9 @@ function get_option( $option ) {
 	return $option;
 }
 
+/**
+ * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+ */
 function apply_filters( $string, $parameter, $option ) {
 	return $string;
 }
