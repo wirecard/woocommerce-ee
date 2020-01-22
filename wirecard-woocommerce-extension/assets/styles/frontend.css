@@ -80,6 +80,16 @@
 	background-color: #ffffff;
 }
 
-#wc_payment_method_wirecard_creditcard_vault .delete-from-vault-disabled {
+.delete-from-vault-disabled {
 	color: #888888;
+}
+.delete-from-vault-disabled:hover {
+	cursor: no-drop !important;
+	text-decoration:none !important;
+}
+
+.wd-card-delete-disabled {
+	color: #888888;
+	text-decoration: none;
+	cursor: no-drop;
 }
