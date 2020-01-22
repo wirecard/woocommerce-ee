@@ -545,8 +545,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	 * @since 1.0.0
 	 */
 	public function get_request_data_credit_card() {
-		$input = json_decode(file_get_contents('php://input'), true);
-		$token_id = sanitize_text_field($input['vault_token']);
+		$token_id = sanitize_text_field( $_POST['vault_token'] );
 		
 		$order_id            = WC()->session->get( 'wirecard_order_id' );
 		$config              = $this->create_payment_config();
@@ -702,9 +701,8 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	 * @since 1.1.0
 	 */
 	public function save_to_vault() {
-		$input = json_decode(file_get_contents('php://input'), true);
-		$token    = sanitize_text_field( $input['token'] );
-		$mask_pan = sanitize_text_field( $input['mask_pan'] );
+		$token    = sanitize_text_field( $_POST['token'] );
+		$mask_pan = sanitize_text_field( $_POST['mask_pan'] );
 		/** @var WP_User $user */
 		$user = wp_get_current_user();
 

@@ -38,7 +38,8 @@
 let Actions = {
 	GET_CREDIT_CARD_FROM_VAULT: "get_cc_from_vault",
 	SUBMIT_CREDIT_CARD_RESPONSE: "submit_creditcard_response",
-	SAVE_CREDIT_CARD_TO_VAULT: "save_cc_to_vault"
+	SAVE_CREDIT_CARD_TO_VAULT: "save_cc_to_vault",
+	GET_CREDIT_CARD_REQUEST_DATA: "get_credit_card_request_data"
 };
 
 let Spinner  = {
@@ -48,21 +49,27 @@ let Spinner  = {
 	STATE_OFF: "none"
 };
 
+let DELETE_BUTTON = {
+	FROM_VAULT: "delete-from-vault",
+	FROM_VAULT_DISABLED: "delete-from-vault-disabled",
+	WD_BUTTON: "wd-card-delete",
+	WD_BUTTON_DISABLED: "wd-card-delete-disabled",
+};
+
 let Constants = {
 	IFRAME_HEIGHT: 270,
 	USE_CARD_ID: "input[data-token]",
-	DELETE_CARD_BUTTON_ID: "button[data-cardid]",
-	STORED_CARD_BUTTON_ID: "#stored-card",
+	DELETE_CARD_BUTTON_ID: ".wd-card-delete",
 	SAVE_CARD_CHECKMARK_ID: "#wirecard-store-card",
-	CARD_LIST_ID: "#wd-card-list",
-	CARD_SPINNER_ID: ".spinner",
 	VAULT_CONTENT_CONTAINER: "#wc_payment_method_wirecard_creditcard_vault .cards",
 	VAULT_TABLE_ID: "vault-table",
 	NEW_CARD_CONTENT_AREA: "#wc_payment_method_wirecard_new_credit_card",
 	NEW_CARD_CONTENT_AREA_IFRAME: "#wc_payment_method_wirecard_new_credit_card iframe",
 	SEAMLESS_SUBMIT_BUTTON: "seamless-submit",
 	SEAMLESS_FORM_CONTAINER: "wc_payment_method_wirecard_creditcard_form",
-	NONCE_SELECTOR: "#wc_payment_method_wirecard_creditcard_response_form input[name='cc_nonce']"
+	NONCE_SELECTOR: "#wc_payment_method_wirecard_creditcard_response_form input[name='cc_nonce']",
+	MESSAGE_CONTAINER: "#wd-creditcard-messagecontainer",
+	WD_TOKEN_ID_PREFIX: "wd-token-"
 };
 
 /**
@@ -70,17 +77,15 @@ let Constants = {
  *
  * @since 2.4.0
  */
-function initializeCreditCardEventHandlers()
+function initializeEventHandlers()
 {
-	let useCardElement = document.querySelector(Constants.USE_CARD_ID);
-	if (useCardElement) {
-		useCardElement.addEventListener("change", onCardSelected);
-	}
-	
 	let seamlessButtonSubmit = document.getElementById(Constants.SEAMLESS_SUBMIT_BUTTON);
 	seamlessButtonSubmit.addEventListener("click", submitSeamlessForm);
-	
-	// $document.on("submit", Constants.PAYMENT_FORM_ID, onPaymentFormSubmit);
+}
+
+function initializeVaultHandlers() {
+	jQuery( Constants.USE_CARD_ID ).on('change', onCardSelected);
+	jQuery( Constants.DELETE_CARD_BUTTON_ID ).on('click', deleteCreditCardFromVaultTab);
 }
 
 /**
@@ -112,21 +117,17 @@ function setSpinnerState(state, selector) {
  */
 function initializeForm(tokenId = null)
 {
-	getCardList();
-	getCreditCardData(tokenId).then(function(response) {
-		renderSeamlessForm(response);
-	}).catch(function(response) {
-		logError(response);
-	}).then(function () {
-		setSpinnerState(Spinner.STATE_OFF, Spinner.FORM_SPINNER);
-	});
-	
-	
-	setTimeout(initializeCreditCardEventHandlers, 3000);
+	getSavedCreditCardList();
+	getCreditCardData( tokenId )
+		.then( renderSeamlessForm )
+		.fail( logError )
+		.always( function () {
+			setSpinnerState(Spinner.STATE_OFF, Spinner.FORM_SPINNER);
+		} );
 }
 
-function getCardList() {
-	let hasSavedTokens = document.getElementById(Constants.VAULT_TABLE_ID);
+function getSavedCreditCardList() {
+	let hasSavedTokens = document.getElementById( Constants.VAULT_TABLE_ID );
 	if (typeof(hasSavedTokens) == 'undefined' || hasSavedTokens == null) {
 		initializeVault();
 	}
@@ -136,73 +137,28 @@ function getCardList() {
  * Initializes the vault interface as required.
  */
 function initializeVault() {
-	return getCreditCardList();
+	callAjax(
+		phpVars.vault_get_url,
+		"GET",
+		{ action : Actions.GET_CREDIT_CARD_FROM_VAULT }
+	)
+		.then( loadCreditCards )
+		.then( initializeVaultHandlers )
+		.fail( logError )
+		.always(function () {
+			setSpinnerState(Spinner.STATE_OFF, Spinner.FORM_SPINNER);
+		});
 }
 
 function callAjax(url, method, data) {
-	return new Promise(function (resolve, reject) {
-		var request = typeof XMLHttpRequest != 'undefined'
-			? new XMLHttpRequest()
-			: new ActiveXObject('Microsoft.XMLHTTP');
-		request.open(method, url, true);
-		request.onload = function () {
-
-
-			if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-				console.log(this.responseText);
-				resolve(JSON.parse(this.responseText).data);
-			} else {
-				reject("OOPS");
-			}
-		};
-		request.onerror = function () {
-			reject("OOPS");
-		};
-		request.send(JSON.stringify(data));
-	});
-	
-	
-	
-	// var request = typeof XMLHttpRequest != 'undefined'
-	// 	? new XMLHttpRequest()
-	// 	: new ActiveXObject('Microsoft.XMLHTTP');
-	// request.open(method, url, true);
-	// //request.setRequestHeader("Cache-Control", "no-cache, no-store, must-revalidate");
-	// //request.setRequestHeader( 'CacheControl', false );
-	// request.setRequestHeader('Content-Type','application/json;charset=UTF-8');
-	// request.onreadystatechange = function() {
-	// 	if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-	// 		console.log(this.responseText);
-	// 		callback(JSON.parse(this.responseText).data);
-	// 	}
-	// };
-	//
-	// request.onerror = function() {
-	// 	console.log('something went wrong');
-	// };
-	//
-	// request.send(JSON.stringify(data));
-}
-
-/**
- * Get all saved credit cards from the vault
- *
- * @return mixed
- * @since 1.7.0
- */
-function getCreditCardList() {
-	
-	return callAjax(
-		phpVars.vault_get_url, 
-		"GET", 
-		{ action : Actions.GET_CREDIT_CARD_FROM_VAULT }
-	).then(function(response) {
-		loadCreditCards(response);
-	}).catch(function(response) {
-		logError(response);
-	}).then(function () {
-		setSpinnerState(Spinner.STATE_OFF, Spinner.FORM_SPINNER);
-	});
+	return jQuery.ajax(
+		{
+			type: method,
+			url: url,
+			data: data,
+			dataType: "json",
+		}
+	);
 }
 
 /**
@@ -210,11 +166,53 @@ function getCreditCardList() {
  */
 function loadCreditCards(cardResponse) {
 	jQuery( Constants.VAULT_CONTENT_CONTAINER )
-		.html( cardResponse );
+		.html( cardResponse.data );
+}
+
+function processDeleteButton( selector, sourceClass, targetClass ) {
+	selector.removeClass(sourceClass).addClass(targetClass);
+
+}
+
+function reloadDeleteButtons() {
+	jQuery( Constants.DELETE_CARD_BUTTON_ID ).off('click');
+	jQuery('[id^=' + Constants.WD_TOKEN_ID_PREFIX + ']').filter(
+		function(){
+			let selector = jQuery( this );
+			processDeleteButton(selector.find("." + DELETE_BUTTON.FROM_VAULT_DISABLED), DELETE_BUTTON.FROM_VAULT_DISABLED, DELETE_BUTTON.FROM_VAULT);
+			processDeleteButton(
+				selector,
+				DELETE_BUTTON.WD_BUTTON_DISABLED,
+				DELETE_BUTTON.WD_BUTTON
+			);
+			selector.on('click', deleteCreditCardFromVaultTab);
+		});
+	
+}
+
+function disabledDeleteButtonByToken(token) {
+	let selector = jQuery( "#" + Constants.WD_TOKEN_ID_PREFIX + token);
+
+	processDeleteButton(
+		selector,
+		DELETE_BUTTON.WD_BUTTON,
+		DELETE_BUTTON.WD_BUTTON_DISABLED
+	);
+	
+	processDeleteButton(
+		selector.find("." + DELETE_BUTTON.FROM_VAULT), 
+		DELETE_BUTTON.FROM_VAULT,
+		DELETE_BUTTON.FROM_VAULT_DISABLED
+	);
+	
+	selector.off('click');
 }
 
 function onCardSelected(event) {
-	let token = event.target.dataset.token;
+	let radioButton = jQuery( this );
+	let token = radioButton.data( "token" );
+	reloadDeleteButtons();
+	disabledDeleteButtonByToken(token);
 	setSpinnerState(Spinner.STATE_ON, Spinner.FORM_SPINNER);
 	initializeForm(token);
 }
@@ -230,25 +228,10 @@ function getCreditCardData( selected_token = null ) {
 		phpVars.ajax_url,
 		"POST",
 		{
-			action: 'get_credit_card_request_data',
+			action: Actions.GET_CREDIT_CARD_REQUEST_DATA,
 			vault_token: selected_token
 		}
 	);
-	// return jQuery.ajax(
-	// 	{
-	// 		type: "POST",
-	// 		url: phpVars.ajax_url,
-	// 		cache: false,
-	// 		data: {
-	// 			"action": "get_credit_card_request_data",
-	// 			"vault_token": selected_token
-	// 		},
-	// 		dataType: "json",
-	// 		success:function(data) {
-	// 			renderSeamlessForm(data);
-	// 		}
-	// 	}
-	// );
 }
 
 /**
@@ -285,7 +268,7 @@ function enableSubmitButton() {
  * @since 1.7.0
  */
 function renderSeamlessForm( response ) {
-	let responseData = JSON.parse(response);
+	let responseData = JSON.parse(response.data);
 	WPP.seamlessRender(
 		{
 			requestData: responseData,
@@ -298,7 +281,6 @@ function renderSeamlessForm( response ) {
 
 function submitSeamlessForm() {
 	setSpinnerState(Spinner.STATE_ON, Spinner.PAY_BUTTON_SPINNER);
-	//jQuery( "#wd-cc-submit-spinner" ).css( "display","block" );
 	jQuery( this ).blur();
 
 	WPP.seamlessSubmit(
@@ -320,7 +302,6 @@ function submitSeamlessForm() {
 function onFormSubmitted( response ) {
 	response["action"]   = Actions.SUBMIT_CREDIT_CARD_RESPONSE;
 	response["cc_nonce"] = document.querySelector(Constants.NONCE_SELECTOR).value;
-	console.log(response);
 
 	saveCreditCardToVault( response )
 		.then(
@@ -334,19 +315,10 @@ function onFormSubmitted( response ) {
 }
 
 function submitCreditCardResponse( response ) {
-	// return callAjax(
-	// 	phpVars.submit_url,
-	// 	"POST",
-	// 	response
-	// ).then( handleSubmitResult ).catch( logError );
-	return jQuery.ajax(
-		{
-			type: "POST",
-			url: phpVars.submit_url,
-			cache: false,
-			data: response,
-			dataType: "json",
-		}
+	return callAjax(
+		phpVars.submit_url,
+		"POST",
+		response
 	);
 }
 
@@ -357,7 +329,6 @@ function submitCreditCardResponse( response ) {
  * @since 1.7.0
  */
 function handleSubmitResult( response ) {
-	console.log(response);
 	var data = response.data;
 
 	if ( "error" === data.result ) {
@@ -368,47 +339,6 @@ function handleSubmitResult( response ) {
 	document.location = data.redirect;
 
 }
-
-// /**
-//  * Save a new credit card token to our vault.
-//  *
-//  * @param response
-//  * @returns mixed
-//  * @since 1.7.0
-//  */
-// async function saveCreditCardToVault( response ) {
-//	
-// 	let vaultCheckbox = document.querySelector(Constants.SAVE_CARD_CHECKMARK_ID);
-//	
-// 	var request       = {
-// 		"action": Actions.SAVE_CREDIT_CARD_TO_VAULT,
-// 		"token": response.token_id,
-// 		"mask_pan": response.masked_account_number
-// 	};
-//
-// 	if ( "success" !== response.transaction_state ) {
-// 		return null;
-// 	}
-//
-// 	if ( ! vaultCheckbox.checked ) {
-// 		return null;
-// 	}
-//
-// 	return callAjax(
-// 		phpVars.vault_url, 
-// 		"POST",
-// 		request
-// 	);
-//	
-// 	// return jQuery.ajax(
-// 	// 	{
-// 	// 		type: "POST",
-// 	// 		url: phpVars.vault_url,
-// 	// 		data: request,
-// 	// 		dataType: "json"
-// 	// 	}
-// 	// );
-// }
 
 /**
  * Save a new credit card token to our vault.
@@ -434,13 +364,10 @@ function saveCreditCardToVault( response ) {
 		return deferred.resolve();
 	}
 
-	return jQuery.ajax(
-		{
-			type: "POST",
-			url: phpVars.vault_url,
-			data: request,
-			dataType: "json"
-		}
+	return callAjax(
+		phpVars.vault_url,
+		"POST",
+		request
 	);
 }
 
@@ -451,22 +378,54 @@ function saveCreditCardToVault( response ) {
  * @since 2.0.3
  */
 function onSubmitError( data ) {
-	console.log(data);
 	setSpinnerState(Spinner.STATE_OFF, Spinner.PAY_BUTTON_SPINNER);
-	//jQuery( "#wd-cc-submit-spinner" ).css( "display","none" );
 	if ("transaction_state" in data) {
-		console.log("OOps");
-		getCreditCardData();
-			// .then( renderSeamlessForm )
-			// .fail( logError )
-			// .always(
-			// 	function() {
-			// 		jQuery( ".show-spinner" ).hide();
-			// 	}
-			// )
-		//jQuery( "#wd-creditcard-messagecontainer" ).css( "display","block" );
+		getCreditCardData()
+			.then( renderForm )
+			.fail( logError )
+			.always(
+				function() {
+					setSpinnerState(Spinner.STATE_OFF, Spinner.FORM_SPINNER);
+				}
+			);
+		jQuery( "#wd-creditcard-messagecontainer" ).css( "display","block" );
 	}
 	logError( data );
 }
 
-initializeForm();
+/**
+ * @param deleteTrigger
+ * @param id
+ */
+function deleteCreditCardFromVaultTab() {
+	let self = this;
+	self.append( phpVars.spinner );
+	let vault_id = jQuery(self).data('vault-id');
+	
+	if (vault_id) {
+		deleteCreditCardFromVault( vault_id )
+			.then( function () {
+				self.closest('tr').remove();
+			} )
+			.fail( logError );
+	}
+}
+
+/**
+ * Delete a saved credit card from the vault
+ *
+ * @param vault_id
+ * @since 1.1.0
+ */
+function deleteCreditCardFromVault( vault_id ) {
+	return callAjax(
+		phpVars.vault_delete_url,
+		"POST",
+		{ "action" : "remove_cc_from_vault", "vault_id": vault_id }
+	);
+}
+
+jQuery(document).on("ready", function(){
+	initializeEventHandlers();
+	initializeForm();
+});
