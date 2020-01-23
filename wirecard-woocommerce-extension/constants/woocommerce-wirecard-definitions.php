@@ -29,24 +29,12 @@
  * Please do not use the plugin if you do not agree to these terms of use!
  */
 
-namespace Page;
-
-class PayPalReview extends Base {
-
-	// include url of current page
-	/**
-	 * @var string
-	 * @since 1.4.4
-	 */
-	public $URL = 'checkout';
-
-	/**
-	 * @var array
-	 * @since 1.4.4
-	 */
-	public $elements = array(
-		'Pay Now' => "//*[@id='confirmButtonTop']",
-		'Accept Cookies' => "//*[@id='acceptAllButton']",
-		'Continue' => "//*[@class='btn full confirmButton continueButton']"
-	);
-}
+define( 'WIRECARD_EXTENSION_NAME', 'Wirecard WooCommerce Extension' );
+define( 'WIRECARD_EXTENSION_VERSION', '3.0.1' );
+define( 'WIRECARD_EXTENSION_BASEDIR', plugin_dir_path( __FILE__ ) . '../' );
+define( 'WIRECARD_EXTENSION_URL', plugin_dir_url( __FILE__ ) . '../' );
+define( 'WIRECARD_EXTENSION_LOCALE_FALLBACK', 'en_US' );
+define( 'WIRECARD_EXTENSION_HEADER_PLUGIN_NAME', 'woocommerce-ee+Wirecard' );
+define( 'WIRECARD_EXTENSION_HELPER_DIR', WIRECARD_EXTENSION_BASEDIR . '/classes/helper/' );
+define( 'WIRECARD_EXTENSION_TEMPLATE_DIR', WIRECARD_EXTENSION_BASEDIR . '/templates/' );
+define( 'WIRECARD_EXTENSION_MAIN_FILE', plugin_basename( __FILE__ ) . '../' );
