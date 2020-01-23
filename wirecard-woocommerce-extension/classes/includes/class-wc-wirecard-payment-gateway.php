@@ -211,6 +211,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 
 		if ( 'cancel' === $_REQUEST['payment-state'] ) {
 			wc_add_notice( __( 'canceled_payment_process', 'wirecard-woocommerce-extension' ), 'notice' );
+			$order->update_status( 'cancelled', __( 'order_status_gateway_update', 'wirecard-woocommerce-extension' ) );
 			header( 'Location:' . $order->get_cancel_endpoint() );
 			die();
 		}
@@ -286,7 +287,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 * Create redirect url including orderinformation
 	 *
 	 * @param WC_Order $order
-	 * @param string   $payment_state
+	 * @param string $payment_state
 	 *
 	 * @return string
 	 *
@@ -326,9 +327,9 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 * Execute transactions via wirecard payment gateway
 	 *
 	 * @param \Wirecard\PaymentSdk\Transaction\Transaction $transaction
-	 * @param \Wirecard\PaymentSdk\Config\Config           $config
-	 * @param string                                       $operation
-	 * @param WC_Order                                     $order
+	 * @param \Wirecard\PaymentSdk\Config\Config $config
+	 * @param string $operation
+	 * @param WC_Order $order
 	 *
 	 * @return array
 	 *
@@ -409,13 +410,13 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 * Execute refund transaction
 	 *
 	 * @param \Wirecard\PaymentSdk\Transaction\Transaction $transaction
-	 * @param Config                                       $config
-	 * @param WC_Order                                     $order
-	 * @param string                                       $operation
-	 *
-	 * @throws Exception
+	 * @param Config $config
+	 * @param WC_Order $order
+	 * @param string $operation
 	 *
 	 * @return string|WP_Error
+	 *
+	 * @throws Exception
 	 *
 	 * @since 1.0.0
 	 */
@@ -488,13 +489,13 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	/**
 	 * Update payment
 	 *
-	 * @param WC_Order        $order
+	 * @param WC_Order $order
 	 * @param SuccessResponse $response
-	 * @param string          $transaction_state
-	 * @param string          $payment_method
+	 * @param string $transaction_state
+	 * @param string $payment_method
 	 *
-	 * @since 1.0.0
 	 * @throws Exception
+	 * @since 1.0.0
 	 */
 	public function update_payment_transaction( $order, $response, $transaction_state, $payment_method ) {
 		$transaction_factory = new Wirecard_Transaction_Factory();
@@ -516,7 +517,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 * Update order with specific order state
 	 *
 	 * @param WC_Order $order
-	 * @param SuccessResponse   $response
+	 * @param SuccessResponse $response
 	 *
 	 * @return WC_Order
 	 *
@@ -540,7 +541,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 			case 'credit':
 			case 'void-capture':
 			case 'void-purchase':
-				if ( $order->get_total() > $transaction_amount ) {
+				if ( ( $order->get_total() > $transaction_amount ) && ( $order->get_remaining_refund_amount() !== '0.00' ) ) {
 					$state = 'processing';
 				} else {
 					$state = 'refunded';
@@ -652,14 +653,14 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	}
 
 	/**
-	 * @param int        $order_id
+	 * @param int $order_id
 	 * @param float|null $amount
-	 * @param string     $reason
+	 * @param string $reason
 	 *
 	 * @return bool|WP_Error
 	 *
-	 * @since 1.0.0
 	 * @throws Exception
+	 * @since 1.0.0
 	 */
 	public function process_refund( $order_id, $amount = null, $reason = '' ) {
 		$order = wc_get_order( $order_id );
@@ -688,13 +689,14 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	/**
 	 * Return true if the payment method is available
 	 *
-	 * @since 1.1.0
 	 * @return bool
+	 * @since 1.1.0
 	 */
 	public function is_available() {
 		if ( $this->get_option( 'enabled' ) === 'yes' ) {
 			return true;
 		}
+
 		return false;
 	}
 
@@ -756,12 +758,14 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 * Generates the fraud protection fingerprint id
 	 *
 	 * @param string $maid_option_name the key to access the merchant account id, 'merchant_account_id' in most payment methods
+	 *
 	 * @return string the generated fingerprint id for this session
 	 * @since 1.5.0
 	 */
 	public function generate_fps_session_id( $maid_option_name ) {
 		$maid   = $this->get_option( $maid_option_name );
 		$random = md5( uniqId() . '_' . microtime() );
+
 		return $maid . '_' . $random;
 	}
 }
