@@ -35,11 +35,21 @@
  * Helper functions
  */
 
+/**
+ * @external WPP - External WPP library
+ * @param {string} phpVars.vault_url - endpoint to save token to vault
+ * @param {string} phpVars.vault_delete_url - endpoint to delete token from vault
+ * @param {string} phpVars.submit_url - endpoint to submit wpp response and process payment
+ * @param {string} phpVars.ajax_url - endpoint to get response from payment engine
+ * @param {string} phpVars.vault_get_url - endpoint to get tokens from vault
+ */
+
 let Actions = {
 	GET_CREDIT_CARD_FROM_VAULT: "get_cc_from_vault",
 	SUBMIT_CREDIT_CARD_RESPONSE: "submit_creditcard_response",
 	SAVE_CREDIT_CARD_TO_VAULT: "save_cc_to_vault",
-	GET_CREDIT_CARD_REQUEST_DATA: "get_credit_card_request_data"
+	GET_CREDIT_CARD_REQUEST_DATA: "get_credit_card_request_data",
+	REMOVE_CREDIT_CARD_FROM_VAULT: "remove_cc_from_vault",
 };
 
 let Spinner  = {
@@ -57,7 +67,7 @@ let DELETE_BUTTON = {
 };
 
 let Constants = {
-	IFRAME_HEIGHT: 270,
+	IFRAME_HEIGHT: "270px",
 	USE_CARD_ID: "input[data-token]",
 	DELETE_CARD_BUTTON_ID: ".wd-card-delete",
 	SAVE_CARD_CHECKMARK_ID: "#wirecard-store-card",
@@ -73,25 +83,30 @@ let Constants = {
 };
 
 /**
- * Initializes all event handlers for the interface
+ * Initializes general event handlers for the interface
  *
  * @since 2.4.0
  */
-function initializeEventHandlers()
+function initEventHandlers()
 {
 	let seamlessButtonSubmit = document.getElementById(Constants.SEAMLESS_SUBMIT_BUTTON);
 	seamlessButtonSubmit.addEventListener("click", submitSeamlessForm);
 }
 
-function initializeVaultHandlers() {
-	jQuery( Constants.USE_CARD_ID ).on('change', onCardSelected);
-	jQuery( Constants.DELETE_CARD_BUTTON_ID ).on('click', deleteCreditCardFromVaultTab);
+/**
+ * Initializes token event handlers for the interface
+ * 
+ * @since 3.1.0
+ */
+function initTokenEventHandlers() {
+	jQuery( Constants.USE_CARD_ID ).on('change', onTokenSelected);
+	jQuery( Constants.DELETE_CARD_BUTTON_ID ).on('click', onTokenDeleted);
 }
 
 /**
  * Log any error that has occurred.
  *
- * @param data
+ * @param {*} data
  * @since 1.7.0
  */
 function logError( data ) {
@@ -112,12 +127,12 @@ function setSpinnerState(state, selector) {
 /**
  * Loads the card list for one-click and renders the seamless form
  *
- * @param tokenId
- * @since 2.4.0
+ * @param {number|null} tokenId
+ * @since 3.1.0
  */
 function initializeForm(tokenId = null)
 {
-	getSavedCreditCardList();
+	getSavedTokenList();
 	getCreditCardData( tokenId )
 		.then( renderSeamlessForm )
 		.fail( logError )
@@ -126,7 +141,7 @@ function initializeForm(tokenId = null)
 		} );
 }
 
-function getSavedCreditCardList() {
+function getSavedTokenList() {
 	let hasSavedTokens = document.getElementById( Constants.VAULT_TABLE_ID );
 	if (typeof(hasSavedTokens) == 'undefined' || hasSavedTokens == null) {
 		initializeVault();
@@ -134,22 +149,41 @@ function getSavedCreditCardList() {
 }
 
 /**
- * Initializes the vault interface as required.
+ * Get saved token from vault
+ * 
+ * @since 3.1.0
  */
-function initializeVault() {
-	callAjax(
+function getFormattedTokenViewFromVault() {
+	return callAjax(
 		phpVars.vault_get_url,
 		"GET",
 		{ action : Actions.GET_CREDIT_CARD_FROM_VAULT }
-	)
-		.then( loadCreditCards )
-		.then( initializeVaultHandlers )
+	);
+}
+
+/**
+ * Initializes the vault interface as required.
+ * 
+ * @since 3.1.0
+ */
+function initializeVault() {
+	getFormattedTokenViewFromVault()
+		.then( loadTokenTable )
+		.then( initTokenEventHandlers )
 		.fail( logError )
 		.always(function () {
-			setSpinnerState(Spinner.STATE_OFF, Spinner.FORM_SPINNER);
+			setSpinnerState( Spinner.STATE_OFF, Spinner.FORM_SPINNER );
 		});
 }
 
+/**
+ * jQuery ajax wrapper
+ * 
+ * @param {string} url
+ * @param {string} method
+ * @param {*} data
+ * @returns {jQuery}
+ */
 function callAjax(url, method, data) {
 	return jQuery.ajax(
 		{
@@ -162,66 +196,97 @@ function callAjax(url, method, data) {
 }
 
 /**
- * @param cardResponse
+ * Load token table
+ * @param {*} response
+ * 
+ * @since 3.1.0
  */
-function loadCreditCards(cardResponse) {
+function loadTokenTable( response ) {
 	jQuery( Constants.VAULT_CONTENT_CONTAINER )
-		.html( cardResponse.data );
+		.html( response.data );
 }
 
-function processDeleteButton( selector, sourceClass, targetClass ) {
-	selector.removeClass(sourceClass).addClass(targetClass);
-
+/**
+ * Replace class for chosen selector
+ * 
+ * @param {jQuery} selector
+ * @param {string} needle
+ * @param {string} replacement
+ * @since 3.1.0
+ */
+function replaceClassForSelector( selector, needle, replacement ) {
+	selector.removeClass(needle).addClass(replacement);
 }
 
-function reloadDeleteButtons() {
-	jQuery( Constants.DELETE_CARD_BUTTON_ID ).off('click');
-	jQuery('[id^=' + Constants.WD_TOKEN_ID_PREFIX + ']').filter(
-		function(){
+/**
+ * Enable all delete buttons on select credit card
+ * 
+ * @since 3.1.0
+ */
+function enableDeleteButtons() {
+	jQuery( Constants.DELETE_CARD_BUTTON_ID ).off( 'click' );
+	jQuery( '[id^=' + Constants.WD_TOKEN_ID_PREFIX + ']' ).filter(
+		function() {
 			let selector = jQuery( this );
-			processDeleteButton(selector.find("." + DELETE_BUTTON.FROM_VAULT_DISABLED), DELETE_BUTTON.FROM_VAULT_DISABLED, DELETE_BUTTON.FROM_VAULT);
-			processDeleteButton(
+			replaceClassForSelector( 
+				selector.find( 
+					"." + DELETE_BUTTON.FROM_VAULT_DISABLED 
+				), 
+				DELETE_BUTTON.FROM_VAULT_DISABLED,
+				DELETE_BUTTON.FROM_VAULT
+			);
+			replaceClassForSelector(
 				selector,
 				DELETE_BUTTON.WD_BUTTON_DISABLED,
 				DELETE_BUTTON.WD_BUTTON
 			);
-			selector.on('click', deleteCreditCardFromVaultTab);
+			selector.on( 'click', onTokenDeleted );
 		});
-	
 }
 
-function disabledDeleteButtonByToken(token) {
-	let selector = jQuery( "#" + Constants.WD_TOKEN_ID_PREFIX + token);
+/**
+ * Disable delete button for selected credit card
+ *
+ * @param {string} token
+ * @since 3.1.0
+ */
+function disableDeleteButtonByToken( token ) {
+	let selector = jQuery( "#" + Constants.WD_TOKEN_ID_PREFIX + token );
 
-	processDeleteButton(
+	replaceClassForSelector(
 		selector,
 		DELETE_BUTTON.WD_BUTTON,
 		DELETE_BUTTON.WD_BUTTON_DISABLED
 	);
 	
-	processDeleteButton(
-		selector.find("." + DELETE_BUTTON.FROM_VAULT), 
+	replaceClassForSelector(
+		selector.find( "." + DELETE_BUTTON.FROM_VAULT ), 
 		DELETE_BUTTON.FROM_VAULT,
 		DELETE_BUTTON.FROM_VAULT_DISABLED
 	);
 	
-	selector.off('click');
+	selector.off( 'click' );
 }
 
-function onCardSelected(event) {
+/**
+ * Trigger event that load filled credit card form 
+ * 
+ * @since 3.1.0
+ */
+function onTokenSelected() {
 	let radioButton = jQuery( this );
 	let token = radioButton.data( "token" );
-	reloadDeleteButtons();
-	disabledDeleteButtonByToken(token);
-	setSpinnerState(Spinner.STATE_ON, Spinner.FORM_SPINNER);
-	initializeForm(token);
+	enableDeleteButtons();
+	disableDeleteButtonByToken( token );
+	setSpinnerState( Spinner.STATE_ON, Spinner.FORM_SPINNER );
+	initializeForm( token );
 }
 
 /**
  * Gets the request data from the server.
  *
- * @returns mixed
- * @since 1.7.0
+ * @returns {jQuery}
+ * @since 3.1.0
  */
 function getCreditCardData( selected_token = null ) {
 	return callAjax(
@@ -237,7 +302,7 @@ function getCreditCardData( selected_token = null ) {
 /**
  * Resize the credit card form when loaded
  *
- * @since 1.0.0
+ * @since 3.1.0
  */
 function onFormRendered() {
 	enableSubmitButton();
@@ -247,28 +312,32 @@ function onFormRendered() {
 /**
  * Configure iframe view
  *
- * @since 2.1.0
+ * @since 3.1.0
  */
 function configureSeamlessIframe() {
-	document.querySelector(Constants.NEW_CARD_CONTENT_AREA_IFRAME).style.height = Constants.IFRAME_HEIGHT + "px";
+	document
+		.querySelector( Constants.NEW_CARD_CONTENT_AREA_IFRAME ).style.height = Constants.IFRAME_HEIGHT;
 }
 
 /**
  * Enable submit button 
  *
- * @since 2.1.0
+ * @since 3.1.0
  */
 function enableSubmitButton() {
-	document.getElementById(Constants.SEAMLESS_SUBMIT_BUTTON).removeAttribute("disabled");
+	document
+		.getElementById( Constants.SEAMLESS_SUBMIT_BUTTON )
+		.removeAttribute( "disabled" );
 }
 
 /**
  * Renders the actual seamless form
  *
- * @since 1.7.0
+ * @since 3.1.0
  */
 function renderSeamlessForm( response ) {
-	let responseData = JSON.parse(response.data);
+	let responseData = JSON.parse( response.data );
+	/** @function WPP.seamlessRender */
 	WPP.seamlessRender(
 		{
 			requestData: responseData,
@@ -279,31 +348,35 @@ function renderSeamlessForm( response ) {
 	);
 }
 
+/**
+ * Render seamless form from WPP in iframe
+ * 
+ * @since 3.1.0
+ */
 function submitSeamlessForm() {
-	setSpinnerState(Spinner.STATE_ON, Spinner.PAY_BUTTON_SPINNER);
+	setSpinnerState( Spinner.STATE_ON, Spinner.PAY_BUTTON_SPINNER );
 	jQuery( this ).blur();
-
+	/** @function WPP.seamlessSubmit */
 	WPP.seamlessSubmit(
 		{
 			wrappingDivId: Constants.SEAMLESS_FORM_CONTAINER,
 			onSuccess: onFormSubmitted,
-			onError: onSubmitError
+			onError: onSubmitError,
 		}
 	);
-	
 }
 
 /**
  * Submit the data so we can do a proper transaction
  *
- * @param response
- * @since 1.7.0
+ * @param {object} response
+ * @since 3.1.0
  */
 function onFormSubmitted( response ) {
 	response["action"]   = Actions.SUBMIT_CREDIT_CARD_RESPONSE;
-	response["cc_nonce"] = document.querySelector(Constants.NONCE_SELECTOR).value;
+	response["cc_nonce"] = document.querySelector( Constants.NONCE_SELECTOR ).value;
 
-	saveCreditCardToVault( response )
+	saveTokenToVault( response )
 		.then(
 			function () {
 				submitCreditCardResponse( response )
@@ -311,9 +384,14 @@ function onFormSubmitted( response ) {
 					.fail( logError );
 			}
 		);
-	
 }
 
+/**
+ * Submit credit card response from WPP
+ * 
+ * @param {Object} response
+ * @since 3.1.0
+ */
 function submitCreditCardResponse( response ) {
 	return callAjax(
 		phpVars.submit_url,
@@ -322,14 +400,13 @@ function submitCreditCardResponse( response ) {
 	);
 }
 
-
 /**
  * Handle the results of the form submission.
  *
- * @since 1.7.0
+ * @since 3.1.0
  */
 function handleSubmitResult( response ) {
-	var data = response.data;
+	let data = response.data;
 
 	if ( "error" === data.result ) {
 		document.location.reload();
@@ -337,21 +414,23 @@ function handleSubmitResult( response ) {
 	}
 
 	document.location = data.redirect;
-
 }
 
 /**
  * Save a new credit card token to our vault.
  *
- * @param response
- * @returns mixed
- * @since 1.7.0
+ * @param {Object} response
+ * @returns {jQuery}
+ * @param {string} response.token_id - tokenized id of saving credit card
+ * @param {string} response.masked_account_number - masked credit card
+ * @param {string} response.transaction_state - transaction state
+ * @since 3.1.0
  */
-function saveCreditCardToVault( response ) {
-	var deferred      = jQuery.Deferred();
-	var vaultCheckbox = jQuery( "#wirecard-store-card" );
-	var request       = {
-		"action": "save_cc_to_vault",
+function saveTokenToVault(response ) {
+	let deferred      = jQuery.Deferred();
+	let vaultCheckbox = jQuery( "#wirecard-store-card" );
+	let request       = {
+		"action": Actions.SAVE_CREDIT_CARD_TO_VAULT,
 		"token": response.token_id,
 		"mask_pan": response.masked_account_number
 	};
@@ -374,38 +453,39 @@ function saveCreditCardToVault( response ) {
 /**
  * Display error message after failure submit and hide processing spinner
  *
- * @param data
- * @since 2.0.3
+ * @param {Object} data
+ * @since 3.1.0
  */
 function onSubmitError( data ) {
 	setSpinnerState(Spinner.STATE_OFF, Spinner.PAY_BUTTON_SPINNER);
-	if ("transaction_state" in data) {
+	if ( "transaction_state" in data ) {
 		getCreditCardData()
 			.then( renderForm )
 			.fail( logError )
 			.always(
 				function() {
-					setSpinnerState(Spinner.STATE_OFF, Spinner.FORM_SPINNER);
+					setSpinnerState( Spinner.STATE_OFF, Spinner.FORM_SPINNER );
 				}
 			);
-		jQuery( "#wd-creditcard-messagecontainer" ).css( "display","block" );
+		jQuery( Constants.MESSAGE_CONTAINER ).css( "display", "block" );
 	}
 	logError( data );
 }
 
 /**
- * @param deleteTrigger
- * @param id
+ * Deleting token from view and vault
+ * 
+ * @since 3.1.0
  */
-function deleteCreditCardFromVaultTab() {
+function onTokenDeleted() {
 	let self = this;
-	self.append( phpVars.spinner );
-	let vault_id = jQuery(self).data('vault-id');
+	jQuery( self ).append( phpVars.spinner );
+	let vault_id = jQuery( self ) .data( 'vault-id' );
 	
-	if (vault_id) {
-		deleteCreditCardFromVault( vault_id )
-			.then( function () {
-				self.closest('tr').remove();
+	if ( vault_id ) {
+		deleteTokenFromVault( vault_id )
+			.done( function () {
+				self.closest( 'tr' ).remove();
 			} )
 			.fail( logError );
 	}
@@ -414,18 +494,21 @@ function deleteCreditCardFromVaultTab() {
 /**
  * Delete a saved credit card from the vault
  *
- * @param vault_id
- * @since 1.1.0
+ * @param {number} vault_id
+ * @since 3.1.0
  */
-function deleteCreditCardFromVault( vault_id ) {
+function deleteTokenFromVault(vault_id ) {
 	return callAjax(
 		phpVars.vault_delete_url,
 		"POST",
-		{ "action" : "remove_cc_from_vault", "vault_id": vault_id }
+		{ 
+			"action" : Actions.REMOVE_CREDIT_CARD_FROM_VAULT,
+			"vault_id": vault_id
+		}
 	);
 }
 
-jQuery(document).on("ready", function(){
-	initializeEventHandlers();
+jQuery(document).on("ready", function() {
+	initEventHandlers();
 	initializeForm();
 });
