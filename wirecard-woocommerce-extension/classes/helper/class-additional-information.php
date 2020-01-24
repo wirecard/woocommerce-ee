@@ -58,11 +58,10 @@ class Additional_Information {
 	const BILLING = 'billing';
 
 	const BASE = 'base';
-	
+
 	protected $basket_item_helper;
-	
-	public function __construct()
-	{
+
+	public function __construct() {
 		$this->basket_item_helper = new Basket_Item_Helper();
 	}
 
@@ -444,7 +443,7 @@ class Additional_Information {
 	 */
 	private function set_voucher_item( $basket, $voucher_total, $voucher_tax ) {
 		$voucher_key = 'Voucher';
-		$amount = (($voucher_total + $voucher_tax) * -1);
+		$amount      = ( ( $voucher_total + $voucher_tax ) * -1 );
 
 		$item = $this->basket_item_helper->build_basket_item(
 			$voucher_key,
@@ -454,7 +453,7 @@ class Additional_Information {
 			$voucher_key,
 			$voucher_tax
 		);
-		
+
 		$basket->add( $item );
 
 		return $basket;

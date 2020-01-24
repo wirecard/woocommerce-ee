@@ -546,7 +546,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	 */
 	public function get_request_data_credit_card() {
 		$token_id = sanitize_text_field( $_POST['vault_token'] );
-		
+
 		$order_id            = WC()->session->get( 'wirecard_order_id' );
 		$config              = $this->create_payment_config();
 		$transaction_service = new TransactionService( $config );
@@ -563,13 +563,13 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 			$this->transaction->setThreeD( $this->force_three_d );
 		}
 		$this->transaction->setConfig( $config->get( CreditCardTransaction::NAME ) );
-		
+
 		// Add token_id if oneclick vaulted card used
 		if ( $token_id ) {
-			$this->transaction->setTokenId($token_id);
-		} 
-		
-		$this->set_three_ds_transaction_fields($order, $token_id);
+			$this->transaction->setTokenId( $token_id );
+		}
+
+		$this->set_three_ds_transaction_fields( $order, $token_id );
 
 		wp_send_json_success(
 			$transaction_service->getCreditCardUiWithData(
