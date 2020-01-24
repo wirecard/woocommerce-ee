@@ -365,26 +365,6 @@ function handleSubmitResult( response ) {
 }
 
 /**
- * Submit the data so we can do a proper transaction
- *
- * @param {Object} response
- * @since 3.1.0
- */
-function onFormSubmitted( response ) {
-	response["action"]   = Actions.SUBMIT_CREDIT_CARD_RESPONSE;
-	response["cc_nonce"] = document.querySelector( Constants.NONCE_SELECTOR ).value;
-
-	saveTokenToVault( response )
-		.then(
-			function () {
-				submitCreditCardResponse( response )
-					.then( handleSubmitResult )
-					.fail( logError );
-			}
-		);
-}
-
-/**
  * Save a new credit card token to our vault.
  *
  * @param {Object} response
@@ -416,6 +396,26 @@ function saveTokenToVault(response ) {
 		"POST",
 		request
 	);
+}
+
+/**
+ * Submit the data so we can do a proper transaction
+ *
+ * @param {Object} response
+ * @since 3.1.0
+ */
+function onFormSubmitted( response ) {
+	response["action"]   = Actions.SUBMIT_CREDIT_CARD_RESPONSE;
+	response["cc_nonce"] = document.querySelector( Constants.NONCE_SELECTOR ).value;
+
+	saveTokenToVault( response )
+		.then(
+			function () {
+				submitCreditCardResponse( response )
+					.then( handleSubmitResult )
+					.fail( logError );
+			}
+		);
 }
 
 /**
@@ -460,6 +460,29 @@ function submitSeamlessForm() {
 }
 
 /**
+ * Trigger event that load filled credit card form
+ *
+ * @since 3.1.0
+ */
+function onTokenSelected() {
+	let token       = jQuery( this ).data( "token" );
+	enableDeleteButtons();
+	disableDeleteButtonByToken( token );
+	setSpinnerState( Spinner.STATE_ON, Spinner.FORM_SPINNER );
+	initializeForm( token );
+}
+
+/**
+ * Initializes token event handlers for the interface
+ *
+ * @since 3.1.0
+ */
+function initTokenEventHandlers() {
+	jQuery( Constants.USE_CARD_ID ).on( "change", onTokenSelected );
+	jQuery( Constants.DELETE_CARD_BUTTON_ID ).on( "click", onTokenDeleted );
+}
+
+/**
  * Initializes the vault interface as required.
  *
  * @since 3.1.0
@@ -478,7 +501,7 @@ function initializeVault() {
 
 /**
  * Get saved tokens and init view
- * 
+ *
  * @since 3.1.0
  */
 function getSavedTokenList() {
@@ -506,30 +529,6 @@ function initializeForm(tokenId = null)
 			}
 		);
 }
-
-/**
- * Trigger event that load filled credit card form
- *
- * @since 3.1.0
- */
-function onTokenSelected() {
-	let token       = jQuery( this ).data( "token" );
-	enableDeleteButtons();
-	disableDeleteButtonByToken( token );
-	setSpinnerState( Spinner.STATE_ON, Spinner.FORM_SPINNER );
-	initializeForm( token );
-}
-
-/**
- * Initializes token event handlers for the interface
- *
- * @since 3.1.0
- */
-function initTokenEventHandlers() {
-	jQuery( Constants.USE_CARD_ID ).on( "change", onTokenSelected );
-	jQuery( Constants.DELETE_CARD_BUTTON_ID ).on( "click", onTokenDeleted );
-}
-
 
 /**
  * Initializes general event handlers for the interface
