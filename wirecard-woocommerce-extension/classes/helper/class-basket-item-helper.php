@@ -42,7 +42,7 @@ use Wirecard\PaymentSdk\Entity\Item;
  * Class Basket_Item_Helper
  * Builds SDK Basket Items
  *
- * Handles basket 
+ * Handles basket
  *
  * @since   1.0.0
  */
