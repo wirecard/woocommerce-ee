@@ -68,7 +68,7 @@ let Spinner = {
 	DELETE_TOKEN_SPINNER: phpVars.spinner
 };
 
-let DELETE_BUTTON = { 
+let DELETE_BUTTON = {
 	FROM_VAULT: "delete-from-vault",
 	FROM_VAULT_DISABLED: "delete-from-vault-disabled",
 	WD_BUTTON: "wd-card-delete",
@@ -89,7 +89,6 @@ let Constants = {
 	NONCE_SELECTOR: "#wc_payment_method_wirecard_creditcard_response_form input[name='cc_nonce']",
 	MESSAGE_CONTAINER: "#wd-creditcard-messagecontainer",
 	WD_TOKEN_ID_PREFIX: "wd-token-",
-	
 };
 
 /**
@@ -124,7 +123,7 @@ function callAjax(request_url, method, request_data) {
 
 /**
  * Set states for spinner object
- * 
+ *
  * @param {string} state
  * @param {jQuery} selector
  * @since 3.1.0
@@ -205,13 +204,13 @@ function onTokenDeleted() {
 /**
  * Replace class for chosen selector
  *
- * @param {jQuery} selector
+ * @param {jQuery} $selector
  * @param {string} needle
  * @param {string} replacement
  * @since 3.1.0
  */
-function replaceClassForSelector( selector, needle, replacement ) {
-	selector.removeClass( needle ).addClass( replacement );
+function replaceClassForSelector( $selector, needle, replacement ) {
+	$selector.removeClass( needle ).addClass( replacement );
 }
 
 /**
@@ -223,20 +222,20 @@ function enableDeleteButtons() {
 	jQuery( Constants.DELETE_CARD_BUTTON_ID ).off( "click" );
 	jQuery( "[id^=" + Constants.WD_TOKEN_ID_PREFIX + "]" ).filter(
 		function() {
-			let selector = jQuery( this );
+			let $selector = jQuery( this );
 			replaceClassForSelector(
-				selector.find(
+				$selector.find(
 					"." + DELETE_BUTTON.FROM_VAULT_DISABLED
 				),
 				DELETE_BUTTON.FROM_VAULT_DISABLED,
 				DELETE_BUTTON.FROM_VAULT
 			);
 			replaceClassForSelector(
-				selector,
+				$selector,
 				DELETE_BUTTON.WD_BUTTON_DISABLED,
 				DELETE_BUTTON.WD_BUTTON
 			);
-			selector.on( "click", onTokenDeleted );
+			$selector.on( "click", onTokenDeleted );
 		}
 	);
 }
@@ -248,21 +247,21 @@ function enableDeleteButtons() {
  * @since 3.1.0
  */
 function disableDeleteButtonByToken( token ) {
-	let selector = jQuery( "#" + Constants.WD_TOKEN_ID_PREFIX + token );
+	let $selector = jQuery( "#" + Constants.WD_TOKEN_ID_PREFIX + token );
 
 	replaceClassForSelector(
-		selector,
+		$selector,
 		DELETE_BUTTON.WD_BUTTON,
 		DELETE_BUTTON.WD_BUTTON_DISABLED
 	);
 
 	replaceClassForSelector(
-		selector.find( "." + DELETE_BUTTON.FROM_VAULT ),
+		$selector.find( "." + DELETE_BUTTON.FROM_VAULT ),
 		DELETE_BUTTON.FROM_VAULT,
 		DELETE_BUTTON.FROM_VAULT_DISABLED
 	);
 
-	selector.off( "click" );
+	$selector.off( "click" );
 }
 
 /**
@@ -350,7 +349,7 @@ function submitCreditCardResponse( response ) {
 
 /**
  * Handle the results of the form submission.
- * 
+ *
  * @param {Object} response
  * @since 3.1.0
  */
@@ -386,24 +385,6 @@ function onFormSubmitted( response ) {
 }
 
 /**
- * Render seamless form from WPP in iframe
- *
- * @since 3.1.0
- */
-function submitSeamlessForm() {
-	setSpinnerState( Spinner.STATE_ON, Spinner.PAY_BUTTON_SPINNER );
-	jQuery( this ).blur();
-	/** @function WPP.seamlessSubmit */
-	WPP.seamlessSubmit(
-		{
-			wrappingDivId: Constants.SEAMLESS_FORM_CONTAINER,
-			onSuccess: onFormSubmitted,
-			onError: onSubmitError,
-		}
-	);
-}
-
-/**
  * Save a new credit card token to our vault.
  *
  * @param {Object} response
@@ -414,7 +395,7 @@ function submitSeamlessForm() {
  * @since 3.1.0
  */
 function saveTokenToVault(response ) {
-	let deferred      = jQuery.Deferred();
+	let deferred      = jQuery.Deferred(); // eslint-disable-line new-cap
 	let vaultCheckbox = jQuery( Constants.SAVE_CARD_CHECKMARK_ID );
 	let request       = {
 		"action": Actions.SAVE_CREDIT_CARD_TO_VAULT,
@@ -459,25 +440,23 @@ function onSubmitError( data ) {
 	logError( data );
 }
 
-/**
- * Initializes general event handlers for the interface
- *
- * @since 2.4.0
- */
-function initEventHandlers()
-{
-	let seamlessButtonSubmit = document.getElementById( Constants.SEAMLESS_SUBMIT_BUTTON );
-	seamlessButtonSubmit.addEventListener( "click", submitSeamlessForm );
-}
 
 /**
- * Initializes token event handlers for the interface
+ * Render seamless form from WPP in iframe
  *
  * @since 3.1.0
  */
-function initTokenEventHandlers() {
-	jQuery( Constants.USE_CARD_ID ).on( "change", onTokenSelected );
-	jQuery( Constants.DELETE_CARD_BUTTON_ID ).on( "click", onTokenDeleted );
+function submitSeamlessForm() {
+	setSpinnerState( Spinner.STATE_ON, Spinner.PAY_BUTTON_SPINNER );
+	jQuery( this ).blur();
+	/** @function WPP.seamlessSubmit */
+	WPP.seamlessSubmit(
+		{
+			wrappingDivId: Constants.SEAMLESS_FORM_CONTAINER,
+			onSuccess: onFormSubmitted,
+			onError: onSubmitError,
+		}
+	);
 }
 
 /**
@@ -534,12 +513,33 @@ function initializeForm(tokenId = null)
  * @since 3.1.0
  */
 function onTokenSelected() {
-	let radioButton = jQuery( this );
-	let token       = radioButton.data( "token" );
+	let token       = jQuery( this ).data( "token" );
 	enableDeleteButtons();
 	disableDeleteButtonByToken( token );
 	setSpinnerState( Spinner.STATE_ON, Spinner.FORM_SPINNER );
 	initializeForm( token );
+}
+
+/**
+ * Initializes token event handlers for the interface
+ *
+ * @since 3.1.0
+ */
+function initTokenEventHandlers() {
+	jQuery( Constants.USE_CARD_ID ).on( "change", onTokenSelected );
+	jQuery( Constants.DELETE_CARD_BUTTON_ID ).on( "click", onTokenDeleted );
+}
+
+
+/**
+ * Initializes general event handlers for the interface
+ *
+ * @since 2.4.0
+ */
+function initEventHandlers()
+{
+	let seamlessButtonSubmit = document.getElementById( Constants.SEAMLESS_SUBMIT_BUTTON );
+	seamlessButtonSubmit.addEventListener( "click", submitSeamlessForm );
 }
 
 jQuery( document ).on(
