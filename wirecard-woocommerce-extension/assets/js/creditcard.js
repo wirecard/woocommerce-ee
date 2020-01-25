@@ -91,6 +91,12 @@ let Constants = {
 	WD_TOKEN_ID_PREFIX: "wd-token-",
 };
 
+Object.freeze(Actions);
+Object.freeze(Url);
+Object.freeze(Spinner);
+Object.freeze(DELETE_BUTTON);
+Object.freeze(Constants);
+
 /**
  * Log any error that has occurred.
  *
@@ -460,6 +466,24 @@ function submitSeamlessForm() {
 }
 
 /**
+ * Loads the card list for one-click and renders the seamless form
+ *
+ * @param {number|null} tokenId
+ * @since 3.1.0
+ */
+function initializeForm(tokenId = null)
+{
+	getCreditCardData( tokenId )
+		.then( renderSeamlessForm )
+		.fail( logError )
+		.always(
+			function () {
+				setSpinnerState( Spinner.STATE_OFF, Spinner.FORM_SPINNER );
+			}
+		);
+}
+
+/**
  * Trigger event that load filled credit card form
  *
  * @since 3.1.0
@@ -477,7 +501,7 @@ function onTokenSelected() {
  *
  * @since 3.1.0
  */
-function initTokenEventHandlers() {
+function initializeTokenEventHandlers() {
 	jQuery( Constants.USE_CARD_ID ).on( "change", onTokenSelected );
 	jQuery( Constants.DELETE_CARD_BUTTON_ID ).on( "click", onTokenDeleted );
 }
@@ -490,7 +514,7 @@ function initTokenEventHandlers() {
 function initializeVault() {
 	getFormattedTokenViewFromVault()
 		.then( loadTokenTable )
-		.then( initTokenEventHandlers )
+		.then( initializeTokenEventHandlers )
 		.fail( logError )
 		.always(
 			function () {
@@ -504,7 +528,7 @@ function initializeVault() {
  *
  * @since 3.1.0
  */
-function getSavedTokenList() {
+function initializeTokenList() {
 	let hasSavedTokens = document.getElementById( Constants.VAULT_TABLE_ID );
 	if ( typeof(hasSavedTokens) === "undefined" || !hasSavedTokens ) {
 		initializeVault();
@@ -512,30 +536,11 @@ function getSavedTokenList() {
 }
 
 /**
- * Loads the card list for one-click and renders the seamless form
- *
- * @param {number|null} tokenId
- * @since 3.1.0
- */
-function initializeForm(tokenId = null)
-{
-	getSavedTokenList();
-	getCreditCardData( tokenId )
-		.then( renderSeamlessForm )
-		.fail( logError )
-		.always(
-			function () {
-				setSpinnerState( Spinner.STATE_OFF, Spinner.FORM_SPINNER );
-			}
-		);
-}
-
-/**
  * Initializes general event handlers for the interface
  *
  * @since 2.4.0
  */
-function initEventHandlers()
+function initializeEventHandlers()
 {
 	let seamlessButtonSubmit = document.getElementById( Constants.SEAMLESS_SUBMIT_BUTTON );
 	seamlessButtonSubmit.addEventListener( "click", submitSeamlessForm );
@@ -544,7 +549,8 @@ function initEventHandlers()
 jQuery( document ).on(
 	"ready",
 	function() {
-		initEventHandlers();
+		initializeEventHandlers();
+		initializeTokenList();
 		initializeForm();
 	}
 );
