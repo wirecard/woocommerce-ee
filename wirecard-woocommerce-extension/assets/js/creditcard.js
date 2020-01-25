@@ -91,11 +91,11 @@ let Constants = {
 	WD_TOKEN_ID_PREFIX: "wd-token-",
 };
 
-Object.freeze(Actions);
-Object.freeze(Url);
-Object.freeze(Spinner);
-Object.freeze(DELETE_BUTTON);
-Object.freeze(Constants);
+Object.freeze( Actions );
+Object.freeze( Url );
+Object.freeze( Spinner );
+Object.freeze( DELETE_BUTTON );
+Object.freeze( Constants );
 
 /**
  * Log any error that has occurred.
@@ -489,7 +489,7 @@ function initializeForm(tokenId = null)
  * @since 3.1.0
  */
 function onTokenSelected() {
-	let token       = jQuery( this ).data( "token" );
+	let token = jQuery( this ).data( "token" );
 	enableDeleteButtons();
 	disableDeleteButtonByToken( token );
 	setSpinnerState( Spinner.STATE_ON, Spinner.FORM_SPINNER );
@@ -530,7 +530,7 @@ function initializeVault() {
  */
 function initializeTokenList() {
 	let hasSavedTokens = document.getElementById( Constants.VAULT_TABLE_ID );
-	if ( typeof(hasSavedTokens) === "undefined" || !hasSavedTokens ) {
+	if ( typeof(hasSavedTokens) === "undefined" || ! hasSavedTokens ) {
 		initializeVault();
 	}
 }
