@@ -33,7 +33,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-require_once( WIRECARD_EXTENSION_HELPER_DIR . 'class-method-helper.php' );
+require_once( WIRECARD_EXTENSION_HELPER_DIR . 'class-string-helper.php' );
+require_once( WIRECARD_EXTENSION_HELPER_DIR . 'class-number-formatter.php' );
 
 use Wirecard\PaymentSdk\Entity\Amount;
 use Wirecard\PaymentSdk\Entity\Item;
@@ -48,6 +49,36 @@ use Wirecard\PaymentSdk\Entity\Item;
  */
 class Basket_Item_Helper {
 
+	/**
+	 * @var Number_Formatter
+	 */
+	private $number_formatter;
+
+	/**
+	 * @return Number_Formatter
+	 * 
+	 * @since 3.1.0
+	 */
+	public function get_number_formatter()
+	{
+		if ( null === $this->number_formatter ) {
+			$this->number_formatter = new Number_Formatter();
+		}
+		return $this->number_formatter;
+	}
+
+	/**
+	 * @param Number_Formatter $number_formatter
+	 * @return Basket_Item_Helper
+	 * 
+	 * @since 3.1.0
+	 */
+	public function set_number_formatter( $number_formatter )
+	{
+		$this->number_formatter = $number_formatter;
+		return $this;
+	}
+	
 	/**
 	 * @param string $name
 	 * @param float $amount
@@ -86,9 +117,9 @@ class Basket_Item_Helper {
 	 * @since 3.1.0
 	 */
 	private function populate_basket_item( $item, $description, $article_nr, $tax_rate, $tax_amount = null, $currency = null ) {
-		$item->setDescription( Method_Helper::string_format_wc( $description ) );
+		$item->setDescription( String_Helper::sanitize_wc( $description ) );
 		$item->setArticleNumber( $article_nr );
-		$item->setTaxRate( Method_Helper::number_format_wc( $tax_rate ) );
+		$item->setTaxRate( $this->get_number_formatter()->format_wc( $tax_rate ) );
 
 		if ( $this->has_tax_amount( $tax_amount ) ) {
 			$item->setTaxAmount(
@@ -111,7 +142,7 @@ class Basket_Item_Helper {
 	 */
 	private function create_basket_item( $name, $amount, $quantity, $currency = null ) {
 		return new Item(
-			Method_Helper::string_format_wc( $name ),
+			String_Helper::sanitize_wc( $name ),
 			$this->create_formatted_amount( $amount, $currency ),
 			$quantity
 		);
@@ -131,7 +162,7 @@ class Basket_Item_Helper {
 		}
 
 		return new Amount(
-			Method_Helper::number_format_wc( $amount ),
+			$this->get_number_formatter()->format_wc( $amount ),
 			$currency
 		);
 	}
@@ -139,7 +170,7 @@ class Basket_Item_Helper {
 	/**
 	 * Check if tax amount is set
 	 *
-	 * @param $tax_amount
+	 * @param float|null $tax_amount
 	 * @return bool
 	 *
 	 * @since 3.1.0

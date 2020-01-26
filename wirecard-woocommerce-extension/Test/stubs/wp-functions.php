@@ -97,8 +97,15 @@ function wp_create_nonce() {
 	return 'nonce';
 }
 
-function wp_strip_all_tags( $string ) {
-	return $string;
+function wp_strip_all_tags( $string, $remove_breaks = false ) {
+	$string = preg_replace( '@<(script|style)[^>]*?>.*?</\\1>@si', '', $string );
+	$string = strip_tags( $string );
+
+	if ( $remove_breaks ) {
+		$string = preg_replace( '/[\r\n\t ]+/', ' ', $string );
+	}
+
+	return trim( $string );
 }
 
 function is_wp_error() {

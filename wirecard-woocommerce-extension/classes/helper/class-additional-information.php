@@ -34,7 +34,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-wirecard-payment-gateway.php' );
-require_once( WIRECARD_EXTENSION_HELPER_DIR . 'class-method-helper.php' );
+require_once( WIRECARD_EXTENSION_HELPER_DIR . 'class-string-helper.php' );
+require_once( WIRECARD_EXTENSION_HELPER_DIR . 'class-number-formatter.php' );
 require_once( WIRECARD_EXTENSION_HELPER_DIR . 'class-basket-item-helper.php' );
 
 use Wirecard\PaymentSdk\Entity\AccountHolder;
@@ -61,8 +62,30 @@ class Additional_Information {
 
 	protected $basket_item_helper;
 
+	/**
+	 * @var Number_Formatter
+	 */
+	protected $number_formatter;
+
+	/**
+	 * Additional_Information constructor.
+	 * 
+	 * @since 3.1.0
+	 */
 	public function __construct() {
+		$this->number_formatter   = new Number_Formatter(wc_get_price_decimals());
 		$this->basket_item_helper = new Basket_Item_Helper();
+		$this->basket_item_helper->set_number_formatter( $this->number_formatter );
+	}
+
+	/**
+	 * @return Number_Formatter
+	 * 
+	 * @since 3.1.0
+	 */
+	public function get_number_formatter()
+	{
+		return $this->number_formatter;
 	}
 
 	/**
@@ -87,9 +110,9 @@ class Additional_Information {
 
 		foreach ( $cart->get_cart() as $cart_item_key => $cart_item ) {
 			/** @var WC_Product $product */
-			$product   = $cart_item['data'];
-			$tax_class = apply_filters( 'woocommerce_cart_item_tax', $product->get_tax_class(), $cart_item, $cart_item_key );
-			$basket    = $this->set_basket_item(
+			$product     = $cart_item['data'];
+			$tax_class   = apply_filters( 'woocommerce_cart_item_tax', $product->get_tax_class(), $cart_item, $cart_item_key );
+			$basket    	 = $this->set_basket_item(
 				$basket,
 				$product,
 				$cart_item['quantity'],
@@ -97,7 +120,9 @@ class Additional_Information {
 				( wc_get_price_including_tax( $product ) - wc_get_price_excluding_tax( $product ) ),
 				$this->get_tax_rate_from_tax_class_depending_on_country( $tax_country, $tax_class )
 			);
-			$sum      += floatval( number_format( wc_get_price_including_tax( $product ), wc_get_price_decimals(), '.', '' ) ) * $cart_item['quantity'];
+			
+			$price_value = floatval( $this->get_number_formatter()->format_wc( wc_get_price_including_tax( $product ) ) );
+			$sum      	+= $price_value * (int)$cart_item['quantity'];
 		}
 		//Check if there is a rounding difference and if so add the difference to shipping
 		$shipping           = $cart->get_shipping_total();
@@ -128,8 +153,9 @@ class Additional_Information {
 		}
 
 		if ( $cart->get_total( 'total' ) - $sum > 0 ) {
-			$shipping += floatval( number_format( ( $cart->get_total( 'total' ) - $sum ), wc_get_price_decimals(), '.', '' ) );
+			$shipping += floatval(  $this->get_number_formatter()->format_wc( $cart->get_total( 'total' ) - $sum ) );
 		}
+		
 		if ( $shipping > 0 ) {
 			$basket = $this->set_shipping_item( $basket, $shipping, $cart->get_shipping_tax(), $shipping_tax_rate );
 		}

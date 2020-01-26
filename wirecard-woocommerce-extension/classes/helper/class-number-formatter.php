@@ -29,16 +29,65 @@
  * Please do not use the plugin if you do not agree to these terms of use!
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
+if (!defined('ABSPATH')) {
 	exit;
 }
 
-class Method_Helper {
-	public static function number_format_wc( $amount ) {
-		return (float) number_format( $amount, wc_get_price_decimals(), '.', '' );
+class Number_Formatter
+{
+	/** @var string */
+	const DEFAULT_DECIMAL_SEPARATOR = ".";
+	/** @var string */
+	const DEFAULT_THOUSANDS_SEPARATOR = "";
+	/** @var int */
+	const DEFAULT_DECIMAL_POINT_NUMBER = 2;
+
+	/** @var int */
+	private $decimal_point_number;
+	/**
+	 * Number_Formatter constructor.
+	 * 
+	 * @param int $decimal_point_number
+	 */
+	public function __construct( $decimal_point_number = self::DEFAULT_DECIMAL_POINT_NUMBER )
+	{
+		$this->set_decimal_point_number( $decimal_point_number );
 	}
 
-	public static function string_format_wc( $string ) {
-		return (string) wp_strip_all_tags( html_entity_decode( $string ), true );
+	/**
+	 * @return int
+	 * 
+	 * @since 3.1.0
+	 */
+	public function get_decimal_point_number()
+	{
+		return $this->decimal_point_number;
+	}
+
+	/**
+	 * @param int $decimal_point_number
+	 * @return $this
+	 * 
+	 * @since 3.1.0
+	 */
+	public function set_decimal_point_number( $decimal_point_number )
+	{
+		$this->decimal_point_number = $decimal_point_number;
+		return $this;
+	}
+
+	/**
+	 * Number format
+	 * 
+	 * @param float $amount
+	 * @return float
+	 */
+	public function format_wc( $amount ) {
+		return (float)number_format(
+			$amount,
+			$this->get_decimal_point_number(),
+			self::DEFAULT_DECIMAL_SEPARATOR,
+			self::DEFAULT_THOUSANDS_SEPARATOR
+		);
 	}
 }
