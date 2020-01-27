@@ -72,6 +72,13 @@
 	text-decoration: underline;
 }
 
+div.ui-widget-overlay {
+	z-index: 100;
+	opacity: 0.5;
+	filter: Alpha(Opacity=50);
+	background-color: black;
+}
+
 #wc_payment_method_wirecard_creditcard_vault fieldset{
 	background-color: #ffffff;
 }
@@ -92,11 +99,4 @@
 	color: #888888;
 	text-decoration: none;
 	cursor: no-drop;
-}
-
-div.ui-widget-overlay {
-	z-index: 100;
-	opacity: 0.5;
-	filter: Alpha(Opacity=50);
-	background-color: black;
 }
