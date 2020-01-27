@@ -156,30 +156,32 @@ function turnOffFormSpinner() {
 
 /**
  * Process error message from WPP
- * 
+ *
  * @param {Object} response
  * @since 3.1.0
  */
 function showErrorMessageFromResponse( response ) {
 	var errorMessage = "";
-	response.errors.forEach( function ( item ) {
-		errorMessage += "<li>" + item.error.description + "</li>";
-	} );
-	
+	response.errors.forEach(
+		function ( item ) {
+			errorMessage += "<li>" + item.error.description + "</li>";
+		}
+	);
+
 	if ( errorMessage ) {
-		errorMessage = "<ul class='woocommerce-error' role='alert'>" + errorMessage + "</ul>";
+		errorMessage              = "<ul class='woocommerce-error' role='alert'>" + errorMessage + "</ul>";
 		let errorMessageContainer = jQuery( Constants.MESSAGE_CONTAINER );
 		errorMessageContainer.empty();
 		errorMessageContainer.html( errorMessage );
 		errorMessageContainer.show();
 	}
-	
-	logError(response);
+
+	logError( response );
 }
 
 /**
  * Hide error message container
- * 
+ *
  * @since 3.1.0
  */
 function hideErrorMessage() {
@@ -190,20 +192,20 @@ function hideErrorMessage() {
 
 /**
  * Disable radio button selection
- * 
+ *
  * @since 3.1.0
  */
 function disableTokenSelection() {
-	jQuery( Constants.USE_CARD_ID ).attr( 'disabled', 'disabled' );
+	jQuery( Constants.USE_CARD_ID ).attr( "disabled", "disabled" );
 }
 
 /**
  * Enable radio button selection
- * 
+ *
  * @since 3.1.0
  */
 function enableTokenSelection() {
-	jQuery( Constants.USE_CARD_ID ).removeAttr( 'disabled' );
+	jQuery( Constants.USE_CARD_ID ).removeAttr( "disabled" );
 }
 
 /**
