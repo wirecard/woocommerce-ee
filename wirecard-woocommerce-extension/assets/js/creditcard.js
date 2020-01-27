@@ -196,7 +196,7 @@ function hideErrorMessage() {
  * @since 3.1.0
  */
 function disableTokenSelection() {
-	jQuery( Constants.USE_CARD_ID ).attr( 'disabled', 'disabled' );
+	jQuery( Constants.USE_CARD_ID ).attr( "disabled", "disabled" );
 }
 
 /**
@@ -205,7 +205,7 @@ function disableTokenSelection() {
  * @since 3.1.0
  */
 function enableTokenSelection() {
-	jQuery( Constants.USE_CARD_ID ).removeAttr( 'disabled' );
+	jQuery( Constants.USE_CARD_ID ).removeAttr( "disabled" );
 }
 
 /**
