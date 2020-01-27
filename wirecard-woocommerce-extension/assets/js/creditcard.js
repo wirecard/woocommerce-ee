@@ -524,7 +524,6 @@ function initializeVault() {
  */
 function initializeTokenList() {
 	let hasSavedTokens = jQuery( Constants.VAULT_TABLE_ID );
-	console.log(hasSavedTokens);
 	if ( typeof(hasSavedTokens) === "undefined" || ! hasSavedTokens.length ) {
 		initializeVault();
 	}

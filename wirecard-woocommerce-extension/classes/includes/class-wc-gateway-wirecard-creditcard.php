@@ -544,7 +544,8 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	 * @since 1.0.0
 	 */
 	public function get_request_data_credit_card() {
-		$token_id = sanitize_text_field( $_POST['vault_token'] );
+		$vault_token = $_POST['vault_token'];
+		$token_id = sanitize_text_field( $vault_token );
 
 		$order_id            = WC()->session->get( 'wirecard_order_id' );
 		$config              = $this->create_payment_config();
@@ -685,6 +686,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	 *
 	 * @return bool|CreditCardTransaction|WP_Error
 	 *
+	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
 	 * @since 1.0.0
 	 * @throws Exception
 	 */
