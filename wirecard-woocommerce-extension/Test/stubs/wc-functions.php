@@ -57,9 +57,6 @@ function wc_add_notice( $message, $type ) {
 
 }
 
-/**
- * @SuppressWarnings(PHPMD.UnusedFormalParameter)
- */
 function wc_get_price_including_tax( $product ) {
 	if ($product->is_taxable()) {
 		return 20.0;
@@ -71,9 +68,6 @@ function wc_get_price_decimals() {
 	return 2;
 }
 
-/**
- * @SuppressWarnings(PHPMD.UnusedFormalParameter)
- */
 function wc_get_price_excluding_tax( $product ) {
 	if ($product->is_taxable()) {
 		return 10.0;
