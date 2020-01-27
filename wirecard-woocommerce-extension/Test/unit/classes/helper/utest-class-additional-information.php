@@ -57,6 +57,9 @@ class WC_Gateway_Wirecard_Additional_Information_Utest extends \PHPUnit_Framewor
 	public function test_create_shopping_basket() {
 		global $woocommerce;
 		
+		$name = 'Basket Testproduct';
+		$description = 'Testing description for basket item';
+		
 		$transaction = new \Wirecard\PaymentSdk\Transaction\CreditCardTransaction();
 		$woocommerce->cart = $this->getMockBuilder(WC_Cart::class)->disableOriginalConstructor()->getMock();
 
@@ -71,8 +74,8 @@ class WC_Gateway_Wirecard_Additional_Information_Utest extends \PHPUnit_Framewor
 		$product->method('get_tax_class')->willReturn(null);
 		$product->method('is_taxable')->willReturn(false);
 		$product->method('get_price')->willReturn('23');
-		$product->method('get_name')->willReturn('Basket Testproduct');
-		$product->method('get_short_description')->willReturn('Testing description for basket item');
+		$product->method('get_name')->willReturn($name);
+		$product->method('get_short_description')->willReturn($description);
 		$product->method('get_id')->willReturn(2);
 		
 		$cart_data = array(
@@ -95,18 +98,22 @@ class WC_Gateway_Wirecard_Additional_Information_Utest extends \PHPUnit_Framewor
 		
 		$expected = new \Wirecard\PaymentSdk\Entity\Basket();
 		$expected->setVersion($transaction);
-		$item = new \Wirecard\PaymentSdk\Entity\Item('Basket Testproduct', new \Wirecard\PaymentSdk\Entity\Amount(23, 'EUR'), 1);
-		$item->setDescription('Testing description for basket item');
+		$item = new \Wirecard\PaymentSdk\Entity\Item($name, new \Wirecard\PaymentSdk\Entity\Amount(23, 'EUR'), 1);
+		$item->setDescription($description);
 		$item->setArticleNumber(2);
-		// Use of fixed tax rate due to dependency of stubs and empty amount
+		// Use of fixed tax rate due to dependency of stubs and empty amount - the usage of stubs should be reworked
 		$item->setTaxAmount(new \Wirecard\PaymentSdk\Entity\Amount(0, 'EUR'));
 		$item->setTaxRate(12.0);
 		$expected->add($item);
-		$shippingItem = new \Wirecard\PaymentSdk\Entity\Item('Shipping', new \Wirecard\PaymentSdk\Entity\Amount(5, 'EUR'), 1);
-		$shippingItem->setDescription('Shipping');
-		$shippingItem->setArticleNumber('Shipping');
-		$shippingItem->setTaxRate(12.0);
-		$expected->add($shippingItem);
+		$shipping_item = new \Wirecard\PaymentSdk\Entity\Item(
+			'Shipping', 
+			new \Wirecard\PaymentSdk\Entity\Amount(5, 'EUR'), 
+			1
+		);
+		$shipping_item->setDescription('Shipping');
+		$shipping_item->setArticleNumber('Shipping');
+		$shipping_item->setTaxRate(12.0);
+		$expected->add($shipping_item);
 		
 		$this->assertEquals($expected, $this->additional_information->create_shopping_basket($transaction));
 	}
