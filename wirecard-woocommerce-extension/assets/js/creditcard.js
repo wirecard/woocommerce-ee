@@ -81,6 +81,7 @@ let Constants = {
 	DELETE_CARD_BUTTON_ID: ".wd-card-delete",
 	SAVE_CARD_CHECKMARK_ID: "#wirecard-store-card",
 	VAULT_CONTENT_CONTAINER: "#wc_payment_method_wirecard_creditcard_vault .cards",
+	VAULT_CONTAINER: "#wc_payment_method_wirecard_creditcard_vault",
 	VAULT_TABLE_ID: "#vault-table",
 	NEW_CARD_CONTENT_AREA: "#wc_payment_method_wirecard_new_credit_card",
 	NEW_CARD_CONTENT_AREA_IFRAME: "#wc_payment_method_wirecard_new_credit_card iframe",
@@ -161,7 +162,12 @@ function turnOffFormSpinner() {
  * @since 3.1.0
  */
 function showErrorMessageFromResponse( response ) {
-	var errorMessage = "";
+	// Invalid configuration
+	if (response.hasOwnProperty( "error_1" )) {
+		return ;
+	}
+	
+	let errorMessage = "";
 	response.errors.forEach(
 		function ( item ) {
 			errorMessage += "<li>" + item.error.description + "</li>";
@@ -256,7 +262,7 @@ function deleteTokenFromVault( id ) {
  */
 function onTokenDeleted() {
 	let self = this;
-	jQuery( self ).append( Spinner.DELETE_TOKEN_SPINNER );
+	jQuery( self ).find("." + DELETE_BUTTON.FROM_VAULT ).append( Spinner.DELETE_TOKEN_SPINNER );
 	let vault_id = jQuery( self ) .data( "vault-id" );
 
 	if ( vault_id ) {
@@ -264,6 +270,9 @@ function onTokenDeleted() {
 			.done(
 				function () {
 					self.closest( "tr" ).remove();
+					if ( ! jQuery( Constants.DELETE_CARD_BUTTON_ID ).length ) {
+						jQuery( Constants.VAULT_CONTAINER ).remove();
+					}
 				}
 			)
 			.fail( logError );

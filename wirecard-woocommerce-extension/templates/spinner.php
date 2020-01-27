@@ -38,4 +38,4 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$html = '<div class="spinner spinner-inline" style="display:inline-block; background: url(\'' . admin_url() . 'images/loading.gif\') no-repeat;"></div>';
+$html = '<div class="spinner spinner-inline spinner-inline-delete-token" style="display:inline-block; background: url(\'' . admin_url() . 'images/loading.gif\') no-repeat;"></div>';
