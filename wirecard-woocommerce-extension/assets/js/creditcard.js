@@ -131,7 +131,7 @@ function callAjax(request_url, method, request_data) {
  * Set states for spinner object
  *
  * @param {string} state
- * @param {jQuery} selector
+ * @param {string} selector
  * @since 3.1.0
  */
 function setSpinnerState(state, selector) {
@@ -143,6 +143,15 @@ function setSpinnerState(state, selector) {
 			document.querySelector( selector ).style.display = "block";
 			break;
 	}
+}
+
+/**
+ * Fade out form spinner
+ * 
+ * @since 3.1.0
+ */
+function turnOffFormSpinner() {
+	setSpinnerState( Spinner.STATE_OFF, Spinner.FORM_SPINNER );
 }
 
 /**
@@ -436,11 +445,7 @@ function onSubmitError( data ) {
 		getCreditCardData()
 			.then( renderSeamlessForm )
 			.fail( logError )
-			.always(
-				function() {
-					setSpinnerState( Spinner.STATE_OFF, Spinner.FORM_SPINNER );
-				}
-			);
+			.always( turnOffFormSpinner );
 		jQuery( Constants.MESSAGE_CONTAINER ).css( "display", "block" );
 	}
 	logError( data );
@@ -476,11 +481,7 @@ function initializeForm(tokenId = null)
 	getCreditCardData( tokenId )
 		.then( renderSeamlessForm )
 		.fail( logError )
-		.always(
-			function () {
-				setSpinnerState( Spinner.STATE_OFF, Spinner.FORM_SPINNER );
-			}
-		);
+		.always( turnOffFormSpinner );
 }
 
 /**
@@ -516,11 +517,7 @@ function initializeVault() {
 		.then( loadTokenTable )
 		.then( initializeTokenEventHandlers )
 		.fail( logError )
-		.always(
-			function () {
-				setSpinnerState( Spinner.STATE_OFF, Spinner.FORM_SPINNER );
-			}
-		);
+		.always( turnOffFormSpinner );
 }
 
 /**

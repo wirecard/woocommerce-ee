@@ -501,8 +501,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	 * @since 1.1.8
 	 */
 	public function load_cc_template() {
-		// @TODO: Change heading according to mock
-		$html = '<h2 class="credit-card-heading">' . __( 'heading_creditcard_form', 'wirecard-woocommerce-extension' ) . '</h2>';
+		$html = '<h2 class="credit-card-heading">' . __( 'heading_creditcard_payment_form', 'wirecard-woocommerce-extension' ) . '</h2>';
 
 		if ( is_user_logged_in()
 			&& $this->get_option( 'cc_vault_enabled' ) === 'yes'
