@@ -147,7 +147,7 @@ function setSpinnerState(state, selector) {
 
 /**
  * Fade out form spinner
- * 
+ *
  * @since 3.1.0
  */
 function turnOffFormSpinner() {
