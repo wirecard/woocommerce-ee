@@ -164,9 +164,9 @@ function turnOffFormSpinner() {
 function showErrorMessageFromResponse( response ) {
 	// Invalid configuration
 	if (response.hasOwnProperty( "error_1" )) {
-		return ;
+		return;
 	}
-	
+
 	let errorMessage = "";
 	response.errors.forEach(
 		function ( item ) {
@@ -262,7 +262,7 @@ function deleteTokenFromVault( id ) {
  */
 function onTokenDeleted() {
 	let self = this;
-	jQuery( self ).find("." + DELETE_BUTTON.FROM_VAULT ).append( Spinner.DELETE_TOKEN_SPINNER );
+	jQuery( self ).find( "." + DELETE_BUTTON.FROM_VAULT ).append( Spinner.DELETE_TOKEN_SPINNER );
 	let vault_id = jQuery( self ) .data( "vault-id" );
 
 	if ( vault_id ) {
