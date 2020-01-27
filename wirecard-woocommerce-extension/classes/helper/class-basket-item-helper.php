@@ -43,7 +43,7 @@ use Wirecard\PaymentSdk\Entity\Item;
  * Builds SDK Basket Items
  *
  * Handles basket
- *
+ * @SuppressWarnings(PHPMD.StaticAccess)
  * @since   1.0.0
  */
 class Basket_Item_Helper {
