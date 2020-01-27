@@ -103,3 +103,9 @@ div.ui-widget-overlay {
 	text-decoration: none;
 	cursor: no-drop;
 }
+
+.spinner-inline-delete-token {
+	position: relative;
+	top: 3px;
+	left: 10px;
+}
