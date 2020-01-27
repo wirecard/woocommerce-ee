@@ -540,7 +540,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 
 	/**
 	 * Return request data for the credit card form
-	 * 
+	 *
 	 * @SuppressWarnings(PHPMD.Superglobals)
 	 * @since 1.0.0
 	 */
