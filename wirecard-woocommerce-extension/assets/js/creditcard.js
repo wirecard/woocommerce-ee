@@ -155,6 +155,58 @@ function turnOffFormSpinner() {
 }
 
 /**
+ * Process error message from WPP
+ * 
+ * @param {Object} response
+ * @since 3.1.0
+ */
+function showErrorMessageFromResponse( response ) {
+	var errorMessage = "";
+	response.errors.forEach( function ( item ) {
+		errorMessage += "<li>" + item.error.description + "</li>";
+	} );
+	
+	if ( errorMessage ) {
+		errorMessage = "<ul class='woocommerce-error' role='alert'>" + errorMessage + "</ul>";
+		let errorMessageContainer = jQuery( Constants.MESSAGE_CONTAINER );
+		errorMessageContainer.empty();
+		errorMessageContainer.html( errorMessage );
+		errorMessageContainer.show();
+	}
+	
+	logError(response);
+}
+
+/**
+ * Hide error message container
+ * 
+ * @since 3.1.0
+ */
+function hideErrorMessage() {
+	let errorMessageContainer = jQuery( Constants.MESSAGE_CONTAINER );
+	errorMessageContainer.empty();
+	errorMessageContainer.hide();
+}
+
+/**
+ * Disable radio button selection
+ * 
+ * @since 3.1.0
+ */
+function disableTokenSelection() {
+	jQuery( Constants.USE_CARD_ID ).attr( 'disabled', 'disabled' );
+}
+
+/**
+ * Enable radio button selection
+ * 
+ * @since 3.1.0
+ */
+function enableTokenSelection() {
+	jQuery( Constants.USE_CARD_ID ).removeAttr( 'disabled' );
+}
+
+/**
  * Get saved token from vault
  *
  * @since 3.1.0
@@ -339,7 +391,7 @@ function renderSeamlessForm( response ) {
 			requestData: responseData,
 			wrappingDivId: Constants.SEAMLESS_FORM_CONTAINER,
 			onSuccess: onFormRendered,
-			onError: logError,
+			onError: showErrorMessageFromResponse,
 		}
 	);
 }
@@ -475,10 +527,12 @@ function submitSeamlessForm() {
  */
 function initializeForm(tokenId = null)
 {
+	disableTokenSelection();
 	getCreditCardData( tokenId )
 		.then( renderSeamlessForm )
 		.fail( logError )
-		.always( turnOffFormSpinner );
+		.always( turnOffFormSpinner )
+		.always( enableTokenSelection );
 }
 
 /**
@@ -488,6 +542,7 @@ function initializeForm(tokenId = null)
  */
 function onTokenSelected() {
 	let token = jQuery( this ).data( "token" );
+	hideErrorMessage();
 	enableDeleteButtons();
 	disableDeleteButtonByToken( token );
 	setSpinnerState( Spinner.STATE_ON, Spinner.FORM_SPINNER );
