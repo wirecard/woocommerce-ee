@@ -97,6 +97,7 @@ class WC_Gateway_Wirecard_Additional_Information_Utest extends \PHPUnit_Framewor
 		);
 		$item->setDescription( 'Voucher' );
 		$item->setArticleNumber( 'Voucher' );
+		$item->setTaxRate(2.0);
 		$basket->add( $item );
 		$basket->setVersion( $expected );
 
