@@ -160,6 +160,12 @@ function is_user_logged_in() {
 }
 
 function get_option( $option ) {
+	/*if ($option == 'woocommerce_tax_based_on') {
+		return 'billing';
+	}
+	if ($option == 'woocommerce_shipping_tax_class') {
+		return 'shipping';
+	}*/
 	return $option;
 }
 

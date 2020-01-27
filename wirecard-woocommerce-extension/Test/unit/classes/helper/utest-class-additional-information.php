@@ -38,6 +38,8 @@ class WC_Gateway_Wirecard_Additional_Information_Utest extends \PHPUnit_Framewor
 	private $transaction;
 
 	private $order;
+	
+	private $basket_item_helper;
 
 	public function setUp() {
 		global $woocommerce;
@@ -49,10 +51,69 @@ class WC_Gateway_Wirecard_Additional_Information_Utest extends \PHPUnit_Framewor
 			->disableOriginalConstructor()
 			->setMethods( [ 'get_total' ] )
 			->getMock();
+		$this->basket_item_helper = new Basket_Item_Helper();
+	}
+	
+	public function test_create_shopping_basket() {
+		global $woocommerce;
+		
+		$transaction = new \Wirecard\PaymentSdk\Transaction\CreditCardTransaction();
+		$woocommerce->cart = $this->getMockBuilder(WC_Cart::class)->disableOriginalConstructor()->getMock();
+
+		$product = $this->getMockBuilder(WC_Product::class)->disableOriginalConstructor()->setMethods([
+			'is_taxable', 
+			'get_price',
+			'get_name',
+			'get_tax_class',
+			'get_short_description',
+			'get_id'
+			])->getMock();
+		$product->method('get_tax_class')->willReturn(null);
+		$product->method('is_taxable')->willReturn(false);
+		$product->method('get_price')->willReturn('23');
+		$product->method('get_name')->willReturn('Basket Testproduct');
+		$product->method('get_short_description')->willReturn('Testing description for basket item');
+		$product->method('get_id')->willReturn(2);
+		
+		$cart_data = array(
+			[
+			'key' => '1',
+			'product_id' => 2,
+			'variation_id' => 4,
+			'variation' => [],
+			'quantity' => 1,
+			'data' => $product,
+			'data_hash' => 'hash_from_product'
+			]
+		);
+
+		$woocommerce->cart->method('get_cart')->willReturn($cart_data);
+		$woocommerce->cart->method('get_shipping_total')->willReturn(5);
+		$woocommerce->cart->method('get_shipping_tax')->willReturn(0);
+		$woocommerce->cart->method('get_applied_coupons')->willReturn(array());
+		$woocommerce->cart->method('get_total')->willReturn(28);
+		
+		$expected = new \Wirecard\PaymentSdk\Entity\Basket();
+		$expected->setVersion($transaction);
+		$item = new \Wirecard\PaymentSdk\Entity\Item('Basket Testproduct', new \Wirecard\PaymentSdk\Entity\Amount(23, 'EUR'), 1);
+		$item->setDescription('Testing description for basket item');
+		$item->setArticleNumber(2);
+		// Use of fixed tax rate due to dependency of stubs and empty amount
+		$item->setTaxAmount(new \Wirecard\PaymentSdk\Entity\Amount(0, 'EUR'));
+		$item->setTaxRate(12.0);
+		$expected->add($item);
+		$shippingItem = new \Wirecard\PaymentSdk\Entity\Item('Shipping', new \Wirecard\PaymentSdk\Entity\Amount(5, 'EUR'), 1);
+		$shippingItem->setDescription('Shipping');
+		$shippingItem->setArticleNumber('Shipping');
+		$shippingItem->setTaxRate(12.0);
+		$expected->add($shippingItem);
+		
+		$this->assertEquals($expected, $this->additional_information->create_shopping_basket($transaction));
 	}
 
 	public function test_set_additional_information() {
 		global $woocommerce;
+		$woocommerce->cart            = new WC_Cart();
 
 		$expected = new \Wirecard\PaymentSdk\Transaction\CreditCardTransaction();
 		$expected->setConsumerId( 1 );
@@ -105,16 +166,16 @@ class WC_Gateway_Wirecard_Additional_Information_Utest extends \PHPUnit_Framewor
 
 		$mocked_product = $this->getMockBuilder( WC_Product::class )
 			->disableOriginalConstructor()
-			->setMethods( [ 'get_id', 'get_short_description', 'is_taxable', 'get_name', 'get_quantity', 'is_downloadable', 'is_virtual', 'get_product_id' ] )
+			->setMethods( [ 'get_id', 'get_short_description', 'is_taxable', 'get_name', 'get_quantity', 'get_price', 'is_downloadable', 'is_virtual', 'get_product_id' ] )
 			->getMock();
 		$mocked_product->method( 'get_id' )->willReturn( '1' );
 		$mocked_product->method( 'get_short_description' )->willReturn( 'Testdescription' );
-		$mocked_product->method( 'is_taxable' )->willReturn( 0 );
+		$mocked_product->method( 'is_taxable' )->willReturn( true);
 		$mocked_product->method( 'get_name' )->willReturn( 'Testproduct' );
 
 		$mocked_cart   = $this->getMockBuilder( WC_Cart::class )
 			->disableOriginalConstructor()
-			->setMethods( [ 'get_cart', 'get_shipping_total', 'get_total', 'get_shipping_tax' ] )
+			->setMethods( [ 'get_cart', 'get_shipping_total', 'is_taxable', 'get_total', 'get_shipping_tax' ] )
 			->getMock();
 		$cart_contents = array(
 			'1' => array(
