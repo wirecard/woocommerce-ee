@@ -540,12 +540,13 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 
 	/**
 	 * Return request data for the credit card form
-	 *
+	 * 
+	 * @SuppressWarnings(PHPMD.Superglobals)
 	 * @since 1.0.0
 	 */
 	public function get_request_data_credit_card() {
-		$vault_token 		 = $_POST['vault_token'];
-		$token_id 			 = sanitize_text_field( $vault_token );
+		$vault_token         = $_POST['vault_token'];
+		$token_id            = sanitize_text_field( $vault_token );
 		$order_id            = WC()->session->get( 'wirecard_order_id' );
 		$config              = $this->create_payment_config();
 		$transaction_service = new TransactionService( $config );
