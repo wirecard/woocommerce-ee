@@ -85,14 +85,17 @@ div.ui-widget-overlay {
 
 #wc_payment_method_wirecard_creditcard_vault fieldset legend {
 	background-color: #ffffff;
+	font-size: 1.4em;
+	font-weight: normal;
+	line-height: 1.214;
 }
 
 .delete-from-vault-disabled {
 	color: #888888;
 }
 .delete-from-vault-disabled:hover {
-	cursor: no-drop !important;
-	text-decoration:none !important;
+	cursor: no-drop;
+	text-decoration:none;
 }
 
 .wd-card-delete-disabled {

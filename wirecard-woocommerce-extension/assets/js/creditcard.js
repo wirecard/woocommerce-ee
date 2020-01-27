@@ -76,15 +76,15 @@ let DELETE_BUTTON = {
 };
 
 let Constants = {
-	IFRAME_HEIGHT: "270px",
+	IFRAME_HEIGHT: "270",
 	USE_CARD_ID: "input[data-token]",
 	DELETE_CARD_BUTTON_ID: ".wd-card-delete",
 	SAVE_CARD_CHECKMARK_ID: "#wirecard-store-card",
 	VAULT_CONTENT_CONTAINER: "#wc_payment_method_wirecard_creditcard_vault .cards",
-	VAULT_TABLE_ID: "vault-table",
+	VAULT_TABLE_ID: "#vault-table",
 	NEW_CARD_CONTENT_AREA: "#wc_payment_method_wirecard_new_credit_card",
 	NEW_CARD_CONTENT_AREA_IFRAME: "#wc_payment_method_wirecard_new_credit_card iframe",
-	SEAMLESS_SUBMIT_BUTTON: "seamless-submit",
+	SEAMLESS_SUBMIT_BUTTON: "#seamless-submit",
 	SEAMLESS_FORM_CONTAINER: "wc_payment_method_wirecard_creditcard_form",
 	NONCE_SELECTOR: "#wc_payment_method_wirecard_creditcard_response_form input[name='cc_nonce']",
 	MESSAGE_CONTAINER: "#wd-creditcard-messagecontainer",
@@ -131,7 +131,7 @@ function callAjax(request_url, method, request_data) {
  * Set states for spinner object
  *
  * @param {string} state
- * @param {jQuery} selector
+ * @param {string} selector
  * @since 3.1.0
  */
 function setSpinnerState(state, selector) {
@@ -143,6 +143,15 @@ function setSpinnerState(state, selector) {
 			document.querySelector( selector ).style.display = "block";
 			break;
 	}
+}
+
+/**
+ * Fade out form spinner
+ * 
+ * @since 3.1.0
+ */
+function turnOffFormSpinner() {
+	setSpinnerState( Spinner.STATE_OFF, Spinner.FORM_SPINNER );
 }
 
 /**
@@ -294,8 +303,7 @@ function getCreditCardData( selected_token = null ) {
  * @since 3.1.0
  */
 function configureSeamlessIframe() {
-	document
-		.querySelector( Constants.NEW_CARD_CONTENT_AREA_IFRAME ).style.height = Constants.IFRAME_HEIGHT;
+	jQuery( Constants.NEW_CARD_CONTENT_AREA_IFRAME ).height( Constants.IFRAME_HEIGHT );
 }
 
 /**
@@ -304,9 +312,7 @@ function configureSeamlessIframe() {
  * @since 3.1.0
  */
 function enableSubmitButton() {
-	document
-		.getElementById( Constants.SEAMLESS_SUBMIT_BUTTON )
-		.removeAttribute( "disabled" );
+	jQuery( Constants.SEAMLESS_SUBMIT_BUTTON ).removeAttr( "disabled" );
 }
 
 /**
@@ -436,11 +442,7 @@ function onSubmitError( data ) {
 		getCreditCardData()
 			.then( renderSeamlessForm )
 			.fail( logError )
-			.always(
-				function() {
-					setSpinnerState( Spinner.STATE_OFF, Spinner.FORM_SPINNER );
-				}
-			);
+			.always( turnOffFormSpinner );
 		jQuery( Constants.MESSAGE_CONTAINER ).css( "display", "block" );
 	}
 	logError( data );
@@ -476,11 +478,7 @@ function initializeForm(tokenId = null)
 	getCreditCardData( tokenId )
 		.then( renderSeamlessForm )
 		.fail( logError )
-		.always(
-			function () {
-				setSpinnerState( Spinner.STATE_OFF, Spinner.FORM_SPINNER );
-			}
-		);
+		.always( turnOffFormSpinner );
 }
 
 /**
@@ -516,11 +514,7 @@ function initializeVault() {
 		.then( loadTokenTable )
 		.then( initializeTokenEventHandlers )
 		.fail( logError )
-		.always(
-			function () {
-				setSpinnerState( Spinner.STATE_OFF, Spinner.FORM_SPINNER );
-			}
-		);
+		.always( turnOffFormSpinner );
 }
 
 /**
@@ -529,8 +523,8 @@ function initializeVault() {
  * @since 3.1.0
  */
 function initializeTokenList() {
-	let hasSavedTokens = document.getElementById( Constants.VAULT_TABLE_ID );
-	if ( typeof(hasSavedTokens) === "undefined" || ! hasSavedTokens ) {
+	let hasSavedTokens = jQuery( Constants.VAULT_TABLE_ID );
+	if ( typeof(hasSavedTokens) === "undefined" || ! hasSavedTokens.length ) {
 		initializeVault();
 	}
 }
@@ -542,8 +536,7 @@ function initializeTokenList() {
  */
 function initializeEventHandlers()
 {
-	let seamlessButtonSubmit = document.getElementById( Constants.SEAMLESS_SUBMIT_BUTTON );
-	seamlessButtonSubmit.addEventListener( "click", submitSeamlessForm );
+	jQuery( Constants.SEAMLESS_SUBMIT_BUTTON ).on( "click", submitSeamlessForm );
 }
 
 jQuery( document ).on(

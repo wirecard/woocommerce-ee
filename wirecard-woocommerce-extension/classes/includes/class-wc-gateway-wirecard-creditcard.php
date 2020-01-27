@@ -501,8 +501,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	 * @since 1.1.8
 	 */
 	public function load_cc_template() {
-		// @TODO: Change heading according to mock
-		$html = '<h2 class="credit-card-heading">' . __( 'heading_creditcard_form', 'wirecard-woocommerce-extension' ) . '</h2>';
+		$html = '<h2 class="credit-card-heading">' . __( 'heading_creditcard_payment_form', 'wirecard-woocommerce-extension' ) . '</h2>';
 
 		if ( is_user_logged_in()
 			&& $this->get_option( 'cc_vault_enabled' ) === 'yes'
@@ -542,11 +541,12 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	/**
 	 * Return request data for the credit card form
 	 *
+	 * @SuppressWarnings(PHPMD.Superglobals)
 	 * @since 1.0.0
 	 */
 	public function get_request_data_credit_card() {
-		$token_id = sanitize_text_field( $_POST['vault_token'] );
-
+		$vault_token         = $_POST['vault_token'];
+		$token_id            = sanitize_text_field( $vault_token );
 		$order_id            = WC()->session->get( 'wirecard_order_id' );
 		$config              = $this->create_payment_config();
 		$transaction_service = new TransactionService( $config );
@@ -686,6 +686,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	 *
 	 * @return bool|CreditCardTransaction|WP_Error
 	 *
+	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
 	 * @since 1.0.0
 	 * @throws Exception
 	 */

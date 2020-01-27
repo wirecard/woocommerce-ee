@@ -348,6 +348,7 @@ class Additional_Information {
 	 * @param array $refund_basket
 	 * @param int $refunding_amount
 	 * @return Basket|WP_Error
+	 * @SuppressWarnings(PHPMD.CyclomaticComplexity)
 	 * @since 1.3.2
 	 */
 	public function create_basket_from_parent_transaction( $order, $config, $payment_method, $refund_basket = array(), $refunding_amount = 0 ) {
