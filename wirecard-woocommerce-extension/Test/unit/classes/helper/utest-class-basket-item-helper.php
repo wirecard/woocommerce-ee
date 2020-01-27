@@ -36,10 +36,10 @@ use Wirecard\PaymentSdk\Entity\Item;
 
 class WC_Gateway_Wirecard_Basket_Item_Utest extends \PHPUnit_Framework_TestCase {
 
-	private $basketHelper;
+	private $basket_helper;
 	
 	public function setUp() {
-		$this->basketHelper = new Basket_Item_Helper();
+		$this->basket_helper = new Basket_Item_Helper();
 	}
 	
 	public function test_build_basket_item_with_tax_rate() {
@@ -61,7 +61,7 @@ class WC_Gateway_Wirecard_Basket_Item_Utest extends \PHPUnit_Framework_TestCase 
 		$expected->setArticleNumber($article_number);
 		$expected->setTaxRate($tax_rate);
 		
-		$this->assertEquals($expected, $this->basketHelper->build_basket_item(
+		$this->assertEquals($expected, $this->basket_helper->build_basket_item(
 			$name,
 			$amount,
 			$quantity,
@@ -93,7 +93,7 @@ class WC_Gateway_Wirecard_Basket_Item_Utest extends \PHPUnit_Framework_TestCase 
 		$expected->setTaxRate($tax_rate);
 		$expected->setTaxAmount(new Amount($tax_amount, $currency));
 
-		$this->assertEquals($expected, $this->basketHelper->build_basket_item(
+		$this->assertEquals($expected, $this->basket_helper->build_basket_item(
 			$name,
 			$amount,
 			$quantity,
@@ -124,7 +124,7 @@ class WC_Gateway_Wirecard_Basket_Item_Utest extends \PHPUnit_Framework_TestCase 
 		$expected->setArticleNumber($article_number);
 		$expected->setTaxAmount(new Amount((float)$tax_amount, $currency));
 
-		$this->assertEquals($expected, $this->basketHelper->build_basket_item(
+		$this->assertEquals($expected, $this->basket_helper->build_basket_item(
 			$name,
 			$amount,
 			$quantity,
@@ -154,7 +154,7 @@ class WC_Gateway_Wirecard_Basket_Item_Utest extends \PHPUnit_Framework_TestCase 
 		$expected->setArticleNumber($article_number);
 		$expected->setTaxRate($tax_rate);
 
-		$this->assertEquals($expected, $this->basketHelper->build_basket_item(
+		$this->assertEquals($expected, $this->basket_helper->build_basket_item(
 			$name,
 			$amount,
 			$quantity,
