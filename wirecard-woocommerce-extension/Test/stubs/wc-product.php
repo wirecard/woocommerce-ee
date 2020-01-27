@@ -50,6 +50,10 @@ class WC_Product {
 		return 1;
 	}
 
+	public function get_price() {
+		return 23;
+	}
+	
 	public function is_downloadable() {
 		return false;
 	}
