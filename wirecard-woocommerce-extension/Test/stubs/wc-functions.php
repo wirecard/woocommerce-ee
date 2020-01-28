@@ -57,22 +57,22 @@ function wc_add_notice( $message, $type ) {
 
 }
 
-/**
- * @SuppressWarnings(PHPMD.UnusedFormalParameter)
- */
 function wc_get_price_including_tax( $product ) {
-	return 20.0;
+	if ($product->is_taxable()) {
+		return 20.0;
+	}
+	return $product->get_price();
 }
 
 function wc_get_price_decimals() {
 	return 2;
 }
 
-/**
- * @SuppressWarnings(PHPMD.UnusedFormalParameter)
- */
 function wc_get_price_excluding_tax( $product ) {
-	return 10.0;
+	if ($product->is_taxable()) {
+		return 10.0;
+	}
+	return $product->get_price();
 }
 
 function wc_round_tax_total( $amount ) {

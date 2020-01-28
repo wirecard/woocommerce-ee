@@ -94,10 +94,10 @@ class Upgrade_Helper {
 			$general_information[ self::CURRENT_VERSION_KEY ] = WIRECARD_EXTENSION_VERSION;
 		}
 
-		$general_information = [
+		$general_information = array(
 			self::PREVIOUS_VERSION_KEY => $general_information[ self::CURRENT_VERSION_KEY ],
 			self::CURRENT_VERSION_KEY  => WIRECARD_EXTENSION_VERSION,
-		];
+		);
 
 		$this->set_extension_general_information( $general_information );
 	}

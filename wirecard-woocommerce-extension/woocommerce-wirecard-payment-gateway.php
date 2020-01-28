@@ -346,7 +346,7 @@ function backend_scripts() {
  */
 function wirecard_add_support_chat() {
 	$admin_url = add_query_arg(
-		[ 'wc-api' => 'test_payment_method_config' ],
+		array( 'wc-api' => 'test_payment_method_config' ),
 		site_url( '/', is_ssl() ? 'https' : 'http' )
 	);
 

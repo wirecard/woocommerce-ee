@@ -34,6 +34,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-wirecard-payment-gateway.php' );
+require_once( WIRECARD_EXTENSION_HELPER_DIR . 'class-method-helper.php' );
+require_once( WIRECARD_EXTENSION_HELPER_DIR . 'class-basket-item-helper.php' );
 
 use Wirecard\PaymentSdk\Entity\AccountHolder;
 use Wirecard\PaymentSdk\Entity\Address;
@@ -54,6 +56,14 @@ class Additional_Information {
 	const SHIPPING = 'shipping';
 
 	const BILLING = 'billing';
+
+	const BASE = 'base';
+
+	protected $basket_item_helper;
+
+	public function __construct() {
+		$this->basket_item_helper = new Basket_Item_Helper();
+	}
 
 	/**
 	 * Create basket items and shipping item
@@ -156,8 +166,8 @@ class Additional_Information {
 	 */
 	public function set_additional_information( $order, $transaction ) {
 		$transaction->setDescriptor( $this->create_descriptor( $order ) );
-		$transaction->setAccountHolder( $this->create_account_holder( $order, 'billing' ) );
-		$transaction->setShipping( $this->create_account_holder( $order, 'shipping' ) );
+		$transaction->setAccountHolder( $this->create_account_holder( $order, self::BILLING ) );
+		$transaction->setShipping( $this->create_account_holder( $order, self::SHIPPING ) );
 		$transaction->setOrderNumber( $order->get_order_number() );
 		$transaction->setBasket( $this->create_shopping_basket( $transaction ) );
 		$transaction->setIpAddress( $order->get_customer_ip_address() );
@@ -233,6 +243,26 @@ class Additional_Information {
 	}
 
 	/**
+	 * @param array $item
+	 *
+	 * @return Item
+	 *
+	 * @since 3.1.0
+	 */
+	private function build_basket_item_from_array( $item ) {
+		return $this->basket_item_helper->build_basket_item(
+			$item['name'],
+			$item['amount']['value'],
+			$item['quantity'],
+			$item['description'],
+			$item['article-number'],
+			$item['tax-rate'],
+			null,
+			$item['amount']['currency']
+		);
+	}
+
+	/**
 	 * Set an Item to basket
 	 *
 	 * @param Basket $basket
@@ -247,21 +277,16 @@ class Additional_Information {
 	private function set_basket_item( $basket, $product, $quantity, $total, $tax, $tax_rate ) {
 		$item_unit_gross_amount = $total + $tax;
 
-		$article_nr  = $product->get_id();
-		$description = wp_strip_all_tags( html_entity_decode( $product->get_short_description() ), true );
-
-		$formatted_amount = floatval( number_format( $item_unit_gross_amount, wc_get_price_decimals(), '.', '' ) );
-		$amount           = new Amount( $formatted_amount, get_woocommerce_currency() );
-
-		$item = new Item(
-			wp_strip_all_tags( html_entity_decode( $product->get_name() ), true ),
-			$amount,
-			$quantity
+		$item = $this->basket_item_helper->build_basket_item(
+			$product->get_name(),
+			$item_unit_gross_amount,
+			$quantity,
+			$product->get_short_description(),
+			$product->get_id(),
+			$tax_rate,
+			$tax
 		);
-		$item->setDescription( $description );
-		$item->setArticleNumber( $article_nr );
-		$item->setTaxRate( floatval( number_format( $tax_rate, wc_get_price_decimals() ) ) );
-		$item->setTaxAmount( new Amount( floatval( wc_round_tax_total( $tax ) ), get_woocommerce_currency() ) );
+
 		$basket->add( $item );
 
 		return $basket;
@@ -278,13 +303,18 @@ class Additional_Information {
 	 * @since 1.4.0
 	 */
 	private function set_shipping_item( $basket, $shipping_total, $shipping_tax, $tax_rate ) {
-		$amount = floatval( number_format( $shipping_total + $shipping_tax, wc_get_price_decimals(), '.', '' ) );
+		$shipping_key = 'Shipping';
+		$amount       = $shipping_total + $shipping_tax;
 
-		$amount = new Amount( $amount, get_woocommerce_currency() );
-		$item   = new Item( 'Shipping', $amount, 1 );
-		$item->setDescription( 'Shipping' );
-		$item->setArticleNumber( 'Shipping' );
-		$item->setTaxRate( floatval( number_format( $tax_rate, wc_get_price_decimals() ) ) );
+		$item = $this->basket_item_helper->build_basket_item(
+			$shipping_key,
+			$amount,
+			1,
+			$shipping_key,
+			$shipping_key,
+			$tax_rate
+		);
+
 		$basket->add( $item );
 
 		return $basket;
@@ -318,9 +348,10 @@ class Additional_Information {
 	 * @param array $refund_basket
 	 * @param int $refunding_amount
 	 * @return Basket|WP_Error
+	 * @SuppressWarnings(PHPMD.CyclomaticComplexity)
 	 * @since 1.3.2
 	 */
-	public function create_basket_from_parent_transaction( $order, $config, $payment_method, $refund_basket = [], $refunding_amount = 0 ) {
+	public function create_basket_from_parent_transaction( $order, $config, $payment_method, $refund_basket = array(), $refunding_amount = 0 ) {
 		$basket              = new Basket();
 		$transaction_service = new \Wirecard\PaymentSdk\TransactionService( $config );
 		$parent_transaction  = $transaction_service->getTransactionByTransactionId( $order->get_transaction_id(), $payment_method );
@@ -333,42 +364,25 @@ class Additional_Information {
 			}
 			if ( ! empty( $refund_basket ) ) {
 				foreach ( $refund_basket as $refund_item ) {
-					if ( $refund_item['product']->get_id() === intval( $item['article-number'] ) ) {
-						$items_total += $item['amount']['value'] * $refund_item['qty'];
-						$basket       = $this->set_item_from_response(
-							$basket,
-							new Amount( floatval( $item['amount']['value'] ), $item['amount']['currency'] ),
-							$item['name'],
-							$refund_item['qty'],
-							$item['description'],
-							$item['article-number'],
-							$item['tax-rate']
+					if ( $refund_item['product']->get_id() === $item['article-number'] ) {
+						$items_total     += $item['amount']['value'] * $refund_item['qty'];
+						$item['quantity'] = $refund_item['qty'];
+						$basket->add(
+							$this->build_basket_item_from_array( $item )
 						);
 					}
 				}
 			} elseif ( 0 === $refunding_amount ) {
-				$basket = $this->set_item_from_response(
-					$basket,
-					new Amount( floatval( $item['amount']['value'] ), $item['amount']['currency'] ),
-					$item['name'],
-					$item['quantity'],
-					$item['description'],
-					$item['article-number'],
-					$item['tax-rate']
+				$basket->add(
+					$this->build_basket_item_from_array( $item )
 				);
 			}
 		}
 
 		if ( ( ! empty( $refund_basket ) || $refunding_amount > 0 ) && $refunding_amount - $items_total > 0 ) {
 			if ( 0 === $refunding_amount - $items_total - $shipping['amount']['value'] ) {
-				$basket = $this->set_item_from_response(
-					$basket,
-					new Amount( $shipping['amount']['value'], $shipping['amount']['currency'] ),
-					$shipping['name'],
-					$shipping['quantity'],
-					$shipping['description'],
-					$shipping['article-number'],
-					$shipping['tax-rate']
+				$basket->add(
+					$this->build_basket_item_from_array( $shipping )
 				);
 			} else {
 				return new WP_Error( 'error', __( 'refund_partial_shipping_error', 'wirecard-woocommerce-extension' ) );
@@ -387,11 +401,11 @@ class Additional_Information {
 		$tax_setting = get_option( 'woocommerce_tax_based_on' );
 
 		switch ( $tax_setting ) {
-			case 'billing':
+			case self::BILLING:
 				return WC()->customer->get_billing_country();
-			case 'shipping':
+			case self::SHIPPING:
 				return WC()->customer->get_shipping_country();
-			case 'base':
+			case self::BASE:
 			default:
 				return wc_get_base_location()['country'];
 		}
@@ -422,27 +436,6 @@ class Additional_Information {
 
 	/**
 	 * @param Basket $basket
-	 * @param Amount $amount
-	 * @param string $name
-	 * @param int $quantity
-	 * @param string $description
-	 * @param string $item_number
-	 * @param float $tax_rate
-	 *
-	 * @return Basket
-	 * @since 1.4.0
-	 */
-	private function set_item_from_response( $basket, $amount, $name, $quantity, $description, $item_number, $tax_rate ) {
-		$basket_item = new Item( $name, $amount, $quantity );
-		$basket_item->setDescription( $description );
-		$basket_item->setArticleNumber( $item_number );
-		$basket_item->setTaxRate( $tax_rate );
-
-		return $basket->add( $basket_item );
-	}
-
-	/**
-	 * @param Basket $basket
 	 * @param float $voucher_total
 	 * @param float $voucher_tax
 	 *
@@ -450,12 +443,18 @@ class Additional_Information {
 	 * @since 1.6.2
 	 */
 	private function set_voucher_item( $basket, $voucher_total, $voucher_tax ) {
-		$amount = floatval( number_format( $voucher_total + $voucher_tax, wc_get_price_decimals() ) );
+		$voucher_key = 'Voucher';
+		$amount      = ( ( $voucher_total + $voucher_tax ) * -1 );
 
-		$amount = new Amount( $amount * -1, get_woocommerce_currency() );
-		$item   = new Item( 'Voucher', $amount, 1 );
-		$item->setDescription( 'Voucher' );
-		$item->setArticleNumber( 'Voucher' );
+		$item = $this->basket_item_helper->build_basket_item(
+			$voucher_key,
+			$amount,
+			1,
+			$voucher_key,
+			$voucher_key,
+			$voucher_tax
+		);
+
 		$basket->add( $item );
 
 		return $basket;

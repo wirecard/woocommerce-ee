@@ -27,11 +27,6 @@
 	float: left;
 }
 
-.wd-toggle-tab {
-	background-color: #f5f5f5;
-	padding: 10px;
-}
-
 #open-vault-popup:hover,
 .token:hover,
 #open-new-card:hover,
@@ -54,15 +49,19 @@
 	margin-bottom: 2rem;
 }
 
+#vault-table {
+	border: none;
+}
 
 #vault-table td,
 #vault-table th {
 	padding: 5px;
 	vertical-align: middle;
+	border: none;
 }
 
 .wd-card-selector {
-	text-align: center;
+	text-align: right;
 }
 
 .wd-card-delete {
@@ -78,4 +77,35 @@ div.ui-widget-overlay {
 	opacity: 0.5;
 	filter: Alpha(Opacity=50);
 	background-color: black;
+}
+
+#wc_payment_method_wirecard_creditcard_vault fieldset{
+	background-color: #ffffff;
+}
+
+#wc_payment_method_wirecard_creditcard_vault fieldset legend {
+	background-color: #ffffff;
+	font-size: 1.4em;
+	font-weight: normal;
+	line-height: 1.214;
+}
+
+.delete-from-vault-disabled {
+	color: #888888;
+}
+.delete-from-vault-disabled:hover {
+	cursor: no-drop;
+	text-decoration:none;
+}
+
+.wd-card-delete-disabled {
+	color: #888888;
+	text-decoration: none;
+	cursor: no-drop;
+}
+
+.spinner-inline-delete-token {
+	position: relative;
+	top: 3px;
+	left: 10px;
 }
