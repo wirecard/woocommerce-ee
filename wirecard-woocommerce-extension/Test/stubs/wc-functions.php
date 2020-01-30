@@ -29,27 +29,71 @@
  * Please do not use the plugin if you do not agree to these terms of use!
  */
 
+global $woocommerce;
+$woocommerce = new stdClass();
+
 /**
- * Html template : Credit Card Vault
- *
- * @since 2.0.0
+ * @SuppressWarnings(PHPMD.ShortMethodName)
+ * @SuppressWarnings(PHPMD.UnusedFormalParameter)
  */
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
+function __( $text, $domain = 'default' ) {
+	return $text;
 }
 
-$html = '
+function wc_get_base_location() {
+	return array(
+		'country' => 'Austria'
+	);
+}
 
-    <div id="wc_payment_method_wirecard_creditcard_vault">	
-     <fieldset>
- 	<legend>' . __( 'vault_use_existing_text', 'wirecard-woocommerce-extension' ) . '</legend>
-				<div class="cards">
-					<div class="show-spinner">
-						<div class="spinner" style="background: url(\'' . admin_url() . 'images/loading.gif\') no-repeat;"></div>
-					</div>
-				</div>
-				<div class="clear"></div>
-				  </fieldset>
-			</div>
+function wc_get_order() {
+	return new WC_Order();
+}
 
-		';
+/**
+ * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+ */
+function wc_add_notice( $message, $type ) {
+
+}
+
+function wc_get_price_including_tax( $product ) {
+	if ($product->is_taxable()) {
+		return 20.0;
+	}
+	return $product->get_price();
+}
+
+function wc_get_price_decimals() {
+	return 2;
+}
+
+function wc_get_price_excluding_tax( $product ) {
+	if ($product->is_taxable()) {
+		return 10.0;
+	}
+	return $product->get_price();
+}
+
+function wc_round_tax_total( $amount ) {
+	return number_format( $amount, 2 );
+}
+
+function wc_reduce_stock_levels( $order ) {
+	return $order;
+}
+
+/**
+ * @SuppressWarnings(PHPMD.ShortMethodName)
+ */
+function WC() {
+	return new WC();
+}
+
+function get_woocommerce_currencies() {
+	return array();
+}
+
+function get_woocommerce_currency() {
+	return 'EUR';
+}

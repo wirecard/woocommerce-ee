@@ -29,27 +29,12 @@
  * Please do not use the plugin if you do not agree to these terms of use!
  */
 
-/**
- * Html template : Credit Card Vault
- *
- * @since 2.0.0
- */
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
-
-$html = '
-
-    <div id="wc_payment_method_wirecard_creditcard_vault">	
-     <fieldset>
- 	<legend>' . __( 'vault_use_existing_text', 'wirecard-woocommerce-extension' ) . '</legend>
-				<div class="cards">
-					<div class="show-spinner">
-						<div class="spinner" style="background: url(\'' . admin_url() . 'images/loading.gif\') no-repeat;"></div>
-					</div>
-				</div>
-				<div class="clear"></div>
-				  </fieldset>
-			</div>
-
-		';
+define( 'WIRECARD_EXTENSION_NAME', 'Wirecard WooCommerce Extension' );
+define( 'WIRECARD_EXTENSION_VERSION', '3.0.1' );
+define( 'WIRECARD_EXTENSION_BASEDIR', plugin_dir_path( __FILE__ ) . '../' );
+define( 'WIRECARD_EXTENSION_URL', plugin_dir_url( __FILE__ ) . '../' );
+define( 'WIRECARD_EXTENSION_LOCALE_FALLBACK', 'en_US' );
+define( 'WIRECARD_EXTENSION_HEADER_PLUGIN_NAME', 'woocommerce-ee+Wirecard' );
+define( 'WIRECARD_EXTENSION_HELPER_DIR', WIRECARD_EXTENSION_BASEDIR . '/classes/helper/' );
+define( 'WIRECARD_EXTENSION_TEMPLATE_DIR', WIRECARD_EXTENSION_BASEDIR . '/templates/' );
+define( 'WIRECARD_EXTENSION_MAIN_FILE', plugin_basename( __FILE__ ) . '../' );

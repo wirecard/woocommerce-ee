@@ -88,81 +88,81 @@ class WC_Gateway_Wirecard_Giropay extends WC_Wirecard_Payment_Gateway {
 	 * @since 2.2.0
 	 */
 	public function init_form_fields() {
-		$this->form_fields = [
-			'enabled'             => [
+		$this->form_fields = array(
+			'enabled'             => array(
 				'title'       => __( 'text_enable_disable', 'wirecard-woocommerce-extension' ),
 				'type'        => 'checkbox',
 				'description' => __( 'config_status_desc_giropay', 'wirecard-woocommerce-extension' ),
 				'label'       => __( 'enable_heading_title_giropay', 'wirecard-woocommerce-extension' ),
 				'default'     => 'no',
-			],
-			'title'               => [
+			),
+			'title'               => array(
 				'title'       => __( 'config_title', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
 				'description' => __( 'config_title_desc', 'wirecard-woocommerce-extension' ),
 				'default'     => __( 'heading_title_giropay', 'wirecard-woocommerce-extension' ),
-			],
-			'merchant_account_id' => [
+			),
+			'merchant_account_id' => array(
 				'title'       => __( 'config_merchant_account_id', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
 				'description' => __( 'config_merchant_account_id_desc', 'wirecard-woocommerce-extension' ),
 				'default'     => '9b4b0e5f-1bc8-422e-be42-d0bad2eadabc',
-			],
-			'secret'              => [
+			),
+			'secret'              => array(
 				'title'       => __( 'config_merchant_secret', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
 				'description' => __( 'config_merchant_secret_desc', 'wirecard-woocommerce-extension' ),
 				'default'     => '0c8c6f3a-1534-4fa1-99d9-d1c644d43709',
-			],
-			'credentials'         => [
+			),
+			'credentials'         => array(
 				'title'       => __( 'text_credentials', 'wirecard-woocommerce-extension' ),
 				'type'        => 'title',
 				'description' => __( 'text_credentials_desc', 'wirecard-woocommerce-extension' ),
-			],
-			'base_url'            => [
+			),
+			'base_url'            => array(
 				'title'       => __( 'config_base_url', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
 				'description' => __( 'config_base_url_desc', 'wirecard-woocommerce-extension' ),
 				'default'     => 'https://api-test.wirecard.com',
-			],
-			'http_user'           => [
+			),
+			'http_user'           => array(
 				'title'       => __( 'config_http_user', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
 				'description' => __( 'config_http_user_desc', 'wirecard-woocommerce-extension' ),
 				'default'     => '16390-testing',
-			],
-			'http_pass'           => [
+			),
+			'http_pass'           => array(
 				'title'       => __( 'config_http_password', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
 				'description' => __( 'config_http_password_desc', 'wirecard-woocommerce-extension' ),
 				'default'     => '3!3013=D3fD8X7',
-			],
-			'test_button'         => [
+			),
+			'test_button'         => array(
 				'title'   => __( 'test_config', 'wirecard-woocommerce-extension' ),
 				'type'    => 'button',
 				'class'   => 'wc_wirecard_test_credentials_button button-primary',
 				'default' => __( 'test_credentials', 'wirecard-woocommerce-extension' ),
-			],
-			'advanced'            => [
+			),
+			'advanced'            => array(
 				'title'       => __( 'text_advanced', 'wirecard-woocommerce-extension' ),
 				'type'        => 'title',
 				'description' => '',
-			],
-			'descriptor'          => [
+			),
+			'descriptor'          => array(
 				'title'       => __( 'text_enable_disable', 'wirecard-woocommerce-extension' ),
 				'type'        => 'checkbox',
 				'description' => __( 'config_descriptor_desc', 'wirecard-woocommerce-extension' ),
 				'label'       => __( 'config_descriptor', 'wirecard-woocommerce-extension' ),
 				'default'     => 'no',
-			],
-			'send_additional'     => [
+			),
+			'send_additional'     => array(
 				'title'       => __( 'text_enable_disable', 'wirecard-woocommerce-extension' ),
 				'type'        => 'checkbox',
 				'description' => __( 'config_additional_info_desc', 'wirecard-woocommerce-extension' ),
 				'label'       => __( 'config_additional_info', 'wirecard-woocommerce-extension' ),
 				'default'     => 'yes',
-			],
-		];
+			),
+		);
 	}
 
 	/**

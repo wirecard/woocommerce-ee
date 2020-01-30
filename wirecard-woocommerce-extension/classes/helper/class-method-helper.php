@@ -29,27 +29,16 @@
  * Please do not use the plugin if you do not agree to these terms of use!
  */
 
-/**
- * Html template : Credit Card Vault
- *
- * @since 2.0.0
- */
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$html = '
+class Method_Helper {
+	public static function number_format_wc( $amount ) {
+		return (float) number_format( $amount, wc_get_price_decimals(), '.', '' );
+	}
 
-    <div id="wc_payment_method_wirecard_creditcard_vault">	
-     <fieldset>
- 	<legend>' . __( 'vault_use_existing_text', 'wirecard-woocommerce-extension' ) . '</legend>
-				<div class="cards">
-					<div class="show-spinner">
-						<div class="spinner" style="background: url(\'' . admin_url() . 'images/loading.gif\') no-repeat;"></div>
-					</div>
-				</div>
-				<div class="clear"></div>
-				  </fieldset>
-			</div>
-
-		';
+	public static function string_format_wc( $string ) {
+		return (string) wp_strip_all_tags( html_entity_decode( $string ), true );
+	}
+}

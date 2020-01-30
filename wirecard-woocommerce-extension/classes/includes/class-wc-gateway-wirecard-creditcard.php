@@ -146,14 +146,6 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 				'execute_payment',
 			)
 		);
-
-		add_action(
-			'woocommerce_api_submit_token_response',
-			array(
-				$this,
-				'execute_token_payment',
-			)
-		);
 	}
 
 	/**
@@ -466,27 +458,27 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	public function load_variables() {
 		$base_url         = site_url( '/', is_ssl() ? 'https' : 'http' );
 		$page_url         = add_query_arg(
-			[ 'wc-api' => 'get_credit_card_request_data' ],
+			array( 'wc-api' => 'get_credit_card_request_data' ),
 			site_url( '/', is_ssl() ? 'https' : 'http' )
 		);
 		$submit_url       = add_query_arg(
-			[ 'wc-api' => 'submit_creditcard_response' ],
+			array( 'wc-api' => 'submit_creditcard_response' ),
 			site_url( '/', is_ssl() ? 'https' : 'http' )
 		);
 		$token_url        = add_query_arg(
-			[ 'wc-api' => 'submit_token_response' ],
+			array( 'wc-api' => 'submit_token_response' ),
 			site_url( '/', is_ssl() ? 'https' : 'http' )
 		);
 		$vault_save_url   = add_query_arg(
-			[ 'wc-api' => 'save_cc_to_vault' ],
+			array( 'wc-api' => 'save_cc_to_vault' ),
 			site_url( '/', is_ssl() ? 'https' : 'http' )
 		);
 		$vault_get_url    = add_query_arg(
-			[ 'wc-api' => 'get_cc_from_vault' ],
+			array( 'wc-api' => 'get_cc_from_vault' ),
 			site_url( '/', is_ssl() ? 'https' : 'http' )
 		);
 		$vault_delete_url = add_query_arg(
-			[ 'wc-api' => 'remove_cc_from_vault' ],
+			array( 'wc-api' => 'remove_cc_from_vault' ),
 			site_url( '/', is_ssl() ? 'https' : 'http' )
 		);
 
@@ -509,7 +501,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	 * @since 1.1.8
 	 */
 	public function load_cc_template() {
-		$html = '<h2 class="credit-card-heading">' . __( 'heading_creditcard_form', 'wirecard-woocommerce-extension' ) . '</h2>';
+		$html = '<h2 class="credit-card-heading">' . __( 'heading_creditcard_payment_form', 'wirecard-woocommerce-extension' ) . '</h2>';
 
 		if ( is_user_logged_in()
 			&& $this->get_option( 'cc_vault_enabled' ) === 'yes'
@@ -549,9 +541,12 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	/**
 	 * Return request data for the credit card form
 	 *
+	 * @SuppressWarnings(PHPMD.Superglobals)
 	 * @since 1.0.0
 	 */
 	public function get_request_data_credit_card() {
+		$vault_token         = $_POST['vault_token'];
+		$token_id            = sanitize_text_field( $vault_token );
 		$order_id            = WC()->session->get( 'wirecard_order_id' );
 		$config              = $this->create_payment_config();
 		$transaction_service = new TransactionService( $config );
@@ -567,9 +562,14 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 		if ( $this->force_three_d ) {
 			$this->transaction->setThreeD( $this->force_three_d );
 		}
-		$this->transaction->setTermUrl( $this->create_redirect_url( $order, 'success', $this->type ) );
 		$this->transaction->setConfig( $config->get( CreditCardTransaction::NAME ) );
-		$this->set_three_ds_transaction_fields( $order );
+
+		// Add token_id if oneclick vaulted card used
+		if ( $token_id ) {
+			$this->transaction->setTokenId( $token_id );
+		}
+
+		$this->set_three_ds_transaction_fields( $order, $token_id );
 
 		wp_send_json_success(
 			$transaction_service->getCreditCardUiWithData(
@@ -634,35 +634,6 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	}
 
 	/**
-	 * @return void
-	 * @since 1.7.0
-	 */
-	public function execute_token_payment() {
-		if ( wp_verify_nonce( $_POST['cc_nonce'] ) ) {
-			$config   = $this->create_payment_config();
-			$order_id = WC()->session->get( 'wirecard_order_id' );
-			$order    = wc_get_order( $order_id );
-			$token_id = sanitize_text_field( $_POST['vault_token'] );
-
-			$this->payment_action = $this->get_option( 'payment_action' );
-
-			if ( $token_id ) {
-				$this->transaction = new CreditCardTransaction();
-
-				parent::process_payment( $order_id );
-
-				$this->transaction->setTokenId( $token_id );
-				$this->transaction->setTermUrl( $this->create_redirect_url( $order, 'success', $this->type ) );
-				$this->transaction->setConfig( $config->get( CreditCardTransaction::NAME ) );
-				$this->set_three_ds_transaction_fields( $order, $token_id );
-
-				wp_send_json_success( $this->execute_transaction( $this->transaction, $config, $this->payment_action, $order ) );
-				wp_die();
-			}
-		}
-	}
-
-	/**
 	 * Create transaction for cancel
 	 *
 	 * @param int        $order_id
@@ -715,6 +686,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	 *
 	 * @return bool|CreditCardTransaction|WP_Error
 	 *
+	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
 	 * @since 1.0.0
 	 * @throws Exception
 	 */
