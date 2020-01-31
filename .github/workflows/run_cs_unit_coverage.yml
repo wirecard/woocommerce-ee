@@ -1,0 +1,47 @@
+name: CS, Unit Tests, Coverage
+
+on: [push]
+
+jobs:
+  run:    
+    runs-on: ${{ matrix.operating-system }}
+    strategy:      
+      matrix:
+        operating-system: [ubuntu-latest]
+        php-versions: ['5.6', '7.0', '7.1', '7.2']
+    name: PHP ${{ matrix.php-versions }} Test
+    steps:
+    - name: Checkout
+      uses: actions/checkout@master
+
+    - name: PHP Setup
+      uses: wirecard/setup-php@master
+      with:
+        php-version: ${{ matrix.php-versions }}
+        extension-csv: mbstring, intl, simplexml, dom
+        ini-values-csv: post_max_size=256M, short_open_tag=On
+        coverage: xdebug
+        pecl: false
+
+    - name: Install Composer 
+      run: composer require --dev --no-interaction satooshi/php-coveralls:^1.0
+
+    - name: Install PHP CodeSniffer
+      run: git clone -b master --depth 1 https://github.com/squizlabs/PHP_CodeSniffer.git /tmp/phpcs
+
+    - name: Install WordPress Coding Standards
+      run: git clone -b 2.1.1 --depth 1 https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards.git /tmp/sniffs
+
+    - name: Configure PHPCS
+      run: composer cs-check-configure
+      
+    - name: Run Style Check
+      run: composer cs-check
+
+    - name: Run Unit Tests
+      run: composer test-coverage
+
+    - name: Upload coverage
+      env:
+        CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
+      run:  composer upload-coverage

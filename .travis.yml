@@ -13,7 +13,7 @@ env:
     - MAJOR_RELEASE=major
     - WOOCOMMERCE_COMPATIBILITY_FILE=./.bin/new-compatible-shop-releases.txt
     - WORDPRESS_CODING_STANDARDS_TAG=2.1.1
-matrix:
+jobs:
   # these stages are allowed to fail
   allow_failures:
     - stage: phraseapp-check-if-in-sync
@@ -29,15 +29,6 @@ matrix:
         - LATEST_EXTENSION_RELEASE=1
         - ALLOW_FAIL=1
   include:
-    - php: 5.6
-      if: type != cron AND env(PHRASEAPP_PULL) != '1' AND commit_message !~ env(SHOP_SYSTEM_UPDATE_COMMIT) AND commit_message !~ env(MANUAL_UITEST_TRIGGER_COMMIT)
-    - php: 7.0
-      if: type != cron AND env(PHRASEAPP_PULL) != '1' AND commit_message !~ env(SHOP_SYSTEM_UPDATE_COMMIT) AND commit_message !~ env(MANUAL_UITEST_TRIGGER_COMMIT)
-    - php: 7.1
-      if: type != cron AND env(PHRASEAPP_PULL) != '1' AND commit_message !~ env(SHOP_SYSTEM_UPDATE_COMMIT) AND commit_message !~ env(MANUAL_UITEST_TRIGGER_COMMIT)
-    - php: 7.2
-      if: type != cron AND env(PHRASEAPP_PULL) != '1' AND commit_message !~ env(SHOP_SYSTEM_UPDATE_COMMIT) AND commit_message !~ env(MANUAL_UITEST_TRIGGER_COMMIT)
-
     - stage: get-latest-shop-release-versions
       if: type = cron
       php: 7.2
@@ -46,7 +37,7 @@ matrix:
       script: bash .bin/get-latest-shop-release-versions.sh
       after_script: skip
       after_failure: skip
-
+    
     - &acceptance-test
       stage: acceptance-test
       #   run this stage on pull request if head branch name contains one of these words (patch, major, minor)
@@ -78,7 +69,7 @@ matrix:
         - bash .bin/update-shop-release-versions.sh
       after_failure:
         - bash .bin/upload-logs-and-notify.sh fail
-
+      
       # run this stage on pull request if head branch name contains major (on major release)
       # tests will use branch which originated pull request
     - <<: *acceptance-test
@@ -86,7 +77,7 @@ matrix:
       env:
         - GATEWAY=API-TEST
         - WOOCOMMERCE_NUMBER=2
-
+        
     # run this stage on pull request if head branch name contains major (on major release)
     # tests will use branch which originated pull request
     - <<: *acceptance-test
@@ -94,7 +85,7 @@ matrix:
       env:
         - GATEWAY=API-TEST
         - WOOCOMMERCE_NUMBER=3
-
+  
     # run this stage when shop system updated with latest shop extension release version
     # tests will use tip of master branch
     - <<: *acceptance-test
@@ -104,7 +95,7 @@ matrix:
         - WOOCOMMERCE_NUMBER=1
         # if this stage fails, it will not fail the whole build
         - ALLOW_FAIL=1
-
+  
     # run this stage when shop system updated with latest shop extension release version
     # tests will use latest released extension version
     - <<: *acceptance-test
@@ -178,24 +169,7 @@ matrix:
         - cd $TMPDIR && travis_retry bundle install
         - bin/rake trigger_build
 
-before_install:
-  - export PHPCS_DIR=/tmp/phpcs
-  - export SNIFFS_DIR=/tmp/sniffs
-  - git clone -b master --depth 1 https://github.com/squizlabs/PHP_CodeSniffer.git $PHPCS_DIR
-  - git clone -b ${WORDPRESS_CODING_STANDARDS_TAG} --depth 1 https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards.git $SNIFFS_DIR
-  - $PHPCS_DIR/bin/phpcs --config-set installed_paths $SNIFFS_DIR
-
-install:
-  - travis_retry composer require --dev $COMPOSER_ARGS satooshi/php-coveralls:^1.0
-  - travis_retry composer install $COMPOSER_ARGS
-  - composer show
-
-script:
-  - $PHPCS_DIR/bin/phpcs --standard=./phpcs.xml .
-  - composer test-coverage
-
 after_script:
-  - travis_retry composer upload-coverage
   - bash .bin/generate-tag.sh
 
 notifications:
