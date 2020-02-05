@@ -27,7 +27,11 @@
     "composer/installers": "^1.0",
     "codacy/coverage": "1.4.3",
     "symfony/yaml": "^3",
-	"symfony/process": "4.3.9"
+	"symfony/process": "4.3.9",
+	"codeception/module-webdriver": "^1.0.2",
+	"codeception/module-asserts": "^1.1.1",
+	"codeception/module-db": "^1.0.1",
+	"codeception/module-phpbrowser": "1.0.0"
   },
   "type": "wordpress-plugin",
   "scripts": {
