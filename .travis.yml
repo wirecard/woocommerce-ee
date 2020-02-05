@@ -63,6 +63,7 @@ jobs:
         - composer require codeception/module-webdriver --dev
         - composer require codeception/module-asserts --dev
         - composer require codeception/module-db --dev
+        - composer require --dev codeception/module-phpbrowser
         - travis_retry composer install $COMPOSER_ARGS
         - composer show
       script: bash .bin/run-ui-tests.sh
