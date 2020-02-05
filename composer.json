@@ -26,7 +26,8 @@
     "wpackagist-plugin/woocommerce": ">=3.2.4",
     "composer/installers": "^1.0",
     "codacy/coverage": "1.4.3",
-    "symfony/yaml": "^3"
+    "symfony/yaml": "^3",
+	"symfony/process": "4.3.9"
   },
   "type": "wordpress-plugin",
   "scripts": {
