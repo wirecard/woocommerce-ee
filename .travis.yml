@@ -60,6 +60,7 @@ jobs:
         - echo "Testing with Woocommerce version ${WOOCOMMERCE_VERSION}"
         - if [[ ${LATEST_EXTENSION_RELEASE}  == "1" ]]; then wget -q https://github.com/wirecard/woocommerce-ee/releases/download/${LATEST_RELEASED_SHOP_EXTENSION_VERSION}/woocommerce-wirecard-ee.zip; else bash .bin/generate-release-package.sh ;fi
         - travis_retry composer require --dev $COMPOSER_ARGS codeception/codeception:^4.0.0
+        - travis_retry composer require codeception/module-webdriver --dev
         - travis_retry composer install $COMPOSER_ARGS
         - composer show
       script: bash .bin/run-ui-tests.sh
