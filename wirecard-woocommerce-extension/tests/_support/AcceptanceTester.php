@@ -313,4 +313,33 @@ class AcceptanceTester extends \Codeception\Actor {
 		$this->currentPage->fillBIC();
 	}
 
+	/**
+	 * @When I accept cookies
+	 * @since 3.1.0
+	 */
+	public function iAcceptCookies()
+	{
+		$this->currentPage->acceptCookies();
+	}
+
+	/**
+	 * @When I click pay now button
+	 * @since 3.1.0
+	 */
+	public function iClickPayNowButton()
+	{
+		$this->currentPage->payNow();
+	}
+
+	/**
+	 * Method getPageSpecific
+	 *
+	 * @return string
+	 */
+	private function getPageSpecific()
+	{
+		//Returns pageSpecific property of the page
+		return $this->currentPage->getPageSpecific();
+	}
+
 }
