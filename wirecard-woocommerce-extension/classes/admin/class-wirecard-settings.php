@@ -329,7 +329,7 @@ class Wirecard_Settings {
 			echo __( 'error_email', 'wirecard-woocommerce-extension' );
 		}
 	}
-	
+
 	/**
 	 * Get array of not secret payment config fields
 	 *
