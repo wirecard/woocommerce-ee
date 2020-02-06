@@ -324,15 +324,15 @@ class Wirecard_Settings {
 			$email_content,
 			$_REQUEST['email']
 		) ) {
-		echo __( 'success_email', 'wirecard-woocommerce-extension' );
+			echo __( 'success_email', 'wirecard-woocommerce-extension' );
 		} else {
 			echo __( 'error_email', 'wirecard-woocommerce-extension' );
 		}
 	}
-	public function getNonSecretPaymentConfigValues($payment_config_values) {
+	public function getNonSecretPaymentConfigValues( $payment_config_values ) {
 		$non_secret_data = [];
 		foreach ( $payment_config_values as $key => $single_payment_config_value ) {
-			if(in_array($key, self::WHITELISTED_PAYMENT_CONFIG_VALUES)){
+			if ( in_array( $key, self::WHITELISTED_PAYMENT_CONFIG_VALUES ) ) {
 				$nonSecretData[$key] = $single_payment_config_value;
 			}
 		}
