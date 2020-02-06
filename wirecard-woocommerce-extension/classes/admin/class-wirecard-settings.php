@@ -329,6 +329,12 @@ class Wirecard_Settings {
 			echo __( 'error_email', 'wirecard-woocommerce-extension' );
 		}
 	}
+	
+	/**
+	 * Get array of not secret payment config fields
+	 *
+	 * @since 3.1.0
+	 */
 	public function get_non_secret_payment_config_values( $payment_config_values ) {
 		$non_secret_data = array();
 		foreach ( $payment_config_values as $key => $single_payment_config_value ) {
