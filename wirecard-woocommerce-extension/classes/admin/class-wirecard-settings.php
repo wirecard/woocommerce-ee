@@ -305,7 +305,7 @@ class Wirecard_Settings {
 		$payment_configs  = $wpdb->get_results( "SELECT option_value FROM wp_options WHERE option_name LIKE '%woocommerce_wirecard_ee%' " );
 		foreach ( $payment_configs as $payment_config ) {
 			$payment_config_values = unserialize( $payment_config->option_value );
-			$config[]              = $this->getNonSecretPaymentConfigValues( $payment_config_values );
+			$config[]              = $this->get_non_secret_payment_configValues( $payment_config_values );
 		}
 
 		$email_content = print_r(
@@ -329,11 +329,11 @@ class Wirecard_Settings {
 			echo __( 'error_email', 'wirecard-woocommerce-extension' );
 		}
 	}
-	public function getNonSecretPaymentConfigValues( $payment_config_values ) {
+	public function get_non_secret_payment_configValues( $payment_config_values ) {
 		$non_secret_data = [];
 		foreach ( $payment_config_values as $key => $single_payment_config_value ) {
 			if ( in_array( $key, self::WHITELISTED_PAYMENT_CONFIG_VALUES ) ) {
-				$nonSecretData[$key] = $single_payment_config_value;
+				$non_secret_data[$key] = $single_payment_config_value;
 			}
 		}
 		return $non_secret_data;
