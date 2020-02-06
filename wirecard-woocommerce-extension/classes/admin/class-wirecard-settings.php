@@ -67,7 +67,7 @@ class Wirecard_Settings {
 		'allowed_currencies',
 		'min_amount',
 		'max_amount',
-		'payment_action',
+		'merchant_return_string',
 		'shopping_basket',
 		'payment_type',
 		'sepa_credentials',
@@ -307,6 +307,7 @@ class Wirecard_Settings {
 			$paymentConfigValues = unserialize( $payment_config->option_value );
 			$config[] = $this->getNonSecretPaymentConfigValues($paymentConfigValues);
 		}
+		
 
 		$email_content = print_r(
 			array(
