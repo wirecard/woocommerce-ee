@@ -73,7 +73,7 @@ class Wirecard_Settings {
 		'sepa_credentials',
 		'creditor_city',
 		'sepa_mandate_textextra',
-		'enable_bic'
+		'enable_bic',
 	];
 
 	/**
@@ -304,10 +304,9 @@ class Wirecard_Settings {
 		$config           = array();
 		$payment_configs  = $wpdb->get_results( "SELECT option_value FROM wp_options WHERE option_name LIKE '%woocommerce_wirecard_ee%' " );
 		foreach ( $payment_configs as $payment_config ) {
-			$paymentConfigValues = unserialize( $payment_config->option_value );
-			$config[] = $this->getNonSecretPaymentConfigValues($paymentConfigValues);
+			$payment_config_values = unserialize( $payment_config->option_value );
+			$config[]              = $this->getNonSecretPaymentConfigValues( $payment_config_values );
 		}
-		
 
 		$email_content = print_r(
 			array(
@@ -330,13 +329,13 @@ class Wirecard_Settings {
 			echo __( 'error_email', 'wirecard-woocommerce-extension' );
 		}
 	}
-	public function getNonSecretPaymentConfigValues($paymentConfigValues) {
-		$nonSecretData = [];
-		foreach($paymentConfigValues as $key => $singlePaymentConfigValue){
+	public function getNonSecretPaymentConfigValues($payment_config_values) {
+		$non_secret_data = [];
+		foreach ( $payment_config_values as $key => $single_payment_config_value ) {
 			if(in_array($key, self::WHITELISTED_PAYMENT_CONFIG_VALUES)){
-				$nonSecretData[$key] = $singlePaymentConfigValue;
+				$nonSecretData[$key] = $single_payment_config_value;
 			}
 		}
-		return $nonSecretData;
+		return $non_secret_data;
 	}
 }
