@@ -44,7 +44,7 @@ require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/admin/class-wirecard-transac
  */
 class Wirecard_Settings {
 
-	const WHITELISTED_PAYMENT_CONFIG_VALUES = [
+	const WHITELISTED_PAYMENT_CONFIG_VALUES = array(
 		'enabled',
 		'title',
 		'merchant_account_id',
@@ -74,7 +74,7 @@ class Wirecard_Settings {
 		'creditor_city',
 		'sepa_mandate_textextra',
 		'enable_bic',
-	];
+	);
 
 	/**
 	 * Factory for transaction table
@@ -330,7 +330,7 @@ class Wirecard_Settings {
 		}
 	}
 	public function get_non_secret_payment_config_values( $payment_config_values ) {
-		$non_secret_data = [];
+		$non_secret_data = array();
 		foreach ( $payment_config_values as $key => $single_payment_config_value ) {
 			if ( in_array( $key, self::WHITELISTED_PAYMENT_CONFIG_VALUES, true ) ) {
 				$non_secret_data[ $key ] = $single_payment_config_value;
