@@ -183,11 +183,11 @@ class Wirecard_Settings {
 
 
 			<script language="javascript" type="text/javascript">
-                var start = 1;
-                function goToWctPage(page) {
-                    start = "?page=wirecardpayment&transaction_start=" + page;
-                    window.location.href = start;
-                }
+				var start = 1;
+				function goToWctPage(page) {
+					start = "?page=wirecardpayment&transaction_start=" + page;
+					window.location.href = start;
+				}
 			</script>
 
 			<?php
@@ -319,12 +319,12 @@ class Wirecard_Settings {
 		);
 
 		if ( $_REQUEST['email'] && wp_mail(
-				'shop-systems-support@wirecard.com',
-				'WooCommerce support request',
-				$email_content,
-				$_REQUEST['email']
-			) ) {
-			echo __( 'success_email', 'wirecard-woocommerce-extension' );
+			'shop-systems-support@wirecard.com',
+			'WooCommerce support request',
+			$email_content,
+			$_REQUEST['email']
+		) ) {
+		echo __( 'success_email', 'wirecard-woocommerce-extension' );
 		} else {
 			echo __( 'error_email', 'wirecard-woocommerce-extension' );
 		}
