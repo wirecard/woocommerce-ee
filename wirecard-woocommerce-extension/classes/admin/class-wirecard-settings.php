@@ -44,6 +44,38 @@ require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/admin/class-wirecard-transac
  */
 class Wirecard_Settings {
 
+	const WHITELISTED_PAYMENT_CONFIG_VALUES = [
+		'enabled',
+		'title',
+		'merchant_account_id',
+		'three_d_merchant_account_id',
+		'ssl_max_limit',
+		'three_d_min_limit',
+		'credentials',
+		'base_url',
+		'wpp_url',
+		'test_button',
+		'advanced',
+		'payment_action',
+		'challenge_indicator',
+		'descriptor',
+		'send_additional',
+		'cc_vault_enabled',
+		'billing_shipping_same',
+		'billing_countries',
+		'shipping_countries',
+		'allowed_currencies',
+		'min_amount',
+		'max_amount',
+		'payment_action',
+		'shopping_basket',
+		'payment_type',
+		'sepa_credentials',
+		'creditor_city',
+		'sepa_mandate_textextra',
+		'enable_bic'
+	];
+
 	/**
 	 * Factory for transaction table
 	 *
@@ -151,11 +183,11 @@ class Wirecard_Settings {
 
 
 			<script language="javascript" type="text/javascript">
-				var start = 1;
-				function goToWctPage(page) {
-					start = "?page=wirecardpayment&transaction_start=" + page;
-					window.location.href = start;
-				}
+                var start = 1;
+                function goToWctPage(page) {
+                    start = "?page=wirecardpayment&transaction_start=" + page;
+                    window.location.href = start;
+                }
 			</script>
 
 			<?php
@@ -272,12 +304,8 @@ class Wirecard_Settings {
 		$config           = array();
 		$payment_configs  = $wpdb->get_results( "SELECT option_value FROM wp_options WHERE option_name LIKE '%woocommerce_wirecard_ee%' " );
 		foreach ( $payment_configs as $payment_config ) {
-			$temp = unserialize( $payment_config->option_value );
-			unset(
-				$temp['three_d_secret'],
-				$temp['secret']
-			);
-			$config[] = $temp;
+			$paymentConfigValues = unserialize( $payment_config->option_value );
+			$config[] = $this->getNonSecretPaymentConfigValues($paymentConfigValues);
 		}
 
 		$email_content = print_r(
@@ -291,14 +319,23 @@ class Wirecard_Settings {
 		);
 
 		if ( $_REQUEST['email'] && wp_mail(
-			'shop-systems-support@wirecard.com',
-			'WooCommerce support request',
-			$email_content,
-			$_REQUEST['email']
-		) ) {
+				'shop-systems-support@wirecard.com',
+				'WooCommerce support request',
+				$email_content,
+				$_REQUEST['email']
+			) ) {
 			echo __( 'success_email', 'wirecard-woocommerce-extension' );
 		} else {
 			echo __( 'error_email', 'wirecard-woocommerce-extension' );
 		}
+	}
+	public function getNonSecretPaymentConfigValues($paymentConfigValues) {
+		$nonSecretData = [];
+		foreach($paymentConfigValues as $key => $singlePaymentConfigValue){
+			if(in_array($key, self::WHITELISTED_PAYMENT_CONFIG_VALUES)){
+				$nonSecretData[$key] = $singlePaymentConfigValue;
+			}
+		}
+		return $nonSecretData;
 	}
 }
