@@ -333,9 +333,12 @@ class Wirecard_Settings {
 	/**
 	 * Get array of not secret payment config fields
 	 *
+	 * @param $payment_config_values
+	 *
+	 * @return array
 	 * @since 3.1.0
 	 */
-	public function get_non_secret_payment_config_values( $payment_config_values ) {
+	private function get_non_secret_payment_config_values( $payment_config_values ) {
 		$non_secret_data = array();
 		foreach ( $payment_config_values as $key => $single_payment_config_value ) {
 			if ( in_array( $key, self::WHITELISTED_PAYMENT_CONFIG_VALUES, true ) ) {
