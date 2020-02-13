@@ -28,7 +28,9 @@ jobs:
         - WOOCOMMERCE_NUMBER=1
         - LATEST_EXTENSION_RELEASE=1
         - ALLOW_FAIL=1
-  include:    
+  include:
+    - php: 7.2
+      if: type != cron AND env(PHRASEAPP_PULL) != '1' AND commit_message !~ env(SHOP_SYSTEM_UPDATE_COMMIT) AND commit_message !~ env(MANUAL_UITEST_TRIGGER_COMMIT)
     - &acceptance-test
       stage: acceptance-test
       #   run this stage on pull request if head branch name contains one of these words (patch, major, minor)
@@ -166,6 +168,7 @@ jobs:
         - cd $TMPDIR && travis_retry bundle install
         - bin/rake trigger_build
 
+script: skip
 after_script:
   - bash .bin/generate-tag.sh
 
