@@ -3,7 +3,7 @@ Contributors: wirecard
 Tags: credit-card, paypal, china-payment, sofort, alipay, ideal, eps, sepa, payment-in-advance, mastercard, visa, american-express, discover, maestro, checkout, e-commerce, ecommerce, payment, payment-page, china, woocommerce, wirecard, extension
 Requires at least: 4.9
 Tested up to: 5.3
-Requires PHP: 5.6
+Requires PHP: 
 Stable tag: 3.1.1
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
