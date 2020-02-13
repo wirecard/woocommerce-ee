@@ -52,6 +52,12 @@ class Base {
 	protected $tester;
 
 	/**
+	 * @var string
+	 * @since 3.1.0
+	 */
+	public $pageSpecific = '';
+
+	/**
 	 * @var AcceptanceTester
 	 * @since 1.4.4
 	 */
@@ -120,6 +126,26 @@ class Base {
 	 * @since   2.2.0
 	 */
 	public function fillGiropayPaymentDetails() {
+	}
+
+	/**
+	 * Method acceptCookies
+	 *
+	 * @since 3.1.0
+	 */
+	public function acceptCookies()
+	{
+		;
+	}
+
+	/**
+	 * Method getPageSpecific
+	 *
+	 * @return string
+	 */
+	public function getPageSpecific()
+	{
+		return $this->pageSpecific;
 	}
 	
 }

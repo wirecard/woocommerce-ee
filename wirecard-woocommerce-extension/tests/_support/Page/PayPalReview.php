@@ -31,6 +31,8 @@
 
 namespace Page;
 
+use Facebook\WebDriver\Exception\NoSuchElementException;
+
 class PayPalReview extends Base {
 
 	// include url of current page
@@ -41,6 +43,12 @@ class PayPalReview extends Base {
 	public $URL = 'checkout';
 
 	/**
+	 * @var string
+	 * @since 3.1.0
+	 */
+	public $pageSpecific = 'checkout';
+
+	/**
 	 * @var array
 	 * @since 1.4.4
 	 */
@@ -49,4 +57,42 @@ class PayPalReview extends Base {
 		'Accept Cookies' => "//*[@id='acceptAllButton']",
 		'Continue' => "//*[@class='btn full confirmButton continueButton']"
 	);
+
+	/**
+	 * Method acceptCookies
+	 *
+	 * @since 3.1.0
+	 */
+	public function acceptCookies()
+	{
+		$I = $this->tester;
+
+		try {
+			$I->waitForElement($this->getElement('Accept Cookies'), 15);
+			$I->waitForElementVisible($this->getElement('Accept Cookies'), 15);
+			$I->waitForElementClickable($this->getElement('Accept Cookies'), 60);
+			$I->click($this->getElement('Accept Cookies'));
+		} catch (NoSuchElementException $e) {
+			$I->seeInCurrentUrl($this->getPageSpecific());
+		}
+	}
+
+	/**
+	 * Method payNow
+	 *
+	 * @since 3.1.0
+	 */
+	public function payNow()
+	{
+		$I = $this->tester;
+
+		$I->wait(1);
+		try {
+			$I->waitForElementVisible($this->getElement('Pay Now'), 60);
+			$I->waitForElementClickable($this->getElement('Pay Now'), 60);
+			$I->click($this->getElement('Pay Now'));
+		} catch (NoSuchElementException $e) {
+			$I->seeInCurrentUrl($this->getPageSpecific());
+		}
+	}
 }

@@ -44,6 +44,36 @@ require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/admin/class-wirecard-transac
  */
 class Wirecard_Settings {
 
+	const WHITELISTED_PAYMENT_CONFIG_VALUES = array(
+		'enabled',
+		'title',
+		'merchant_account_id',
+		'three_d_merchant_account_id',
+		'ssl_max_limit',
+		'three_d_min_limit',
+		'base_url',
+		'wpp_url',
+		'test_button',
+		'advanced',
+		'payment_action',
+		'challenge_indicator',
+		'descriptor',
+		'send_additional',
+		'cc_vault_enabled',
+		'billing_shipping_same',
+		'billing_countries',
+		'shipping_countries',
+		'allowed_currencies',
+		'min_amount',
+		'max_amount',
+		'merchant_return_string',
+		'shopping_basket',
+		'payment_type',
+		'creditor_city',
+		'sepa_mandate_textextra',
+		'enable_bic',
+	);
+
 	/**
 	 * Factory for transaction table
 	 *
@@ -272,12 +302,8 @@ class Wirecard_Settings {
 		$config           = array();
 		$payment_configs  = $wpdb->get_results( "SELECT option_value FROM wp_options WHERE option_name LIKE '%woocommerce_wirecard_ee%' " );
 		foreach ( $payment_configs as $payment_config ) {
-			$temp = unserialize( $payment_config->option_value );
-			unset(
-				$temp['three_d_secret'],
-				$temp['secret']
-			);
-			$config[] = $temp;
+			$payment_config_values = unserialize( $payment_config->option_value );
+			$config[]              = $this->get_non_secret_payment_config_values( $payment_config_values );
 		}
 
 		$email_content = print_r(
@@ -300,5 +326,23 @@ class Wirecard_Settings {
 		} else {
 			echo __( 'error_email', 'wirecard-woocommerce-extension' );
 		}
+	}
+
+	/**
+	 * Get array of not secret payment config fields
+	 *
+	 * @param $payment_config_values
+	 *
+	 * @return array
+	 * @since 3.1.0
+	 */
+	private function get_non_secret_payment_config_values( $payment_config_values ) {
+		$non_secret_data = array();
+		foreach ( $payment_config_values as $key => $single_payment_config_value ) {
+			if ( in_array( $key, self::WHITELISTED_PAYMENT_CONFIG_VALUES, true ) ) {
+				$non_secret_data[ $key ] = $single_payment_config_value;
+			}
+		}
+		return $non_secret_data;
 	}
 }
