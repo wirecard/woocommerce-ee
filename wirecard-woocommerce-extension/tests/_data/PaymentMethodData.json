@@ -1,7 +1,6 @@
 {
   "paypal": {
       "user_name": "paypal-shop-extensions-test@wirecard.com",
-	  //move to environment variable
       "password": "lkF.98TZU1_234"
   },
   "creditcard": {
@@ -12,3 +11,4 @@
       "expiration_date" : "0123"
   }
 }
+
