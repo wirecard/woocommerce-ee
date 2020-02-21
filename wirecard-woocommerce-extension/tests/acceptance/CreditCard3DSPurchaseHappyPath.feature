@@ -10,8 +10,7 @@ Feature: CreditCard3DSPurchaseHappyPath
     And I fill fields with "Customer data"
     Then I see "Wirecard Credit Card"
 	And I click "Place order"
-
-  @patch @minor @major
+	  
   Scenario: purchase
     Given I fill fields with "Valid Credit Card Data"
     When I click "Pay now"
