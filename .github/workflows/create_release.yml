@@ -29,9 +29,11 @@ jobs:
         uses: wirecard/github-create-release-action@master
         with:
           created_tag: ${{ steps.tag_and_prepare_release.outputs.tag }}
-          release_title: magento-ee ${{steps.tag_and_prepare_release.outputs.tag}}
+          release_title: woocommerce-ee ${{steps.tag_and_prepare_release.outputs.tag}}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Prepare release folder
+        run: cp LICENSE wirecard-woocommerce-extension/
       - name: Create release package
         uses: wirecard/php-artifact-action@master
       - name: Upload release package
@@ -39,7 +41,7 @@ jobs:
         uses: wirecard/upload-release-action@1.0.1
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: artifact.zip
+          file: wirecard-woocommerce-extension/artifact.zip
           asset_name: woocommerce-wirecard-ee.zip
           tag: ${{ steps.tag_and_prepare_release.outputs.tag }}
           overwrite: true

@@ -2,7 +2,8 @@
 
 WORDPRESS_DIR=wordpress
 PLUGIN_DIR=wirecard-woocommerce-extension
-VERSION=`jq .[0].release SHOPVERSIONS| tr -d \"`
+TAG=$(git describe --tags)
+VERSION=${TAG#v}
 RELEASE_DIR=${WORDPRESS_DIR}/tags/${VERSION}
 BLACKLIST_FILE=.bin/svn-blacklist.txt
 
