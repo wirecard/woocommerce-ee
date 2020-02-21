@@ -1,7 +1,6 @@
 {
   "paypal": {
-      "user_name": "paypal-shop-extensions-test@wirecard.com",
-      "password": "lkF.98TZU1_234"
+      "user_name": "paypal-shop-extensions-test@wirecard.com"
   },
   "creditcard": {
       "first_name": "test",
@@ -11,4 +10,3 @@
       "expiration_date" : "0123"
   }
 }
-
