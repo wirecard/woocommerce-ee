@@ -1,36 +1,16 @@
 {
-  "package": {
-    "type": "zip",
-    "execution-path": "/github/workspace",
-    "file-blacklist": [
-      ".editorconfig",
-      ".gitignore", 
-	  ".rubocop.yml", 
-	  ".ruby-version",
-      ".travis.yml",
-      "CHANGELOG.md",
-      "composer.json",
-      "composer.lock", 
-	  "docker-compose.yml",
-	  "Dockerfile",
-	  "Gemfile",
-	  "Gemfile.lock",
-      "phpcs.xml",
-      "phpunit.xml",
-	  "Rakefile",
-      "README.md",
-      "SHOPVERSIONS",
-	  "wirecard-woocommerce-extension/codeception.yml"
-    ],
-    "folder-blacklist": [
-      ".bin",
-      ".git",
-      ".github", 
-	  "wirecard-woocommerce-extension/Test",
-	  "wirecard-woocommerce-extension/tests"
-    ]
-  },
-  "composer": {
-    "execution-path": "/github/workspace"
-  }
+	"package": {
+		"type": "zip",
+		"execution-path": "/github/workspace/wirecard-woocommerce-extension",
+		"file-blacklist": [
+			"codeception.yml"
+		],
+		"folder-blacklist": [
+			"Test",
+			"tests"
+		]
+	},
+	"composer": {
+		"execution-path": "/github/workspace"
+	}
 }
