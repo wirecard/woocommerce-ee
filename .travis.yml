@@ -135,8 +135,8 @@ jobs:
       before_install: skip
       install: skip
       script:
-        #      svn checkout is not producing logs, not to overload travis, so wait for 30 minutes till the checkout completes
-        - travis_wait 60 bash .bin/upload-to-marketplace.sh
+        #svn checkout is not producing logs, not to overload travis, so wait for maximum 30 minutes till the checkout completes
+        - travis_wait 30 bash .bin/upload-to-marketplace.sh
       after_script: skip
 
     - stage: trigger-white-labelling
