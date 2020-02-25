@@ -30,11 +30,6 @@
   },
   "type": "wordpress-plugin",
   "scripts": {
-    "make-readme-badge": "@php .bin/version-helper.php -r",
-    "update-versions-internal-readme": "@php .bin/version-helper.php -i", 
-    "update-versions-internal-php": "@php .bin/version-helper.php -p",
-    "make-wiki-notes": "@php .bin/version-helper.php -w",
-    "make-release-notes": "@php .bin/version-helper.php",
     "upload-coverage": "codacycoverage clover build/coverage/xml",
     "cs-check-configure": "/tmp/phpcs/bin/phpcs --config-set installed_paths /tmp/sniffs",
     "cs-check": "/tmp/phpcs/bin/phpcs --standard=./phpcs.xml .",

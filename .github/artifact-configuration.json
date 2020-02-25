@@ -1,0 +1,16 @@
+{
+	"package": {
+		"type": "zip",
+		"execution-path": "/github/workspace/wirecard-woocommerce-extension",
+		"file-blacklist": [
+			"codeception.yml"
+		],
+		"folder-blacklist": [
+			"Test",
+			"tests"
+		]
+	},
+	"composer": {
+		"execution-path": "/github/workspace"
+	}
+}

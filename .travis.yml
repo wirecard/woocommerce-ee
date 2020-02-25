@@ -29,8 +29,6 @@ jobs:
         - LATEST_EXTENSION_RELEASE=1
         - ALLOW_FAIL=1
   include:
-    - php: 7.2
-      if: type != cron AND env(PHRASEAPP_PULL) != '1' AND commit_message !~ env(SHOP_SYSTEM_UPDATE_COMMIT) AND commit_message !~ env(MANUAL_UITEST_TRIGGER_COMMIT)
     - &acceptance-test
       stage: acceptance-test
       #   run this stage on pull request if head branch name contains one of these words (patch, major, minor)
@@ -68,7 +66,7 @@ jobs:
         - bash .bin/update-shop-release-versions.sh
       after_failure:
         - bash .bin/upload-logs-and-notify.sh fail
-      
+
       # run this stage on pull request if head branch name contains major (on major release)
       # tests will use branch which originated pull request
     - <<: *acceptance-test
@@ -76,7 +74,7 @@ jobs:
       env:
         - GATEWAY=API-TEST
         - WOOCOMMERCE_NUMBER=2
-        
+
     # run this stage on pull request if head branch name contains major (on major release)
     # tests will use branch which originated pull request
     - <<: *acceptance-test
@@ -84,7 +82,7 @@ jobs:
       env:
         - GATEWAY=API-TEST
         - WOOCOMMERCE_NUMBER=3
-  
+
     # run this stage when shop system updated with latest shop extension release version
     # tests will use tip of master branch
     - <<: *acceptance-test
@@ -94,7 +92,7 @@ jobs:
         - WOOCOMMERCE_NUMBER=1
         # if this stage fails, it will not fail the whole build
         - ALLOW_FAIL=1
-  
+
     # run this stage when shop system updated with latest shop extension release version
     # tests will use latest released extension version
     - <<: *acceptance-test
@@ -130,47 +128,33 @@ jobs:
         - .bin/rake phraseapp:ci_check_if_in_sync
       after_script: skip
 
-    - stage: deploy
+    - stage: upload-to-wordpress
+      if: tag IS present AND type = push
+      language: php
+      php: 7.1
+      before_install: skip
+      install: skip
+      script:
+        #svn checkout is not producing logs, not to overload travis, so wait for maximum 30 minutes till the checkout completes
+        - travis_wait 30 bash .bin/upload-to-marketplace.sh
+      after_script: skip
+
+    - stage: trigger-white-labelling
       if: tag IS present AND type = push
       language: php
       php: 7.1
       before_install: skip
       install:
-        - travis_retry composer install $COMPOSER_ARGS
         - rvm install 2.5.3
         - travis_retry gem install bundler -v 2.0.1
-      before_script: skip
-      script: skip
-      after_script: skip
-      before_deploy:
-        - export REPO_NAME=`echo $TRAVIS_REPO_SLUG | awk -F'/' '{print $2}'`
-        - export RELEASE_NOTES=$(composer make-release-notes)
-        - bash .bin/generate-wiki-notes.sh
-        - bash .bin/generate-readme-badge.sh
-        - bash .bin/update-internal-readme-and-php.sh
-        - bash .bin/generate-release-package.sh $TRAVIS_TAG
-      deploy:
-        provider: releases
-        github_token: ${GITHUB_TOKEN}
-        api_key: ${GITHUB_TOKEN}
-        file: woocommerce-wirecard-ee.zip
-        name: "${REPO_NAME} ${TRAVIS_TAG}"
-        body: "${RELEASE_NOTES}"
-        skip_cleanup: true
-        on:
-          repo: ${TRAVIS_REPO_SLUG}
-          tags: true
-      after_deploy:
-        #      svn checkout is not producing logs, not to oerload travis, so wait for 30 minutes till the checkout completes
-        - travis_wait 60 bash .bin/upload-to-marketplace.sh
+      before_script:
+        - bash .bin/check-release-notes-exist.sh
+      script:
         - export TMPDIR=/tmp/wirecard
         - git clone -b master --depth 1 https://$WIRECARD_CEE_GITHUB_TOKEN@github.com/$DEPLOYMENT_PROJECT $TMPDIR
         - cd $TMPDIR && travis_retry bundle install
         - bin/rake trigger_build
-
-script: skip
-after_script:
-  - bash .bin/generate-tag.sh
+      after_script: skip
 
 notifications:
   email: false
