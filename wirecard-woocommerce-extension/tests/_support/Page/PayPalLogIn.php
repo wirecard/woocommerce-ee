@@ -73,7 +73,7 @@ class PayPalLogIn extends Base {
 			$I->click( $this->getElement( 'Next' ) );
 		}
 		$I->waitForElementVisible( $this->getElement( 'Password' ) );
-		$I->fillField( $this->getElement( 'Password' ), $data_field_values->paypal->password );
+		$I->fillField( $this->getElement( 'Password' ), getenv('PAYPAL_PASSWORD') );
 		$I->waitForElementVisible( $this->getElement( 'Log In' ) );
 		$I->click( $this->getElement( 'Log In' ) );
 	}

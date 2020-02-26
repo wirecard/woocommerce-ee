@@ -1,7 +1,6 @@
 {
   "paypal": {
-      "user_name": "paypal.buyer2@wirecard.com",
-      "password": "Wirecardbuyer"
+      "user_name": "paypal-shop-extensions-test@wirecard.com"
   },
   "creditcard": {
       "first_name": "test",
