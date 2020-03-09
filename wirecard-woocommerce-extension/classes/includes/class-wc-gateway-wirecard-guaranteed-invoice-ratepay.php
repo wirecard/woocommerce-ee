@@ -33,7 +33,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-wirecard-payment-gateway.php' );
+require_once WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-wirecard-payment-gateway.php';
+require_once WIRECARD_EXTENSION_HELPER_DIR . 'class-credentials-loader.php';
 
 use Wirecard\PaymentSdk\Config\Config;
 use Wirecard\PaymentSdk\Config\PaymentMethodConfig;
@@ -64,6 +65,7 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 		$this->method_name        = __( 'ratepayinvoice', 'wirecard-woocommerce-extension' );
 		$this->method_description = __( 'ratepayinvoice_desc', 'wirecard-woocommerce-extension' );
 		$this->has_fields         = true;
+		$this->credentials_loader = new Credentials_Loader();
 
 		$this->supports = array(
 			'products',
@@ -94,6 +96,7 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 	 * @since 1.1.0
 	 */
 	public function init_form_fields() {
+		$credentials = $this->credentials_loader->getCredentials($this->type);
 		$countries_obj = new WC_Countries();
 		$countries     = $countries_obj->__get( 'countries' );
 
@@ -115,13 +118,13 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 				'title'       => __( 'config_merchant_account_id', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
 				'description' => __( 'config_merchant_account_id_desc', 'wirecard-woocommerce-extension' ),
-				'default'     => '7d7edecb-b008-4f05-9103-308c81cf2ea2',
+				'default'     => $credentials['merchant_account_id'],
 			),
 			'secret'                => array(
 				'title'       => __( 'config_merchant_secret', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
 				'description' => __( 'config_merchant_secret_desc', 'wirecard-woocommerce-extension' ),
-				'default'     => '555d998b-15db-46a9-8f1f-d9bc3ec66b19',
+				'default'     => $credentials['secret'],
 			),
 			'credentials'           => array(
 				'title'       => __( 'text_credentials', 'wirecard-woocommerce-extension' ),
@@ -132,19 +135,19 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 				'title'       => __( 'config_base_url', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
 				'description' => __( 'config_base_url_desc', 'wirecard-woocommerce-extension' ),
-				'default'     => 'https://api-test.wirecard.com',
+				'default'     => $credentials['base_url'],
 			),
 			'http_user'             => array(
 				'title'       => __( 'config_http_user', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
 				'description' => __( 'config_http_user_desc', 'wirecard-woocommerce-extension' ),
-				'default'     => '16390-testing',
+				'default'     => $credentials['http_user'],
 			),
 			'http_pass'             => array(
 				'title'       => __( 'config_http_password', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
 				'description' => __( 'config_http_password_desc', 'wirecard-woocommerce-extension' ),
-				'default'     => '3!3013=D3fD8X7',
+				'default'     => $credentials['http_pass'],
 			),
 			'test_button'           => array(
 				'title'   => __( 'test_config', 'wirecard-woocommerce-extension' ),

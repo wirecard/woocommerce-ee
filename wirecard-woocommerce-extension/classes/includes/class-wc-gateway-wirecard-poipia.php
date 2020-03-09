@@ -34,6 +34,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 require_once WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-wirecard-payment-gateway.php';
+require_once WIRECARD_EXTENSION_HELPER_DIR . 'class-credentials-loader.php';
 
 use Wirecard\PaymentSdk\Config\Config;
 use Wirecard\PaymentSdk\Config\PaymentMethodConfig;
@@ -61,6 +62,7 @@ class WC_Gateway_Wirecard_Poipia extends WC_Wirecard_Payment_Gateway {
 		$this->method_title       = __( 'heading_title_poi_pia', 'wirecard-woocommerce-extension' );
 		$this->method_name        = __( 'poi_pia', 'wirecard-woocommerce-extension' );
 		$this->method_description = __( 'poi_pia_desc', 'wirecard-woocommerce-extension' );
+		$this->credentials_loader = new Credentials_Loader();
 
 		$this->supports       = array(
 			'products',
@@ -87,6 +89,7 @@ class WC_Gateway_Wirecard_Poipia extends WC_Wirecard_Payment_Gateway {
 	 * @since 1.1.0
 	 */
 	public function init_form_fields() {
+		$credentials = $this->credentials_loader->getCredentials($this->type);
 		$this->form_fields = array(
 			'enabled'             => array(
 				'title'       => __( 'text_enable_disable', 'wirecard-woocommerce-extension' ),
@@ -105,13 +108,13 @@ class WC_Gateway_Wirecard_Poipia extends WC_Wirecard_Payment_Gateway {
 				'title'       => __( 'config_merchant_account_id', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
 				'description' => __( 'config_merchant_account_id_desc', 'wirecard-woocommerce-extension' ),
-				'default'     => '105ab3e8-d16b-4fa0-9f1f-18dd9b390c94',
+				'default'     => $credentials['merchant_account_id'],
 			),
 			'secret'              => array(
 				'title'       => __( 'config_merchant_secret', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
 				'description' => __( 'config_merchant_secret_desc', 'wirecard-woocommerce-extension' ),
-				'default'     => '2d96596b-9d10-4c98-ac47-4d56e22fd878',
+				'default'     => $credentials['secret'],
 			),
 			'credentials'         => array(
 				'title'       => __( 'text_credentials', 'wirecard-woocommerce-extension' ),
@@ -122,19 +125,19 @@ class WC_Gateway_Wirecard_Poipia extends WC_Wirecard_Payment_Gateway {
 				'title'       => __( 'config_base_url', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
 				'description' => __( 'config_base_url_desc', 'wirecard-woocommerce-extension' ),
-				'default'     => 'https://api-test.wirecard.com',
+				'default'     => $credentials['base_url'],
 			),
 			'http_user'           => array(
 				'title'       => __( 'config_http_user', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
 				'description' => __( 'config_http_user_desc', 'wirecard-woocommerce-extension' ),
-				'default'     => '70000-APITEST-AP',
+				'default'     => $credentials['http_user'],
 			),
 			'http_pass'           => array(
 				'title'       => __( 'config_http_password', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
 				'description' => __( 'config_http_password_desc', 'wirecard-woocommerce-extension' ),
-				'default'     => 'qD2wzQ_hrc!8',
+				'default'     => $credentials['http_pass'],
 			),
 			'test_button'         => array(
 				'title'   => __( 'test_config', 'wirecard-woocommerce-extension' ),
