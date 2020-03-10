@@ -12,7 +12,7 @@
     "wirecard/iso-paypal-converter": "^1.0",
     "wirecard/io-converter": "^1.0",
     "wirecard/base-url-matcher": "^1.0",
-    "wirecard/extentions-credentials-module": "dev-TPWDCEE-6187-credentials"
+    "wirecard/extentions-credentials-module": "dev-TPWDCEE-6187-credentials-with-registry"
   },
   "repositories":[
     {

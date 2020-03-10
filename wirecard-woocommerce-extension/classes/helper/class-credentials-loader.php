@@ -99,7 +99,7 @@ class Credentials_Loader {
 	 * @since 3.1.1
 	 */
 	public function get_credentials_config( $payment_method ) {
-		$payment_method = new PaymentMethod( $payment_method );
+		$payment_method        = new PaymentMethod( $payment_method );
 		$credentials           = $this->get_credentials( $payment_method );
 		$credentials_config_cc = [];
 		$credentials_config    = array(
