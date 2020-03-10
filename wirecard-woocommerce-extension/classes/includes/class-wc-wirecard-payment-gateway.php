@@ -168,7 +168,6 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 * @throws \Credentials\Exception\InvalidPaymentMethodException
 	 */
 	public function init_form_fields() {
-		parent::init_form_fields();
 		$this->credential_config = ( new Credentials_Loader() )->get_credentials_config( $this->type );
 	}
 	/**
