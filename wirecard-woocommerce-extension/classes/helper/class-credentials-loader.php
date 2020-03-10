@@ -34,6 +34,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 use Credentials\Credentials;
+use Credentials\PaymentMethod;
 use Credentials\Exception\InvalidPaymentMethodException;
 use Credentials\Exception\InvalidXMLFormatException;
 use Credentials\Exception\MissedCredentialsException;
@@ -60,12 +61,12 @@ class Credentials_Loader {
 	 *
 	 * @since 3.1.1
 	 */
-	public function get_credentials( $payment_type ) {
+	public function get_credentials( $payment_method ) {
 		$credential_file_path = dirname( dirname( __DIR__ ) ) . '/' . self::CREDENTIALS_CONFIG_FILE;
 		$credentials          = [];
 		try {
 			$module  = new Credentials( $credential_file_path );
-			$payment = $module->getCredentialsByPaymentMethod( $payment_type );
+			$payment = $module->getConfigByPaymentMethod( $payment_method );
 			if ( $payment ) {
 				$credentials['merchant_account_id'] = $payment->getMerchantAccountId();
 				$credentials['secret']              = $payment->getSecret();
@@ -73,7 +74,7 @@ class Credentials_Loader {
 				$credentials['http_pass']           = $payment->getHttpPassword();
 				$credentials['base_url']            = $payment->getBaseUrl();
 			}
-			if ( self::CREDIT_CARD_ID === $payment_type ) {
+			if ( self::CREDIT_CARD_ID === $payment_method->getValue() ) {
 				$credentials['three_d_merchant_account_id'] = $payment->getThreeDMerchantAccountId();
 				$credentials['three_d_secret']              = $payment->getThreeDSecret();
 				$credentials['wpp_url']                     = $payment->getWppUrl();
@@ -98,6 +99,7 @@ class Credentials_Loader {
 	 * @since 3.1.1
 	 */
 	public function get_credentials_config( $payment_method ) {
+		$payment_method = new PaymentMethod( $payment_method );
 		$credentials           = $this->get_credentials( $payment_method );
 		$credentials_config_cc = [];
 		$credentials_config    = array(
@@ -137,7 +139,7 @@ class Credentials_Loader {
 				'default'     => $credentials['http_pass'],
 			),
 		);
-		if ( self::CREDIT_CARD_ID === $payment_method ) {
+		if ( self::CREDIT_CARD_ID === $payment_method->getValue() ) {
 			$credentials_config_cc = array(
 				'three_d_merchant_account_id' => array(
 					'title'       => __( 'config_three_d_merchant_account_id', 'wirecard-woocommerce-extension' ),
