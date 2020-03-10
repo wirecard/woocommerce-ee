@@ -41,7 +41,7 @@ use Credentials\Exception\MissedCredentialsException;
 /**
  * Class Credentials_Loader
  *
- * Handles credentails data retrieval
+ * Handles credentials data retrieval
  *
  * @since   3.1.1
  */
