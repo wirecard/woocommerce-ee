@@ -36,8 +36,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 use Credentials\Credentials;
 use Credentials\PaymentMethod;
 use Credentials\Exception\InvalidPaymentMethodException;
-use Credentials\Exception\InvalidXMLFormatException;
-use Credentials\Exception\MissedCredentialsException;
 
 /**
  * Class Credentials_Loader
@@ -58,12 +56,14 @@ class Credentials_Loader {
 	 * @param PaymentMethod $payment_method
 	 *
 	 * @return array
-	 *
+	 * 
+	 * @throws Exception
 	 * @since 3.1.1
 	 */
 	public function get_credentials( $payment_method ) {
 		$credential_file_path = dirname( dirname( __DIR__ ) ) . '/' . self::CREDENTIALS_CONFIG_FILE;
 		$credentials          = [];
+		$logger               = new Logger();
 
 		try {
 			$module  = new Credentials( $credential_file_path );
@@ -80,13 +80,9 @@ class Credentials_Loader {
 				$credentials['three_d_secret']              = $payment->getThreeDSecret();
 				$credentials['wpp_url']                     = $payment->getWppUrl();
 			}
-		} catch ( InvalidPaymentMethodException $e ) {
-			$credentials = [];
-		} catch ( InvalidXMLFormatException $e ) {
-			$credentials = [];
-		} catch ( MissedCredentialsException $e ) {
-			$credentials = [];
-		}
+		} catch ( \Exception $exception ) {
+			$logger->error( __METHOD__ . ':' . $exception->getMessage() );
+		} 
 		return $credentials;
 	}
 
