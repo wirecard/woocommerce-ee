@@ -64,7 +64,7 @@ class Credentials_Loader {
 	public function get_credentials( $payment_method ) {
 		$credential_file_path = dirname( dirname( __DIR__ ) ) . '/' . self::CREDENTIALS_CONFIG_FILE;
 		$credentials          = [];
-		
+
 		try {
 			$module  = new Credentials( $credential_file_path );
 			$payment = $module->getConfigByPaymentMethod( $payment_method );
