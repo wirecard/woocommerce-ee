@@ -56,7 +56,7 @@ class Credentials_Loader {
 	 * @param PaymentMethod $payment_method
 	 *
 	 * @return array
-	 * 
+	 *
 	 * @throws Exception
 	 * @since 3.1.1
 	 */
@@ -82,7 +82,7 @@ class Credentials_Loader {
 			}
 		} catch ( \Exception $exception ) {
 			$logger->error( __METHOD__ . ':' . $exception->getMessage() );
-		} 
+		}
 		return $credentials;
 	}
 
