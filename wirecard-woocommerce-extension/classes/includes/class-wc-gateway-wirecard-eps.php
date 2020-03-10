@@ -89,8 +89,8 @@ class WC_Gateway_Wirecard_Eps extends WC_Wirecard_Payment_Gateway {
 	 * @since 1.5.0
 	 */
 	public function init_form_fields() {
-		$credentials_config = $this->credentials_loader->getcredentialsConfig($this->type);
-		$this->form_fields = array(
+		$credentials_config = $this->credentials_loader->get_credentials_config( $this->type );
+		$this->form_fields  = array(
 			'enabled'             => array(
 				'title'       => __( 'text_enable_disable', 'wirecard-woocommerce-extension' ),
 				'type'        => 'checkbox',

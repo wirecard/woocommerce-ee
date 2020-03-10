@@ -96,9 +96,9 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 	 * @since 1.1.0
 	 */
 	public function init_form_fields() {
-		$credentials_config = $this->credentials_loader->getcredentialsConfig($this->type);
-		$countries_obj = new WC_Countries();
-		$countries     = $countries_obj->__get( 'countries' );
+		$credentials_config = $this->credentials_loader->get_credentials_config( $this->type );
+		$countries_obj      = new WC_Countries();
+		$countries          = $countries_obj->__get( 'countries' );
 
 		$this->form_fields = array(
 			'enabled'               => array(
@@ -114,12 +114,12 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 				'description' => __( 'config_title_desc', 'wirecard-woocommerce-extension' ),
 				'default'     => __( 'heading_title_ratepayinvoice', 'wirecard-woocommerce-extension' ),
 			),
-			'merchant_account_id' => $credentials_config['merchant_account_id'],
-			'secret'              => $credentials_config['secret'],
-			'credentials'         => $credentials_config['credentials'],
-			'base_url'            => $credentials_config['base_url'],
-			'http_user'           => $credentials_config['http_user'],
-			'http_pass'           => $credentials_config['http_pass'],
+			'merchant_account_id'   => $credentials_config['merchant_account_id'],
+			'secret'                => $credentials_config['secret'],
+			'credentials'           => $credentials_config['credentials'],
+			'base_url'              => $credentials_config['base_url'],
+			'http_user'             => $credentials_config['http_user'],
+			'http_pass'             => $credentials_config['http_pass'],
 			'test_button'           => array(
 				'title'   => __( 'test_config', 'wirecard-woocommerce-extension' ),
 				'type'    => 'button',
