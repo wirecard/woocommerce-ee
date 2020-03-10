@@ -48,6 +48,8 @@ use Credentials\Exception\MissedCredentialsException;
 class Credentials_Loader {
 
 	const CREDIT_CARD_ID = 'creditcard';
+	
+	const CREDENTIALS_CONFIG_FILE = 'credentials_config.xml';
 
 	/**
 	 * Get credentials from the xml using Credentials class methods
@@ -59,17 +61,17 @@ class Credentials_Loader {
 	 * @since 3.1.1
 	 */
 	public function get_credentials( $payment_type ) {
-		$credential_file_path = dirname( dirname( __DIR__ ) ) . '/credentials_config.xml';
+		$credential_file_path = dirname( dirname( __DIR__ ) ) . '/' . self::CREDENTIALS_CONFIG_FILE;
 		$credentials          = [];
 		try {
 			$module  = new Credentials( $credential_file_path );
 			$payment = $module->getCredentialsByPaymentMethod( $payment_type );
 			if ( $payment ) {
 				$credentials['merchant_account_id'] = $payment->getMerchantAccountId();
-				$credentials['secret'] = $payment->getSecret();
-				$credentials['http_user'] = $payment->getHttpUser();
-				$credentials['http_pass'] = $payment->getHttpPassword();
-				$credentials['base_url'] = $payment->getBaseUrl();
+				$credentials['secret']              = $payment->getSecret();
+				$credentials['http_user']           = $payment->getHttpUser();
+				$credentials['http_pass']           = $payment->getHttpPassword();
+				$credentials['base_url']            = $payment->getBaseUrl();
 			}
 			if ( self::CREDIT_CARD_ID === $payment_type ) {
 				$credentials['three_d_merchant_account_id'] = $payment->getThreeDMerchantAccountId();
@@ -98,44 +100,44 @@ class Credentials_Loader {
 	public function get_credentials_config( $payment_method ) {
 		$credentials           = $this->get_credentials( $payment_method );
 		$credentials_config_cc = [];
-		$credentials_config    = array(
-			'merchant_account_id' => array( 
+		$credentials_config    = array( 
+			'merchant_account_id' => array(
 				'title'       => __( 'config_merchant_account_id', 'wirecard-woocommerce-extension' ),
-			    'type'        => 'text',
-			    'description' => __( 'config_merchant_account_id_desc', 'wirecard-woocommerce-extension' ),
-			    'default'     => $credentials['merchant_account_id'],
+				'type'        => 'text',
+				'description' => __( 'config_merchant_account_id_desc', 'wirecard-woocommerce-extension' ),
+				'default'     => $credentials['merchant_account_id'],
 			),
 			'secret'              => array(
-                'title'       => __( 'config_merchant_secret', 'wirecard-woocommerce-extension' ),
-                'type'        => 'text',
-                'description' => __( 'config_merchant_secret_desc', 'wirecard-woocommerce-extension' ),
-                'default'     => $credentials['secret'],
-	        ),
-	        'credentials'         => array(
-	            'title'       => __( 'text_credentials', 'wirecard-woocommerce-extension' ),
-	            'type'        => 'title',
-	            'description' => __( 'text_credentials_desc', 'wirecard-woocommerce-extension' ),
-	        ),
-	        'base_url'            => array(
-	            'title'       => __( 'config_base_url', 'wirecard-woocommerce-extension' ),
-	            'type'        => 'text',
-	            'description' => __( 'config_base_url_desc', 'wirecard-woocommerce-extension' ),
-	            'default'     => $credentials['base_url'],
-	        ), 
+				'title'       => __( 'config_merchant_secret', 'wirecard-woocommerce-extension' ),
+				'type'        => 'text',
+				'description' => __( 'config_merchant_secret_desc', 'wirecard-woocommerce-extension' ),
+				'default'     => $credentials['secret'],
+			),
+			'credentials'         => array(
+				'title'       => __( 'text_credentials', 'wirecard-woocommerce-extension' ),
+				'type'        => 'title',
+				'description' => __( 'text_credentials_desc', 'wirecard-woocommerce-extension' ),
+			),
+			'base_url'            => array(
+				'title'       => __( 'config_base_url', 'wirecard-woocommerce-extension' ),
+				'type'        => 'text',
+				'description' => __( 'config_base_url_desc', 'wirecard-woocommerce-extension' ),
+				'default'     => $credentials['base_url'],
+			),
 			'http_user'           => array(
-	            'title'       => __( 'config_http_user', 'wirecard-woocommerce-extension' ),
-	            'type'        => 'text',
-	            'description' => __( 'config_http_user_desc', 'wirecard-woocommerce-extension' ),
-	            'default'     => $credentials['http_user'],
-	        ),
-	        'http_pass'           => array(
-	            'title'       => __( 'config_http_password', 'wirecard-woocommerce-extension' ),
-	            'type'        => 'text',
-	            'description' => __( 'config_http_password_desc', 'wirecard-woocommerce-extension' ),
-	            'default'     => $credentials['http_pass'],
-	        ),
+				'title'       => __( 'config_http_user', 'wirecard-woocommerce-extension' ),
+				'type'        => 'text',
+				'description' => __( 'config_http_user_desc', 'wirecard-woocommerce-extension' ),
+				'default'     => $credentials['http_user'],
+			),
+			'http_pass'           => array(
+				'title'       => __( 'config_http_password', 'wirecard-woocommerce-extension' ),
+				'type'        => 'text',
+				'description' => __( 'config_http_password_desc', 'wirecard-woocommerce-extension' ),
+				'default'     => $credentials['http_pass'],
+			),
 		);
-		if ( $payment_method === self::CREDIT_CARD_ID ) {
+		if ( self::CREDIT_CARD_ID === $payment_method ) {
 			$credentials_config_cc = array(
 				'three_d_merchant_account_id' => array(
 					'title'       => __( 'config_three_d_merchant_account_id', 'wirecard-woocommerce-extension' ),
@@ -154,9 +156,9 @@ class Credentials_Loader {
 					'type'        => 'text',
 					'description' => __( 'config_wpp_url_desc', 'wirecard-woocommerce-extension' ),
 					'default'     => $credentials['wpp_url'],
-				)
+				),
 			);
 		}
-		return array_merge( $credentials_config,$credentials_config_cc );
+		return array_merge( $credentials_config, $credentials_config_cc );
 	}
 }
