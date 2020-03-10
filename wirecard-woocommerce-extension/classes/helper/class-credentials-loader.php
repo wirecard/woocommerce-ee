@@ -55,7 +55,7 @@ class Credentials_Loader {
 	/**
 	 * Get credentials from the xml using Credentials class methods
 	 *
-	 * @param $payment_type
+	 * @param PaymentMethod $payment_method
 	 *
 	 * @return array
 	 *
@@ -92,14 +92,15 @@ class Credentials_Loader {
 	/**
 	 * Create structure of data for the credentials fields
 	 *
-	 * @param $payment_method
+	 * @param string $payment_method_name
 	 *
 	 * @return array
 	 *
+	 * @throws InvalidPaymentMethodException
 	 * @since 3.1.1
 	 */
-	public function get_credentials_config( $payment_method ) {
-		$payment_method        = new PaymentMethod( $payment_method );
+	public function get_credentials_config( $payment_method_name ) {
+		$payment_method        = new PaymentMethod( $payment_method_name );
 		$credentials           = $this->get_credentials( $payment_method );
 		$credentials_config_cc = [];
 		$credentials_config    = array(
