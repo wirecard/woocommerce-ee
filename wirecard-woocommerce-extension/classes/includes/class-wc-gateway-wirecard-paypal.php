@@ -92,7 +92,7 @@ class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 	 */
 	public function init_form_fields() {
 		parent::init_form_fields();
-		$this->form_fields  = array(
+		$this->form_fields = array(
 			'enabled'             => array(
 				'title'       => __( 'text_enable_disable', 'wirecard-woocommerce-extension' ),
 				'type'        => 'checkbox',

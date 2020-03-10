@@ -45,7 +45,7 @@ use Credentials\Exception\InvalidPaymentMethodException;
  * @since   3.1.1
  */
 class Credentials_Loader {
-	
+
 
 	const CREDENTIALS_CONFIG_FILE = 'credentials_config.xml';
 
@@ -66,7 +66,7 @@ class Credentials_Loader {
 	 * @var string
 	 */
 	private $logger;
-	
+
 	/**
 	 * Credentials_Loader constructor.
 	 *
@@ -74,9 +74,9 @@ class Credentials_Loader {
 	 */
 	public function __construct() {
 		$this->credential_file_path = dirname( dirname( __DIR__ ) ) . '/' . self::CREDENTIALS_CONFIG_FILE;
-		$this->logger = new Logger();
+		$this->logger               = new Logger();
 	}
-	
+
 	/**
 	 * Create structure of data for the credentials fields
 	 *
@@ -91,7 +91,7 @@ class Credentials_Loader {
 		$credentials = null;
 
 		try {
-			$module  = new Credentials( $this->credential_file_path );
+			$module      = new Credentials( $this->credential_file_path );
 			$credentials = $module->getConfigByPaymentMethod( new PaymentMethod( $payment_method_name ) );
 		} catch ( \Exception $exception ) {
 			$this->logger->error( __METHOD__ . ':' . $exception->getMessage() );

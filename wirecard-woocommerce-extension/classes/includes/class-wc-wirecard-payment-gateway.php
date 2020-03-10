@@ -145,7 +145,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 * @since 3.1.1
 	 */
 	protected $credential_config;
-	
+
 	/**
 	 * Payment method config
 	 *

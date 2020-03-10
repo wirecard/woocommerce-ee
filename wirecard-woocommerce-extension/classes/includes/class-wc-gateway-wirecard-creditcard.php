@@ -84,14 +84,14 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	 * @since 1.0.0
 	 */
 	public function __construct() {
-		$this->type               = 'creditcard';
-		$this->logger             = new Logger();
-		$this->additional_helper  = new Additional_Information();
-		$this->template_helper    = new Template_Helper();
-		$this->supports           = array( 'products', 'refunds' );
-		$this->cancel             = array( 'authorization' );
-		$this->capture            = array( 'authorization' );
-		$this->refund             = array( 'purchase', 'capture-authorization' );
+		$this->type              = 'creditcard';
+		$this->logger            = new Logger();
+		$this->additional_helper = new Additional_Information();
+		$this->template_helper   = new Template_Helper();
+		$this->supports          = array( 'products', 'refunds' );
+		$this->cancel            = array( 'authorization' );
+		$this->capture           = array( 'authorization' );
+		$this->refund            = array( 'purchase', 'capture-authorization' );
 
 		$this->init();
 
@@ -218,7 +218,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 				'title'       => __( 'config_base_url', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
 				'description' => __( 'config_base_url_desc', 'wirecard-woocommerce-extension' ),
-				'default'     => $this->credential_config->getBaseUrl()
+				'default'     => $this->credential_config->getBaseUrl(),
 			),
 			'wpp_url'                     => array(
 				'title'       => __( 'config_wpp_url', 'wirecard-woocommerce-extension' ),
