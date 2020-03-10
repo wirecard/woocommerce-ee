@@ -165,11 +165,15 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	protected $fps_session_id;
 
 	/**
+	 * Define config data
+	 *
 	 * @throws \Credentials\Exception\InvalidPaymentMethodException
+	 * @since 3.1.1
 	 */
-	public function init_form_fields() {
+	public function define_config_data() {
 		$this->credential_config = ( new Credentials_Loader() )->get_credentials_config( $this->type );
 	}
+
 	/**
 	 * Add global wirecard payment gateway actions
 	 *
