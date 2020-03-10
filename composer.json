@@ -11,8 +11,7 @@
     "php-http/guzzle6-adapter": "1.1.1",
     "wirecard/iso-paypal-converter": "^1.0",
     "wirecard/io-converter": "^1.0",
-    "wirecard/base-url-matcher": "^1.0",
-    "wirecard/extentions-credentials-module": "dev-TPWDCEE-6187-credentials-with-registry"
+    "wirecard/base-url-matcher": "^1.0"
   },
   "repositories":[
     {
