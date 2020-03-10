@@ -52,7 +52,7 @@ jobs:
         #output VERSION variable value without first "v"
         run: echo ::set-output name=adapted_version::${VERSION##v}
       - name: Deploy to Wordpress
-        uses: wirecard/action-wordpress-plugin-deploy@add-custom-workspace
+        uses: wirecard/action-wordpress-plugin-deploy@develop
         env:
           SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
           SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
