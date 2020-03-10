@@ -62,7 +62,7 @@ class Credentials_Loader {
 	 */
 	public function get_credentials( $payment_method ) {
 		$credential_file_path = dirname( dirname( __DIR__ ) ) . '/' . self::CREDENTIALS_CONFIG_FILE;
-		$credentials          = [];
+		$credentials          = array();
 		$logger               = new Logger();
 
 		try {
@@ -99,7 +99,7 @@ class Credentials_Loader {
 	public function get_credentials_config( $payment_method_name ) {
 		$payment_method        = new PaymentMethod( $payment_method_name );
 		$credentials           = $this->get_credentials( $payment_method );
-		$credentials_config_cc = [];
+		$credentials_config_cc = array();
 		$credentials_config    = array(
 			'merchant_account_id' => array(
 				'title'       => __( 'config_merchant_account_id', 'wirecard-woocommerce-extension' ),
