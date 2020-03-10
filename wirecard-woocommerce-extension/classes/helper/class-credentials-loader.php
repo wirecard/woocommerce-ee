@@ -48,7 +48,7 @@ use Credentials\Exception\MissedCredentialsException;
 class Credentials_Loader {
 
 	const CREDIT_CARD_ID = 'creditcard';
-	
+
 	const CREDENTIALS_CONFIG_FILE = 'credentials_config.xml';
 
 	/**
@@ -100,7 +100,7 @@ class Credentials_Loader {
 	public function get_credentials_config( $payment_method ) {
 		$credentials           = $this->get_credentials( $payment_method );
 		$credentials_config_cc = [];
-		$credentials_config    = array( 
+		$credentials_config    = array(
 			'merchant_account_id' => array(
 				'title'       => __( 'config_merchant_account_id', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
