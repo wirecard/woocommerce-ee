@@ -71,7 +71,7 @@ class Credentials_Loader {
 	 * @var Credentials_Loader
 	 */
 	private static $instance;
-	
+
 	/**
 	 * Credentials_Loader constructor.
 	 *
@@ -85,7 +85,7 @@ class Credentials_Loader {
 	/**
 	 * @return Credentials_Loader
 	 */
-	public static function getInstance() {
+	public static function get_instance() {
 		if ( null === self::$instance ) {
 			self::$instance = new self();
 		}

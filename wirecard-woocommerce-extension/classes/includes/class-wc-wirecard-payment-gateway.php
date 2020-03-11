@@ -171,7 +171,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 * @since 3.1.1
 	 */
 	public function init_form_fields() {
-		$this->credential_config = Credentials_Loader::getInstance()->get_credentials_config( $this->type );
+		$this->credential_config = Credentials_Loader::get_instance()->get_credentials_config( $this->type );
 	}
 
 	/**
