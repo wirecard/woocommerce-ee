@@ -156,7 +156,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	 * @since 1.0.0
 	 */
 	public function init_form_fields() {
-		parent::define_config_data();
+		parent::init_form_fields();
 		$challenge_indicators = $this->get_challenge_indicator_options();
 
 		$this->form_fields = array(

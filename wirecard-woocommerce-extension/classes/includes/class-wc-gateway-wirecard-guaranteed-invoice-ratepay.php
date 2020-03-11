@@ -94,7 +94,7 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 	 * @since 1.1.0
 	 */
 	public function init_form_fields() {
-		parent::define_config_data();
+		parent::init_form_fields();
 		$countries_obj = new WC_Countries();
 		$countries     = $countries_obj->__get( 'countries' );
 

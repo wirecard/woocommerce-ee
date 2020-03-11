@@ -68,13 +68,28 @@ class Credentials_Loader {
 	private $logger;
 
 	/**
+	 * @var Credentials_Loader
+	 */
+	private static $instance;
+	
+	/**
 	 * Credentials_Loader constructor.
 	 *
 	 * @since 3.1.1
 	 */
-	public function __construct() {
+	private function __construct() {
 		$this->credential_file_path = dirname( dirname( __DIR__ ) ) . '/' . self::CREDENTIALS_CONFIG_FILE;
 		$this->logger               = new Logger();
+	}
+
+	/**
+	 * @return Credentials_Loader
+	 */
+	public static function getInstance() {
+		if ( null === self::$instance ) {
+			self::$instance = new self();
+		}
+		return self::$instance;
 	}
 
 	/**

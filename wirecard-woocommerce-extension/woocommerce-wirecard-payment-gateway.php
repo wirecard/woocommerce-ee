@@ -178,7 +178,7 @@ function wirecard_add_payment_gateway( $methods ) {
 /**
  * Return payment methods
  *
- * @return array
+ * @return array | WC_Wirecard_Payment_Gateway
  *
  * @since 1.1.0
  */
