@@ -105,12 +105,12 @@ class Credentials_Loader {
 	 * @since 3.1.1
 	 */
 	public function get_credentials_config( $payment_method_name ) {
-		$credentials       = null;
+		$credentials = null;
 		try {
 			$module      = new Credentials( $this->credential_file_path );
 			$credentials = $module->getConfigByPaymentMethod( new PaymentMethod( $payment_method_name ) );
 		} catch ( \Exception $exception ) {
-			$credentials =  new Empty_Credentials_Config();
+			$credentials = new Empty_Credentials_Config();
 			$this->logger->error( __METHOD__ . ':' . $exception->getMessage() );
 		}
 		return $credentials;
