@@ -111,12 +111,9 @@ class Credentials_Loader {
 			$module      = new Credentials( $this->credential_file_path );
 			$credentials = $module->getConfigByPaymentMethod( new PaymentMethod( $payment_method_name ) );
 		} catch ( \Exception $exception ) {
+			$credentials =  new Empty_Credentials_Config();
 			$this->logger->error( __METHOD__ . ':' . $exception->getMessage() );
 		}
-		if ( null === $credentials ) {
-			return $empty_credentials;
-		} else {
-			return $credentials;
-		}
+		return $credentials;
 	}
 }
