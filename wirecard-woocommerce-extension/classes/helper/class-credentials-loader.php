@@ -33,9 +33,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-use Credentials\Credentials;
-use Credentials\PaymentMethod;
-use Credentials\Exception\InvalidPaymentMethodException;
+use Wirecard\Credentials\Credentials;
+use Wirecard\Credentials\PaymentMethod;
+use Wirecard\Credentials\Exception\InvalidPaymentMethodException;
 
 /**
  * Class Credentials_Loader
@@ -97,8 +97,8 @@ class Credentials_Loader {
 	 *
 	 * @param string $payment_method_name
 	 *
-	 * @return \Credentials\Config\CredentialsConfigInterface|\Credentials\Config\CredentialsCreditCardConfig
 	 *
+	 * @return Wirecard\Credentials\Config\CredentialsConfigInterface|Wirecard\Credentials\Config\CredentialsCreditCardConfig|null
 	 * @throws InvalidPaymentMethodException
 	 * @since 3.1.1
 	 */
