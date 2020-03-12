@@ -39,7 +39,7 @@ require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/handler/class-wirecard-callb
 require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/admin/class-wirecard-transaction-factory.php' );
 require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/helper/class-logger.php' );
 require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/helper/class-additional-information.php' );
-require_once( WIRECARD_EXTENSION_HELPER_DIR . 'class-credentials-loader.php' );
+require_once( WIRECARD_EXTENSION_HELPER_DIR . 'credentials/class-credentials-loader.php' );
 
 use Wirecard\PaymentSdk\Config\Config;
 use Wirecard\PaymentSdk\Entity\Amount;

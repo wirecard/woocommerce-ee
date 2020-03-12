@@ -33,6 +33,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+require_once( 'class-empty-credentials-config.php' );
+
 use Wirecard\Credentials\Credentials;
 use Wirecard\Credentials\PaymentMethod;
 use Wirecard\Credentials\Exception\InvalidPaymentMethodException;
@@ -78,7 +80,7 @@ class Credentials_Loader {
 	 * @since 3.1.1
 	 */
 	private function __construct() {
-		$this->credential_file_path = dirname( dirname( __DIR__ ) ) . '/' . self::CREDENTIALS_CONFIG_FILE;
+		$this->credential_file_path = WIRECARD_EXTENSION_BASEDIR . '/' . self::CREDENTIALS_CONFIG_FILE;
 		$this->logger               = new Logger();
 	}
 
@@ -103,15 +105,19 @@ class Credentials_Loader {
 	 * @since 3.1.1
 	 */
 	public function get_credentials_config( $payment_method_name ) {
-		$credentials = null;
-
+		$credentials       = null;
+		$empty_credentials = new Empty_Credentials_Config();
 		try {
 			$module      = new Credentials( $this->credential_file_path );
 			$credentials = $module->getConfigByPaymentMethod( new PaymentMethod( $payment_method_name ) );
 		} catch ( \Exception $exception ) {
 			$this->logger->error( __METHOD__ . ':' . $exception->getMessage() );
 		}
-
-		return $credentials;
+		if( $credentials === null ){
+			return $empty_credentials;
+		}
+		else {
+			return $credentials;
+		}
 	}
 }
