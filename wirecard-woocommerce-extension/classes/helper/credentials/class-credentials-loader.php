@@ -106,7 +106,6 @@ class Credentials_Loader {
 	 */
 	public function get_credentials_config( $payment_method_name ) {
 		$credentials       = null;
-		$empty_credentials = new Empty_Credentials_Config();
 		try {
 			$module      = new Credentials( $this->credential_file_path );
 			$credentials = $module->getConfigByPaymentMethod( new PaymentMethod( $payment_method_name ) );
