@@ -57,7 +57,7 @@ class Empty_Credentials_Config implements CredentialsConfigInterface, Credential
 	 * @return string
 	 * @since 3.1.1
 	 */
-	public function getMerchantAccountId(){
+	public function getMerchantAccountId() {
 		return null;
 	}
 

@@ -113,10 +113,9 @@ class Credentials_Loader {
 		} catch ( \Exception $exception ) {
 			$this->logger->error( __METHOD__ . ':' . $exception->getMessage() );
 		}
-		if( $credentials === null ){
+		if ( null === $credentials ) {
 			return $empty_credentials;
-		}
-		else {
+		} else {
 			return $credentials;
 		}
 	}
