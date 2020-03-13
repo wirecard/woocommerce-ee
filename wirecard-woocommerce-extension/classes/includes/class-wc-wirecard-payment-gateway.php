@@ -39,6 +39,7 @@ require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/handler/class-wirecard-callb
 require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/admin/class-wirecard-transaction-factory.php' );
 require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/helper/class-logger.php' );
 require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/helper/class-additional-information.php' );
+require_once( WIRECARD_EXTENSION_HELPER_DIR . 'class-credentials-loader.php' );
 
 use Wirecard\PaymentSdk\Config\Config;
 use Wirecard\PaymentSdk\Entity\Amount;
@@ -139,6 +140,13 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	protected $additional_helper;
 
 	/**
+	 * @var \Credentials\Config\DefaultConfig|\Credentials\Config\CreditCardConfig
+	 *
+	 * @since 3.1.1
+	 */
+	protected $credential_config;
+
+	/**
 	 * Payment method config
 	 *
 	 * @since 1.1.0
@@ -155,6 +163,16 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 * @var string
 	 */
 	protected $fps_session_id;
+
+	/**
+	 * Define config data
+	 *
+	 * @throws \Credentials\Exception\InvalidPaymentMethodException
+	 * @since 3.1.1
+	 */
+	public function init_form_fields() {
+		$this->credential_config = Credentials_Loader::get_instance()->get_credentials_config( $this->type );
+	}
 
 	/**
 	 * Add global wirecard payment gateway actions
