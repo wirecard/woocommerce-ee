@@ -84,6 +84,8 @@ class Credentials_Loader {
 
 	/**
 	 * @return Credentials_Loader
+	 *
+	 * @since 3.1.1
 	 */
 	public static function get_instance() {
 		if ( null === self::$instance ) {

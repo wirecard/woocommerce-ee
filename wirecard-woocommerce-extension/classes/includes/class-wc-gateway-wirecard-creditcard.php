@@ -29,13 +29,13 @@
  * Please do not use the plugin if you do not agree to these terms of use!
  */
 
-require_once __DIR__ . '/class-wc-wirecard-payment-gateway.php';
-require_once WIRECARD_EXTENSION_HELPER_DIR . 'class-credit-card-vault.php';
-require_once WIRECARD_EXTENSION_HELPER_DIR . 'class-template-helper.php';
-require_once WIRECARD_EXTENSION_HELPER_DIR . 'class-logger.php';
-require_once WIRECARD_EXTENSION_HELPER_DIR . 'class-admin-message.php';
-require_once WIRECARD_EXTENSION_HELPER_DIR . 'class-action-helper.php';
-require_once WIRECARD_EXTENSION_HELPER_DIR . 'class-three-ds-helper.php';
+require_once( __DIR__ . '/class-wc-wirecard-payment-gateway.php' );
+require_once( WIRECARD_EXTENSION_HELPER_DIR . 'class-credit-card-vault.php' );
+require_once( WIRECARD_EXTENSION_HELPER_DIR . 'class-template-helper.php' );
+require_once( WIRECARD_EXTENSION_HELPER_DIR . 'class-logger.php' );
+require_once( WIRECARD_EXTENSION_HELPER_DIR . 'class-admin-message.php' );
+require_once( WIRECARD_EXTENSION_HELPER_DIR . 'class-action-helper.php' );
+require_once( WIRECARD_EXTENSION_HELPER_DIR . 'class-three-ds-helper.php' );
 
 use Wirecard\PaymentSdk\Config\Config;
 use Wirecard\PaymentSdk\Config\CreditCardConfig;
@@ -118,7 +118,6 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	 * @since 2.0.0
 	 */
 	protected function init() {
-		$this->type               = 'creditcard';
 		$this->id                 = 'wirecard_ee_creditcard';
 		$this->icon               = WIRECARD_EXTENSION_URL . 'assets/images/creditcard.png';
 		$this->method_title       = __( 'heading_title_creditcard', 'wirecard-woocommerce-extension' );
