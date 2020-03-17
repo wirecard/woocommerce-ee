@@ -135,13 +135,11 @@ function wirecard_init_payment_gateway() {
 	register_post_status(
 		'wc-authorization',
 		array(
-			'label'                     => __( 'order_status_authorized', 'wirecard-woocommerce-extension' ),
+			'label'                     => __( 'order_status_authorized_count_plural', 'wirecard-woocommerce-extension' ),
 			'public'                    => true,
 			'exclude_from_search'       => false,
 			'show_in_admin_all_list'    => true,
 			'show_in_admin_status_list' => true,
-			// translators:
-			'label_count'               => _n_noop( 'order_status_authorized_count_single', 'order_status_authorized_count_plural', 'wirecard-woocommerce-extension' ),
 		)
 	);
 }

@@ -782,14 +782,9 @@ msgstr "付款過程中發生錯誤，請重試。"
 msgid "order_status_authorized"
 msgstr "已授權"
 
+
 msgid "order_status_authorized_count_plural"
 msgstr "授權 <span class=\"count\">(%s)</span>"
-
-#. translators:
-#: woocommerce-wirecard-payment-gateway.php:105
-msgid "order_status_authorized_count_single"
-msgid_plural "order_status_authorized_count_plural"
-msgstr[0] ""
 
 #: classes/includes/class-wc-wirecard-payment-gateway.php:521
 
