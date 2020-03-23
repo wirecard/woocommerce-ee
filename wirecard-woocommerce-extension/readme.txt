@@ -4,7 +4,7 @@ Tags: credit-card, paypal, china-payment, sofort, alipay, ideal, eps, sepa, paym
 Requires at least: 4.9
 Tested up to: 5.3
 Requires PHP: 
-Stable tag: 3.1.1
+Stable tag: 3.2.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
