@@ -14,8 +14,8 @@
     	}
     },	
 	"changelog": [
-		"Enable default configuration reading from xml file",
-        "Add translation for order table header state filers"
+		"Enable reading of test payment credentials for all payment methods form a generic xml file",
+        "Add translation for header state filters in the order table"
 	]
 },
 {
