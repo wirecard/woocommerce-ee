@@ -783,14 +783,9 @@ msgstr "결제 프로세스 중 오류 발생. 다시 시도하십시오."
 msgid "order_status_authorized"
 msgstr "승인됨"
 
+
 msgid "order_status_authorized_count_plural"
 msgstr "승인됨 <span class=\"count\">(%s)</span>"
-
-#. translators:
-#: woocommerce-wirecard-payment-gateway.php:105
-msgid "order_status_authorized_count_single"
-msgid_plural "order_status_authorized_count_plural"
-msgstr[0] ""
 
 #: classes/includes/class-wc-wirecard-payment-gateway.php:521
 

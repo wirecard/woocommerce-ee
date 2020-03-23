@@ -1,5 +1,24 @@
 [
 {
+	"release": "3.2.0",
+	"shopversions": {
+    	"shopsystem": {
+    		"name": "WooCommerce",
+    		"tested": "3.8.0",
+    		"compatibility": "3.3.4"
+    	},
+    	"platform": {
+    		"name": "Wordpress",
+    		"tested": "5.3",
+    		"compatibility": "5.0.3"
+    	}
+    },	
+	"changelog": [
+		"Enable reading of test payment credentials for all payment methods form a generic xml file",
+        "Add translation for header state filters in the order table"
+	]
+},
+{
 	"release": "3.1.1",
 	"shopversions": {
     	"shopsystem": {

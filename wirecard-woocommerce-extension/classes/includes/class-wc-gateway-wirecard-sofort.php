@@ -91,6 +91,7 @@ class WC_Gateway_Wirecard_Sofort extends WC_Wirecard_Payment_Gateway {
 	 * @since 1.1.0
 	 */
 	public function init_form_fields() {
+		parent::init_form_fields();
 		$this->form_fields = array(
 			'enabled'             => array(
 				'title'       => __( 'text_enable_disable', 'wirecard-woocommerce-extension' ),
@@ -109,13 +110,13 @@ class WC_Gateway_Wirecard_Sofort extends WC_Wirecard_Payment_Gateway {
 				'title'       => __( 'config_merchant_account_id', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
 				'description' => __( 'config_merchant_account_id_desc', 'wirecard-woocommerce-extension' ),
-				'default'     => '6c0e7efd-ee58-40f7-9bbd-5e7337a052cd',
+				'default'     => $this->credential_config->getMerchantAccountId(),
 			),
 			'secret'              => array(
 				'title'       => __( 'config_merchant_secret', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
 				'description' => __( 'config_merchant_secret_desc', 'wirecard-woocommerce-extension' ),
-				'default'     => 'dbc5a498-9a66-43b9-bf1d-a618dd399684',
+				'default'     => $this->credential_config->getSecret(),
 			),
 			'credentials'         => array(
 				'title'       => __( 'text_credentials', 'wirecard-woocommerce-extension' ),
@@ -126,19 +127,19 @@ class WC_Gateway_Wirecard_Sofort extends WC_Wirecard_Payment_Gateway {
 				'title'       => __( 'config_base_url', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
 				'description' => __( 'config_base_url_desc', 'wirecard-woocommerce-extension' ),
-				'default'     => 'https://api-test.wirecard.com',
+				'default'     => $this->credential_config->getBaseUrl(),
 			),
 			'http_user'           => array(
 				'title'       => __( 'config_http_user', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
 				'description' => __( 'config_http_user_desc', 'wirecard-woocommerce-extension' ),
-				'default'     => '16390-testing',
+				'default'     => $this->credential_config->getHttpUser(),
 			),
 			'http_pass'           => array(
 				'title'       => __( 'config_http_password', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
 				'description' => __( 'config_http_password_desc', 'wirecard-woocommerce-extension' ),
-				'default'     => '3!3013=D3fD8X7',
+				'default'     => $this->credential_config->getHttpPassword(),
 			),
 			'test_button'         => array(
 				'title'   => __( 'test_config', 'wirecard-woocommerce-extension' ),

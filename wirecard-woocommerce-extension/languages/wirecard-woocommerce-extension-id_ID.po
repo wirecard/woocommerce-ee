@@ -782,14 +782,9 @@ msgstr "Kesalahan terjadi saat proses pembayaran. Harap coba lagi."
 msgid "order_status_authorized"
 msgstr "Sah"
 
+
 msgid "order_status_authorized_count_plural"
 msgstr "Sah<span class=\"count\">(%s)</span>"
-
-#. translators:
-#: woocommerce-wirecard-payment-gateway.php:105
-msgid "order_status_authorized_count_single"
-msgid_plural "order_status_authorized_count_plural"
-msgstr[0] ""
 
 #: classes/includes/class-wc-wirecard-payment-gateway.php:521
 
