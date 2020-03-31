@@ -1,5 +1,23 @@
 [
 {
+    "release": "3.2.1",
+    "shopversions": {
+        "shopsystem": {
+            "name": "WooCommerce",
+            "tested": "3.8.0",
+            "compatibility": "3.3.4"
+        },
+        "platform": {
+            "name": "Wordpress",
+            "tested": "5.3",
+            "compatibility": "5.0.3"
+        }
+    },
+    "changelog": [
+        "Fix archive size for partners"
+    ]
+},
+{
 	"release": "3.2.0",
 	"shopversions": {
     	"shopsystem": {
