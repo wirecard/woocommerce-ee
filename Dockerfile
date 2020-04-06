@@ -36,7 +36,6 @@ RUN if [ "$WOOCOMMERCE_VERSION" != "0" ]; then \
 
 #get woocommerce-wirecard-ee package into the docker image
 ADD woocommerce-wirecard-ee.zip /tmp/temp.zip
-ADD wirecard-woocommerce-extension/tests/_data/ /usr/src/wordpress/_data
 
 RUN cd /usr/src/wordpress/wp-content/plugins \
     && unzip -q /tmp/temp.zip \
