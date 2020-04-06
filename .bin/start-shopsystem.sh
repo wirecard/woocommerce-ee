@@ -28,22 +28,22 @@ while ! $(curl --output /dev/null --silent --head --fail "${NGROK_URL}/wp-admin/
 done
 
 #install wordpress
-docker-compose exec wp core install --allow-root --url="${NGROK_URL}" --admin_password="${WOOCOMMERCE_ADMIN_PASSWORD}" --title=test --admin_user=${WOOCOMMERCE_ADMIN_USER} --admin_email=test@test.com
+docker-compose exec web wp core install --allow-root --url="${NGROK_URL}" --admin_password="${WOOCOMMERCE_ADMIN_PASSWORD}" --title=test --admin_user=${WOOCOMMERCE_ADMIN_USER} --admin_email=test@test.com
 
 #activate woocommerce
-docker-compose exec wp plugin activate woocommerce --allow-root
+docker-compose exec web wp plugin activate woocommerce --allow-root
 
 #activate woocommerce-ee
-docker-compose exec wp plugin activate wirecard-woocommerce-extension --allow-root
+docker-compose exec web wp plugin activate wirecard-woocommerce-extension --allow-root
 
 #install wordpress-importer
-docker-compose exec wp plugin install wordpress-importer --activate --allow-root
+docker-compose exec web wp plugin install wordpress-importer --activate --allow-root
 
 #import sample product
-docker-compose exec wp import /var/www/html/wp-content/plugins/woocommerce/sample-data/sample_products.xml --allow-root --authors=create
+docker-compose exec web wp import /var/www/html/wp-content/plugins/woocommerce/sample-data/sample_products.xml --allow-root --authors=create
 
 #activate storefront theme
-docker-compose exec wp theme install storefront --activate --allow-root
+docker-compose exec web wp theme install storefront --activate --allow-root
 
 #install shop pages
-docker-compose exec wp wc tool run install_pages --user=admin --allow-root
+docker-compose exec web wp wc tool run install_pages --user=admin --allow-root
