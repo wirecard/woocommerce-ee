@@ -1,13 +1,12 @@
 version: '3'
 services:
-  webserver:
-    container_name: ${WOOCOMMERCE_CONTAINER_NAME}
+  web:
     build:
       context: .
     environment:
       - WORDPRESS_DB_PASSWORD=${WOOCOMMERCE_DB_PASSWORD}
       - WOOCOMMERCE_VERSION=${WOOCOMMERCE_VERSION}
-      - DB_SERVER=dbserver
+      - DB_SERVER=db
       - DB_PASSWD=${WOOCOMMERCE_DB_PASSWORD}
       - DB_NAME=${WOOCOMMERCE_DB_NAME}
     networks:
@@ -17,10 +16,9 @@ services:
     env_file:
       - .env
     links:
-      - dbserver:mysql
+      - db:mysql
 
-  dbserver:
-    container_name: woo_mariadb
+  db:
     image: mariadb
     environment:
       - MYSQL_ROOT_PASSWORD=${WOOCOMMERCE_DB_PASSWORD}
