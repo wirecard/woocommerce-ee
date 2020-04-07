@@ -21,7 +21,7 @@ curl -X POST -H 'Content-type: application/json' \
     Build Number: ${TRAVIS_BUILD_NUMBER}\n
     Branch: ${TRAVIS_BRANCH}', 'channel': '${CHANNEL}'}" ${SLACK_ROOMS}
 
-FAILED_TESTS=$(ls -1q wirecard-woocommerce-extension/tests/_output/*.fail.png | wc -l)
+FAILED_TESTS=$(ls -1q wirecard-woocommerce-extension/vendor/wirecard/shopsystem-ui-testsuite/tests/_output/*.fail.png | wc -l)
 
 if [[ ${COMPATIBILITY_CHECK}  == "0" ]]; then
   # send link to the report into slack chat room

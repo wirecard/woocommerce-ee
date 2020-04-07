@@ -42,12 +42,11 @@ if [ ! -d "${REPO_NAME}/${RELATIVE_REPORTS_LOCATION}" ]; then
     mkdir ${REPO_NAME}/${RELATIVE_REPORTS_LOCATION}
 fi
 
-
 # copy report files
-cp wirecard-woocommerce-extension/tests/_output/*.html ${REPO_NAME}/${RELATIVE_REPORTS_LOCATION}
-cp wirecard-woocommerce-extension/tests/_output/*.xml ${REPO_NAME}/${RELATIVE_REPORTS_LOCATION}
+cp wirecard-woocommerce-extension/vendor/wirecard/shopsystem-ui-testsuite/tests/_output/*.html ${REPO_NAME}/${RELATIVE_REPORTS_LOCATION}
+cp wirecard-woocommerce-extension/vendor/wirecard/shopsystem-ui-testsuite/tests/_output/*.xml ${REPO_NAME}/${RELATIVE_REPORTS_LOCATION}
 if [[ $1 == 'fail' ]]; then
-    cp wirecard-woocommerce-extension/tests/_output/*.fail.png ${REPO_NAME}/${RELATIVE_REPORTS_LOCATION}
+    cp wirecard-woocommerce-extension/vendor/wirecard/shopsystem-ui-testsuite/tests/_output/*.fail.png ${REPO_NAME}/${RELATIVE_REPORTS_LOCATION}
 fi
 
 cd ${REPO_NAME}
