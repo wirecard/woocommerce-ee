@@ -45,3 +45,17 @@ jobs:
           asset_name: woocommerce-wirecard-ee.zip
           tag: ${{ steps.tag_and_prepare_release.outputs.tag }}
           overwrite: true
+      - name: Adapt tag for Wordpress
+        id: adapt_tag_for_wordpress
+        env:
+          VERSION: ${{ steps.tag_and_prepare_release.outputs.tag }}
+        #output VERSION variable value without first "v"
+        run: echo ::set-output name=adapted_version::${VERSION##v}
+      - name: Deploy to Wordpress
+        uses: wirecard/action-wordpress-plugin-deploy@develop
+        env:
+          SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
+          SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
+          SLUG: wirecard-woocommerce-extension
+          VERSION: ${{ steps.adapt_tag_for_wordpress.outputs.adapted_version }}
+          WORKSPACE_DIR: /github/workspace/wirecard-woocommerce-extension

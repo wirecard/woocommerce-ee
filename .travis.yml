@@ -50,20 +50,11 @@ jobs:
         - export LATEST_RELEASED_SHOP_EXTENSION_VERSION=`jq .[0].release ${TRAVIS_BUILD_DIR}/SHOPVERSIONS | tr -d '"'`
         - echo "Testing with Woocommerce version ${WOOCOMMERCE_VERSION}"
         - if [[ ${LATEST_EXTENSION_RELEASE}  == "1" ]]; then wget -q https://github.com/wirecard/woocommerce-ee/releases/download/${LATEST_RELEASED_SHOP_EXTENSION_VERSION}/woocommerce-wirecard-ee.zip; else bash .bin/generate-release-package.sh ;fi
-        - travis_retry composer require --dev $COMPOSER_ARGS codeception/codeception:^4.0.0
-        # codeception dependencies
-        - composer require --dev $COMPOSER_ARGS symfony/process:^4.3.9
-        - composer require --dev $COMPOSER_ARGS codeception/module-webdriver:^1.0.2
-        - composer require --dev $COMPOSER_ARGS codeception/module-asserts:^1.1.1
-        - composer require --dev $COMPOSER_ARGS codeception/module-db:^1.0.1
-        - composer require --dev $COMPOSER_ARGS codeception/module-phpbrowser:^1.0.0
-        - travis_retry composer install $COMPOSER_ARGS
-        - composer show
-      script: bash .bin/run-ui-tests.sh
+
+      script: bash .bin/setup-and-run-ui-tests.sh
       after_script: skip
       after_success:
         - bash .bin/upload-logs-and-notify.sh
-        - bash .bin/update-shop-release-versions.sh
       after_failure:
         - bash .bin/upload-logs-and-notify.sh fail
 
@@ -126,17 +117,6 @@ jobs:
         - travis_retry bundle install
       script:
         - .bin/rake phraseapp:ci_check_if_in_sync
-      after_script: skip
-
-    - stage: upload-to-wordpress
-      if: tag IS present AND type = push
-      language: php
-      php: 7.1
-      before_install: skip
-      install: skip
-      script:
-        #svn checkout is not producing logs, not to overload travis, so wait for maximum 30 minutes till the checkout completes
-        - travis_wait 30 bash .bin/upload-to-marketplace.sh
       after_script: skip
 
     - stage: trigger-white-labelling

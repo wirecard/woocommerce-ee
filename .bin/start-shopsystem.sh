@@ -1,58 +1,49 @@
 #!/bin/bash
 set -e # Exit with nonzero exit code if anything fails
 export WOOCOMMERCE_CONTAINER_NAME=woo_commerce
-export WOOCOMMERCE_DB_PASSWORD=example
-export WOOCOMMERCE_DB_PORT=3306
 
-WOOCOMMERCE_ADMIN_USER=admin
-WOOCOMMERCE_ADMIN_PASSWORD=password
-export WOOCOMMERCE_VERSION_RELEASE=${WOOCOMMERCE_VERSION}
+for ARGUMENT in "$@"; do
+  KEY=$(echo "${ARGUMENT}" | cut -f1 -d=)
+  VALUE=$(echo "${ARGUMENT}" | cut -f2 -d=)
 
-docker-compose build --build-arg WOOCOMMERCE_VERSION=${WOOCOMMERCE_VERSION_RELEASE} --build-arg GATEWAY=${GATEWAY} webserver
+  case "${KEY}" in
+  NGROK_URL) NGROK_URL=${VALUE} ;;
+  SHOP_VERSION) WOOCOMMERCE_VERSION=${VALUE} ;;
+  *) ;;
+  esac
+done
+
+export WOOCOMMERCE_ADMIN_USER=admin
+export WOOCOMMERCE_ADMIN_PASSWORD=password
+
+docker-compose build --build-arg WOOCOMMERCE_VERSION="${WOOCOMMERCE_VERSION}" web
+
 docker-compose up -d
-# wordpress running on 9090
+docker-compose ps
 
+# wordpress running on 9090
 while ! $(curl --output /dev/null --silent --head --fail "${NGROK_URL}/wp-admin/install.php"); do
     echo "Waiting for docker container to initialize"
     sleep 5
 done
 
 #install wordpress
-docker exec ${WOOCOMMERCE_CONTAINER_NAME} wp core install --allow-root --url="${NGROK_URL}" --admin_password="${WOOCOMMERCE_DB_PASSWORD}" --title=test --admin_user=${WOOCOMMERCE_ADMIN_USER} --admin_email=test@test.com
+docker-compose exec web wp core install --allow-root --url="${NGROK_URL}" --admin_password="${WOOCOMMERCE_ADMIN_PASSWORD}" --title=test --admin_user=${WOOCOMMERCE_ADMIN_USER} --admin_email=test@test.com
 
 #activate woocommerce
-docker exec ${WOOCOMMERCE_CONTAINER_NAME} wp plugin activate woocommerce --allow-root
+docker-compose exec web wp plugin activate woocommerce --allow-root
 
 #activate woocommerce-ee
-docker exec ${WOOCOMMERCE_CONTAINER_NAME} wp plugin activate wirecard-woocommerce-extension --allow-root
+docker-compose exec web wp plugin activate wirecard-woocommerce-extension --allow-root
 
 #install wordpress-importer
-docker exec ${WOOCOMMERCE_CONTAINER_NAME} wp plugin install wordpress-importer --activate --allow-root
+docker-compose exec web wp plugin install wordpress-importer --activate --allow-root
 
 #import sample product
-docker exec ${WOOCOMMERCE_CONTAINER_NAME} wp import /var/www/html/wp-content/plugins/woocommerce/sample-data/sample_products.xml --allow-root --authors=create
+docker-compose exec web wp import /var/www/html/wp-content/plugins/woocommerce/sample-data/sample_products.xml --allow-root --authors=create
 
 #activate storefront theme
-docker exec ${WOOCOMMERCE_CONTAINER_NAME} wp theme install storefront --activate --allow-root
+docker-compose exec web wp theme install storefront --activate --allow-root
 
 #install shop pages
-docker exec ${WOOCOMMERCE_CONTAINER_NAME} wp wc tool run install_pages --user=admin --allow-root
-
-#configure credit card payment method
-docker exec --env WOOCOMMERCE_DB_PASSWORD=${WOOCOMMERCE_DB_PASSWORD} \
-        --env WOOCOMMERCE_DB_PORT=${WOOCOMMERCE_DB_PORT} \
-        --env GATEWAY=${GATEWAY} \
-        ${WOOCOMMERCE_CONTAINER_NAME} bash -c "cd /var/www/html/_data/ && php configure_payment_method_db.php creditcard pay"
-
-#configure pay pal payment method if gateway is equal to API-TEST
-if [[ ${GATEWAY} = "API-TEST" ]]; then
-	docker exec --env WOOCOMMERCE_DB_PASSWORD=${WOOCOMMERCE_DB_PASSWORD} \
-			--env WOOCOMMERCE_DB_PORT=${WOOCOMMERCE_DB_PORT} \
-			--env GATEWAY=${GATEWAY} \
-			${WOOCOMMERCE_CONTAINER_NAME} bash -c "cd /var/www/html/_data/ && php configure_payment_method_db.php paypal pay"
-			
-	docker exec --env WOOCOMMERCE_DB_PASSWORD=${WOOCOMMERCE_DB_PASSWORD} \
-			--env WOOCOMMERCE_DB_PORT=${WOOCOMMERCE_DB_PORT} \
-			--env GATEWAY=${GATEWAY} \
-			${WOOCOMMERCE_CONTAINER_NAME} bash -c "cd /var/www/html/_data/ && php configure_payment_method_db.php giropay pay"
-fi
+docker-compose exec web wp wc tool run install_pages --user=admin --allow-root

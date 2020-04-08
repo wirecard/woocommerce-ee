@@ -783,14 +783,9 @@ msgstr "支払い処理中にエラーが発生しました。もう一度実行
 msgid "order_status_authorized"
 msgstr "承認済み"
 
+
 msgid "order_status_authorized_count_plural"
 msgstr "承認済み <span class=\"count\">(%s)</span>"
-
-#. translators:
-#: woocommerce-wirecard-payment-gateway.php:105
-msgid "order_status_authorized_count_single"
-msgid_plural "order_status_authorized_count_plural"
-msgstr[0] ""
 
 #: classes/includes/class-wc-wirecard-payment-gateway.php:521
 

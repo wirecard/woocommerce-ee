@@ -9,10 +9,12 @@ RUN apt-get -qq update && apt-get -qq install libicu-dev unzip wget -y \
 
 ARG WOOCOMMERCE_VERSION=0
 ARG STOREFRONT_VERSION=0
+ARG WOOCOMMERCE_CONTAINER_NAME=0
 
 ENV WOOCOMMERCE_VERSION $WOOCOMMERCE_VERSION
 ENV STOREFRONT_VERSION $STOREFRONT_VERSION
 ENV GATEWAY $GATEWAY
+ENV WOOCOMMERCE_CONTAINER_NAME $WOOCOMMERCE_CONTAINER_NAME
 
 #Get Woocommerce when --build-arg WOOCOMMERCE_VERSION is not set
 RUN if [ "$WOOCOMMERCE_VERSION" = "0" ]; then \
@@ -36,7 +38,6 @@ RUN if [ "$WOOCOMMERCE_VERSION" != "0" ]; then \
 
 #get woocommerce-wirecard-ee package into the docker image
 ADD woocommerce-wirecard-ee.zip /tmp/temp.zip
-ADD wirecard-woocommerce-extension/tests/_data/ /usr/src/wordpress/_data
 
 RUN cd /usr/src/wordpress/wp-content/plugins \
     && unzip -q /tmp/temp.zip \
