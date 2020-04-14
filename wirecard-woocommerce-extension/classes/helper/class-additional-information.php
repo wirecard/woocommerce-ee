@@ -58,7 +58,7 @@ class Additional_Information {
 	const BILLING = 'billing';
 
 	const BASE = 'base';
-	
+
 	const PAYPAL_METHOD = 'wirecard_ee_paypal';
 
 	protected $basket_item_helper;
@@ -123,7 +123,7 @@ class Additional_Information {
 			}
 			$coupon_total = $coupon_netto + $coupon_tax;
 			$sum         -= $coupon_total;
-			$basket = $this->set_voucher_item(
+			$basket       = $this->set_voucher_item(
 				$basket,
 				$coupon_netto,
 				$coupon_tax,
@@ -450,7 +450,7 @@ class Additional_Information {
 	private function set_voucher_item( $basket, $voucher_total, $voucher_tax, $payment_method ) {
 		$voucher_key = 'Voucher';
 		$amount      = ( ( $voucher_total + $voucher_tax ) * -1 );
-		$item = $this->basket_item_helper->build_basket_item(
+		$item        = $this->basket_item_helper->build_basket_item(
 			$voucher_key,
 			$amount,
 			1,
@@ -458,8 +458,8 @@ class Additional_Information {
 			$voucher_key,
 			$voucher_tax
 		);
-		if ( $payment_method == self::PAYPAL_METHOD ) {
-			$item->setTaxRate(null);
+		if ( $payment_method === self::PAYPAL_METHOD ) {
+			$item->setTaxRate( null );
 		}
 		$basket->add( $item );
 
