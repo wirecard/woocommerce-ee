@@ -58,6 +58,8 @@ class Additional_Information {
 	const BILLING = 'billing';
 
 	const BASE = 'base';
+	
+	const PAYPAL_METHOD = 'wirecard_ee_paypal';
 
 	protected $basket_item_helper;
 
@@ -70,11 +72,13 @@ class Additional_Information {
 	 *
 	 * @param Transaction $transaction
 	 *
+	 * @param string $payment_method
+	 *
 	 * @return Basket
 	 *
 	 * @since 1.0.0
 	 */
-	public function create_shopping_basket( $transaction ) {
+	public function create_shopping_basket( $transaction, $payment_method = null ) {
 		global $woocommerce;
 
 		/** @var WC_Cart $cart */
@@ -119,14 +123,13 @@ class Additional_Information {
 			}
 			$coupon_total = $coupon_netto + $coupon_tax;
 			$sum         -= $coupon_total;
-
 			$basket = $this->set_voucher_item(
 				$basket,
 				$coupon_netto,
-				$coupon_tax
+				$coupon_tax,
+				$payment_method
 			);
 		}
-
 		if ( $cart->get_total( 'total' ) - $sum > 0 ) {
 			$shipping += floatval( number_format( ( $cart->get_total( 'total' ) - $sum ), wc_get_price_decimals(), '.', '' ) );
 		}
@@ -169,7 +172,7 @@ class Additional_Information {
 		$transaction->setAccountHolder( $this->create_account_holder( $order, self::BILLING ) );
 		$transaction->setShipping( $this->create_account_holder( $order, self::SHIPPING ) );
 		$transaction->setOrderNumber( $order->get_order_number() );
-		$transaction->setBasket( $this->create_shopping_basket( $transaction ) );
+		$transaction->setBasket( $this->create_shopping_basket( $transaction, $order->get_payment_method() ) );
 		$transaction->setIpAddress( $order->get_customer_ip_address() );
 		$transaction->setConsumerId( $order->get_customer_id() );
 
@@ -439,13 +442,14 @@ class Additional_Information {
 	 * @param float $voucher_total
 	 * @param float $voucher_tax
 	 *
+	 * @param $payment_method
+	 *
 	 * @return Basket
 	 * @since 1.6.2
 	 */
-	private function set_voucher_item( $basket, $voucher_total, $voucher_tax ) {
+	private function set_voucher_item( $basket, $voucher_total, $voucher_tax, $payment_method ) {
 		$voucher_key = 'Voucher';
 		$amount      = ( ( $voucher_total + $voucher_tax ) * -1 );
-
 		$item = $this->basket_item_helper->build_basket_item(
 			$voucher_key,
 			$amount,
@@ -454,7 +458,9 @@ class Additional_Information {
 			$voucher_key,
 			$voucher_tax
 		);
-
+		if ( $payment_method == self::PAYPAL_METHOD ) {
+			$item->setTaxRate(null);
+		}
 		$basket->add( $item );
 
 		return $basket;
