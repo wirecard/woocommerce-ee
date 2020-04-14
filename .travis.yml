@@ -49,8 +49,6 @@ jobs:
         - if [[ ${COMPATIBILITY_CHECK}  == "0" ]]; then export WOOCOMMERCE_VERSION=$(awk "NR==${WOOCOMMERCE_NUMBER} {print; exit}" ${WOOCOMMERCE_RELEASES_FILE}); else export WOOCOMMERCE_VERSION=$(awk "NR==${WOOCOMMERCE_NUMBER} {print; exit}" ${WOOCOMMERCE_COMPATIBILITY_FILE}); fi
         - export LATEST_RELEASED_SHOP_EXTENSION_VERSION=`jq .[0].release ${TRAVIS_BUILD_DIR}/SHOPVERSIONS | tr -d '"'`
         - echo "Testing with Woocommerce version ${WOOCOMMERCE_VERSION}"
-        - if [[ ${LATEST_EXTENSION_RELEASE}  == "1" ]]; then wget -q https://github.com/wirecard/woocommerce-ee/releases/download/${LATEST_RELEASED_SHOP_EXTENSION_VERSION}/woocommerce-wirecard-ee.zip; else bash .bin/generate-release-package.sh ;fi
-
       script: bash .bin/setup-and-run-ui-tests.sh
       after_script: skip
       after_success:
