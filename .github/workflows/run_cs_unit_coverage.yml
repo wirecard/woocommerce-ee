@@ -26,6 +26,9 @@ jobs:
     - name: Install Composer 
       run: composer require --dev --no-interaction satooshi/php-coveralls:^1.0
 
+    - name: Install codeception dependencies
+      run: composer require codeception/module-asserts:^1.2
+
     - name: Install PHP CodeSniffer
       run: git clone -b master --depth 1 https://github.com/squizlabs/PHP_CodeSniffer.git /tmp/phpcs
 
