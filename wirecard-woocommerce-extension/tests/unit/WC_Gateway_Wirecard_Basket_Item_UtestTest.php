@@ -32,14 +32,37 @@
 use Wirecard\PaymentSdk\Entity\Amount;
 use Wirecard\PaymentSdk\Entity\Item;
 
+/**
+ * Class Basket_Item_Helper
+ * @since 3.2.1
+ */
 class WC_Gateway_Wirecard_Basket_Item_Unit_Test extends \Codeception\Test\Unit
 {
+
+	const NAME = "Test Product";
+	const AMOUNT = 34;
+	const AMOUNT_FLOAT = 34.50;
+	const AMOUNT_FLOAT_STRING = '42.50';
+	const QUANTITY = 2;
+	const DESCRIPTION = "This is a test product.";
+	const ARTICAL_NUMBER = "3";
+	const TAX_RATE = 15.0;
+	const TAX_RATE_NULL = null;
+	const TAX_AMOUNT = 5;
+	const TAX_AMOUNT_NULL = null;
+	const TAX_AMOUNT_FLOAT = '3.40';
+	const CURRENCY = "EUR";
+
 	/**
 	 * @var UnitTester
 	 */
 	protected $tester;
-	private $basket_helper;
 
+	/**
+	 * @var Basket_Item_Helper
+	 */
+	private $basket_helper;
+	
 	protected function _before()
 	{
 		$this->basket_helper = new Basket_Item_Helper();
@@ -48,26 +71,75 @@ class WC_Gateway_Wirecard_Basket_Item_Unit_Test extends \Codeception\Test\Unit
 	protected function _after()
 	{
 	}
+	
+	public function dataProvider() {
+		yield "test_build_basket_item_with_tax_rate" => [
+			self::NAME,
+			self::AMOUNT,
+			self::QUANTITY,
+			self::DESCRIPTION,
+			self::ARTICAL_NUMBER,
+			self::TAX_RATE,
+			self::TAX_AMOUNT_NULL,
+			self::CURRENCY
+		];
+		yield "test_build_basket_item_with_tax_amount" => [
+			self::NAME,
+			self::AMOUNT,
+			self::QUANTITY,
+			self::DESCRIPTION,
+			self::ARTICAL_NUMBER,
+			self::TAX_RATE,
+			self::TAX_AMOUNT,
+			self::CURRENCY
+		];
+		yield "test_build_basket_item_with_string_amount" => [
+			self::NAME,
+			self::AMOUNT,
+			self::QUANTITY,
+			self::DESCRIPTION,
+			self::ARTICAL_NUMBER,
+			self::TAX_RATE_NULL,
+			self::TAX_AMOUNT_FLOAT,
+			self::CURRENCY
+		];
+		yield "test_build_basket_without_currency" => [
+			self::NAME,
+			self::AMOUNT_FLOAT,
+			self::QUANTITY,
+			self::DESCRIPTION,
+			self::ARTICAL_NUMBER,
+			self::TAX_RATE,
+			self::TAX_AMOUNT_NULL,
+			get_woocommerce_currency()
+		];
+	}
 
-	public function test_build_basket_item_with_tax_rate() {
+	/**
+	 * @dataProvider dataProvider
+	 *
+	 * @param string $name
+	 * @param int $amount
+	 * @param int $quantity
+	 * @param string $description
+	 * @param string $article_number
+	 * @param int $tax_amount
+	 * @param int $tax_rate
+	 * @param string $currency
+	 */
+	public function test_build_basket($name, $amount, $quantity, $description, $article_number, $tax_rate, $tax_amount, $currency)
+	{
+		$expected = new Item($name, new Amount($amount, $currency), $quantity);
 
-		$name = 'Testproduct1';
-		$amount = 34;
-		$quantity = 2;
-		$description = 'This is a testproduct.';
-		$article_number = '3';
-		$tax_rate = 15;
-		$tax_amount = null;
-		$currency = 'EUR';
-
-		$expected = new Item(
-			$name,
-			new Amount($amount, $currency),
-			$quantity
-		);
 		$expected->setDescription($description);
 		$expected->setArticleNumber($article_number);
 		$expected->setTaxRate($tax_rate);
+		
+		if ($tax_amount =! null) {
+			$expected->setTaxAmount(new Amount((float)$tax_amount, $currency));
+		} else {
+			$expected->setTaxAmount(new Amount($tax_amount, $currency));
+		}
 
 		$this->assertEquals($expected, $this->basket_helper->build_basket_item(
 			$name,
@@ -78,98 +150,6 @@ class WC_Gateway_Wirecard_Basket_Item_Unit_Test extends \Codeception\Test\Unit
 			$tax_rate,
 			$tax_amount,
 			$currency
-		));
-	}
-
-	public function test_build_basket_item_with_tax_amount() {
-		$name = 'Testproduct with taxamount';
-		$amount = 36;
-		$quantity = 3;
-		$description = 'This is a testproduct with tax amount.';
-		$article_number = '6';
-		$tax_rate = 12;
-		$tax_amount = 5;
-		$currency = 'EUR';
-
-		$expected = new Item(
-			$name,
-			new Amount($amount, $currency),
-			$quantity
-		);
-		$expected->setDescription($description);
-		$expected->setArticleNumber($article_number);
-		$expected->setTaxRate($tax_rate);
-		$expected->setTaxAmount(new Amount($tax_amount, $currency));
-
-		$this->assertEquals($expected, $this->basket_helper->build_basket_item(
-			$name,
-			$amount,
-			$quantity,
-			$description,
-			$article_number,
-			$tax_rate,
-			$tax_amount,
-			$currency
-		));
-	}
-
-	public function test_build_basket_item_with_string_amount() {
-		$name = 'Testproduct with amount not float';
-		$amount = '42.50';
-		$quantity = 1;
-		$description = 'This is a testproduct with tax amount and not float values.';
-		$article_number = '6';
-		$tax_rate = null;
-		$tax_amount = '3.40';
-		$currency = 'EUR';
-
-		$expected = new Item(
-			$name,
-			new Amount((float)$amount, $currency),
-			$quantity
-		);
-		$expected->setDescription($description);
-		$expected->setArticleNumber($article_number);
-		$expected->setTaxAmount(new Amount((float)$tax_amount, $currency));
-
-		$this->assertEquals($expected, $this->basket_helper->build_basket_item(
-			$name,
-			$amount,
-			$quantity,
-			$description,
-			$article_number,
-			$tax_rate,
-			$tax_amount,
-			$currency
-		));
-	}
-
-	public function test_build_basket_without_currency() {
-		$name = 'Testproduct without currency';
-		$amount = 36.2;
-		$quantity = 1;
-		$description = 'This is a testproduct with tax rate and without currency set.';
-		$article_number = '8';
-		$tax_rate = 16;
-		$tax_amount = null;
-
-		$expected = new Item(
-			$name,
-			new Amount($amount, get_woocommerce_currency()),
-			$quantity
-		);
-		$expected->setDescription($description);
-		$expected->setArticleNumber($article_number);
-		$expected->setTaxRate($tax_rate);
-
-		$this->assertEquals($expected, $this->basket_helper->build_basket_item(
-			$name,
-			$amount,
-			$quantity,
-			$description,
-			$article_number,
-			$tax_rate,
-			$tax_amount
 		));
 	}
 }
