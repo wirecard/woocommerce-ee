@@ -72,7 +72,38 @@ class WC_Gateway_Wirecard_Basket_Item_Unit_Test extends \Codeception\Test\Unit
 	{
 	}
 	
-	public function dataProvider() {
+	/**
+	 * @param $name
+	 * @param $amount
+	 * @param $quantity
+	 * @param $description
+	 * @param $article_number
+	 * @param $tax_rate
+	 * @param $tax_amount
+	 * @param $currency
+	 * @return Item $expected
+	 */
+	private function itemData($name, $amount, $quantity, $description, $article_number, $tax_rate, $tax_amount, $currency)
+	{
+		$expected = new Item($name, new Amount($amount, $currency), $quantity);
+
+		$expected->setDescription($description);
+		$expected->setArticleNumber($article_number);
+
+		$expected->setTaxRate($tax_rate);
+
+		if ($tax_amount != null) {
+			$expected->setTaxAmount(new Amount((float)$tax_amount, $currency));
+		}
+
+		return $expected;
+	}
+	
+	/**
+	* @return \Generator
+	*/
+	public function dataProvider()
+	{
 		yield "test_build_basket_item_with_tax_rate" => [
 			self::NAME,
 			self::AMOUNT,
@@ -81,7 +112,10 @@ class WC_Gateway_Wirecard_Basket_Item_Unit_Test extends \Codeception\Test\Unit
 			self::ARTICAL_NUMBER,
 			self::TAX_RATE,
 			self::TAX_AMOUNT_NULL,
-			self::CURRENCY
+			self::CURRENCY,
+			$this->itemData(self::NAME, self::AMOUNT, self::QUANTITY,
+				self::DESCRIPTION, self::ARTICAL_NUMBER,
+				self::TAX_RATE, self::TAX_AMOUNT_NULL, self::CURRENCY)
 		];
 		yield "test_build_basket_item_with_tax_amount" => [
 			self::NAME,
@@ -91,7 +125,10 @@ class WC_Gateway_Wirecard_Basket_Item_Unit_Test extends \Codeception\Test\Unit
 			self::ARTICAL_NUMBER,
 			self::TAX_RATE,
 			self::TAX_AMOUNT,
-			self::CURRENCY
+			self::CURRENCY,
+			$this->itemData(self::NAME, self::AMOUNT, self::QUANTITY,
+				self::DESCRIPTION, self::ARTICAL_NUMBER,
+				self::TAX_RATE, self::TAX_AMOUNT, self::CURRENCY)
 		];
 		yield "test_build_basket_item_with_string_amount" => [
 			self::NAME,
@@ -101,7 +138,10 @@ class WC_Gateway_Wirecard_Basket_Item_Unit_Test extends \Codeception\Test\Unit
 			self::ARTICAL_NUMBER,
 			self::TAX_RATE_NULL,
 			self::TAX_AMOUNT_FLOAT,
-			self::CURRENCY
+			self::CURRENCY,
+			$this->itemData(self::NAME, self::AMOUNT, self::QUANTITY,
+				self::DESCRIPTION, self::ARTICAL_NUMBER,
+				self::TAX_RATE_NULL, self::TAX_AMOUNT_FLOAT, self::CURRENCY)
 		];
 		yield "test_build_basket_without_currency" => [
 			self::NAME,
@@ -111,36 +151,28 @@ class WC_Gateway_Wirecard_Basket_Item_Unit_Test extends \Codeception\Test\Unit
 			self::ARTICAL_NUMBER,
 			self::TAX_RATE,
 			self::TAX_AMOUNT_NULL,
-			get_woocommerce_currency()
+			get_woocommerce_currency(),
+			$this->itemData(self::NAME, self::AMOUNT_FLOAT, self::QUANTITY,
+				self::DESCRIPTION, self::ARTICAL_NUMBER,
+				self::TAX_RATE, self::TAX_AMOUNT_NULL, get_woocommerce_currency())
 		];
 	}
 
 	/**
 	 * @dataProvider dataProvider
 	 *
-	 * @param string $name
-	 * @param int $amount
-	 * @param int $quantity
-	 * @param string $description
-	 * @param string $article_number
-	 * @param int $tax_amount
-	 * @param int $tax_rate
-	 * @param string $currency
+	 * @param $name
+	 * @param $amount
+	 * @param $quantity
+	 * @param $description
+	 * @param $article_number
+	 * @param $tax_rate
+	 * @param $tax_amount
+	 * @param $currency
+	 * @param $expected
 	 */
-	public function test_build_basket($name, $amount, $quantity, $description, $article_number, $tax_rate, $tax_amount, $currency)
+	public function test_build_basket($name, $amount, $quantity, $description, $article_number, $tax_rate, $tax_amount, $currency, $expected)
 	{
-		$expected = new Item($name, new Amount($amount, $currency), $quantity);
-
-		$expected->setDescription($description);
-		$expected->setArticleNumber($article_number);
-		$expected->setTaxRate($tax_rate);
-		
-		if ($tax_amount =! null) {
-			$expected->setTaxAmount(new Amount((float)$tax_amount, $currency));
-		} else {
-			$expected->setTaxAmount(new Amount($tax_amount, $currency));
-		}
-
 		$this->assertEquals($expected, $this->basket_helper->build_basket_item(
 			$name,
 			$amount,
