@@ -84,4 +84,5 @@ Our general Terms of Use can be found on [Github](https://github.com/wirecard/wo
 Follow this [link](https://github.com/wirecard/woocommerce-ee/graphs/contributors) to see the team responsible for the development of this extension.
 
 == Changelog ==
-- Implement new and improved credit card workflow for one-click checkout
+3.2.1
+- Fix archive size for partners
