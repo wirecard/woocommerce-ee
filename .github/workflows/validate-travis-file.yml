@@ -1,6 +1,5 @@
 name: Validate travis.yml file
 
-
 on:
   push:
     paths: '.travis.yml'
