@@ -45,7 +45,7 @@ class Translation {
 	 */
 	public function get_transaction_type_list() {
 		return array(
-			'check-enrollment'		=> array(
+			'check-enrollment'      => array(
 				'title' => __( 'tx_type_check_enrollment', 'wirecard-woocommerce-extension' ),
 			),
 			'check-payer-response'  => array(
@@ -66,13 +66,13 @@ class Translation {
 			'void-capture'          => array(
 				'title' => __( 'tx_type_void_capture', 'wirecard-woocommerce-extension' ),
 			),
-			'deposit'              	=> array(
+			'deposit'               => array(
 				'title' => __( 'tx_type_deposit', 'wirecard-woocommerce-extension' ),
 			),
 			'purchase'              => array(
 				'title' => __( 'tx_type_purchase', 'wirecard-woocommerce-extension' ),
 			),
-			'debit'              	=> array(
+			'debit'                 => array(
 				'title' => __( 'tx_type_debit', 'wirecard-woocommerce-extension' ),
 			),
 			'refund-purchase'       => array(
@@ -99,12 +99,12 @@ class Translation {
 			'void-pending-credit'   => array(
 				'title' => __( 'tx_type_void_pending_credit', 'wirecard-woocommerce-extension' ),
 			),
-			'credit'              	=> array(
+			'credit'                => array(
 				'title' => __( 'tx_type_credit', 'wirecard-woocommerce-extension' ),
 			),
 		);
 	}
-	
+
 	/**
 	 * Gets list of all transaction state translations
 	 *
@@ -114,16 +114,16 @@ class Translation {
 	 */
 	public function get_transaction_state_list() {
 		return array(
-			'closed'    => array(
+			'closed'   => array(
 				'title' => __( 'state_closed', 'wirecard-woocommerce-extension' ),
 			),
-			'open'      => array(
+			'open'     => array(
 				'title' => __( 'state_open', 'wirecard-woocommerce-extension' ),
 			),
-			'success'   => array(
+			'success'  => array(
 				'title' => __( 'state_success', 'wirecard-woocommerce-extension' ),
 			),
-			'awaiting'	=> array(
+			'awaiting' => array(
 				'title' => __( 'state_awaiting', 'wirecard-woocommerce-extension' ),
 			),
 		);

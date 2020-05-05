@@ -88,7 +88,7 @@ class Wirecard_Transaction_Factory {
 	private $fields_list;
 
 	/**
-	 * List of transaction type translations 
+	 * List of transaction type translations
 	 *
 	 * @since  3.3.0
 	 * @access private
@@ -163,10 +163,10 @@ class Wirecard_Transaction_Factory {
 				'title' => __( 'panel_currency', 'wirecard-woocommerce-extension' ),
 			),
 		);
-		
-		$translation = new Translation();
+
+		$translation                  = new Translation();
 		$this->transaction_state_list = $translation->get_transaction_state_list();
-		$this->transaction_type_list = $translation->get_transaction_type_list();
+		$this->transaction_type_list  = $translation->get_transaction_type_list();
 	}
 
 	/**
@@ -256,10 +256,10 @@ class Wirecard_Transaction_Factory {
 				if ( key_exists( $field_key, $row ) ) {
 					if ( 'transaction_id' === $field_key || ( 'parent_transaction_id' === $field_key && ! empty( $field_value ) ) ) {
 						echo "<a href='?page=wirecardpayment&id={$row[ $field_key ]}'>" . $row[ $field_key ] . '</a>';
-					} else if ( 'transaction_type' === $field_key ) {
-						echo $this->transaction_type_list[ $row[ $field_key ] ][ 'title' ];
-					} else if ( 'transaction_state' === $field_key ) {
-						echo $this->transaction_state_list[ $row[ $field_key ] ][ 'title' ];
+					} elseif ( 'transaction_type' === $field_key ) {
+						echo $this->transaction_type_list[ $row[ $field_key ] ]['title'];
+					} elseif ( 'transaction_state' === $field_key ) {
+						echo $this->transaction_state_list[ $row[ $field_key ] ]['title'];
 					} else {
 						echo $row[ $field_key ];
 					}
