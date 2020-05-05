@@ -26,12 +26,13 @@ echo "SUBDOMAIN=${SUBDOMAIN}"
 
 # Open ngrok tunnel
 "${PWD}"/ngrok authtoken "${NGROK_TOKEN}"
-"${PWD}"/ngrok http 9090 -subdomain="${SUBDOMAIN}" >/dev/null &
+"${PWD}"/ngrok http 8080 -subdomain="${SUBDOMAIN}" >/dev/null &
 NGROK_URL=$(curl -s localhost:4040/api/tunnels/command_line | jq --raw-output .public_url)
 
 # allow ngrok to initialize
 while [ ! "${NGROK_URL}" ] || [ "${NGROK_URL}" = 'null' ]; do
   echo "Waiting for ngrok to initialize"
   export NGROK_URL=$(curl -s localhost:4040/api/tunnels/command_line | jq --raw-output .public_url)
+  ((c++)) && ((c == 50)) && break
   sleep 1
 done

@@ -1,0 +1,12 @@
+paths:
+  tests: wirecard-woocommerce-extension/tests
+  output: wirecard-woocommerce-extension/tests/_output
+  data: wirecard-woocommerce-extension/tests/_data
+  support: wirecard-woocommerce-extension/tests/_support
+  envs: wirecard-woocommerce-extension/tests/_envs
+actor_suffix: Tester
+extensions:
+  enabled:
+    - Codeception\Extension\RunFailed
+params:
+  - env
