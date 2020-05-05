@@ -34,6 +34,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/handler/class-wirecard-transaction-handler.php' );
+require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/helper/class-transaction-state-translation.php' );
+require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/helper/class-transaction-type-translation.php' );
 
 
 use Wirecard\PaymentSdk\Response\SuccessResponse;
@@ -85,6 +87,24 @@ class Wirecard_Transaction_Factory {
 	 * @var array
 	 */
 	private $fields_list;
+
+	/**
+	 * List of transaction type translations 
+	 *
+	 * @since  3.3.0
+	 * @access private
+	 * @var array
+	 */
+	private $transaction_type_list;
+
+	/**
+	 * List of transaction state translations
+	 *
+	 * @since  3.3.0
+	 * @access private
+	 * @var array
+	 */
+	private $transaction_state_list;
 
 	/**
 	 * Handles back-end operations
@@ -144,6 +164,12 @@ class Wirecard_Transaction_Factory {
 				'title' => __( 'panel_currency', 'wirecard-woocommerce-extension' ),
 			),
 		);
+		
+		$transaction_state_translation = new Transaction_State_Translation();
+		$this->transaction_state_list = $transaction_state_translation->get_transaction_state_list();
+		
+		$transaction_type_translation = new Transaction_Type_Translation();
+		$this->transaction_type_list = $transaction_type_translation->get_transaction_type_list();
 	}
 
 	/**
@@ -233,6 +259,10 @@ class Wirecard_Transaction_Factory {
 				if ( key_exists( $field_key, $row ) ) {
 					if ( 'transaction_id' === $field_key || ( 'parent_transaction_id' === $field_key && ! empty( $field_value ) ) ) {
 						echo "<a href='?page=wirecardpayment&id={$row[ $field_key ]}'>" . $row[ $field_key ] . '</a>';
+					} else if ( 'transaction_type' === $field_key ) {
+						echo $this->transaction_type_list[ $row[ $field_key ] ][ 'title' ];
+					} else if ( 'transaction_state' === $field_key ) {
+						echo $this->transaction_state_list[ $row[ $field_key ] ][ 'title' ];
 					} else {
 						echo $row[ $field_key ];
 					}
