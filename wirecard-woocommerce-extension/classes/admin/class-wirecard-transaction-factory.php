@@ -256,12 +256,8 @@ class Wirecard_Transaction_Factory {
 				if ( key_exists( $field_key, $row ) ) {
 					if ( 'transaction_id' === $field_key || ( 'parent_transaction_id' === $field_key && ! empty( $field_value ) ) ) {
 						echo "<a href='?page=wirecardpayment&id={$row[ $field_key ]}'>" . $row[ $field_key ] . '</a>';
-					} elseif ( 'transaction_type' === $field_key ) {
-						echo $this->transaction_type_list[ $row[ $field_key ] ]['title'];
-					} elseif ( 'transaction_state' === $field_key ) {
-						echo $this->transaction_state_list[ $row[ $field_key ] ]['title'];
 					} else {
-						echo $row[ $field_key ];
+						echo $this->get_translated_key( $field_key, $row );
 					}
 				}
 				echo '</td>';
@@ -644,5 +640,27 @@ class Wirecard_Transaction_Factory {
 		}
 
 		return false;
+	}
+
+	/**
+	 * Returns translation if exists, otherwise returns the key
+	 *
+	 * @param $field_key
+	 * @param $row
+	 *
+	 * @return string
+	 *
+	 * @since 3.3.0
+	 */
+	private function get_translated_key( $field_key, $row ) {
+		$translation_key = $row[ $field_key ];
+		switch ( $field_key ) {
+			case 'transaction_type':
+				return $this->transaction_type_list[ $translation_key ]['title'];
+			case 'transaction_state':
+				return $this->transaction_state_list[ $translation_key ]['title'];
+			default:
+				return $translation_key;
+		}
 	}
 }
