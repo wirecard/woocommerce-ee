@@ -34,7 +34,7 @@
  *
  * @since 3.3.0
  */
-class Transaction_Type_Translation {
+class Translation {
 
 	/**
 	 * Gets list of all transaction type translations
@@ -101,6 +101,30 @@ class Transaction_Type_Translation {
 			),
 			'credit'              	=> array(
 				'title' => __( 'tx_type_credit', 'wirecard-woocommerce-extension' ),
+			),
+		);
+	}
+	
+	/**
+	 * Gets list of all transaction state translations
+	 *
+	 * @return array
+	 *
+	 * @since 3.3.0
+	 */
+	public function get_transaction_state_list() {
+		return array(
+			'closed'    => array(
+				'title' => __( 'state_closed', 'wirecard-woocommerce-extension' ),
+			),
+			'open'      => array(
+				'title' => __( 'state_open', 'wirecard-woocommerce-extension' ),
+			),
+			'success'   => array(
+				'title' => __( 'state_success', 'wirecard-woocommerce-extension' ),
+			),
+			'awaiting'	=> array(
+				'title' => __( 'state_awaiting', 'wirecard-woocommerce-extension' ),
 			),
 		);
 	}

@@ -34,8 +34,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/handler/class-wirecard-transaction-handler.php' );
-require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/helper/class-transaction-state-translation.php' );
-require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/helper/class-transaction-type-translation.php' );
+require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/helper/class-translation.php' );
 
 
 use Wirecard\PaymentSdk\Response\SuccessResponse;
@@ -165,11 +164,9 @@ class Wirecard_Transaction_Factory {
 			),
 		);
 		
-		$transaction_state_translation = new Transaction_State_Translation();
-		$this->transaction_state_list = $transaction_state_translation->get_transaction_state_list();
-		
-		$transaction_type_translation = new Transaction_Type_Translation();
-		$this->transaction_type_list = $transaction_type_translation->get_transaction_type_list();
+		$translation = new Translation();
+		$this->transaction_state_list = $translation->get_transaction_state_list();
+		$this->transaction_type_list = $translation->get_transaction_type_list();
 	}
 
 	/**
