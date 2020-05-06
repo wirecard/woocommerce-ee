@@ -30,11 +30,32 @@
  */
 
 /**
- * Class Translation
+ * Class Transaction_Translation
  *
  * @since 3.3.0
  */
-class Translation {
+class Transaction_Translation {
+
+	/**
+	 * Returns list of transaction header
+	 *
+	 * @return array
+	 *
+	 * @since 3.3.0
+	 */
+	public function get_header_translations() {
+		return array(
+			'tx_id'                 => __( 'panel_transaction', 'wirecard-woocommerce-extension' ),
+			'order_id'              => __( 'panel_order_number', 'wirecard-woocommerce-extension' ),
+			'transaction_id'        => __( 'panel_transcation_id', 'wirecard-woocommerce-extension' ),
+			'parent_transaction_id' => __( 'panel_parent_transaction_id', 'wirecard-woocommerce-extension' ),
+			'transaction_type'      => __( 'panel_action', 'wirecard-woocommerce-extension' ),
+			'payment_method'        => __( 'panel_payment_method', 'wirecard-woocommerce-extension' ),
+			'transaction_state'     => __( 'panel_transaction_state', 'wirecard-woocommerce-extension' ),
+			'amount'                => __( 'panel_amount', 'wirecard-woocommerce-extension' ),
+			'currency'              => __( 'panel_currency', 'wirecard-woocommerce-extension' ),
+		);
+	}
 
 	/**
 	 * Returns translated key for transaction table
@@ -45,12 +66,13 @@ class Translation {
 	 * @since 3.3.0
 	 */
 	public function get_translated_key( $field_key ) {
-		$translations = $this->get_transactions();
+		$translations = $this->get_translations();
 		if ( array_key_exists( $field_key, $translations ) ) {
 			return $translations[ $field_key ];
 		}
 		return $field_key;
 	}
+
 	/**
 	 * Returns list of all transaction translations
 	 *
@@ -58,7 +80,7 @@ class Translation {
 	 *
 	 * @since 3.3.0
 	 */
-	private function get_transactions() {
+	private function get_translations() {
 		return array(
 			'check-enrollment'      => __( 'tx_type_check_enrollment', 'wirecard-woocommerce-extension' ),
 			'check-payer-response'  => __( 'tx_type_check_payer_response', 'wirecard-woocommerce-extension' ),
