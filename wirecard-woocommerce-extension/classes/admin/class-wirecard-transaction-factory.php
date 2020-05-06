@@ -34,7 +34,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/handler/class-wirecard-transaction-handler.php' );
-require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/helper/class-transaction-translation.php' );
+require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/helper/class-transaction-translate-helper.php' );
 
 
 use Wirecard\PaymentSdk\Response\SuccessResponse;
@@ -101,9 +101,9 @@ class Wirecard_Transaction_Factory {
 	 *
 	 * @since  3.3.0
 	 * @access private
-	 * @var Transaction_Translation $translation
+	 * @var Transaction_Translate_Helper $transaction_translate_helper
 	 */
-	private $translation;
+	private $transaction_translate_helper;
 
 	/**
 	 * Wirecard_Transaction_Factory constructor.
@@ -113,10 +113,10 @@ class Wirecard_Transaction_Factory {
 	public function __construct() {
 		global $wpdb;
 
-		$this->transaction_handler   = new Wirecard_Transaction_Handler();
-		$this->table_name            = $wpdb->base_prefix . 'wirecard_payment_gateway_tx';
-		$this->stock_reduction_types = array( 'authorization', 'purchase', 'debit', 'deposit' );
-		$this->translation           = new Transaction_Translation();
+		$this->transaction_handler          = new Wirecard_Transaction_Handler();
+		$this->table_name                   = $wpdb->base_prefix . 'wirecard_payment_gateway_tx';
+		$this->stock_reduction_types        = array( 'authorization', 'purchase', 'debit', 'deposit' );
+		$this->transaction_translate_helper = new Transaction_Translate_Helper();
 	}
 
 	/**
@@ -179,8 +179,8 @@ class Wirecard_Transaction_Factory {
 	public function get_rows( $page = 1 ) {
 		global $wpdb;
 
-		$fields_list = $this->translation->get_header_translations();
-		$start       = ( $page * 20 ) - 19;
+		$transaction_table_title_list = $this->transaction_translate_helper->get_table_header_translations();
+		$start                        = ( $page * 20 ) - 19;
 
 		$start --;
 		$rows  = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}wirecard_payment_gateway_tx ORDER BY tx_id DESC LIMIT %d,20", $start ), ARRAY_A );
@@ -192,9 +192,9 @@ class Wirecard_Transaction_Factory {
 		}
 
 		echo '<tr>';
-		foreach ( $fields_list as $field_key => $field_value ) {
+		foreach ( $transaction_table_title_list as $table_title_key => $table_title ) {
 			echo '<th>';
-			echo $field_value;
+			echo $table_title;
 			echo '</th>';
 		}
 		echo '</tr>';
@@ -202,13 +202,13 @@ class Wirecard_Transaction_Factory {
 		foreach ( $rows as $row ) {
 			echo '<tr>';
 
-			foreach ( $fields_list as $field_key => $field_value ) {
+			foreach ( $transaction_table_title_list as $table_title_key => $table_title ) {
 				echo '<td>';
-				if ( key_exists( $field_key, $row ) ) {
-					if ( 'transaction_id' === $field_key || ( 'parent_transaction_id' === $field_key && ! empty( $field_value ) ) ) {
-						echo "<a href='?page=wirecardpayment&id={$row[ $field_key ]}'>" . $row[ $field_key ] . '</a>';
+				if ( key_exists( $table_title_key, $row ) ) {
+					if ( 'transaction_id' === $table_title_key || ( 'parent_transaction_id' === $table_title_key && ! empty( $table_title ) ) ) {
+						echo "<a href='?page=wirecardpayment&id={$row[ $table_title_key ]}'>" . $row[ $table_title_key ] . '</a>';
 					} else {
-						echo $this->translation->get_translated_key( $row[ $field_key ] );
+						echo $this->transaction_translate_helper->translate( $row[ $table_title_key ] );
 					}
 				}
 				echo '</td>';

@@ -34,7 +34,7 @@
  *
  * @since 3.3.0
  */
-class Transaction_Translation {
+class Transaction_Translate_Helper {
 
 	/**
 	 * Returns list of transaction header
@@ -43,7 +43,7 @@ class Transaction_Translation {
 	 *
 	 * @since 3.3.0
 	 */
-	public function get_header_translations() {
+	public function get_table_header_translations() {
 		return array(
 			'tx_id'                 => __( 'panel_transaction', 'wirecard-woocommerce-extension' ),
 			'order_id'              => __( 'panel_order_number', 'wirecard-woocommerce-extension' ),
@@ -60,12 +60,12 @@ class Transaction_Translation {
 	/**
 	 * Returns translated key for transaction table
 	 *
-	 * @param $field_key
+	 * @param string $field_key
 	 * @return string
 	 *
 	 * @since 3.3.0
 	 */
-	public function get_translated_key( $field_key ) {
+	public function translate( $field_key ) {
 		$translations = $this->get_translations();
 		if ( array_key_exists( $field_key, $translations ) ) {
 			return $translations[ $field_key ];
