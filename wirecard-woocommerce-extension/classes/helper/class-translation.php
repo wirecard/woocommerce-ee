@@ -30,102 +30,59 @@
  */
 
 /**
- * Class Transaction_Type_Translation
+ * Class Translation
  *
  * @since 3.3.0
  */
 class Translation {
 
 	/**
-	 * Gets list of all transaction type translations
+	 * Returns translated key for transaction table
 	 *
-	 * @return array
+	 * @param $field_key
+	 * @return string
 	 *
 	 * @since 3.3.0
 	 */
-	public function get_transaction_type_list() {
-		return array(
-			'check-enrollment'      => array(
-				'title' => __( 'tx_type_check_enrollment', 'wirecard-woocommerce-extension' ),
-			),
-			'check-payer-response'  => array(
-				'title' => __( 'tx_type_check_payer_response', 'wirecard-woocommerce-extension' ),
-			),
-			'authorization'         => array(
-				'title' => __( 'tx_type_authorization', 'wirecard-woocommerce-extension' ),
-			),
-			'capture-authorization' => array(
-				'title' => __( 'tx_type_capture_authorization', 'wirecard-woocommerce-extension' ),
-			),
-			'refund-capture'        => array(
-				'title' => __( 'tx_type_refund_capture', 'wirecard-woocommerce-extension' ),
-			),
-			'void-authorization'    => array(
-				'title' => __( 'tx_type_void_authorization', 'wirecard-woocommerce-extension' ),
-			),
-			'void-capture'          => array(
-				'title' => __( 'tx_type_void_capture', 'wirecard-woocommerce-extension' ),
-			),
-			'deposit'               => array(
-				'title' => __( 'tx_type_deposit', 'wirecard-woocommerce-extension' ),
-			),
-			'purchase'              => array(
-				'title' => __( 'tx_type_purchase', 'wirecard-woocommerce-extension' ),
-			),
-			'debit'                 => array(
-				'title' => __( 'tx_type_debit', 'wirecard-woocommerce-extension' ),
-			),
-			'refund-purchase'       => array(
-				'title' => __( 'tx_type_refund_purchase', 'wirecard-woocommerce-extension' ),
-			),
-			'refund-debit'          => array(
-				'title' => __( 'tx_type_refund_debit', 'wirecard-woocommerce-extension' ),
-			),
-			'debit-return'          => array(
-				'title' => __( 'tx_type_debit_return', 'wirecard-woocommerce-extension' ),
-			),
-			'void-purchase'         => array(
-				'title' => __( 'tx_type_void_purchase', 'wirecard-woocommerce-extension' ),
-			),
-			'pending-debit'         => array(
-				'title' => __( 'tx_type_pending_debit', 'wirecard-woocommerce-extension' ),
-			),
-			'void-pending-debit'    => array(
-				'title' => __( 'tx_type_void_pending_debit', 'wirecard-woocommerce-extension' ),
-			),
-			'pending-credit'        => array(
-				'title' => __( 'tx_type_pending_credit', 'wirecard-woocommerce-extension' ),
-			),
-			'void-pending-credit'   => array(
-				'title' => __( 'tx_type_void_pending_credit', 'wirecard-woocommerce-extension' ),
-			),
-			'credit'                => array(
-				'title' => __( 'tx_type_credit', 'wirecard-woocommerce-extension' ),
-			),
-		);
+	public function get_translated_key( $field_key ) {
+		$translations = $this->get_transactions();
+		if ( array_key_exists( $field_key, $translations ) ) {
+			return $translations[ $field_key ];
+		}
+		return $field_key;
 	}
-
 	/**
-	 * Gets list of all transaction state translations
+	 * Returns list of all transaction translations
 	 *
 	 * @return array
 	 *
 	 * @since 3.3.0
 	 */
-	public function get_transaction_state_list() {
+	private function get_transactions() {
 		return array(
-			'closed'   => array(
-				'title' => __( 'state_closed', 'wirecard-woocommerce-extension' ),
-			),
-			'open'     => array(
-				'title' => __( 'state_open', 'wirecard-woocommerce-extension' ),
-			),
-			'success'  => array(
-				'title' => __( 'state_success', 'wirecard-woocommerce-extension' ),
-			),
-			'awaiting' => array(
-				'title' => __( 'state_awaiting', 'wirecard-woocommerce-extension' ),
-			),
+			'check-enrollment'      => __( 'tx_type_check_enrollment', 'wirecard-woocommerce-extension' ),
+			'check-payer-response'  => __( 'tx_type_check_payer_response', 'wirecard-woocommerce-extension' ),
+			'authorization'         => __( 'tx_type_authorization', 'wirecard-woocommerce-extension' ),
+			'capture-authorization' => __( 'tx_type_capture_authorization', 'wirecard-woocommerce-extension' ),
+			'refund-capture'        => __( 'tx_type_refund_capture', 'wirecard-woocommerce-extension' ),
+			'void-authorization'    => __( 'tx_type_void_authorization', 'wirecard-woocommerce-extension' ),
+			'void-capture'          => __( 'tx_type_void_capture', 'wirecard-woocommerce-extension' ),
+			'deposit'               => __( 'tx_type_deposit', 'wirecard-woocommerce-extension' ),
+			'purchase'              => __( 'tx_type_purchase', 'wirecard-woocommerce-extension' ),
+			'debit'                 => __( 'tx_type_debit', 'wirecard-woocommerce-extension' ),
+			'refund-purchase'       => __( 'tx_type_refund_purchase', 'wirecard-woocommerce-extension' ),
+			'refund-debit'          => __( 'tx_type_refund_debit', 'wirecard-woocommerce-extension' ),
+			'debit-return'          => __( 'tx_type_debit_return', 'wirecard-woocommerce-extension' ),
+			'void-purchase'         => __( 'tx_type_void_purchase', 'wirecard-woocommerce-extension' ),
+			'pending-debit'         => __( 'tx_type_pending_debit', 'wirecard-woocommerce-extension' ),
+			'void-pending-debit'    => __( 'tx_type_void_pending_debit', 'wirecard-woocommerce-extension' ),
+			'pending-credit'        => __( 'tx_type_pending_credit', 'wirecard-woocommerce-extension' ),
+			'void-pending-credit'   => __( 'tx_type_void_pending_credit', 'wirecard-woocommerce-extension' ),
+			'credit'                => __( 'tx_type_credit', 'wirecard-woocommerce-extension' ),
+			'closed'                => __( 'state_closed', 'wirecard-woocommerce-extension' ),
+			'open'                  => __( 'state_open', 'wirecard-woocommerce-extension' ),
+			'success'               => __( 'state_success', 'wirecard-woocommerce-extension' ),
+			'awaiting'              => __( 'state_awaiting', 'wirecard-woocommerce-extension' ),
 		);
 	}
 }

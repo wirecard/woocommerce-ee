@@ -88,24 +88,6 @@ class Wirecard_Transaction_Factory {
 	private $fields_list;
 
 	/**
-	 * List of transaction type translations
-	 *
-	 * @since  3.3.0
-	 * @access private
-	 * @var array
-	 */
-	private $transaction_type_list;
-
-	/**
-	 * List of transaction state translations
-	 *
-	 * @since  3.3.0
-	 * @access private
-	 * @var array
-	 */
-	private $transaction_state_list;
-
-	/**
 	 * Handles back-end operations
 	 *
 	 * @since  1.0.0
@@ -122,6 +104,15 @@ class Wirecard_Transaction_Factory {
 	 * @var array
 	 */
 	private $stock_reduction_types;
+
+	/**
+	 * Translation of transaction types and states
+	 *
+	 * @since  3.3.0
+	 * @access private
+	 * @var Translation $translation
+	 */
+	private $translation;
 
 	/**
 	 * Wirecard_Transaction_Factory constructor.
@@ -163,10 +154,7 @@ class Wirecard_Transaction_Factory {
 				'title' => __( 'panel_currency', 'wirecard-woocommerce-extension' ),
 			),
 		);
-
-		$translation                  = new Translation();
-		$this->transaction_state_list = $translation->get_transaction_state_list();
-		$this->transaction_type_list  = $translation->get_transaction_type_list();
+		$this->translation           = new Translation();
 	}
 
 	/**
@@ -257,7 +245,7 @@ class Wirecard_Transaction_Factory {
 					if ( 'transaction_id' === $field_key || ( 'parent_transaction_id' === $field_key && ! empty( $field_value ) ) ) {
 						echo "<a href='?page=wirecardpayment&id={$row[ $field_key ]}'>" . $row[ $field_key ] . '</a>';
 					} else {
-						echo $this->get_translated_key( $field_key, $row );
+						echo $this->translation->get_translated_key( $row[ $field_key ] );
 					}
 				}
 				echo '</td>';
@@ -640,27 +628,5 @@ class Wirecard_Transaction_Factory {
 		}
 
 		return false;
-	}
-
-	/**
-	 * Returns translation if exists, otherwise returns the key
-	 *
-	 * @param $field_key
-	 * @param $row
-	 *
-	 * @return string
-	 *
-	 * @since 3.3.0
-	 */
-	private function get_translated_key( $field_key, $row ) {
-		$translation_key = $row[ $field_key ];
-		switch ( $field_key ) {
-			case 'transaction_type':
-				return $this->transaction_type_list[ $translation_key ]['title'];
-			case 'transaction_state':
-				return $this->transaction_state_list[ $translation_key ]['title'];
-			default:
-				return $translation_key;
-		}
 	}
 }
