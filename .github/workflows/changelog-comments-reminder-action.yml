@@ -1,13 +1,13 @@
 name: Check Changelog comments
 
 on:
-  pull_request:
-    types: opened
+  push:
+    branches:
+    - 'RC**'
 
 jobs:
   change-version:
     runs-on: ubuntu-latest
-    if: startsWith(github.head_ref, 'RC-')
     name: Check Changelog comments
     steps:
       - name: Checkout ${{ github.event.repository.name }}
