@@ -16,7 +16,7 @@ jobs:
           ref: ${{ github.head_ref }}
       - name: Bump versions and add entry to CHAGGELOG
         id: check-version
-        uses: changelog-comments-reminder-action@TPWDCEE-6751-configuration
+        uses: extension-release-info-update-action@TPWDCEE-6739-configuration
         with:
           repository: ${{ github.event.repository.name }}
       - name: Set global git conf
