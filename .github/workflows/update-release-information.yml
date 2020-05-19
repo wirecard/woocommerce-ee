@@ -14,9 +14,11 @@ jobs:
         uses: wirecard/checkout@v2.0.0
         with:
           ref: ${{ github.head_ref }}
+      - name: Get tags
+        run: git fetch --prune --unshallow
       - name: Bump versions and add entry to CHAGGELOG
         id: check-version
-        uses: extension-release-info-update-action@TPWDCEE-6739-configuration
+        uses: wirecard/extension-release-info-update-action@TPWDCEE-6739-configuration
         with:
           repository: ${{ github.event.repository.name }}
       - name: Set global git conf
