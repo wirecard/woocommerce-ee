@@ -1,4 +1,4 @@
-FROM wordpress:php7.1-apache
+FROM wordpress:php7.2-apache
 #example :
 #docker build --build-arg WOOCOMMERCE_VERSION=2.6.14 --build-arg STOREFRONT_VERSION=2.1.8 -t woo .
 
