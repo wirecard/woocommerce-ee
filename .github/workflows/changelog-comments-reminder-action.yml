@@ -1,0 +1,21 @@
+name: Check Changelog comments
+
+on:
+  push:
+    branches:
+    - 'RC**'
+
+jobs:
+  change-version:
+    runs-on: ubuntu-latest
+    name: Check Changelog comments
+    steps:
+      - name: Checkout ${{ github.event.repository.name }}
+        uses: wirecard/checkout@v2.0.0
+        with:
+          ref: ${{ github.head_ref }}
+      - name: Check changelog comments
+        id: check-changelog
+        uses: wirecard/changelog-comments-reminder-action@master
+        with:
+          repository: ${{ github.event.repository.name }}
