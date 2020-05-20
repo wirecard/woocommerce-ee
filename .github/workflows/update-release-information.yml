@@ -18,7 +18,7 @@ jobs:
         run: git fetch --prune --unshallow
       - name: Bump versions and add entry to CHAGGELOG
         id: check-version
-        uses: wirecard/extension-release-info-update-action@TPWDCEE-6739-configuration
+        uses: wirecard/extension-release-info-update-action@master
         with:
           repository: ${{ github.event.repository.name }}
       - name: Set global git conf
