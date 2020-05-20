@@ -1,4 +1,5 @@
-FROM wordpress:php7.2-apache
+ARG PHP_VERSION
+FROM wordpress:php${PHP_VERSION}-apache
 #example :
 #docker build --build-arg WOOCOMMERCE_VERSION=2.6.14 --build-arg STOREFRONT_VERSION=2.1.8 -t woo .
 
@@ -7,6 +8,7 @@ RUN apt-get -qq update && apt-get -qq install libicu-dev unzip wget -y \
     && docker-php-ext-install intl \
     && docker-php-ext-enable intl
 
+ARG PHP_VERSION
 ARG WOOCOMMERCE_VERSION=0
 ARG STOREFRONT_VERSION=0
 ARG WOOCOMMERCE_CONTAINER_NAME=0
