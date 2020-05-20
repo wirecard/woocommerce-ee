@@ -20,12 +20,6 @@ jobs:
         - GATEWAY=API-TEST
         - WOOCOMMERCE_NUMBER=1
         - ALLOW_FAIL=1
-    - stage: acceptance-test
-      env:
-        - GATEWAY=API-TEST
-        - WOOCOMMERCE_NUMBER=1
-        - LATEST_EXTENSION_RELEASE=1
-        - ALLOW_FAIL=1
   include:
     - &acceptance-test
       stage: acceptance-test
