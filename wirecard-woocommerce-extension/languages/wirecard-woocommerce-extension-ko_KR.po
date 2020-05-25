@@ -395,6 +395,12 @@ msgstr "결제 유형"
 msgid "config_payment_type_desc"
 msgstr "\"사전 결제\"를 선택하여 체크아웃 프로세스 이후 은행 데이터를 표시하거나 \"송장 결제\"를 선택하여 송장과 함께 은행 데이터를 보내십시오."
 
+msgid "config_PSD2_information"
+msgstr "PSD 2"
+
+msgid "config_PSD2_information_desc_woocommerce"
+msgstr "In regards to PSD 2 regulations consider <a target=\"_blank\" href='https://github.com/wirecard/woocommerce-ee/wiki/Credit-Card'>https://github.com/wirecard/woocommerce-ee/wiki/Credit-Card</a> in order to minimize rejected transactions due to missing information. "
+
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:178
 
 msgid "config_shipping_countries"
@@ -421,6 +427,7 @@ msgid "config_status_desc_alipay_crossborder"
 msgstr "Alipay Crossborder 결제방법 활성화"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:106
+
 msgid "config_status_desc_creditcard"
 msgstr "신용카드 결제방법 활성화"
 
@@ -516,6 +523,7 @@ msgid "config_title_desc"
 msgstr "체크아웃 중에 고객이 보게 되는 제목을 제어합니다."
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:213
+
 msgid "config_vault_desc"
 msgstr "신용카드는 이후 사용을 위해 저장할 수 있습니다"
 
@@ -538,6 +546,7 @@ msgid "config_zapp_merchant_return_string_desc"
 msgstr "고객을 휴대전화 은행 앱에서 상점으로 돌려보내는 머천트 복귀 URL"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:62
+
 msgid "creditcard"
 msgstr "Credit Card"
 
@@ -563,50 +572,61 @@ msgid "debtor_acc_owner"
 msgstr "계좌 소유자"
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:97
+
 msgid "enable_heading_title_alipay_crossborder"
 msgstr "Wirecard Alipay Crossborder 사용"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:105
+
 msgid "enable_heading_title_creditcard"
 msgstr "Wirecard 신용카드 사용"
 
 #: classes/includes/class-wc-gateway-wirecard-eps.php:98
+
 msgid "enable_heading_title_eps"
 msgstr "Wirecard eps-Überweisung 활성화"
 
 #: classes/includes/class-wc-gateway-wirecard-giropay.php:101
 msgid "enable_heading_title_giropay"
-msgstr "Enable Wirecard giropay"
+msgstr "Enable giropay"
 
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:101
+
 msgid "enable_heading_title_ideal"
 msgstr "Wirecard iDEAL 사용"
 
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:99
+
 msgid "enable_heading_title_paybybankapp"
 msgstr "Wirecard Pay by Bank app 활성화"
 
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:99
+
 msgid "enable_heading_title_paypal"
 msgstr "Wirecard PayPal 사용"
 
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:96
+
 msgid "enable_heading_title_poi_pia"
 msgstr "Wirecard 송장 결제 / 사전 결제 사용"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:106
+
 msgid "enable_heading_title_ratepayinvoice"
 msgstr "Wirecard Guaranteed Invoice 사용"
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:96
+
 msgid "enable_heading_title_sepact"
 msgstr "Wirecard SEPA Credit Transfer 사용"
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:100
+
 msgid "enable_heading_title_sepadd"
 msgstr "Wirecard SEPA Direct Debit 사용"
 
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:99
+
 msgid "enable_heading_title_sofortbanking"
 msgstr "Wirecard Sofort 사용."
 
@@ -633,6 +653,7 @@ msgid "error_email"
 msgstr "이메일 전송 중 오류가 발생했습니다"
 
 #: templates/credit-card-form.php:45
+
 msgid "error_malformed_creditcard_request"
 msgstr "이런! 문제가 생겼습니다. 신용카드 데이터를 확인하고 다시 시도하십시오."
 
@@ -671,45 +692,53 @@ msgstr "giropay transactions via Wirecard Payment Gateway."
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:504
 msgid "heading_creditcard_payment_form"
-msgstr "Credit Card Payment"
+msgstr "Card Payments"
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:60
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:104
+
 msgid "heading_title_alipay_crossborder"
 msgstr "Wirecard Alipay Crossborder"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:61
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:113
+
 msgid "heading_title_creditcard"
 msgstr "Wirecard 신용카드"
 
 #: classes/includes/class-wc-gateway-wirecard-eps.php:62
 #: classes/includes/class-wc-gateway-wirecard-eps.php:108
+
 msgid "heading_title_eps"
 msgstr "Wirecard eps-Überweisung"
 
 #: classes/includes/class-wc-gateway-wirecard-giropay.php:65
 #: classes/includes/class-wc-gateway-wirecard-giropay.php:108
+
 msgid "heading_title_giropay"
 msgstr "Wirecard Giropay"
 
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:63
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:108
+
 msgid "heading_title_ideal"
 msgstr "Wirecard iDEAL"
 
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:60
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:106
+
 msgid "heading_title_paybybankapp"
 msgstr "Wirecard Pay by Bank app"
 
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:61
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:106
+
 msgid "heading_title_paypal"
 msgstr "Wirecard PayPal"
 
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:61
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:103
+
 msgid "heading_title_poi_pia"
 msgstr "Wirecard 송장 결제 / 사전 결제"
 
@@ -721,16 +750,19 @@ msgstr "Wirecard Guaranteed Invoice"
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:60
 #: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:103
+
 msgid "heading_title_sepact"
 msgstr "Wirecard SEPA Credit Transfer"
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:59
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:107
+
 msgid "heading_title_sepadd"
 msgstr "Wirecard SEPA Direct Debit"
 
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:62
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:106
+
 msgid "heading_title_sofortbanking"
 msgstr "Wirecard Sofort."
 
@@ -783,6 +815,7 @@ msgstr "결제 프로세스 중 오류 발생. 다시 시도하십시오."
 msgid "order_status_authorized"
 msgstr "승인됨"
 
+#: woocommerce-wirecard-payment-gateway.php:138
 
 msgid "order_status_authorized_count_plural"
 msgstr "승인됨 <span class=\"count\">(%s)</span>"
@@ -981,6 +1014,22 @@ msgstr "Sofort."
 
 msgid "sofortbanking_desc"
 msgstr "Sofort. Wirecard 결제 처리 게이트웨이를 통한 트랜잭션"
+
+#: classes/helper/class-transaction-state-translation.php:58
+msgid "state_awaiting"
+msgstr "대기 중"
+
+#: classes/helper/class-transaction-state-translation.php:49
+msgid "state_closed"
+msgstr "닫힘"
+
+# Key used in transaction table status: Open
+msgid "state_open"
+msgstr "open"
+
+#: classes/helper/class-transaction-state-translation.php:55
+msgid "state_success"
+msgstr "성공"
 
 #: classes/admin/class-wirecard-settings.php:242
 msgid "submit_button"
@@ -1213,6 +1262,82 @@ msgstr "Wirecard 결제 게이트웨이"
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:261
 msgid "transfer_notice"
 msgstr "다음 데이터를 이용하여 금액을 이체하십시오:"
+
+# Key used for tx-type: Authorization
+msgid "tx_type_authorization"
+msgstr "authorization"
+
+# Key used for tx-type capture-authorization
+msgid "tx_type_capture_authorization"
+msgstr "capture-authorization"
+
+# describes the tx-type check-enrollment
+msgid "tx_type_check_enrollment"
+msgstr "check-enrollment"
+
+# Key used for tx-type check-payer response
+msgid "tx_type_check_payer_response"
+msgstr "check-payer-response"
+
+# Key used for tx-type credit
+msgid "tx_type_credit"
+msgstr "credit"
+
+# Key used for tx-type debit
+msgid "tx_type_debit"
+msgstr "debit"
+
+# Key used for tx-type debit-return
+msgid "tx_type_debit_return"
+msgstr "debit-return"
+
+# Key used for tx-type deposit
+msgid "tx_type_deposit"
+msgstr "deposit"
+
+# Key used for tx-type pending-credit
+msgid "tx_type_pending_credit"
+msgstr "pending-credit"
+
+# Key used for tx-type pending-debit
+msgid "tx_type_pending_debit"
+msgstr "pending-debit"
+
+# Key used for tx-type purchase
+msgid "tx_type_purchase"
+msgstr "purchase"
+
+# Key used for tx-type refund-capture
+msgid "tx_type_refund_capture"
+msgstr "refund-capture"
+
+# Key used for tx-type refund-debit
+msgid "tx_type_refund_debit"
+msgstr "refund-debit"
+
+# Key used for tx-type refund-purchase
+msgid "tx_type_refund_purchase"
+msgstr "refund-purchase"
+
+# Key used for tx-type void-authorization
+msgid "tx_type_void_authorization"
+msgstr "void-authorization"
+
+# Key used for tx-type void-capture
+msgid "tx_type_void_capture"
+msgstr "void-capture"
+
+# Key used for tx-type void-pending-credit
+msgid "tx_type_void_pending_credit"
+msgstr "void-pending-credit"
+
+# Key used for tx-type void-pending-debit
+msgid "tx_type_void_pending_debit"
+msgstr "void-pending-debit"
+
+# Key used for tx-type void-purchase
+msgid "tx_type_void_purchase"
+msgstr "void-purchase"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:349
 msgid "vault_save_text"

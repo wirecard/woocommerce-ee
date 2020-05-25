@@ -1,10 +1,10 @@
 msgid ""
 msgstr ""
-"Language: id_ID\n"
+"Language: nl_NL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: PhraseApp (phraseapp.com)\n"
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:61
@@ -12,40 +12,38 @@ msgid "alipay_crossborder"
 msgstr "Alipay Cross-border"
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:62
-
 msgid "alipay_crossborder_desc"
-msgstr "Alipay Crossborder transactions via Wirecard Payment Processing Gateway"
+msgstr "Alipay Cross-border-transacties via Wirecard Payment Gateway."
 
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:263
 msgid "amount"
-msgstr "Amount"
+msgstr "Hoeveelheid"
 
 #: classes/admin/class-wirecard-settings.php:241
 msgid "back_button"
-msgstr "Back"
+msgstr "Terug"
 
 #: classes/includes/class-wc-gateway-wirecard-eps.php:183
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:265
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:273
 msgid "bic"
-msgstr "BIC:"
+msgstr "BIC"
 
 #: classes/helper/sepa-template.php:56
 msgid "bic_input"
 msgstr "BIC"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:424
-
 msgid "birthdate_input"
-msgstr "Tanggal lahir"
+msgstr "Geboortedatum"
 
 #: classes/helper/sepa-template.php:108
 msgid "cancel"
-msgstr "Cancel"
+msgstr "Annuleren"
 
 #: classes/includes/class-wc-wirecard-payment-gateway.php:201
 msgid "canceled_payment_process"
-msgstr "Anda telah membatalkan proses pembayaran."
+msgstr "U heeft de betalingsprocedure geannuleerd."
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:163
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:281
@@ -57,9 +55,8 @@ msgstr "Anda telah membatalkan proses pembayaran."
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:172
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:206
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:159
-
 msgid "config_additional_info"
-msgstr "Kirim informasi tambahan"
+msgstr "Bijkomende informatie versturen"
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:162
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:206
@@ -73,16 +70,15 @@ msgstr "Kirim informasi tambahan"
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:158
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:175
 msgid "config_additional_info_desc"
-msgstr "Data tambahan akan dikirimkan untuk perlindungan atas penipuan. Data tambahan ini mencakup alamat pengiriman tagihan/barang, keranjang belanja, dan pendeskripsi."
+msgstr "Bijkomende gegevens zullen verstuurd worden als bescherming tegen fraude. Deze bijkomende gegevens omvatten facturatie-/verzendadres, winkelmandje en onderwerp."
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:187
-
 msgid "config_allowed_currencies"
-msgstr "Mata uang yang diizinkan"
+msgstr "Ondersteunde valuta"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:189
 msgid "config_allowed_currencies_desc"
-msgstr "Metode pembayaran Faktur Bergaransi hanya akan ditampilkan jika mata uang yang aktif termasuk salah satu mata uang negara terpilih."
+msgstr "Betaalmethode \"gegarandeerde betaling\" wordt enkel weergegeven indien de geactiveerde munteenheid een van de hier geselecteerde valuta is."
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:124
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:157
@@ -95,9 +91,8 @@ msgstr "Metode pembayaran Faktur Bergaransi hanya akan ditampilkan jika mata uan
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:127
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:126
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:126
-
 msgid "config_base_url"
-msgstr "URL Dasar"
+msgstr "Wirecard serveradres (URL)"
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:126
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:159
@@ -110,87 +105,84 @@ msgstr "URL Dasar"
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:129
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:128
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:128
-
 msgid "config_base_url_desc"
-msgstr "URL dasar Wirecard. (misal, https://api.wirecard.com)"
+msgstr "Wirecard serveradres (URL)  (bv. https://api.wirecard.com)."
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:201
 msgid "config_basket_max"
-msgstr "Jumlah Maksimum"
+msgstr "Maximumbedrag"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:202
 msgid "config_basket_max_desc"
-msgstr "Metode pembayaran Faktur Bergaransi hanya akan ditampilkan jika jumlah pemesanan lebih rendah daripada jumlah yang ditentukan. Jumlah dalam mata uang default toko"
+msgstr "Betaalmethode \"gegarandeerde betaling\" wordt enkel weergegeven indien het bestelde bedrag lager ligt dan het vastgelegde bedrag. Bedrag in standaard winkelvaluta."
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:196
 msgid "config_basket_min"
-msgstr "Jumlah Minimum"
+msgstr "Minimumbedrag"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:197
 msgid "config_basket_min_desc"
-msgstr "Metode pembayaran Faktur Bergaransi hanya akan ditampilkan jika jumlah pemesanan lebih besar daripada jumlah yang ditentukan. Jumlah dalam mata uang default toko"
+msgstr "Betaalmethode \"gegarandeerde betaling\" wordt enkel weergegeven indien het bestelde bedrag hoger ligt dan het vastgelegde bedrag. Bedrag in standaard winkelvaluta."
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:169
-
 msgid "config_billing_countries"
-msgstr "Negara tujuan yang diizinkan untuk pengiriman tagihan"
+msgstr "Ondersteunde facturatielanden"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:171
 msgid "config_billing_countries_desc"
-msgstr "Metode pembayaran Faktur Bergaransi hanya akan ditampilkan jika negara tujuan pengiriman barang pembeli termasuk salah satu negara terpilih.\nNegara-negara yang diizinkan berikut ini telah ditentukan sebelumnya: AT, DE."
+msgstr "Betaalmethode \"gegarandeerde betaling\" wordt enkel weergegeven tijdens het afrekenen als het land van facturatie van de klant een van de hier geselecteerde landen is. CTRL-klik om te selecteren. Standaard preselectie: Oostenrijk en Duitsland."
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:165
-
 msgid "config_billing_shipping"
-msgstr "Alamat pengiriman tagihan/barang harus sama"
+msgstr "Identiek facturatie-/verzendadres."
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:164
 msgid "config_billing_shipping_desc"
-msgstr "Jika diaktifkan, metode pembayaran Faktur Bergaransi hanya akan ditampilkan jika alamat pengiriman Tagihan/Barang sama"
+msgstr "Als dit ingeschakeld is, wordt de betaalmethode \"gegarandeerde betaling\" enkel weergegeven indien het facturatieadres identiek is aan het verzendadres."
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:306
 msgid "config_challenge_challenge_threed"
-msgstr "Pertanyaan tantangan diminta"
+msgstr "Challenge aangevraagd."
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:271
 msgid "config_challenge_indicator"
-msgstr "Indikator Pertanyaan Tantangan"
+msgstr "Challenge-indicator"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:273
 msgid "config_challenge_indicator_desc"
-msgstr "Menunjukkan apakah suatu pertanyaan tantangan diminta untuk transaksi ini."
+msgstr "Geeft aan of een challenge aangevraagd werd voor deze transactie."
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:305
 msgid "config_challenge_no_challenge"
-msgstr "Pertanyaan tantangan tidak diminta"
+msgstr "Geen challenge aangevraagd."
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:304
 msgid "config_challenge_no_preference"
-msgstr "Tidak ada preferensi"
+msgstr "Geen voorkeur"
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:168
 msgid "config_creditor_city"
-msgstr "Kota Kreditur"
+msgstr "Stad crediteur"
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:170
 msgid "config_creditor_city_desc"
-msgstr "SEPA membutuhkan Kota Kreditur untuk ditampilkan pada halaman Mandat Debit Langsung SEPA."
+msgstr "SEPA Direct Debit vereist een stad van crediteur voor de SEPA Direct Debit Mandate-pagina."
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:156
 msgid "config_creditor_id"
-msgstr "Identitas Kreditur"
+msgstr "Crediteur-ID"
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:158
 msgid "config_creditor_id_desc"
-msgstr "SEPA membutuhkan Identitas Kreditur untuk membuat Mandat Debit Langsung SEPA. Untuk mendapatkan Identitas Kreditur, ajukan di lembaga bank yang bertanggung jawab."
+msgstr "SEPA Direct Debit vereist een crediteur-ID voor de SEPA Direct Debit Mandate-pagina. U kunt een crediteur-ID aanvragen bij uw financiële instelling."
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:162
 msgid "config_creditor_name"
-msgstr "Nama Kreditur"
+msgstr "Crediteurnaam"
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:164
 msgid "config_creditor_name_desc"
-msgstr "SEPA membutuhkan Nama Kreditur untuk ditampilkan pada halaman Mandat Debit Langsung SEPA."
+msgstr "SEPA Direct Debit vereist een crediteurnaam voor de SEPA Direct Debit Mandate-pagina."
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:156
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:200
@@ -203,7 +195,7 @@ msgstr "SEPA membutuhkan Nama Kreditur untuk ditampilkan pada halaman Mandat Deb
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:199
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:169
 msgid "config_descriptor"
-msgstr "Pendeskripsi"
+msgstr "Onderwerp"
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:155
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:199
@@ -216,20 +208,19 @@ msgstr "Pendeskripsi"
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:198
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:168
 msgid "config_descriptor_desc"
-msgstr "Kirim teks yang akan ditampilkan pada laporan bank yang diterbitkan untuk pembeli Anda oleh penyedia jasa keuangan"
+msgstr "Tekst die weergegeven wordt op het bankafschrift dat wordt uitgegeven aan uw klant door de financiële dienstverlener."
 
 #: classes/admin/class-wirecard-settings.php:226
-
 msgid "config_email"
-msgstr "Alamat e-mail Anda"
+msgstr "Uw e-mailadres"
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:213
 msgid "config_enable_bic"
-msgstr "BIC diaktifkan"
+msgstr "BIC ingeschakeld"
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:212
 msgid "config_enable_bic_desc"
-msgstr "Jika BIC diaktifkan, pelanggan harus memasukkan BIC saat checkout."
+msgstr "Als de BIC is ingeschakeld, moet de klant een BIC ingeven tijdens het afrekenen."
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:136
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:234
@@ -244,7 +235,7 @@ msgstr "Jika BIC diaktifkan, pelanggan harus memasukkan BIC saat checkout."
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:139
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:138
 msgid "config_http_password"
-msgstr "Kata Sandi HTTP"
+msgstr "Wachtwoord"
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:138
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:171
@@ -259,7 +250,7 @@ msgstr "Kata Sandi HTTP"
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:140
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:140
 msgid "config_http_password_desc"
-msgstr "Kata sandi http yang tercantum dalam kontrak Wirecard Anda"
+msgstr "Wachtwoord zoals voorzien in uw Wirecard-contract."
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:130
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:228
@@ -274,7 +265,7 @@ msgstr "Kata sandi http yang tercantum dalam kontrak Wirecard Anda"
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:133
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:132
 msgid "config_http_user"
-msgstr "Pengguna HTTP"
+msgstr "Gebruikersnaam"
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:132
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:165
@@ -289,20 +280,20 @@ msgstr "Pengguna HTTP"
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:134
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:134
 msgid "config_http_user_desc"
-msgstr "Pengguna http yang tercantum dalam kontrak Wirecard Anda"
+msgstr "Gebruikersnaam zoals voorzien in uw Wirecard-contract."
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:142
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:148
 msgid "config_limit_desc"
-msgstr "Jumlah dalam mata uang default toko"
+msgstr "Bedrag in standaard winkelvaluta."
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:174
 msgid "config_mandate_text"
-msgstr "Teks Tambahan"
+msgstr "Bijkomende tekst"
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:177
 msgid "config_mandate_text_desc"
-msgstr "Teks ini ditampilkan pada halaman Mandat Debit Langsung SEPA di akhir paragraf pertama."
+msgstr "Deze tekst verschijnt op de SEPA Direct Debit Mandate-pagina op het einde van de eerste paragraaf."
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:107
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:175
@@ -316,9 +307,8 @@ msgstr "Teks ini ditampilkan pada halaman Mandat Debit Langsung SEPA di akhir pa
 #: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:106
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:110
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:109
-
 msgid "config_merchant_account_id"
-msgstr "Identitas Rekening Penjual"
+msgstr "Account-ID handelaar (MAID: Merchant Account ID)"
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:109
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:118
@@ -333,7 +323,7 @@ msgstr "Identitas Rekening Penjual"
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:111
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:111
 msgid "config_merchant_account_id_desc"
-msgstr "Tanda pengenal unik yang diberikan untuk rekening penjual."
+msgstr "Uniek identificatiemiddel toegewezen aan uw handelaarsaccount."
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:113
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:181
@@ -348,7 +338,7 @@ msgstr "Tanda pengenal unik yang diberikan untuk rekening penjual."
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:116
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:115
 msgid "config_merchant_secret"
-msgstr "Kunci Rahasia"
+msgstr "Secret Key"
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:115
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:124
@@ -363,11 +353,11 @@ msgstr "Kunci Rahasia"
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:117
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:117
 msgid "config_merchant_secret_desc"
-msgstr "Kunci rahasia wajib digunakan untuk mengkalkulasi Tanda Tangan Digital dalam pembayaran."
+msgstr "Secret key is verplicht om de digitale handtekening voor betalingen te berekenen."
 
 #: classes/admin/class-wirecard-settings.php:234
 msgid "config_message"
-msgstr "Pesan Anda"
+msgstr "Uw boodschap"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:251
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:255
@@ -376,7 +366,7 @@ msgstr "Pesan Anda"
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:185
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:189
 msgid "config_payment_action"
-msgstr "Tindakan Pembayaran"
+msgstr "Betalingsactie"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:188
 #: classes/includes/class-wc-gateway-wirecard-masterpass.php:157
@@ -384,16 +374,16 @@ msgstr "Tindakan Pembayaran"
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:187
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:157
 msgid "config_payment_action_desc"
-msgstr "Pilih \"Catat transaksi\" untuk mencatat transaksi/menerbitkan faktur atas pesanan Anda secara otomatis atau \"Otorisasi\" untuk mencata transaksi/menerbitkan faktur secara manual."
+msgstr "Selecteer tussen \"Aankoop\" om uw bestelling automatisch vast te leggen/te factureren of \"Autorisatie\" om handmatig vast te leggen/te factureren."
 
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:152
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:156
 msgid "config_payment_type"
-msgstr "Jenis Pembayaran"
+msgstr "Betaalmethode"
 
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:154
 msgid "config_payment_type_desc"
-msgstr "Pilih \"Pembayaran di Muka\" untuk menampilkan data bank setelah proses checkout, atau \"Pembayaran Berdasarkan Faktur\" untuk mengirimkan data bank beserta faktur."
+msgstr "Kies \"Voorafbetaling\" om bankgegevens weer te geven na het afrekenen of \"Betaling op factuur\" om bankgegevens op de factuur weer te geven."
 
 msgid "config_PSD2_information"
 msgstr "PSD 2"
@@ -402,38 +392,37 @@ msgid "config_PSD2_information_desc_woocommerce"
 msgstr "In regards to PSD 2 regulations consider <a target=\"_blank\" href='https://github.com/wirecard/woocommerce-ee/wiki/Credit-Card'>https://github.com/wirecard/woocommerce-ee/wiki/Credit-Card</a> in order to minimize rejected transactions due to missing information. "
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:178
-
 msgid "config_shipping_countries"
-msgstr "Negara tujuan yang diizinkan untuk pengiriman barang"
+msgstr "Ondersteunde landen van verzending"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:180
 msgid "config_shipping_countries_desc"
-msgstr "Metode pembayaran Faktur Bergaransi hanya akan ditampilkan bila negara tujuan pengiriman tagihan pembeli termasuk salah satu negara terpilih.\nBerdasarkan kontrak Wirecard Anda, negara-negara yang diizinkan berikut ini telah ditentukan sebelumnya: AT, DE."
+msgstr "Betaalmethode \"gegarandeerde betaling\" wordt enkel weergegeven tijdens het afrekenen als het land van verzending van de klant een van de hier geselecteerde landen is. CTRL-klik om te selecteren. Standaard preselectie: Oostenrijk en Duitsland."
 
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:169
 msgid "config_shopping_basket"
-msgstr "Keranjang Belanja"
+msgstr "Winkelmandje"
 
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:168
 msgid "config_shopping_basket_desc"
-msgstr "Untuk tujuan konfirmasi, metode pembayaran ini mendukung tampilan keranjang belanja saat checkout. Untuk mengaktifkan fitur ini, aktifkan Keranjang Belanja."
+msgstr "Om te kunnen bevestigen, ondersteunt de betaling de weergave van het winkelmandje tijdens het afrekenen. Het winkelmandje activeren om deze functie in te schakelen."
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:140
 msgid "config_ssl_max_limit"
-msgstr "Batas Maksimum untuk Non 3-D Secure"
+msgstr "Niet-3D-beveiligde max. limiet"
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:96
 msgid "config_status_desc_alipay_crossborder"
-msgstr "Aktifkan metode pembayaran Alipay Cross-border"
+msgstr "Betaalmethode Alipay Cross-border activeren om deze beschikbaar te maken voor uw klanten."
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:106
 
 msgid "config_status_desc_creditcard"
-msgstr "Aktifkan metode pembayaran Kartu Kredit"
+msgstr "Betaalmethode Creditcard activeren om deze beschikbaar te maken voor uw klanten."
 
 #: classes/includes/class-wc-gateway-wirecard-eps.php:97
 msgid "config_status_desc_eps"
-msgstr "Aktifkan metode pembayaran eps-Überweisung untuk menyediakannya kepada pelanggan Anda."
+msgstr "Betaalmethode eps-Überweisung activeren om deze beschikbaar te maken voor uw klanten."
 
 #: classes/includes/class-wc-gateway-wirecard-giropay.php:100
 msgid "config_status_desc_giropay"
@@ -441,56 +430,55 @@ msgstr "Activate payment method giropay to make it available for your consumers.
 
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:100
 msgid "config_status_desc_ideal"
-msgstr "Aktifkan metode pembayaran iDEAL"
+msgstr "Betaalmethode iDEAL activeren om deze beschikbaar te maken voor uw klanten."
 
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:98
 msgid "config_status_desc_paybybankapp"
-msgstr "Aktifkan metode pembayaran Pay by Bank app untuk menyediakannya kepada pelanggan Anda."
+msgstr "Betaalmethode Pay by Bank app activeren om deze beschikbaar te maken voor uw klanten."
 
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:98
 msgid "config_status_desc_paypal"
-msgstr "Aktifkan metode pembayaran PayPal"
+msgstr "Betaalmethode PayPal activeren om deze beschikbaar te maken voor uw klanten."
 
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:95
 msgid "config_status_desc_poi_pia"
-msgstr "Aktifkan metode pembayaran Pembayaran Berdasarkan Faktur atau Pembayaran di Muka"
+msgstr "Betaalmethode \"betaling op factuur\" of \"voorafbetaling\" activeren om deze beschikbaar te maken voor uw klanten."
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:105
 msgid "config_status_desc_ratepayinvoice"
-msgstr "Aktifkan metode pembayaran Faktur Bergaransi"
+msgstr "Betaalmethode \"gegarandeerde betaling door Wirecard\" activeren om deze beschikbaar te maken voor uw klanten."
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:95
 msgid "config_status_desc_sepact"
-msgstr "Aktifkan metode pembayaran SEPA Credit Transfer"
+msgstr "Betaalmethode SEPA Credit Transfer activeren om deze beschikbaar te maken voor uw klanten."
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:99
 msgid "config_status_desc_sepadd"
-msgstr "Aktifkan metode pembayaran Debit Langsung SEPA"
+msgstr "Betaalmethode SEPA Direct Debit activeren om deze beschikbaar te maken voor uw klanten."
 
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:98
 msgid "config_status_desc_sofortbanking"
-msgstr "Aktifkan metode pembayaran Sofort."
+msgstr "Betaalmethode Sofort. activeren om deze beschikbaar te maken voor uw klanten."
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:128
-
 msgid "config_three_d_merchant_account_id"
-msgstr "ID 3-D Secure Rekening Penjual"
+msgstr "3D-beveiligde MAID"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:130
 msgid "config_three_d_merchant_account_id_desc"
-msgstr "Tanda pengenal unik yang diberikan untuk Rekening 3D Secure Penjual Anda."
+msgstr "Uniek identificatiemiddel toegewezen aan uw 3D-beveiligd handelaarsaccount. Kan naar \"onbestaand\" gewijzigd worden om SSL-proces te forceren."
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:134
 msgid "config_three_d_merchant_secret"
-msgstr "Kunci Rahasia 3-D Secure"
+msgstr "3D-beveiligde secret key"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:136
 msgid "config_three_d_merchant_secret_desc"
-msgstr "Kunci rahasia wajib digunakan untuk mengkalkulasi Tanda Tangan Digital dalam pembayaran 3D."
+msgstr "Secret key is verplicht om de digitale handtekening voor 3D-beveiligde betalingen te berekenen. Kan naar \"onbestaand\" gewijzigd worden om SSL-proces te forceren."
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:146
 msgid "config_three_d_min_limit"
-msgstr "Batas Minimum untuk 3-D Secure"
+msgstr "3D-beveiligde min. limiet"
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:101
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:169
@@ -505,7 +493,7 @@ msgstr "Batas Minimum untuk 3-D Secure"
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:104
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:103
 msgid "config_title"
-msgstr "Judul"
+msgstr "Titel"
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:103
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:112
@@ -520,71 +508,71 @@ msgstr "Judul"
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:105
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:105
 msgid "config_title_desc"
-msgstr "Ini mengendalikan judul yang dilihat pelanggan ketika akan melakukan pembayaran."
+msgstr "Naam betaalmethode zoals weergegeven voor klant tijdens afrekenen."
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:213
 
 msgid "config_vault_desc"
-msgstr "Kartu Kredit dapat disimpan untuk digunakan kembali di kemudian hari tanpa memasukkan perincian kartu kredit"
+msgstr "Creditcardgegevens worden bewaard voor later gebruik."
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:219
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:126
 msgid "config_wpp_url"
-msgstr "Alamat Wirecard Payment Page v2 (URL WPP v2)"
+msgstr "Wirecard betaalpagina v2 adres (URL WPP v2)"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:221
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:128
 msgid "config_wpp_url_desc"
-msgstr "Alamat Wirecard Payment Page v2  (URL WPP v2) (misalnya https://wpp.wirecard.com)."
+msgstr "Wirecard betaalpagina v2 adres (URL WPP v2) (e.g. https://wpp.wirecard.com)."
 
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:155
 msgid "config_zapp_merchant_return_string"
-msgstr "URL Pengalihan Merchant"
+msgstr "Terugkeer-URL voor handelaar"
 
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:157
 msgid "config_zapp_merchant_return_string_desc"
-msgstr "URL Pengalihan Merchant untuk mengarahkan konsumen dari aplikasi mobile banking ke toko Anda."
+msgstr "Terugkeer-URL voor handelaar om klanten door te verwijzen van hun mobiele bank apps naar uw winkel."
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:62
 
 msgid "creditcard"
-msgstr "Credit Card"
+msgstr "Creditcard"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:63
 
 msgid "creditcard_desc"
-msgstr "Credit Card transactions via Wirecard Payment Processing Gateway"
+msgstr "Creditcard-transacties via Wirecard Payment Gateway."
 
 #: classes/helper/sepa-template.php:38
 msgid "creditor"
-msgstr "Kreditor"
+msgstr "Crediteur"
 
 #: classes/helper/sepa-template.php:40
 msgid "creditor_id_input"
-msgstr "Identitas Kreditur:"
+msgstr "Crediteur-ID"
 
 #: classes/helper/sepa-template.php:52
 msgid "debtor"
-msgstr "Debitur"
+msgstr "Debiteur"
 
 #: classes/helper/sepa-template.php:53
 msgid "debtor_acc_owner"
-msgstr "Pemilik akun:"
+msgstr "Accounteigenaar"
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:97
 
 msgid "enable_heading_title_alipay_crossborder"
-msgstr "Aktifkan Alipay Cross-border Wirecard"
+msgstr "Wirecard Alipay Cross-border inschakelen"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:105
 
 msgid "enable_heading_title_creditcard"
-msgstr "Aktifkan Kartu Kredit Wirecard"
+msgstr "Wirecard Creditcard inschakelen"
 
 #: classes/includes/class-wc-gateway-wirecard-eps.php:98
 
 msgid "enable_heading_title_eps"
-msgstr "Aktifkan Wirecard eps-Überweisung"
+msgstr "Wirecard eps-Überweisung inschakelen"
 
 #: classes/includes/class-wc-gateway-wirecard-giropay.php:101
 msgid "enable_heading_title_giropay"
@@ -593,47 +581,46 @@ msgstr "Enable giropay"
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:101
 
 msgid "enable_heading_title_ideal"
-msgstr "Aktifkan iDEAL Wirecard"
+msgstr "Wirecard iDEAL inschakelen"
 
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:99
 
 msgid "enable_heading_title_paybybankapp"
-msgstr "Aktifkan Wirecard Pay by Bank app"
+msgstr "Wirecard Pay by Bank app inschakelen"
 
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:99
 
 msgid "enable_heading_title_paypal"
-msgstr "Aktifkan PayPal Wirecard"
+msgstr "Wirecard PayPal inschakelen"
 
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:96
 
 msgid "enable_heading_title_poi_pia"
-msgstr "Aktifkan Pembayaran Berdasarkan Faktur / Pembayaran di Muka Wirecard"
+msgstr "Wirecard betaling op factuur / voorafbetaling inschakelen"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:106
 
 msgid "enable_heading_title_ratepayinvoice"
-msgstr "Aktifkan Faktur Bergaransi Wirecard"
+msgstr "Wirecard gegarandeerde betaling inschakelen"
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:96
 
 msgid "enable_heading_title_sepact"
-msgstr "Aktifkan SEPA Credit Transfer Wirecard"
+msgstr "Wirecard SEPA Credit Transfer inschakelen"
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:100
 
 msgid "enable_heading_title_sepadd"
-msgstr "Aktifkan SEPA Direct Debit Wirecard"
+msgstr "Wirecard SEPA Direct Debit inschakelen"
 
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:99
 
 msgid "enable_heading_title_sofortbanking"
-msgstr "Aktifkan Sofort. Wirecard"
+msgstr "Wirecard Sofort. inschakelen"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:214
-
 msgid "enable_vault"
-msgstr "Aktifkan Pembayaran Rutin"
+msgstr "Afrekenen met één klik inschakelen"
 
 #: classes/includes/class-wc-gateway-wirecard-eps.php:63
 msgid "eps"
@@ -641,45 +628,43 @@ msgstr "eps-Überweisung"
 
 #: classes/includes/class-wc-gateway-wirecard-eps.php:64
 msgid "eps_desc"
-msgstr "Transaksi eps-Überweisung melalui Gerbang Pembayaran Wirecard."
+msgstr "eps-Überweisung-transacties via Wirecard Payment Gateway."
 
 #: classes/includes/class-wc-wirecard-payment-gateway.php:682
 msgid "error_credentials"
-msgstr "Tes gagal, harap cek kredensial Anda."
+msgstr "Test mislukt, gelieve uw gegevens te controleren."
 
 #: classes/admin/class-wirecard-settings.php:301
-
 msgid "error_email"
-msgstr "Terjadi kesalahan saat mengirim e-mail"
+msgstr "Fout bij afleveren e-mail."
 
 #: templates/credit-card-form.php:45
 
 msgid "error_malformed_creditcard_request"
-msgstr "Ups! Ada yang salah. Periksa data kartu kredit Anda dan coba lagi."
+msgstr "Oeps! Er ging iets mis. Gelieve uw creditcardgegevens te controleren en opnieuw te proberen."
 
 #: classes/admin/class-wirecard-transaction-factory.php:359
 msgid "error_no_post_processing_operations"
-msgstr "Tidak ada operasi pendukung untuk transaksi ini"
+msgstr "Geen naverwerkingsactiviteiten beschikbaar voor deze transactie."
 
 #: classes/admin/class-wirecard-transaction-factory.php:363
 msgid "error_no_post_processing_operations_unconfirmed"
-msgstr "Tidak ada operasi pendukung untuk transaksi ini, transaksi belum dapat dikonfirmasi."
+msgstr "Geen naverwerkingsactiviteiten beschikbaar voor deze transactie; de transactie werd nog niet bevestigd."
 
 #: classes/admin/class-wirecard-transaction-factory.php:323
 #: classes/admin/class-wirecard-transaction-factory.php:411
 #: classes/admin/class-wirecard-transaction-factory.php:429
 #: classes/admin/class-wirecard-transaction-factory.php:447
-
 msgid "error_no_transaction"
-msgstr "Transaksi tidak ditemukan"
+msgstr "Geen transactie gevonden."
 
 #: woocommerce-wirecard-payment-gateway.php:319
 msgid "error_woocommerce_missing"
-msgstr "Maaf, untuk menjalankan plugin ini, Plugin WooCommerce harus diinstal dan aktif."
+msgstr "Sorry, maar voor deze plug-in moet de WooCommerce-extensie geïnstalleerd en actief zijn."
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:258
 msgid "first-name"
-msgstr "Nama depan"
+msgstr "Voornaam"
 
 #: classes/includes/class-wc-gateway-wirecard-giropay.php:66
 msgid "giropay"
@@ -697,13 +682,13 @@ msgstr "Card Payments"
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:104
 
 msgid "heading_title_alipay_crossborder"
-msgstr "Alipay Cross-border Wirecard"
+msgstr "Wirecard Alipay Cross-border"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:61
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:113
 
 msgid "heading_title_creditcard"
-msgstr "Kartu Kredit Wirecard"
+msgstr "Wirecard Credit Card"
 
 #: classes/includes/class-wc-gateway-wirecard-eps.php:62
 #: classes/includes/class-wc-gateway-wirecard-eps.php:108
@@ -715,13 +700,13 @@ msgstr "Wirecard eps-Überweisung"
 #: classes/includes/class-wc-gateway-wirecard-giropay.php:108
 
 msgid "heading_title_giropay"
-msgstr "giropay Wirecard"
+msgstr "Wirecard giropay"
 
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:63
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:108
 
 msgid "heading_title_ideal"
-msgstr "iDEAL Wirecard"
+msgstr "Wirecard iDEAL"
 
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:60
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:106
@@ -739,39 +724,38 @@ msgstr "Wirecard PayPal"
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:103
 
 msgid "heading_title_poi_pia"
-msgstr "Pembayaran Berdasarkan Faktur/Pembayaran di Muka Wirecard"
+msgstr "Wirecard betaling op factuur / voorafbetaling"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:63
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:113
 
 msgid "heading_title_ratepayinvoice"
-msgstr "Faktur Bergaransi Wirecard"
+msgstr "Wirecard gegarandeerde betaling door Wirecard"
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:60
 #: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:103
 
 msgid "heading_title_sepact"
-msgstr "SEPA Credit Transfer Wirecard"
+msgstr "Wirecard SEPA Credit Transfer"
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:59
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:107
 
 msgid "heading_title_sepadd"
-msgstr "SEPA Direct Debit Wirecard"
+msgstr "Wirecard SEPA Direct Debit"
 
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:62
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:106
 
 msgid "heading_title_sofortbanking"
-msgstr "Sofort. Wirecard"
+msgstr "Wirecard Sofort."
 
 #: woocommerce-wirecard-payment-gateway.php:316
 #: woocommerce-wirecard-payment-gateway.php:317
 #: woocommerce-wirecard-payment-gateway.php:324
 #: woocommerce-wirecard-payment-gateway.php:325
-
 msgid "heading_title_support"
-msgstr "Dukungan"
+msgstr "Wirecard Support"
 
 #. Plugin URI of the plugin
 msgid "https://github.com/wirecard/woocommerce-ee"
@@ -784,7 +768,7 @@ msgstr "https://www.wirecard.com/"
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:264
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:266
 msgid "iban"
-msgstr "IBAN:"
+msgstr "IBAN"
 
 #: classes/helper/sepa-template.php:54
 msgid "iban_input"
@@ -795,80 +779,76 @@ msgid "ideal"
 msgstr "iDEAL"
 
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:65
-
 msgid "ideal_desc"
-msgstr "Transaksi iDEAL melalui Payment Gateway Wirecard"
+msgstr "iDEAL-transacties via Wirecard Payment Gateway."
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:262
 msgid "last-name"
-msgstr "Nama belakang"
+msgstr "Achternaam"
 
 #: classes/includes/class-wc-wirecard-payment-gateway.php:212
 #: classes/includes/class-wc-wirecard-payment-gateway.php:228
 #: classes/includes/class-wc-wirecard-payment-gateway.php:340
 msgid "order_error"
-msgstr "Kesalahan terjadi saat proses pembayaran. Harap coba lagi."
+msgstr "Er is een fout opgetreden tijdens de betalingsprocedure. Opnieuw proberen."
 
 #: woocommerce-wirecard-payment-gateway.php:100
 #: woocommerce-wirecard-payment-gateway.php:166
 msgid "order_status_authorized"
-msgstr "Sah"
+msgstr "Geautoriseerd"
 
 #: woocommerce-wirecard-payment-gateway.php:138
 
 msgid "order_status_authorized_count_plural"
-msgstr "Sah<span class=\"count\">(%s)</span>"
+msgstr "Geautoriseerd <span class=\"count\">(%s)</span>"
 
 #: classes/includes/class-wc-wirecard-payment-gateway.php:521
-
 msgid "order_status_gateway_update"
-msgstr "Perbarui status pemesanan melalui Payment Gateway Wirecard."
+msgstr "Update bestelstatus via Wirecard Payment Gateway"
 
 #: classes/admin/class-wirecard-settings.php:119
 msgid "pagination_back"
-msgstr "< Kembali"
+msgstr "< Terug"
 
 #: classes/admin/class-wirecard-settings.php:120
 msgid "pagination_next"
-msgstr "Berikutnya >"
+msgstr "Volgende >"
 
 #: classes/admin/class-wirecard-transaction-factory.php:112
 msgid "panel_action"
-msgstr "Tindakan"
+msgstr "Actie"
 
 #: classes/admin/class-wirecard-transaction-factory.php:121
 msgid "panel_amount"
-msgstr "Jumlah"
+msgstr "Hoeveelheid"
 
 #: classes/admin/class-wirecard-transaction-factory.php:124
 msgid "panel_currency"
-msgstr "Mata uang"
+msgstr "Valuta"
 
 #: classes/admin/class-wirecard-transaction-factory.php:103
 msgid "panel_order_number"
-msgstr "Order Number"
+msgstr "Bestelnummer"
 
 #: classes/admin/class-wirecard-transaction-factory.php:109
-
 msgid "panel_parent_transaction_id"
-msgstr "ID transaksi-induk"
+msgstr "Parent Transaction ID"
 
 #: classes/admin/class-wirecard-transaction-factory.php:115
-
 msgid "panel_payment_method"
-msgstr "Metode pembayaran"
+msgstr "Betaalmethode"
 
 #: classes/admin/class-wirecard-transaction-factory.php:100
 msgid "panel_transaction"
-msgstr "Transaksi"
+msgstr "Transactie"
 
 #: classes/admin/class-wirecard-transaction-factory.php:118
 msgid "panel_transaction_state"
-msgstr "Status transaksi"
+msgstr "Status transactie"
 
 #: classes/admin/class-wirecard-transaction-factory.php:106
 msgid "panel_transcation_id"
-msgstr "ID Transaksi"
+msgstr "Transactie-ID"
 
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:61
 msgid "paybybankapp"
@@ -876,112 +856,106 @@ msgstr "Pay by Bank app"
 
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:62
 msgid "paybybankapp_desc"
-msgstr "Transaksi Pay by Bank app melalui Gerbang Pembayaran Wirecard."
+msgstr "Pay by Bank app-transacties via Wirecard Payment Gateway."
 
 #. Description of the plugin
+
 msgid "Payment Gateway for WooCommerce"
-msgstr "Payment Gateway for WooCommerce"
+msgstr "Payment Gateway voor WooCommerce"
 
 #: classes/includes/class-wc-wirecard-payment-gateway.php:733
 msgid "payment_awaiting"
-msgstr "Menunggu pembayaran dari Wirecard"
+msgstr "Wachtend op betaling van Wirecard."
 
 #: classes/admin/class-wirecard-transaction-factory.php:341
 msgid "payment_suffix"
-msgstr "payment"
+msgstr "betaling"
 
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:62
 msgid "paypal"
 msgstr "PayPal"
 
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:63
-
 msgid "paypal_desc"
-msgstr "Transaksi PayPal melalui Gerbang Pemrosesan Pembayaran Wirecard"
+msgstr "PayPal-transacties via Wirecard Payment Gateway."
 
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:62
 msgid "poi_pia"
-msgstr "Pembayaran Berdasarkan Faktur/Pembayaran di Muka"
+msgstr "Betaling op factuur / voorafbetaling"
 
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:63
-
 msgid "poi_pia_desc"
-msgstr "Transaksi Pembayaran Berdasarkan Faktur/Pembayaran di Muka melalui Payment Gateway Wirecard"
+msgstr "Betalingstransacties op factuur / voorafbetaling via Wirecard Payment Gateway."
 
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:266
-
 msgid "ptrid"
-msgstr "Identitas referensi transaksi provider"
+msgstr "Transactiereferentie-ID provider"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:64
 msgid "ratepayinvoice"
-msgstr "Faktur Bergaransi"
+msgstr "Gegarandeerde betaling"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:65
-
 msgid "ratepayinvoice_desc"
-msgstr "Transaksi Faktur Bergaransi melalui Payment Gateway Wirecard"
+msgstr "Transacties met gegarandeerde betaling via Wirecard Payment Gateway."
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:456
 msgid "ratepayinvoice_fields_error"
-msgstr "Anda harus berusia 18 tahun ke atas untuk memesan."
+msgstr "Minimumleeftijd om door middel van gegarandeerde betaling te betalen: 18."
 
 #: classes/handler/class-wirecard-callback.php:53
 #: classes/handler/class-wirecard-callback.php:80
 msgid "redirect_text"
-msgstr "Koneksi Anda sedang dialihkan, harap menunggu"
+msgstr "U wordt doorverwezen. Even geduld."
 
 #: classes/includes/class-wc-wirecard-payment-gateway.php:418
 #: classes/includes/class-wc-wirecard-payment-gateway.php:421
-
 msgid "refund_gateway_error"
-msgstr "Pengembalian dana melalui Payment Gateway Wirecard gagal."
+msgstr "Terugbetaling via Wirecard Payment Gateway mislukt."
 
 #: classes/includes/class-wc-wirecard-payment-gateway.php:632
 msgid "refund_online_error"
-msgstr "Pengembalian dana online saat ini tidak tersedia."
+msgstr "Momenteel geen online terugbetaling mogelijk."
 
 #: classes/helper/class-additional-information.php:349
 msgid "refund_partial_shipping_error"
-msgstr "Anda hanya bisa mengembalikan biaya pengiriman secara penuh; pengembalian biaya pengiriman secara parsial tidak bisa dilakukan."
+msgstr "U kunt de verzendkosten enkel volledig terugbetalen; gedeeltelijke terugbetaling van verzendkosten is niet mogelijk."
 
 #: classes/includes/class-wc-wirecard-payment-gateway.php:409
 msgid "refund_processing_error"
-msgstr "Pemrosesan pengembalian dana gagal."
+msgstr "Verwerken van terugbetaling mislukt."
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:61
 msgid "sepact"
 msgstr "SEPA Credit Transfer"
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:62
-
 msgid "sepact_desc"
-msgstr "Transaksi SEPA Credit Transfer melalui Payment Gateway Wirecard"
+msgstr "SEPA Credit Transfer-transacties via Wirecard Payment Gateway"
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:60
 msgid "sepadd"
 msgstr "SEPA Direct Debit"
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:61
-
 msgid "sepadd_desc"
-msgstr "Transaksi SEPA melalui Payment Gateway Wirecard"
+msgstr "SEPA Direct Debit-transacties via Wirecard Payment Gateway."
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:246
 msgid "sepa_cancel"
-msgstr "Batal"
+msgstr "Annuleren"
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:295
 msgid "sepa_fields_error"
-msgstr "Harap isi kolom SEPA dan coba lagi."
+msgstr "Gelieve de SEPA Direct Debit-velden in te vullen en opnieuw te proberen."
 
 #: classes/helper/sepa-template.php:69
 msgid "sepa_text_1"
-msgstr "Saya mengizinkan kreditor"
+msgstr "Ik autoriseer de crediteur"
 
 #: classes/helper/sepa-template.php:71
 msgid "sepa_text_2"
-msgstr "untuk mengirimkan instruksi ke bank saya untuk mengumpulkan satu debit langsung dari akun saya. Pada waktu yang sama saya menginstruksikan bank untuk mendebit akun saya sesuai dengan instruksi dari kreditor"
+msgstr "om instructies naar mijn bank te sturen om een eenmalige automatische incasso van mijn account te halen. Ik geef mijn bank tegelijkertijd de opdracht om mijn account te debiteren in overeenstemming met de instructies van de crediteur"
 
 #: classes/helper/sepa-template.php:72
 msgid "sepa_text_2b"
@@ -989,36 +963,35 @@ msgstr "."
 
 #: classes/helper/sepa-template.php:78
 msgid "sepa_text_3"
-msgstr "Catatan: Sebagai bagian dari hak saya, saya berhak atas pengembalian dana sesuai dengan syarat dan ketentuan perjanjian saya dengan bank. Pengembalian dana harus diklaim dalam waktu 8 minggu dimulai dari tanggal akun saya didebit."
+msgstr "Opmerking: Ik heb recht op een terugbetaling onder de voorwaarden van mijn overeenkomst met mijn bank. Een terugbetaling moet binnen de 8 weken vanaf de datum waarop mijn account gedebiteerd werd, aangevraagd worden."
 
 #: classes/helper/sepa-template.php:84
 msgid "sepa_text_4"
-msgstr "Saya menyatakan persetujuan yang tidak dapat dibatalkan bahwa jika debit langsung tidak ditanggapi, atau terdapat keberatan atas debit langsung tersebut, bank saya akan mengungkapkan kepada kreditor"
+msgstr "Ik stem onherroepelijk in dat mijn bank in het geval van niet-nageleefde automatische incasso, of dat er bezwaar bestaat tegen de automatische incasso, mijn bank de volgende gegevens zal delen met de crediteur:"
 
 #: classes/helper/sepa-template.php:86
 msgid "sepa_text_5"
-msgstr "nama lengkap, alamat, dan tanggal lahir saya."
+msgstr "mijn volledige naam, adres en geboortedatum."
 
 #: classes/helper/sepa-template.php:104
 msgid "sepa_text_6"
-msgstr "Saya telah membaca dan menyetujui informasi mengenai Mandat Debit Langsung SEPA."
+msgstr "Ik heb de SEPA Direct Debit Mandate-informatie gelezen en ik stem ermee in."
 
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:63
 msgid "sofortbanking"
 msgstr "Sofort."
 
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:64
-
 msgid "sofortbanking_desc"
-msgstr "Transaksi Sofort. melalui Payment Gateway Wirecard"
+msgstr "Sofort.-transacties via Wirecard Payment Gateway."
 
 #: classes/helper/class-transaction-state-translation.php:58
 msgid "state_awaiting"
-msgstr "menunggu"
+msgstr "in afwachting"
 
 #: classes/helper/class-transaction-state-translation.php:49
 msgid "state_closed"
-msgstr "ditutup"
+msgstr "afgesloten"
 
 # Key used in transaction table status: Open
 msgid "state_open"
@@ -1026,24 +999,23 @@ msgstr "open"
 
 #: classes/helper/class-transaction-state-translation.php:55
 msgid "state_success"
-msgstr "berhasil"
+msgstr "gelukt"
 
 #: classes/admin/class-wirecard-settings.php:242
 msgid "submit_button"
-msgstr "Submit"
+msgstr "Indienen"
 
 #: classes/includes/class-wc-wirecard-payment-gateway.php:680
 msgid "success_credentials"
-msgstr "Pengujian konfigurasi penjual berhasil."
+msgstr "Configuratie handelaar succesvol getest."
 
 #: classes/admin/class-wirecard-settings.php:299
-
 msgid "success_email"
-msgstr "E-Mail berhasil dikirim"
+msgstr "E-mail versturen gelukt."
 
 #: classes/admin/class-wirecard-transaction-factory.php:339
 msgid "success_new_transaction"
-msgstr "Operasi pascapemrosesan berhasil. Transaksi baru dibuat."
+msgstr "De naverwerkingsactiviteit is gelukt. Een nieuwe transactie is aangemaakt."
 
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:149
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:146
@@ -1057,7 +1029,7 @@ msgstr "Operasi pascapemrosesan berhasil. Transaksi baru dibuat."
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:145
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:175
 msgid "test_config"
-msgstr "Konfigurasi tes"
+msgstr "Configuratie testen"
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:145
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:243
@@ -1072,9 +1044,8 @@ msgstr "Konfigurasi tes"
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:148
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:147
 #: woocommerce-wirecard-payment-gateway.php:355
-
 msgid "test_credentials"
-msgstr "Tes"
+msgstr "Gegevens testen"
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:148
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:181
@@ -1088,23 +1059,23 @@ msgstr "Tes"
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:150
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:150
 msgid "text_advanced"
-msgstr "Opsi Lanjutan"
+msgstr "Geavanceerde opties"
 
 #: woocommerce-wirecard-payment-gateway.php:236
 #: woocommerce-wirecard-payment-gateway.php:237
 #: classes/admin/class-wirecard-transaction-factory.php:350
 msgid "text_cancel_transaction"
-msgstr "Batalkan transaksi"
+msgstr "Transactie annuleren"
 
 #: woocommerce-wirecard-payment-gateway.php:244
 #: woocommerce-wirecard-payment-gateway.php:245
 #: classes/admin/class-wirecard-transaction-factory.php:353
 msgid "text_capture_transaction"
-msgstr "Catat transaksi"
+msgstr "Transactie vastleggen"
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:245
 msgid "text_confirm"
-msgstr "Process"
+msgstr "Bevestigen"
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:119
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:152
@@ -1119,7 +1090,7 @@ msgstr "Process"
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:121
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:121
 msgid "text_credentials"
-msgstr "Kredensial"
+msgstr "Gegevens"
 
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:123
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:125
@@ -1133,11 +1104,11 @@ msgstr "Kredensial"
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:124
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:154
 msgid "text_credentials_desc"
-msgstr "Masukkan kredensial Wirecard Anda."
+msgstr "Geef uw Wirecard-gegevens in"
 
 #: classes/helper/class-credit-card-vault.php:163
 msgid "text_delete"
-msgstr "Hapus"
+msgstr "Verwijderen"
 
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:96
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:166
@@ -1174,91 +1145,87 @@ msgstr "Hapus"
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:204
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:211
 msgid "text_enable_disable"
-msgstr "Aktifkan/Nonaktifkan"
+msgstr "In-/uitschakelen"
 
 #: woocommerce-wirecard-payment-gateway.php:320
 msgid "text_go_to_plugins"
-msgstr "Buka Plugin"
+msgstr "Ga naar extensies"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:258
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:162
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:192
 msgid "text_payment_action_pay"
-msgstr "Purchase"
+msgstr "Aankoop"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:257
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:161
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:191
 msgid "text_payment_action_reserve"
-msgstr "Authorization"
+msgstr "Autorisatie"
 
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:159
 msgid "text_payment_type_pia"
-msgstr "Payment in Advance"
+msgstr "Voorafbetaling"
 
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:158
 msgid "text_payment_type_poi"
-msgstr "Payment on Invoice"
+msgstr "Betaling op factuur"
 
 #: woocommerce-wirecard-payment-gateway.php:252
 #: woocommerce-wirecard-payment-gateway.php:253
 #: classes/admin/class-wirecard-transaction-factory.php:356
 msgid "text_refund_transaction"
-msgstr "Kembalikan dana transaksi"
+msgstr "Transactie terugstorten"
 
 #: classes/admin/class-wirecard-transaction-factory.php:371
-
 msgid "text_response_data"
-msgstr "Data respons"
+msgstr "Responsgegevens"
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:153
 msgid "text_sepadd_config_desc"
-msgstr "Masukkan kredensial SEPA dan pengaturan Mandat Debit Langsung SEPA Anda."
+msgstr "Uw SEPA Direct Debit-gegevens en mandaatinstellingen invoeren."
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:151
-
 msgid "text_sepa_config"
-msgstr "Kredensial SEPA"
+msgstr "SEPA-gegevens"
 
 #: classes/admin/class-wirecard-settings.php:98
 msgid "text_support"
-msgstr "Support"
+msgstr "Ondersteuning"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:436
-
 msgid "text_terms_accept"
-msgstr "I herewith confirm that I have read the <a href=\"https://www.wirecardbank.de/privacy-documents/datenschutzhinweis-fur-die-wirecard-zahlarten/\" target=\"_blank\">privacy notice</a> and <a target=\"_blank\" href=\"https://www.wirecardbank.de/privacy-documents/zusatzliche-geschaftsbedingungen-fur-wirecard-zahlarten/\">additional terms and conditions</a> for Wirecard payment types and that I accept their validity."
+msgstr "Ik bevestig dat ik het <a href=\"https://www.wirecardbank.de/privacy-documents/datenschutzhinweis-fur-die-wirecard-zahlarten/\" target=\"_blank\">privacybeleid</a> and <a target=\"_blank\" href=\"https://www.wirecardbank.de/privacy-documents/zusatzliche-geschaftsbedingungen-fur-wirecard-zahlarten/\">bijkomende voorwaarden</a> voor Wirecard betalingsmethoden gelezen heb en dat ik ze accepteer."
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:471
 msgid "text_terms_notice"
-msgstr "Anda harus menyetujui pemberitahuan privasi dan persyaratan tambahan dari metode pembayaran Wirecard."
+msgstr "U moet instemmen met het privacybeleid en bijkomende voorwaarden van Wirecard betaalmethoden."
 
 #: classes/admin/class-wirecard-transaction-factory.php:376
 msgid "text_total"
-msgstr "Total"
+msgstr "Totaal"
 
 #: classes/admin/class-wirecard-transaction-factory.php:339
 msgid "text_transaction"
-msgstr "Transaction"
+msgstr "Transactie"
 
 #: classes/admin/class-wirecard-transaction-factory.php:468
 msgid "text_transaction_details_1"
-msgstr "For more transaction information click "
+msgstr "Voor meer transactie-informatie, hier "
 
 #: classes/admin/class-wirecard-transaction-factory.php:471
 msgid "text_transaction_details_2"
-msgstr "here"
+msgstr "klikken"
 
 #: woocommerce-wirecard-payment-gateway.php:228
 #: woocommerce-wirecard-payment-gateway.php:229
 #: classes/admin/class-wirecard-transaction-factory.php:367
-
 msgid "title_payment_gateway"
-msgstr "Payment Gateway Wirecard"
+msgstr "Wirecard Payment Gateway"
 
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:261
 msgid "transfer_notice"
-msgstr "Harap transfer jumlah tersebut menggunakan data berikut ini:"
+msgstr "Gelieve het bedrag over te maken met de volgende gegevens:"
 
 # Key used for tx-type: Authorization
 msgid "tx_type_authorization"
@@ -1338,16 +1305,16 @@ msgstr "void-purchase"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:349
 msgid "vault_save_text"
-msgstr "Simpan untuk digunakan di kemudian hari."
+msgstr "Bewaren voor later gebruik."
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:336
 
 msgid "vault_use_existing_text"
-msgstr "Gunakan Kartu Kredit yang tersimpan"
+msgstr "Opgeslagen creditcard gebruiken"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:777
 msgid "warning_credit_card_url_mismatch"
-msgstr "Perhatian: Periksa kredensial Anda dalam kolom pengaturan URL. Anda mungkin telah mengonfigurasi/menggabungkan akun produktif dengan akun pengujian."
+msgstr "Opgelet: Gelieve uw gegevens binnen de URL-instellingsvelden te controleren. U hebt mogelijk een actieve account geconfigureerd/gecombineerd met een testaccount."
 
 #. Author of the plugin
 msgid "Wirecard AG"
@@ -1355,4 +1322,4 @@ msgstr "Wirecard AG"
 
 #. Plugin Name of the plugin
 msgid "Wirecard WooCommerce Extension"
-msgstr "Ekstensi WooCommerce Wirecard"
+msgstr "Wirecard WooCommerce Extensie"
