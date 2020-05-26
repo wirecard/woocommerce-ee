@@ -529,7 +529,7 @@ msgstr "Return-URL des Händlers"
 
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:157
 msgid "config_zapp_merchant_return_string_desc"
-msgstr "Return-URL um Kunden von ihren mobilen Banking-Apps in den Shop zurückzuleiten.\n"
+msgstr "Return-URL um Kunden von ihren mobilen Banking-Apps in den Shop zurückzuleiten."
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:62
 msgid "creditcard"
