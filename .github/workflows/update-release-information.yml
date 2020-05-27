@@ -1,4 +1,4 @@
-name: Change release version
+name: Bump versions and add initial CHANGELOG entry
 
 on:
   pull_request:
@@ -14,15 +14,17 @@ jobs:
         uses: wirecard/checkout@v2.0.0
         with:
           ref: ${{ github.head_ref }}
-      - name: Change extension release version
+      - name: Get tags
+        run: git fetch --prune --unshallow
+      - name: Bump versions and add entry to CHAGGELOG
         id: check-version
-        uses: wirecard/extension-release-version@master
+        uses: wirecard/extension-release-info-update-action@master
         with:
           repository: ${{ github.event.repository.name }}
       - name: Set global git conf
         run: git config --global user.email "" && git config --global user.name "github-actions"
       - name: Commit files
-        run: git commit -m "Change release version" -a
+        run: git commit -m "Bump versions and add initial changelog entry" -a
       - name: Push changes
         uses: wirecard/github-push-action@master
         with:
