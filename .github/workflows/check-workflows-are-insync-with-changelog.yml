@@ -1,0 +1,22 @@
+name: Check if workflow files need update after CHANGELOG update
+
+on:
+  push:
+    branches: 'RC**'
+
+jobs:
+  update-files:
+    runs-on: ubuntu-latest
+    name: Check workflows are in sync with CHANGELOG
+    steps:
+      - name: Checkout ${{ github.event.repository.name }}
+        uses: wirecard/checkout@v2.0.0
+        with:
+          ref: ${{ github.ref }}
+      - name: Get tags
+        run: git fetch --prune --unshallow
+      - name: Check if workflow files need update after CHANGELOG.md update
+        uses: wirecard/extension-release-info-update-action@master
+        with:
+          repository: ${{ github.event.repository.name }}
+          action: check_config_files_after_changelog_update

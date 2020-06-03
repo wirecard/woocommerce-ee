@@ -1,4 +1,4 @@
-name: Check Changelog comments
+name: Check CHANGELOG.md has comments
 
 on:
   push:
