@@ -1,51 +1,49 @@
 msgid ""
 msgstr ""
-"Language: zh_CN\n"
+"Language: sk_SK\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 "X-Generator: PhraseApp (phraseapp.com)\n"
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:61
 msgid "alipay_crossborder"
-msgstr "支付宝跨境"
+msgstr "Alipay Cross-border"
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:62
-
 msgid "alipay_crossborder_desc"
-msgstr "Alipay Crossborder transactions via Wirecard Payment Processing Gateway"
+msgstr "Transakcie Alipay Cross-border cez platobnú bránu Wirecard."
 
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:263
 msgid "amount"
-msgstr "Amount"
+msgstr "Suma"
 
 #: classes/admin/class-wirecard-settings.php:241
 msgid "back_button"
-msgstr "Back"
+msgstr "Späť"
 
 #: classes/includes/class-wc-gateway-wirecard-eps.php:183
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:265
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:273
 msgid "bic"
-msgstr "BIC:"
+msgstr "BIC"
 
 #: classes/helper/sepa-template.php:56
 msgid "bic_input"
-msgstr "银行识别码"
+msgstr "BIC"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:424
-
 msgid "birthdate_input"
-msgstr "出生日期"
+msgstr "Dátum narodenia"
 
 #: classes/helper/sepa-template.php:108
 msgid "cancel"
-msgstr "Cancel"
+msgstr "Zrušiť"
 
 #: classes/includes/class-wc-wirecard-payment-gateway.php:201
 msgid "canceled_payment_process"
-msgstr "您已取消付款过程。"
+msgstr "Zrušili ste proces platby."
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:163
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:281
@@ -57,9 +55,8 @@ msgstr "您已取消付款过程。"
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:172
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:206
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:159
-
 msgid "config_additional_info"
-msgstr "发送附加信息"
+msgstr "Odoslať doplňujúce informácie"
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:162
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:206
@@ -73,16 +70,15 @@ msgstr "发送附加信息"
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:158
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:175
 msgid "config_additional_info_desc"
-msgstr "将发送附加数据用于欺诈保护。这些附加数据包括账单/收货地址、购物篮和描述符。"
+msgstr "Doplňujúce informácie budú odoslané na účel ochrany pred podvodmi. Medzi tieto doplňujúce informácie patria fakturačná/dodacia adresa, nákupný košík a deskriptor."
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:187
-
 msgid "config_allowed_currencies"
-msgstr "允许货币"
+msgstr "Povolené meny"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:189
 msgid "config_allowed_currencies_desc"
-msgstr "仅当有效货币属于任一选定货币时，才会显示保证发票付款方式。"
+msgstr "Spôsob platby Zaručená faktúra sa zobrazí iba vtedy, keď je aktivovaná mena jednou spomedzi tu vybraných mien."
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:124
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:157
@@ -95,9 +91,8 @@ msgstr "仅当有效货币属于任一选定货币时，才会显示保证发票
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:127
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:126
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:126
-
 msgid "config_base_url"
-msgstr "基准 URL"
+msgstr "Adresa servera Wirecard (URL)"
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:126
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:159
@@ -110,87 +105,84 @@ msgstr "基准 URL"
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:129
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:128
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:128
-
 msgid "config_base_url_desc"
-msgstr "Wirecard 基准 URL。（例如 https://api.wirecard.com）"
+msgstr "Adresa servera Wirecard (URL) (napr. https://api.wirecard.com)."
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:201
 msgid "config_basket_max"
-msgstr "最大金额"
+msgstr "Maximálna suma"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:202
 msgid "config_basket_max_desc"
-msgstr "仅当订单金额小于定义金额时，才会显示保证发票付款方式。默认商店货币金额"
+msgstr "Spôsob platby Zaručená faktúra sa zobrazí iba vtedy, keď je suma objednávky nižšia než určená suma. Suma v predvolenej mene obchodu."
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:196
 msgid "config_basket_min"
-msgstr "最小金额"
+msgstr "Minimálna suma"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:197
 msgid "config_basket_min_desc"
-msgstr "仅当订单金额大于定义金额时，才会显示保证发票付款方式。默认商店货币金额"
+msgstr "Spôsob platby Zaručená faktúra sa zobrazí iba vtedy, keď je suma objednávky vyššia než určená suma. Suma v predvolenej mene obchodu."
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:169
-
 msgid "config_billing_countries"
-msgstr "可开票国家"
+msgstr "Povolené krajiny fakturácie"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:171
 msgid "config_billing_countries_desc"
-msgstr "仅当消费者配送国家属于任一选定国家时，才会显示保证发票付款方式。\n\t\t\t\t预先确定了以下允许国家：奥地利、德国。"
+msgstr "Spôsob platby Zaručená faktúra sa pri realizácii nákupu zobrazí iba vtedy, keď krajina fakturácie spotrebiteľa je jednou spomedzi tu vybraných krajín. Vyberte kliknutím s CTRL. Predvolený výber: Rakúsko a Nemecko."
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:165
-
 msgid "config_billing_shipping"
-msgstr "账单/收货地址必须相同"
+msgstr "Zhodná fakturačná/dodacia adresa"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:164
 msgid "config_billing_shipping_desc"
-msgstr "如已激活，则仅在账单/收货地址相同时才会显示保证发票付款方式"
+msgstr "Ak je možnosť aktivovaná, spôsob platby Zaručená faktúra sa zobrazí, iba ak sú fakturačná/dodacia adresa zhodné."
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:306
 msgid "config_challenge_challenge_threed"
-msgstr "请求质询"
+msgstr "Vyžaduje sa výzva"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:271
 msgid "config_challenge_indicator"
-msgstr "质询指标"
+msgstr "Indikátor výzvy"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:273
 msgid "config_challenge_indicator_desc"
-msgstr "指示是否为此交易请求质询。"
+msgstr "Ukazuje, či sa pre danú transakciu vyžaduje výzva."
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:305
 msgid "config_challenge_no_challenge"
-msgstr "没有质询被请求"
+msgstr "Nevyžaduje sa výzva"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:304
 msgid "config_challenge_no_preference"
-msgstr "没有首选项"
+msgstr "Bez preferencie"
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:168
 msgid "config_creditor_city"
-msgstr "债权人所处城市"
+msgstr "Mesto príjemcu"
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:170
 msgid "config_creditor_city_desc"
-msgstr "SEPA 要求在 SEPA 直接借记授权页面上显示债权人所处城市。"
+msgstr "SEPA Inkaso vyžaduje mesto príjemcu pre stránku Mandátu pre SEPA Inkaso."
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:156
 msgid "config_creditor_id"
-msgstr "债权人 ID"
+msgstr "ID príjemcu"
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:158
 msgid "config_creditor_id_desc"
-msgstr "SEPA 需要债权人 ID 才能创建 SEPA 直接借记授权。请在负责的银行机构申请债权人 ID。"
+msgstr "SEPA Inkaso vyžaduje identifikáciu príjemcu na vytvorenie Mandátu pre SEPA Inkaso. O identifikátor príjemcu (Creditor ID) môžete požiadať Vašu finančnú inštitúciu."
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:162
 msgid "config_creditor_name"
-msgstr "债权人名字"
+msgstr "Meno inkasanta"
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:164
 msgid "config_creditor_name_desc"
-msgstr "SEPA 要求在 SEPA 直接借记授权页面上显示债权人名字。"
+msgstr "SEPA Inkaso vyžaduje meno príjemcu pre stránku Mandátu pre SEPA Inkaso."
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:156
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:200
@@ -203,7 +195,7 @@ msgstr "SEPA 要求在 SEPA 直接借记授权页面上显示债权人名字。"
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:199
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:169
 msgid "config_descriptor"
-msgstr "描述符"
+msgstr "Deskriptor"
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:155
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:199
@@ -216,20 +208,19 @@ msgstr "描述符"
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:198
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:168
 msgid "config_descriptor_desc"
-msgstr "发送由金融服务供应商签发给消费者的银行对账单上显示的文本"
+msgstr "Pošlite text, ktorý sa zobrazí na výpise z účtu vydanom spotrebiteľovi poskytovateľom finančných služieb."
 
 #: classes/admin/class-wirecard-settings.php:226
-
 msgid "config_email"
-msgstr "您的电子邮件地址"
+msgstr "Vaša e-mailová adresa"
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:213
 msgid "config_enable_bic"
-msgstr "银行识别码已启用"
+msgstr "BIC povolený"
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:212
 msgid "config_enable_bic_desc"
-msgstr "若启用 BIC，消费者结账时必须输入 BIC。"
+msgstr "Ak je povolená možnosť BIC, spotrebiteľ musí pri realizácii nákupu zadať kód banky BIC."
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:136
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:234
@@ -244,7 +235,7 @@ msgstr "若启用 BIC，消费者结账时必须输入 BIC。"
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:139
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:138
 msgid "config_http_password"
-msgstr "HTTP 密码"
+msgstr "Heslo"
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:138
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:171
@@ -259,7 +250,7 @@ msgstr "HTTP 密码"
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:140
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:140
 msgid "config_http_password_desc"
-msgstr "您 Wirecard 合同中提供的 http 密码"
+msgstr "Heslo podľa Vašej zmluvy Wirecard."
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:130
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:228
@@ -274,7 +265,7 @@ msgstr "您 Wirecard 合同中提供的 http 密码"
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:133
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:132
 msgid "config_http_user"
-msgstr "HTTP 用户"
+msgstr "Používateľské meno"
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:132
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:165
@@ -289,20 +280,20 @@ msgstr "HTTP 用户"
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:134
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:134
 msgid "config_http_user_desc"
-msgstr "您 Wirecard 合同中提供的 http 用户"
+msgstr "Používateľské meno podľa Vašej zmluvy Wirecard."
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:142
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:148
 msgid "config_limit_desc"
-msgstr "默认商店货币金额"
+msgstr "Suma v predvolenej mene obchodu"
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:174
 msgid "config_mandate_text"
-msgstr "附加文本"
+msgstr "Doplňujúci text"
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:177
 msgid "config_mandate_text_desc"
-msgstr "此文本显示在第一段末尾的 SEPA 直接借记授权页面上。"
+msgstr "Tento text bude uvedený na konci prvého odseku stránky Mandátu pre SEPA Inkaso."
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:107
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:175
@@ -316,9 +307,8 @@ msgstr "此文本显示在第一段末尾的 SEPA 直接借记授权页面上。
 #: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:106
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:110
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:109
-
 msgid "config_merchant_account_id"
-msgstr "商家账户 ID"
+msgstr "ID účtu obchodníka (MAID)"
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:109
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:118
@@ -333,7 +323,7 @@ msgstr "商家账户 ID"
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:111
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:111
 msgid "config_merchant_account_id_desc"
-msgstr "为您的商家账户分配的唯一标识符。"
+msgstr "Jedinečný identifikátor priradený k Vášmu účtu obchodníka."
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:113
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:181
@@ -348,7 +338,7 @@ msgstr "为您的商家账户分配的唯一标识符。"
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:116
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:115
 msgid "config_merchant_secret"
-msgstr "密钥"
+msgstr "Tajný kľúč"
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:115
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:124
@@ -363,11 +353,11 @@ msgstr "密钥"
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:117
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:117
 msgid "config_merchant_secret_desc"
-msgstr "必须使用密钥以计算付款的数字签名。"
+msgstr "Tajný kľúč je povinný na výpočet digitálneho podpisu pre platby."
 
 #: classes/admin/class-wirecard-settings.php:234
 msgid "config_message"
-msgstr "您的消息"
+msgstr "Vaša správa"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:251
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:255
@@ -376,7 +366,7 @@ msgstr "您的消息"
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:185
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:189
 msgid "config_payment_action"
-msgstr "付款操作"
+msgstr "Úkon pri platbe"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:188
 #: classes/includes/class-wc-gateway-wirecard-masterpass.php:157
@@ -384,49 +374,48 @@ msgstr "付款操作"
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:187
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:157
 msgid "config_payment_action_desc"
-msgstr "选择“获取”以自动获取您的订单/为您的订单开具发票或“授权”以手动获取/开具发票。"
+msgstr "Zvoľte buď \"Nákup\" na automatické zachytenie/fakturáciu vašej objednávky alebo \"Autorizácia\" na manuálne zachytenie/fakturáciu."
 
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:152
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:156
 msgid "config_payment_type"
-msgstr "付款方式"
+msgstr "Druh platby"
 
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:154
 msgid "config_payment_type_desc"
-msgstr "选择“预付货款”，在结账流程后显示银行数据，或选择“交货付款”，发送带有发票的银行数据。"
+msgstr "Zvoľte \"Platba vopred\", aby sa po procese nákupu zobrazili informácie o bankovom účte, alebo \"Platba na faktúru\", aby sa informácie o bankovom účte odoslali spolu s faktúrou."
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:178
-
 msgid "config_shipping_countries"
-msgstr "可配送国家"
+msgstr "Povolené krajiny dodania"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:180
 msgid "config_shipping_countries_desc"
-msgstr "仅当消费者开票国家属于任一选定国家时，才会显示保证发票付款方式。根据您的 Wirecard 合同，预先确定了以下允许国家：奥地利、德国。"
+msgstr "Spôsob platby Zaručená faktúra sa zobrazí iba vtedy, keď krajina dodania spotrebiteľa je jednou spomedzi tu vybraných krajín. Vyberte kliknutím s CTRL. Predvolený výber: Rakúsko a Nemecko."
 
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:169
 msgid "config_shopping_basket"
-msgstr "购物篮"
+msgstr "Nákupný košík"
 
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:168
 msgid "config_shopping_basket_desc"
-msgstr "为了进行确认，该支付方式支持支付时显示购物车。为启用该特性，激活购物车。"
+msgstr "Na účely potvrdenia je pri realizácii nákupu počas platby možné zobraziť obsah nákupného košíka. Aby sa povolila táto funkcia, aktivujte Nákupný košík."
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:140
 msgid "config_ssl_max_limit"
-msgstr "非 3-D 安全最大限制"
+msgstr "Max. limit pre iné ako 3-D Secure"
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:96
 msgid "config_status_desc_alipay_crossborder"
-msgstr "激活支付宝跨境付款方式"
+msgstr "Aktivujte spôsob platby Alipay Cross-border a sprístupnite ho svojim spotrebiteľom."
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:106
 msgid "config_status_desc_creditcard"
-msgstr "激活信用卡付款方式"
+msgstr "Aktivujte spôsob platby kreditnou kartou a sprístupnite ho svojim spotrebiteľom."
 
 #: classes/includes/class-wc-gateway-wirecard-eps.php:97
 msgid "config_status_desc_eps"
-msgstr "激活 eps-Überweisung 支付方式以使客户可以支付。"
+msgstr "Aktivujte spôsob platby eps-Überweisung a sprístupnite ho svojim spotrebiteľom."
 
 #: classes/includes/class-wc-gateway-wirecard-giropay.php:100
 msgid "config_status_desc_giropay"
@@ -434,56 +423,55 @@ msgstr "Activate payment method giropay to make it available for your consumers.
 
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:100
 msgid "config_status_desc_ideal"
-msgstr "激活 iDEAL 付款方式"
+msgstr "Aktivujte spôsob platby iDEAL a sprístupnite ho svojim spotrebiteľom."
 
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:98
 msgid "config_status_desc_paybybankapp"
-msgstr "激活 Pay by Bank app 支付方式以使客户可以支付。"
+msgstr "Aktivujte spôsob platby Pay by Bank app a sprístupnite ho svojim spotrebiteľom."
 
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:98
 msgid "config_status_desc_paypal"
-msgstr "激活 PayPal 付款方式"
+msgstr "Aktivujte spôsob platby PayPal a sprístupnite ho svojim spotrebiteľom."
 
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:95
 msgid "config_status_desc_poi_pia"
-msgstr "激活发票付款或提前付款的付款方式"
+msgstr "Aktivujte spôsob platby na faktúru alebo platby vopred a sprístupnite ho svojim spotrebiteľom."
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:105
 msgid "config_status_desc_ratepayinvoice"
-msgstr "激活保证发票付款方式"
+msgstr "Aktivujte spôsob platby Zaručená faktúra a sprístupnite ho svojim spotrebiteľom."
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:95
 msgid "config_status_desc_sepact"
-msgstr "激活 SEPA Credit Transfer 付款方式"
+msgstr "Aktivujte spôsob platby SEPA Úhrada a sprístupnite ho svojim spotrebiteľom."
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:99
 msgid "config_status_desc_sepadd"
-msgstr "激活 SEPA 直接借记付款方式"
+msgstr "Aktivujte spôsob platby SEPA Inkaso a sprístupnite ho svojim spotrebiteľom."
 
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:98
 msgid "config_status_desc_sofortbanking"
-msgstr "激活 Sofort 付款方式。"
+msgstr "Aktivujte spôsob platby Sofort. a sprístupnite ho svojim spotrebiteľom."
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:128
-
 msgid "config_three_d_merchant_account_id"
-msgstr "3-D 安全商家账户 ID"
+msgstr "ID účtu obchodníka 3-D Secure MAID"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:130
 msgid "config_three_d_merchant_account_id_desc"
-msgstr "为您的 3D 商家账户分配的唯一标识符。"
+msgstr "Jedinečný identifikátor priradený k Vášmu účtu obchodníka 3-D Secure. Môže sa nastaviť na \"null\" na vynútenie procesu SSL."
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:134
 msgid "config_three_d_merchant_secret"
-msgstr "3-D 安全密钥"
+msgstr "Tajný kľúč 3-D Secure"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:136
 msgid "config_three_d_merchant_secret_desc"
-msgstr "必须使用密钥以计算 3D 付款的数字签名。"
+msgstr "Tajný kľúč je povinný na výpočet digitálneho podpisu pre platby 3-D Secure. Môže sa nastaviť na \"null\" na vynútenie procesu SSL."
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:146
 msgid "config_three_d_min_limit"
-msgstr "3-D 安全最小限制"
+msgstr "Min. limit pre 3-D Secure"
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:101
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:169
@@ -498,7 +486,7 @@ msgstr "3-D 安全最小限制"
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:104
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:103
 msgid "config_title"
-msgstr "名称"
+msgstr "Názov"
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:103
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:112
@@ -513,66 +501,65 @@ msgstr "名称"
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:105
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:105
 msgid "config_title_desc"
-msgstr "这可以控制消费者在结账时看到的名称。"
+msgstr "Názov spôsobu platby, ktorý sa zobrazuje spotrebiteľovi pri realizácii nákupu."
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:213
 msgid "config_vault_desc"
-msgstr "可以保存信用卡以备后用"
+msgstr "Údaje kreditnej karty sú uložené na neskoršie použitie."
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:219
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:126
 msgid "config_wpp_url"
-msgstr "Wirecard 支付页面v2 地址 (URL WPP v2)"
+msgstr "Adresa Wirecard Payment Page v2 (URL WPP v2)"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:221
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:128
 msgid "config_wpp_url_desc"
-msgstr "Wirecard 支付页面v2 地址 (URL WPP v2)"
+msgstr "Adresa Wirecard Payment Page v2 (URL WPP v2) (napr. https://wpp.wirecard.com)."
 
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:155
 msgid "config_zapp_merchant_return_string"
-msgstr "商家返回 URL"
+msgstr "URL obchodníka pre návrat"
 
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:157
 msgid "config_zapp_merchant_return_string_desc"
-msgstr "商家返回 URL，用于将客户从其移动银行应用程序重定向到您的商店。"
+msgstr "URL obchodníka pre návrat na presmerovanie spotrebiteľov z aplikácií mobilného bankovníctva do Vášho obchodu."
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:62
 msgid "creditcard"
-msgstr "Credit Card"
+msgstr "Kreditná karta"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:63
-
 msgid "creditcard_desc"
-msgstr "Credit Card transactions via Wirecard Payment Processing Gateway"
+msgstr "Transakcie kreditnými kartami cez platobnú bránu Wirecard."
 
 #: classes/helper/sepa-template.php:38
 msgid "creditor"
-msgstr "贷方"
+msgstr "Príjemca"
 
 #: classes/helper/sepa-template.php:40
 msgid "creditor_id_input"
-msgstr "贷方 ID："
+msgstr "ID príjemcu"
 
 #: classes/helper/sepa-template.php:52
 msgid "debtor"
-msgstr "借方"
+msgstr "Dlžník"
 
 #: classes/helper/sepa-template.php:53
 msgid "debtor_acc_owner"
-msgstr "账户所有人"
+msgstr "Vlastník účtu"
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:97
 msgid "enable_heading_title_alipay_crossborder"
-msgstr "启用 Wirecard 支付宝跨境"
+msgstr "Povoliť cezhraničné platby Wirecard Alipay Cross-border"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:105
 msgid "enable_heading_title_creditcard"
-msgstr "启用 Wirecard 信用卡"
+msgstr "Povoliť kreditnú kartu Wirecard Credit Card"
 
 #: classes/includes/class-wc-gateway-wirecard-eps.php:98
 msgid "enable_heading_title_eps"
-msgstr "启用 Wirecard eps-Überweisung"
+msgstr "Povoliť Wirecard eps-Überweisung"
 
 #: classes/includes/class-wc-gateway-wirecard-giropay.php:101
 msgid "enable_heading_title_giropay"
@@ -580,40 +567,39 @@ msgstr "Enable Wirecard giropay"
 
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:101
 msgid "enable_heading_title_ideal"
-msgstr "启用 Wirecard iDEAL"
+msgstr "Povoliť Wirecard iDEAL"
 
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:99
 msgid "enable_heading_title_paybybankapp"
-msgstr "启用 Wirecard Pay by Bank app"
+msgstr "Povoliť Wirecard Pay by Bank app"
 
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:99
 msgid "enable_heading_title_paypal"
-msgstr "启用 Wirecard PayPal"
+msgstr "Povoliť Wirecard PayPal"
 
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:96
 msgid "enable_heading_title_poi_pia"
-msgstr "启用 Wirecard 发票付款/提前付款"
+msgstr "Povoliť platbu na faktúru/vopred Wirecard"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:106
 msgid "enable_heading_title_ratepayinvoice"
-msgstr "启用 Wirecard 保证发票"
+msgstr "Povoliť zaručenú faktúru Wirecard"
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:96
 msgid "enable_heading_title_sepact"
-msgstr "启用 Wirecard SEPA Credit Transfer"
+msgstr "Povoliť prevod Wirecard SEPA Úhrada"
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:100
 msgid "enable_heading_title_sepadd"
-msgstr "启用 Wirecard SEPA"
+msgstr "Povoliť prevod Wirecard SEPA Inkaso"
 
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:99
 msgid "enable_heading_title_sofortbanking"
-msgstr "启用 Wirecard Sofort。"
+msgstr "Povoliť Wirecard Sofort."
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:214
-
 msgid "enable_vault"
-msgstr "启用定期付款"
+msgstr "Povoliť nákup jedným kliknutím"
 
 #: classes/includes/class-wc-gateway-wirecard-eps.php:63
 msgid "eps"
@@ -621,45 +607,42 @@ msgstr "eps-Überweisung"
 
 #: classes/includes/class-wc-gateway-wirecard-eps.php:64
 msgid "eps_desc"
-msgstr "通过 Wirecard 支付网关进行 eps-Überweisung 交易。"
+msgstr "Transakcie eps-Überweisung cez platobnú bránu Wirecard."
 
 #: classes/includes/class-wc-wirecard-payment-gateway.php:682
 msgid "error_credentials"
-msgstr "测试失败，请检查您的凭证。"
+msgstr "Skúška neúspešná, skontrolujte poverovacie údaje."
 
 #: classes/admin/class-wirecard-settings.php:301
-
 msgid "error_email"
-msgstr "电子邮件发送出现错误"
+msgstr "Chyba pri doručení e-mailovej správy."
 
 #: templates/credit-card-form.php:45
 msgid "error_malformed_creditcard_request"
-msgstr "哎呀！出现错误。请检查您的信用卡数据，然后重试。"
+msgstr "Ajaj! Niečo nie je v poriadku. Skontrolujte údaje Vašej kreditnej karty a skúste to znova."
 
 #: classes/admin/class-wirecard-transaction-factory.php:359
 msgid "error_no_post_processing_operations"
-msgstr "没有可用于此交易的后端操作"
+msgstr "Pre túto transakciu nie sú k dispozícii žiadne operácie dodatočného spracovania."
 
 #: classes/admin/class-wirecard-transaction-factory.php:363
 msgid "error_no_post_processing_operations_unconfirmed"
-msgstr "没有可用于此交易的后端操作，交易尚未确认。"
+msgstr "Pre túto transakciu nie sú k dispozícii žiadne operácie dodatočného spracovania; transakcia ešte nebola potvrdená."
 
 #: classes/admin/class-wirecard-transaction-factory.php:323
 #: classes/admin/class-wirecard-transaction-factory.php:411
 #: classes/admin/class-wirecard-transaction-factory.php:429
 #: classes/admin/class-wirecard-transaction-factory.php:447
-
 msgid "error_no_transaction"
-msgstr "未找到交易"
+msgstr "Nenašla sa žiadna transakcia."
 
 #: woocommerce-wirecard-payment-gateway.php:319
-
 msgid "error_woocommerce_missing"
-msgstr "很抱歉，此插件需要安装和激活 WooCommerce 插件。"
+msgstr "Ľutujeme, ale tento zásuvný modul vyžaduje na inštaláciu a aktivovanie rozšírenie WooCommerce."
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:258
 msgid "first-name"
-msgstr "名"
+msgstr "Krstné meno"
 
 #: classes/includes/class-wc-gateway-wirecard-giropay.php:66
 msgid "giropay"
@@ -676,12 +659,12 @@ msgstr "Credit Card Payment"
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:60
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:104
 msgid "heading_title_alipay_crossborder"
-msgstr "Wirecard 支付宝跨境"
+msgstr "Wirecard Alipay Cross-border"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:61
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:113
 msgid "heading_title_creditcard"
-msgstr "Wirecard 信用卡"
+msgstr "Wirecard Credit Card"
 
 #: classes/includes/class-wc-gateway-wirecard-eps.php:62
 #: classes/includes/class-wc-gateway-wirecard-eps.php:108
@@ -711,36 +694,34 @@ msgstr "Wirecard PayPal"
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:61
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:103
 msgid "heading_title_poi_pia"
-msgstr "Wirecard 发票付款/提前付款"
+msgstr "Wirecard platba na faktúru/platba vopred"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:63
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:113
-
 msgid "heading_title_ratepayinvoice"
-msgstr "Wirecard 保证发票"
+msgstr "Wirecard zaručená faktúra cez Wirecard"
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:60
 #: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:103
 msgid "heading_title_sepact"
-msgstr "Wirecard SEPA Credit Transfer"
+msgstr "Wirecard SEPA Úhrada"
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:59
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:107
 msgid "heading_title_sepadd"
-msgstr "Wirecard SEPA Direct Debit"
+msgstr "Wirecard SEPA Inkaso"
 
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:62
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:106
 msgid "heading_title_sofortbanking"
-msgstr "Wirecard Sofort。"
+msgstr "Wirecard Sofort."
 
 #: woocommerce-wirecard-payment-gateway.php:316
 #: woocommerce-wirecard-payment-gateway.php:317
 #: woocommerce-wirecard-payment-gateway.php:324
 #: woocommerce-wirecard-payment-gateway.php:325
-
 msgid "heading_title_support"
-msgstr "支持"
+msgstr "Wirecard Support"
 
 #. Plugin URI of the plugin
 msgid "https://github.com/wirecard/woocommerce-ee"
@@ -753,7 +734,7 @@ msgstr "https://www.wirecard.com/"
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:264
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:266
 msgid "iban"
-msgstr "IBAN:"
+msgstr "IBAN"
 
 #: classes/helper/sepa-template.php:54
 msgid "iban_input"
@@ -764,81 +745,76 @@ msgid "ideal"
 msgstr "iDEAL"
 
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:65
-
 msgid "ideal_desc"
-msgstr "通过 Wirecard 支付处理网关进行 iDEAL 交易"
+msgstr "Transakcie iDEAL cez platobnú bránu Wirecard."
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:262
 msgid "last-name"
-msgstr "姓"
+msgstr "Priezvisko"
 
 #: classes/includes/class-wc-wirecard-payment-gateway.php:212
 #: classes/includes/class-wc-wirecard-payment-gateway.php:228
 #: classes/includes/class-wc-wirecard-payment-gateway.php:340
 msgid "order_error"
-msgstr "付款过程发生错误。请重试。"
+msgstr "Počas procesu platby sa vyskytla chyba. Skúste to znova, prosím."
 
 #: woocommerce-wirecard-payment-gateway.php:100
 #: woocommerce-wirecard-payment-gateway.php:166
 msgid "order_status_authorized"
-msgstr "已授权"
+msgstr "Autorizovaná"
 
 #: woocommerce-wirecard-payment-gateway.php:138
 
 msgid "order_status_authorized_count_plural"
-msgstr "授权 <span class=\"count\">(%s)</span>"
+msgstr "Autorizované <span class=\"count\">(%s)</span>"
 
 #: classes/includes/class-wc-wirecard-payment-gateway.php:521
-
 msgid "order_status_gateway_update"
-msgstr "通过 Wirecard 支付处理网关更新订单状态。"
+msgstr "Aktualizovať stav objednávky cez platobnú bránu Wirecard."
 
 #: classes/admin/class-wirecard-settings.php:119
 msgid "pagination_back"
-msgstr "< 返回"
+msgstr "< Späť"
 
 #: classes/admin/class-wirecard-settings.php:120
 msgid "pagination_next"
-msgstr "下一步 >"
+msgstr "Ďalej >"
 
 #: classes/admin/class-wirecard-transaction-factory.php:112
 msgid "panel_action"
-msgstr "操作"
+msgstr "Úkon"
 
 #: classes/admin/class-wirecard-transaction-factory.php:121
 msgid "panel_amount"
-msgstr "金额"
+msgstr "Suma"
 
 #: classes/admin/class-wirecard-transaction-factory.php:124
 msgid "panel_currency"
-msgstr "货币"
+msgstr "Mena"
 
 #: classes/admin/class-wirecard-transaction-factory.php:103
 msgid "panel_order_number"
-msgstr "Order Number"
+msgstr "Číslo objednávky"
 
 #: classes/admin/class-wirecard-transaction-factory.php:109
-
 msgid "panel_parent_transaction_id"
-msgstr "父交易 ID"
+msgstr "Parent Transaction ID"
 
 #: classes/admin/class-wirecard-transaction-factory.php:115
-
 msgid "panel_payment_method"
-msgstr "付款方式"
+msgstr "Spôsob platby"
 
 #: classes/admin/class-wirecard-transaction-factory.php:100
 msgid "panel_transaction"
-msgstr "交易"
+msgstr "Transakcia"
 
 #: classes/admin/class-wirecard-transaction-factory.php:118
-
 msgid "panel_transaction_state"
-msgstr "交易状态"
+msgstr "Stav transakcie"
 
 #: classes/admin/class-wirecard-transaction-factory.php:106
 msgid "panel_transcation_id"
-msgstr "交易 ID"
+msgstr "ID transakcie"
 
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:61
 msgid "paybybankapp"
@@ -846,150 +822,142 @@ msgstr "Pay by Bank app"
 
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:62
 msgid "paybybankapp_desc"
-msgstr "通过 Wirecard 支付网关进行 Pay by Bank app 交易。"
+msgstr "Transakcie Pay by Bank app cez platobnú bránu Wirecard."
 
 #. Description of the plugin
 
 msgid "Payment Gateway for WooCommerce"
-msgstr "WooCommerce 支付网关"
+msgstr "Platobná brána pre WooCommerce"
 
 #: classes/includes/class-wc-wirecard-payment-gateway.php:733
 msgid "payment_awaiting"
-msgstr "等待 Wirecard 付款"
+msgstr "Očakáva sa platba z Wirecard."
 
 #: classes/admin/class-wirecard-transaction-factory.php:341
 msgid "payment_suffix"
-msgstr "payment"
+msgstr "platba"
 
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:62
 msgid "paypal"
 msgstr "PayPal"
 
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:63
-
 msgid "paypal_desc"
-msgstr "通过 Wirecard 支付处理网关进行 PayPal 交易"
+msgstr "Transakcie PayPal cez platobnú bránu Wirecard."
 
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:62
 msgid "poi_pia"
-msgstr "发票付款/提前付款"
+msgstr "Platba na faktúru/platba vopred"
 
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:63
-
 msgid "poi_pia_desc"
-msgstr "通过 Wirecard 支付处理网关进行发票付款/提前付款交易"
+msgstr "Transakcie s platbou na faktúru/platbou vopred cez platobnú bránu Wirecard."
 
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:266
-
 msgid "ptrid"
-msgstr "供应商交易参考 ID"
+msgstr "Referenčné ID transakcie poskytovateľa"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:64
 msgid "ratepayinvoice"
-msgstr "保证发票"
+msgstr "Zaručená faktúra"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:65
-
 msgid "ratepayinvoice_desc"
-msgstr "通过 Wirecard 支付处理网关进行保证发票交易"
+msgstr "Transakcie so zaručenou faktúrou cez platobnú bránu Wirecard."
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:456
 msgid "ratepayinvoice_fields_error"
-msgstr "您必须年满 18 周岁才能订购。"
+msgstr "Minimálna veková hranica na platby so zaručenou faktúrou: 18."
 
 #: classes/handler/class-wirecard-callback.php:53
 #: classes/handler/class-wirecard-callback.php:80
 msgid "redirect_text"
-msgstr "您正在重定向。请稍候"
+msgstr "Prebieha presmerovanie. Čakajte, prosím."
 
 #: classes/includes/class-wc-wirecard-payment-gateway.php:418
 #: classes/includes/class-wc-wirecard-payment-gateway.php:421
-
 msgid "refund_gateway_error"
-msgstr "通过 Wirecard 支付处理网关进行的退款失败。"
+msgstr "Vrátenie peňazí cez platobnú bránu Wirecard zlyhalo."
 
 #: classes/includes/class-wc-wirecard-payment-gateway.php:632
 msgid "refund_online_error"
-msgstr "此时无法进行在线退款。"
+msgstr "Momentálne nie je možné online vrátenie peňazí."
 
 #: classes/helper/class-additional-information.php:349
 msgid "refund_partial_shipping_error"
-msgstr "您只能全额退还运费；不能部分退还运费。"
+msgstr "Prepravné poplatky je možné vrátiť iba v plnej výške. Čiastočné vrátenie prepravných poplatkov nie je možné."
 
 #: classes/includes/class-wc-wirecard-payment-gateway.php:409
 msgid "refund_processing_error"
-msgstr "处理退款失败。"
+msgstr "Spracovanie vrátenia peňazí zlyhalo."
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:61
 msgid "sepact"
-msgstr "SEPA Credit Transfer"
+msgstr "SEPA Úhrada"
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:62
-
 msgid "sepact_desc"
-msgstr "通过 Wirecard 支付处理网关进行 SEPA Credit Transfer 交易"
+msgstr "Transakcie SEPA Úhrada cez platobnú bránu Wirecard."
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:60
 msgid "sepadd"
-msgstr "SEPA Direct Debit"
+msgstr "SEPA Inkaso"
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:61
-
 msgid "sepadd_desc"
-msgstr "通过 Wirecard 支付处理网关进行 SEPA 交易"
+msgstr "Transakcie SEPA Inkaso cez platobnú bránu Wirecard."
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:246
 msgid "sepa_cancel"
-msgstr "取消"
+msgstr "Zrušiť"
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:295
 msgid "sepa_fields_error"
-msgstr "请填写 SEPA 字段并重试。"
+msgstr "Prosím, vyplňte polia SEPA Inkaso a skúste to znova."
 
 #: classes/helper/sepa-template.php:69
 msgid "sepa_text_1"
-msgstr "我授权该贷方"
+msgstr "Oprávňujem inkasanta"
 
 #: classes/helper/sepa-template.php:71
 msgid "sepa_text_2"
-msgstr "向我的银行发送指示，以便从我的账户中直接收取一笔账目。与此同时，我指派我的银行根据贷方的指示在我的账户上记录相应的债务。"
+msgstr "aby odoslal do mojej banky príkaz na inkaso jedinej inkasnej platby z môjho účtu. Súčasne dávam pokyn svojej banke, aby vykonala inkaso z môjho účtu podľa pokynov príjemcu"
 
 #: classes/helper/sepa-template.php:72
 msgid "sepa_text_2b"
-msgstr "。"
+msgstr "."
 
 #: classes/helper/sepa-template.php:78
 msgid "sepa_text_3"
-msgstr "备注：作为我权力的一部分，根据我与银行之间协议的使用条款，我应当获得退款。该退款必须在我账户计入债务起的 8 周内索取。"
+msgstr "Poznámka: V rámci svojich práv mám nárok na vrátenie platby v súlade s podmienkami mojej dohody s mojou bankou. O vrátenie peňazí sa musí požiadať do 8 týždňov odo dňa úhrady z môjho účtu."
 
 #: classes/helper/sepa-template.php:84
 msgid "sepa_text_4"
-msgstr "我不可撤销地同意，当无法如期执行直接扣款或是直接扣款受到阻碍时，我的银行可以向贷方"
+msgstr "Neodvolateľne súhlasím s tým, že v prípade, že inkaso nebude zaplatené alebo bude proti inkasu námietka, moja banka poskytne príjemcovi"
 
 #: classes/helper/sepa-template.php:86
 msgid "sepa_text_5"
-msgstr "公布我的全名、地址以及出生日期。"
+msgstr "celé moje meno, adresu a dátum narodenia."
 
 #: classes/helper/sepa-template.php:104
 msgid "sepa_text_6"
-msgstr "我已经阅读并接受 SEPA 直接扣款授权令的信息。"
+msgstr "Prečítal/-a som si a súhlasím s informáciami k mandátu na inkaso SEPA."
 
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:63
 msgid "sofortbanking"
-msgstr "Sofort。"
+msgstr "Sofort."
 
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:64
-
 msgid "sofortbanking_desc"
-msgstr "通过 Wirecard 支付处理网关进行 Sofort 交易"
+msgstr "Transakcie Sofort. cez platobnú bránu Wirecard."
 
 #: classes/helper/class-transaction-state-translation.php:58
 msgid "state_awaiting"
-msgstr "等待中"
+msgstr "čaká sa"
 
 #: classes/helper/class-transaction-state-translation.php:49
 msgid "state_closed"
-msgstr "已关闭"
+msgstr "uzavreté"
 
 # Key used in transaction table status: Open
 msgid "state_open"
@@ -997,24 +965,23 @@ msgstr "open"
 
 #: classes/helper/class-transaction-state-translation.php:55
 msgid "state_success"
-msgstr "成功"
+msgstr "úspech"
 
 #: classes/admin/class-wirecard-settings.php:242
 msgid "submit_button"
-msgstr "Submit"
+msgstr "Odoslať"
 
 #: classes/includes/class-wc-wirecard-payment-gateway.php:680
 msgid "success_credentials"
-msgstr "商家配置已成功通过测试。"
+msgstr "Konfigurácia obchodníka bola úspešne odskúšaná."
 
 #: classes/admin/class-wirecard-settings.php:299
-
 msgid "success_email"
-msgstr "电子邮件已发送成功"
+msgstr "E-mail úspešne odoslaný."
 
 #: classes/admin/class-wirecard-transaction-factory.php:339
 msgid "success_new_transaction"
-msgstr "后续处理操作成功了。已创建新交易。"
+msgstr "Operácia dodatočného spracovania bola úspešná. Vytvorila sa nová transakcia."
 
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:149
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:146
@@ -1028,7 +995,7 @@ msgstr "后续处理操作成功了。已创建新交易。"
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:145
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:175
 msgid "test_config"
-msgstr "测试配置"
+msgstr "Test – konfigurácia"
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:145
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:243
@@ -1043,9 +1010,8 @@ msgstr "测试配置"
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:148
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:147
 #: woocommerce-wirecard-payment-gateway.php:355
-
 msgid "test_credentials"
-msgstr "测试"
+msgstr "Test – poverovacie údaje"
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:148
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:181
@@ -1059,23 +1025,23 @@ msgstr "测试"
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:150
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:150
 msgid "text_advanced"
-msgstr "高级选项"
+msgstr "Rozšírené možnosti"
 
 #: woocommerce-wirecard-payment-gateway.php:236
 #: woocommerce-wirecard-payment-gateway.php:237
 #: classes/admin/class-wirecard-transaction-factory.php:350
 msgid "text_cancel_transaction"
-msgstr "取消交易"
+msgstr "Zrušiť transakciu"
 
 #: woocommerce-wirecard-payment-gateway.php:244
 #: woocommerce-wirecard-payment-gateway.php:245
 #: classes/admin/class-wirecard-transaction-factory.php:353
 msgid "text_capture_transaction"
-msgstr "获取交易"
+msgstr "Zachytiť transakciu"
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:245
 msgid "text_confirm"
-msgstr "Confirm"
+msgstr "Potvrdiť"
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:119
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:152
@@ -1090,7 +1056,7 @@ msgstr "Confirm"
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:121
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:121
 msgid "text_credentials"
-msgstr "凭证"
+msgstr "Prístupové údaje"
 
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:123
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:125
@@ -1104,11 +1070,11 @@ msgstr "凭证"
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:124
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:154
 msgid "text_credentials_desc"
-msgstr "输入您的 Wirecard 凭证。"
+msgstr "Zadajte Vaše prístupové údaje Wirecard."
 
 #: classes/helper/class-credit-card-vault.php:163
 msgid "text_delete"
-msgstr "删除"
+msgstr "Vymazať"
 
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:96
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:166
@@ -1145,90 +1111,87 @@ msgstr "删除"
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:204
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:211
 msgid "text_enable_disable"
-msgstr "启用/禁用"
+msgstr "Povoliť/zakázať"
 
 #: woocommerce-wirecard-payment-gateway.php:320
 msgid "text_go_to_plugins"
-msgstr "转至插件"
+msgstr "Prejsť na Rozšírenia"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:258
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:162
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:192
 msgid "text_payment_action_pay"
-msgstr "Purchase"
+msgstr "Nákup"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:257
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:161
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:191
 msgid "text_payment_action_reserve"
-msgstr "Authorization"
+msgstr "Autorizácia"
 
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:159
 msgid "text_payment_type_pia"
-msgstr "Payment in Advance"
+msgstr "Platba vopred"
 
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:158
 msgid "text_payment_type_poi"
-msgstr "Payment on Invoice"
+msgstr "Platba na faktúru"
 
 #: woocommerce-wirecard-payment-gateway.php:252
 #: woocommerce-wirecard-payment-gateway.php:253
 #: classes/admin/class-wirecard-transaction-factory.php:356
 msgid "text_refund_transaction"
-msgstr "交易退款"
+msgstr "Vrátenie transakcie"
 
 #: classes/admin/class-wirecard-transaction-factory.php:371
-
 msgid "text_response_data"
-msgstr "响应数据"
+msgstr "Údaje odpovede"
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:153
 msgid "text_sepadd_config_desc"
-msgstr "输入您的 SEPA 凭证和 SEPA 直接借记授权设置。"
+msgstr "Zadajte Vaše prístupové údaje a nastavenia mandátu pre SEPA Inkaso."
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:151
 msgid "text_sepa_config"
-msgstr "SEPA 凭证"
+msgstr "Prístupové údaje SEPA"
 
 #: classes/admin/class-wirecard-settings.php:98
 msgid "text_support"
-msgstr "Support"
+msgstr "Podpora"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:436
-
 msgid "text_terms_accept"
-msgstr "I herewith confirm that I have read the <a href=\"https://www.wirecardbank.de/privacy-documents/datenschutzhinweis-fur-die-wirecard-zahlarten/\" target=\"_blank\">privacy notice</a> and <a target=\"_blank\" href=\"https://www.wirecardbank.de/privacy-documents/zusatzliche-geschaftsbedingungen-fur-wirecard-zahlarten/\">additional terms and conditions</a> for Wirecard payment types and that I accept their validity."
+msgstr "Týmto potvrdzujem, že som si prečítal/-a <a href=\"https://www.wirecardbank.de/privacy-documents/datenschutzhinweis-fur-die-wirecard-zahlarten/\" target=\"_blank\">upozornenie k ochrane osobných údajov</a> a <a target=\"_blank\" href=\"https://www.wirecardbank.de/privacy-documents/zusatzliche-geschaftsbedingungen-fur-wirecard-zahlarten/\">doplňujúce zmluvné podmienky</a> pre typy platieb Wirecard a súhlasím s ich platným znením."
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:471
 msgid "text_terms_notice"
-msgstr "您必须同意隐私声明和 Wirecard 支付方式的附加条款。"
+msgstr "Musíte vyjadriť súhlas s upozornením k ochrane osobných údajov a ďalšími podmienkami platobných metód Wirecard."
 
 #: classes/admin/class-wirecard-transaction-factory.php:376
 msgid "text_total"
-msgstr "总计"
+msgstr "Celkom"
 
 #: classes/admin/class-wirecard-transaction-factory.php:339
 msgid "text_transaction"
-msgstr "Transaction"
+msgstr "Transakcia"
 
 #: classes/admin/class-wirecard-transaction-factory.php:468
 msgid "text_transaction_details_1"
-msgstr "For more transaction information click "
+msgstr "Ďalšie informácie o transakcii získate kliknutím "
 
 #: classes/admin/class-wirecard-transaction-factory.php:471
 msgid "text_transaction_details_2"
-msgstr "here"
+msgstr "sem"
 
 #: woocommerce-wirecard-payment-gateway.php:228
 #: woocommerce-wirecard-payment-gateway.php:229
 #: classes/admin/class-wirecard-transaction-factory.php:367
-
 msgid "title_payment_gateway"
-msgstr "Wirecard 支付网关"
+msgstr "Platobná brána Wirecard"
 
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:261
 msgid "transfer_notice"
-msgstr "请使用以下数据转账："
+msgstr "Vykonajte prevod sumy s použitím nasledujúcich údajov:"
 
 # Key used for tx-type: Authorization
 msgid "tx_type_authorization"
@@ -1308,16 +1271,15 @@ msgstr "void-purchase"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:349
 msgid "vault_save_text"
-msgstr "保存以备后用。"
+msgstr "Uložiť na neskoršie použitie."
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:336
-
 msgid "vault_use_existing_text"
-msgstr "使用保存的信用卡"
+msgstr "Použiť uloženú kreditnú kartu"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:777
 msgid "warning_credit_card_url_mismatch"
-msgstr "注意：请在 URL 设置字段中检查您的凭据。您可能已将生产账户配置/组合到测试帐户。"
+msgstr "Upozornenie: Skontrolujte svoje poverovacie údaje v poliach nastavenia URL. Je možné, že ste konfigurovali/skombinovali produkčný účet so skúšobným účtom."
 
 #. Author of the plugin
 msgid "Wirecard AG"
@@ -1325,4 +1287,4 @@ msgstr "Wirecard AG"
 
 #. Plugin Name of the plugin
 msgid "Wirecard WooCommerce Extension"
-msgstr "Wirecard  WooCommerce 扩展"
+msgstr "Rozšírenie Wirecard WooCommerce"

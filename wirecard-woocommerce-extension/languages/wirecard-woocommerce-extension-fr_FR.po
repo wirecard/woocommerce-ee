@@ -767,6 +767,7 @@ msgstr "Une erreur est survenue durant le processus de paiement. Veuillez réess
 msgid "order_status_authorized"
 msgstr "Autorisé"
 
+#: woocommerce-wirecard-payment-gateway.php:138
 msgid "order_status_authorized_count_plural"
 msgstr "Autorisé<span class=\"count\">(%s)</span>"
 
@@ -959,6 +960,22 @@ msgstr "Sofort."
 
 msgid "sofortbanking_desc"
 msgstr "Transactions Sofort. via la passerelle de paiement Wirecard."
+
+#: classes/helper/class-transaction-state-translation.php:58
+msgid "state_awaiting"
+msgstr "en attente"
+
+#: classes/helper/class-transaction-state-translation.php:49
+msgid "state_closed"
+msgstr "fermé"
+
+# Key used in transaction table status: Open
+msgid "state_open"
+msgstr "ouvert"
+
+#: classes/helper/class-transaction-state-translation.php:55
+msgid "state_success"
+msgstr "validé"
 
 #: classes/admin/class-wirecard-settings.php:242
 msgid "submit_button"
@@ -1186,6 +1203,82 @@ msgstr "Passerelle de paiement Wirecard"
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:261
 msgid "transfer_notice"
 msgstr "Veuillez transférer le montant en utilisant les données suivantes :"
+
+# Key used for tx-type: Authorization
+msgid "tx_type_authorization"
+msgstr "Autorisation "
+
+# Key used for tx-type capture-authorization
+msgid "tx_type_capture_authorization"
+msgstr "Autorisation de capture"
+
+# describes the tx-type check-enrollment
+msgid "tx_type_check_enrollment"
+msgstr "Inscription vérification 3D"
+
+# Key used for tx-type check-payer response
+msgid "tx_type_check_payer_response"
+msgstr "Réponse payeur vérification 3D"
+
+# Key used for tx-type credit
+msgid "tx_type_credit"
+msgstr "Crédit"
+
+# Key used for tx-type debit
+msgid "tx_type_debit"
+msgstr "Débit"
+
+# Key used for tx-type debit-return
+msgid "tx_type_debit_return"
+msgstr "Retour de débit"
+
+# Key used for tx-type deposit
+msgid "tx_type_deposit"
+msgstr "Dépôt"
+
+# Key used for tx-type pending-credit
+msgid "tx_type_pending_credit"
+msgstr "Crédit en attente"
+
+# Key used for tx-type pending-debit
+msgid "tx_type_pending_debit"
+msgstr "Débit en attente"
+
+# Key used for tx-type purchase
+msgid "tx_type_purchase"
+msgstr "Achat "
+
+# Key used for tx-type refund-capture
+msgid "tx_type_refund_capture"
+msgstr "Capture du remboursement"
+
+# Key used for tx-type refund-debit
+msgid "tx_type_refund_debit"
+msgstr "Remboursement de débit"
+
+# Key used for tx-type refund-purchase
+msgid "tx_type_refund_purchase"
+msgstr "Remboursement achat"
+
+# Key used for tx-type void-authorization
+msgid "tx_type_void_authorization"
+msgstr "Annulation autorisation"
+
+# Key used for tx-type void-capture
+msgid "tx_type_void_capture"
+msgstr "Annulation capture "
+
+# Key used for tx-type void-pending-credit
+msgid "tx_type_void_pending_credit"
+msgstr "Annulation crédit en attente"
+
+# Key used for tx-type void-pending-debit
+msgid "tx_type_void_pending_debit"
+msgstr "Annulation débit en attente"
+
+# Key used for tx-type void-purchase
+msgid "tx_type_void_purchase"
+msgstr "Annulation achat "
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:349
 msgid "vault_save_text"
