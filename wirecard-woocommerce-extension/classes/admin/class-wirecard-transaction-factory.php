@@ -180,6 +180,7 @@ class Wirecard_Transaction_Factory {
 		global $wpdb;
 
 		$transaction_table_title_list = $this->transaction_translate_helper->get_table_header_translations();
+		$payment_methods              = $this->get_payment_methods();
 		$start                        = ( $page * 20 ) - 19;
 
 		$start --;
@@ -208,7 +209,11 @@ class Wirecard_Transaction_Factory {
 					if ( 'transaction_id' === $table_title_key || ( 'parent_transaction_id' === $table_title_key && ! empty( $table_title ) ) ) {
 						echo "<a href='?page=wirecardpayment&id={$row[ $table_title_key ]}'>" . $row[ $table_title_key ] . '</a>';
 					} else {
-						echo $this->transaction_translate_helper->translate( $row[ $table_title_key ] );
+						if ( 'payment_method' === $table_title_key ) {
+							echo $this->get_payment_method_display_text( $payment_methods, $row[ $table_title_key ] );
+						} else {
+							echo $this->transaction_translate_helper->translate( $row[ $table_title_key ] );
+						}
 					}
 				}
 				echo '</td>';
@@ -591,5 +596,45 @@ class Wirecard_Transaction_Factory {
 		}
 
 		return false;
+	}
+
+	/**
+	 * Get payment_method display text
+	 *
+	 * @param WC_Wirecard_Payment_Gateway[] $payment_methods
+	 * @param string $type
+	 *
+	 * @return string
+	 *
+	 * @since 3.3.0
+	 */
+	private function get_payment_method_display_text( $payment_methods, $type ) {
+		if ( ! isset( $payment_methods[ $type ] ) ) {
+			return $type;
+		}
+
+		$payment_method = $payment_methods[ $type ];
+
+		return $payment_method->get_title();
+	}
+
+	/**
+	 * Get payment methods
+	 *
+	 * @return WC_Wirecard_Payment_Gateway[]
+	 *
+	 * @since 3.3.0
+	 */
+	private function get_payment_methods() {
+		$payment_methods = array();
+
+		/**
+		 * @var WC_Wirecard_Payment_Gateway $payment_method
+		 */
+		foreach ( wirecard_get_payments() as $name => $payment_method ) {
+			$payment_methods[ $payment_method->get_type() ] = $payment_method;
+		}
+
+		return $payment_methods;
 	}
 }
