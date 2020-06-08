@@ -84,5 +84,10 @@ Our general Terms of Use can be found on [Github](https://github.com/wirecard/wo
 Follow this [link](https://github.com/wirecard/woocommerce-ee/graphs/contributors) to see the team responsible for the development of this extension.
 
 == Changelog ==
-3.2.1
-- Fix archive size for partners
+3.3.0
+- Add PSD2 hint in Credit Card configuration  
+- Display payment method name in transaction table  
+- Improve response error codes in the payment process  
+- Remove the wirecard live chat  
+- Translate transaction state and -type in transaction overview  
+- Update Alipay Cross-border logo  
