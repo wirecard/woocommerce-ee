@@ -385,6 +385,12 @@ msgstr "Betaalmethode"
 msgid "config_payment_type_desc"
 msgstr "Kies \"Voorafbetaling\" om bankgegevens weer te geven na het afrekenen of \"Betaling op factuur\" om bankgegevens op de factuur weer te geven."
 
+msgid "config_PSD2_information"
+msgstr "PSD 2"
+
+msgid "config_PSD2_information_desc_woocommerce"
+msgstr "With regard to PSD 2 requirements, you should request certain personal information from your consumers during <a target=\"_blank\" href='https://github.com/wirecard/woocommerce-ee/wiki/WooCommerce-Checkout'>checkout</a> to reduce the risk of transactions being rejected."
+
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:178
 msgid "config_shipping_countries"
 msgstr "Ondersteunde landen van verzending"
@@ -410,6 +416,7 @@ msgid "config_status_desc_alipay_crossborder"
 msgstr "Betaalmethode Alipay Cross-border activeren om deze beschikbaar te maken voor uw klanten."
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:106
+
 msgid "config_status_desc_creditcard"
 msgstr "Betaalmethode Creditcard activeren om deze beschikbaar te maken voor uw klanten."
 
@@ -504,6 +511,7 @@ msgid "config_title_desc"
 msgstr "Naam betaalmethode zoals weergegeven voor klant tijdens afrekenen."
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:213
+
 msgid "config_vault_desc"
 msgstr "Creditcardgegevens worden bewaard voor later gebruik."
 
@@ -526,10 +534,12 @@ msgid "config_zapp_merchant_return_string_desc"
 msgstr "Terugkeer-URL voor handelaar om klanten door te verwijzen van hun mobiele bank apps naar uw winkel."
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:62
+
 msgid "creditcard"
 msgstr "Creditcard"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:63
+
 msgid "creditcard_desc"
 msgstr "Creditcard-transacties via Wirecard Payment Gateway."
 
@@ -550,50 +560,61 @@ msgid "debtor_acc_owner"
 msgstr "Accounteigenaar"
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:97
+
 msgid "enable_heading_title_alipay_crossborder"
 msgstr "Wirecard Alipay Cross-border inschakelen"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:105
+
 msgid "enable_heading_title_creditcard"
 msgstr "Wirecard Creditcard inschakelen"
 
 #: classes/includes/class-wc-gateway-wirecard-eps.php:98
+
 msgid "enable_heading_title_eps"
 msgstr "Wirecard eps-Überweisung inschakelen"
 
 #: classes/includes/class-wc-gateway-wirecard-giropay.php:101
 msgid "enable_heading_title_giropay"
-msgstr "Enable Wirecard giropay"
+msgstr "Enable giropay"
 
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:101
+
 msgid "enable_heading_title_ideal"
 msgstr "Wirecard iDEAL inschakelen"
 
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:99
+
 msgid "enable_heading_title_paybybankapp"
 msgstr "Wirecard Pay by Bank app inschakelen"
 
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:99
+
 msgid "enable_heading_title_paypal"
 msgstr "Wirecard PayPal inschakelen"
 
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:96
+
 msgid "enable_heading_title_poi_pia"
 msgstr "Wirecard betaling op factuur / voorafbetaling inschakelen"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:106
+
 msgid "enable_heading_title_ratepayinvoice"
 msgstr "Wirecard gegarandeerde betaling inschakelen"
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:96
+
 msgid "enable_heading_title_sepact"
 msgstr "Wirecard SEPA Credit Transfer inschakelen"
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:100
+
 msgid "enable_heading_title_sepadd"
 msgstr "Wirecard SEPA Direct Debit inschakelen"
 
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:99
+
 msgid "enable_heading_title_sofortbanking"
 msgstr "Wirecard Sofort. inschakelen"
 
@@ -618,6 +639,7 @@ msgid "error_email"
 msgstr "Fout bij afleveren e-mail."
 
 #: templates/credit-card-form.php:45
+
 msgid "error_malformed_creditcard_request"
 msgstr "Oeps! Er ging iets mis. Gelieve uw creditcardgegevens te controleren en opnieuw te proberen."
 
@@ -654,65 +676,77 @@ msgstr "giropay transactions via Wirecard Payment Gateway."
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:504
 msgid "heading_creditcard_payment_form"
-msgstr "Credit Card Payment"
+msgstr "Card Payments"
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:60
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:104
+
 msgid "heading_title_alipay_crossborder"
 msgstr "Wirecard Alipay Cross-border"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:61
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:113
+
 msgid "heading_title_creditcard"
 msgstr "Wirecard Credit Card"
 
 #: classes/includes/class-wc-gateway-wirecard-eps.php:62
 #: classes/includes/class-wc-gateway-wirecard-eps.php:108
+
 msgid "heading_title_eps"
 msgstr "Wirecard eps-Überweisung"
 
 #: classes/includes/class-wc-gateway-wirecard-giropay.php:65
 #: classes/includes/class-wc-gateway-wirecard-giropay.php:108
+
 msgid "heading_title_giropay"
 msgstr "Wirecard giropay"
 
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:63
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:108
+
 msgid "heading_title_ideal"
 msgstr "Wirecard iDEAL"
 
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:60
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:106
+
 msgid "heading_title_paybybankapp"
 msgstr "Wirecard Pay by Bank app"
 
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:61
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:106
+
 msgid "heading_title_paypal"
 msgstr "Wirecard PayPal"
 
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:61
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:103
+
 msgid "heading_title_poi_pia"
 msgstr "Wirecard betaling op factuur / voorafbetaling"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:63
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:113
+
 msgid "heading_title_ratepayinvoice"
 msgstr "Wirecard gegarandeerde betaling door Wirecard"
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:60
 #: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:103
+
 msgid "heading_title_sepact"
 msgstr "Wirecard SEPA Credit Transfer"
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:59
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:107
+
 msgid "heading_title_sepadd"
 msgstr "Wirecard SEPA Direct Debit"
 
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:62
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:106
+
 msgid "heading_title_sofortbanking"
 msgstr "Wirecard Sofort."
 
@@ -1274,6 +1308,7 @@ msgid "vault_save_text"
 msgstr "Bewaren voor later gebruik."
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:336
+
 msgid "vault_use_existing_text"
 msgstr "Opgeslagen creditcard gebruiken"
 
