@@ -5,47 +5,12 @@ language: php
 env:
   global:
     - COMPOSER_ARGS=--no-interaction
-    - WOOCOMMERCE_RELEASES_FILE=./.bin/compatible-shop-releases.txt
-    - MANUAL_UITEST_TRIGGER_COMMIT=TestMyBuild
-    - PATCH_RELEASE=patch
-    - MINOR_RELEASE=minor
-    - MAJOR_RELEASE=major
     - WORDPRESS_CODING_STANDARDS_TAG=2.1.1
 jobs:
   # these stages are allowed to fail
   allow_failures:
     - stage: phraseapp-check-if-in-sync
-    - stage: acceptance-test
-      env:
-        - GATEWAY=API-TEST
-        - WOOCOMMERCE_NUMBER=1
-        - ALLOW_FAIL=1
   include:
-    - &acceptance-test
-      stage: acceptance-test
-      #   run this stage on pull request if head branch name contains one of these words (patch, major, minor)
-      #   or when build triggered ad-hoc with special commit message
-      #   tests will use extension version = branch which originated pull request
-      #   or branch which was defined in ad-hoc trigger in Travis UI
-      if: (type = pull_request AND (head_branch =~ env(PATCH_RELEASE) OR head_branch =~ env(MINOR_RELEASE) OR head_branch =~ env(MAJOR_RELEASE))) OR (commit_message =~ env(MANUAL_UITEST_TRIGGER_COMMIT))
-      php: 7.2
-      env:
-        - GATEWAY=API-TEST
-        - WOOCOMMERCE_NUMBER=1
-      before_install:
-        - travis_retry composer self-update
-      install:
-        # check from which file to take versions
-        - export WOOCOMMERCE_VERSION=$(awk "NR==${WOOCOMMERCE_NUMBER} {print; exit}" ${WOOCOMMERCE_RELEASES_FILE})
-        - export LATEST_RELEASED_SHOP_EXTENSION_VERSION=$(git describe --abbrev=0 --tags)
-        - echo "Testing with Woocommerce version ${WOOCOMMERCE_VERSION}"
-      script: bash .bin/setup-and-run-ui-tests.sh
-      after_script: skip
-      after_success:
-        - bash .bin/upload-logs-and-notify.sh
-      after_failure:
-        - bash .bin/upload-logs-and-notify.sh fail
- 
     - stage: phraseapp-pull
       if: type != cron AND env(PHRASEAPP_PULL) = '1'
       language: ruby
@@ -86,15 +51,3 @@ jobs:
         - cd $TMPDIR && travis_retry bundle install
         - bin/rake trigger_build
       after_script: skip
-
-notifications:
-  email: false
-  slack:
-    rooms:
-      - secure: YI7sUrfMyKyJD60kElGkO7yBDkGEh+069yS8bFAIDUST7s48J+dDP/r2G9dN9oQwhs9hvNjpNytpZDPys838T+Z0mNtFZ9Wu022hV3MpbKUuMl7L9P0MQQmxjg4bKyKK3Hl9tPrZ3UsKRlwIUmRGGYQ7cjs4zumorqs19YsB3X+WnnxAmmYB3kHQYfNKgVnmcG2QHJyx5KaLZ0EsWynSHXkYb8bVCtdlbQFNnpChvGHPprZrHAszLCYnlU7AEZGdbuk17oIfXO9Wjuu1GV8iJ2VgKkTCzW4FBC5eHJyZezojPFUm1I5tvdihRZuyBekVGOF23J6pvHLqPx77clT+/Vn6T+UMDuh1INZ0LKt4UOU42oEDKGblWZx2VYWcHwfEK+ckJWZkT9EBfg/CMenJly2tbtBj6++XNvxgGEDn6XqKIEatcb7X/aiy4f8BPXa3/pzgZAlvzZbGGqHFNZPAlgcXBBXgbaC7VvMhvi6Z5AG5ylKzPS5GCD95ozPC+cGv0234TBJus5oZck4qNiT53IUQ7Ta+OGVB0Mea105VAoQI0I7YcgaqW6c4h2YTmnuuQsIzAwPOrJ5TAinj8Z8mZ9C11tEcNF3Pgy1tOoG/YLurhOJm7v1ebotRb/DIeSHU8RfNatnDSSky4YS6Y8k2pQthdC9m7m2f2mJYuGdLjlM=
-    template:
-      - "%{repository}#%{build_number} (%{branch} : %{author}): %{message}"
-      - "Change view : %{compare_url}"
-      - "Build details : %{build_url}"
-    on_success: change
-    on_failure: change

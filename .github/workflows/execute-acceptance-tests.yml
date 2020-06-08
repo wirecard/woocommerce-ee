@@ -1,0 +1,58 @@
+name: Execute Acceptance Tests
+
+on: pull_request
+
+jobs:
+  execute-acceptance-tests:
+    runs-on: ubuntu-latest
+    if: startsWith(github.head_ref, 'RC-') && contains(github.head_ref, 'major') || contains(github.head_ref, 'minor') || contains(github.head_ref, 'patch')
+    steps:
+      - name: Checkout ${{ github.event.repository.name }}
+        uses: wirecard/checkout@v2.0.0
+        with:
+          ref: ${{ github.head_ref }}
+      - name: Checkout extension-shop-system-builder
+        run: git clone https://github.com/wirecard/extension-shop-system-builder.git
+      - name: PHP version setup
+        uses: wirecard/setup-php@2.1.3
+        with:
+          php-version: '7.2'
+          extension: mbstring, intl, simplexml, dom
+          ini-values: post_max_size=256M, short_open_tag=On
+      - name: Extract shop name
+        run: echo "::set-env name=SHOP_SYSTEM_NAME::${{ github.event.repository.name }}"
+      - name: Extract ${{ github.event.repository.name }} version
+        run: echo "::set-env name=SHOP_SYSTEM_VERSION::$(awk "NR==1 {print; exit}" ${SHOP_RELEASES_FILE})"
+        env: 
+          SHOP_RELEASES_FILE: 'extension-shop-system-builder/${{ github.event.repository.name }}/compatible-shop-releases.txt'
+      - name: Extract branch name
+        shell: bash
+        run: echo "::set-env name=GIT_BRANCH::${{ github.head_ref }}"
+      - name: Set global git conf
+        run: git config --global user.email "" && git config --global user.name "github-actions"
+      - name: Execute scceptance tests
+        run: extension-shop-system-builder/.bin/setup-and-run-ui-tests.sh
+        shell: bash
+        env:
+          PHP_VERSION: '7.2'
+          NGROK_TOKEN: ${{ secrets.NGROK_TOKEN }}
+          BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
+          BROWSERSTACK_USER: ${{ secrets.BROWSERSTACK_USER }}
+          PATCH_RELEASE: 'patch'
+          MINOR_RELEASE: 'minor'
+          MAJOR_RELEASE: 'major'
+      - name: Acceptance tests passed
+        if: ${{ success() }}
+        run: extension-shop-system-builder/.bin/upload-logs-and-notify.sh
+        shell: bash
+        env:
+          GITHUB_RUN_ID: ${{ github.run_id }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Acceptance tests failed
+        if: ${{ failure() }}
+        run: extension-shop-system-builder/.bin/upload-logs-and-notify.sh fail
+        shell: bash
+        env:
+          SLACK_ROOMS: ${{ secrets.SLACK_ROOMS }}
+          GITHUB_RUN_ID: ${{ github.run_id }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
