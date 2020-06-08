@@ -88,6 +88,6 @@ Follow this [link](https://github.com/wirecard/woocommerce-ee/graphs/contributor
 - Add PSD2 hint in Credit Card configuration  
 - Display payment method name in transaction table  
 - Improve response error codes in the payment process  
-- Remove the wirecard live chat  
+- Remove the support live chat  
 - Translate transaction state and -type in transaction overview  
 - Update Alipay Cross-border logo  
