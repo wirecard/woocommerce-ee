@@ -385,6 +385,12 @@ msgstr ""
 msgid "config_payment_type_desc"
 msgstr ""
 
+msgid "config_PSD2_information"
+msgstr ""
+
+msgid "config_PSD2_information_desc_woocommerce"
+msgstr ""
+
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:178
 msgid "config_shipping_countries"
 msgstr ""
@@ -563,7 +569,6 @@ msgid "enable_heading_title_eps"
 msgstr ""
 
 #: classes/includes/class-wc-gateway-wirecard-giropay.php:101
-#, fuzzy
 msgid "enable_heading_title_giropay"
 msgstr ""
 

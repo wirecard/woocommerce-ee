@@ -166,6 +166,11 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 				'description' => __( 'config_status_desc_creditcard', 'wirecard-woocommerce-extension' ),
 				'default'     => 'no',
 			),
+			'psd_two'                     => array(
+				'title'       => __( 'config_PSD2_information', 'wirecard-woocommerce-extension' ),
+				'type'        => 'hidden',
+				'description' => __( 'config_PSD2_information_desc_woocommerce', 'wirecard-woocommerce-extension' ),
+			),
 			'title'                       => array(
 				'title'       => __( 'config_title', 'wirecard-woocommerce-extension' ),
 				'type'        => 'text',
