@@ -612,10 +612,16 @@ class Wirecard_Transaction_Factory {
 		if ( ! isset( $payment_methods[ $type ] ) ) {
 			return $type;
 		}
+		
+		$payment_method   = $payment_methods[ $type ];
+		$database_title   = $payment_method->get_title();
+		$translated_title = $payment_method->get_method_title();
 
-		$payment_method = $payment_methods[ $type ];
+		if ( $database_title === $translated_title ) {
+			return $translated_title;
+		}
 
-		return $payment_method->get_title();
+		return $translated_title . '<br>(' . $database_title . ')';
 	}
 
 	/**
