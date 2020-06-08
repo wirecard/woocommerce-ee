@@ -612,7 +612,7 @@ class Wirecard_Transaction_Factory {
 		if ( ! isset( $payment_methods[ $type ] ) ) {
 			return $type;
 		}
-		
+
 		$payment_method   = $payment_methods[ $type ];
 		$database_title   = $payment_method->get_title();
 		$translated_title = $payment_method->get_method_title();
