@@ -9,7 +9,7 @@ jobs:
       matrix:
         operating-system: [ubuntu-latest]
         php-versions: ['7.2']
-    if: startsWith(github.head_ref, 'RC-') && contains(github.head_ref, 'major') || contains(github.head_ref, 'minor') || contains(github.head_ref, 'patch')
+    if: startsWith(github.head_ref, 'RC-') != false && endsWith(github.head_ref, '-major') != false  || endsWith(github.head_ref, '-minor') != false || endsWith(github.head_ref, '-patch') != false
     steps:
       - name: Checkout ${{ github.event.repository.name }}
         uses: wirecard/checkout@v2.0.0
