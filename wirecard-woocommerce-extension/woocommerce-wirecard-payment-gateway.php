@@ -376,7 +376,7 @@ function wirecard_check_if_woo_installed() {
 
 	$sitewide_plugins = get_site_option( 'active_sitewide_plugins' );
 	if ( is_array( $sitewide_plugins ) ) {
-		foreach ( $sitewide_plugins as $plugin_name => $plugin_activation_time ) {
+		foreach ( array_keys($sitewide_plugins) as $plugin_name ) {
 			if ( preg_match( $woocommerce_pattern, $plugin_name ) ) {
 				return;
 			}
