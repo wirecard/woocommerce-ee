@@ -388,9 +388,8 @@ msgstr "Choose \"Payment In Advance\" to display bank data after the checkout pr
 msgid "config_PSD2_information"
 msgstr "PSD 2"
 
-
 msgid "config_PSD2_information_desc_woocommerce"
-msgstr "In regards to PSD 2 regulations consider <a target=\"_blank\" href='https://github.com/wirecard/woocommerce-ee/wiki/Credit-Card'>https://github.com/wirecard/woocommerce-ee/wiki/Credit-Card</a> in order to minimize rejected transactions due to missing information. "
+msgstr "With regard to PSD 2 requirements, you should request certain personal information from your consumers during <a target=\"_blank\" href='https://github.com/wirecard/woocommerce-ee/wiki/WooCommerce-Checkout'>checkout</a> to reduce the risk of transactions being rejected."
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:178
 msgid "config_shipping_countries"

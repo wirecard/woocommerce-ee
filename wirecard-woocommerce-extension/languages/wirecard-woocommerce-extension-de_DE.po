@@ -388,8 +388,9 @@ msgstr "Wählen Sie \"Vorauskasse\", um die Bankdaten nach dem Checkout anzuzeig
 msgid "config_PSD2_information"
 msgstr "PSD 2"
 
+
 msgid "config_PSD2_information_desc_woocommerce"
-msgstr "In regards to PSD 2 regulations consider <a target=\"_blank\" href='https://github.com/wirecard/woocommerce-ee/wiki/Credit-Card'>https://github.com/wirecard/woocommerce-ee/wiki/Credit-Card</a> in order to minimize rejected transactions due to missing information. "
+msgstr "Angesichts der Bestimmungen der PSD 2 sollten Sie beim  <a target=\"_blank\" href='https://github.com/wirecard/woocommerce-ee/wiki/WooCommerce-Checkout'>Checkout</a> bestimmte persönliche Daten von Ihren Kunden anfordern, um das Risiko, dass Transaktionen abgelehnt werden, zu reduzieren.  "
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:178
 msgid "config_shipping_countries"
@@ -965,7 +966,7 @@ msgstr "beendet"
 
 # Key used in transaction table status: Open
 msgid "state_open"
-msgstr "open"
+msgstr "offen"
 
 #: classes/helper/class-transaction-state-translation.php:55
 msgid "state_success"
