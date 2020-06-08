@@ -1,0 +1,46 @@
+name: Create Pull Request from RC branch
+
+on:
+  push:
+    branches:
+      - RC*
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    name: Create Pull Request from RC branch
+    steps:
+      - name: Checkout
+        uses: wirecard/checkout@v2.0.0
+        with:
+          ref: ${{ github.ref }}
+      - name: Get hub
+        run: curl -fsSL https://github.com/github/hub/raw/master/script/get | bash -s 2.14.1
+      - name: Check that PR is created
+        id: get_pull_request_link
+        run: echo ::set-output name=pull_req_link::$(hub pr show  -h ${{ github.ref }} -u 2> /dev/null || true)
+        env:
+          GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
+          GIT_EDITOR: vi
+      - name: Set global git conf
+        if: (!contains(steps.get_pull_request_link.outputs.pull_req_link, 'http'))
+        run: git config --global user.email "" && git config --global user.name "github-actions"
+      - name: Commit files
+        if: (!contains(steps.get_pull_request_link.outputs.pull_req_link, 'http'))
+        run: git commit --allow-empty -m "Initial commit"
+      - name: Push changes
+        if: (!contains(steps.get_pull_request_link.outputs.pull_req_link, 'http'))
+        uses: wirecard/github-push-action@master
+        with:
+          branch: ${{ github.ref }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create pull request for release candidate branch
+        if: (!contains(steps.get_pull_request_link.outputs.pull_req_link, 'http'))
+        shell: bash
+        run: |
+          FULL_BRANCH_NAME=${BRANCH//-/ }
+          bin/hub pull-request -f -m "${FULL_BRANCH_NAME##*[/]}" --no-edit 
+        env:
+          GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
+          GIT_EDITOR: vi
+          BRANCH: ${{ github.ref }}
