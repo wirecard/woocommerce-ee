@@ -3,7 +3,7 @@
  * Plugin Name: Wirecard WooCommerce Extension
  * Plugin URI: https://github.com/wirecard/woocommerce-ee
  * Description: Payment Gateway for WooCommerce
- * Version: 3.1.1
+ * Version: 3.3.0
  * Author: Wirecard AG
  * Author URI: https://www.wirecard.com/
  * License: GPLv3
@@ -135,13 +135,11 @@ function wirecard_init_payment_gateway() {
 	register_post_status(
 		'wc-authorization',
 		array(
-			'label'                     => __( 'order_status_authorized', 'wirecard-woocommerce-extension' ),
+			'label'                     => __( 'order_status_authorized_count_plural', 'wirecard-woocommerce-extension' ),
 			'public'                    => true,
 			'exclude_from_search'       => false,
 			'show_in_admin_all_list'    => true,
 			'show_in_admin_status_list' => true,
-			// translators:
-			'label_count'               => _n_noop( 'order_status_authorized_count_single', 'order_status_authorized_count_plural', 'wirecard-woocommerce-extension' ),
 		)
 	);
 }
@@ -178,7 +176,7 @@ function wirecard_add_payment_gateway( $methods ) {
 /**
  * Return payment methods
  *
- * @return array
+ * @return array | WC_Wirecard_Payment_Gateway
  *
  * @since 1.1.0
  */
@@ -225,8 +223,8 @@ function wirecard_install_payment_gateway() {
 	wirecard_check_if_woo_installed();
 	global $wpdb;
 
-	$table_name       = $wpdb->base_prefix . 'wirecard_payment_gateway_tx';
-	$vault_table_name = $wpdb->base_prefix . 'wirecard_payment_gateway_vault';
+	$table_name       = $wpdb->prefix . 'wirecard_payment_gateway_tx';
+	$vault_table_name = $wpdb->prefix . 'wirecard_payment_gateway_vault';
 	$collate          = '';
 	if ( $wpdb->has_cap( 'collation' ) ) {
 		$collate = $wpdb->get_charset_collate();
@@ -335,7 +333,6 @@ function wirecard_gateway_options_page() {
  * @since 1.1.5
  */
 function backend_scripts() {
-	wp_register_script( 'live_chat', 'https://www.provusgroup.com/livezilla/script.php?id=936f87cd4ce16e1e60bea40b45b0596a', array(), null, true );
 	wp_register_script( 'plugin_admin_script', WIRECARD_EXTENSION_URL . 'assets/js/admin/plugin_admin.js', array(), null, false );
 }
 
@@ -356,7 +353,6 @@ function wirecard_add_support_chat() {
 		'admin_nonce'             => wp_create_nonce(),
 	);
 
-	wp_enqueue_script( 'live_chat' );
 	wp_enqueue_script( 'plugin_admin_script' );
 	wp_localize_script( 'plugin_admin_script', 'admin_vars', $args );
 }
@@ -378,7 +374,7 @@ function wirecard_check_if_woo_installed() {
 
 	$sitewide_plugins = get_site_option( 'active_sitewide_plugins' );
 	if ( is_array( $sitewide_plugins ) ) {
-		foreach ( $sitewide_plugins as $plugin_name ) {
+		foreach ( array_keys( $sitewide_plugins ) as $plugin_name ) {
 			if ( preg_match( $woocommerce_pattern, $plugin_name ) ) {
 				return;
 			}

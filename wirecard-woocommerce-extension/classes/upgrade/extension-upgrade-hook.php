@@ -85,6 +85,10 @@ function wirecard_extension_upgrade_hook() {
 	// Add timestamps to vault table, if not already existent
 	vault_timestamp_upgrade();
 
+	// Create tables in sub sites, because before this pull request https://github.com/wirecard/woocommerce-ee/pull/311
+	// the tables were created only in main blog. And we could not correctly match transactions with sites.
+	wirecard_install_payment_gateway();
+
 	// If other things should happen on upgrade
 	// add the method calls here
 
