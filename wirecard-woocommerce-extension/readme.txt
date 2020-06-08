@@ -1,10 +1,9 @@
 === Wirecard WooCommerce Extension ===
 Contributors: wirecard
 Tags: credit-card, paypal, china-payment, sofort, alipay, ideal, eps, sepa, payment-in-advance, mastercard, visa, american-express, discover, maestro, checkout, e-commerce, ecommerce, payment, payment-page, china, woocommerce, wirecard, extension
-Requires at least: 4.9
+Requires at least: 5.0.3
 Tested up to: 5.3
-Requires PHP: 
-Stable tag: 3.3.0
+7.0Stable tag: 3.3.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -84,6 +83,13 @@ Our general Terms of Use can be found on [Github](https://github.com/wirecard/wo
 Follow this [link](https://github.com/wirecard/woocommerce-ee/graphs/contributors) to see the team responsible for the development of this extension.
 
 == Changelog ==
+3.3.0
+- Add PSD2 hint in Credit Card configuration  
+- Display payment method name in transaction table  
+- Improve response error codes in the payment process  
+- Remove the support live chat  
+- Translate transaction state and -type in transaction overview  
+- Update Alipay Cross-border logo  
 3.3.0
 - Add PSD2 hint in Credit Card configuration  
 - Display payment method name in transaction table  
