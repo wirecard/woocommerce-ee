@@ -786,4 +786,15 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 
 		return $maid . '_' . $random;
 	}
+
+	/**
+	 * Return payment method type
+	 *
+	 * @return string
+	 *
+	 * @since 3.3.0
+	 */
+	public function get_type() {
+		return $this->type;
+	}
 }

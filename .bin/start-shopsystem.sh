@@ -9,22 +9,31 @@ for ARGUMENT in "$@"; do
   case "${KEY}" in
   NGROK_URL) NGROK_URL=${VALUE} ;;
   SHOP_VERSION) WOOCOMMERCE_VERSION=${VALUE} ;;
+  PHP_VERSION) PHP_VERSION=${VALUE} ;;
+  USE_SPECIFIC_EXTENSION_RELEASE) USE_SPECIFIC_EXTENSION_RELEASE=${VALUE} ;;
+  SPECIFIC_RELEASED_SHOP_EXTENSION_VERSION) SPECIFIC_RELEASED_SHOP_EXTENSION_VERSION=${VALUE} ;;
   *) ;;
   esac
 done
 
+if [[ ${USE_SPECIFIC_EXTENSION_RELEASE}  == "1" ]]; then 
+  git checkout tags/"${SPECIFIC_RELEASED_SHOP_EXTENSION_VERSION}"     
+fi
+
+.bin/generate-release-package.sh
+
 export WOOCOMMERCE_ADMIN_USER=admin
 export WOOCOMMERCE_ADMIN_PASSWORD=password
-
-docker-compose build --build-arg WOOCOMMERCE_VERSION="${WOOCOMMERCE_VERSION}" web
+docker-compose build --build-arg PHP_VERSION="${PHP_VERSION}" --build-arg WOOCOMMERCE_VERSION="${WOOCOMMERCE_VERSION}" web
 
 docker-compose up -d
 docker-compose ps
 
-# wordpress running on 9090
+# wordpress running on 8080
 while ! $(curl --output /dev/null --silent --head --fail "${NGROK_URL}/wp-admin/install.php"); do
-    echo "Waiting for docker container to initialize"
+    echo "Waiting for docker container to initialize"   
     sleep 5
+    ((c++)) && ((c == 50)) && break
 done
 
 #install wordpress

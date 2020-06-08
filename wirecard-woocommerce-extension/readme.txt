@@ -4,7 +4,7 @@ Tags: credit-card, paypal, china-payment, sofort, alipay, ideal, eps, sepa, paym
 Requires at least: 4.9
 Tested up to: 5.3
 Requires PHP: 
-Stable tag: 3.2.1
+Stable tag: 3.3.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -84,4 +84,5 @@ Our general Terms of Use can be found on [Github](https://github.com/wirecard/wo
 Follow this [link](https://github.com/wirecard/woocommerce-ee/graphs/contributors) to see the team responsible for the development of this extension.
 
 == Changelog ==
-- Implement new and improved credit card workflow for one-click checkout
+3.2.1
+- Fix archive size for partners

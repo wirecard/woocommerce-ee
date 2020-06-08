@@ -29,46 +29,13 @@
  * Please do not use the plugin if you do not agree to these terms of use!
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
+define( 'ABSPATH', true );
+define('WIRECARD_EXTENSION_HELPER_DIR',  __DIR__ .  '/../../classes/helper/');
 
-/**
- * Update vault table with timestamps created and modified
- *
- * @since 2.1.0
- */
-function vault_timestamp_upgrade() {
-	add_vault_timestamp_column( 'created' );
-	add_vault_timestamp_column( 'modified' );
-}
+require_once( WIRECARD_EXTENSION_HELPER_DIR . 'class-basket-item-helper.php' );
+require_once( WIRECARD_EXTENSION_HELPER_DIR . 'class-method-helper.php' );
 
-/**
- * Add timestamp column to vault table for specified name
- *
- * @param string $name
- * @since 2.1.0
- */
-function add_vault_timestamp_column( $name ) {
-	global $wpdb;
-	$vault_table_name = $wpdb->prefix . 'wirecard_payment_gateway_vault';
-
-	if ( ! check_existing_column( $name, $vault_table_name ) ) {
-		$wpdb->query( "ALTER TABLE $vault_table_name ADD $name DATETIME NOT NULL default CURRENT_TIMESTAMP" );
-	}
-}
-/**
- * Check if column already exist within given table
- *
- * @param string $column_name
- * @param string $table_name
- * @return bool True if column already exists
- *
- * @since 2.1.0
- */
-function check_existing_column( $column_name, $table_name ) {
-	global $wpdb;
-	$results = $wpdb->get_col( 'DESC ' . $table_name, 0 );
-
-	return in_array( $column_name, $results, true );
-}
+# move stubs to codeception folder tests/
+require_once __DIR__ . '/../../Test/stubs/wp-functions.php';
+require_once __DIR__ . '/../../Test/stubs/wc-functions.php';
+require_once __DIR__ . '/../../Test/stubs/wpdb.php';
