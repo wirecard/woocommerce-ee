@@ -631,7 +631,7 @@ class Wirecard_Transaction_Factory {
 		/**
 		 * @var WC_Wirecard_Payment_Gateway $payment_method
 		 */
-		foreach ( wirecard_get_payments() as $name => $payment_method ) {
+		foreach ( wirecard_get_payments() as $payment_method ) {
 			$payment_methods[ $payment_method->get_type() ] = $payment_method;
 		}
 
