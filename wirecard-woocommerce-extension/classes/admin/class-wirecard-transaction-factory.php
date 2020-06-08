@@ -114,7 +114,7 @@ class Wirecard_Transaction_Factory {
 		global $wpdb;
 
 		$this->transaction_handler          = new Wirecard_Transaction_Handler();
-		$this->table_name                   = $wpdb->base_prefix . 'wirecard_payment_gateway_tx';
+		$this->table_name                   = $wpdb->prefix . 'wirecard_payment_gateway_tx';
 		$this->stock_reduction_types        = array( 'authorization', 'purchase', 'debit', 'deposit' );
 		$this->transaction_translate_helper = new Transaction_Translate_Helper();
 	}
