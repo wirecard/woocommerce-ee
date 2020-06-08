@@ -23,30 +23,16 @@ curl -X POST -H 'Content-type: application/json' \
 
 FAILED_TESTS=$(ls -1q wirecard-woocommerce-extension/vendor/wirecard/shopsystem-ui-testsuite/tests/_output/*.fail.png | wc -l)
 
-if [[ ${COMPATIBILITY_CHECK}  == "0" ]]; then
-  # send link to the report into slack chat room
-  curl -X POST -H 'Content-type: application/json' --data "{
-      'attachments': [
-          {
-              'fallback': 'Failed test data',
-              'text': 'There are failed tests.
-               Test report: ${PREVIEW_LINK}/${SCREENSHOT_COMMIT_HASH}/${RELATIVE_REPORTS_LOCATION}/${REPORT_FILE} .
-               All screenshots can be found  ${REPO_LINK}/tree/${SCREENSHOT_COMMIT_HASH}/${RELATIVE_REPORTS_LOCATION} .',
-              'color': '#764FA5'
-          }
-      ], 'channel': '${CHANNEL}'
-  }"  ${SLACK_ROOMS};
-else
-  # send link to the report into slack chat room
-  curl -X POST -H 'Content-type: application/json' --data "{
-      'attachments': [
-          {
-              'fallback': 'Failed test data',
-              'text': 'We are not compatible with the latest WooCommerce released version: ${WOOCOMMERCE_VERSION}.
-               Test report: ${PREVIEW_LINK}/${SCREENSHOT_COMMIT_HASH}/${RELATIVE_REPORTS_LOCATION}/${REPORT_FILE} .
-               All screenshots can be found  ${REPO_LINK}/tree/${SCREENSHOT_COMMIT_HASH}/${RELATIVE_REPORTS_LOCATION} .',
-              'color': '#764FA5'
-          }
-      ], 'channel': '${CHANNEL}'
-  }"  ${SLACK_ROOMS};
-fi
+# send link to the report into slack chat room
+curl -X POST -H 'Content-type: application/json' --data "{
+    'attachments': [
+        {
+            'fallback': 'Failed test data',
+            'text': 'There are failed tests.
+             Test report: ${PREVIEW_LINK}/${SCREENSHOT_COMMIT_HASH}/${RELATIVE_REPORTS_LOCATION}/${REPORT_FILE} .
+             All screenshots can be found  ${REPO_LINK}/tree/${SCREENSHOT_COMMIT_HASH}/${RELATIVE_REPORTS_LOCATION} .',
+            'color': '#764FA5'
+        }
+    ], 'channel': '${CHANNEL}'
+}"  ${SLACK_ROOMS};
+

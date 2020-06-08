@@ -1,33 +1,33 @@
-name: Bump versions and add initial CHANGELOG entry
+name: Update non-workflow files after CHANGELOG update
 
 on:
-  pull_request:
-    types: opened
+  push:
+    branches: 'RC**'
+    paths: 'CHANGELOG*'
 
 jobs:
-  change-version:
+  update-files:
     runs-on: ubuntu-latest
-    if: startsWith(github.head_ref, 'RC-')
-    name: Change release version
+    name: Update files after CHANGELOG update
     steps:
       - name: Checkout ${{ github.event.repository.name }}
         uses: wirecard/checkout@v2.0.0
         with:
-          ref: ${{ github.head_ref }}
+          ref: ${{ github.ref }}
       - name: Get tags
         run: git fetch --prune --unshallow
-      - name: Bump versions and add entry to CHANGELOG
-        id: check-version
+      - name: Update non-workflow files after CHANGELOG.md update
         uses: wirecard/extension-release-info-update-action@master
         with:
           repository: ${{ github.event.repository.name }}
-          action: initial_changelog_and_version_update
+          action: update_versions_after_changelog_update
       - name: Set global git conf
         run: git config --global user.email "" && git config --global user.name "github-actions"
       - name: Commit files
-        run: git commit -m "Bump versions and add initial changelog entry" -a
+        run: git commit -m "Update files after CHANGELOG update" -a
       - name: Push changes
         uses: wirecard/github-push-action@master
         with:
-          branch: ${{ github.head_ref }}
+          branch: ${{ github.ref }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
+

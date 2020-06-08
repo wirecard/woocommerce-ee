@@ -333,7 +333,6 @@ function wirecard_gateway_options_page() {
  * @since 1.1.5
  */
 function backend_scripts() {
-	wp_register_script( 'live_chat', 'https://www.provusgroup.com/livezilla/script.php?id=936f87cd4ce16e1e60bea40b45b0596a', array(), null, true );
 	wp_register_script( 'plugin_admin_script', WIRECARD_EXTENSION_URL . 'assets/js/admin/plugin_admin.js', array(), null, false );
 }
 
@@ -354,7 +353,6 @@ function wirecard_add_support_chat() {
 		'admin_nonce'             => wp_create_nonce(),
 	);
 
-	wp_enqueue_script( 'live_chat' );
 	wp_enqueue_script( 'plugin_admin_script' );
 	wp_localize_script( 'plugin_admin_script', 'admin_vars', $args );
 }

@@ -61,6 +61,6 @@ class Wirecard_Callback {
 
 		echo $html;
 		get_footer();
-		wp_die();
+		wp_die( '', 200 );
 	}
 }
