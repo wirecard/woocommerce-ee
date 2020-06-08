@@ -223,8 +223,8 @@ function wirecard_install_payment_gateway() {
 	wirecard_check_if_woo_installed();
 	global $wpdb;
 
-	$table_name       = $wpdb->base_prefix . 'wirecard_payment_gateway_tx';
-	$vault_table_name = $wpdb->base_prefix . 'wirecard_payment_gateway_vault';
+	$table_name       = $wpdb->prefix . 'wirecard_payment_gateway_tx';
+	$vault_table_name = $wpdb->prefix . 'wirecard_payment_gateway_vault';
 	$collate          = '';
 	if ( $wpdb->has_cap( 'collation' ) ) {
 		$collate = $wpdb->get_charset_collate();
