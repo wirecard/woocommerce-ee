@@ -32,7 +32,7 @@ jobs:
       - name: Extract ${{ github.event.repository.name }} version
         run: echo "::set-env name=SHOP_SYSTEM_VERSION::$(awk "NR==1 {print; exit}" ${SHOP_RELEASES_FILE})"
         env: 
-          SHOP_RELEASES_FILE: 'shopsystems-ui-test-runner/${{ github.event.repository.name }}/compatible-shop-releases.txt'
+          SHOP_RELEASES_FILE: '.bin/compatible-shop-releases.txt'
       - name: Extract branch name
         shell: bash
         run: echo "::set-env name=GIT_BRANCH::${{ github.head_ref }}"
