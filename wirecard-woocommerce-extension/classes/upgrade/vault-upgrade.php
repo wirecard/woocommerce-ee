@@ -51,7 +51,7 @@ function vault_timestamp_upgrade() {
  */
 function add_vault_timestamp_column( $name ) {
 	global $wpdb;
-	$vault_table_name = $wpdb->base_prefix . 'wirecard_payment_gateway_vault';
+	$vault_table_name = $wpdb->prefix . 'wirecard_payment_gateway_vault';
 
 	if ( ! check_existing_column( $name, $vault_table_name ) ) {
 		$wpdb->query( "ALTER TABLE $vault_table_name ADD $name DATETIME NOT NULL default CURRENT_TIMESTAMP" );

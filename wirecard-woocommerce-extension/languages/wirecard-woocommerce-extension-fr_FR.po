@@ -386,6 +386,12 @@ msgstr "Mode de paiement"
 msgid "config_payment_type_desc"
 msgstr "Sélectionnez « Paiement à l’avance » pour afficher les coordonnées bancaires après le processus de finalisation de la commande ou « Paiement sur facture » pour envoyer les coordonnées bancaires avec la facture."
 
+msgid "config_PSD2_information"
+msgstr "PSD 2"
+
+msgid "config_PSD2_information_desc_woocommerce"
+msgstr "With regard to PSD 2 requirements, you should request certain personal information from your consumers during <a target=\"_blank\" href='https://github.com/wirecard/woocommerce-ee/wiki/WooCommerce-Checkout'>checkout</a> to reduce the risk of transactions being rejected."
+
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:178
 msgid "config_shipping_countries"
 msgstr "Pays d’expédition autorisés"
@@ -412,15 +418,15 @@ msgstr "Activer le mode de paiement Alipay Cross-border pour qu’il soit dispon
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:106
 msgid "config_status_desc_creditcard"
-msgstr "Activer le mode de paiement Carte de crédit pour qu’il soit disponible pour vos clients."
+msgstr "Activer le mode de paiement Carte pour qu’il soit disponible pour vos clients."
 
 #: classes/includes/class-wc-gateway-wirecard-eps.php:97
 msgid "config_status_desc_eps"
-msgstr "Activer le mode de paiement Virement eps pour qu’il soit disponible pour vos clients."
+msgstr "Activer le mode de paiement eps-Überweisung pour qu’il soit disponible pour vos clients."
 
 #: classes/includes/class-wc-gateway-wirecard-giropay.php:100
 msgid "config_status_desc_giropay"
-msgstr "Activate payment method giropay to make it available for your consumers."
+msgstr "Activer le mode de paiement giropay pour qu’il soit disponible pour vos clients."
 
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:100
 msgid "config_status_desc_ideal"
@@ -506,7 +512,7 @@ msgstr "Désignation du mode de paiement affiché pour le client lors du process
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:213
 msgid "config_vault_desc"
-msgstr "Les données de la carte de crédit sont enregistrées pour une utilisation ultérieure."
+msgstr "Les données de la carte sont enregistrées pour une utilisation ultérieure."
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:219
 #: classes/includes/class-wc-gateway-wirecard-unionpay-international.php:126
@@ -528,12 +534,11 @@ msgstr "L’URL de retour du site marchand redirige les consommateurs vers votre
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:62
 msgid "creditcard"
-msgstr "Carte de crédit"
+msgstr "Carte"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:63
-
 msgid "creditcard_desc"
-msgstr "Transactions Carte de crédit via la passerelle de paiement Wirecard."
+msgstr "Transactions Carte via la passerelle de paiement Wirecard."
 
 #: classes/helper/sepa-template.php:38
 msgid "creditor"
@@ -553,51 +558,51 @@ msgstr "Titulaire du compte"
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:97
 msgid "enable_heading_title_alipay_crossborder"
-msgstr "Activer Wirecard Alipay Cross-border"
+msgstr "Activer Alipay Cross-border"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:105
 msgid "enable_heading_title_creditcard"
-msgstr "Activer Wirecard Carte de crédit"
+msgstr "Activer Carte"
 
 #: classes/includes/class-wc-gateway-wirecard-eps.php:98
 msgid "enable_heading_title_eps"
-msgstr "Activer Wirecard Virement eps"
+msgstr "Activer eps-Überweisung"
 
 #: classes/includes/class-wc-gateway-wirecard-giropay.php:101
 msgid "enable_heading_title_giropay"
-msgstr "Enable Wirecard giropay"
+msgstr "Activer giropay"
 
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:101
 msgid "enable_heading_title_ideal"
-msgstr "Activer Wirecard iDEAL"
+msgstr "Activer iDEAL"
 
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:99
 msgid "enable_heading_title_paybybankapp"
-msgstr "Activez Wirecard Pay by Bank app"
+msgstr "Activer Pay by Bank app"
 
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:99
 msgid "enable_heading_title_paypal"
-msgstr "Activer Wirecard PayPal"
+msgstr "Activer PayPal"
 
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:96
 msgid "enable_heading_title_poi_pia"
-msgstr "Activer Wirecard Paiement sur facture / Paiement à l’avance"
+msgstr "Activer Paiement sur facture / Paiement à l’avance"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:106
 msgid "enable_heading_title_ratepayinvoice"
-msgstr "Activer Wirecard Facture avec garantie de paiement"
+msgstr "Activer Facture avec garantie de paiement"
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:96
 msgid "enable_heading_title_sepact"
-msgstr "Activé Wirecard Virement SEPA"
+msgstr "Activer Virement SEPA"
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:100
 msgid "enable_heading_title_sepadd"
-msgstr "Activer Wirecard Prélèvement SEPA"
+msgstr "Activer Prélèvement SEPA"
 
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:99
 msgid "enable_heading_title_sofortbanking"
-msgstr "Activer Wirecard Sofort."
+msgstr "Activer Sofort."
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:214
 msgid "enable_vault"
@@ -608,9 +613,8 @@ msgid "eps"
 msgstr "Virement eps"
 
 #: classes/includes/class-wc-gateway-wirecard-eps.php:64
-
 msgid "eps_desc"
-msgstr "Transactions Virement eps via la passerelle de paiement Wirecard."
+msgstr "Transactions eps-Überweisung via la passerelle de paiement Wirecard."
 
 #: classes/includes/class-wc-wirecard-payment-gateway.php:682
 msgid "error_credentials"
@@ -622,7 +626,7 @@ msgstr "Message d’erreur de distribution de l’e-mail."
 
 #: templates/credit-card-form.php:45
 msgid "error_malformed_creditcard_request"
-msgstr "Oups ! Une erreur est survenue. Veuillez vérifier vos données de carte de crédit et réessayer."
+msgstr "Oups ! Une erreur est survenue. Veuillez vérifier vos données de carte et réessayer."
 
 #: classes/admin/class-wirecard-transaction-factory.php:359
 msgid "error_no_post_processing_operations"
@@ -657,67 +661,67 @@ msgstr "giropay transactions via Wirecard Payment Gateway."
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:504
 msgid "heading_creditcard_payment_form"
-msgstr "Paiement par carte de crédit"
+msgstr "Paiement par carte"
 
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:60
 #: classes/includes/class-wc-gateway-wirecard-alipay-crossborder.php:104
 msgid "heading_title_alipay_crossborder"
-msgstr "Wirecard Alipay Cross-border"
+msgstr "Alipay Cross-border"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:61
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:113
 msgid "heading_title_creditcard"
-msgstr "Wirecard Carte de crédit"
+msgstr "Carte"
 
 #: classes/includes/class-wc-gateway-wirecard-eps.php:62
 #: classes/includes/class-wc-gateway-wirecard-eps.php:108
 msgid "heading_title_eps"
-msgstr "Wirecard Virement eps"
+msgstr "eps-Überweisung"
 
 #: classes/includes/class-wc-gateway-wirecard-giropay.php:65
 #: classes/includes/class-wc-gateway-wirecard-giropay.php:108
 msgid "heading_title_giropay"
-msgstr "Wirecard giropay"
+msgstr "giropay"
 
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:63
 #: classes/includes/class-wc-gateway-wirecard-ideal.php:108
 msgid "heading_title_ideal"
-msgstr "Wirecard iDEAL"
+msgstr "iDEAL"
 
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:60
 #: classes/includes/class-wc-gateway-wirecard-pay-by-bank-app.php:106
 msgid "heading_title_paybybankapp"
-msgstr "Wirecard Pay by Bank app"
+msgstr "Pay by Bank app"
 
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:61
 #: classes/includes/class-wc-gateway-wirecard-paypal.php:106
 msgid "heading_title_paypal"
-msgstr "Wirecard PayPal"
+msgstr "PayPal"
 
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:61
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:103
 msgid "heading_title_poi_pia"
-msgstr "Wirecard Paiement sur facture / Paiement à l’avance"
+msgstr "Paiement sur facture / Paiement à l’avance"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:63
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:113
 msgid "heading_title_ratepayinvoice"
-msgstr "Wirecard Facture avec garantie de paiement par Wirecard"
+msgstr "Facture avec garantie de paiement par Wirecard"
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:60
 #: classes/includes/class-wc-gateway-wirecard-sepa-credit-transfer.php:103
 msgid "heading_title_sepact"
-msgstr "Wirecard Virement SEPA"
+msgstr "Virement SEPA"
 
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:59
 #: classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php:107
 msgid "heading_title_sepadd"
-msgstr "Wirecard Prélèvement SEPA"
+msgstr "Prélèvement SEPA"
 
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:62
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:106
 msgid "heading_title_sofortbanking"
-msgstr "Wirecard Sofort."
+msgstr "Sofort."
 
 #: woocommerce-wirecard-payment-gateway.php:316
 #: woocommerce-wirecard-payment-gateway.php:317
@@ -767,6 +771,7 @@ msgstr "Une erreur est survenue durant le processus de paiement. Veuillez réess
 msgid "order_status_authorized"
 msgstr "Autorisé"
 
+#: woocommerce-wirecard-payment-gateway.php:138
 msgid "order_status_authorized_count_plural"
 msgstr "Autorisé<span class=\"count\">(%s)</span>"
 
@@ -959,6 +964,22 @@ msgstr "Sofort."
 
 msgid "sofortbanking_desc"
 msgstr "Transactions Sofort. via la passerelle de paiement Wirecard."
+
+#: classes/helper/class-transaction-state-translation.php:58
+msgid "state_awaiting"
+msgstr "en attente"
+
+#: classes/helper/class-transaction-state-translation.php:49
+msgid "state_closed"
+msgstr "fermé"
+
+# Key used in transaction table status: Open
+msgid "state_open"
+msgstr "ouvert"
+
+#: classes/helper/class-transaction-state-translation.php:55
+msgid "state_success"
+msgstr "validé"
 
 #: classes/admin/class-wirecard-settings.php:242
 msgid "submit_button"
@@ -1187,13 +1208,89 @@ msgstr "Passerelle de paiement Wirecard"
 msgid "transfer_notice"
 msgstr "Veuillez transférer le montant en utilisant les données suivantes :"
 
+# Key used for tx-type: Authorization
+msgid "tx_type_authorization"
+msgstr "Autorisation "
+
+# Key used for tx-type capture-authorization
+msgid "tx_type_capture_authorization"
+msgstr "Autorisation de capture"
+
+# describes the tx-type check-enrollment
+msgid "tx_type_check_enrollment"
+msgstr "Inscription vérification 3D"
+
+# Key used for tx-type check-payer response
+msgid "tx_type_check_payer_response"
+msgstr "Réponse payeur vérification 3D"
+
+# Key used for tx-type credit
+msgid "tx_type_credit"
+msgstr "Crédit"
+
+# Key used for tx-type debit
+msgid "tx_type_debit"
+msgstr "Débit"
+
+# Key used for tx-type debit-return
+msgid "tx_type_debit_return"
+msgstr "Retour de débit"
+
+# Key used for tx-type deposit
+msgid "tx_type_deposit"
+msgstr "Dépôt"
+
+# Key used for tx-type pending-credit
+msgid "tx_type_pending_credit"
+msgstr "Crédit en attente"
+
+# Key used for tx-type pending-debit
+msgid "tx_type_pending_debit"
+msgstr "Débit en attente"
+
+# Key used for tx-type purchase
+msgid "tx_type_purchase"
+msgstr "Achat "
+
+# Key used for tx-type refund-capture
+msgid "tx_type_refund_capture"
+msgstr "Capture du remboursement"
+
+# Key used for tx-type refund-debit
+msgid "tx_type_refund_debit"
+msgstr "Remboursement de débit"
+
+# Key used for tx-type refund-purchase
+msgid "tx_type_refund_purchase"
+msgstr "Remboursement achat"
+
+# Key used for tx-type void-authorization
+msgid "tx_type_void_authorization"
+msgstr "Annulation autorisation"
+
+# Key used for tx-type void-capture
+msgid "tx_type_void_capture"
+msgstr "Annulation capture "
+
+# Key used for tx-type void-pending-credit
+msgid "tx_type_void_pending_credit"
+msgstr "Annulation crédit en attente"
+
+# Key used for tx-type void-pending-debit
+msgid "tx_type_void_pending_debit"
+msgstr "Annulation débit en attente"
+
+# Key used for tx-type void-purchase
+msgid "tx_type_void_purchase"
+msgstr "Annulation achat "
+
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:349
 msgid "vault_save_text"
 msgstr "Enregistrer pour une utilisation ultérieure."
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:336
 msgid "vault_use_existing_text"
-msgstr "Utiliser une carte de crédit enregistrée"
+msgstr "Utiliser une carte enregistrée"
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:777
 msgid "warning_credit_card_url_mismatch"

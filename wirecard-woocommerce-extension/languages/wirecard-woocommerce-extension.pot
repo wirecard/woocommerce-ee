@@ -385,6 +385,12 @@ msgstr ""
 msgid "config_payment_type_desc"
 msgstr ""
 
+msgid "config_PSD2_information"
+msgstr ""
+
+msgid "config_PSD2_information_desc_woocommerce"
+msgstr ""
+
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:178
 msgid "config_shipping_countries"
 msgstr ""
@@ -563,7 +569,6 @@ msgid "enable_heading_title_eps"
 msgstr ""
 
 #: classes/includes/class-wc-gateway-wirecard-giropay.php:101
-#, fuzzy
 msgid "enable_heading_title_giropay"
 msgstr ""
 
@@ -767,6 +772,7 @@ msgstr ""
 msgid "order_status_authorized"
 msgstr ""
 
+#: woocommerce-wirecard-payment-gateway.php:138
 msgid "order_status_authorized_count_plural"
 msgstr ""
 
@@ -950,6 +956,22 @@ msgstr ""
 
 #: classes/includes/class-wc-gateway-wirecard-sofort.php:64
 msgid "sofortbanking_desc"
+msgstr ""
+
+#: classes/helper/class-transaction-state-translation.php:58
+msgid "state_awaiting"
+msgstr ""
+
+#: classes/helper/class-transaction-state-translation.php:49
+msgid "state_closed"
+msgstr ""
+
+# Key used in transaction table status: Open
+msgid "state_open"
+msgstr ""
+
+#: classes/helper/class-transaction-state-translation.php:55
+msgid "state_success"
 msgstr ""
 
 #: classes/admin/class-wirecard-settings.php:242
@@ -1176,6 +1198,82 @@ msgstr ""
 
 #: classes/includes/class-wc-gateway-wirecard-poipia.php:261
 msgid "transfer_notice"
+msgstr ""
+
+# Key used for tx-type: Authorization
+msgid "tx_type_authorization"
+msgstr ""
+
+# Key used for tx-type capture-authorization
+msgid "tx_type_capture_authorization"
+msgstr ""
+
+# describes the tx-type check-enrollment
+msgid "tx_type_check_enrollment"
+msgstr ""
+
+# Key used for tx-type check-payer response
+msgid "tx_type_check_payer_response"
+msgstr ""
+
+# Key used for tx-type credit
+msgid "tx_type_credit"
+msgstr ""
+
+# Key used for tx-type debit
+msgid "tx_type_debit"
+msgstr ""
+
+# Key used for tx-type debit-return
+msgid "tx_type_debit_return"
+msgstr ""
+
+# Key used for tx-type deposit
+msgid "tx_type_deposit"
+msgstr ""
+
+# Key used for tx-type pending-credit
+msgid "tx_type_pending_credit"
+msgstr ""
+
+# Key used for tx-type pending-debit
+msgid "tx_type_pending_debit"
+msgstr ""
+
+# Key used for tx-type purchase
+msgid "tx_type_purchase"
+msgstr ""
+
+# Key used for tx-type refund-capture
+msgid "tx_type_refund_capture"
+msgstr ""
+
+# Key used for tx-type refund-debit
+msgid "tx_type_refund_debit"
+msgstr ""
+
+# Key used for tx-type refund-purchase
+msgid "tx_type_refund_purchase"
+msgstr ""
+
+# Key used for tx-type void-authorization
+msgid "tx_type_void_authorization"
+msgstr ""
+
+# Key used for tx-type void-capture
+msgid "tx_type_void_capture"
+msgstr ""
+
+# Key used for tx-type void-pending-credit
+msgid "tx_type_void_pending_credit"
+msgstr ""
+
+# Key used for tx-type void-pending-debit
+msgid "tx_type_void_pending_debit"
+msgstr ""
+
+# Key used for tx-type void-purchase
+msgid "tx_type_void_purchase"
 msgstr ""
 
 #: classes/includes/class-wc-gateway-wirecard-creditcard.php:349
