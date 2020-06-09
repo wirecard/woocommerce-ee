@@ -1,5 +1,19 @@
 # Changelog
 
+## v3.3.0
+
+*   Add PSD2 hint in Credit Card configuration  
+*   Display payment method name in transaction table  
+*   Improve response error codes in the payment process  
+*   Remove the support live chat  
+*   Translate transaction state and -type in transaction overview  
+*   Update Alipay Cross-border logo  
+
+|  Overview             | Woocommerce and Wordpress version                                | PHP 5.6 | PHP 7.0 | PHP 7.1 | PHP 7.2 |  
+|-----------------------|------------------------------------------------------------------|:-------:|:-------:|:-------:|:-------:|  
+| **Tested version(s)** | Woocommerce version 3.8.0, Wordpress version 5.3                 |   :x:   |   :x:   |   :x:   | &#9989; |  
+| **Compatibility**     | Woocommerce version 3.3.4 - 3.8.0, Wordpress version 5.0.3 - 5.3 | &#9989; | &#9989; | &#9989; | &#9989; |  
+
 ## v3.2.1
 
 *   Fix archive size for partners
