@@ -442,7 +442,7 @@ class Additional_Information {
 	 * @param float $voucher_total
 	 * @param float $voucher_tax
 	 *
-	 * @param $payment_method
+	 * @param string $payment_method
 	 *
 	 * @return Basket
 	 * @since 1.6.2
