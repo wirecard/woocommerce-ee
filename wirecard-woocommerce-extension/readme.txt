@@ -91,3 +91,5 @@ Follow this [link](https://github.com/wirecard/woocommerce-ee/graphs/contributor
 - Remove the support live chat  
 - Translate transaction state and -type in transaction overview  
 - Update Alipay Cross-border logo  
+3.3.1
+- Add Woocommerce 3.9.0 compatibility

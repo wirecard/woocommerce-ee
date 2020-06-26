@@ -11,7 +11,7 @@
  * Text Domain: wirecard-woocommerce-extension
  * Domain Path: /languages
  * WC requires at least: 3.3.4
- * WC tested up to: 3.8.0
+ * WC tested up to: 3.9.0
  *
  * Shop System Plugins - Terms of Use
  *
