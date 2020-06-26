@@ -34,6 +34,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/handler/class-wirecard-transaction-handler.php' );
+require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/helper/class-transaction-translate-helper.php' );
 
 
 use Wirecard\PaymentSdk\Response\SuccessResponse;
@@ -78,15 +79,6 @@ class Wirecard_Transaction_Factory {
 	private $table_name;
 
 	/**
-	 * Fields for transaction table view
-	 *
-	 * @since  1.0.0
-	 * @access private
-	 * @var array
-	 */
-	private $fields_list;
-
-	/**
 	 * Handles back-end operations
 	 *
 	 * @since  1.0.0
@@ -105,6 +97,15 @@ class Wirecard_Transaction_Factory {
 	private $stock_reduction_types;
 
 	/**
+	 * Translation of transaction types and states
+	 *
+	 * @since  3.3.0
+	 * @access private
+	 * @var Transaction_Translate_Helper $transaction_translate_helper
+	 */
+	private $transaction_translate_helper;
+
+	/**
 	 * Wirecard_Transaction_Factory constructor.
 	 *
 	 * @since 1.0.0
@@ -112,38 +113,10 @@ class Wirecard_Transaction_Factory {
 	public function __construct() {
 		global $wpdb;
 
-		$this->transaction_handler   = new Wirecard_Transaction_Handler();
-		$this->table_name            = $wpdb->base_prefix . 'wirecard_payment_gateway_tx';
-		$this->stock_reduction_types = array( 'authorization', 'purchase', 'debit', 'deposit' );
-		$this->fields_list           = array(
-			'tx_id'                 => array(
-				'title' => __( 'panel_transaction', 'wirecard-woocommerce-extension' ),
-			),
-			'order_id'              => array(
-				'title' => __( 'panel_order_number', 'wirecard-woocommerce-extension' ),
-			),
-			'transaction_id'        => array(
-				'title' => __( 'panel_transcation_id', 'wirecard-woocommerce-extension' ),
-			),
-			'parent_transaction_id' => array(
-				'title' => __( 'panel_parent_transaction_id', 'wirecard-woocommerce-extension' ),
-			),
-			'transaction_type'      => array(
-				'title' => __( 'panel_action', 'wirecard-woocommerce-extension' ),
-			),
-			'payment_method'        => array(
-				'title' => __( 'panel_payment_method', 'wirecard-woocommerce-extension' ),
-			),
-			'transaction_state'     => array(
-				'title' => __( 'panel_transaction_state', 'wirecard-woocommerce-extension' ),
-			),
-			'amount'                => array(
-				'title' => __( 'panel_amount', 'wirecard-woocommerce-extension' ),
-			),
-			'currency'              => array(
-				'title' => __( 'panel_currency', 'wirecard-woocommerce-extension' ),
-			),
-		);
+		$this->transaction_handler          = new Wirecard_Transaction_Handler();
+		$this->table_name                   = $wpdb->prefix . 'wirecard_payment_gateway_tx';
+		$this->stock_reduction_types        = array( 'authorization', 'purchase', 'debit', 'deposit' );
+		$this->transaction_translate_helper = new Transaction_Translate_Helper();
 	}
 
 	/**
@@ -206,7 +179,9 @@ class Wirecard_Transaction_Factory {
 	public function get_rows( $page = 1 ) {
 		global $wpdb;
 
-		$start = ( $page * 20 ) - 19;
+		$transaction_table_title_list = $this->transaction_translate_helper->get_table_header_translations();
+		$payment_methods              = $this->get_payment_methods();
+		$start                        = ( $page * 20 ) - 19;
 
 		$start --;
 		$rows  = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}wirecard_payment_gateway_tx ORDER BY tx_id DESC LIMIT %d,20", $start ), ARRAY_A );
@@ -218,9 +193,9 @@ class Wirecard_Transaction_Factory {
 		}
 
 		echo '<tr>';
-		foreach ( $this->fields_list as $field_key => $field_value ) {
+		foreach ( $transaction_table_title_list as $table_title_key => $table_title ) {
 			echo '<th>';
-			echo $field_value['title'];
+			echo $table_title;
 			echo '</th>';
 		}
 		echo '</tr>';
@@ -228,13 +203,17 @@ class Wirecard_Transaction_Factory {
 		foreach ( $rows as $row ) {
 			echo '<tr>';
 
-			foreach ( $this->fields_list as $field_key => $field_value ) {
+			foreach ( $transaction_table_title_list as $table_title_key => $table_title ) {
 				echo '<td>';
-				if ( key_exists( $field_key, $row ) ) {
-					if ( 'transaction_id' === $field_key || ( 'parent_transaction_id' === $field_key && ! empty( $field_value ) ) ) {
-						echo "<a href='?page=wirecardpayment&id={$row[ $field_key ]}'>" . $row[ $field_key ] . '</a>';
+				if ( key_exists( $table_title_key, $row ) ) {
+					if ( 'transaction_id' === $table_title_key || ( 'parent_transaction_id' === $table_title_key && ! empty( $table_title ) ) ) {
+						echo "<a href='?page=wirecardpayment&id={$row[ $table_title_key ]}'>" . $row[ $table_title_key ] . '</a>';
 					} else {
-						echo $row[ $field_key ];
+						if ( 'payment_method' === $table_title_key ) {
+							echo $this->get_payment_method_display_text( $payment_methods, $row[ $table_title_key ] );
+						} else {
+							echo $this->transaction_translate_helper->translate( $row[ $table_title_key ] );
+						}
 					}
 				}
 				echo '</td>';
@@ -617,5 +596,51 @@ class Wirecard_Transaction_Factory {
 		}
 
 		return false;
+	}
+
+	/**
+	 * Get payment_method display text
+	 *
+	 * @param WC_Wirecard_Payment_Gateway[] $payment_methods
+	 * @param string $type
+	 *
+	 * @return string
+	 *
+	 * @since 3.3.0
+	 */
+	private function get_payment_method_display_text( $payment_methods, $type ) {
+		if ( ! isset( $payment_methods[ $type ] ) ) {
+			return $type;
+		}
+
+		$payment_method   = $payment_methods[ $type ];
+		$database_title   = $payment_method->get_title();
+		$translated_title = $payment_method->get_method_title();
+
+		if ( $database_title === $translated_title ) {
+			return $translated_title;
+		}
+
+		return $translated_title . '<br>(' . $database_title . ')';
+	}
+
+	/**
+	 * Get payment methods
+	 *
+	 * @return WC_Wirecard_Payment_Gateway[]
+	 *
+	 * @since 3.3.0
+	 */
+	private function get_payment_methods() {
+		$payment_methods = array();
+
+		/**
+		 * @var WC_Wirecard_Payment_Gateway $payment_method
+		 */
+		foreach ( wirecard_get_payments() as $payment_method ) {
+			$payment_methods[ $payment_method->get_type() ] = $payment_method;
+		}
+
+		return $payment_methods;
 	}
 }

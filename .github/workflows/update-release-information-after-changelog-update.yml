@@ -1,0 +1,33 @@
+name: Update non-workflow files after CHANGELOG update
+
+on:
+  push:
+    branches: 'RC**'
+    paths: 'CHANGELOG*'
+
+jobs:
+  update-files:
+    runs-on: ubuntu-latest
+    name: Update files after CHANGELOG update
+    steps:
+      - name: Checkout ${{ github.event.repository.name }}
+        uses: wirecard/checkout@v2.0.0
+        with:
+          ref: ${{ github.ref }}
+      - name: Get tags
+        run: git fetch --prune --unshallow
+      - name: Update non-workflow files after CHANGELOG.md update
+        uses: wirecard/extension-release-info-update-action@master
+        with:
+          repository: ${{ github.event.repository.name }}
+          action: update_versions_after_changelog_update
+      - name: Set global git conf
+        run: git config --global user.email "" && git config --global user.name "github-actions"
+      - name: Commit files
+        run: git commit -m "Update files after CHANGELOG update" -a
+      - name: Push changes
+        uses: wirecard/github-push-action@master
+        with:
+          branch: ${{ github.ref }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
