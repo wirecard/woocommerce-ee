@@ -125,7 +125,6 @@ class WC_Gateway_Wirecard_Additional_Information_Utest extends \PHPUnit_Framewor
 		$expected = new \Wirecard\PaymentSdk\Transaction\CreditCardTransaction();
 		$expected->setConsumerId( 1 );
 		$expected->setIpAddress( '123.123.123' );
-		$expected->setOrderNumber( 12 );
 		$expected->setDescriptor( 'name 12' );
 		$account_holder = new \Wirecard\PaymentSdk\Entity\AccountHolder();
 		$account_holder->setLastName( 'last-name' );
@@ -198,7 +197,8 @@ class WC_Gateway_Wirecard_Additional_Information_Utest extends \PHPUnit_Framewor
 			$expected,
 			$this->additional_information->set_additional_information(
 				$this->order,
-				$this->transaction
+				$this->transaction,
+				50
 			)
 		);
 	}
