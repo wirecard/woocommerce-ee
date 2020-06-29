@@ -148,8 +148,4 @@ class WC_Order {
 	public function get_checkout_payment_url() {
 		return 'http://example.com/checkout/receipt/123';
 	}
-
-	public function get_payment_method() {
-		return 'PayPal';
-	}
 }
