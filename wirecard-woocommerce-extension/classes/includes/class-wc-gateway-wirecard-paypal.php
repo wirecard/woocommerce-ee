@@ -78,8 +78,8 @@ class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 		$this->title   = $this->get_option( 'title' );
 		$this->enabled = $this->get_option( 'enabled' );
 
-		$this->additional_helper = new Additional_Information($this->id);
-		
+		$this->additional_helper = new Additional_Information( $this->id );
+
 		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
 
 		parent::add_payment_gateway_actions();

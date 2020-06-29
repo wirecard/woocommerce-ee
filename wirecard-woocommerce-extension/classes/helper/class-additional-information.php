@@ -60,11 +60,11 @@ class Additional_Information {
 	const BASE = 'base';
 
 	protected $basket_item_helper;
-	
+
 	private $payment_method;
 
-	public function __construct($payment_method = null) {
-		$this->payment_method = $payment_method;
+	public function __construct( $payment_method = null ) {
+		$this->payment_method     = $payment_method;
 		$this->basket_item_helper = new Basket_Item_Helper();
 	}
 
@@ -72,8 +72,6 @@ class Additional_Information {
 	 * Create basket items and shipping item
 	 *
 	 * @param Transaction $transaction
-	 *
-	 * @param string $payment_method
 	 *
 	 * @return Basket
 	 *
