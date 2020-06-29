@@ -660,7 +660,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 		$custom_fields->add( new CustomField( 'multisite', is_multisite() ? 'multisite' : '' ) );
 		$custom_fields->add( new CustomField( 'phpVersion', phpversion() ) );
 		$this->transaction->setCustomFields( $custom_fields );
-
+		$this->transaction->setOrderNumber( $order->get_order_number() );
 		if ( $this->get_option( 'descriptor' ) === 'yes' ) {
 			$this->transaction->setDescriptor( $this->additional_helper->create_descriptor( $order ) );
 		}

@@ -169,7 +169,6 @@ class Additional_Information {
 		$transaction->setDescriptor( $this->create_descriptor( $order ) );
 		$transaction->setAccountHolder( $this->create_account_holder( $order, self::BILLING ) );
 		$transaction->setShipping( $this->create_account_holder( $order, self::SHIPPING ) );
-		$transaction->setOrderNumber( $order->get_order_number() );
 		$transaction->setBasket( $this->create_shopping_basket( $transaction ) );
 		$transaction->setIpAddress( $order->get_customer_ip_address() );
 		$transaction->setConsumerId( $order->get_customer_id() );
