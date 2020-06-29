@@ -61,7 +61,10 @@ class Additional_Information {
 
 	protected $basket_item_helper;
 
-	public function __construct() {
+	private $payment_method;
+
+	public function __construct( $payment_method = null ) {
+		$this->payment_method     = $payment_method;
 		$this->basket_item_helper = new Basket_Item_Helper();
 	}
 
@@ -119,14 +122,12 @@ class Additional_Information {
 			}
 			$coupon_total = $coupon_netto + $coupon_tax;
 			$sum         -= $coupon_total;
-
-			$basket = $this->set_voucher_item(
+			$basket       = $this->set_voucher_item(
 				$basket,
 				$coupon_netto,
 				$coupon_tax
 			);
 		}
-
 		if ( $cart->get_total( 'total' ) - $sum > 0 ) {
 			$shipping += floatval( number_format( ( $cart->get_total( 'total' ) - $sum ), wc_get_price_decimals(), '.', '' ) );
 		}
@@ -444,8 +445,7 @@ class Additional_Information {
 	private function set_voucher_item( $basket, $voucher_total, $voucher_tax ) {
 		$voucher_key = 'Voucher';
 		$amount      = ( ( $voucher_total + $voucher_tax ) * -1 );
-
-		$item = $this->basket_item_helper->build_basket_item(
+		$item        = $this->basket_item_helper->build_basket_item(
 			$voucher_key,
 			$amount,
 			1,
@@ -453,7 +453,9 @@ class Additional_Information {
 			$voucher_key,
 			$voucher_tax
 		);
-
+		if ( null !== $this->payment_method ) {
+			$item->setTaxRate( null );
+		}
 		$basket->add( $item );
 
 		return $basket;
