@@ -198,8 +198,7 @@ class WC_Gateway_Wirecard_Additional_Information_Utest extends \PHPUnit_Framewor
 			$expected,
 			$this->additional_information->set_additional_information(
 				$this->order,
-				$this->transaction,
-				50
+				$this->transaction
 			)
 		);
 	}
