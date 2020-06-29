@@ -454,7 +454,7 @@ class Additional_Information {
 			$voucher_key,
 			$voucher_tax
 		);
-		if ( $this->payment_method !== null ) {
+		if ( null !== $this->payment_method ) {
 			$item->setTaxRate( null );
 		}
 		$basket->add( $item );
