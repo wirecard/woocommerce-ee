@@ -46,6 +46,7 @@ jobs:
           BROWSERSTACK_USER: ${{ secrets.BROWSERSTACK_USER }}
           SHOP_SYSTEM_NAME: ${{ github.event.repository.name }}
           TEST_SUITE_BRANCH: parallel_test_concept_2
+          NUMBER_OF_TEST_GROUPS: "3"
           TEST_GROUP: ${{ matrix.test-group}}
       - name: Acceptance tests passed
         if: ${{ success() }}
