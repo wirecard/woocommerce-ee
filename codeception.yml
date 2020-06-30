@@ -10,3 +10,7 @@ extensions:
     - Codeception\Extension\RunFailed
 params:
   - env
+groups:
+  test_group_1: [tests/acceptance/Alipay/AlipayCrossBorderInitialTransaction.feature, tests/acceptance/Eps/EpsInitialTransactionHappyPath.feature, tests/acceptance/GuaranteedInvoice/GuaranteedInvoiceInitialTransactionHappyPath.feature, tests/acceptance/giropay/giropayInitialTransactionHappyPath.feature]
+  test_group_2: [tests/acceptance/CreditCard/CreditCardConfigurationHappyPath.feature, tests/acceptance/CreditCard/CreditCardInitialTransactionHappyPath.feature, tests/acceptance/CreditCard/CreditCardOneClickInitialTransactionHappyPath.feature]
+  test_group_3: [tests/acceptance/PayPal/PayPalInitialTransactionHappyPath.feature, tests/acceptance/PaymentOnInvoicePaymentInAdvance/PaymentOnInvoicePaymentInAdvanceInitialTransactionHappyPath.feature, tests/acceptance/SEPADirectDebit/SEPADirectDebitInitialTransactionHappyPath.feature, tests/acceptance/Sofort/SofortInitialTransactionHappyPath.feature]
