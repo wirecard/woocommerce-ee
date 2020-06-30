@@ -11,7 +11,8 @@ jobs:
       matrix:
         operating-system: [ubuntu-latest]
         php-versions: ['7.2']
-        test-group: ['test_group_1', 'test_group_2', 'test_group_3']
+        test-group: ['test_group_1']
+#        test-group: ['test_group_1', 'test_group_2', 'test_group_3']
       fail-fast: false
 #    if: startsWith(github.head_ref, 'RC-') != false && endsWith(github.head_ref, '-major') != false  || endsWith(github.head_ref, '-minor') != false || endsWith(github.head_ref, '-patch') != false
     steps:
