@@ -1,6 +1,6 @@
 name: Run Acceptance Tests
 
-on: pull_request
+on: push
 
 jobs:
   run-acceptance-tests:
@@ -9,17 +9,17 @@ jobs:
       matrix:
         operating-system: [ubuntu-latest]
         php-versions: ['7.2']
-    if: startsWith(github.head_ref, 'RC-') != false && endsWith(github.head_ref, '-major') != false  || endsWith(github.head_ref, '-minor') != false || endsWith(github.head_ref, '-patch') != false
+    #if: startsWith(github.head_ref, 'RC-') != false && endsWith(github.head_ref, '-major') != false  || endsWith(github.head_ref, '-minor') != false || endsWith(github.head_ref, '-patch') != false
     steps:
       - name: Checkout ${{ github.event.repository.name }}
         uses: wirecard/checkout@v2.0.0
         with:
-          ref: ${{ github.head_ref }}
+          ref: TPWDCEE-7032-configuration
       - name: Checkout shopsystems-ui-test-runner
         uses: wirecard/checkout@v2.0.0
         with:
           repository: 'wirecard/shopsystems-ui-test-runner'
-          ref: 'master'
+          ref: 'testing'
           path: shopsystems-ui-test-runner
       - name: PHP version setup
         uses: wirecard/setup-php@2.1.3
