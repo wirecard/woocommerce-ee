@@ -7,7 +7,7 @@ env:
     - COMPOSER_ARGS=--no-interaction
     - WORDPRESS_CODING_STANDARDS_TAG=2.1.1
 jobs:
-  ## these stages are allowed to fail
+  # these stages are allowed to fail
   allow_failures:
     - stage: phraseapp-check-if-in-sync
   include:
