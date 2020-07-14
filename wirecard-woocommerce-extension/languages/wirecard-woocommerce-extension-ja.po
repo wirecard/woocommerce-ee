@@ -917,7 +917,7 @@ msgstr "プロバイダーのトランザクション参照 ID"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:64
 msgid "ratepayinvoice"
-msgstr "保証付きインボイス"
+msgstr "Wirecard 保証付きインボイス"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:65
 

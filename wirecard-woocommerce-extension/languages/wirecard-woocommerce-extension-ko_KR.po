@@ -918,7 +918,7 @@ msgstr "제공자 트랜잭션 참조 ID"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:64
 msgid "ratepayinvoice"
-msgstr "Guaranteed Invoice"
+msgstr "Wirecard Guaranteed Invoice"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:65
 

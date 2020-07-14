@@ -918,7 +918,7 @@ msgstr "供应商交易参考 ID"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:64
 msgid "ratepayinvoice"
-msgstr "保证发票"
+msgstr "Wirecard 保证发票"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:65
 

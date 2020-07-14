@@ -893,7 +893,7 @@ msgstr "Transactiereferentie-ID provider"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:64
 msgid "ratepayinvoice"
-msgstr "Gegarandeerde betaling"
+msgstr "Wirecard gegarandeerde betaling door Wirecard"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:65
 msgid "ratepayinvoice_desc"

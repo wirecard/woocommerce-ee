@@ -866,7 +866,7 @@ msgstr "Provider Transaction Reference ID"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:64
 msgid "ratepayinvoice"
-msgstr "Guaranteed Invoice"
+msgstr "Guaranteed Invoice by Wirecard"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:65
 msgid "ratepayinvoice_desc"

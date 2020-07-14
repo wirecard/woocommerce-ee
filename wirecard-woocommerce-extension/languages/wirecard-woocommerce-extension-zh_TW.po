@@ -917,7 +917,7 @@ msgstr "提供商交易參考 ID"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:64
 msgid "ratepayinvoice"
-msgstr "Guaranteed Invoice"
+msgstr "Wirecard Guaranteed Invoice"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:65
 
@@ -1356,4 +1356,4 @@ msgstr "Wirecard AG"
 
 #. Plugin Name of the plugin
 msgid "Wirecard WooCommerce Extension"
-msgstr "Wirecard WooCommerce 擴充"
+msgstr "Wirecard WooCommerce Extension"
