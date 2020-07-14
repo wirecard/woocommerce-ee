@@ -4,7 +4,7 @@ Tags: credit-card, paypal, china-payment, sofort, alipay, ideal, eps, sepa, paym
 Requires at least: 5.0.3
 Tested up to: 5.3
 Requires PHP: 5.6
-Stable tag: 3.3.1
+Stable tag: 3.3.2
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -93,3 +93,6 @@ Follow this [link](https://github.com/wirecard/woocommerce-ee/graphs/contributor
 - Update Alipay Cross-border logo  
 3.3.1
 - Add Woocommerce 3.9.0 compatibility
+3.3.2
+- Update SDK version
+- Fix special characters handling

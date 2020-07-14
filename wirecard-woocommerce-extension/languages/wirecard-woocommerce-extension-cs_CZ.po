@@ -892,7 +892,7 @@ msgstr "Referenční identifikační kód poskytovatele transakce"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:64
 msgid "ratepayinvoice"
-msgstr "Zaručená faktura"
+msgstr "Zaručená faktura Wirecard společnosti Wirecard"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:65
 msgid "ratepayinvoice_desc"

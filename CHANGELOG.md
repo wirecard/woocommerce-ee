@@ -1,5 +1,15 @@
 # Changelog
 
+## v3.3.2
+
+*   Update SDK version
+*   Fix special characters handling
+
+| Overview | Woocommerce and Wordpress version | PHP 5.6 | PHP 7.0 | PHP 7.1 | PHP 7.2 |  
+|-----------------------|------------------------------------------------------------------|:-------:|:-------:|:-------:|:-------:|  
+| __Tested version(s)__ | Woocommerce version 3.9.0, Wordpress version 5.3 | :x: | :x: | :x: | ✅ |  
+| __Compatibility__ | Woocommerce version 3.3.4 - 3.9.0, Wordpress version 5.0.3 - 5.3 | ✅ | ✅ | ✅ | ✅ | 
+
 ## v3.3.1
 
 *   Add Woocommerce 3.9.0 compatibility

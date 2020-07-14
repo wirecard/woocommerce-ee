@@ -390,7 +390,7 @@ msgid "config_PSD2_information"
 msgstr "PSD 2"
 
 msgid "config_PSD2_information_desc_woocommerce"
-msgstr "With regard to PSD 2 requirements, you should request certain personal information from your consumers during <a target=\"_blank\" href='https://github.com/wirecard/woocommerce-ee/wiki/WooCommerce-Checkout'>checkout</a> to reduce the risk of transactions being rejected."
+msgstr "Compte tenu des dispositions de la DSP 2, il vous faut demander certaines informations personnelles à vos clients <a target=\"_blank\" href='https://github.com/wirecard/woocommerce-ee/wiki/Checkout-WooCommerce'>lors du paiement</a> afin de réduire le risque de rejet des transactions."
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:178
 msgid "config_shipping_countries"
@@ -868,7 +868,7 @@ msgstr "Identifiant de référence du fournisseur de transactions"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:64
 msgid "ratepayinvoice"
-msgstr "Facture avec garantie de paiement"
+msgstr "Facture avec garantie de paiement par Wirecard"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:65
 

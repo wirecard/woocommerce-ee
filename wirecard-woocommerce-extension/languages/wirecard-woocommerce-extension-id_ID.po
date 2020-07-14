@@ -915,7 +915,7 @@ msgstr "Identitas referensi transaksi provider"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:64
 msgid "ratepayinvoice"
-msgstr "Faktur Bergaransi"
+msgstr "Faktur Bergaransi Wirecard"
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:65
 
