@@ -93,3 +93,6 @@ Follow this [link](https://github.com/wirecard/woocommerce-ee/graphs/contributor
 - Update Alipay Cross-border logo  
 3.3.1
 - Add Woocommerce 3.9.0 compatibility
+3.3.2
+- Update SDK version
+- Fix special characters handling
