@@ -13,7 +13,7 @@
     "wirecard/io-converter": "^1.0",
     "wirecard/base-url-matcher": "^1.0",
     "wirecard/extension-credentials-module": "dev-master", 
-	  "symfony/polyfill-intl-idn": "v1.17.0"
+	  "symfony/polyfill-intl-idn": "1.17.*"
   },
   "repositories":[
     {
