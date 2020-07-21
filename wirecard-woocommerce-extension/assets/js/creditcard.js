@@ -607,8 +607,10 @@ function initializeEventHandlers()
 	jQuery( Constants.SEAMLESS_SUBMIT_BUTTON ).on( "click", submitSeamlessForm );
 }
 
-jQuery( document ).ready(function() {
+jQuery( document ).ready(
+	function() {
 		initializeEventHandlers();
 		initializeTokenList();
 		initializeForm();
-});
+	}
+);
