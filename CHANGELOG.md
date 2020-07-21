@@ -3,10 +3,9 @@
 ## v3.3.3
 
 *   Add Compatibility:
-    
     *   Woocommerce 3.9.1
     *   Woocommerce 3.9.2
-    *   Woocommerce 3.9.3       
+    *   Woocommerce 3.9.3
 
 | Overview | Woocommerce and Wordpress version | PHP 5.6 | PHP 7.0 | PHP 7.1 | PHP 7.2 |  
 |-----------------------|------------------------------------------------------------------|:-------:|:-------:|:-------:|:-------:|  
