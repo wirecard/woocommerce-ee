@@ -345,17 +345,18 @@ function disableDeleteButtonByToken( token ) {
 /**
  * Gets the request data from the server.
  *
- * @param {number|null} selected_token
+ * @param {number|null} selectedToken
  * @returns {jQuery}
  * @since 3.1.0
  */
-function getCreditCardData( selected_token = null ) {
+function getCreditCardData( selectedToken ) {
+	selectedToken = (typeof selectedToken !== "undefined") ? selectedToken : null;
 	return callAjax(
 		Url.GET_CREDIT_CARD_REQUEST_DATA,
 		"POST",
 		{
 			action: Actions.GET_CREDIT_CARD_REQUEST_DATA,
-			vault_token: selected_token
+			vault_token: selectedToken
 		}
 	);
 }
@@ -536,8 +537,9 @@ function submitSeamlessForm() {
  * @param {number|null} tokenId
  * @since 3.1.0
  */
-function initializeForm(tokenId = null)
+function initializeForm( tokenId )
 {
+	tokenId = (typeof tokenId !== "undefined") ? tokenId : null;
 	disableTokenSelection();
 	getCreditCardData( tokenId )
 		.then( renderSeamlessForm )
@@ -605,8 +607,7 @@ function initializeEventHandlers()
 	jQuery( Constants.SEAMLESS_SUBMIT_BUTTON ).on( "click", submitSeamlessForm );
 }
 
-jQuery( document ).on(
-	"ready",
+jQuery( document ).ready(
 	function() {
 		initializeEventHandlers();
 		initializeTokenList();
