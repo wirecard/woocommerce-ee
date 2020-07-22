@@ -42,10 +42,10 @@ function vault_timestamp_upgrade() {
 	add_vault_timestamp_column( 'created' );
 	add_vault_timestamp_column( 'modified' );
 	// Add required address data fields related to saved token
-	add_vault_timestamp_column('address_1');
-	add_vault_timestamp_column('city');
-	add_vault_timestamp_column('postcode');
-	add_vault_timestamp_column('country');
+	add_vault_timestamp_column( 'address_1' );
+	add_vault_timestamp_column( 'city' );
+	add_vault_timestamp_column( 'postcode' );
+	add_vault_timestamp_column( 'country' );
 }
 
 /**
