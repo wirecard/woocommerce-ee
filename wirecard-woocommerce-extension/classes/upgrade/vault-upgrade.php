@@ -41,11 +41,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 function vault_timestamp_upgrade() {
 	add_vault_timestamp_column( 'created' );
 	add_vault_timestamp_column( 'modified' );
-	// Add required address data fields related to saved token
-	add_vault_timestamp_column( 'address_1' );
-	add_vault_timestamp_column( 'city' );
-	add_vault_timestamp_column( 'postcode' );
-	add_vault_timestamp_column( 'country' );
 }
 
 /**
@@ -62,6 +57,39 @@ function add_vault_timestamp_column( $name ) {
 		$wpdb->query( "ALTER TABLE $vault_table_name ADD $name DATETIME NOT NULL default CURRENT_TIMESTAMP" );
 	}
 }
+
+/**
+ * Add varchar column to vault table for specified name
+ *
+ * @param object $db_connection
+ * @param string $name
+ * @param int $length
+ * 
+ * @since 3.3.4
+ */
+function add_vault_varchar_column( $db_connection, $name, $length = 50 ) {
+	$vault_table_name = $db_connection->prefix . 'wirecard_payment_gateway_vault';
+
+	if ( ! check_existing_column( $name, $vault_table_name ) ) {
+		$db_connection->query( "ALTER TABLE {$vault_table_name} ADD {$name} VARCHAR({$length}) NOT NULL" );
+	}
+}
+
+/**
+ * Update vault table with address related fields
+ *
+ * @since 3.3.4
+ */
+function vault_address_fields_upgrade() {
+	// Add required address data fields related to saved token
+	global $wpdb;
+	// Add required address data fields related to saved token
+	add_vault_varchar_column( $wpdb, 'address_1' );
+	add_vault_varchar_column( $wpdb, 'city', 20 );
+	add_vault_varchar_column( $wpdb, 'postcode', 20 );
+	add_vault_varchar_column( $wpdb, 'country', 20 );
+}
+
 /**
  * Check if column already exist within given table
  *
