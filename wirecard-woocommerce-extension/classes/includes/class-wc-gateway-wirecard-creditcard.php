@@ -710,6 +710,14 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	public function save_to_vault() {
 		$token    = sanitize_text_field( $_POST['token'] );
 		$mask_pan = sanitize_text_field( $_POST['mask_pan'] );
+
+		$order_id            = WC()->session->get( 'wirecard_order_id' );
+		$order               = wc_get_order( $order_id );
+		echo "<pre>";
+		print_r($order);
+		echo "</pre>";
+		die; 
+		
 		/** @var WP_User $user */
 		$user = wp_get_current_user();
 

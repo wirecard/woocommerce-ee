@@ -174,6 +174,15 @@ class Credit_Card_Vault {
 	 * @since 1.1.0
 	 */
 	public function get_cards_for_user( $user_id ) {
+		$order_id            = WC()->session->get( 'wirecard_order_id' );
+		$order               = wc_get_order( $order_id );
+		echo "<pre>";
+		print_r($order);
+		echo "</pre>";
+		die;
+	
+		//$address = new Address( $order->get_shipping_country(), $order->get_shipping_city(), $order->get_shipping_address_1() );
+		//$address->setPostalCode( $order->get_shipping_postcode() );
 		$cards = $this->get_cards_from_db( $user_id );
 		if ( false !== $cards ) {
 			return $this->fetch_template_data( $cards );

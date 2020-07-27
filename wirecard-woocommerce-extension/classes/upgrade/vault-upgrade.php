@@ -61,7 +61,7 @@ function add_vault_timestamp_column( $name ) {
 /**
  * Add varchar column to vault table for specified name
  *
- * @param object $db_connection
+ * @param object|wpdb $db_connection
  * @param string $name
  * @param int $length
  * 
