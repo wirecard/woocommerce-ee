@@ -178,6 +178,7 @@ class Credit_Card_Vault {
 		$order               = wc_get_order( $order_id );
 		echo "<pre>";
 		print_r($order);
+		print_r(Address_Data::fromWoocommerceOrder($order));
 		echo "</pre>";
 		die;
 	

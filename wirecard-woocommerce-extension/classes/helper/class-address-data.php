@@ -65,15 +65,15 @@ class Address_Data
 
 	/**
 	 * Address_Data constructor.
-	 * @param string $street1
+	 * @param string $address_1
 	 * @param string $city
 	 * @param string $postal_code
 	 * @param string $country
 	 * @param string $type
 	 */
-	public function __construct( $street1, $city, $postal_code, $country, $type = self::TYPE_BILLING )
+	public function __construct($address_1, $city, $postal_code, $country, $type = self::TYPE_BILLING )
 	{
-		$this->address_1 = $street1;
+		$this->address_1 = $address_1;
 		$this->city = $city;
 		$this->postal_code = $postal_code;
 		$this->country = $country;
@@ -114,6 +114,7 @@ class Address_Data
 	
 
 	/**
+	 * Equals with other Address_Data
 	 * @param Address_Data $address_data
 	 * @return bool
 	 */
@@ -126,6 +127,7 @@ class Address_Data
 	}
 
 	/**
+	 * Representation of data in array format
 	 * @return array
 	 */
 	public function toArray()
@@ -153,5 +155,20 @@ class Address_Data
 		}
 		
 		return $wc_list;
+	}
+
+	/**
+	 * Create instance of billing address from WC_Order
+	 * @param WC_Order $order
+	 * @return static
+	 */
+	public static function fromWoocommerceOrder( WC_Order $order )
+	{
+		return new static(
+			$order->get_shipping_address_1(),
+			$order->get_billing_city(),
+			$order->get_billing_postcode(),
+			$order->get_billing_country()
+		);
 	}
 }
