@@ -30,6 +30,7 @@
  */
 
 require_once( __DIR__ . '/class-wc-wirecard-payment-gateway.php' );
+require_once( WIRECARD_EXTENSION_HELPER_DIR. 'class-address-data.php');
 require_once( WIRECARD_EXTENSION_HELPER_DIR . 'class-credit-card-vault.php' );
 require_once( WIRECARD_EXTENSION_HELPER_DIR . 'class-template-helper.php' );
 require_once( WIRECARD_EXTENSION_HELPER_DIR . 'class-logger.php' );
@@ -713,15 +714,11 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 
 		$order_id            = WC()->session->get( 'wirecard_order_id' );
 		$order               = wc_get_order( $order_id );
-		echo "<pre>";
-		print_r($order);
-		echo "</pre>";
-		die; 
 		
 		/** @var WP_User $user */
 		$user = wp_get_current_user();
 
-		if ( $this->vault->save_card( $user->ID, $token, $mask_pan ) ) {
+		if ( $this->vault->save_card( $user->ID, $token, $mask_pan, $order ) ) {
 			wp_send_json_success();
 			wp_die();
 		}

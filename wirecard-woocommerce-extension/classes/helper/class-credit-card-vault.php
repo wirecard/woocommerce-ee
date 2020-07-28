@@ -77,10 +77,11 @@ class Credit_Card_Vault {
 	 * @param int $user_id
 	 * @param string $token
 	 * @param string $pan
+	 * @param WC_Order $order
 	 * @return int
 	 * @since 1.1.0
 	 */
-	public function save_card( $user_id, $token, $pan ) {
+	public function save_card( $user_id, $token, $pan, $order ) {
 		global $wpdb;
 
 		$cards = $this->get_cards_from_db( $user_id );
@@ -97,8 +98,12 @@ class Credit_Card_Vault {
 				'user_id'    => intval( $user_id ),
 				'token'      => $token,
 				'masked_pan' => $pan,
+				'address_1' => $order->get_billing_address_1(),
+				'postcode' => $order->get_billing_postcode(),
+				'city' => $order->get_billing_city(),
+				'country' => $order->get_billing_country(),
 			),
-			array( '%d', '%s', '%s' )
+			array( '%d', '%s', '%s', '%s', '%s', '%s', '%s' )
 		);
 
 		return $wpdb->insert_id;
@@ -176,11 +181,6 @@ class Credit_Card_Vault {
 	public function get_cards_for_user( $user_id ) {
 		$order_id            = WC()->session->get( 'wirecard_order_id' );
 		$order               = wc_get_order( $order_id );
-		echo "<pre>";
-		print_r($order);
-		print_r(Address_Data::fromWoocommerceOrder($order));
-		echo "</pre>";
-		die;
 	
 		//$address = new Address( $order->get_shipping_country(), $order->get_shipping_city(), $order->get_shipping_address_1() );
 		//$address->setPostalCode( $order->get_shipping_postcode() );

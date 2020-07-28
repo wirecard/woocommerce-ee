@@ -44,7 +44,6 @@ if (!defined('ABSPATH')) {
 class Address_Data
 {
 	const TYPE_BILLING = "billing";
-	const TYPE_SHIPPING = "shipping";
 	
 	// AddressData attributes
 	const ATTRIBUTE_ADDRESS_1 = "address_1";
@@ -140,35 +139,49 @@ class Address_Data
 		];
 	}
 
-	/**
-	 * @return array
-	 */
-	public function generateWCArray()
-	{
-		$wc_list = [];
-		$generateKey = function ($attribute) {
-			return $this->type . "_" . $attribute;
-		};
-		$data = $this->toArray();
-		foreach ($data as $key => $value) {
-			$wc_list[$generateKey($key)] = $value;
-		}
-		
-		return $wc_list;
-	}
+//	/**
+//	 * @return array
+//	 */
+//	public function generateWCArray()
+//	{
+//		$wc_list = [];
+//		$generateKey = function ($attribute) {
+//			return $this->type . "_" . $attribute;
+//		};
+//		$data = $this->toArray();
+//		foreach ($data as $key => $value) {
+//			$wc_list[$generateKey($key)] = $value;
+//		}
+//		
+//		return $wc_list;
+//	}
 
 	/**
 	 * Create instance of billing address from WC_Order
 	 * @param WC_Order $order
-	 * @return static
+	 * @return $this
 	 */
 	public static function fromWoocommerceOrder( WC_Order $order )
 	{
 		return new static(
-			$order->get_shipping_address_1(),
+			$order->get_billing_address_1(),
 			$order->get_billing_city(),
 			$order->get_billing_postcode(),
 			$order->get_billing_country()
+		);
+	}
+
+	/**
+	 * @param stdClass $address
+	 * @return $this
+	 */
+	public function fromInput( stdClass $address )
+	{
+		return new static(
+			$address->address_1,
+			$address->city,
+			$address->postcode,
+			$address->country
 		);
 	}
 }
