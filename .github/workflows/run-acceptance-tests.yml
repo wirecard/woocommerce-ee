@@ -8,7 +8,7 @@ jobs:
     strategy:
       matrix:
         operating-system: [ubuntu-latest]
-        php-versions: ['7.2']
+        php-versions: ['7.3']
     if: startsWith(github.head_ref, 'RC-') != false && endsWith(github.head_ref, '-major') != false  || endsWith(github.head_ref, '-minor') != false || endsWith(github.head_ref, '-patch') != false
     steps:
       - name: Checkout ${{ github.event.repository.name }}
