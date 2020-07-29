@@ -38,16 +38,36 @@ class WC_Gateway_Wirecard_Credit_Card_Vault_Utest extends \PHPUnit_Framework_Tes
 		$this->credit_card_vault = new Credit_Card_Vault();
 	}
 
+	private function get_sample_address_data() {
+		return new Address_Data(
+			"Sesam str 123",
+			"Sesam",
+			"SE0000",
+			"Wonderland"
+		);
+	}
 	public function test_save_card() {
-		$this->assertNotNull( $this->credit_card_vault->save_card( 1, 12, '123*****123' ) );
+		$vault_data = new Vault_Data(
+			2,
+			'123*****123',
+			12,
+			$this->get_sample_address_data()
+		);
+		$this->assertNotNull( $this->credit_card_vault->save_card( $vault_data ) );
 	}
 
 	public function test_get_cards_for_user() {
-		$this->assertNotNull( $this->credit_card_vault->get_cards_for_user( 1 ) );
+		$this->assertNotNull( $this->credit_card_vault->get_cards_for_user(
+			1,
+			$this->get_sample_address_data()
+		) );
 	}
 
 	public function test_failed_get_cards_for_user() {
-		$this->assertFalse( $this->credit_card_vault->get_cards_for_user( 2 ) );
+		$this->assertFalse( $this->credit_card_vault->get_cards_for_user(
+			1,
+			$this->get_sample_address_data()
+		) );
 	}
 
 	public function test_delete_credit_card() {

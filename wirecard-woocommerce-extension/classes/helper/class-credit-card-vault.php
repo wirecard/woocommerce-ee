@@ -75,7 +75,7 @@ class Credit_Card_Vault {
 	 * Save credit card data to db
 	 *
 	 * @param Vault_Data $card
-	 * @return int|void
+	 * @return int
 	 * @since 1.1.0
 	 */
 	public function save_card( Vault_Data $card ) {
@@ -83,7 +83,7 @@ class Credit_Card_Vault {
 		
 		$saved_card = $this->get_vault_by_token( $card->get_user_id(), $card->get_token() );
 		if ( null !== $saved_card && $saved_card->get_address_data()->equals( $card->get_address_data() )) {
-			return;
+			return 0;
 		}
 
 		$data = array(
