@@ -2,10 +2,10 @@
 
 ## v3.3.4
 
-| Overview | Woocommerce and Wordpress version | PHP 7.0 | PHP 7.1 | PHP 7.2 | PHP 7.3 |  
-|-----------------------|------------------------------------------------------------------|:-------:|:-------:|:-------:|:-------:|  
-| __Tested version(s)__ | Woocommerce version 3.9.3, Wordpress version 5.4.2 | :x: | :x: | :x: | ✅ |  
-| __Compatibility__ | Woocommerce version 3.3.4 - 3.9.3, Wordpress version 5.0.3 - 5.4.2 | ✅ | ✅ | ✅ | ✅ | 
+| Overview | Woocommerce and Wordpress version | PHP 7.0 | PHP 7.1 | PHP 7.2 | PHP 7.3 | PHP 7.4 |    
+|-----------------------|------------------------------------------------------------------|:-------:|:-------:|:-------:|:-------:|:-------:|    
+| __Tested version(s)__ | Woocommerce version 4.3.1, Wordpress version 5.4.2 | :x: | :x: | :x: | :x: | ✅ |    
+| __Compatibility__ | Woocommerce version 3.3.4 - 4.3.1, Wordpress version 5.0.3 - 5.4.2 | ✅ | ✅ | ✅ | ✅ | ✅ |  
 
 ## v3.3.3
 
