@@ -114,3 +114,15 @@ Woocommerce 3.9.3
 - Woocommerce 3.9.1
 - Woocommerce 3.9.2
 - Woocommerce 3.9.3
+3.3.4
+- 
+Add Compatibility:
+
+Woocommerce 3.9.1
+Woocommerce 3.9.2
+Woocommerce 3.9.3
+
+
+- Woocommerce 3.9.1
+- Woocommerce 3.9.2
+- Woocommerce 3.9.3
