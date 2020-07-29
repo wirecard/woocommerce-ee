@@ -59,7 +59,7 @@ class Vault_Data {
 	 * @since 3.3.4
 	 */
 	public function get_user_id() {
-		 return $this->user_id;
+		return $this->user_id;
 	}
 
 	/**

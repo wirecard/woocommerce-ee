@@ -100,7 +100,7 @@ class Address_Data {
 	 * @since 3.4.4
 	 */
 	public function get_country() {
-		 return $this->country;
+		return $this->country;
 	}
 
 	/**
