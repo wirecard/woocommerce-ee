@@ -39,7 +39,7 @@ if (!defined('ABSPATH')) {
  * Address data helper
  *
  * @SuppressWarnings(PHPMD.StaticAccess)
- * @since   3.4.4
+ * @since 3.4.4
  */
 class Address_Data
 {
@@ -69,6 +69,7 @@ class Address_Data
 	 * @param string $postal_code
 	 * @param string $country
 	 * @param string $type
+	 * @since 3.4.4
 	 */
 	public function __construct($address_1, $city, $postal_code, $country, $type = self::TYPE_BILLING )
 	{
@@ -81,32 +82,36 @@ class Address_Data
 
 	/**
 	 * @return string
+	 * @since 3.4.4
 	 */
-	public function getAddress1()
+	public function get_address_1()
 	{
 		return $this->address_1;
 	}
 
 	/**
 	 * @return string
+	 * @since 3.4.4
 	 */
-	public function getPostalCode()
+	public function get_post_code()
 	{
 		return $this->postal_code;
 	}
 
 	/**
 	 * @return string
+	 * @since 3.4.4
 	 */
-	public function getCountry()
+	public function get_country()
 	{
 		return $this->country;
 	}
 
 	/**
 	 * @return string
+	 * @since 3.4.4
 	 */
-	public function getCity()
+	public function get_city()
 	{
 		return $this->city;
 	}
@@ -116,20 +121,22 @@ class Address_Data
 	 * Equals with other Address_Data
 	 * @param Address_Data $address_data
 	 * @return bool
+	 * @since 3.4.4
 	 */
 	public function equals( Address_Data $address_data )
 	{
-		return $this->getCity() === $address_data->getCity() &&
-			$this->getCountry() === $address_data->getCountry() &&
-			$this->getPostalCode() === $address_data->getPostalCode() &&
-			$this->getAddress1() === $address_data->getAddress1();
+		return $this->get_city() === $address_data->get_city() &&
+			$this->get_country() === $address_data->get_country() &&
+			$this->get_post_code() === $address_data->get_post_code() &&
+			$this->get_address_1() === $address_data->get_address_1();
 	}
 
 	/**
 	 * Representation of data in array format
 	 * @return array
+	 * @since 3.4.4
 	 */
-	public function toArray()
+	public function to_array()
 	{
 		return [
 			self::ATTRIBUTE_ADDRESS_1 => $this->address_1,
@@ -139,49 +146,19 @@ class Address_Data
 		];
 	}
 
-//	/**
-//	 * @return array
-//	 */
-//	public function generateWCArray()
-//	{
-//		$wc_list = [];
-//		$generateKey = function ($attribute) {
-//			return $this->type . "_" . $attribute;
-//		};
-//		$data = $this->toArray();
-//		foreach ($data as $key => $value) {
-//			$wc_list[$generateKey($key)] = $value;
-//		}
-//		
-//		return $wc_list;
-//	}
-
 	/**
 	 * Create instance of billing address from WC_Order
 	 * @param WC_Order $order
-	 * @return $this
+	 * @return static
+	 * @since 3.4.4
 	 */
-	public static function fromWoocommerceOrder( WC_Order $order )
+	public static function from_wc_order( WC_Order $order )
 	{
 		return new static(
 			$order->get_billing_address_1(),
 			$order->get_billing_city(),
 			$order->get_billing_postcode(),
 			$order->get_billing_country()
-		);
-	}
-
-	/**
-	 * @param stdClass $address
-	 * @return $this
-	 */
-	public function fromInput( stdClass $address )
-	{
-		return new static(
-			$address->address_1,
-			$address->city,
-			$address->postcode,
-			$address->country
 		);
 	}
 }
