@@ -243,7 +243,7 @@ class Credit_Card_Vault {
 	private function get_cards_from_db( $user_id ) {
 		global $wpdb;
 
-		$cards     = [];
+		$cards     = array();
 		$statement = $wpdb->prepare(
 			"SELECT * FROM {$wpdb->prefix}wirecard_payment_gateway_vault WHERE user_id = %s",
 			(int) $user_id
