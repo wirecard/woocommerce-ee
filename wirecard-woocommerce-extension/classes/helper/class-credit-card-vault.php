@@ -80,9 +80,9 @@ class Credit_Card_Vault {
 	 */
 	public function save_card( Vault_Data $card ) {
 		global $wpdb;
-		
+
 		$saved_card = $this->get_vault_by_token( $card->get_user_id(), $card->get_token() );
-		if ( null !== $saved_card && $saved_card->get_address_data()->equals( $card->get_address_data() )) {
+		if ( null !== $saved_card && $saved_card->get_address_data()->equals( $card->get_address_data() ) ) {
 			return 0;
 		}
 
@@ -92,14 +92,14 @@ class Credit_Card_Vault {
 			'masked_pan' => $card->get_masked_pan(),
 			'address_1'  => $card->get_address_data()->get_address_1(),
 			'postcode'   => $card->get_address_data()->get_post_code(),
-			'city' 		 => $card->get_address_data()->get_city(),
-			'country'    => $card->get_address_data()->get_country()
+			'city'       => $card->get_address_data()->get_city(),
+			'country'    => $card->get_address_data()->get_country(),
 		);
 
 		$data_format = array( '%d', '%s', '%s', '%s', '%s', '%s', '%s' );
-		
+
 		if ( $saved_card ) {
-			$data = array_merge( $data, array( 'vault_id' => $saved_card->get_vault_id() ) );
+			$data          = array_merge( $data, array( 'vault_id' => $saved_card->get_vault_id() ) );
 			$data_format[] = '%d';
 		}
 
@@ -183,11 +183,14 @@ class Credit_Card_Vault {
 	 * @since 1.1.0
 	 */
 	public function get_cards_for_user( $user_id, Address_Data $address_data ) {
-		$cards = $this->get_cards_from_db( $user_id );
-		$filtered_cards = array_filter( $cards, function ( Vault_Data $vault_data) use ($address_data) {
-			return $vault_data->get_address_data()->equals( $address_data );
-		});
-		
+		$cards          = $this->get_cards_from_db( $user_id );
+		$filtered_cards = array_filter(
+			$cards,
+			function ( Vault_Data $vault_data ) use ( $address_data ) {
+				return $vault_data->get_address_data()->equals( $address_data );
+			}
+		);
+
 		if ( $filtered_cards ) {
 			return $this->fetch_template_data( $filtered_cards );
 		}
@@ -222,14 +225,14 @@ class Credit_Card_Vault {
 				$token_id
 			)
 		);
-		
+
 		if ( $result ) {
 			return Vault_Data::from_db( $result );
 		}
-		
+
 		return null;
 	}
-	
+
 	/**
 	 * Get credit cards from vault
 	 *

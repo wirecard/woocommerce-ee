@@ -30,8 +30,8 @@
  */
 
 require_once( __DIR__ . '/class-wc-wirecard-payment-gateway.php' );
-require_once( WIRECARD_EXTENSION_HELPER_DIR. 'class-address-data.php');
-require_once( WIRECARD_EXTENSION_HELPER_DIR. 'class-vault-data.php');
+require_once( WIRECARD_EXTENSION_HELPER_DIR . 'class-address-data.php' );
+require_once( WIRECARD_EXTENSION_HELPER_DIR . 'class-vault-data.php' );
 require_once( WIRECARD_EXTENSION_HELPER_DIR . 'class-credit-card-vault.php' );
 require_once( WIRECARD_EXTENSION_HELPER_DIR . 'class-template-helper.php' );
 require_once( WIRECARD_EXTENSION_HELPER_DIR . 'class-logger.php' );
@@ -78,7 +78,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	 * @since 2.0.0
 	 */
 	protected $logger;
-	
+
 	/**
 	 * @var Address_Data
 	 */
@@ -715,10 +715,10 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	 * @since 1.1.0
 	 */
 	public function save_to_vault() {
-		$token      = sanitize_text_field( $_POST['token'] );
-		$mask_pan   = sanitize_text_field( $_POST['mask_pan'] );
+		$token    = sanitize_text_field( $_POST['token'] );
+		$mask_pan = sanitize_text_field( $_POST['mask_pan'] );
 		/** @var WP_User $user */
-		$user 	    = wp_get_current_user();
+		$user       = wp_get_current_user();
 		$vault_data = new Vault_Data( $user->ID, $mask_pan, $token, $this->get_address_data_from_current_order() );
 		if ( $this->vault->save_card( $vault_data ) ) {
 			wp_send_json_success();
@@ -746,14 +746,16 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	/**
 	 * Render vault table for specific user
 	 * @param int $user_id
-	 * 
+	 *
 	 * @since 3.3.4
 	 */
 	private function render_card_template_by_user( $user_id ) {
-		wp_send_json_success( $this->vault->get_cards_for_user(
-			(int) $user_id,
-			$this->get_address_data_from_current_order()
-		) );
+		wp_send_json_success(
+			$this->vault->get_cards_for_user(
+				(int) $user_id,
+				$this->get_address_data_from_current_order()
+			)
+		);
 		wp_die();
 	}
 
@@ -954,14 +956,15 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	/**
 	 * Get address data generated from WC_Order
 	 * @return Address_Data
-	 * 
 	 * @since 3.3.4
 	 */
 	public function get_address_data_from_current_order() {
 		if ( null === $this->current_address_data ) {
 			$this->current_address_data = Address_Data::from_wc_order(
-				wc_get_order( WC()->session->get( 'wirecard_order_id' )
-			) );
+				wc_get_order(
+					WC()->session->get( 'wirecard_order_id' )
+				)
+			);
 		}
 		return $this->current_address_data;
 	}

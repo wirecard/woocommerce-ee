@@ -5,8 +5,8 @@
  * @SuppressWarnings(PHPMD.StaticAccess)
  * @since 3.3.4
  */
-class Vault_Data
-{
+class Vault_Data {
+
 	/**
 	 * @var int
 	 */
@@ -38,21 +38,19 @@ class Vault_Data
 	 * @param null|int $vault_id
 	 * @since 3.3.4
 	 */
-	public function __construct($user_id, $masked_pan, $token, Address_Data $address_data = null, $vault_id = null)
-	{
-		$this->user_id = intval($user_id);
-		$this->masked_pan = $masked_pan;
-		$this->token = $token;
+	public function __construct( $user_id, $masked_pan, $token, Address_Data $address_data = null, $vault_id = null ) {
+		$this->user_id      = intval( $user_id );
+		$this->masked_pan   = $masked_pan;
+		$this->token        = $token;
 		$this->address_data = $address_data;
-		$this->vault_id = $vault_id;
+		$this->vault_id     = $vault_id;
 	}
 
 	/**
 	 * @return int
 	 * @since 3.3.4
 	 */
-	public function get_vault_id()
-	{
+	public function get_vault_id() {
 		return $this->vault_id;
 	}
 
@@ -60,17 +58,15 @@ class Vault_Data
 	 * @return int
 	 * @since 3.3.4
 	 */
-	public function get_user_id()
-	{
-		return $this->user_id;
+	public function get_user_id() {
+		 return $this->user_id;
 	}
 
 	/**
 	 * @return string
 	 * @since 3.3.4
 	 */
-	public function get_masked_pan()
-	{
+	public function get_masked_pan() {
 		return $this->masked_pan;
 	}
 
@@ -78,17 +74,15 @@ class Vault_Data
 	 * @return string
 	 * @since 3.3.4
 	 */
-	public function get_token()
-	{
+	public function get_token() {
 		return $this->token;
 	}
-	
+
 	/**
 	 * @return Address_Data
 	 * @since 3.3.4
 	 */
-	public function get_address_data()
-	{
+	public function get_address_data() {
 		return $this->address_data;
 	}
 
@@ -97,8 +91,8 @@ class Vault_Data
 	 * @return static
 	 * @since 3.3.4
 	 */
-	public static function from_db(stdClass $obj) {
-		
+	public static function from_db( stdClass $obj ) {
+
 		return new static(
 			$obj->user_id,
 			$obj->masked_pan,
@@ -113,12 +107,12 @@ class Vault_Data
 	 * @since 3.3.4
 	 */
 	public function to_array() {
-		$vault_data  = [
-			'user_id' => $this->get_user_id(),
-			'token' => $this->get_token(),
+		$vault_data = [
+			'user_id'    => $this->get_user_id(),
+			'token'      => $this->get_token(),
 			'masked_pan' => $this->get_masked_pan(),
 		];
-		
-		return array_merge($vault_data, $this->get_address_data()->to_array());
+
+		return array_merge( $vault_data, $this->get_address_data()->to_array() );
 	}
 }

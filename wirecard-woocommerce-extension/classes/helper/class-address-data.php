@@ -29,7 +29,7 @@
  * Please do not use the plugin if you do not agree to these terms of use!
  */
 
-if (!defined('ABSPATH')) {
+if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
@@ -41,15 +41,15 @@ if (!defined('ABSPATH')) {
  * @SuppressWarnings(PHPMD.StaticAccess)
  * @since 3.4.4
  */
-class Address_Data
-{
-	const TYPE_BILLING = "billing";
-	
+class Address_Data {
+
+	const TYPE_BILLING = 'billing';
+
 	// AddressData attributes
-	const ATTRIBUTE_ADDRESS_1 = "address_1";
-	const ATTRIBUTE_POSTAL_CODE = "postcode";
-	const ATTRIBUTE_CITY = "city";
-	const ATTRIBUTE_COUNTRY = "country";
+	const ATTRIBUTE_ADDRESS_1   = 'address_1';
+	const ATTRIBUTE_POSTAL_CODE = 'postcode';
+	const ATTRIBUTE_CITY        = 'city';
+	const ATTRIBUTE_COUNTRY     = 'country';
 
 	/** @var string */
 	private $address_1;
@@ -71,21 +71,19 @@ class Address_Data
 	 * @param string $type
 	 * @since 3.4.4
 	 */
-	public function __construct($address_1, $city, $postal_code, $country, $type = self::TYPE_BILLING )
-	{
-		$this->address_1 = $address_1;
-		$this->city = $city;
+	public function __construct( $address_1, $city, $postal_code, $country, $type = self::TYPE_BILLING ) {
+		$this->address_1   = $address_1;
+		$this->city        = $city;
 		$this->postal_code = $postal_code;
-		$this->country = $country;
-		$this->type = $type;
+		$this->country     = $country;
+		$this->type        = $type;
 	}
 
 	/**
 	 * @return string
 	 * @since 3.4.4
 	 */
-	public function get_address_1()
-	{
+	public function get_address_1() {
 		return $this->address_1;
 	}
 
@@ -93,8 +91,7 @@ class Address_Data
 	 * @return string
 	 * @since 3.4.4
 	 */
-	public function get_post_code()
-	{
+	public function get_post_code() {
 		return $this->postal_code;
 	}
 
@@ -102,20 +99,18 @@ class Address_Data
 	 * @return string
 	 * @since 3.4.4
 	 */
-	public function get_country()
-	{
-		return $this->country;
+	public function get_country() {
+		 return $this->country;
 	}
 
 	/**
 	 * @return string
 	 * @since 3.4.4
 	 */
-	public function get_city()
-	{
+	public function get_city() {
 		return $this->city;
 	}
-	
+
 
 	/**
 	 * Equals with other Address_Data
@@ -123,8 +118,7 @@ class Address_Data
 	 * @return bool
 	 * @since 3.4.4
 	 */
-	public function equals( Address_Data $address_data )
-	{
+	public function equals( Address_Data $address_data ) {
 		return $this->get_city() === $address_data->get_city() &&
 			$this->get_country() === $address_data->get_country() &&
 			$this->get_post_code() === $address_data->get_post_code() &&
@@ -136,12 +130,11 @@ class Address_Data
 	 * @return array
 	 * @since 3.4.4
 	 */
-	public function to_array()
-	{
+	public function to_array() {
 		return [
-			self::ATTRIBUTE_ADDRESS_1 => $this->address_1,
-			self::ATTRIBUTE_COUNTRY => $this->country,
-			self::ATTRIBUTE_CITY => $this->city,
+			self::ATTRIBUTE_ADDRESS_1   => $this->address_1,
+			self::ATTRIBUTE_COUNTRY     => $this->country,
+			self::ATTRIBUTE_CITY        => $this->city,
 			self::ATTRIBUTE_POSTAL_CODE => $this->postal_code,
 		];
 	}
@@ -152,8 +145,7 @@ class Address_Data
 	 * @return static
 	 * @since 3.4.4
 	 */
-	public static function from_wc_order( WC_Order $order )
-	{
+	public static function from_wc_order( WC_Order $order ) {
 		return new static(
 			$order->get_billing_address_1(),
 			$order->get_billing_city(),
