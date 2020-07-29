@@ -95,7 +95,7 @@ $html .= '</td>
 			<table border="0" width="100%">
 				<tr>
 					<td class="text11justify">' .
-	$creditor_store_city . ' ' . date( 'd.m.Y' ) . ' <span class="first_last_name"></span>
+	$creditor_store_city . ' ' . gmdate( 'd.m.Y' ) . ' <span class="first_last_name"></span>
 					</td>
 					<td width="10%">&nbsp;</td>
 				</tr>
