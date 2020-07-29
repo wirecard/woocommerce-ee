@@ -35,7 +35,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /**
  * Class Credit_Card_Vault
- *
+ * @SuppressWarnings(PHPMD.StaticAccess)
  * @since   1.1.0
  */
 class Credit_Card_Vault {

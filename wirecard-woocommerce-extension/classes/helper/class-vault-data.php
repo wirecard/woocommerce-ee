@@ -107,11 +107,11 @@ class Vault_Data {
 	 * @since 3.3.4
 	 */
 	public function to_array() {
-		$vault_data = [
+		$vault_data = array(
 			'user_id'    => $this->get_user_id(),
 			'token'      => $this->get_token(),
 			'masked_pan' => $this->get_masked_pan(),
-		];
+		);
 
 		return array_merge( $vault_data, $this->get_address_data()->to_array() );
 	}

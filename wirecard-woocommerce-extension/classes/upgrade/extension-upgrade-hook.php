@@ -47,7 +47,7 @@ require_once 'vault-upgrade.php';
  *
  * @param array $upgrader_object
  * @param array $options
- *
+ * @SuppressWarnings(PHPMD.UnusedFormalParameter)
  * @since 2.0.0
  */
 function wirecard_extension_upgrade_completed( $upgrader_object, $options ) {

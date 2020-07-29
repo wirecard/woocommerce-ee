@@ -131,12 +131,12 @@ class Address_Data {
 	 * @since 3.4.4
 	 */
 	public function to_array() {
-		return [
+		return array(
 			self::ATTRIBUTE_ADDRESS_1   => $this->address_1,
 			self::ATTRIBUTE_COUNTRY     => $this->country,
 			self::ATTRIBUTE_CITY        => $this->city,
 			self::ATTRIBUTE_POSTAL_CODE => $this->postal_code,
-		];
+		);
 	}
 
 	/**

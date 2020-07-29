@@ -956,6 +956,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	/**
 	 * Get address data generated from WC_Order
 	 * @return Address_Data
+	 * @SuppressWarnings(PHPMD.StaticAccess)
 	 * @since 3.3.4
 	 */
 	public function get_address_data_from_current_order() {
