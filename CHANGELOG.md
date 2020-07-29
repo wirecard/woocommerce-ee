@@ -1,6 +1,19 @@
 # Changelog
 
 ## v3.3.4
+ 
+*   Add Compatibility:    Wordpress 5.4.2
+*   Add Compatibility:    Woocommerce 4.0.0
+*   Add Compatibility:    Woocommerce 4.0.1
+*   Add Compatibility:    Woocommerce 4.1.0
+*   Add Compatibility:    Woocommerce 4.2.0
+*   Add Compatibility:    Woocommerce 4.3.0
+*   Add Compatibility:    Woocommerce 4.3.1
+*   Add Compatibility:    PHP 7.3
+*   Add Compatibility:    PHP 7.4
+*   Remove Compatibility: PHP 5.6
+*   Fix IE11 Credit Card form loading issues
+ 
 
 | Overview | Woocommerce and Wordpress version | PHP 7.0 | PHP 7.1 | PHP 7.2 | PHP 7.3 | PHP 7.4 |    
 |-----------------------|------------------------------------------------------------------|:-------:|:-------:|:-------:|:-------:|:-------:|    
