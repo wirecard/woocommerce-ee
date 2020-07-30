@@ -193,6 +193,7 @@ class Credit_Card_Vault {
 	 * @param int $user_id
 	 * @param Address_Data $address_data
 	 * @return bool
+	 * @since 3.4.4
 	 */
 	public function has_cards_for_user_address( $user_id, Address_Data $address_data ) {
 		$cards = $this->get_cards_from_db( $user_id, $address_data->get_hash() );
@@ -213,9 +214,10 @@ class Credit_Card_Vault {
 	}
 
 	/**
-	 * @param $user_id
-	 * @param $token_id
+	 * @param int $user_id
+	 * @param int $token_id
 	 * @return Vault_Data|null
+	 * @since 3.4.4
 	 */
 	public function get_vault_by_token( $user_id, $token_id ) {
 		global $wpdb;

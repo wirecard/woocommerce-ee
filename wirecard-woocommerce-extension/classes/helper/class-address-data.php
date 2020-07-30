@@ -104,6 +104,8 @@ class Address_Data {
 
 	/**
 	 * Generate hash in format MD5(address1_city_country_postcode)
+	 * @return self
+	 * @since 3.4.4
 	 */
 	private function generate_hash() {
 		$data       = array( $this->address_1, $this->city, $this->country, $this->postal_code );
