@@ -46,6 +46,12 @@ class WPDB {
 		return;
 	}
 
+	/**
+	 * @param $table_name
+	 * @param $data
+	 * @param null $type
+	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+	 */
 	public function replace( $table_name, $data, $type = null ) {
 		$this->insert_id = 1;
 		return;
