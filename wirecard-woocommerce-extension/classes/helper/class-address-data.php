@@ -67,7 +67,7 @@ class Address_Data {
 		$this->city        = $city;
 		$this->postal_code = $postal_code;
 		$this->country     = $country;
-		$this->get_hash();
+		$this->generate_hash();
 	}
 
 	/**
@@ -106,7 +106,7 @@ class Address_Data {
 	 * Generate hash in format MD5(address1_city_country_postcode)
 	 */
 	private function generate_hash() {
-		$data       = [ $this->address_1, $this->city, $this->country, $this->postal_code ];
+		$data       = array( $this->address_1, $this->city, $this->country, $this->postal_code );
 		$this->hash = md5( implode( '_', $data ) );
 		return $this;
 	}
