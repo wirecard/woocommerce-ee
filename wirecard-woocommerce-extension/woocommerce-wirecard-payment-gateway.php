@@ -260,10 +260,7 @@ function wirecard_install_payment_gateway() {
  		masked_pan varchar(30) NOT NULL,
 		created DATETIME NOT NULL default CURRENT_TIMESTAMP,
 		modified DATETIME NOT NULL default CURRENT_TIMESTAMP,
-		address_1 varchar(40),
-		city varchar(20),
-		postcode varchar(20),
-		country varchar(30),
+		address_hash varchar(32) NOT NULL,
  		PRIMARY KEY (vault_id)
  		)$collate;";
 	dbDelta( $sql2 );
