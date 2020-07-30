@@ -67,7 +67,7 @@ function add_vault_timestamp_column( $name ) {
  *
  * @since 3.3.4
  */
-function add_vault_varchar_column( $db_connection, $name, $length = 50 ) {
+function add_vault_varchar_column( $db_connection, $name, $length = 32 ) {
 	$vault_table_name = $db_connection->prefix . 'wirecard_payment_gateway_vault';
 
 	if ( ! check_existing_column( $name, $vault_table_name ) ) {
@@ -84,10 +84,7 @@ function vault_address_fields_upgrade() {
 	// Add required address data fields related to saved token
 	global $wpdb;
 	// Add required address data fields related to saved token
-	add_vault_varchar_column( $wpdb, 'address_1' );
-	add_vault_varchar_column( $wpdb, 'city', 20 );
-	add_vault_varchar_column( $wpdb, 'postcode', 20 );
-	add_vault_varchar_column( $wpdb, 'country', 20 );
+	add_vault_varchar_column( $wpdb, 'address_hash' );
 }
 
 /**
