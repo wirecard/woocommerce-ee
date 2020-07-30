@@ -718,8 +718,9 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 		$token    = sanitize_text_field( $_POST['token'] );
 		$mask_pan = sanitize_text_field( $_POST['mask_pan'] );
 		/** @var WP_User $user */
-		$user       = wp_get_current_user();
-		$vault_data = new Vault_Data( $user->ID, $mask_pan, $token, $this->get_address_data_from_current_order() );
+		$user         = wp_get_current_user();
+		$address_data = $this->get_address_data_from_current_order();
+		$vault_data   = new Vault_Data( $user->ID, $mask_pan, $token, $address_data->get_hash() );
 		if ( $this->vault->save_card( $vault_data ) ) {
 			wp_send_json_success();
 			wp_die();
@@ -786,7 +787,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 		/** @var WP_User $user */
 		$user = wp_get_current_user();
 
-		if ( $this->vault->get_cards_for_user( $user->ID, $this->get_address_data_from_current_order() ) ) {
+		if ( $this->vault->has_cards_for_user_address( $user->ID, $this->get_address_data_from_current_order() ) ) {
 			return true;
 		}
 		return false;

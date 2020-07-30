@@ -72,10 +72,7 @@ class WPDB {
 			$card->masked_pan = '123*****123';
 			$card->vault_id   = '1';
 			$card->user_id    = '123';
-			$card->address_1  = 'Example str. 1';
-			$card->city   	  = 'Vienna';
-			$card->country    = 'Austria';
-			$card->postcode   = '1040';
+			$card->address_hash   = '1231qwerqwerqwerqwerqwerqwerqwer';
 
 			return array(
 				'1' => $card,

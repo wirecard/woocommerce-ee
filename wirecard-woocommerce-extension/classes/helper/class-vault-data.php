@@ -25,24 +25,24 @@ class Vault_Data {
 	private $masked_pan;
 
 	/**
-	 * @var Address_Data
+	 * @var string
 	 */
-	private $address_data;
+	private $address_hash;
 
 	/**
 	 * Vault_Data constructor.
 	 * @param int $user_id
 	 * @param string $masked_pan
 	 * @param string $token
-	 * @param Address_Data|null $address_data
+	 * @param Address_Data|null $address_hash
 	 * @param null|int $vault_id
 	 * @since 3.3.4
 	 */
-	public function __construct( $user_id, $masked_pan, $token, Address_Data $address_data = null, $vault_id = null ) {
+	public function __construct( $user_id, $masked_pan, $token, $address_hash = null, $vault_id = null ) {
 		$this->user_id      = intval( $user_id );
 		$this->masked_pan   = $masked_pan;
 		$this->token        = $token;
-		$this->address_data = $address_data;
+		$this->address_hash = $address_hash;
 		$this->vault_id     = $vault_id;
 	}
 
@@ -82,8 +82,8 @@ class Vault_Data {
 	 * @return Address_Data
 	 * @since 3.3.4
 	 */
-	public function get_address_data() {
-		return $this->address_data;
+	public function get_address_hash() {
+		return $this->address_hash;
 	}
 
 	/**
@@ -97,10 +97,8 @@ class Vault_Data {
 			$obj->user_id,
 			$obj->masked_pan,
 			$obj->token,
-			new Address_Data( $obj->address_1, $obj->city, $obj->postcode, $obj->country ),
+			$obj->address_hash,
 			$obj->vault_id
 		);
 	}
-	
-	
 }

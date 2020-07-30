@@ -65,7 +65,7 @@ class WC_Gateway_Wirecard_Credit_Card_Vault_Utest extends \PHPUnit_Framework_Tes
 
 	public function test_failed_get_cards_for_user() {
 		$this->assertFalse( $this->credit_card_vault->get_cards_for_user(
-			1,
+			2,
 			$this->get_sample_address_data()
 		) );
 	}

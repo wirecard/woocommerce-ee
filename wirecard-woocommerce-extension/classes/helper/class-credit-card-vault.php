@@ -82,18 +82,15 @@ class Credit_Card_Vault {
 		global $wpdb;
 
 		$saved_card = $this->get_vault_by_token( $card->get_user_id(), $card->get_token() );
-		if ( null !== $saved_card && $saved_card->get_address_data()->equals( $card->get_address_data() ) ) {
+		if ( null !== $saved_card && $saved_card->get_address_hash() === $card->get_address_hash() ) {
 			return 0;
 		}
 
 		$data = array(
-			'user_id'    => $card->get_user_id(),
-			'token'      => $card->get_token(),
-			'masked_pan' => $card->get_masked_pan(),
-			'address_1'  => $card->get_address_data()->get_address_1(),
-			'postcode'   => $card->get_address_data()->get_post_code(),
-			'city'       => $card->get_address_data()->get_city(),
-			'country'    => $card->get_address_data()->get_country(),
+			'user_id'      => $card->get_user_id(),
+			'token'        => $card->get_token(),
+			'masked_pan'   => $card->get_masked_pan(),
+			'address_hash' => $card->get_address_hash(),
 		);
 
 		$data_format = array( '%d', '%s', '%s', '%s', '%s', '%s', '%s' );
@@ -183,19 +180,23 @@ class Credit_Card_Vault {
 	 * @since 1.1.0
 	 */
 	public function get_cards_for_user( $user_id, Address_Data $address_data ) {
-		$cards          = $this->get_cards_from_db( $user_id );
-		$filtered_cards = array_filter(
-			$cards,
-			function ( Vault_Data $vault_data ) use ( $address_data ) {
-				return $vault_data->get_address_data()->equals( $address_data );
-			}
-		);
+		$cards = $this->get_cards_from_db( $user_id, $address_data->get_hash() );
 
-		if ( $filtered_cards ) {
-			return $this->fetch_template_data( $filtered_cards );
+		if ( $cards ) {
+			return $this->fetch_template_data( $cards );
 		}
 
 		return false;
+	}
+
+	/**
+	 * @param int $user_id
+	 * @param Address_Data $address_data
+	 * @return bool
+	 */
+	public function has_cards_for_user_address( $user_id, Address_Data $address_data ) {
+		$cards = $this->get_cards_from_db( $user_id, $address_data->get_hash() );
+		return count( $cards ) > 0;
 	}
 
 	/**
@@ -237,16 +238,18 @@ class Credit_Card_Vault {
 	 * Get credit cards from vault
 	 *
 	 * @param int $user_id
+	 * @param string $address_hash
 	 * @return array|Vault_Data[]
 	 * @since 1.1.0
 	 */
-	private function get_cards_from_db( $user_id ) {
+	private function get_cards_from_db( $user_id, $address_hash ) {
 		global $wpdb;
 
 		$cards     = array();
 		$statement = $wpdb->prepare(
-			"SELECT * FROM {$wpdb->prefix}wirecard_payment_gateway_vault WHERE user_id = %s",
-			(int) $user_id
+			"SELECT * FROM {$wpdb->prefix}wirecard_payment_gateway_vault WHERE user_id = %s AND address_hash = %s",
+			(int) $user_id,
+			$address_hash
 		);
 		$db_cards  = $wpdb->get_results( $statement );
 		foreach ( $db_cards as $db_card ) {
