@@ -260,6 +260,7 @@ function wirecard_install_payment_gateway() {
  		masked_pan varchar(30) NOT NULL,
 		created DATETIME NOT NULL default CURRENT_TIMESTAMP,
 		modified DATETIME NOT NULL default CURRENT_TIMESTAMP,
+		address_hash varchar(32) NOT NULL,
  		PRIMARY KEY (vault_id)
  		)$collate;";
 	dbDelta( $sql2 );
@@ -393,5 +394,6 @@ function wirecard_check_if_woo_installed() {
  *
  * @since 2.0.0
  */
+
 require_once WIRECARD_EXTENSION_BASEDIR . 'classes/upgrade/extension-upgrade-hook.php';
 add_action( 'upgrader_process_complete', 'wirecard_extension_upgrade_completed', 1, 2 );

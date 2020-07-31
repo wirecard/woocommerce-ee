@@ -46,6 +46,17 @@ class WPDB {
 		return;
 	}
 
+	/**
+	 * @param $table_name
+	 * @param $data
+	 * @param null $type
+	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+	 */
+	public function replace( $table_name, $data, $type = null ) {
+		$this->insert_id = 1;
+		return;
+	}
+
 	public function prepare( $query, $id ) {
 		if ( $id == 1 || $id == '123' ) {
 			return true;
@@ -60,6 +71,8 @@ class WPDB {
 			$card->token      = '123123123';
 			$card->masked_pan = '123*****123';
 			$card->vault_id   = '1';
+			$card->user_id    = '123';
+			$card->address_hash   = '1231qwerqwerqwerqwerqwerqwerqwer';
 
 			return array(
 				'1' => $card,
