@@ -81,7 +81,7 @@ function wirecard_extension_upgrade_hook() {
 		// for credit card
 		wpp_v_two_upgrade();
 	}
-	
+
 	// Add address_hash field to vault table, if not already existent
 	vault_address_fields_upgrade();
 	// Add timestamps to vault table, if not already existent
