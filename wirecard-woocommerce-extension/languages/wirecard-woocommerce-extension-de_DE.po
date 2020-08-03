@@ -388,9 +388,8 @@ msgstr "Wählen Sie \"Vorauskasse\", um die Bankdaten nach dem Checkout anzuzeig
 msgid "config_PSD2_information"
 msgstr "PSD 2"
 
-
 msgid "config_PSD2_information_desc_woocommerce"
-msgstr "Angesichts der Bestimmungen der PSD 2 sollten Sie beim  <a target=\"_blank\" href='https://github.com/wirecard/woocommerce-ee/wiki/WooCommerce-Checkout'>Checkout</a> bestimmte persönliche Daten von Ihren Kunden anfordern, um das Risiko, dass Transaktionen abgelehnt werden, zu reduzieren.  "
+msgstr "Angesichts der Bestimmungen der PSD 2 sollten Sie beim  <a target=\"_blank\" href='https://https://github.com/wirecard/woocommerce-ee/wiki/WooCommerce-Checkout-Seite'>Checkout</a> bestimmte persönliche Daten von Ihren Kunden anfordern, um das Risiko, dass Transaktionen abgelehnt werden, zu reduzieren.  "
 
 #: classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php:178
 msgid "config_shipping_countries"
