@@ -3,7 +3,7 @@
  * Plugin Name: Wirecard WooCommerce Extension
  * Plugin URI: https://github.com/wirecard/woocommerce-ee
  * Description: Payment Gateway for WooCommerce
- * Version: 3.3.3
+ * Version: 3.3.4
  * Author: Wirecard AG
  * Author URI: https://www.wirecard.com/
  * License: GPLv3
@@ -11,7 +11,7 @@
  * Text Domain: wirecard-woocommerce-extension
  * Domain Path: /languages
  * WC requires at least: 3.3.4
- * WC tested up to: 3.9.3
+ * WC tested up to: 4.3.1
 
  *
  * Shop System Plugins - Terms of Use
@@ -260,6 +260,7 @@ function wirecard_install_payment_gateway() {
  		masked_pan varchar(30) NOT NULL,
 		created DATETIME NOT NULL default CURRENT_TIMESTAMP,
 		modified DATETIME NOT NULL default CURRENT_TIMESTAMP,
+		address_hash varchar(32) NOT NULL,
  		PRIMARY KEY (vault_id)
  		)$collate;";
 	dbDelta( $sql2 );
@@ -393,5 +394,6 @@ function wirecard_check_if_woo_installed() {
  *
  * @since 2.0.0
  */
+
 require_once WIRECARD_EXTENSION_BASEDIR . 'classes/upgrade/extension-upgrade-hook.php';
 add_action( 'upgrader_process_complete', 'wirecard_extension_upgrade_completed', 1, 2 );

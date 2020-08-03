@@ -387,7 +387,7 @@ msgid "config_payment_type_desc"
 msgstr "Sélectionnez « Paiement à l’avance » pour afficher les coordonnées bancaires après le processus de finalisation de la commande ou « Paiement sur facture » pour envoyer les coordonnées bancaires avec la facture."
 
 msgid "config_PSD2_information"
-msgstr "PSD 2"
+msgstr "DSP 2"
 
 msgid "config_PSD2_information_desc_woocommerce"
 msgstr "Compte tenu des dispositions de la DSP 2, il vous faut demander certaines informations personnelles à vos clients <a target=\"_blank\" href='https://github.com/wirecard/woocommerce-ee/wiki/Checkout-WooCommerce'>lors du paiement</a> afin de réduire le risque de rejet des transactions."

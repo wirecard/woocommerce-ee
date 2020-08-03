@@ -35,7 +35,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /**
  * Class Credit_Card_Vault
- *
+ * @SuppressWarnings(PHPMD.StaticAccess)
  * @since   1.1.0
  */
 class Credit_Card_Vault {
@@ -74,31 +74,36 @@ class Credit_Card_Vault {
 	/**
 	 * Save credit card data to db
 	 *
-	 * @param int $user_id
-	 * @param string $token
-	 * @param string $pan
+	 * @param Vault_Data $card
 	 * @return int
 	 * @since 1.1.0
 	 */
-	public function save_card( $user_id, $token, $pan ) {
+	public function save_card( Vault_Data $card ) {
 		global $wpdb;
 
-		$cards = $this->get_cards_from_db( $user_id );
-		if ( ! empty( $cards ) ) {
-			foreach ( $cards as $card ) {
-				if ( $card->token === $token ) {
-					return;
-				}
-			}
+		$saved_card = $this->get_vault_by_token( $card->get_user_id(), $card->get_token() );
+		if ( null !== $saved_card && $saved_card->get_address_hash() === $card->get_address_hash() ) {
+			return 0;
 		}
-		$wpdb->insert(
+
+		$data = array(
+			'user_id'      => $card->get_user_id(),
+			'token'        => $card->get_token(),
+			'masked_pan'   => $card->get_masked_pan(),
+			'address_hash' => $card->get_address_hash(),
+		);
+
+		$data_format = array( '%d', '%s', '%s', '%s', '%s', '%s', '%s' );
+
+		if ( $saved_card ) {
+			$data          = array_merge( $data, array( 'vault_id' => $saved_card->get_vault_id() ) );
+			$data_format[] = '%d';
+		}
+
+		$wpdb->replace(
 			$this->table_name,
-			array(
-				'user_id'    => intval( $user_id ),
-				'token'      => $token,
-				'masked_pan' => $pan,
-			),
-			array( '%d', '%s', '%s' )
+			$data,
+			$data_format
 		);
 
 		return $wpdb->insert_id;
@@ -170,16 +175,29 @@ class Credit_Card_Vault {
 	 * Get all credit cards for a user
 	 *
 	 * @param int $user_id
+	 * @param Address_Data|null $address_data
 	 * @return array|bool|null|object
 	 * @since 1.1.0
 	 */
-	public function get_cards_for_user( $user_id ) {
-		$cards = $this->get_cards_from_db( $user_id );
-		if ( false !== $cards ) {
+	public function get_cards_for_user( $user_id, Address_Data $address_data ) {
+		$cards = $this->get_cards_from_db( $user_id, $address_data->get_hash() );
+
+		if ( $cards ) {
 			return $this->fetch_template_data( $cards );
 		}
 
 		return false;
+	}
+
+	/**
+	 * @param int $user_id
+	 * @param Address_Data $address_data
+	 * @return bool
+	 * @since 3.4.4
+	 */
+	public function has_cards_for_user_address( $user_id, Address_Data $address_data ) {
+		$cards = $this->get_cards_from_db( $user_id, $address_data->get_hash() );
+		return count( $cards ) > 0;
 	}
 
 	/**
@@ -196,19 +214,48 @@ class Credit_Card_Vault {
 	}
 
 	/**
+	 * @param int $user_id
+	 * @param int $token_id
+	 * @return Vault_Data|null
+	 * @since 3.4.4
+	 */
+	public function get_vault_by_token( $user_id, $token_id ) {
+		global $wpdb;
+		$result = $wpdb->get_row(
+			$wpdb->prepare(
+				"SELECT * FROM {$wpdb->prefix}wirecard_payment_gateway_vault WHERE user_id = %s AND token = %s",
+				(int) $user_id,
+				$token_id
+			)
+		);
+
+		if ( $result ) {
+			return Vault_Data::from_db( $result );
+		}
+
+		return null;
+	}
+
+	/**
 	 * Get credit cards from vault
 	 *
 	 * @param int $user_id
-	 * @return array|bool|null|object
+	 * @param string $address_hash
+	 * @return array|Vault_Data[]
 	 * @since 1.1.0
 	 */
-	private function get_cards_from_db( $user_id ) {
+	private function get_cards_from_db( $user_id, $address_hash ) {
 		global $wpdb;
 
-		$cards = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}wirecard_payment_gateway_vault WHERE user_id = %s", $user_id ) );
-
-		if ( empty( $cards ) ) {
-			return false;
+		$cards     = array();
+		$statement = $wpdb->prepare(
+			"SELECT * FROM {$wpdb->prefix}wirecard_payment_gateway_vault WHERE user_id = %s AND address_hash = %s",
+			(int) $user_id,
+			$address_hash
+		);
+		$db_cards  = $wpdb->get_results( $statement );
+		foreach ( $db_cards as $db_card ) {
+			$cards[] = Vault_Data::from_db( $db_card );
 		}
 
 		return $cards;
@@ -217,7 +264,7 @@ class Credit_Card_Vault {
 	/**
 	 * Return html for the ajax
 	 *
-	 * @param array $cards
+	 * @param array|Vault_Data[] $cards
 	 * @return string
 	 * @since 1.1.0
 	 */
@@ -225,9 +272,9 @@ class Credit_Card_Vault {
 		$html = '<table id="vault-table">';
 		foreach ( $cards as $card ) {
 			$html .= '<tr>
-				<td class="wd-card-selector"><input class="token" name="token" type="radio" data-token="' . $card->token . '" /></td>
-				<td class="wd-card-number">' . $card->masked_pan . '</td>
-				<td class="wd-card-delete" id="wd-token-' . $card->token . '" data-vault-id="' . $card->vault_id . '"><div class="delete-from-vault">' . __( 'text_delete', 'wirecard-woocommerce-extension' ) . '</div></td>
+				<td class="wd-card-selector"><input class="token" name="token" type="radio" data-token="' . $card->get_token() . '" /></td>
+				<td class="wd-card-number">' . $card->get_masked_pan() . '</td>
+				<td class="wd-card-delete" id="wd-token-' . $card->get_token() . '" data-vault-id="' . $card->get_vault_id() . '"><div class="delete-from-vault">' . __( 'text_delete', 'wirecard-woocommerce-extension' ) . '</div></td>
 			</tr>';
 		}
 		$html .= '</table>';

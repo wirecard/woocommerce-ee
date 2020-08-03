@@ -47,7 +47,6 @@ require_once 'vault-upgrade.php';
  *
  * @param array $upgrader_object
  * @param array $options
- *
  * @since 2.0.0
  */
 function wirecard_extension_upgrade_completed( $upgrader_object, $options ) {
@@ -82,6 +81,9 @@ function wirecard_extension_upgrade_hook() {
 		// for credit card
 		wpp_v_two_upgrade();
 	}
+
+	// Add address_hash field to vault table, if not already existent
+	vault_address_fields_upgrade();
 	// Add timestamps to vault table, if not already existent
 	vault_timestamp_upgrade();
 
