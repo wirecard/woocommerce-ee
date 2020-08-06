@@ -1,0 +1,50 @@
+name: Run phraseapp check and pull
+
+#on: pull_request
+on:
+  push:
+    branches:
+      - TPWDCEE-7385-phraseapp-configuration
+
+jobs:
+  run-phraseapp:
+#    if: startsWith(github.head_ref, 'RC-') != false && endsWith(github.head_ref, '-major') != false  || endsWith(github.head_ref, '-minor') != false || endsWith(github.head_ref, '-patch') != false
+    runs-on: ubuntu-16.04
+    name: Run phraseapp
+    steps:
+      - name: Set up Ruby 2.5
+        uses: actions/setup-ruby@v1
+        with:
+          ruby-version: 2.5
+      - name: Checkout ${{ github.event.repository.name }}
+        uses: wirecard/checkout@v2.0.0
+        with:
+          ref: ${{ github.head_ref }}
+      - name: Install bundler
+        run: |
+          gem install bundler -v 2.0.1
+          bundle install
+      - name: Install dependencies
+        run: sudo apt-get update -y && sudo apt-get install -y gettext
+      - name: Check if phraseapp in sync
+        run: .bin/rake phraseapp:ci_check_if_in_sync
+        env:
+          PHRASEAPP_TOKEN: ${{ secrets.PHRASEAPP_TOKEN }}
+      - name: Phaseapp not in sync
+        if: ${{ failure() }}
+        run: .bin/rake phraseapp:ci_update
+        env:
+          PHRASEAPP_TOKEN: ${{ secrets.PHRASEAPP_TOKEN }}
+      - name: Set global git conf
+        if: ${{ failure() }}
+        run: git config --global user.email "" && git config --global user.name "github-actions"
+      - name: Commit files
+        if: ${{ failure() }}
+        run: git commit -m "Update phraseapp keys" -a
+      - name: Push changes
+        if: ${{ failure() }}
+        uses: wirecard/github-push-action@master
+        with:
+          branch: ${{ github.head_ref }}
+          github_token: ${{ secrets.WORKFLOW_TOKEN }}
+
