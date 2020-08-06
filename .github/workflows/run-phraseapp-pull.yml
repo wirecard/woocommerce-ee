@@ -19,7 +19,8 @@ jobs:
       - name: Checkout ${{ github.event.repository.name }}
         uses: wirecard/checkout@v2.0.0
         with:
-          ref: ${{ github.head_ref }}
+          ref: TPWDCEE-7385-phraseapp-configuration
+#          ref: ${{ github.head_ref }}
       - name: Install bundler
         run: |
           gem install bundler -v 2.0.1
@@ -27,22 +28,24 @@ jobs:
       - name: Install dependencies
         run: sudo apt-get update -y && sudo apt-get install -y gettext
       - name: Check if phraseapp in sync
+        id: phraseapp-check
         run: .bin/rake phraseapp:ci_check_if_in_sync
         env:
           PHRASEAPP_TOKEN: ${{ secrets.PHRASEAPP_TOKEN }}
-      - name: Phaseapp not in sync
-        if: ${{ failure() }}
+      - name: Phaseapp not in sync - pull the keys
+        id: pull-keys
+        if: startsWith(steps.phraseapp-check.conclusion, 'failure') && failure()
         run: .bin/rake phraseapp:ci_update
         env:
           PHRASEAPP_TOKEN: ${{ secrets.PHRASEAPP_TOKEN }}
       - name: Set global git conf
-        if: ${{ failure() }}
+        if: startsWith(steps.phraseapp-check.conclusion, 'failure') && failure() && contains(steps.pull-keys.conclusion, 'success')
         run: git config --global user.email "" && git config --global user.name "github-actions"
-      - name: Commit files
-        if: ${{ failure() }}
+      - name: Commit changes
+        if:  startsWith(steps.phraseapp-check.conclusion, 'failure') && failure() && contains(steps.pull-keys.conclusion, 'success')
         run: git commit -m "Update phraseapp keys" -a
       - name: Push changes
-        if: ${{ failure() }}
+        if: startsWith(steps.phraseapp-check.conclusion, 'failure') && failure() && contains(steps.pull-keys.conclusion, 'success')
         uses: wirecard/github-push-action@master
         with:
           branch: ${{ github.head_ref }}

@@ -24,7 +24,8 @@ namespace :phraseapp do
 
   desc '[CI] Pull locales, commit & push to git remote'
   task :ci_update do
-    WdPhraseApp.new.pull_locales && WdProject.new.commit_push_pr_locales
+    WdPhraseApp.new.pull_locales
+#   WdPhraseApp.new.pull_locales && WdProject.new.commit_push_pr_locales
   end
 
   desc '[CI] Check if PhraseApp is up to date with the project'
