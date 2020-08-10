@@ -7,34 +7,7 @@ env:
     - COMPOSER_ARGS=--no-interaction
     - WORDPRESS_CODING_STANDARDS_TAG=2.1.1
 jobs:
-  # these stages are allowed to fail
-  allow_failures:
-    - stage: phraseapp-check-if-in-sync
   include:
-    - stage: phraseapp-pull
-      if: type != cron AND env(PHRASEAPP_PULL) = '1'
-      language: ruby
-      ruby: 2.5.3
-      before_install: skip
-      install:
-        - travis_retry gem install bundler -v 2.0.1
-        - travis_retry bundle install
-      script:
-        - .bin/rake phraseapp:ci_update
-      after_script: skip
-
-    - stage: phraseapp-check-if-in-sync
-      if: type = pull_request
-      language: ruby
-      ruby: 2.5.3
-      before_install: skip
-      install:
-        - travis_retry gem install bundler -v 2.0.1
-        - travis_retry bundle install
-      script:
-        - .bin/rake phraseapp:ci_check_if_in_sync
-      after_script: skip
-
     - stage: trigger-white-labelling
       if: tag IS present AND type = push
       language: php
