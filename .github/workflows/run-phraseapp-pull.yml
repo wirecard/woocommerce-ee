@@ -1,14 +1,10 @@
 name: Run phraseapp check and pull
 
-#on: pull_request
-on:
-  push:
-    branches:
-      - TPWDCEE-7385-phraseapp-configuration
+on: pull_request
 
 jobs:
   run-phraseapp:
-#    if: startsWith(github.head_ref, 'RC-') != false && endsWith(github.head_ref, '-major') != false  || endsWith(github.head_ref, '-minor') != false || endsWith(github.head_ref, '-patch') != false
+    if: startsWith(github.head_ref, 'RC-') != false && endsWith(github.head_ref, '-major') != false  || endsWith(github.head_ref, '-minor') != false || endsWith(github.head_ref, '-patch') != false
     runs-on: ubuntu-16.04
     name: Run phraseapp
     steps:
@@ -19,8 +15,7 @@ jobs:
       - name: Checkout ${{ github.event.repository.name }}
         uses: wirecard/checkout@v2.0.0
         with:
-          ref: TPWDCEE-7385-phraseapp-configuration
-#          ref: ${{ github.head_ref }}
+          ref: ${{ github.head_ref }}
       - name: Install bundler
         run: |
           gem install bundler -v 2.0.1
