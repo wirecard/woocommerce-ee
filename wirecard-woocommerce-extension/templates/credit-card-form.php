@@ -50,10 +50,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<div class="show-spinner">
 		<div class="spinner" style="background: url('<?php echo admin_url(); ?>images/loading.gif') no-repeat;"></div>
 	</div>
-	
+
 	<form method="POST" id="wc_payment_method_wirecard_creditcard_response_form">
 		<input type="hidden" name="cc_nonce" value="<?php echo  wp_create_nonce(); ?>" />
 	</form>
-	
+
 	<div id="wc_payment_method_wirecard_creditcard_form"></div>
 </div>

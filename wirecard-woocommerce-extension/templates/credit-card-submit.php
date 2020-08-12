@@ -43,4 +43,3 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<?php echo __( 'Pay', 'woocommerce' ); ?>
 </button>
 <div id="wd-cc-submit-spinner" class="spinner spinner-inline spinner-submit" style="display: none; background: url('<?php echo admin_url(); ?>images/loading.gif') no-repeat;"></div>
-	
