@@ -38,8 +38,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$html = '
-				<button disabled id="seamless-submit" class="wd-submit checkout-button button alt wc-forward">' . __( 'Pay', 'woocommerce' ) . '</button>
-				<div id="wd-cc-submit-spinner" class="spinner spinner-inline spinner-submit" style="display: none; background: url(\'' . admin_url() . 'images/loading.gif\') no-repeat;"></div>
-			</div>
-		';
+?>
+<button disabled id="seamless-submit" class="wd-submit checkout-button button alt wc-forward">
+	<?= __( 'Pay', 'woocommerce' ) ?>
+</button>
+<div id="wd-cc-submit-spinner" class="spinner spinner-inline spinner-submit" style="display: none; background: url('<?= admin_url() ?>images/loading.gif') no-repeat;"></div>
+	

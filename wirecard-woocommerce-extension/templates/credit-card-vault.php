@@ -38,18 +38,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$html = '
+?>
 
-    <div id="wc_payment_method_wirecard_creditcard_vault">	
-     <fieldset>
- 	<legend>' . __( 'vault_use_existing_text', 'wirecard-woocommerce-extension' ) . '</legend>
-				<div class="cards">
-					<div class="show-spinner">
-						<div class="spinner" style="background: url(\'' . admin_url() . 'images/loading.gif\') no-repeat;"></div>
-					</div>
-				</div>
-				<div class="clear"></div>
-				  </fieldset>
+<div id="wc_payment_method_wirecard_creditcard_vault">
+	<fieldset>
+		<legend><?= __( 'vault_use_existing_text', 'wirecard-woocommerce-extension' ) ?></legend>
+		<div class="cards">
+			<div class="show-spinner">
+				<div class="spinner" style="background: url('<?= admin_url() ?>images/loading.gif') no-repeat;"></div>
 			</div>
-
-		';
+		</div>
+		<div class="clear"></div>
+	</fieldset>
+</div>

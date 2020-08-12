@@ -49,13 +49,9 @@ class Template_Helper {
 	 * @since 2.0.0
 	 */
 	public function get_template_as_string( $file_name ) {
-		$html           = '';
-		$full_file_path = WIRECARD_EXTENSION_TEMPLATE_DIR . $file_name;
-
-		if ( file_exists( $full_file_path ) ) {
-			require_once( $full_file_path );
-		}
-
+		$template_path = WIRECARD_EXTENSION_TEMPLATE_DIR;
+		$html = wc_get_template_html($file_name, [], $template_path, $template_path);
+		
 		return $html;
 	}
 }
