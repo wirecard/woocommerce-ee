@@ -2,7 +2,7 @@
 Contributors: wirecard
 Tags: credit-card, paypal, china-payment, sofort, alipay, ideal, eps, sepa, payment-in-advance, mastercard, visa, american-express, discover, maestro, checkout, e-commerce, ecommerce, payment, payment-page, china, woocommerce, wirecard, extension
 Requires at least: 5.0.3
-Tested up to: 5.5
+Tested up to: 5.4.2
 Requires PHP: 7.2
 Stable tag: 3.3.5
 License: GPLv3
@@ -112,6 +112,18 @@ Follow this [link](https://github.com/wirecard/woocommerce-ee/graphs/contributor
 - Add Compatibility:    Woocommerce 4.3.1
 - Add Compatibility:    PHP 7.3
 - Add Compatibility:    PHP 7.4
+- Remove Compatibility: PHP 5.6
+- Fix IE11 Credit Card form loading issues
+3.3.5
+- Add Compatibility: Wordpress 5.4.2
+- Add Compatibility: Woocommerce 4.0.0
+- Add Compatibility: Woocommerce 4.0.1
+- Add Compatibility: Woocommerce 4.1.0
+- Add Compatibility: Woocommerce 4.2.0
+- Add Compatibility: Woocommerce 4.3.0
+- Add Compatibility: Woocommerce 4.3.1
+- Add Compatibility: PHP 7.3
+- Add Compatibility: PHP 7.4
 - Remove Compatibility: PHP 5.6
 - Fix IE11 Credit Card form loading issues
 3.3.5
