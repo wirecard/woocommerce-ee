@@ -5,7 +5,7 @@
 [![PHP v7.3](https://img.shields.io/badge/php-v7.3-yellow.svg)](http://www.php.net)
 [![PHP v7.4](https://img.shields.io/badge/php-v7.4-yellow.svg)](http://www.php.net)
 [![WooCommerce v4.3.2](https://img.shields.io/badge/WooCommerce-v4.3.2-green.svg)](https://woocommerce.com/)
-[![Wordpress v5.5](https://img.shields.io/badge/Wordpress-v5.5-green.svg)](https://wordpress.org/)
+[![Wordpress v5.4.2](https://img.shields.io/badge/Wordpress-v5.4.2-green.svg)](https://wordpress.org/)
 [![PhraseApp](https://img.shields.io/badge/Using-PhraseApp-blue.svg)](https://phraseapp.com)
 
 ***
