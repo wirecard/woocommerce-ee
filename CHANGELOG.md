@@ -4,8 +4,8 @@
 
 | Overview | Woocommerce and Wordpress version | PHP 7.2 | PHP 7.3 | PHP 7.4 |   
 |-----------------------|------------------------------------------------------------------|:-------:|:-------:|:-------:|   
-| __Tested version(s)__ | Woocommerce version 4.3.2, Wordpress version 5.5 | :x: | :x: | ✅ |   
-| __Compatibility__ | Woocommerce version 3.3.4 - 4.3.2, Wordpress version 5.0.3 - 5.5 | ✅ | ✅ | ✅ | 
+| __Tested version(s)__ | Woocommerce version 4.3.2, Wordpress version 5.4.2 | :x: | :x: | ✅ |   
+| __Compatibility__ | Woocommerce version 3.3.4 - 4.3.2, Wordpress version 5.0.3 - 5.4.2 | ✅ | ✅ | ✅ | 
 
 ## v3.3.4
 
