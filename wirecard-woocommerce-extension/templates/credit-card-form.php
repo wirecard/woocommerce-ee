@@ -43,16 +43,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<div id="wd-creditcard-messagecontainer" class="woocommerce-NoticeGroup woocommerce-NoticeGroup-checkout" style="display: none;">
 		<ul class="woocommerce-error" role="alert">
 			<li id="wd-creditcard-error-message">
-				<?= __( 'error_malformed_creditcard_request', 'wirecard-woocommerce-extension' ) ?>
+				<?php echo __( 'error_malformed_creditcard_request', 'wirecard-woocommerce-extension' ); ?>
 			</li>
 		</ul>
 	</div>
 	<div class="show-spinner">
-		<div class="spinner" style="background: url('<?= admin_url() ?>images/loading.gif') no-repeat;"></div>
+		<div class="spinner" style="background: url('<?php echo admin_url(); ?>images/loading.gif') no-repeat;"></div>
 	</div>
 	
 	<form method="POST" id="wc_payment_method_wirecard_creditcard_response_form">
-		<input type="hidden" name="cc_nonce" value="<?=  wp_create_nonce() ?>" />
+		<input type="hidden" name="cc_nonce" value="<?php echo  wp_create_nonce(); ?>" />
 	</form>
 	
 	<div id="wc_payment_method_wirecard_creditcard_form"></div>

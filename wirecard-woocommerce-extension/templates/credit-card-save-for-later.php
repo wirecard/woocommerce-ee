@@ -42,6 +42,5 @@ if ( ! defined( 'ABSPATH' ) ) {
 <div class="save-later">
 	<label for="wirecard-store-card">
 	<input type="checkbox" id="wirecard-store-card" />
-	&nbsp;<?= __( 'vault_save_text', 'wirecard-woocommerce-extension' ) ?></label>
+	&nbsp;<?php echo __( 'vault_save_text', 'wirecard-woocommerce-extension' ); ?></label>
 </div>
-
