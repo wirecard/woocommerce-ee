@@ -30,7 +30,7 @@
  */
 
 define( 'WIRECARD_EXTENSION_NAME', 'Wirecard WooCommerce Extension' );
-define( 'WIRECARD_EXTENSION_VERSION', '3.3.4' );
+define( 'WIRECARD_EXTENSION_VERSION', '3.3.5' );
 define( 'WIRECARD_EXTENSION_BASEDIR', plugin_dir_path( __DIR__ ) );
 define( 'WIRECARD_EXTENSION_URL', plugin_dir_url( __FILE__ ) . '../' );
 define( 'WIRECARD_EXTENSION_LOCALE_FALLBACK', 'en_US' );
