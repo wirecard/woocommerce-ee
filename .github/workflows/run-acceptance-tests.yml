@@ -38,10 +38,17 @@ jobs:
         run: echo "::set-env name=GIT_BRANCH::${{ github.head_ref }}"
       - name: Set global git conf
         run: git config --global user.email "" && git config --global user.name "github-actions"
+      - name: Install and setup xonsh
+        run: |
+          sudo apt-get install python3-setuptools
+          sudo pip3 install xonsh
+          echo "::set-env name=LOGNAME::shopsystem-bot"
+          sudo service sshd stop
       - name: Run acceptance tests
         run: shopsystems-ui-test-runner/.bin/setup-and-run-ui-tests.sh
         shell: bash
         env:
+          WIRECARD_PLUGIN_VERSION: ${{ github.event.pull_request.head.sha }}
           PHP_VERSION: ${{ matrix.php-versions }}
           NGROK_TOKEN: ${{ secrets.NGROK_TOKEN }}
           BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
@@ -49,6 +56,7 @@ jobs:
           PATCH_RELEASE: 'patch'
           MINOR_RELEASE: 'minor'
           MAJOR_RELEASE: 'major'
+          GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
       - name: Acceptance tests passed
         if: ${{ success() }}
         run: shopsystems-ui-test-runner/.bin/upload-logs-and-notify.sh
