@@ -44,7 +44,7 @@ require_once __DIR__ . '/stubs/class-wc-log-levels.php';
 require_once __DIR__ . '/stubs/class-wp-error.php';
 require_once __DIR__ . '/stubs/class-wc-logger.php';
 require_once __DIR__ . '/stubs/class-wc-countries.php';
-require_once __DIR__ . '/stubs/class-wc-cart.php';
+require_once __DIR__ . '/stubs/wc-cart.php';
 require_once __DIR__ . '/stubs/class-wc-product.php';
 require_once __DIR__ . '/stubs/class-wc.php';
 require_once __DIR__ . '/stubs/class-wc-session.php';
