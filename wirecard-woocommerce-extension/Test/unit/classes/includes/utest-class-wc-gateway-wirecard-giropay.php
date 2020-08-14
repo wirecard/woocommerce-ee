@@ -43,6 +43,7 @@ class WC_Gateway_Wirecard_Giropay_Utest extends \PHPUnit_Framework_TestCase {
 
 	/**
 	 * Initialize mock class
+	 * @SuppressWarnings(PHPMD.Superglobals)
 	 */
 	public function setUp() {
 		$this->payment             = new WC_Gateway_Wirecard_Giropay();
