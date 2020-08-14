@@ -44,7 +44,7 @@ class WC_Gateway_Wirecard_Transaction_Factory_Utest extends \PHPUnit_Framework_T
 
 		$this->order = $this->getMockBuilder( WC_Order::class )
 			->disableOriginalConstructor()
-			->setMethods( [ 'get_total', 'get_currency', 'get_id', 'set_transaction_id' ] )
+			->setMethods( array( 'get_total', 'get_currency', 'get_id', 'set_transaction_id' ) )
 			->getMock();
 
 		$this->order->method( 'get_total' )->willReturn( 20 );
@@ -53,7 +53,7 @@ class WC_Gateway_Wirecard_Transaction_Factory_Utest extends \PHPUnit_Framework_T
 
 		$this->response = $this->getMockBuilder( \Wirecard\PaymentSdk\Response\SuccessResponse::class )
 			->disableOriginalConstructor()
-			->setMethods( [ 'getParentTransactionId', 'getTransactionId', 'findElement', 'getData' ] )
+			->setMethods( array( 'getParentTransactionId', 'getTransactionId', 'findElement', 'getData' ) )
 			->getMock();
 
 		$this->response->method( 'getTransactionId' )->willReturn( '123' );
@@ -79,7 +79,7 @@ class WC_Gateway_Wirecard_Transaction_Factory_Utest extends \PHPUnit_Framework_T
 		$transactions                   = array( '1' => $transaction );
 
 		$mocked_wpdb = $this->getMockBuilder( WPDB::class )
-			->setMethods( [ 'get_results', 'get_row' ] )
+			->setMethods( array( 'get_results', 'get_row' ) )
 			->getMock();
 		$mocked_wpdb->method( 'get_row' )->willReturn( $parent );
 		$mocked_wpdb->method( 'get_results' )->willReturn( $transactions );
@@ -96,7 +96,7 @@ class WC_Gateway_Wirecard_Transaction_Factory_Utest extends \PHPUnit_Framework_T
 		$parent->transaction_state = 'success';
 
 		$mocked_wpdb = $this->getMockBuilder( WPDB::class )
-			->setMethods( [ 'get_results', 'get_row' ] )
+			->setMethods( array( 'get_results', 'get_row' ) )
 			->getMock();
 		$mocked_wpdb->method( 'get_row' )->willReturn( $parent );
 		$mocked_wpdb->method( 'get_results' )->willReturn( 0 );
@@ -104,7 +104,7 @@ class WC_Gateway_Wirecard_Transaction_Factory_Utest extends \PHPUnit_Framework_T
 
 		$update_response = $this->getMockBuilder( \Wirecard\PaymentSdk\Response\SuccessResponse::class )
 			->disableOriginalConstructor()
-			->setMethods( [ 'getParentTransactionId', 'getTransactionId', 'findElement', 'getData' ] )
+			->setMethods( array( 'getParentTransactionId', 'getTransactionId', 'findElement', 'getData' ) )
 			->getMock();
 
 		$update_response->method( 'getTransactionId' )->willReturn( '124' );
@@ -122,11 +122,11 @@ class WC_Gateway_Wirecard_Transaction_Factory_Utest extends \PHPUnit_Framework_T
 	public function test_insert_create_transaction() {
 		$response = $this->getMockBuilder( \Wirecard\PaymentSdk\Response\SuccessResponse::class )
 			->disableOriginalConstructor()
-			->setMethods( [ 'getParentTransactionId', 'getTransactionId', 'findElement', 'getData' ] )
+			->setMethods( array( 'getParentTransactionId', 'getTransactionId', 'findElement', 'getData' ) )
 			->getMock();
 		$wpdb     = $this->getMockBuilder( WPDB::class )
 			->disableOriginalConstructor()
-			->setMethods( [ 'get_row', 'get_results' ] )
+			->setMethods( array( 'get_row', 'get_results' ) )
 			->getMock();
 
 		$response->method( 'getParentTransactionId' )->willReturn( '1234' );

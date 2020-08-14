@@ -47,12 +47,12 @@ class WC_Gateway_Wirecard_Template_Helper_Utest extends \PHPUnit_Framework_TestC
 				&nbsp;vault_save_text</label>
 			</div>
 		';
-		
+
 		$str = $this->template_helper->get_template_as_string( 'credit-card-save-for-later.php' );
-				
+
 		$this->assertEquals(
 			$expected,
-			$str			
+			$str
 		);
 	}
 }

@@ -42,7 +42,7 @@ function __( $text, $domain = 'default' ) {
 
 function wc_get_base_location() {
 	return array(
-		'country' => 'Austria'
+		'country' => 'Austria',
 	);
 }
 
@@ -58,7 +58,7 @@ function wc_add_notice( $message, $type ) {
 }
 
 function wc_get_price_including_tax( $product ) {
-	if ($product->is_taxable()) {
+	if ( $product->is_taxable() ) {
 		return 20.0;
 	}
 	return $product->get_price();
@@ -69,7 +69,7 @@ function wc_get_price_decimals() {
 }
 
 function wc_get_price_excluding_tax( $product ) {
-	if ($product->is_taxable()) {
+	if ( $product->is_taxable() ) {
 		return 10.0;
 	}
 	return $product->get_price();

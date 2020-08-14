@@ -35,8 +35,8 @@ require_once __DIR__ . '/../../../../classes/includes/class-wc-gateway-wirecard-
  * Class WC_Gateway_Wirecard_Giropay_Utest
  * @coversDefaultClass WC_Gateway_Wirecard_Giropay
  */
-class WC_Gateway_Wirecard_Giropay_Utest extends \PHPUnit_Framework_TestCase
-{
+class WC_Gateway_Wirecard_Giropay_Utest extends \PHPUnit_Framework_TestCase {
+
 
 	/** @var WC_Gateway_Wirecard_Giropay */
 	private $payment;
@@ -44,32 +44,30 @@ class WC_Gateway_Wirecard_Giropay_Utest extends \PHPUnit_Framework_TestCase
 	/**
 	 * Initialize mock class
 	 */
-	public function setUp()
-	{
-		$this->payment = new WC_Gateway_Wirecard_Giropay();
+	public function setUp() {
+		$this->payment             = new WC_Gateway_Wirecard_Giropay();
 		$_POST['giropay_bank_bic'] = 'GENODETT488';
-		$_POST['giropay_nonce'] = 'test';
+		$_POST['giropay_nonce']    = 'test';
 	}
 
 	/**
 	 * @group unit
-	 * @small 
+	 * @small
 	 * @covers ::init_form_fields
 	 */
-	public function test_init_form_fields()
-	{
+	public function test_init_form_fields() {
 		$this->payment->init_form_fields();
 		$formFields = $this->payment->form_fields;
-		
-		$this->assertTrue(is_array($formFields));
-		$this->assertArrayHasKey('title', $formFields);
-		$this->assertArrayHasKey('enabled', $formFields);
-		$this->assertArrayHasKey('merchant_account_id', $formFields);
-		$this->assertArrayHasKey('secret', $formFields);
-		$this->assertArrayHasKey('base_url', $formFields);
-		$this->assertArrayHasKey('http_user', $formFields);
-		$this->assertArrayHasKey('http_pass', $formFields);
-		$this->assertArrayHasKey('test_button', $formFields);
+
+		$this->assertTrue( is_array( $formFields ) );
+		$this->assertArrayHasKey( 'title', $formFields );
+		$this->assertArrayHasKey( 'enabled', $formFields );
+		$this->assertArrayHasKey( 'merchant_account_id', $formFields );
+		$this->assertArrayHasKey( 'secret', $formFields );
+		$this->assertArrayHasKey( 'base_url', $formFields );
+		$this->assertArrayHasKey( 'http_user', $formFields );
+		$this->assertArrayHasKey( 'http_pass', $formFields );
+		$this->assertArrayHasKey( 'test_button', $formFields );
 	}
 
 	/**
@@ -77,11 +75,10 @@ class WC_Gateway_Wirecard_Giropay_Utest extends \PHPUnit_Framework_TestCase
 	 * @small
 	 * @covers ::process_payment
 	 */
-	public function test_process_payment()
-	{
-		$result = $this->payment->process_payment(12);
-		$this->assertTrue(is_array($result));
-		$this->assertArrayHasKey('result', $result);
+	public function test_process_payment() {
+		$result = $this->payment->process_payment( 12 );
+		$this->assertTrue( is_array( $result ) );
+		$this->assertArrayHasKey( 'result', $result );
 	}
 
 	/**
@@ -89,8 +86,7 @@ class WC_Gateway_Wirecard_Giropay_Utest extends \PHPUnit_Framework_TestCase
 	 * @small
 	 * @covers ::payment_fields
 	 */
-	public function test_payment_fields()
-	{
-		$this->assertTrue($this->payment->payment_fields());
+	public function test_payment_fields() {
+		 $this->assertTrue( $this->payment->payment_fields() );
 	}
 }

@@ -37,8 +37,9 @@ class WC_Gateway_Wirecard_Creditcard_Utest extends \PHPUnit_Framework_TestCase {
 	private $credit_card;
 
 	public function setUp() {
-		$this->credit_card = new WC_Gateway_Wirecard_Creditcard();;
-		$_POST['cc_nonce'] = 'test';
+		$this->credit_card = new WC_Gateway_Wirecard_Creditcard();
+
+		$_POST['cc_nonce']    = 'test';
 		$_POST['vault_token'] = 'test';
 	}
 
@@ -89,7 +90,7 @@ class WC_Gateway_Wirecard_Creditcard_Utest extends \PHPUnit_Framework_TestCase {
 
 		$this->assertJson( $contents );
 	}
-	
+
 	public function test_render_form() {
 		ob_start();
 		$this->credit_card->render_form();

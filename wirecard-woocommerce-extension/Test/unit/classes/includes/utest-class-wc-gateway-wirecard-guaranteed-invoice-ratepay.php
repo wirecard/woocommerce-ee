@@ -75,7 +75,7 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay_Utest extends \PHPUnit_Fram
 		$this->basket->setVersion( $version );
 
 		$this->mock_additional_helper = $this->getMockBuilder( Additional_Information::class )
-			->setMethods( [ 'create_basket_from_parent_transaction' ] )
+			->setMethods( array( 'create_basket_from_parent_transaction' ) )
 			->getMock();
 
 		$this->mock_additional_helper->method( 'create_basket_from_parent_transaction' )

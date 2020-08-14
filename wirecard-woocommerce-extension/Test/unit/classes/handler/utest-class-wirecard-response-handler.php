@@ -40,7 +40,7 @@ class WC_Gateway_Wirecard_Response_Handler_Utest extends \PHPUnit_Framework_Test
 	public function setUp() {
 		$this->handler             = new Wirecard_Response_Handler();
 		$this->transaction_service = $this->getMockBuilder( \Wirecard\PaymentSdk\TransactionService::class )
-			->setMethods( [ 'process' ] )
+			->setMethods( array( 'process' ) )
 			->disableOriginalConstructor()
 			->getMock();
 	}

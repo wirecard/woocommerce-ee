@@ -67,12 +67,12 @@ class WPDB {
 
 	public function get_results( $query ) {
 		if ( $query ) {
-			$card             = new stdClass();
-			$card->token      = '123123123';
-			$card->masked_pan = '123*****123';
-			$card->vault_id   = '1';
-			$card->user_id    = '123';
-			$card->address_hash   = '1231qwerqwerqwerqwerqwerqwerqwer';
+			$card               = new stdClass();
+			$card->token        = '123123123';
+			$card->masked_pan   = '123*****123';
+			$card->vault_id     = '1';
+			$card->user_id      = '123';
+			$card->address_hash = '1231qwerqwerqwerqwerqwerqwerqwer';
 
 			return array(
 				'1' => $card,

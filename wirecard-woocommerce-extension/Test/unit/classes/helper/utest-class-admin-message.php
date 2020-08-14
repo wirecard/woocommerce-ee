@@ -39,14 +39,14 @@ class WC_Gateway_Wirecard_Admin_Message_Utest extends \PHPUnit_Framework_TestCas
 		$this->admin_message = new Admin_message();
 	}
 
-	public function test_admin_message() {		
+	public function test_admin_message() {
 		$message  = 'test_message';
-		$expected = sprintf( 
-			'<div class="%s"><p>%s</p></div>', 
+		$expected = sprintf(
+			'<div class="%s"><p>%s</p></div>',
 			Admin_Message::CLASS_NOTICE_WARNING_DISMISSIBLE,
 			$message
 		);
-		
+
 		$this->expectOutputString( $expected );
 		$this->admin_message->add_gateway_admin_notice__warning( $message );
 	}
