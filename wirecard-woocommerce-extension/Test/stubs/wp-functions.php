@@ -29,7 +29,7 @@
  * Please do not use the plugin if you do not agree to these terms of use!
  */
 
-require_once __DIR__ . '/class-wpdb.php';
+require_once __DIR__ . '/wpdb.php';
 
 global $wpdb;
 $wpdb = new WPDB();
