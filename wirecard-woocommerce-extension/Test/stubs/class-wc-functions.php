@@ -29,73 +29,72 @@
  * Please do not use the plugin if you do not agree to these terms of use!
  */
 
-class WPDB {
-	public $prefix;
+global $woocommerce;
+$woocommerce = new stdClass();
 
-	public $insert_id;
+/**
+ * @SuppressWarnings(PHPMD.ShortMethodName)
+ * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+ */
+function __( $text, $domain = 'default' ) {
+	return $text;
+}
 
-	public $base_prefix;
+function wc_get_base_location() {
+	return array(
+		'country' => 'Austria',
+	);
+}
 
-	public function __construct() {
-		$this->prefix      = 'prefix_';
-		$this->base_prefix = 'base_prefix_';
+function wc_get_order() {
+	return new WC_Order();
+}
+
+/**
+ * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+ */
+function wc_add_notice( $message, $type ) {
+
+}
+
+function wc_get_price_including_tax( $product ) {
+	if ( $product->is_taxable() ) {
+		return 20.0;
 	}
+	return $product->get_price();
+}
 
-	public function insert( $table_name, $data, $type = null ) {
-		$this->insert_id = 1;
-		return;
+function wc_get_price_decimals() {
+	return 2;
+}
+
+function wc_get_price_excluding_tax( $product ) {
+	if ( $product->is_taxable() ) {
+		return 10.0;
 	}
+	return $product->get_price();
+}
 
-	/**
-	 * @param $table_name
-	 * @param $data
-	 * @param null $type
-	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-	 */
-	public function replace( $table_name, $data, $type = null ) {
-		$this->insert_id = 1;
-		return;
-	}
+function wc_round_tax_total( $amount ) {
+	return number_format( $amount, 2 );
+}
 
-	public function prepare( $query, $id ) {
-		if ( $id == 1 || $id == '123' ) {
-			return true;
-		} else {
-			return false;
-		}
-	}
+function wc_reduce_stock_levels( $order ) {
+	return $order;
+}
 
-	public function get_results( $query ) {
-		if ( $query ) {
-			$card               = new stdClass();
-			$card->token        = '123123123';
-			$card->masked_pan   = '123*****123';
-			$card->vault_id     = '1';
-			$card->user_id      = '123';
-			$card->address_hash = '1231qwerqwerqwerqwerqwerqwerqwer';
+/**
+ * @SuppressWarnings(PHPMD.ShortMethodName)
+ */
+//@codingStandardsIgnoreLine
+function WC() {
+	return new WC();
+}
 
-			return array(
-				'1' => $card,
-			);
-		} else {
-			return array();
-		}
-	}
+function get_woocommerce_currencies() {
+	return array();
+}
 
-	public function query( $query ) {
-		return 1;
-	}
-
-	public function get_row( $id ) {
-		$transaction = new stdClass();
-		if ( $id ) {
-			return $transaction;
-		} else {
-			return;
-		}
-	}
-
-	public function update() {
-		return;
-	}
+function get_woocommerce_currency() {
+	return 'EUR';
 }

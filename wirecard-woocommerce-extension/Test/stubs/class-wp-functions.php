@@ -29,13 +29,13 @@
  * Please do not use the plugin if you do not agree to these terms of use!
  */
 
-require_once __DIR__ . '/wpdb.php';
+require_once __DIR__ . '/class-wpdb.php';
 
 global $wpdb;
 $wpdb = new WPDB();
 
 function plugin_dir_path( $file ) {
-	 return dirname( $file ) . DIRECTORY_SEPARATOR;
+	return dirname( $file ) . DIRECTORY_SEPARATOR;
 }
 
 function plugin_dir_url( $file ) {
@@ -43,7 +43,7 @@ function plugin_dir_url( $file ) {
 }
 
 function plugin_basename( $file ) {
-	 return dirname( $file ) . DIRECTORY_SEPARATOR;
+	return dirname( $file ) . DIRECTORY_SEPARATOR;
 }
 
 function wp_json_encode() {

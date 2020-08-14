@@ -57,17 +57,17 @@ class WC_Gateway_Wirecard_Giropay_Utest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function test_init_form_fields() {
 		$this->payment->init_form_fields();
-		$formFields = $this->payment->form_fields;
+		$form_fields = $this->payment->form_fields;
 
-		$this->assertTrue( is_array( $formFields ) );
-		$this->assertArrayHasKey( 'title', $formFields );
-		$this->assertArrayHasKey( 'enabled', $formFields );
-		$this->assertArrayHasKey( 'merchant_account_id', $formFields );
-		$this->assertArrayHasKey( 'secret', $formFields );
-		$this->assertArrayHasKey( 'base_url', $formFields );
-		$this->assertArrayHasKey( 'http_user', $formFields );
-		$this->assertArrayHasKey( 'http_pass', $formFields );
-		$this->assertArrayHasKey( 'test_button', $formFields );
+		$this->assertTrue( is_array( $form_fields ) );
+		$this->assertArrayHasKey( 'title', $form_fields );
+		$this->assertArrayHasKey( 'enabled', $form_fields );
+		$this->assertArrayHasKey( 'merchant_account_id', $form_fields );
+		$this->assertArrayHasKey( 'secret', $form_fields );
+		$this->assertArrayHasKey( 'base_url', $form_fields );
+		$this->assertArrayHasKey( 'http_user', $form_fields );
+		$this->assertArrayHasKey( 'http_pass', $form_fields );
+		$this->assertArrayHasKey( 'test_button', $form_fields );
 	}
 
 	/**
@@ -87,6 +87,6 @@ class WC_Gateway_Wirecard_Giropay_Utest extends \PHPUnit_Framework_TestCase {
 	 * @covers ::payment_fields
 	 */
 	public function test_payment_fields() {
-		 $this->assertTrue( $this->payment->payment_fields() );
+		$this->assertTrue( $this->payment->payment_fields() );
 	}
 }

@@ -7,7 +7,7 @@
  *
  * They have been tested and approved for full functionality in the standard configuration
  * (status on delivery) of the corresponding shop system. They are under General Public
- * License Version 3 (GPLv3) and can be used, developed and passed on to third parties under
+ * License version 3 (GPLv3) and can be used, developed and passed on to third parties under
  * the same terms.
  *
  * However, Wirecard AG does not provide any guarantee or accept any liability for any errors
@@ -29,11 +29,73 @@
  * Please do not use the plugin if you do not agree to these terms of use!
  */
 
-require_once __DIR__ . '/wc-settings-api.php';
+class WPDB {
+	public $prefix;
 
-class WC_Payment_Gateway extends WC_Settings_API {
+	public $insert_id;
 
-	public function init_settings() {
+	public $base_prefix;
+
+	public function __construct() {
+		$this->prefix      = 'prefix_';
+		$this->base_prefix = 'base_prefix_';
+	}
+
+	public function insert( $table_name, $data, $type = null ) {
+		$this->insert_id = 1;
+		return;
+	}
+
+	/**
+	 * @param $table_name
+	 * @param $data
+	 * @param null $type
+	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+	 */
+	public function replace( $table_name, $data, $type = null ) {
+		$this->insert_id = 1;
+		return;
+	}
+
+	public function prepare( $query, $id ) {
+		if ( 1 === $id || '123' === $id ) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public function get_results( $query ) {
+		if ( $query ) {
+			$card               = new stdClass();
+			$card->token        = '123123123';
+			$card->masked_pan   = '123*****123';
+			$card->vault_id     = '1';
+			$card->user_id      = '123';
+			$card->address_hash = '1231qwerqwerqwerqwerqwerqwerqwer';
+
+			return array(
+				'1' => $card,
+			);
+		} else {
+			return array();
+		}
+	}
+
+	public function query( $query ) {
+		return 1;
+	}
+
+	public function get_row( $id ) {
+		$transaction = new stdClass();
+		if ( $id ) {
+			return $transaction;
+		} else {
+			return;
+		}
+	}
+
+	public function update() {
 		return;
 	}
 }

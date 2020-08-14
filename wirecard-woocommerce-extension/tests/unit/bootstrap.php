@@ -36,6 +36,6 @@ require_once( WIRECARD_EXTENSION_HELPER_DIR . 'class-basket-item-helper.php' );
 require_once( WIRECARD_EXTENSION_HELPER_DIR . 'class-method-helper.php' );
 
 # move stubs to codeception folder tests/
-require_once __DIR__ . '/../../Test/stubs/wp-functions.php';
-require_once __DIR__ . '/../../Test/stubs/wc-functions.php';
-require_once __DIR__ . '/../../Test/stubs/wpdb.php';
+require_once __DIR__ . '/../../Test/stubs/class-wp-functions.php';
+require_once __DIR__ . '/../../Test/stubs/class-wc-functions.php';
+require_once __DIR__ . '/../../Test/stubs/class-wpdb.php';

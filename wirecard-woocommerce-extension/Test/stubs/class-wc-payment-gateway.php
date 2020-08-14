@@ -7,7 +7,7 @@
  *
  * They have been tested and approved for full functionality in the standard configuration
  * (status on delivery) of the corresponding shop system. They are under General Public
- * License version 3 (GPLv3) and can be used, developed and passed on to third parties under
+ * License Version 3 (GPLv3) and can be used, developed and passed on to third parties under
  * the same terms.
  *
  * However, Wirecard AG does not provide any guarantee or accept any liability for any errors
@@ -29,71 +29,11 @@
  * Please do not use the plugin if you do not agree to these terms of use!
  */
 
-global $woocommerce;
-$woocommerce = new stdClass();
+require_once __DIR__ . '/class-wc-settings-api.php';
 
-/**
- * @SuppressWarnings(PHPMD.ShortMethodName)
- * @SuppressWarnings(PHPMD.UnusedFormalParameter)
- */
-function __( $text, $domain = 'default' ) {
-	return $text;
-}
+class WC_Payment_Gateway extends WC_Settings_API {
 
-function wc_get_base_location() {
-	return array(
-		'country' => 'Austria',
-	);
-}
-
-function wc_get_order() {
-	return new WC_Order();
-}
-
-/**
- * @SuppressWarnings(PHPMD.UnusedFormalParameter)
- */
-function wc_add_notice( $message, $type ) {
-
-}
-
-function wc_get_price_including_tax( $product ) {
-	if ( $product->is_taxable() ) {
-		return 20.0;
+	public function init_settings() {
+		return;
 	}
-	return $product->get_price();
-}
-
-function wc_get_price_decimals() {
-	return 2;
-}
-
-function wc_get_price_excluding_tax( $product ) {
-	if ( $product->is_taxable() ) {
-		return 10.0;
-	}
-	return $product->get_price();
-}
-
-function wc_round_tax_total( $amount ) {
-	return number_format( $amount, 2 );
-}
-
-function wc_reduce_stock_levels( $order ) {
-	return $order;
-}
-
-/**
- * @SuppressWarnings(PHPMD.ShortMethodName)
- */
-function WC() {
-	return new WC();
-}
-
-function get_woocommerce_currencies() {
-	return array();
-}
-
-function get_woocommerce_currency() {
-	return 'EUR';
 }

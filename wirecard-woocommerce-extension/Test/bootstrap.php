@@ -31,25 +31,25 @@
 
 define( 'ABSPATH', true );
 
-require_once __DIR__ . '/stubs/wp-functions.php';
+require_once __DIR__ . '/stubs/class-wp-functions.php';
 require_once __DIR__ . '/../constants/woocommerce-wirecard-definitions.php';
 require_once __DIR__ . '/../vendor/autoload.php';
 
 //stub objects
-require_once __DIR__ . '/stubs/wc-payment-gateway.php';
-require_once __DIR__ . '/stubs/wc-functions.php';
-require_once __DIR__ . '/stubs/wc-settings-api.php';
-require_once __DIR__ . '/stubs/wc-order.php';
-require_once __DIR__ . '/stubs/wc-log-levels.php';
-require_once __DIR__ . '/stubs/wp-error.php';
-require_once __DIR__ . '/stubs/wc-logger.php';
-require_once __DIR__ . '/stubs/wc-countries.php';
-require_once __DIR__ . '/stubs/wc-cart.php';
-require_once __DIR__ . '/stubs/wc-product.php';
-require_once __DIR__ . '/stubs/wc.php';
-require_once __DIR__ . '/stubs/wc-session.php';
-require_once __DIR__ . '/stubs/wc-customer.php';
-require_once __DIR__ . '/stubs/wc-tax.php';
+require_once __DIR__ . '/stubs/class-wc-payment-gateway.php';
+require_once __DIR__ . '/stubs/class-wc-functions.php';
+require_once __DIR__ . '/stubs/class-wc-settings-api.php';
+require_once __DIR__ . '/stubs/class-wc-order.php';
+require_once __DIR__ . '/stubs/class-wc-log-levels.php';
+require_once __DIR__ . '/stubs/class-wp-error.php';
+require_once __DIR__ . '/stubs/class-wc-logger.php';
+require_once __DIR__ . '/stubs/class-wc-countries.php';
+require_once __DIR__ . '/stubs/class-wc-cart.php';
+require_once __DIR__ . '/stubs/class-wc-product.php';
+require_once __DIR__ . '/stubs/class-wc.php';
+require_once __DIR__ . '/stubs/class-wc-session.php';
+require_once __DIR__ . '/stubs/class-wc-customer.php';
+require_once __DIR__ . '/stubs/class-wc-tax.php';
 
 //payment methods
 require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/includes/class-wc-gateway-wirecard-paypal.php' );
