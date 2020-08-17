@@ -33,7 +33,7 @@ $( document ).ready(
 	function () {
 			var button = $( ".wc_wirecard_test_credentials_button" );
 
-			/* global admin_vars b:true */
+			/* global admin_vars */
 			button.removeClass( "regular-input" ).val( admin_vars.test_credentials_button );
 			button.on(
 				"click",
@@ -47,7 +47,6 @@ $( document ).ready(
 					$.ajax(
 						{
 							type: "POST",
-							/* global admin_vars b:true */
 							url: admin_vars.admin_url,
 							data: { "action" : "test_payment_method_config", "base_url" : base_url, "http_user" : http_user, "http_pass" : http_pass, "admin_nonce" : admin_vars.admin_nonce },
 							dataType: "json",
