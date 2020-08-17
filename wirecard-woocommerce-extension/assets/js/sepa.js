@@ -118,7 +118,7 @@ function get_sepa_mandate_data() {
 				openPopup( response.data );
 			},
 			error: function ( response ) {
-				console.log( response );
+				console.log( response ); // eslint-disable-line new-cap
 			}
 		}
 	);
