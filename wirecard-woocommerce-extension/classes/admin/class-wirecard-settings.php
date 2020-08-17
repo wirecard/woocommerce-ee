@@ -41,6 +41,7 @@ require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/admin/class-wirecard-transac
  * Handles main dashboard for Wirecard transactions
  *
  * @since 1.0.0
+ * @SuppressWarnings(PHPMD.Superglobals)
  */
 class Wirecard_Settings {
 

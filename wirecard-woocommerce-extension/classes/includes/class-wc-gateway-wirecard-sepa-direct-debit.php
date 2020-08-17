@@ -49,6 +49,7 @@ use Wirecard\PaymentSdk\Transaction\SepaCreditTransferTransaction;
  * @extends WC_Wirecard_Payment_Gateway
  *
  * @since   1.0.0
+ * @SuppressWarnings(PHPMD.Superglobals)
  */
 class WC_Gateway_Wirecard_Sepa_Direct_Debit extends WC_Wirecard_Payment_Gateway {
 
