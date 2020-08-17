@@ -59,7 +59,7 @@ use Wirecard\PaymentSdk\TransactionService;
  * @extends WC_Payment_Gateway
  *
  * @since   1.0.0
- * 
+ *
  * @todo: refactor class. Reduce complexity.
  * @SuppressWarnings(PHPMD.Superglobals)
  * @SuppressWarnings(PHPMD.ElseExpression)
