@@ -46,6 +46,7 @@ use Wirecard\PaymentSdk\Response\SuccessResponse;
  * Factory for transaction creation and basic views
  *
  * @since 1.0.0
+ * @SuppressWarnings(PHPMD.ElseExpression)
  */
 class Wirecard_Transaction_Factory {
 

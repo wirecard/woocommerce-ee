@@ -60,9 +60,9 @@ class WPDB {
 	public function prepare( $query, $id ) {
 		if ( 1 === $id || '123' === $id ) {
 			return true;
-		} else {
-			return false;
 		}
+		
+		return false;
 	}
 
 	public function get_results( $query ) {
@@ -77,9 +77,9 @@ class WPDB {
 			return array(
 				'1' => $card,
 			);
-		} else {
-			return array();
 		}
+		
+		return array();
 	}
 
 	public function query( $query ) {
@@ -90,9 +90,9 @@ class WPDB {
 		$transaction = new stdClass();
 		if ( $id ) {
 			return $transaction;
-		} else {
-			return;
 		}
+
+		return;
 	}
 
 	public function update() {

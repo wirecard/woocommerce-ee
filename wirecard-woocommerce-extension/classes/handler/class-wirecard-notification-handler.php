@@ -62,6 +62,7 @@ class Wirecard_Notification_Handler extends Wirecard_Handler {
 	 * @return SuccessResponse|boolean
 	 *
 	 * @since 1.0.0
+	 * @SuppressWarnings(PHPMD.ElseExpression)
 	 */
 	public function handle_notification( $payment_method, $payload ) {
 		/** @var WC_Wirecard_Payment_Gateway $payment */

@@ -97,6 +97,7 @@ class Wirecard_Settings {
 	 * Handles various views
 	 *
 	 * @since 1.0.0
+	 * @SuppressWarnings(PHPMD.ElseExpression)
 	 */
 	public function wirecard_payment_gateway_settings() {
 		if ( isset( $_REQUEST['id'] ) ) {
