@@ -53,7 +53,7 @@ $( document ).ready(
 								base_url,
 								http_user,
 								http_pass,
-								"admin_nonce" : admin_vars.admin_nonce
+								admin_nonce : admin_vars.admin_nonce
 							},
 							dataType: "json",
 							success: function (data) {
