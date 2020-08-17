@@ -49,6 +49,7 @@ use Wirecard\PaymentSdk\Entity\Basket;
  *
  * @since   1.1.0
  * @SuppressWarnings(PHPMD.Superglobals)
+ * @SuppressWarnings(PHPMD.TooManyMethods)
  */
 class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment_Gateway {
 

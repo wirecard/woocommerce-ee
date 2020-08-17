@@ -62,6 +62,7 @@ use Wirecard\PaymentSdk\TransactionService;
  * @SuppressWarnings(PHPMD.Superglobals)
  * @SuppressWarnings(PHPMD.ElseExpression)
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ * @SuppressWarnings(PHPMD.TooManyMethods)
  * @todo: refactor class. Extract parts out of the scope.
  */
 abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
