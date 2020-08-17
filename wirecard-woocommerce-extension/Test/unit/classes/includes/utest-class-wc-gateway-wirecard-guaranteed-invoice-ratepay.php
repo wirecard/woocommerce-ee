@@ -31,6 +31,10 @@
 
 require_once __DIR__ . '/../../../../classes/includes/class-wc-gateway-wirecard-guaranteed-invoice-ratepay.php';
 
+/**
+ * Class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay_Utest
+ * @SuppressWarnings(PHPMD.Superglobals)
+ */
 class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay_Utest extends \PHPUnit_Framework_TestCase {
 
 	/** @var WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay */
