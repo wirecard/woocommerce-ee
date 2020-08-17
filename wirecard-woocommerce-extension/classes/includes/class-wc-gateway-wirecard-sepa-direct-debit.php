@@ -92,6 +92,7 @@ class WC_Gateway_Wirecard_Sepa_Direct_Debit extends WC_Wirecard_Payment_Gateway 
 	 * Load form fields for configuration
 	 *
 	 * @since 1.0.0
+	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
 	 */
 	public function init_form_fields() {
 		parent::init_form_fields();

@@ -165,6 +165,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	 *
 	 * @since 2.1.0 challenge_indicator config field
 	 * @since 1.0.0
+	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
 	 */
 	public function init_form_fields() {
 		parent::init_form_fields();

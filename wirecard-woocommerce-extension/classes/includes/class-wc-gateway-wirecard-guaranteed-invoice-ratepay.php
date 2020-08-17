@@ -94,6 +94,7 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 	 * Load form fields for configuration
 	 *
 	 * @since 1.1.0
+	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
 	 */
 	public function init_form_fields() {
 		parent::init_form_fields();
