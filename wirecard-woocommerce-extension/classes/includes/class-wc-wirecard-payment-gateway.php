@@ -64,6 +64,7 @@ use Wirecard\PaymentSdk\TransactionService;
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  * @SuppressWarnings(PHPMD.TooManyMethods)
  * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
+ * @SuppressWarnings(PHPMD.ExitExpression)
  * @todo: refactor class. Reduce complexity.
  */
 abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
@@ -222,7 +223,6 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 * @throws \Wirecard\PaymentSdk\Exception\MalformedResponseException
 	 *
 	 * @since 1.0.0
-	 * @SuppressWarnings(PHPMD.ExitExpression)
 	 */
 	public function return_request( $response = null ) {
 		$redirect_url = $this->get_return_url();
