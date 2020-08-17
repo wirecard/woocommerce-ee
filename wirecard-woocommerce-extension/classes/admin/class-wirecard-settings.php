@@ -144,6 +144,7 @@ class Wirecard_Settings {
 	 *
 	 * @since 1.0.0
 	 * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+	 * @SuppressWarnings(PHPMD.NPathComplexity)
 	 */
 	public function add_pagination( $start = 1, $pages ) {
 		$back = __( 'pagination_back', 'wirecard-woocommerce-extension' );

@@ -328,6 +328,7 @@ class Wirecard_Transaction_Factory {
 	 *
 	 * @since 1.0.0
 	 * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+	 * @SuppressWarnings(PHPMD.NPathComplexity)
 	 * @todo: refactor method
 	 */
 	public function show_transaction( $transaction, $message, $severity ) {
