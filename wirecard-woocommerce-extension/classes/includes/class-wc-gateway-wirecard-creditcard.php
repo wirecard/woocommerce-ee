@@ -54,6 +54,8 @@ use Wirecard\PaymentSdk\Constant\ChallengeInd;
  *
  * @since   1.0.0
  * @SuppressWarnings(PHPMD.Superglobals)
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ * @todo: extract additional parts from class.
  */
 class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 

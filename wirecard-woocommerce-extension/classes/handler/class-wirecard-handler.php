@@ -66,6 +66,8 @@ class Wirecard_Handler {
 	 * Wirecard_Handler constructor.
 	 *
 	 * @since 1.0.0
+	 * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+	 * @todo: use factory and polymorphisms instead
 	 */
 	public function __construct() {
 		$this->payment_methods = array(
