@@ -42,6 +42,8 @@ require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/admin/class-wirecard-transac
  *
  * @since 1.0.0
  * @SuppressWarnings(PHPMD.Superglobals)
+ * @SuppressWarnings(PHPMD.ElseExpression)
+ * @todo: refactor class.
  */
 class Wirecard_Settings {
 
@@ -97,7 +99,6 @@ class Wirecard_Settings {
 	 * Handles various views
 	 *
 	 * @since 1.0.0
-	 * @SuppressWarnings(PHPMD.ElseExpression)
 	 */
 	public function wirecard_payment_gateway_settings() {
 		if ( isset( $_REQUEST['id'] ) ) {
@@ -143,7 +144,6 @@ class Wirecard_Settings {
 	 *
 	 * @since 1.0.0
 	 * @SuppressWarnings(PHPMD.CyclomaticComplexity)
-	 * @todo: refactor method
 	 */
 	public function add_pagination( $start = 1, $pages ) {
 		$back = __( 'pagination_back', 'wirecard-woocommerce-extension' );
