@@ -47,6 +47,8 @@ use Wirecard\PaymentSdk\Response\SuccessResponse;
  *
  * @since 1.0.0
  * @SuppressWarnings(PHPMD.ElseExpression)
+ * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
+ * @todo: Refactor class. Reduce complexity.
  */
 class Wirecard_Transaction_Factory {
 

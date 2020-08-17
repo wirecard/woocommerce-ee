@@ -56,6 +56,7 @@ use Wirecard\PaymentSdk\Constant\ChallengeInd;
  * @SuppressWarnings(PHPMD.Superglobals)
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  * @SuppressWarnings(PHPMD.TooManyMethods)
+ * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  * @todo: Classes with lots of methods are difficult to maintain.
  * @todo: extract additional parts from class.
  */
