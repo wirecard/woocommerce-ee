@@ -114,10 +114,10 @@ function get_sepa_mandate_data() {
 			url: sepa_var.ajax_url,
 			data: { "action" : "get_sepa_mandate" },
 			dataType: "json",
-			success ( response ) {
+			success( response ) {
 				openPopup( response.data );
 			},
-			error ( response ) {
+			error( response ) {
 				console.log( response ); // eslint-disable-line no-console
 			}
 		}
