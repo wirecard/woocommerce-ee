@@ -29,6 +29,10 @@
  * Please do not use the plugin if you do not agree to these terms of use!
  */
 
+/**
+ * Class WPDB
+ * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+ */
 class WPDB {
 	public $prefix;
 
@@ -50,7 +54,6 @@ class WPDB {
 	 * @param $table_name
 	 * @param $data
 	 * @param null $type
-	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
 	 */
 	public function replace( $table_name, $data, $type = null ) {
 		$this->insert_id = 1;

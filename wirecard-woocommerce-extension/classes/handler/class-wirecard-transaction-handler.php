@@ -173,7 +173,7 @@ class Wirecard_Transaction_Handler extends Wirecard_Handler {
 		$order      = wc_get_order( $order_id );
 		$line_items = $order->get_items();
 
-		foreach ( $line_items as $item_id => $item ) {
+		foreach ( $line_items as $item ) {
 			$product = $item->get_product();
 			if ( $product && $product->managing_stock() ) {
 				$old_stock = $product->get_stock_quantity();
