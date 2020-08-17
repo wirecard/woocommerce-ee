@@ -220,11 +220,10 @@ class WC_Gateway_Wirecard_Alipay_Crossborder extends WC_Wirecard_Payment_Gateway
 	 *
 	 * @since 1.1.0
 	 * @throws Exception
-	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
 	 */
 	public function process_refund( $order_id, $amount = null, $reason = '' ) {
 		$this->transaction = new AlipayCrossborderTransaction();
 
-		return parent::process_refund( $order_id, $amount, '' );
+		return parent::process_refund( $order_id, $amount, $reason );
 	}
 }
