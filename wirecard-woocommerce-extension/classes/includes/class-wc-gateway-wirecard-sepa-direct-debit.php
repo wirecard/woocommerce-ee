@@ -360,7 +360,7 @@ class WC_Gateway_Wirecard_Sepa_Direct_Debit extends WC_Wirecard_Payment_Gateway 
 	}
 
 	/**
-	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+	 * @SuppressWarnings(PHPMD.UnusedLocalVariable)
 	 */
 	public function sepa_mandate() {
 		$creditor_name       = $this->get_option( 'creditor_name' );
