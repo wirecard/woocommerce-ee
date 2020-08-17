@@ -124,10 +124,6 @@ class WC_Gateway_Wirecard_Transaction_Factory_Utest extends \PHPUnit_Framework_T
 			->disableOriginalConstructor()
 			->setMethods( array( 'getParentTransactionId', 'getTransactionId', 'findElement', 'getData' ) )
 			->getMock();
-		$wpdb     = $this->getMockBuilder( WPDB::class )
-			->disableOriginalConstructor()
-			->setMethods( array( 'get_row', 'get_results' ) )
-			->getMock();
 
 		$response->method( 'getParentTransactionId' )->willReturn( '1234' );
 		$response->method( 'getTransactionId' )->willReturn( '1234' );
