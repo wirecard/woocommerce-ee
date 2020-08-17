@@ -59,13 +59,14 @@ use Wirecard\PaymentSdk\TransactionService;
  * @extends WC_Payment_Gateway
  *
  * @since   1.0.0
+ * 
+ * @todo: refactor class. Reduce complexity.
  * @SuppressWarnings(PHPMD.Superglobals)
  * @SuppressWarnings(PHPMD.ElseExpression)
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  * @SuppressWarnings(PHPMD.TooManyMethods)
  * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  * @SuppressWarnings(PHPMD.ExitExpression)
- * @todo: refactor class. Reduce complexity.
  */
 abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	const CHECK_PAYER_RESPONSE = 'check-payer-response';
