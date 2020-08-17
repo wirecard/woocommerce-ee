@@ -353,7 +353,10 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 *
 	 * @return array
 	 *
+	 * @throws \Http\Client\Exception
 	 * @since 1.0.0
+	 * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+	 * @todo: refactor method
 	 */
 	public function execute_transaction( $transaction, $config, $operation, $order, $request_values = null ) {
 		$logger              = new Logger();
@@ -542,6 +545,8 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 * @return WC_Order
 	 *
 	 * @since 1.0.0
+	 * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+	 * @todo: refactor method | user order states module
 	 */
 	public function update_order_state( $order, $response ) {
 		$transaction_amount = $response->getData()['requested-amount'];
