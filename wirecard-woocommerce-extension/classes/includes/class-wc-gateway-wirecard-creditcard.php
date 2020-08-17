@@ -706,14 +706,13 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	 *
 	 * @return bool|CreditCardTransaction|WP_Error
 	 *
-	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
 	 * @since 1.0.0
 	 * @throws Exception
 	 */
 	public function process_refund( $order_id, $amount = null, $reason = '' ) {
 		$this->transaction = new CreditCardTransaction();
 
-		return parent::process_refund( $order_id, $amount, '' );
+		return parent::process_refund( $order_id, $amount, $reason );
 	}
 
 	/**

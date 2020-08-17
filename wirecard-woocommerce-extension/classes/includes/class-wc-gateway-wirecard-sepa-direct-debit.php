@@ -359,6 +359,9 @@ class WC_Gateway_Wirecard_Sepa_Direct_Debit extends WC_Wirecard_Payment_Gateway 
 		return substr( $creditor_id, 0, 35 - strlen( $appendix ) ) . $appendix;
 	}
 
+	/**
+	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+	 */
 	public function sepa_mandate() {
 		$creditor_name       = $this->get_option( 'creditor_name' );
 		$creditor_store_city = $this->get_option( 'creditor_city' );

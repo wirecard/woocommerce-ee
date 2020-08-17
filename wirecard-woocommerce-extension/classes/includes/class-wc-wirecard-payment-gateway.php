@@ -690,6 +690,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 *
 	 * @throws Exception
 	 * @since 1.0.0
+	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
 	 */
 	public function process_refund( $order_id, $amount = null, $reason = '' ) {
 		$order = wc_get_order( $order_id );
@@ -750,24 +751,6 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 			}
 		}
 		die();
-	}
-
-	/**
-	 * Get current WordPress version and WooCommerce version
-	 *
-	 * @return string
-	 *
-	 * @since 1.1.0
-	 */
-	private function get_shop_version() {
-		global $wp_version;
-
-		$shop         = 'WordPress ';
-		$shop        .= 'v' . $wp_version;
-		$woocommerce  = ' WooCommerce ';
-		$woocommerce .= 'v' . WC()->version;
-
-		return $shop . $woocommerce;
 	}
 
 	/**

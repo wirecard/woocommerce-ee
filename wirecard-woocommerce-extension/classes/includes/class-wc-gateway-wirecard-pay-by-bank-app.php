@@ -255,7 +255,7 @@ class WC_Gateway_Wirecard_Pay_By_Bank_App extends WC_Wirecard_Payment_Gateway {
 		$custom_fields->add( $this->createCustomField( 'zapp.in.RefundMethod', 'BACS' ) );
 		$this->transaction->setCustomFields( $custom_fields );
 
-		return parent::process_refund( $order_id, $amount, '' );
+		return parent::process_refund( $order_id, $amount, $reason );
 	}
 
 	/**

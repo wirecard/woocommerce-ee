@@ -323,12 +323,14 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 	/**
 	 * Create transaction for refund
 	 *
-	 * @param int        $order_id
+	 * @param int $order_id
 	 * @param float|null $amount
 	 * @param string $reason
 	 *
 	 * @return bool|RatepayInvoiceTransaction|WP_Error
+	 * @throws Exception
 	 * @since 1.1.0
+	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
 	 */
 	public function process_refund( $order_id, $amount = null, $reason = '' ) {
 		/** @var WC_Order $order */
@@ -486,7 +488,7 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 	 * @since 1.1.0
 	 */
 	private function validate_cart_products( $cart ) {
-		foreach ( $cart->cart_contents as $hash => $item ) {
+		foreach ( $cart->cart_contents as $item ) {
 			$product = new WC_Product( $item['product_id'] );
 			if ( $product->is_downloadable() || $product->is_virtual() ) {
 				return false;
