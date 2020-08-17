@@ -44,15 +44,15 @@ class WC_Gateway_Wirecard_Template_Helper_Utest extends \PHPUnit_Framework_TestC
 		include WIRECARD_EXTENSION_TEMPLATE_DIR . 'credit-card-save-for-later.php';
 		return ob_get_clean();
 	}
-	
-	
+
+
 	public function test_template_as_string() {
-		
-		$str = $this->template_helper->get_template_as_string( 'credit-card-save-for-later.php' );
+
+		$str      = $this->template_helper->get_template_as_string( 'credit-card-save-for-later.php' );
 		$expected = $this->get_credit_card_save_for_later_as_html_string();
 		$this->assertEquals(
 			$expected,
-			$str			
+			$str
 		);
 	}
 }
