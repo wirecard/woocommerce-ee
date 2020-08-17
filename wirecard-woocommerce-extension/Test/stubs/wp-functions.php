@@ -189,3 +189,13 @@ function esc_html ( $str ) {
 function load_plugin_textdomain() {
 	return true;
 }
+
+/**
+ * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+ */
+function wc_get_template_html( $template_name, $args = array(), $template_path = '', $default_path = '' ) {
+	ob_start();
+	$path = "{$default_path}/{$template_name}";
+	require_once $path;
+	return ob_get_clean();
+}
