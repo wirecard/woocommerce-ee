@@ -46,6 +46,8 @@ jobs:
       
     - name: stylelint
       uses: actions-hub/stylelint@master
+      env:
+        PATTERN: "**/*.css"
 
     - name: Run Unit Tests
       run: composer test-coverage
