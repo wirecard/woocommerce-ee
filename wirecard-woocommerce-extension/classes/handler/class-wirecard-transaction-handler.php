@@ -156,10 +156,10 @@ class Wirecard_Transaction_Handler extends Wirecard_Handler {
 		$return  = $payment->process_refund( $transaction_data->order_id, $amount );
 		if ( is_wp_error( $return ) ) {
 			return $return->get_error_message();
-		} else {
-			$this->restock_returned_items( $transaction_data->order_id );
-			return $return;
 		}
+
+		$this->restock_returned_items( $transaction_data->order_id );
+		return $return;
 	}
 
 	/**

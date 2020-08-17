@@ -153,6 +153,7 @@ function wirecard_init_payment_gateway() {
  * @return array
  *
  * @since 1.0.0
+ * @SuppressWarnings(PHPMD.ElseExpression)
  */
 function wirecard_add_payment_gateway( $methods ) {
 	//If not on the checkout page show all available payment methods
