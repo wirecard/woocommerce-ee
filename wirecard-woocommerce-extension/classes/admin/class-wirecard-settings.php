@@ -325,7 +325,7 @@ class Wirecard_Settings {
 		) ) {
 			$result_message = __( 'error_email', 'wirecard-woocommerce-extension' );
 		}
-		
+
 		echo $result_message;
 	}
 
