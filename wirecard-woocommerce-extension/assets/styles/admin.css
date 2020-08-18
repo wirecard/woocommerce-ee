@@ -1,21 +1,25 @@
 .transaction-type.type-authorization {
-	background: #c6e1c6;
-	color: #5b841b;
-	border-radius: 4px;
-	padding: 7px;
+  background: #c6e1c6;
+  color: #5b841b;
+  border-radius: 4px;
+  padding: 7px;
 }
 
 .settings-password-input-container {
-	position:relative;
-	width: 400px;
+  position:relative;
+  width: 400px;
 }
 
+/* stylelint-disable declaration-no-important */
 .settings-password-secure-input {
-	width: 345px !important;
+  width: 345px !important;
 }
+/* stylelint-enable declaration-no-important */
 
+/* stylelint-disable */
 .settings-password-secure-button {
-	position:absolute;
-	top:8px;
-	right: 0px;
+  position: absolute;
+  top: 8px;
+  right: 0px;
 }
+/* stylelint-enable */
