@@ -10,16 +10,14 @@
   width: 400px;
 }
 
-/* stylelint-disable declaration-no-important */
+/* stylelint-disable length-zero-no-unit declaration-no-important */
 .settings-password-secure-input {
   width: 345px !important;
 }
-/* stylelint-enable declaration-no-important */
 
-/* stylelint-disable */
 .settings-password-secure-button {
   position: absolute;
   top: 8px;
   right: 0px;
 }
-/* stylelint-enable */
+/* stylelint-enable length-zero-no-unit declaration-no-important */
