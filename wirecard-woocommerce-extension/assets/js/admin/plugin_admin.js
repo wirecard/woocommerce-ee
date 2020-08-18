@@ -68,5 +68,21 @@ $( document ).ready(
 
 				}
 			);
+			
+			var secure_button = $( ".settings-password-secure-button" );
+			secure_button.on( 
+				"click",
+				function ( e ) {
+					var secure_input = $( this ).parent().find( '.settings-password-secure-input' );
+					if (secure_input.attr( 'type' ) === 'password') {
+						secure_input.attr( 'type', 'text' );
+					} else {
+						secure_input.attr( 'type', 'password' );
+					}
+					$( this ).find( 'span' ).toggleClass( 'dashicons-visibility dashicons-hidden' );
+					e.preventDefault();
+				}
+			);
+			
 	}
 );
