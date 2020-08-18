@@ -73,13 +73,13 @@ $( document ).ready(
 			secure_button.on(
 				"click",
 				function ( e ) {
-					var secure_input = $( this ).parent().find( '.settings-password-secure-input' );
-					if (secure_input.attr( 'type' ) === 'password') {
-						secure_input.attr( 'type', 'text' );
+					var secure_input = $( this ).parent().find( ".settings-password-secure-input" );
+					if (secure_input.attr( "type" ) === "password") {
+						secure_input.attr( "type", "text" );
 					} else {
-						secure_input.attr( 'type', 'password' );
+						secure_input.attr( "type", "password" );
 					}
-					$( this ).find( 'span' ).toggleClass( 'dashicons-visibility dashicons-hidden' );
+					$( this ).find( "span" ).toggleClass( "dashicons-visibility dashicons-hidden" );
 					e.preventDefault();
 				}
 			);
