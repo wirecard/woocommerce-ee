@@ -6,18 +6,16 @@
 }
 
 .settings-password-input-container {
-  position:relative;
+  position: relative;
   width: 400px;
 }
 
-/* stylelint-disable length-zero-no-unit declaration-no-important */
 .settings-password-secure-input {
-  width: 345px !important;
+  width: 345px !important; /* csslint allow: important */
 }
 
 .settings-password-secure-button {
   position: absolute;
   top: 8px;
-  right: 0px;
+  right: 0;
 }
-/* stylelint-enable length-zero-no-unit declaration-no-important */
