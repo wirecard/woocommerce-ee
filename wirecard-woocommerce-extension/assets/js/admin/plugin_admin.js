@@ -55,11 +55,11 @@ $( document ).ready(
 								http_pass,
 								admin_nonce : admin_vars.admin_nonce
 							},
-							dataType: "json",
-							success( data ) {
+							dataType: "json", 
+							success: function (data) {
 								alert( data.data );
-							},
-							error( data ) {
+							}, 
+							error: function (data) {
 								// This occurs if the PHP script dies. So the error message is hardcoded
 								// Usually it is an invalid url that gets called
 								let msg = "An undefined error occured!";
