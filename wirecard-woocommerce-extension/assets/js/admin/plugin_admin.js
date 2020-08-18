@@ -68,9 +68,9 @@ $( document ).ready(
 
 				}
 			);
-			
+
 			var secure_button = $( ".settings-password-secure-button" );
-			secure_button.on( 
+			secure_button.on(
 				"click",
 				function ( e ) {
 					var secure_input = $( this ).parent().find( '.settings-password-secure-input' );
@@ -83,6 +83,6 @@ $( document ).ready(
 					e.preventDefault();
 				}
 			);
-			
+
 	}
 );

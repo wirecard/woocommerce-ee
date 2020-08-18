@@ -798,11 +798,10 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 		return $this->type;
 	}
 
-	public function generate_password_html($key, $data)
-	{
+	public function generate_password_html( $key, $data ) {
 		$data['type'] = 'password';
-		$field_key = $this->get_field_key( $key );
-		$defaults  = array(
+		$field_key    = $this->get_field_key( $key );
+		$defaults     = array(
 			'title'             => '',
 			'disabled'          => false,
 			'class'             => '',
