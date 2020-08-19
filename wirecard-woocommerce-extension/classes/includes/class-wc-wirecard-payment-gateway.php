@@ -59,6 +59,14 @@ use Wirecard\PaymentSdk\TransactionService;
  * @extends WC_Payment_Gateway
  *
  * @since   1.0.0
+ *
+ * @todo: refactor class. Reduce complexity.
+ * @SuppressWarnings(PHPMD.Superglobals)
+ * @SuppressWarnings(PHPMD.ElseExpression)
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ * @SuppressWarnings(PHPMD.TooManyMethods)
+ * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
+ * @SuppressWarnings(PHPMD.ExitExpression)
  */
 abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	const CHECK_PAYER_RESPONSE = 'check-payer-response';
@@ -351,7 +359,10 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 *
 	 * @return array
 	 *
+	 * @throws \Http\Client\Exception
 	 * @since 1.0.0
+	 * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+	 * @todo: refactor method
 	 */
 	public function execute_transaction( $transaction, $config, $operation, $order, $request_values = null ) {
 		$logger              = new Logger();
@@ -540,6 +551,8 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 * @return WC_Order
 	 *
 	 * @since 1.0.0
+	 * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+	 * @todo: refactor method | user order states module
 	 */
 	public function update_order_state( $order, $response ) {
 		$transaction_amount = $response->getData()['requested-amount'];
@@ -679,6 +692,7 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	 *
 	 * @throws Exception
 	 * @since 1.0.0
+	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
 	 */
 	public function process_refund( $order_id, $amount = null, $reason = '' ) {
 		$order = wc_get_order( $order_id );
@@ -739,24 +753,6 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 			}
 		}
 		die();
-	}
-
-	/**
-	 * Get current WordPress version and WooCommerce version
-	 *
-	 * @return string
-	 *
-	 * @since 1.1.0
-	 */
-	private function get_shop_version() {
-		global $wp_version;
-
-		$shop         = 'WordPress ';
-		$shop        .= 'v' . $wp_version;
-		$woocommerce  = ' WooCommerce ';
-		$woocommerce .= 'v' . WC()->version;
-
-		return $shop . $woocommerce;
 	}
 
 	/**

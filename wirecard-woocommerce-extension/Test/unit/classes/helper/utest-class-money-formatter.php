@@ -52,14 +52,14 @@ class WC_Gateway_Wirecard_Money_Formatter_Utest extends \PHPUnit_Framework_TestC
 	}
 
 	public function test_float_as_string() {
-		$this->assertEquals( 2.34, $this->class_under_test->to_float( "2.34" ) );
+		$this->assertEquals( 2.34, $this->class_under_test->to_float( '2.34' ) );
 	}
 
 	public function test_negative_float_as_string() {
-		$this->assertEquals( -1.32, $this->class_under_test->to_float( "-1.32" ) );
+		$this->assertEquals( -1.32, $this->class_under_test->to_float( '-1.32' ) );
 	}
 
 	public function test_whitespaces() {
-		$this->assertEquals( 10.11, $this->class_under_test->to_float( "   10.11   " ) );
+		$this->assertEquals( 10.11, $this->class_under_test->to_float( '   10.11   ' ) );
 	}
 }

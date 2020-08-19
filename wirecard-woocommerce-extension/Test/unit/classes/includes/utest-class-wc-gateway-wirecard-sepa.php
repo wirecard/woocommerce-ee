@@ -31,6 +31,10 @@
 
 require_once __DIR__ . '/../../../../classes/includes/class-wc-gateway-wirecard-sepa-direct-debit.php';
 
+/**
+ * Class WC_Gateway_Wirecard_Sepa_Utest
+ * @SuppressWarnings(PHPMD.Superglobals)
+ */
 class WC_Gateway_Wirecard_Sepa_Utest extends \PHPUnit_Framework_TestCase {
 
 	/** @var WC_Gateway_Wirecard_Sepa_Direct_Debit */

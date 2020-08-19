@@ -31,6 +31,11 @@
 
 require_once __DIR__ . '/../../../../classes/includes/class-wc-gateway-wirecard-paypal.php';
 
+/**
+ * Class WC_Gateway_Wirecard_Paypal_Utest
+ * @SuppressWarnings(PHPMD.TooManyMethods)
+ * @todo: combine or remove none useful methods
+ */
 class WC_Gateway_Wirecard_Paypal_Utest extends \PHPUnit_Framework_TestCase {
 
 	/** @var WC_Gateway_Wirecard_Paypal */

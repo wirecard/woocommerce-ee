@@ -46,6 +46,9 @@ use Wirecard\PaymentSdk\Response\SuccessResponse;
  * Factory for transaction creation and basic views
  *
  * @since 1.0.0
+ * @SuppressWarnings(PHPMD.ElseExpression)
+ * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
+ * @todo: Refactor class. Reduce complexity.
  */
 class Wirecard_Transaction_Factory {
 
@@ -174,6 +177,8 @@ class Wirecard_Transaction_Factory {
 	 *
 	 * @return int $row_count
 	 * @since 1.0.0
+	 * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+	 * @todo: refactor method
 	 *
 	 */
 	public function get_rows( $page = 1 ) {
@@ -329,6 +334,9 @@ class Wirecard_Transaction_Factory {
 	 * @param string $severity
 	 *
 	 * @since 1.0.0
+	 * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+	 * @SuppressWarnings(PHPMD.NPathComplexity)
+	 * @todo: refactor method
 	 */
 	public function show_transaction( $transaction, $message, $severity ) {
 		/** @var WC_Wirecard_Payment_Gateway $payment */

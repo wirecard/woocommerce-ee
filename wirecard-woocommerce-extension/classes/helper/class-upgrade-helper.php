@@ -83,9 +83,7 @@ class Upgrade_Helper {
 	 * @since 2.0.0
 	 */
 	public function update_extension_version() {
-		$general_information        = null;
-		$previous_extension_version = null;
-
+		$general_information = null;
 		$this->general_information_init();
 
 		$general_information = $this->get_extension_general_information();
