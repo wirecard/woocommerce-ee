@@ -48,6 +48,7 @@ use Wirecard\PaymentSdk\Entity\IdealBic;
  * @extends WC_Wirecard_Payment_Gateway
  *
  * @since   1.1.0
+ * @SuppressWarnings(PHPMD.Superglobals)
  */
 class WC_Gateway_Wirecard_Ideal extends WC_Wirecard_Payment_Gateway {
 

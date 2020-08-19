@@ -41,6 +41,9 @@ require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/admin/class-wirecard-transac
  * Handles main dashboard for Wirecard transactions
  *
  * @since 1.0.0
+ * @SuppressWarnings(PHPMD.Superglobals)
+ * @SuppressWarnings(PHPMD.ElseExpression)
+ * @todo: refactor class.
  */
 class Wirecard_Settings {
 
@@ -100,10 +103,9 @@ class Wirecard_Settings {
 	public function wirecard_payment_gateway_settings() {
 		if ( isset( $_REQUEST['id'] ) ) {
 			$this->transaction_factory->show_post_processing_info( $_REQUEST['id'], isset( $_REQUEST['action'] ) ? $_REQUEST['action'] : null );
-		} elseif ( isset( $_GET['transaction_start'] ) ) {
-			$this->show_dashboard( $_GET['transaction_start'] );
 		} else {
-			$this->show_dashboard();
+			$start = isset( $_GET['transaction_start'] ) ? $_GET['transaction_start'] : 1;
+			$this->show_dashboard( $start );
 		}
 	}
 
@@ -140,6 +142,8 @@ class Wirecard_Settings {
 	 * @param int $pages
 	 *
 	 * @since 1.0.0
+	 * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+	 * @SuppressWarnings(PHPMD.NPathComplexity)
 	 */
 	public function add_pagination( $start = 1, $pages ) {
 		$back = __( 'pagination_back', 'wirecard-woocommerce-extension' );
@@ -312,16 +316,17 @@ class Wirecard_Settings {
 			true
 		);
 
-		if ( $_REQUEST['email'] && wp_mail(
+		$result_message = __( 'success_email', 'wirecard-woocommerce-extension' );
+		if ( ! $_REQUEST['email'] || ! wp_mail(
 			'shop-systems-support@wirecard.com',
 			'WooCommerce support request',
 			$email_content,
 			$_REQUEST['email']
 		) ) {
-			echo __( 'success_email', 'wirecard-woocommerce-extension' );
-		} else {
-			echo __( 'error_email', 'wirecard-woocommerce-extension' );
+			$result_message = __( 'error_email', 'wirecard-woocommerce-extension' );
 		}
+
+		echo $result_message;
 	}
 
 	/**

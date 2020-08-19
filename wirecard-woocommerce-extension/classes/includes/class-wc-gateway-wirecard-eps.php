@@ -48,6 +48,7 @@ use Wirecard\PaymentSdk\Transaction\EpsTransaction;
  * @extends WC_Wirecard_Payment_Gateway
  *
  * @since 1.5.0
+ * @SuppressWarnings(PHPMD.Superglobals)
  */
 class WC_Gateway_Wirecard_Eps extends WC_Wirecard_Payment_Gateway {
 

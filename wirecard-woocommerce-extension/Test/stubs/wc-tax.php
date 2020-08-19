@@ -31,6 +31,9 @@
 
 class WC_Tax {
 
+	/**
+	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+	 */
 	public function find_rates( $array ) {
 		return array( 'id' => array( 'rate' => 12 ) );
 	}
