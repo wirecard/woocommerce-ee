@@ -34,18 +34,15 @@ require_once __DIR__ . '/wpdb.php';
 global $wpdb;
 $wpdb = new WPDB();
 
-function plugin_dir_path( $file )
-{
+function plugin_dir_path( $file ) {
 	return dirname( $file ) . DIRECTORY_SEPARATOR;
 }
 
-function plugin_dir_url( $file )
-{
+function plugin_dir_url( $file ) {
 	return dirname( $file ) . DIRECTORY_SEPARATOR;
 }
 
-function plugin_basename( $file )
-{
+function plugin_basename( $file ) {
 	return dirname( $file ) . DIRECTORY_SEPARATOR;
 }
 
@@ -105,12 +102,12 @@ function is_wp_error() {
 	return;
 }
 
-function wp_send_json_success($input) {
-	echo json_encode($input);
+function wp_send_json_success( $input ) {
+	echo json_encode( $input );
 }
 
-function wp_send_json_error($input) {
-	echo json_encode($input);
+function wp_send_json_error( $input ) {
+	echo json_encode( $input );
 }
 
 function wp_die() {
@@ -182,10 +179,20 @@ function esc_attr( $str ) {
 	return $str;
 }
 
-function esc_html ( $str ) {
+function esc_html( $str ) {
 	return $str;
 }
 
 function load_plugin_textdomain() {
 	return true;
+}
+
+/**
+ * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+ */
+function wc_get_template_html( $template_name, $args = array(), $template_path = '', $default_path = '' ) {
+	ob_start();
+	$path = "{$default_path}/{$template_name}";
+	require_once $path;
+	return ob_get_clean();
 }

@@ -272,7 +272,7 @@ class WC_Gateway_Wirecard_Paypal extends WC_Wirecard_Payment_Gateway {
 	public function process_refund( $order_id, $amount = null, $reason = '' ) {
 		$this->transaction = new PayPalTransaction();
 
-		return parent::process_refund( $order_id, $amount, '' );
+		return parent::process_refund( $order_id, $amount, $reason );
 	}
 
 	/**

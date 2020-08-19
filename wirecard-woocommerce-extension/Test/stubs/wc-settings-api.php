@@ -31,6 +31,9 @@
 
 class WC_Settings_API {
 
+	/**
+	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+	 */
 	public function get_option( $key, $empty_value = null ) {
 		$data = array(
 			'ssl_max_limit'      => 10,
@@ -54,8 +57,8 @@ class WC_Settings_API {
 
 		if ( isset( $data[ $key ] ) ) {
 			return $data[ $key ];
-		} else {
-			return $key;
 		}
+
+		return $key;
 	}
 }

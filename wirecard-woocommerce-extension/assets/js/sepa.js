@@ -60,11 +60,10 @@ function process_order() {
 }
 
 function check_change() {
+	/* global sepa_var */
 	if ( document.getElementById( "sepa-check" ).checked ) {
-		/* global sepa_var b:true */
 		$( "#sepa-button" ).text( sepa_var.sepa_process_text );
 	} else {
-		/* global sepa_var b:true */
 		$( "#sepa-button" ).text( sepa_var.sepa_cancel_text );
 	}
 }
@@ -115,11 +114,11 @@ function get_sepa_mandate_data() {
 			url: sepa_var.ajax_url,
 			data: { "action" : "get_sepa_mandate" },
 			dataType: "json",
-			success: function ( response ) {
+			success: function ( response ) { // eslint-disable-line object-shorthand
 				openPopup( response.data );
 			},
-			error: function ( response ) {
-				console.log( response );
+			error: function ( response ) { // eslint-disable-line object-shorthand
+				console.log( response ); // eslint-disable-line no-console
 			}
 		}
 	);

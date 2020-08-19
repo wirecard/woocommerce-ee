@@ -43,19 +43,12 @@ class Template_Helper {
 	 * Get template as string
 	 *
 	 * @param string $file_name
-	 *
-	 * @return string $html
-	 *
+	 * @param array $arguments
+	 * @return string
 	 * @since 2.0.0
+	 * @since 3.3.5 added param [arguments] - to load templates with arguments
 	 */
-	public function get_template_as_string( $file_name ) {
-		$html           = '';
-		$full_file_path = WIRECARD_EXTENSION_TEMPLATE_DIR . $file_name;
-
-		if ( file_exists( $full_file_path ) ) {
-			require_once( $full_file_path );
-		}
-
-		return $html;
+	public function get_template_as_string( $file_name, $arguments = array() ) {
+		return wc_get_template_html( $file_name, $arguments, '', WIRECARD_EXTENSION_TEMPLATE_DIR );
 	}
 }

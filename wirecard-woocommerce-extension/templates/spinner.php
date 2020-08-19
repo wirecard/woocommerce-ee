@@ -38,4 +38,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$html = '<div class="spinner spinner-inline spinner-inline-delete-token" style="display:inline-block; background: url(\'' . admin_url() . 'images/loading.gif\') no-repeat;"></div>';
+?>
+
+<div class="spinner spinner-inline spinner-inline-delete-token" style="display:inline-block; background: url(<?php echo admin_url(); ?>'images/loading.gif') no-repeat;"></div>

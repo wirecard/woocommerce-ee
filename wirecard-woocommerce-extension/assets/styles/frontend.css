@@ -1,30 +1,30 @@
 .spinner {
-	background-size: 16px 16px;
-	display: block;
-	opacity: .7;
-	filter: alpha(opacity=70);
-	width: 16px;
-	height: 16px;
-	margin: 5px auto 0;
+  background-size: 16px 16px;
+  display: block;
+  opacity: 0.7;
+  filter: alpha(opacity=70);
+  width: 16px;
+  height: 16px;
+  margin: 5px auto 0;
 }
 
 .spinner-inline {
-	margin-left: 0.5rem;
-	margin-right: 0.5rem;
-	float: right;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  float: right;
 }
 
 .spinner-submit {
-	margin: 1rem;
+  margin: 1rem;
 }
 
 .show-spinner {
-	width: 100%;
-	padding: 10px;
+  width: 100%;
+  padding: 10px;
 }
 
 .save-later {
-	float: left;
+  float: left;
 }
 
 #open-vault-popup:hover,
@@ -32,80 +32,81 @@
 #open-new-card:hover,
 .save-later:hover,
 .delete-from-vault:hover {
-	cursor: pointer;
+  cursor: pointer;
 }
 
 .payment_method_wirecard_ee_creditcard .dashicons {
-	margin-top: 3px;
+  margin-top: 3px;
 }
 
 .credit-card-heading {
-	margin-top: 0;
-	margin-bottom: 1em;
+  margin-top: 0;
+  margin-bottom: 1em;
 }
 
 .wd-submit {
-	float: right;
-	margin-bottom: 2rem;
+  float: right;
+  margin-bottom: 2rem;
 }
 
 #vault-table {
-	border: none;
+  border: none;
 }
 
 #vault-table td,
 #vault-table th {
-	padding: 5px;
-	vertical-align: middle;
-	border: none;
+  padding: 5px;
+  vertical-align: middle;
+  border: none;
 }
 
 .wd-card-selector {
-	text-align: right;
+  text-align: right;
 }
 
 .wd-card-delete {
-	color: firebrick;
+  color: firebrick;
 }
 
 .wd-card-delete:hover {
-	text-decoration: underline;
+  text-decoration: underline;
 }
 
 div.ui-widget-overlay {
-	z-index: 100;
-	opacity: 0.5;
-	filter: Alpha(Opacity=50);
-	background-color: black;
+  z-index: 100;
+  opacity: 0.5;
+  filter: alpha(opacity=50);
+  background-color: black;
 }
 
-#wc_payment_method_wirecard_creditcard_vault fieldset{
-	background-color: #ffffff;
+#wc_payment_method_wirecard_creditcard_vault fieldset {
+  background-color: #fff;
 }
 
 #wc_payment_method_wirecard_creditcard_vault fieldset legend {
-	background-color: #ffffff;
-	font-size: 1.4em;
-	font-weight: normal;
-	line-height: 1.214;
+  background-color: #fff;
+  font-size: 1.4em;
+  font-weight: normal;
+  line-height: 1.214;
 }
 
 .delete-from-vault-disabled {
-	color: #888888;
+  color: #888;
 }
+
 .delete-from-vault-disabled:hover {
-	cursor: no-drop;
-	text-decoration:none;
+  cursor: no-drop;
+  text-decoration: none;
 }
 
 .wd-card-delete-disabled {
-	color: #888888;
-	text-decoration: none;
-	cursor: no-drop;
+  color: #888;
+  text-decoration: none;
+  cursor: no-drop;
 }
 
 .spinner-inline-delete-token {
-	position: relative;
-	top: 3px;
-	left: 10px;
+  position: relative;
+  top: 3px;
+  left: 10px;
 }

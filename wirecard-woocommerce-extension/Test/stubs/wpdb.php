@@ -29,6 +29,10 @@
  * Please do not use the plugin if you do not agree to these terms of use!
  */
 
+/**
+ * Class WPDB
+ * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+ */
 class WPDB {
 	public $prefix;
 
@@ -50,7 +54,6 @@ class WPDB {
 	 * @param $table_name
 	 * @param $data
 	 * @param null $type
-	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
 	 */
 	public function replace( $table_name, $data, $type = null ) {
 		$this->insert_id = 1;
@@ -58,28 +61,28 @@ class WPDB {
 	}
 
 	public function prepare( $query, $id ) {
-		if ( $id == 1 || $id == '123' ) {
+		if ( 1 === $id || '123' === $id ) {
 			return true;
-		} else {
-			return false;
 		}
+		
+		return false;
 	}
 
 	public function get_results( $query ) {
 		if ( $query ) {
-			$card             = new stdClass();
-			$card->token      = '123123123';
-			$card->masked_pan = '123*****123';
-			$card->vault_id   = '1';
-			$card->user_id    = '123';
-			$card->address_hash   = '1231qwerqwerqwerqwerqwerqwerqwer';
+			$card               = new stdClass();
+			$card->token        = '123123123';
+			$card->masked_pan   = '123*****123';
+			$card->vault_id     = '1';
+			$card->user_id      = '123';
+			$card->address_hash = '1231qwerqwerqwerqwerqwerqwerqwer';
 
 			return array(
 				'1' => $card,
 			);
-		} else {
-			return array();
 		}
+		
+		return array();
 	}
 
 	public function query( $query ) {
@@ -90,9 +93,9 @@ class WPDB {
 		$transaction = new stdClass();
 		if ( $id ) {
 			return $transaction;
-		} else {
-			return;
 		}
+
+		return;
 	}
 
 	public function update() {

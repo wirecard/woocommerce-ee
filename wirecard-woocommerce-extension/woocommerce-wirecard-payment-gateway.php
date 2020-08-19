@@ -63,6 +63,7 @@ add_action( 'override_load_textdomain', 'wirecard_load_locale_fallback', 10, 3 )
  * @param string $mofile
  * @return bool
  * @since 1.5.1
+ * @SuppressWarnings(PHPMD.UnusedFormalParameter)
  */
 function wirecard_load_locale_fallback( $override, $domain, $mofile ) {
 	if ( 'wirecard-woocommerce-extension' !== $domain || is_readable( $mofile ) ) {
@@ -153,6 +154,7 @@ function wirecard_init_payment_gateway() {
  * @return array
  *
  * @since 1.0.0
+ * @SuppressWarnings(PHPMD.ElseExpression)
  */
 function wirecard_add_payment_gateway( $methods ) {
 	//If not on the checkout page show all available payment methods
