@@ -105,13 +105,13 @@ class WC_Gateway_Wirecard_Eps extends WC_Wirecard_Payment_Gateway {
 			),
 			'merchant_account_id' => array(
 				'title'       => __( 'config_merchant_account_id', 'wirecard-woocommerce-extension' ),
-				'type'        => 'text',
+				'type'        => 'password',
 				'description' => __( 'config_merchant_account_id_desc', 'wirecard-woocommerce-extension' ),
 				'default'     => $this->credential_config->getMerchantAccountId(),
 			),
 			'secret'              => array(
 				'title'       => __( 'config_merchant_secret', 'wirecard-woocommerce-extension' ),
-				'type'        => 'text',
+				'type'        => 'password',
 				'description' => __( 'config_merchant_secret_desc', 'wirecard-woocommerce-extension' ),
 				'default'     => $this->credential_config->getSecret(),
 			),
@@ -128,13 +128,13 @@ class WC_Gateway_Wirecard_Eps extends WC_Wirecard_Payment_Gateway {
 			),
 			'http_user'           => array(
 				'title'       => __( 'config_http_user', 'wirecard-woocommerce-extension' ),
-				'type'        => 'text',
+				'type'        => 'password',
 				'description' => __( 'config_http_user_desc', 'wirecard-woocommerce-extension' ),
 				'default'     => $this->credential_config->getHttpUser(),
 			),
 			'http_pass'           => array(
 				'title'       => __( 'config_http_password', 'wirecard-woocommerce-extension' ),
-				'type'        => 'text',
+				'type'        => 'password',
 				'description' => __( 'config_http_password_desc', 'wirecard-woocommerce-extension' ),
 				'default'     => $this->credential_config->getHttpPassword(),
 			),

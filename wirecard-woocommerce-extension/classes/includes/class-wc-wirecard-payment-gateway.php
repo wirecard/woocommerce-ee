@@ -793,4 +793,60 @@ abstract class WC_Wirecard_Payment_Gateway extends WC_Payment_Gateway {
 	public function get_type() {
 		return $this->type;
 	}
+
+	public function generate_password_html( $key, $data ) {
+		$data['type'] = 'password';
+		$field_key    = $this->get_field_key( $key );
+		$defaults     = array(
+			'title'             => '',
+			'disabled'          => false,
+			'class'             => '',
+			'css'               => '',
+			'placeholder'       => '',
+			'type'              => 'text',
+			'desc_tip'          => false,
+			'description'       => '',
+			'custom_attributes' => array(),
+		);
+
+		$data = wp_parse_args( $data, $defaults );
+
+		ob_start();
+		?>
+		<tr valign="top">
+			<th scope="row" class="titledesc">
+				<label
+					for="<?php echo esc_attr( $field_key ); ?>"><?php echo wp_kses_post( $data['title'] ); ?><?php echo $this->get_tooltip_html( $data ); // WPCS: XSS ok. ?></label>
+			</th>
+			<td class="forminp">
+				<fieldset>
+					<div class="settings-password-input-container">
+						<legend class="screen-reader-text"><span><?php echo wp_kses_post( $data['title'] ); ?></span>
+						</legend>
+						<input
+							class="input-text regular-input settings-password-secure-input <?php echo esc_attr( $data['class'] ); ?>"
+							type="<?php echo esc_attr( $data['type'] ); ?>"
+							name="<?php echo esc_attr( $field_key ); ?>"
+							id="<?php echo esc_attr( $field_key ); ?>"
+							style="<?php echo esc_attr( $data['css'] ); ?>"
+							value="<?php echo esc_attr( $this->get_option( $key ) ); ?>"
+							placeholder="<?php echo esc_attr( $data['placeholder'] ); ?>"
+							<?php disabled( $data['disabled'], true ); ?>
+
+							<?php echo $this->get_custom_attribute_html( $data ); // WPCS: XSS ok. ?>
+						/>
+
+						<button type="button" aria-label="Show password" class="settings-password-secure-button">
+							<span class="dashicons dashicons-visibility" aria-hidden="true"></span>
+						</button>
+
+						<?php echo $this->get_description_html( $data ); // WPCS: XSS ok. ?>
+					</div>
+				</fieldset>
+			</td>
+		</tr>
+		<?php
+
+		return ob_get_clean();
+	}
 }
