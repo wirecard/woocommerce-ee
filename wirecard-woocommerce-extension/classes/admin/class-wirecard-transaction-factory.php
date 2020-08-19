@@ -217,7 +217,12 @@ class Wirecard_Transaction_Factory {
 						if ( 'payment_method' === $table_title_key ) {
 							echo $this->get_payment_method_display_text( $payment_methods, $row[ $table_title_key ] );
 						} else {
-							echo $this->transaction_translate_helper->translate( $row[ $table_title_key ] );
+							$value = $row[ $table_title_key ];
+							if ( 'order_id' === $table_title_key ) {
+								$order = new WC_Order( $value );
+								$value = $order->get_order_number();
+							}
+							echo $this->transaction_translate_helper->translate( $value );
 						}
 					}
 				}
