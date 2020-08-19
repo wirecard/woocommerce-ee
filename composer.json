@@ -12,8 +12,9 @@
     "wirecard/iso-paypal-converter": "^1.0",
     "wirecard/io-converter": "^1.0",
     "wirecard/base-url-matcher": "^1.0",
-    "wirecard/extension-credentials-module": "dev-master", 
-	  "symfony/polyfill-intl-idn": "1.17.*"
+    "wirecard/extension-credentials-module": "dev-master",
+	"symfony/polyfill-intl-idn": "1.17.*",
+	"wirecard/extension-order-state-module": "dev-master"
   },
   "repositories":[
     {
