@@ -214,7 +214,7 @@ class Wirecard_Transaction_Factory {
 						} else {
 							$value = $row[ $table_title_key ];
 							if ( 'order_id' === $table_title_key ) {
-								$order = new WC_Order( $row[ $table_title_key ] );
+								$order = new WC_Order( $value );
 								$value = $order->get_order_number();
 							}
 							echo $this->transaction_translate_helper->translate( $value );
