@@ -53,6 +53,12 @@ use Wirecard\PaymentSdk\Constant\ChallengeInd;
  * @extends WC_Wirecard_Payment_Gateway
  *
  * @since   1.0.0
+ * @SuppressWarnings(PHPMD.Superglobals)
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ * @SuppressWarnings(PHPMD.TooManyMethods)
+ * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
+ * @todo: Classes with lots of methods are difficult to maintain.
+ * @todo: extract additional parts from class.
  */
 class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 
@@ -160,6 +166,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	 *
 	 * @since 2.1.0 challenge_indicator config field
 	 * @since 1.0.0
+	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
 	 */
 	public function init_form_fields() {
 		parent::init_form_fields();
@@ -699,14 +706,13 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	 *
 	 * @return bool|CreditCardTransaction|WP_Error
 	 *
-	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
 	 * @since 1.0.0
 	 * @throws Exception
 	 */
 	public function process_refund( $order_id, $amount = null, $reason = '' ) {
 		$this->transaction = new CreditCardTransaction();
 
-		return parent::process_refund( $order_id, $amount, '' );
+		return parent::process_refund( $order_id, $amount, $reason );
 	}
 
 	/**

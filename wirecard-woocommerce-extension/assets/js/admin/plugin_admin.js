@@ -33,7 +33,7 @@ $( document ).ready(
 	function () {
 			var button = $( ".wc_wirecard_test_credentials_button" );
 
-			/* global admin_vars b:true */
+			/* global admin_vars */
 			button.removeClass( "regular-input" ).val( admin_vars.test_credentials_button );
 			button.on(
 				"click",
@@ -47,14 +47,19 @@ $( document ).ready(
 					$.ajax(
 						{
 							type: "POST",
-							/* global admin_vars b:true */
 							url: admin_vars.admin_url,
-							data: { "action" : "test_payment_method_config", "base_url" : base_url, "http_user" : http_user, "http_pass" : http_pass, "admin_nonce" : admin_vars.admin_nonce },
+							data: {
+								action : "test_payment_method_config",
+								base_url,
+								http_user,
+								http_pass,
+								admin_nonce : admin_vars.admin_nonce
+							},
 							dataType: "json",
-							success: function (data) {
+							success: function (data) { // eslint-disable-line object-shorthand
 								alert( data.data );
 							},
-							error: function (data) {
+							error: function (data) { // eslint-disable-line object-shorthand
 								// This occurs if the PHP script dies. So the error message is hardcoded
 								// Usually it is an invalid url that gets called
 								let msg = "An undefined error occured!";

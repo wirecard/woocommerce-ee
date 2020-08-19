@@ -40,10 +40,10 @@ class WC_Gateway_Wirecard_Credit_Card_Vault_Utest extends \PHPUnit_Framework_Tes
 
 	private function get_sample_address_data() {
 		return new Address_Data(
-			"Sesam str 123",
-			"Sesam",
-			"SE0000",
-			"Wonderland"
+			'Sesam str 123',
+			'Sesam',
+			'SE0000',
+			'Wonderland'
 		);
 	}
 	public function test_save_card() {
@@ -57,17 +57,21 @@ class WC_Gateway_Wirecard_Credit_Card_Vault_Utest extends \PHPUnit_Framework_Tes
 	}
 
 	public function test_get_cards_for_user() {
-		$this->assertNotNull( $this->credit_card_vault->get_cards_for_user(
-			1,
-			$this->get_sample_address_data()
-		) );
+		$this->assertNotNull(
+			$this->credit_card_vault->get_cards_for_user(
+				1,
+				$this->get_sample_address_data()
+			)
+		);
 	}
 
 	public function test_failed_get_cards_for_user() {
-		$this->assertFalse( $this->credit_card_vault->get_cards_for_user(
-			2,
-			$this->get_sample_address_data()
-		) );
+		$this->assertFalse(
+			$this->credit_card_vault->get_cards_for_user(
+				2,
+				$this->get_sample_address_data()
+			)
+		);
 	}
 
 	public function test_delete_credit_card() {

@@ -41,6 +41,8 @@ require_once( WIRECARD_EXTENSION_BASEDIR . 'classes/helper/class-logger.php' );
  * Basic Wirecard handler for payment gateway payments
  *
  * @since 1.0.0
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ * @todo: use factory and polymorphisms instead
  */
 class Wirecard_Handler {
 

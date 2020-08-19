@@ -53,7 +53,7 @@ class WC_Product {
 	public function get_price() {
 		return 23;
 	}
-	
+
 	public function is_downloadable() {
 		return false;
 	}

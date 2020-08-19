@@ -105,7 +105,7 @@ Object.freeze( Constants );
  * @since 1.7.0
  */
 function logError( data ) {
-	console.error( "An error occurred: ", data );
+	console.error( "An error occurred: ", data ); // eslint-disable-line no-console
 }
 
 /**

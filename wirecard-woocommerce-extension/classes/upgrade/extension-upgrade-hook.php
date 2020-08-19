@@ -48,6 +48,7 @@ require_once 'vault-upgrade.php';
  * @param array $upgrader_object
  * @param array $options
  * @since 2.0.0
+ * @SuppressWarnings(PHPMD.UnusedFormalParameter)
  */
 function wirecard_extension_upgrade_completed( $upgrader_object, $options ) {
 	// If an update has taken place and the updated type is plugins and the plugins element exists
