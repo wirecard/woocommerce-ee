@@ -338,6 +338,8 @@ function wirecard_gateway_options_page() {
  */
 function backend_scripts() {
 	wp_register_script( 'plugin_admin_script', WIRECARD_EXTENSION_URL . 'assets/js/admin/plugin_admin.js', array(), null, false );
+	wp_register_style( 'plugin_admin_style', WIRECARD_EXTENSION_URL . 'assets/styles/admin.css', array() );
+	wp_enqueue_style( 'plugin_admin_style' );
 }
 
 /**
