@@ -137,7 +137,27 @@ function wirecard_init_payment_gateway() {
 	register_post_status(
 		'wc-authorization',
 		array(
-			'label'                     => __( 'order_status_authorized_count_plural', 'wirecard-woocommerce-extension' ),
+			'label'                     => __( 'order_state_payment_authorized', 'wirecard-woocommerce-extension' ),
+			'public'                    => true,
+			'exclude_from_search'       => false,
+			'show_in_admin_all_list'    => true,
+			'show_in_admin_status_list' => true,
+		)
+	);
+	register_post_status(
+		'wc-partially-refunded',
+		array(
+			'label'                     => __( 'order_state_payment_partially_refunded', 'wirecard-woocommerce-extension' ),
+			'public'                    => true,
+			'exclude_from_search'       => false,
+			'show_in_admin_all_list'    => true,
+			'show_in_admin_status_list' => true,
+		)
+	);
+	register_post_status(
+		'wc-partially-captured',
+		array(
+			'label'                     => __( 'order_state_payment_partially_captured', 'wirecard-woocommerce-extension' ),
 			'public'                    => true,
 			'exclude_from_search'       => false,
 			'show_in_admin_all_list'    => true,
@@ -392,6 +412,26 @@ function wirecard_check_if_woo_installed() {
 		'<br><a href="' . admin_url( 'plugins.php' ) . '">' . __( 'text_go_to_plugins', 'wirecard-woocommerce-extension' ) . '</a>'
 	);
 }
+
+
+
+add_action('wc_order_statuses', 'wc_order_statuses_custom', 99);
+
+function wc_order_statuses_custom( ) {
+	$order_statuses = array(
+		'wc-pending'    => _x( 'Pending payment', 'Order status', 'woocommerce' ),
+		'wc-processing' => _x( 'Processing', 'Order status', 'woocommerce' ),
+		'wc-on-hold'    => _x( 'On hold', 'Order status', 'woocommerce' ),
+		'wc-completed'  => _x( 'Completed', 'Order status', 'woocommerce' ),
+		'wc-cancelled'  => _x( 'Cancelled', 'Order status', 'woocommerce' ),
+		'wc-refunded'   => _x( 'Refunded', 'Order status', 'woocommerce' ),
+		'wc-failed'     => _x( 'Failed', 'Order status', 'woocommerce' ),
+	);
+	$order_statuses[ 'wc-xxx'] = 'xxx';
+	return $order_statuses;
+}
+
+
 
 /**
  * Call upgrade hook
