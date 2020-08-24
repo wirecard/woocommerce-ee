@@ -415,21 +415,12 @@ function wirecard_check_if_woo_installed() {
 
 
 
-add_action('wc_order_statuses', 'wc_order_statuses_custom', 99);
-
-function wc_order_statuses_custom( ) {
-	$order_statuses = array(
-		'wc-pending'    => _x( 'Pending payment', 'Order status', 'woocommerce' ),
-		'wc-processing' => _x( 'Processing', 'Order status', 'woocommerce' ),
-		'wc-on-hold'    => _x( 'On hold', 'Order status', 'woocommerce' ),
-		'wc-completed'  => _x( 'Completed', 'Order status', 'woocommerce' ),
-		'wc-cancelled'  => _x( 'Cancelled', 'Order status', 'woocommerce' ),
-		'wc-refunded'   => _x( 'Refunded', 'Order status', 'woocommerce' ),
-		'wc-failed'     => _x( 'Failed', 'Order status', 'woocommerce' ),
-	);
-	$order_statuses[ 'wc-xxx'] = 'xxx';
-	return $order_statuses;
-}
+//add_action('wc_order_statuses', 'wc_order_statuses_custom', 99);
+//
+//function wc_order_statuses_custom( $order_statuses ) { 
+//	$order_statuses[ 'wc-xxx'] = 'xxx'; 
+//	return $order_statuses;
+//}
 
 
 

@@ -809,6 +809,21 @@ msgstr "Nama belakang"
 msgid "order_error"
 msgstr "Kesalahan terjadi saat proses pembayaran. Harap coba lagi."
 
+msgid "order_state_payment_authorized"
+msgstr "Wirecard Payment authorized"
+
+msgid "order_state_payment_awaiting"
+msgstr "Wirecard Payment awaiting"
+
+msgid "order_state_payment_partially_captured"
+msgstr "Wirecard Payment partially captured"
+
+msgid "order_state_payment_partially_refunded"
+msgstr "Wirecard Payment partially refunded"
+
+msgid "order_state_payment_started"
+msgstr "Wirecard Payment started"
+
 #: woocommerce-wirecard-payment-gateway.php:100
 #: woocommerce-wirecard-payment-gateway.php:166
 msgid "order_status_authorized"
