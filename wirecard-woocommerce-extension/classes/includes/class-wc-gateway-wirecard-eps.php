@@ -60,7 +60,7 @@ class WC_Gateway_Wirecard_Eps extends WC_Wirecard_Payment_Gateway {
 	public function __construct() {
 		$this->type               = 'eps';
 		$this->id                 = 'wirecard_ee_eps';
-		$this->icon               = WIRECARD_EXTENSION_URL . 'assets/images/eps.png';
+		$this->icon               = apply_filters('wirecard_payment_icon', WIRECARD_EXTENSION_URL . 'assets/images/eps.png');
 		$this->method_title       = __( 'heading_title_eps', 'wirecard-woocommerce-extension' );
 		$this->method_name        = __( 'eps', 'wirecard-woocommerce-extension' );
 		$this->method_description = __( 'eps_desc', 'wirecard-woocommerce-extension' );
