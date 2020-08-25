@@ -61,7 +61,7 @@ class WC_Gateway_Wirecard_Guaranteed_Invoice_Ratepay extends WC_Wirecard_Payment
 	public function __construct() {
 		$this->type               = 'ratepay-invoice';
 		$this->id                 = 'wirecard_ee_invoice';
-		$this->icon               = apply_filters( 'wirecard_payment_icon', WIRECARD_EXTENSION_URL . 'assets/images/invoice.png' );
+		$this->icon               = apply_filters( 'wirecard_payment_icon', WIRECARD_EXTENSION_URL . 'assets/images/invoice.png', 1 );
 		$this->method_title       = __( 'heading_title_ratepayinvoice', 'wirecard-woocommerce-extension' );
 		$this->method_name        = __( 'ratepayinvoice', 'wirecard-woocommerce-extension' );
 		$this->method_description = __( 'ratepayinvoice_desc', 'wirecard-woocommerce-extension' );

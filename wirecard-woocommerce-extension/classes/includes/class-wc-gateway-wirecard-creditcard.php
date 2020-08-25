@@ -132,7 +132,7 @@ class WC_Gateway_Wirecard_Creditcard extends WC_Wirecard_Payment_Gateway {
 	 */
 	protected function init() {
 		$this->id                 = 'wirecard_ee_creditcard';
-		$this->icon               = apply_filters( 'wirecard_payment_icon', WIRECARD_EXTENSION_URL . 'assets/images/creditcard.png' );
+		$this->icon               = apply_filters( 'wirecard_payment_icon', WIRECARD_EXTENSION_URL . 'assets/images/creditcard.png', 1 );
 		$this->method_title       = __( 'heading_title_creditcard', 'wirecard-woocommerce-extension' );
 		$this->method_name        = __( 'creditcard', 'wirecard-woocommerce-extension' );
 		$this->method_description = __( 'creditcard_desc', 'wirecard-woocommerce-extension' );
