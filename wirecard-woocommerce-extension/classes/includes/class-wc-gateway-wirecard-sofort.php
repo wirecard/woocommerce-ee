@@ -58,7 +58,7 @@ class WC_Gateway_Wirecard_Sofort extends WC_Wirecard_Payment_Gateway {
 	public function __construct() {
 		$this->type               = 'sofortbanking';
 		$this->id                 = 'wirecard_ee_sofortbanking';
-		$this->icon               = apply_filters('wirecard_payment_icon', WIRECARD_EXTENSION_URL . 'assets/images/sofortbanking.png');
+		$this->icon               = apply_filters( 'wirecard_payment_icon', WIRECARD_EXTENSION_URL . 'assets/images/sofortbanking.png' );
 		$this->method_title       = __( 'heading_title_sofortbanking', 'wirecard-woocommerce-extension' );
 		$this->method_name        = __( 'sofortbanking', 'wirecard-woocommerce-extension' );
 		$this->method_description = __( 'sofortbanking_desc', 'wirecard-woocommerce-extension' );

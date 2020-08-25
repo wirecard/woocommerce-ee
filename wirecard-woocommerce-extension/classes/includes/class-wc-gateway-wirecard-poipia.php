@@ -57,7 +57,7 @@ class WC_Gateway_Wirecard_Poipia extends WC_Wirecard_Payment_Gateway {
 	public function __construct() {
 		$this->type               = 'wiretransfer';
 		$this->id                 = 'wirecard_ee_poipia';
-		$this->icon               = apply_filters('wirecard_payment_icon', WIRECARD_EXTENSION_URL . 'assets/images/poipia.png');
+		$this->icon               = apply_filters( 'wirecard_payment_icon', WIRECARD_EXTENSION_URL . 'assets/images/poipia.png' );
 		$this->method_title       = __( 'heading_title_poi_pia', 'wirecard-woocommerce-extension' );
 		$this->method_name        = __( 'poi_pia', 'wirecard-woocommerce-extension' );
 		$this->method_description = __( 'poi_pia_desc', 'wirecard-woocommerce-extension' );

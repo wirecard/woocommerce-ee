@@ -56,7 +56,7 @@ class WC_Gateway_Wirecard_Pay_By_Bank_App extends WC_Wirecard_Payment_Gateway {
 	public function __construct() {
 		$this->type               = 'zapp';
 		$this->id                 = 'wirecard_ee_pbba';
-		$this->icon               = apply_filters('wirecard_payment_icon', WIRECARD_EXTENSION_URL . 'assets/images/pbba.png');
+		$this->icon               = apply_filters( 'wirecard_payment_icon', WIRECARD_EXTENSION_URL . 'assets/images/pbba.png' );
 		$this->method_title       = __( 'heading_title_paybybankapp', 'wirecard-woocommerce-extension' );
 		$this->method_name        = __( 'paybybankapp', 'wirecard-woocommerce-extension' );
 		$this->method_description = __( 'paybybankapp_desc', 'wirecard-woocommerce-extension' );
