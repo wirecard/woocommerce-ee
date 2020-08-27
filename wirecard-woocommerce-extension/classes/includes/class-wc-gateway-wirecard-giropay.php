@@ -62,7 +62,7 @@ class WC_Gateway_Wirecard_Giropay extends WC_Wirecard_Payment_Gateway {
 	public function __construct() {
 		$this->type               = 'giropay';
 		$this->id                 = 'wirecard_ee_giropay';
-		$this->icon               = WIRECARD_EXTENSION_URL . 'assets/images/giropay.png';
+		$this->icon               = apply_filters( 'wirecard_payment_icon', WIRECARD_EXTENSION_URL . 'assets/images/giropay.png', 1 );
 		$this->method_title       = __( 'heading_title_giropay', 'wirecard-woocommerce-extension' );
 		$this->method_name        = __( 'giropay', 'wirecard-woocommerce-extension' );
 		$this->method_description = __( 'giropay_desc', 'wirecard-woocommerce-extension' );
