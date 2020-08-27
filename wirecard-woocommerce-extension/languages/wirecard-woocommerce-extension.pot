@@ -767,6 +767,21 @@ msgstr ""
 msgid "order_error"
 msgstr ""
 
+msgid "order_state_payment_authorized"
+msgstr ""
+
+msgid "order_state_payment_awaiting"
+msgstr ""
+
+msgid "order_state_payment_partially_captured"
+msgstr ""
+
+msgid "order_state_payment_partially_refunded"
+msgstr ""
+
+msgid "order_state_payment_started"
+msgstr ""
+
 #: woocommerce-wirecard-payment-gateway.php:100
 #: woocommerce-wirecard-payment-gateway.php:166
 msgid "order_status_authorized"

@@ -766,6 +766,22 @@ msgstr "Nom de famille"
 msgid "order_error"
 msgstr "Une erreur est survenue durant le processus de paiement. Veuillez réessayer."
 
+
+msgid "order_state_payment_authorized"
+msgstr "Wirecard Paiement autorisé"
+
+msgid "order_state_payment_awaiting"
+msgstr "Wirecard Paiement en attente"
+
+msgid "order_state_payment_partially_captured"
+msgstr "Wirecard Paiement partiellement payé"
+
+msgid "order_state_payment_partially_refunded"
+msgstr "Wirecard Paiement remboursé partiellement"
+
+msgid "order_state_payment_started"
+msgstr "Wirecard Paiement initié"
+
 #: woocommerce-wirecard-payment-gateway.php:100
 #: woocommerce-wirecard-payment-gateway.php:166
 msgid "order_status_authorized"

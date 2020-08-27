@@ -764,6 +764,21 @@ msgstr "Nachname"
 msgid "order_error"
 msgstr "Beim Bezahlprozess ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut."
 
+msgid "order_state_payment_authorized"
+msgstr "Wirecard Zahlung autorisiert"
+
+msgid "order_state_payment_awaiting"
+msgstr "Wirecard Bezahlung ausständig"
+
+msgid "order_state_payment_partially_captured"
+msgstr "Wirecard Bezahlung teilweise gebucht"
+
+msgid "order_state_payment_partially_refunded"
+msgstr "Wirecard Bezahlung teilweise rückerstattet"
+
+msgid "order_state_payment_started"
+msgstr "Wirecard Bezahlung gestartet"
+
 #: woocommerce-wirecard-payment-gateway.php:100
 #: woocommerce-wirecard-payment-gateway.php:166
 msgid "order_status_authorized"
